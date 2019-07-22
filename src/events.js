@@ -1,0 +1,3 @@
+
+export const TOGGLE_SNACKBAR = 'TOGGLE_SNACKBAR';
+export const SHOW_ALERT = 'SHOW_ALERT';
