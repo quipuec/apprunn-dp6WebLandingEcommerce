@@ -52,3 +52,4 @@ npm run build
 4. CAT - Categories
 5. PRO - Products
 6. COM - Components (Header, Subheader, Filters, Searcher, Footer, Carrousel, etc...)
+7. LOG - Login, register, etc.
