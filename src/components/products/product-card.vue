@@ -16,6 +16,10 @@
 				<h3 class="product-price-discount">S/. 47.99</h3>
 				<small class="product-price">S/. 67.99</small>
 				<small class="other-buy">+ 1000 compraron esto</small>
+				<v-rating
+					small
+					class="product-rating"
+					v-model="product.rating"></v-rating>
 			</div>
 		</section>
 	</div>
@@ -30,6 +34,7 @@ function data() {
 	return {
 		product: {
 			favorite: false,
+			rating: 3,
 		},
 	};
 }
@@ -92,6 +97,7 @@ export default {
 	.product-description-wrapper {
 		display: flex;
 		flex-direction: column;
+		margin: 0 5px !important;
 	}
 
 	.product-img {
@@ -121,8 +127,13 @@ export default {
 		color: color(base);
 		font-size: size(xsmall);
 	}
+
 	.product-price {
 		text-decoration: line-through;
+	}
+
+	.product-rating {
+		margin: 0 !important;
 	}
 </style>
 

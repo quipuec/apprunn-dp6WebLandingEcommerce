@@ -40,6 +40,7 @@ import {
 	VTreeview,
 	VAvatar,
 	VInput,
+	VRating,
 } from 'vuetify';
 
 export default function (Vue) {
@@ -86,6 +87,7 @@ export default function (Vue) {
 				VStepper,
 				VSwitch,
 				VTreeview,
+				VRating,
 			},
 			theme: {
 				primary: '#487fff',
