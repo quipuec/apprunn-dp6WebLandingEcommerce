@@ -122,7 +122,6 @@ export default {
 html, body {
 	font-family: map-get($fonts, regular) !important;
 	font-size: map-get($sizes, medium);
-	min-width: 960px;
 	overflow-x: auto;
 }
 
