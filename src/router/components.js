@@ -1,6 +1,10 @@
 const route = {
 	path: '/components',
 	name: 'components',
-	component: () => import('@/pages/pages-components'),
+	meta: {
+		title: 'Componentes',
+	},
+	component: () => import('@/pages/page-components'),
 };
+
 export default route;

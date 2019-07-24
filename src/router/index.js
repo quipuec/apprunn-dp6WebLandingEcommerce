@@ -1,6 +1,6 @@
 import Router from 'vue-router';
 import login from './login';
-import Components from './components';
+import components from './components';
 
 export default function (Vue) {
 	Vue.use(Router);
@@ -13,9 +13,10 @@ export default function (Vue) {
 				component: () => import('@/pages/page-home'),
 				children: [],
 			},
+			components,
 			login,
-			Components,
 		],
 	});
+	config.beforeEach((to, from, next) => next());
 	return config;
 }

@@ -120,7 +120,8 @@ export default {
 }
 
 html, body {
-	font-family: map-get($fonts, regular) !important;
+	color: color(black) !important;
+	font-family: font(regular) !important;
 	font-size: map-get($sizes, medium);
 	overflow-x: auto;
 }
@@ -140,7 +141,7 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .content {
-	background: white;
+	background: color(white);
 	padding: 133px 12px 0px !important;
 
 	&--wrap {
@@ -2053,8 +2054,13 @@ nav.v-toolbar {
 	}
 }
 
-.product-rating {
+input.app-input::-webkit-input-placeholder {
+	color: color(text);
+	font-family: font(demi);
+	font-size: size(medium);
+}
 
+.product-rating {
 	.v-icon {
 		padding: 0.2rem !important;
 	}

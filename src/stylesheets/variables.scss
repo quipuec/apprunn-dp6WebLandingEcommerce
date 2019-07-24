@@ -1,4 +1,6 @@
 $colors: (
+	background: #fcfcfc,
+	black: #000000,
 	primary: #f42b17,
 	secondary: #004e9c,
 	terciary: #006edb,
@@ -8,13 +10,22 @@ $colors: (
 	disabled: #f5f5f5,
 	standarBackground: #ffffff,
 	highLight: #f8e71c,
+	text: #e6e6e6,
+	white: #ffffff,
 );
 
 $fonts: (
-	medium: 'Avenir Next Medium',
 	bold: 'Avenir Next Bold',
-	light: 'Avenir Next Ultra Light',
+	demi: 'Avenir Next Demi',
+	demi-italic: 'Avenir Next Demi Italic',
+	heavy: 'Avenir Next Heavy',
+	heavy-italic: 'Avenir Next Heavy Italic',
+	italic: 'Avenir Next Italic',
+	medium: 'Avenir Next Medium',
+	medium-italic: 'Avenir Next Medium Italic',
 	regular: 'Avenir Next Regular',
+	ultra-light: 'Avenir Next Ultra Light',
+	ultra-light-italic: 'Avenir Next Ultra Light Italic',
 );
 
 $sizes: (
