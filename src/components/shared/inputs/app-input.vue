@@ -26,5 +26,10 @@
 		outline: none;
 		padding: 0px 16.2px;
 		width: 100%;
+
+		@media (min-width: 764px) {
+			height: 40px;
+			max-width: 306px;
+		}
 	}
 </style>
