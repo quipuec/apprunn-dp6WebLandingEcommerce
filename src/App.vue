@@ -123,7 +123,6 @@ html, body {
 	color: color(black) !important;
 	font-family: font(regular) !important;
 	font-size: map-get($sizes, medium);
-	min-width: 960px;
 	overflow-x: auto;
 }
 
@@ -2056,8 +2055,14 @@ nav.v-toolbar {
 }
 
 input.app-input::-webkit-input-placeholder {
-	color: color(text);
+	color: color(border);
 	font-family: font(demi);
 	font-size: size(medium);
+}
+
+.product-rating {
+	.v-icon {
+		padding: 0.2rem !important;
+	}
 }
 </style>

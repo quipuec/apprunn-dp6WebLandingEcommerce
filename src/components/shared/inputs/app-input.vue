@@ -18,7 +18,7 @@
 	.app-input {
 		background-color: color(background);
 		border-radius: 7px;
-		color: color(text);
+		color: color(border);
 		font-family: font(demi);
 		font-size: size(medium);
 		height: 46.8px;
