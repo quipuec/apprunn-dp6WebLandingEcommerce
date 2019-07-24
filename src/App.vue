@@ -2052,4 +2052,11 @@ nav.v-toolbar {
 		height: 16px;
 	}
 }
+
+.product-rating {
+
+	.v-icon {
+		padding: 0.2rem;
+	}
+}
 </style>

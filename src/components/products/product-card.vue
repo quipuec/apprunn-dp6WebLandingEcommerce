@@ -134,6 +134,10 @@ export default {
 
 	.product-rating {
 		margin: 0 !important;
+
+		.v-icon {
+			padding: 0.3rem !important;
+		}
 	}
 </style>
 
