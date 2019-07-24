@@ -54,6 +54,7 @@ export default {
 	.product-container {
 		background-color: color(standarBackground);
 		border: 3px solid color(border);
+		font-family: font(medium);
 		max-height: 330px;
 		padding: 10px;
 
@@ -126,6 +127,16 @@ export default {
 	.other-buy {
 		color: color(base);
 		font-size: size(xsmall);
+	}
+
+	.other-buy {
+		font-family: font(regular);
+		display: none;
+
+		@media (min-width: 500px) {
+			display: block;
+			flex-direction: column;
+		}
 	}
 
 	.product-price {
