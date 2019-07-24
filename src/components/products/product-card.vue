@@ -52,8 +52,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 	.product-container {
-		background-color: color(standarBackground);
+		background-color: color(white);
 		border: 3px solid color(border);
+		font-family: font(medium);
 		max-height: 330px;
 		padding: 10px;
 
@@ -71,7 +72,7 @@ export default {
 	.product-discount {
 		background-color: color(primary);
 		border-radius: 5px;
-		color: color(standarBackground);
+		color: color(white);
 		font-family: font(medium);
 		font-size: size(large);
 		padding: 8px 15px;
@@ -128,12 +129,26 @@ export default {
 		font-size: size(xsmall);
 	}
 
+	.other-buy {
+		font-family: font(regular);
+		display: none;
+
+		@media (min-width: 500px) {
+			display: block;
+			flex-direction: column;
+		}
+	}
+
 	.product-price {
 		text-decoration: line-through;
 	}
 
 	.product-rating {
 		margin: 0 !important;
+
+		.v-icon {
+			padding: 0.3rem !important;
+		}
 	}
 </style>
 
