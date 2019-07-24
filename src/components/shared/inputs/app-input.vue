@@ -3,6 +3,7 @@
 		<input
 			v-bind="$attrs"
 			class="app-input"
+			:style="`border-color: ${borderColor}`"
 		/>
 	</div>
 </template>
@@ -11,6 +12,9 @@
 	export default {
 		name: 'app-input',
 		inheritAttrs: false,
+		props: {
+			borderColor: String,
+		},
 	};
 </script>
 
@@ -18,6 +22,8 @@
 	.app-input {
 		background-color: color(background);
 		border-radius: 7px;
+		border-style: solid;
+		border-width: 1px;
 		color: color(border);
 		font-family: font(demi);
 		font-size: size(medium);
