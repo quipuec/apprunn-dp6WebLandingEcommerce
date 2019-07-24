@@ -7,6 +7,7 @@
 			</v-flex>
 			<v-flex xs12>
 				<app-input
+					border-color="#f5f3f3"
 					placeholder="E-mail"
 				></app-input>
 			</v-flex>
@@ -27,7 +28,7 @@
 
 <style lang="scss" scoped>
 	.page-components {
-		background-color: color(primary);
+		background-color: color(background);
 		color: color(black);
 		height: 100vh;
 		padding: 45px;
