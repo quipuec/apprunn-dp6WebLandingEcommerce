@@ -24,7 +24,7 @@
 		border-radius: 7px;
 		border-style: solid;
 		border-width: 1px;
-		color: color(text);
+		color: color(border);
 		font-family: font(demi);
 		font-size: size(medium);
 		height: 46.8px;

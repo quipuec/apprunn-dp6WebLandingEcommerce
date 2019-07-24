@@ -52,7 +52,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 	.product-container {
-		background-color: color(standarBackground);
+		background-color: color(white);
 		border: 3px solid color(border);
 		font-family: font(medium);
 		max-height: 330px;
@@ -72,7 +72,7 @@ export default {
 	.product-discount {
 		background-color: color(primary);
 		border-radius: 5px;
-		color: color(standarBackground);
+		color: color(white);
 		font-family: font(medium);
 		font-size: size(large);
 		padding: 8px 15px;
