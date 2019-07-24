@@ -2,7 +2,7 @@
 
 > a vuetify template along to vue-router, axios and some other stuff.
 
-> http://ecommerce.netlify.com/ [DEV]
+> http://ecommerce-template.netlify.com/ [DEV]
 
 ### Libraries Documentation
 
