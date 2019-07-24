@@ -26,18 +26,32 @@
 				></app-button>
 			</v-flex>
 		</v-layout>
+		<v-layout wrap>
+			<v-flex xs12>
+				Tarjetas de producto
+			</v-flex>
+			<section class="product-section">
+				<product-card class="product-card"/>		
+				<product-card class="product-card"/>		
+				<product-card class="product-card"/>		
+				<product-card class="product-card"/>		
+				<product-card class="product-card"/>		
+			</section>
+		</v-layout>
 	</div>
 </template>
 
 <script>
 	const appButton = () => import('@/components/shared/buttons/app-button');
 	const appInput = () => import('@/components/shared/inputs/app-input');
+	const productCard = () => import('@/components/products/product-card');
 
 	export default {
 		name: 'components',
 		components: {
 			appButton,
 			appInput,
+			productCard,
 		},
 	};
 </script>
@@ -52,5 +66,14 @@
 
 	.title {
 		margin-bottom: 20px;
+	}
+	
+	.product-section {
+		align-items: center;
+		display: grid;
+		flex-wrap: wrap;
+		grid-template-columns: repeat(auto-fit, minmax(214px, 1fr));
+		margin: auto;
+		max-width: 1070px;
 	}
 </style>
