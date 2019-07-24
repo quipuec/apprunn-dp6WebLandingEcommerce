@@ -17,15 +17,5 @@ export default function (Vue) {
 			Components,
 		],
 	});
-	// config.beforeEach((to, from, next) => {
-	// 	if (to.name !== 'login') {
-	// 		const token = window.localStorage.getItem(`${process.env.STORAGE_USER_KEY}::token`);
-	// 		if (token) {
-	// 			return next();
-	// 		}
-	// 		return next({ name: 'login' });
-	// 	}
-	// 	return next();
-	// });
 	return config;
 }
