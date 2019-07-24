@@ -1,5 +1,6 @@
 import Router from 'vue-router';
 import login from './login';
+import components from './components';
 
 export default function (Vue) {
 	Vue.use(Router);
@@ -12,18 +13,10 @@ export default function (Vue) {
 				component: () => import('@/pages/page-home'),
 				children: [],
 			},
+			components,
 			login,
 		],
 	});
-	config.beforeEach((to, from, next) => {
-		if (to.name !== 'login') {
-			const token = window.localStorage.getItem(`${process.env.STORAGE_USER_KEY}::token`);
-			if (token) {
-				return next();
-			}
-			return next({ name: 'login' });
-		}
-		return next();
-	});
+	config.beforeEach((to, from, next) => next());
 	return config;
 }
