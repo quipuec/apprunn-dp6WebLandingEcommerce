@@ -12,7 +12,7 @@
 				></app-input>
 			</v-flex>
 		</v-layout>
-		<v-layout wrap>
+		<v-layout wrap mb-5>
 			<v-flex xs12>
 				Botones
 			</v-flex>
@@ -26,18 +26,28 @@
 				></app-button>
 			</v-flex>
 		</v-layout>
+		<v-layout wrap>
+			<v-flex xs12>
+				Boton categoría
+			</v-flex>
+			<v-flex xs12>
+				<call-menu />
+			</v-flex>
+		</v-layout>
 	</div>
 </template>
 
 <script>
 	const appButton = () => import('@/components/shared/buttons/app-button');
 	const appInput = () => import('@/components/shared/inputs/app-input');
+	const callMenu = () => import('@/components/header/call-menu');
 
 	export default {
 		name: 'components',
 		components: {
 			appButton,
 			appInput,
+			callMenu,
 		},
 	};
 </script>
