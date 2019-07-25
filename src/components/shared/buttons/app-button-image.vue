@@ -3,8 +3,9 @@
 		<button class="app-button" @click="$emit('click-image')">
 			<div class="button-number" v-if="ifNumber">{{number}}</div>
 			<img :src="data.image" 
-				:alt="data.name" 
-				:style="`height: ${data.height}px`">
+				:alt="data.name"
+				:height="data.height" 
+			>
 		</button>
 	</div>
 </template>
