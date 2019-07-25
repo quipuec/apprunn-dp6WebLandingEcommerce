@@ -4,6 +4,7 @@
 			v-bind="$attrs"
 			class="app-input"
 			:style="`border-color: ${borderColor}`"
+			:placeholder="placeholder"
 		/>
 	</div>
 </template>
@@ -14,6 +15,7 @@
 		inheritAttrs: false,
 		props: {
 			borderColor: String,
+			placeholder: String,
 		},
 	};
 </script>
