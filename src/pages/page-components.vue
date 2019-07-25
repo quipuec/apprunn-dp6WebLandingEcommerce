@@ -38,6 +38,16 @@
 				<product-card class="product-card"/>		
 			</section>
 		</v-layout>
+		<v-layout>
+			<media-company-data
+				class="border"
+				image="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/customer-service.png"
+				image-width="30"
+				image-height="29"
+				description=" (511) 326-0933 
+				(511) 326-8056"
+			></media-company-data>
+		</v-layout>
 	</div>
 </template>
 
@@ -45,6 +55,7 @@
 	const appButton = () => import('@/components/shared/buttons/app-button');
 	const appInput = () => import('@/components/shared/inputs/app-input');
 	const productCard = () => import('@/components/products/product-card');
+	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
 
 	export default {
 		name: 'components',
@@ -52,6 +63,7 @@
 			appButton,
 			appInput,
 			productCard,
+			mediaCompanyData,
 		},
 	};
 </script>
@@ -75,5 +87,9 @@
 		grid-template-columns: repeat(auto-fit, minmax(214px, 1fr));
 		margin: auto;
 		max-width: 1070px;
+	}
+
+	.border {
+		background: map-get($colors, primary);
 	}
 </style>
