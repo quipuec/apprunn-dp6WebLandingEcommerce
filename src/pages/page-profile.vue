@@ -131,7 +131,7 @@ export default {
 	}
 
 	.user-name {
-		font-size: font(large);
+		font-size: size(large);
 		margin-bottom: 20px;
 
 		@media (max-width: 500px) {
