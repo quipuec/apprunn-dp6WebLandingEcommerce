@@ -54,6 +54,20 @@
 				<modal-login />
 			</v-flex>
 		</v-layout>	
+		<v-layout wrap mb-5>
+			<v-flex xs12>
+				Botones Header
+			</v-flex>
+			<v-flex xs12>
+				<button-image 
+					:data="imagesButton[0]"
+					/>
+				<button-image
+				:data="imagesButton[1]"
+				:number="1"
+				if-number/>
+			</v-flex>
+		</v-layout>
 		<v-layout>
 			<media-company-data
 				class="border"
@@ -73,16 +87,35 @@
 	const callMenu = () => import('@/components/header/call-menu');
 	const productCard = () => import('@/components/products/product-card');
 	const modalLogin = () => import('@/components/header/modal-login');
+	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
 
+	function data() {
+		return {
+			imagesButton: [
+				{
+					image: '/static/img/heart.svg',
+					name: 'Mis órdenes',
+					height: 20,
+				},
+				{
+					image: '/static/img/car.svg',
+					name: 'Carrito de compras',
+					height: 20,
+				},
+			],
+		};
+	}
 	export default {
 		name: 'components',
+		data,
 		components: {
 			appButton,
 			appInput,
 			callMenu,
 			productCard,
 			modalLogin,
+			buttonImage,
 			mediaCompanyData,
 		},
 	};
