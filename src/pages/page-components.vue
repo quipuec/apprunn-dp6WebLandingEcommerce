@@ -12,7 +12,7 @@
 				></app-input>
 			</v-flex>
 		</v-layout>
-		<v-layout wrap>
+		<v-layout wrap mb-5>
 			<v-flex xs12>
 				Botones
 			</v-flex>
@@ -26,8 +26,16 @@
 				></app-button>
 			</v-flex>
 		</v-layout>
-		<v-layout wrap>
+		<v-layout wrap mb-5>
 			<v-flex xs12>
+				Boton categoría
+			</v-flex>
+			<v-flex xs12>
+				<call-menu text="Categorías"/>
+			</v-flex>
+		</v-layout>
+		<v-layout>
+			<v-flex>
 				Tarjetas de producto
 			</v-flex>
 			<section class="product-section">
@@ -54,6 +62,7 @@
 <script>
 	const appButton = () => import('@/components/shared/buttons/app-button');
 	const appInput = () => import('@/components/shared/inputs/app-input');
+	const callMenu = () => import('@/components/header/call-menu');
 	const productCard = () => import('@/components/products/product-card');
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
 
@@ -62,6 +71,7 @@
 		components: {
 			appButton,
 			appInput,
+			callMenu,
 			productCard,
 			mediaCompanyData,
 		},
