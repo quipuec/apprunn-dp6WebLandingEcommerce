@@ -15,8 +15,8 @@ export default {
 	.profile-layout {
 		align-items: center;
 		display: flex;
-		justify-content: flex-start;
 		flex-wrap: wrap;
+		justify-content: flex-start;
 		margin: auto;
 		max-width: 1142px;
 
