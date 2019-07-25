@@ -31,7 +31,7 @@
 				Boton categoría
 			</v-flex>
 			<v-flex xs12>
-				<call-menu />
+				<call-menu text="Categorías"/>
 			</v-flex>
 		</v-layout>
 		<v-layout>

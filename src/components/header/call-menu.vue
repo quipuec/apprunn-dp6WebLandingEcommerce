@@ -1,14 +1,14 @@
 <template>
-	<div class="call-menu" @click="toggleMenu">
-		<button 
-			class="call-menu-btn"
-			:class="{open: menuIsVisible}">
+	<button 
+		class="call-menu"
+		@click="toggleMenu">
+		<div class="call-menu-btn" :class="{open: menuIsVisible}">
 			<span class="call-menu-line"></span>
 			<span class="call-menu-line"></span>
 			<span class="call-menu-line"></span>
-		</button>
-		<span class="call-menu-text mt-2">Categorías</span>
-	</div>
+		</div>
+		<p class="call-menu-text mt-2">{{text}}</p>
+	</button>
 </template>
 <script>
 function toggleMenu() {
@@ -26,6 +26,9 @@ export default {
 	data,
 	methods: {
 		toggleMenu,
+	},
+	props: {
+		text: String,
 	},
 };
 
