@@ -24,7 +24,7 @@ export default {
 .container-media-company {
 	align-items: center;
 	display: flex;
-	padding: 19px;
+	padding: 0 45px;
 }
 
 .text-company-data {
