@@ -12,7 +12,7 @@
 				></app-input>
 			</v-flex>
 		</v-layout>
-		<v-layout wrap>
+		<v-layout wrap mb-5>
 			<v-flex xs12>
 				Botones
 			</v-flex>
@@ -26,7 +26,7 @@
 				></app-button>
 			</v-flex>
 		</v-layout>
-		<v-layout wrap>
+		<v-layout wrap mb-5>
 			<v-flex xs12>
 				Tarjetas de producto
 			</v-flex>
@@ -38,6 +38,20 @@
 				<product-card class="product-card"/>		
 			</section>
 		</v-layout>
+		<v-layout wrap mb-5>
+			<v-flex xs12>
+				Botones Header
+			</v-flex>
+			<v-flex xs12>
+				<button-image 
+					:data="imagesButton[0]"
+					/>
+				<button-image
+				:data="imagesButton[1]"
+				:number="1"
+				if-number/>
+			</v-flex>
+		</v-layout>
 	</div>
 </template>
 
@@ -45,13 +59,32 @@
 	const appButton = () => import('@/components/shared/buttons/app-button');
 	const appInput = () => import('@/components/shared/inputs/app-input');
 	const productCard = () => import('@/components/products/product-card');
+	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 
+	function data() {
+		return {
+			imagesButton: [
+				{
+					image: '/static/img/heart.svg',
+					name: 'Mis órdenes',
+					height: 20,
+				},
+				{
+					image: '/static/img/car.svg',
+					name: 'Carrito de compras',
+					height: 20,
+				},
+			],
+		};
+	}
 	export default {
 		name: 'components',
+		data,
 		components: {
 			appButton,
 			appInput,
 			productCard,
+			buttonImage,
 		},
 	};
 </script>
