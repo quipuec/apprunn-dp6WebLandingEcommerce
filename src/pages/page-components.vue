@@ -38,6 +38,14 @@
 				<product-card class="product-card"/>		
 			</section>
 		</v-layout>
+		<v-layout wrap>
+			<v-flex xs12>
+				input search
+			</v-flex>
+			<v-flex xs12>
+				<app-search />
+			</v-flex>
+		</v-layout>
 	</div>
 </template>
 
@@ -45,6 +53,7 @@
 	const appButton = () => import('@/components/shared/buttons/app-button');
 	const appInput = () => import('@/components/shared/inputs/app-input');
 	const productCard = () => import('@/components/products/product-card');
+	const appSearch = () => import('@/components/shared/inputs/app-input-search');
 
 	export default {
 		name: 'components',
@@ -52,6 +61,7 @@
 			appButton,
 			appInput,
 			productCard,
+			appSearch,
 		},
 	};
 </script>
