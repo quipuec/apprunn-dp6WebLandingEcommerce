@@ -1,0 +1,115 @@
+<template>
+	<div class="call-menu" @click="toggleMenu">
+		<button 
+			class="call-menu-btn"
+			:class="{open: menuIsVisible}">
+			<span class="call-menu-line"></span>
+			<span class="call-menu-line"></span>
+			<span class="call-menu-line"></span>
+		</button>
+		<span class="call-menu-text mt-2">Categorías</span>
+	</div>
+</template>
+<script>
+function toggleMenu() {
+	this.menuIsVisible = !this.menuIsVisible;
+}
+
+function data() {
+	return {
+		menuIsVisible: false,
+	};
+}
+
+export default {
+	name: 'call-menu',
+	data,
+	methods: {
+		toggleMenu,
+	},
+};
+
+</script>
+<style lang="scss" scoped>
+	.call-menu {
+		align-items: center;
+		display: inline-flex;
+    flex-direction: column;
+	}
+
+	.call-menu-btn {
+		border: 2px solid color(border);
+		border-radius: 50%;
+		height: 34px;
+		position: relative;
+		transition: .5s ease-in-out;
+		width: 36px;
+		
+		@media (max-width: 500px) {
+			border: none;
+		}
+
+		.call-menu-line {
+			background: color(primary);
+			display: block;
+			height: 2px;
+			left: 9px;
+			position: absolute;
+			transition: .5s ease-in-out;
+			width: 14px;
+			
+			&:nth-child(1) {
+				top: 10px;
+				transform-origin: left center;
+			}
+
+			&:nth-child(2) {
+				top: 14px;
+				transform-origin: left center;
+			}
+
+			&:nth-child(3) {
+				top: 18px;
+				transform-origin: left center;
+			}
+
+			@media (max-width: 500px) {
+				width: 18px;
+			}
+		}
+
+		&.open {
+			span:nth-child(1) {
+				left: 11px;
+				top: 9px;
+				transform: rotate(45deg);
+
+				@media (max-width: 500px) {
+					top: 7px;
+				}
+			}
+
+			span:nth-child(2) {
+				opacity: 0;
+				width: 0%;
+			}
+
+			span:nth-child(3) {
+				left: 11px;
+				top: 19px;
+				transform: rotate(-45deg);
+			}
+		}
+	}
+
+	.call-menu-text {
+		color: color(primary);
+		font-family: font(bold);
+		font-size: size(msmall);
+
+		@media (max-width: 500px) {
+			display: none;
+		}
+	}
+</style>
+
