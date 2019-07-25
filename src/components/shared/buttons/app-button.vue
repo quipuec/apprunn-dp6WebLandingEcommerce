@@ -3,7 +3,8 @@
 		<button
 			v-bind="$attrs"
 			class="app-button"
-			:style="`background-color: ${background}; text-align: ${!img ? 'center' : 'left'}`"
+			:class="{'thin': thin}"
+			:style="`background-color: ${background}; text-align: ${!img ? 'center' : 'left'} ; color: ${color}; border: ${border ? `1px solid ${border}` : null}`"
 		>
 			<span class="span-img" :style="`border-color: ${imgBorderColor}`" v-if="img">
 				<img
@@ -30,6 +31,12 @@
 			imgBorderColor: String,
 			imgHeight: [String, Number],
 			imgWidth: [String, Number],
+			color: {
+				type: String,
+				default: 'white',
+			},
+			border: String,
+			thin: Boolean,
 		},
 	};
 </script>
@@ -37,7 +44,6 @@
 <style lang="scss" scoped>
 	.app-button {
 		border-radius: 7px;
-		color: color(white);
 		font-family: font(bold);
 		font-size: size(medium);
 		height: 39.5px;
@@ -59,6 +65,13 @@
 			margin-right: 11px;
 			padding: 3px 14px;
 			vertical-align: middle;
+		}
+
+		&.thin {
+			height: 24px;
+			font-family: font(demi);
+			font-size: size(small);
+			width: 170px;
 		}
 	}
 </style>
