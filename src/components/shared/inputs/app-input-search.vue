@@ -1,7 +1,7 @@
 <template>
   <div class="app-input-search">
 		<img 
-			src="/static/img/search.svg" 
+			:src="image" 
 			alt="Buscar"
 			class="icon-search">
 		<input
@@ -15,6 +15,9 @@
 
 export default {
 	name: 'app-input-search',
+	props: {
+		image: String,
+	},
 };
 </script>
 <style lang="scss" scoped>

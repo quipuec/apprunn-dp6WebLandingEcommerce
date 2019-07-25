@@ -51,7 +51,7 @@
 				input search
 			</v-flex>
 			<v-flex xs12>
-				<app-search />
+				<app-search image="/static/img/search.svg"/>
 			</v-flex>
 		</v-layout>		
 		<v-layout wrap mb-5>
