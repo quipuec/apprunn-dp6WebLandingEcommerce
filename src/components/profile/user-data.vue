@@ -57,15 +57,17 @@
 </template>
 <script>
 
-function editing() {}
+function editing() {
+	this.$router.push({ name: 'edit-user-data' });
+}
 
 function loadAvatar() {}
 
 export default {
 	name: 'user-data',
 	components: {
-		editComponent: () => import('@/components/shared/icons/edit-component'),
 		cameraComponent: () => import('@/components/shared/icons/camera-component'),
+		editComponent: () => import('@/components/shared/icons/edit-component'),
 	},
 	methods: {
 		editing,

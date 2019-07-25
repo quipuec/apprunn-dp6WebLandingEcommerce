@@ -38,7 +38,7 @@ export default {
 		max-width: 1142px;
 		padding-top: 100px;
 
-		@media (max-width: 500px) {
+		@media (max-width: 768px) {
 			height: auto;
 			padding: 0 15px;
 			padding-top: 90px;
@@ -54,8 +54,8 @@ export default {
 		position: relative;
 		text-align: center;
 
-		@media (max-width: 500px) {
-			padding: 100px 30px 14px;
+		@media (max-width: 768px) {
+			padding: 100px 0px 14px;
 		}
 	}
 
@@ -67,9 +67,8 @@ export default {
 		position: absolute;
 		width: 100%;
 
-		@media (max-width: 500px) {
+		@media (max-width: 768px) {
 			bottom: 75%;
-			padding-right: 60px;
 		}
 	}
 
@@ -100,17 +99,24 @@ export default {
 		box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.08);
 		flex: 1 1 70%;
 		height: 100%;
-		padding: 17px 44px;
+		padding: 17px 40px;
+
+		@media (max-width: 768px) {
+			height: auto;
+			padding: 17px 10px;
+		}
 	}
 
 	.user-actions {
 		align-items: center;
 		display: grid;
 		grid-template-columns: 1fr;
+		padding: 0 50px;
 
-		@media (max-width: 500px) {
+		@media (max-width: 768px) {
 			grid-column-gap: 10px;
 			grid-template-columns: repeat(2, 1fr);
+			padding: 0 75px;
 		}
 	}
 
@@ -119,7 +125,6 @@ export default {
 		color: color(background);
 		font-family: font(bold);
 		font-size: size(small);
-		padding: 0;
 	}
 
 	.user-action {
@@ -148,7 +153,7 @@ export default {
 	.user-logout {
 		color: color(border);
 
-		@media (max-width: 500px) {
+		@media (max-width: 768px) {
 			grid-column: 2;
 		}
 	}

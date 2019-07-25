@@ -2,7 +2,11 @@
 	<div>
 		<button
 			v-bind="$attrs"
-			class="app-button"
+			:class="[
+				'app-button',
+				{ 'save-btn': save },
+				{ 'cancel-btn': cancel },
+			]"
 			:style="`background-color: ${background}; text-align: ${!img ? 'center' : 'left'}`"
 		>
 			<span class="span-img" :style="`border-color: ${imgBorderColor}`" v-if="img">
@@ -24,12 +28,14 @@
 		name: 'app-button',
 		inheritAttrs: false,
 		props: {
-			background: String,
 			action: String,
+			background: String,
+			cancel: Boolean,
 			img: String,
 			imgBorderColor: String,
 			imgHeight: [String, Number],
 			imgWidth: [String, Number],
+			save: Boolean,
 		},
 	};
 </script>
@@ -46,7 +52,6 @@
 		width: 100%;
 
 		@media (min-width: 764px) {
-			height: 49px;
 			max-width: 182px;
 		}
 
@@ -60,5 +65,13 @@
 			padding: 3px 14px;
 			vertical-align: middle;
 		}
+	}
+
+	.save-btn {
+		background-color: color(secondary);
+	}
+
+	.cancel-btn {
+		background-color: color(primary);
 	}
 </style>
