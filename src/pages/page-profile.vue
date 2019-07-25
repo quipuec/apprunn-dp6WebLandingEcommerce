@@ -16,7 +16,9 @@
 					<li class="user-action user-logout"><button class="user-action-btn ">Cerrar sesión</button></li>
 				</ul>
 			</div>
-			<div class="profile-info"></div>
+			<div class="profile-info">
+				<router-view></router-view>
+			</div>
 		</section>
 	</layout-admin>
 </template>
@@ -29,6 +31,7 @@ export default {
 	.profile-layout {
 		align-items: center;
 		display: flex;
+		height: 630px;
 		justify-content: flex-start;
 		flex-wrap: wrap;
 		margin: auto;
@@ -36,8 +39,9 @@ export default {
 		padding-top: 100px;
 
 		@media (max-width: 500px) {
+			height: auto;
 			padding: 0 15px;
-			padding-top: 150px;
+			padding-top: 90px;
 		}
 	}
 
@@ -45,24 +49,26 @@ export default {
 		background-color: color(dark);
 		border-radius: 7px;
 		flex: 1 1 30%;
+		height: 100%;
 		padding: 122px 0 0;
 		position: relative;
 		text-align: center;
 
 		@media (max-width: 500px) {
-			padding: 64px 30px 14px;
+			padding: 100px 30px 14px;
 		}
 	}
 
 	.user-avatar-container {
 		align-items: center;
-		bottom: 80%;
+		bottom: 85%;
 		display: flex;
 		justify-content: center;
 		position: absolute;
 		width: 100%;
 
 		@media (max-width: 500px) {
+			bottom: 75%;
 			padding-right: 60px;
 		}
 	}
