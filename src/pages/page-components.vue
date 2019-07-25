@@ -12,7 +12,7 @@
 				></app-input>
 			</v-flex>
 		</v-layout>
-		<v-layout wrap>
+		<v-layout wrap mb-5>
 			<v-flex xs12>
 				Botones
 			</v-flex>
@@ -26,8 +26,16 @@
 				></app-button>
 			</v-flex>
 		</v-layout>
-		<v-layout wrap>
+		<v-layout wrap mb-5>
 			<v-flex xs12>
+				Boton categoría
+			</v-flex>
+			<v-flex xs12>
+				<call-menu text="Categorías"/>
+			</v-flex>
+		</v-layout>
+		<v-layout>
+			<v-flex>
 				Tarjetas de producto
 			</v-flex>
 			<section class="product-section">
@@ -38,20 +46,77 @@
 				<product-card class="product-card"/>		
 			</section>
 		</v-layout>
+		<v-layout wrap>
+			<v-flex xs12>
+				input search
+			</v-flex>
+			<v-flex xs12>
+				<app-search image="/static/img/search.svg"/>
+			</v-flex>
+		</v-layout>		
+		<v-layout wrap mb-5>
+			<v-flex xs12>
+				Botones Header
+			</v-flex>
+			<v-flex xs12>
+				<button-image 
+					:data="imagesButton[0]"
+					/>
+				<button-image
+				:data="imagesButton[1]"
+				:number="1"
+				if-number/>
+			</v-flex>
+		</v-layout>
+		<v-layout>
+			<media-company-data
+				class="border"
+				image="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/customer-service.png"
+				image-width="30"
+				image-height="29"
+				description=" (511) 326-0933 
+				(511) 326-8056"
+			></media-company-data>
+		</v-layout>
 	</div>
 </template>
 
 <script>
 	const appButton = () => import('@/components/shared/buttons/app-button');
 	const appInput = () => import('@/components/shared/inputs/app-input');
+	const callMenu = () => import('@/components/header/call-menu');
 	const productCard = () => import('@/components/products/product-card');
+	const appSearch = () => import('@/components/shared/inputs/app-input-search');
+	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
+	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
 
+	function data() {
+		return {
+			imagesButton: [
+				{
+					image: '/static/img/heart.svg',
+					name: 'Mis órdenes',
+					height: 20,
+				},
+				{
+					image: '/static/img/car.svg',
+					name: 'Carrito de compras',
+					height: 20,
+				},
+			],
+		};
+	}
 	export default {
 		name: 'components',
+		data,
 		components: {
 			appButton,
 			appInput,
+			callMenu,
 			productCard,
+			appSearch,
+			buttonImage,
+			mediaCompanyData,
 		},
 	};
 </script>
@@ -75,5 +140,9 @@
 		grid-template-columns: repeat(auto-fit, minmax(214px, 1fr));
 		margin: auto;
 		max-width: 1070px;
+	}
+
+	.border {
+		background: map-get($colors, primary);
 	}
 </style>
