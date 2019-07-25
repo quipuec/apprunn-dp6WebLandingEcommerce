@@ -110,9 +110,9 @@ export default {
 
 	.user-name,
 	.user-actions {
-		color: color(standarBackground);
+		color: color(background);
 		font-family: font(bold);
-		font-size: font(small);
+		font-size: size(small);
 		padding: 0;
 	}
 
