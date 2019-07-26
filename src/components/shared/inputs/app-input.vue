@@ -27,7 +27,7 @@
 		border-style: solid;
 		border-width: 1px;
 		color: color(border);
-		font-family: font(demi);
+		font-family: font(medium);
 		font-size: size(medium);
 		height: 46.8px;
 		outline: none;
