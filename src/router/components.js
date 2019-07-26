@@ -1,5 +1,5 @@
 const route = {
-	path: '/components',
+	path: 'components',
 	name: 'components',
 	component: () => import('@/pages/page-components'),
 };
