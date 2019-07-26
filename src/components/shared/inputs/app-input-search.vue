@@ -8,6 +8,7 @@
 			v-bind="$attrs"
 			class="app-input"
 			placeholder="¿Qué buscas?"
+			:style="`color: ${color}`"
 		/>
 	</div>
 </template>
@@ -17,6 +18,7 @@ export default {
 	name: 'app-input-search',
 	props: {
 		image: String,
+		color: String,
 	},
 };
 </script>

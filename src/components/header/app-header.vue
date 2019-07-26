@@ -18,7 +18,9 @@
 				<div 
 					class="container-search flex"
 					:class="{'open' : isSearchMobile}">
-					<app-search image="/static/img/search.svg"/>
+					<app-search 
+						image="/static/img/search.svg"
+						color="#4a4a4a"/>
 					<button-image 
 						:data="close" 
 						class="icon-close"
