@@ -56,6 +56,7 @@ export default {
 
 	.user-header {
 		margin-bottom: 20px;
+		margin-left: 40px;
 	}
 
 	.section-title {
@@ -63,6 +64,7 @@ export default {
 		font-family: font(bold);
 		font-size: size(large);
 		margin-bottom: 50px;
+		margin-left: 40px;
 		text-transform: uppercase;
 
 		@media (max-width: 500px) {

@@ -14,6 +14,11 @@ const route = {
 			name: 'edit-user-data',
 			component: () => import('@/components/profile/edit-user-data'),
 		},
+		{
+			path: 'mis-ordenes',
+			name: 'user-ordes',
+			component: () => import('@/components/profile/user-orders'),
+		},
 	],
 };
 
