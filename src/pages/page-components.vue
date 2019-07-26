@@ -86,6 +86,14 @@
 				(511) 326-8056"
 			></media-company-data>
 		</v-layout>
+		<v-layout wrap>
+			<v-flex xs12>
+				item menu categoria
+			</v-flex>
+			<v-flex xs12>
+				<item-menu :data="dataCategory"/>
+			</v-flex>
+		</v-layout>		
 	</div>
 </template>
 
@@ -98,6 +106,7 @@
 	const appSearch = () => import('@/components/shared/inputs/app-input-search');
 	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
+	const itemMenu = () => import('@/components/header/item-menu');
 
 	function data() {
 		return {
@@ -113,6 +122,11 @@
 					height: 20,
 				},
 			],
+			nameCategory: 'Mallas',
+			dataCategory: {
+				urlImage: '/static/img/category-malla.svg',
+				name: 'Malla',
+			},
 		};
 	}
 	export default {
@@ -127,6 +141,7 @@
 			appSearch,
 			buttonImage,
 			mediaCompanyData,
+			itemMenu,
 		},
 	};
 </script>
