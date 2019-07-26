@@ -11,16 +11,27 @@
 							:src="logo.image"
 							:alt="logo.name"
 							:height="logo.height"
+							class="logo-image"
 						/>
 					</router-link>
 				</h1>
-				<div class="container-search">
+				<div 
+					class="container-search flex"
+					:class="{'open' : isSearchMobile}">
 					<app-search image="/static/img/search.svg"/>
-					<button-image :data="close" class="icon-close"/>
+					<button-image 
+						:data="close" 
+						class="icon-close"
+						@click-image="toogleSearch"/>
 				</div>
 			</div>
-			<div class="flex container-button-image">
-				<button-image :data="search" class="icon-mobile"/>
+			<div 
+				class="flex container-button-image"
+				:class="{'opacity' : isSearchMobile}">
+				<button-image 
+					:data="search" 
+					class="icon-mobile"
+					@click-image="toogleSearch"/>
 				<button-image :data="imagesButton[0]" class="icon-desktop"/>
 				<button-image :data="imagesButton[1]" class="icon-medium icon-desktop"/>
 				<button-image
@@ -36,6 +47,10 @@
 const callMenu = () => import('@/components/header/call-menu');
 const appSearch = () => import('@/components/shared/inputs/app-input-search');
 const buttonImage = () => import('@/components/shared/buttons/app-button-image');
+
+function toogleSearch() {
+	this.isSearchMobile = !this.isSearchMobile;
+}
 
 function data() {
 	return {
@@ -66,6 +81,7 @@ function data() {
 			name: 'Buscar',
 			height: 20,
 		},
+		isSearchMobile: false,
 	};
 }
 export default {
@@ -76,6 +92,9 @@ export default {
 		buttonImage,
 	},
 	data,
+	methods: {
+		toogleSearch,
+	},
 	props: {
 		logo: {
 			type: Object,
@@ -88,12 +107,12 @@ export default {
 	.app-header {
 		background: color(white);
 		padding: 25px 6%;
-		position: relative;
 	}
 
 	.app-wrapper {
 		align-items: center;
 		display: flex;
+		position: relative;
 		width: 100%;
 	}
 
@@ -129,6 +148,10 @@ export default {
 
 		@media (max-width: 764px) {
 			justify-content: space-between;
+
+			&.opacity {
+				opacity: 0;
+			}
 		}
 	}
 
@@ -145,7 +168,20 @@ export default {
 	}
 
 	.container-search {
+		align-items: center;
+		background: color(white);
+		transition: .3s ease-in-out;
 		width: 100%;
+		z-index: 1;
+
+		@media (max-width: 764px) {
+			left: 107%;
+			position: absolute;
+
+			&.open {
+				left: 0;
+			}
+		}
 	}
 
 	.icon-close {
@@ -153,13 +189,7 @@ export default {
 
 		@media (max-width: 764px) {
 			display: block;
-		}
-	}
-
-	.container-search {
-		@media (max-width: 764px) {
-			position: absolute;
-			left: 100%;
+			margin-left: 11px;
 		}
 	}
 
@@ -176,6 +206,12 @@ export default {
 
 		@media (max-width: 764px) {
 			display: none;
+		}
+	}
+
+	.logo-image {
+		@media (max-width: 764px) {
+			height: 20px;
 		}
 	}
 </style>

@@ -22,6 +22,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 	.app-input-search {
+		align-items: center;
 		border: solid 2px color(border);
 		border-radius: 8px;
 		display: flex;
