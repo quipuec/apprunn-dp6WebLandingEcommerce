@@ -29,7 +29,7 @@ export default {
 		background-color: color(dark);
 		border-radius: 7px;
 		flex: 1 1 30%;
-		padding: 122px 90px 0;
+		padding: 123px 90px 0;
 
 		@media (max-width: 500px) {
 			padding: 64px 76px 14px;
