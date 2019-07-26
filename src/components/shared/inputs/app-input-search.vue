@@ -25,7 +25,9 @@ export default {
 		border: solid 2px color(border);
 		border-radius: 8px;
 		display: flex;
-		padding: 9px 14px;
+		height: 38px;
+		padding: 5px 14px;
+		width: 100%;
 
 		@media (max-width: 764px) {
 			border: solid 1px color(border);

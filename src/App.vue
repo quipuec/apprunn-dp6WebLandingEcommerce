@@ -1,5 +1,6 @@
 <template>
 	<v-app>
+		<app-header :logo="logo"/>
 		<v-progress-linear
 			class="progress-bar"
 			color="success"
@@ -31,6 +32,8 @@
 </template>
 
 <script>
+const appHeader = () => import('@/components/header/app-header');
+
 function indeterminate() {
 	return this.$store.getters.indeterminate;
 }
@@ -39,11 +42,25 @@ function snackbar() {
 	return this.$store.getters.snackbar;
 }
 
+function data() {
+	return {
+		logo: {
+			image: '/static/img/mrc-logo.png',
+			name: 'MRC',
+			height: 30,
+		},
+	};
+}
+
 export default {
 	name: 'app',
 	computed: {
 		indeterminate,
 		snackbar,
+	},
+	data,
+	components: {
+		appHeader,
 	},
 };
 </script>
