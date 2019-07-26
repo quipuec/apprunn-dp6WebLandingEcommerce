@@ -12,7 +12,7 @@
 				></app-input>
 			</v-flex>
 		</v-layout>
-		<v-layout wrap>
+		<v-layout wrap mb-5>
 			<v-flex xs12>
 				Botones
 			</v-flex>
@@ -26,8 +26,16 @@
 				></app-button>
 			</v-flex>
 		</v-layout>
-		<v-layout wrap>
+		<v-layout wrap mb-5>
 			<v-flex xs12>
+				Boton categoría
+			</v-flex>
+			<v-flex xs12>
+				<call-menu text="Categorías"/>
+			</v-flex>
+		</v-layout>
+		<v-layout>
+			<v-flex>
 				Tarjetas de producto
 			</v-flex>
 			<section class="product-section">
@@ -37,6 +45,36 @@
 				<product-card class="product-card"/>		
 				<product-card class="product-card"/>		
 			</section>
+		</v-layout>
+		<v-layout wrap>
+			<v-flex xs12>
+				Modal login
+			</v-flex>
+			<v-flex xs12>
+				<modal-login />
+			</v-flex>
+		</v-layout>
+		<v-layout wrap>
+			<v-flex xs12>
+				input search
+			</v-flex>
+			<v-flex xs12>
+				<app-search image="/static/img/search.svg"/>
+			</v-flex>
+		</v-layout>		
+		<v-layout wrap mb-5>
+			<v-flex xs12>
+				Botones Header
+			</v-flex>
+			<v-flex xs12>
+				<button-image 
+					:data="imagesButton[0]"
+					/>
+				<button-image
+				:data="imagesButton[1]"
+				:number="1"
+				if-number/>
+			</v-flex>
 		</v-layout>
 		<v-layout>
 			<div>
@@ -53,18 +91,46 @@
 <script>
 	const appButton = () => import('@/components/shared/buttons/app-button');
 	const appInput = () => import('@/components/shared/inputs/app-input');
+	const callMenu = () => import('@/components/header/call-menu');
 	const productCard = () => import('@/components/products/product-card');
 	const containerCompanyData = () => import('@/components/shared/company/container-company-data');
 	const formBulletin = () => import('@/components/shared/form/form-bulletin');
+	const modalLogin = () => import('@/components/header/modal-login');
+	const appSearch = () => import('@/components/shared/inputs/app-input-search');
+	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
+	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
 
+	function data() {
+		return {
+			imagesButton: [
+				{
+					image: '/static/img/heart.svg',
+					name: 'Mis órdenes',
+					height: 20,
+				},
+				{
+					image: '/static/img/car.svg',
+					name: 'Carrito de compras',
+					height: 20,
+				},
+			],
+		};
+	}
 	export default {
 		name: 'components',
+		data,
 		components: {
 			appButton,
 			appInput,
 			containerCompanyData,
 			formBulletin,
 			productCard,
+			callMenu,
+			productCard,
+			modalLogin,
+			appSearch,
+			buttonImage,
+			mediaCompanyData,
 		},
 	};
 </script>
