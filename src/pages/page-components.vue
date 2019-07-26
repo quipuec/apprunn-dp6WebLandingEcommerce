@@ -44,6 +44,9 @@
 				<container-company-data></container-company-data>
 			</div>
 		</v-layout>
+		<v-layout>
+			<form-bulletin></form-bulletin>
+		</v-layout>
 	</div>
 </template>
 
@@ -52,14 +55,16 @@
 	const appInput = () => import('@/components/shared/inputs/app-input');
 	const productCard = () => import('@/components/products/product-card');
 	const containerCompanyData = () => import('@/components/shared/company/container-company-data');
+	const formBulletin = () => import('@/components/shared/form/form-bulletin');
 
 	export default {
 		name: 'components',
 		components: {
 			appButton,
 			appInput,
-			productCard,
 			containerCompanyData,
+			formBulletin,
+			productCard,
 		},
 	};
 </script>
