@@ -35,8 +35,8 @@ export default {
 		border-radius: 7px;
 		box-shadow: inset 0 0 3px 0 rgba(0, 0, 0, 0.18);
 		display: flex;
-		justify-content: center;
 		height: 190px;
+		justify-content: center;
 		width: 246px;
 	}
 
