@@ -22,11 +22,11 @@
 					<span class="user-content">M</span>
 				</p>
 				<p>
-					<span class="label">Departamento:</span>
-					<span class="user-content">Lima</span>
+					<span class="label">Teléfono:</span>
+					<span class="user-content">999-333-222</span>
 				</p>
 				<p>
-					<span class="label">Distrito:</span>
+					<span class="label">Provincia:</span>
 					<span class="user-content">Lima</span>
 				</p>
 				<p>
@@ -48,11 +48,11 @@
 					<span class="user-content">Lima 34</span>
 				</p>
 				<p>
-					<span class="label">Teléfono:</span>
-					<span class="user-content">999-333-222</span>
+					<span class="label">Departamento:</span>
+					<span class="user-content">Lima</span>
 				</p>
 				<p>
-					<span class="label">Provincia:</span>
+					<span class="label">Distrito:</span>
 					<span class="user-content">Lima</span>
 				</p>
 			</div>
@@ -99,7 +99,7 @@ export default {
 	}
 
 	.info-container {
-		align-items: center;
+		align-items: flex-start;
 		font-family: font(medium);
 		display: grid;
 		grid-column-gap: 50px;
