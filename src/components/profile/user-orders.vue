@@ -12,6 +12,7 @@
 					<td class="row-order">{{row.order}}</td>
 					<td class="row-totalOrder">{{row.totalOrder}}</td>
 					<td class="row-orderStatus">{{row.orderStatus}}</td>
+					<td class="row-wayDelivery">{{row.wayDelivery}}</td>
 					<td class="row-wayPayment">{{row.wayPayment}}</td>
 					<td class="row-actions">
 						<details-component class="action-btn"/>
@@ -31,6 +32,7 @@ function data() {
 			{ value: '', title: 'Número de orden', responsive: false },
 			{ value: '', title: 'Total Orden' },
 			{ value: 'orderStatus', title: 'Estado', responsive: true },
+			{ value: 'wayDelivery', title: 'Modo de entrega', responsive: false },
 			{ value: 'wayPayment', title: 'Método de pago', responsive: true },
 			{ value: '', title: 'Acción' },
 		],
@@ -41,6 +43,7 @@ function data() {
 				totalOrder: 320,
 				orderStatus: 'No pagado',
 				wayPayment: 'Pago en tienda',
+				wayDelivery: 'Recojo en tienda',
 			},
 			{
 				date: '23/04/2019',
@@ -48,6 +51,7 @@ function data() {
 				totalOrder: 320,
 				orderStatus: 'No pagado',
 				wayPayment: 'Pago en tienda',
+				wayDelivery: 'Envío a domicilio',
 			},
 		],
 	};
@@ -138,6 +142,13 @@ export default {
 		@media (max-width: 600px) {
 			background-color: color(background);
 			line-height: 45px;
+		}
+	}
+
+	.row-wayDelivery {
+		
+		@media (max-width: 600px) {
+			display: none;
 		}
 	}
 

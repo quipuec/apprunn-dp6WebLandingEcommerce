@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<section class="user-header">
+		<!-- <section class="user-header">
 			<edit-component class="mr-3"/>
 			<camera-component @click="loadAvatar"/>
 		</section>
 		<section>
 			<h3 class="section-title">Mis datos personales</h3>
-		</section>
+		</section> -->
 		<div class="form-container">
 			<form class="user-form">
 				<app-input class="user-name" placeholder="Nombre"/>
@@ -22,12 +22,16 @@
 			</form>
 			<section class="btn-section">
 				<app-button save action="Guardar" class="action-button save"/>
-				<app-button cancel action="Cancelar" class="action-button cancel"/>
+				<app-button cancel action="Cancelar" class="action-button cancel" @click="goBack"/>
 			</section>
 		</div>
 	</div>
 </template>
 <script>
+
+function goBack() {
+	this.$router.back();
+}
 
 function loadAvatar() {}
 
@@ -40,6 +44,7 @@ export default {
 		editComponent: () => import('@/components/shared/icons/edit-component'),
 	},
 	methods: {
+		goBack,
 		loadAvatar,
 	},
 };
