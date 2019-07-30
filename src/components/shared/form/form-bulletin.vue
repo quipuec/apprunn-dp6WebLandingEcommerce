@@ -28,10 +28,10 @@ export default {
 
 <style lang="scss">
 .button-form {
-	border-top-right-radius: 6px;
 	border-bottom-right-radius: 6px;
-	background-color: map-get($colors, dark);
-	color: map-get($colors, white);
+	border-top-right-radius: 6px;
+	background-color: color(dark);
+	color: color(white);
 	font-size: 15px;
 	min-height: 41px;
 	min-width: 148px;
@@ -46,7 +46,7 @@ export default {
 
 .form-bulletin {
 	align-items: center;
-	background-color: map-get($colors, background);
+	background-color: color(background);
 	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.08);
 	display: flex;
 	justify-content: space-around;
@@ -72,7 +72,7 @@ export default {
 }
 
 .input-form {
-	border: 1px solid map-get($colors, dark);
+	border: 1px solid color(dark);
 	border-radius: 6px;
 	left: 8px;
 	min-height: 41px;

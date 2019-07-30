@@ -76,9 +76,11 @@
 				if-number/>
 			</v-flex>
 		</v-layout>
-		<v-layout>
+		<v-layout wrap>
+			<v-flex xs12>
+				Datos de Compañias
+			</v-flex>
 			<div>
-				Datos de Compañia
 				<container-company-data></container-company-data>
 			</div>
 		</v-layout>
@@ -124,7 +126,6 @@
 			appInput,
 			containerCompanyData,
 			formBulletin,
-			productCard,
 			callMenu,
 			productCard,
 			modalLogin,
