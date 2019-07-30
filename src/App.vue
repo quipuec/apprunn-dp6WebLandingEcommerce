@@ -2104,7 +2104,7 @@ input.app-input::-webkit-input-placeholder {
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active below version 2.1.8 */ {
+	opacity: 0;
   transform: translateX(10px);
-  opacity: 0;
 }
 </style>
