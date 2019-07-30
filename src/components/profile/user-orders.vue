@@ -9,8 +9,10 @@
 			>
 				<template slot-scope="{ row }">
 					<td class="row-date">{{row.date}}</td>
-					<td class="row-order">{{row.order}}</td>
-					<td class="row-totalOrder">{{row.totalOrder}}</td>
+					<td class="row-order">
+						<span class="row-order-label">Nro. Orden: </span>{{row.order}}</td>
+					<td class="row-totalOrder">
+						<span class="row-totalOrder-label">Total: </span>{{row.totalOrder}}</td>
 					<td class="row-orderStatus">{{row.orderStatus}}</td>
 					<td class="row-wayDelivery">{{row.wayDelivery}}</td>
 					<td class="row-wayPayment">{{row.wayPayment}}</td>
@@ -89,6 +91,8 @@ export default {
 
 		@media (max-width: 600px) {
 			border: none;
+			font-family: font(bold);
+			font-size: size(small);
 			line-height: 45px;
 		}
 	}
@@ -99,6 +103,7 @@ export default {
 
 		@media (max-width: 600px) {
 			background-color: color(background);
+			font-size: size(small);
 			line-height: 45px;
 		}
 	}
@@ -109,6 +114,8 @@ export default {
 
 		@media (max-width: 600px) {
 			border: none;
+			font-family: font(bold);
+			font-size: size(small);
 			line-height: 45px;
 		}
 	}
@@ -120,6 +127,7 @@ export default {
 
 		@media (max-width: 600px) {
 			background-color: color(background);
+			font-size: size(small);
 			line-height: 45px;
 		}
 	}
@@ -141,6 +149,7 @@ export default {
 
 		@media (max-width: 600px) {
 			background-color: color(background);
+			font-size: size(small);
 			line-height: 45px;
 		}
 	}
@@ -154,5 +163,14 @@ export default {
 
 	.action-btn {
 		margin: 0 10px;
+	}
+
+	.row-totalOrder-label,
+	.row-order-label {
+		display: none;
+
+		@media (max-width: 600px) {
+			display: inline-block,
+		}
 	}
 </style>
