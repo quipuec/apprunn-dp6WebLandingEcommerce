@@ -34,7 +34,8 @@ export default {
 	display: flex;
 	padding: 0 52px;
 
-	@media (max-width: 700px) {
+	@media (max-width: 760px) {
+		min-height: 52px;
 		padding: 0 9px;
 	}
 }
@@ -45,9 +46,15 @@ export default {
 	margin: 0 0 0 9px;
 	max-width: 100px;
 
-	@media (max-width: 700px) {
+	@media (max-width: 760px) {
 		font-size: 8px;
 		max-width: 46px;
+	}
+}
+
+.image-company {
+	@media (max-width: 760px) {
+		height: 17px;
 	}
 }
 </style>
