@@ -105,7 +105,6 @@ export default {
 
 		@media (max-width: 768px) {
 			height: auto;
-			padding: 17px 10px;
 		}
 	}
 
