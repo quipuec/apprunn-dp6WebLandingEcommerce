@@ -18,9 +18,9 @@
 				<app-input class="user-department" placeholder="Departamento"/>
 				<app-input class="user-phone" placeholder="Teléfono"/>
 				<app-input class="user-district" placeholder="Distrito"/>
-				<app-input class="user-email" placeholder="Correo"/>
+				<app-input class="user-province" placeholder="Provincia"/>
 			</form>
-			<section class="btn-section">
+			<section class="btn-section mb-2">
 				<app-button save action="Guardar" class="action-button save"/>
 				<app-button cancel action="Cancelar" class="action-button cancel"/>
 			</section>
@@ -28,16 +28,20 @@
 	</div>
 </template>
 <script>
+import appButton from '@/components/shared/buttons/app-button';
+import appInput from '@/components/shared/inputs/app-input';
+import cameraComponent from '@/components/shared/icons/camera-component';
+import editComponent from '@/components/shared/icons/edit-component';
 
 function loadAvatar() {}
 
 export default {
 	name: 'edit-user-profile',
 	components: {
-		appButton: () => import('@/components/shared/buttons/app-button'),
-		appInput: () => import('@/components/shared/inputs/app-input'),
-		cameraComponent: () => import('@/components/shared/icons/camera-component'),
-		editComponent: () => import('@/components/shared/icons/edit-component'),
+		appButton,
+		appInput,
+		cameraComponent,
+		editComponent,
 	},
 	methods: {
 		loadAvatar,
@@ -79,7 +83,7 @@ export default {
 		margin-bottom: 55px;
 
 		@media (max-width: 768px) {
-			.user-name, .user-lastname, .user-ruc, .user-email {
+			.user-name, .user-lastname, .user-ruc, .user-province {
 				grid-column: 1/3;
 			}
 
@@ -103,7 +107,7 @@ export default {
 				grid-row: 6;
 			}
 
-			.user-email {
+			.user-province {
 				grid-row: 7;
 			}
 		}

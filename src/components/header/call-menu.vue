@@ -48,7 +48,7 @@ export default {
 		transition: .5s ease-in-out;
 		width: 36px;
 		
-		@media (max-width: 500px) {
+		@media (max-width: 764px) {
 			border: none;
 		}
 
@@ -76,7 +76,7 @@ export default {
 				transform-origin: left center;
 			}
 
-			@media (max-width: 500px) {
+			@media (max-width: 764px) {
 				width: 18px;
 			}
 		}
@@ -87,7 +87,7 @@ export default {
 				top: 9px;
 				transform: rotate(45deg);
 
-				@media (max-width: 500px) {
+				@media (max-width: 764px) {
 					top: 7px;
 				}
 			}
@@ -109,8 +109,9 @@ export default {
 		color: color(primary);
 		font-family: font(bold);
 		font-size: size(msmall);
+		margin-bottom: 0px;
 
-		@media (max-width: 500px) {
+		@media (max-width: 764px) {
 			display: none;
 		}
 	}

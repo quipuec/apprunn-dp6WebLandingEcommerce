@@ -125,7 +125,8 @@ export default {
 	.user-actions {
 		color: color(background);
 		font-family: font(bold);
-		font-size: size(small);
+		font-size: size(medium);
+		padding: 0;
 	}
 
 	.user-action {

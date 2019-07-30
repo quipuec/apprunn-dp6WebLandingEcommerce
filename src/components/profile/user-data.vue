@@ -29,6 +29,10 @@
 					<span class="label">Distrito:</span>
 					<span class="user-content">Lima</span>
 				</p>
+				<p>
+					<span class="label">Correo:</span>
+					<span class="user-content">x@mail.com</span>
+				</p>
 			</div>
 			<div class="col">
 				<p>
@@ -48,14 +52,16 @@
 					<span class="user-content">999-333-222</span>
 				</p>
 				<p>
-					<span class="label">Correo:</span>
-					<span class="user-content">x@mail.com</span>
+					<span class="label">Provincia:</span>
+					<span class="user-content">Lima</span>
 				</p>
 			</div>
 		</section>
 	</div>
 </template>
 <script>
+import cameraComponent from '@/components/shared/icons/camera-component';
+import editComponent from '@/components/shared/icons/edit-component';
 
 function editing() {
 	this.$router.push({ name: 'edit-user-data' });
@@ -66,8 +72,8 @@ function loadAvatar() {}
 export default {
 	name: 'user-data',
 	components: {
-		cameraComponent: () => import('@/components/shared/icons/camera-component'),
-		editComponent: () => import('@/components/shared/icons/edit-component'),
+		cameraComponent,
+		editComponent,
 	},
 	methods: {
 		editing,
