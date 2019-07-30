@@ -18,7 +18,7 @@
 					v-for="(item, index) in selectCategory.list" 
 					:key="index"
 					class="list-item">
-					<span class="list-item-name" :class="{'bold': isBold}">{{item.name}}</span>
+					<span class="list-item-name bold">{{item.name}}</span>
 					<div v-if="item.list">
 						<span 
 							v-for="(itemList, indexItem) in item.list" 
@@ -201,7 +201,7 @@ export default {
 
 		.list-item {
 			border-right: 1px solid color(dark);
-			padding: 10px 20%;
+			padding: 10px 10%;
 		}
 
 		.list-item-name {
