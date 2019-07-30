@@ -86,6 +86,9 @@
 				(511) 326-8056"
 			></media-company-data>
 		</v-layout>
+		<v-layout wrap mb-3 mt-5>
+			<section-links></section-links>
+		</v-layout>
 	</div>
 </template>
 
@@ -98,6 +101,7 @@
 	const appSearch = () => import('@/components/shared/inputs/app-input-search');
 	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
+	const sectionLinks = () => import('@/components/footer/section-links.vue');
 
 	function data() {
 		return {
@@ -127,6 +131,7 @@
 			appSearch,
 			buttonImage,
 			mediaCompanyData,
+			sectionLinks,
 		},
 	};
 </script>
