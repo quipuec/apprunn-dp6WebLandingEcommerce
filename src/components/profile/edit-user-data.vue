@@ -13,12 +13,12 @@
 				<app-input class="user-dni" placeholder="DNI"/>
 				<app-input class="user-lastname" placeholder="Apellido"/>
 				<app-input class="user-ruc" placeholder="RUC"/>
-				<app-input class="user-gender" placeholder="Género"/>
+				<app-select class="user-gender" placeholder="Género"/>
 				<app-input class="user-postcode" placeholder="Código postal"/>
-				<app-input class="user-department" placeholder="Departamento"/>
+				<app-select class="user-department" placeholder="Departamento"/>
 				<app-input class="user-phone" placeholder="Teléfono"/>
-				<app-input class="user-district" placeholder="Distrito"/>
-				<app-input class="user-province" placeholder="Provincia"/>
+				<app-select class="user-district" placeholder="Distrito"/>
+				<app-select class="user-province" placeholder="Provincia"/>
 			</form>
 			<section class="btn-section mb-2">
 				<app-button save action="Guardar" class="action-button save"/>
@@ -30,6 +30,7 @@
 <script>
 import appButton from '@/components/shared/buttons/app-button';
 import appInput from '@/components/shared/inputs/app-input';
+import appSelect from '@/components/shared/inputs/app-select';
 import cameraComponent from '@/components/shared/icons/camera-component';
 import editComponent from '@/components/shared/icons/edit-component';
 
@@ -40,6 +41,7 @@ export default {
 	components: {
 		appButton,
 		appInput,
+		appSelect,
 		cameraComponent,
 		editComponent,
 	},

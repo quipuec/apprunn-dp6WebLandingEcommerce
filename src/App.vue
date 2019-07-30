@@ -2082,4 +2082,28 @@ input.app-input::-webkit-input-placeholder {
 		padding: 0.2rem !important;
 	}
 }
+
+.ecommerce-select {
+	background-color: color(background);
+	font-family: font(medium);
+	height: 46.8px;
+
+	.v-input__control {
+
+		.v-input__slot {
+			border: 1px solid color(border) !important;
+			border-radius: 5px;
+			height: -webkit-fill-available;
+			min-height: inherit;
+
+			.v-select__selections {
+				padding-top: 0;
+			}
+
+			.v-input__append-inner {
+				margin-top: 10px;
+			}
+		}
+	}
+}
 </style>
