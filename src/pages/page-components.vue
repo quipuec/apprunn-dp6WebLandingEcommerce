@@ -91,7 +91,9 @@
 				item menu categoria
 			</v-flex>
 			<v-flex xs12>
-				<item-menu :data="dataCategory"/>
+				<item-menu 
+				:data="dataCategory" 
+				color-select="#ed0000"/>
 			</v-flex>
 		</v-layout>		
 	</div>
@@ -126,6 +128,7 @@
 			dataCategory: {
 				urlImage: '/static/img/category-malla.svg',
 				name: 'Malla',
+				select: false,
 			},
 		};
 	}
