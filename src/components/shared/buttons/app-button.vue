@@ -2,12 +2,18 @@
 	<div>
 		<button
 			v-bind="$attrs"
+<<<<<<< HEAD
 			:class="[
 				'app-button',
 				{ 'save-btn': save },
 				{ 'cancel-btn': cancel },
 			]"
 			:style="`background-color: ${background}; text-align: ${!img ? 'center' : 'left'}`"
+=======
+			class="app-button"
+			:class="{'thin': thin}"
+			:style="`background-color: ${background}; text-align: ${!img ? 'center' : 'left'} ; color: ${color}; border: ${border ? `1px solid ${border}` : null}`"
+>>>>>>> 5a00ac2e7f1b4074d1585050aaf6e42283a4fc3b
 		>
 			<span class="span-img" :style="`border-color: ${imgBorderColor}`" v-if="img">
 				<img
@@ -36,6 +42,12 @@
 			imgHeight: [String, Number],
 			imgWidth: [String, Number],
 			save: Boolean,
+			color: {
+				type: String,
+				default: 'white',
+			},
+			border: String,
+			thin: Boolean,
 		},
 	};
 </script>
@@ -43,7 +55,6 @@
 <style lang="scss" scoped>
 	.app-button {
 		border-radius: 7px;
-		color: color(white);
 		font-family: font(bold);
 		font-size: size(medium);
 		height: 39.5px;
@@ -64,6 +75,13 @@
 			margin-right: 11px;
 			padding: 3px 14px;
 			vertical-align: middle;
+		}
+
+		&.thin {
+			height: 24px;
+			font-family: font(demi);
+			font-size: size(small);
+			width: 170px;
 		}
 	}
 

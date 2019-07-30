@@ -8,6 +8,7 @@
 			v-bind="$attrs"
 			class="app-input"
 			placeholder="¿Qué buscas?"
+			:style="`color: ${color}`"
 		/>
 	</div>
 </template>
@@ -17,15 +18,19 @@ export default {
 	name: 'app-input-search',
 	props: {
 		image: String,
+		color: String,
 	},
 };
 </script>
 <style lang="scss" scoped>
 	.app-input-search {
+		align-items: center;
 		border: solid 2px color(border);
 		border-radius: 8px;
 		display: flex;
-		padding: 9px 14px;
+		height: 38px;
+		padding: 5px 14px;
+		width: 100%;
 
 		@media (max-width: 764px) {
 			border: solid 1px color(border);
