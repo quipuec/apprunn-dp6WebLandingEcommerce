@@ -2,7 +2,10 @@
 	<v-app>
 		<app-header :logo="logo" @change-menu="changeMenu"/>
 		<transition name="slide-fade">
-			<app-menu-category v-show="showMenu"/>
+			<app-menu-category 
+				v-show="showMenu" 
+				:img-user="user"
+				:color-base="colorBase"/>
   	</transition>
 		<v-progress-linear
 			class="progress-bar"
@@ -58,6 +61,12 @@ function data() {
 			height: 30,
 		},
 		showMenu: false,
+		user: {
+			urlImage: '/static/img/user.svg',
+			name: 'Login',
+			height: 25,
+		},
+		colorBase: process.env.COLOR_BASE,
 	};
 }
 
@@ -2097,13 +2106,12 @@ input.app-input::-webkit-input-placeholder {
 }
 
 .slide-fade-enter-active {
-  transition: all .3s ease;
+  transition: all .8s ease;
 }
 .slide-fade-leave-active {
   transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
-.slide-fade-enter, .slide-fade-leave-to
-/* .slide-fade-leave-active below version 2.1.8 */ {
+.slide-fade-enter, .slide-fade-leave-to {
 	opacity: 0;
   transform: translateX(10px);
 }

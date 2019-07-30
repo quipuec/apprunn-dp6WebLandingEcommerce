@@ -1,5 +1,18 @@
 <template>
 	<div class="app-category">
+		<div class="app-category-user">
+			<div class="container-user" :style="`border-color: ${colorBase}`">
+				<img :src="imgUser.urlImage" :alt="imgUser.name" :height="imgUser.height">
+			</div>
+			<div class="container-link-user">
+				<router-link 
+					to="/"
+					:style="`color: ${colorBase}`">Iniciar Sesión</router-link>
+				<router-link 
+					to="/"
+					:style="`color: ${colorBase}`">Crear cuenta</router-link>
+			</div>
+		</div>
 		<div class="menu-app-category">
 			<div class="menu-list-name-category">
 				<div 
@@ -13,7 +26,7 @@
 						@click-item="clickCategory"/>
 				</div>
 			</div>
-			<div class="menu-list-item" :class="isMoreTwo ? 'isMultiple' : 'isTwo'">
+			<div class="menu-list-item desktop" :class="isMoreTwo ? 'isMultiple' : 'isTwo'">
 				<div 
 					v-for="(item, index) in selectCategory.list" 
 					:key="index"
@@ -163,6 +176,13 @@ export default {
 		isBold,
 		isMoreTwo,
 	},
+	props: {
+		imgUser: {
+			type: Object,
+			default: () => {},
+		},
+		colorBase: String,
+	},
 };
 </script>
 <style lang="scss" scoped>
@@ -172,10 +192,15 @@ export default {
 		box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.07);
 		max-height: 502px;
 		min-height: 226px;
-	}
 
-	.menu-app-category {
-		display: flex;
+		@media (max-width: 764px) {
+			height: 100vh;
+			max-height: none;
+			min-height: none;
+			padding: 22px 8%;
+			position: absolute;
+			width: 85%;
+		}
 	}
 
 	.menu-list-name-category {
@@ -184,7 +209,12 @@ export default {
 
 	.menu-app-category {
 		align-items: center;
+		display: flex;
 		padding: 33px 10%;
+
+		@media (max-width: 764px) {
+			padding: 0px;
+		}
 	}
 
 	.name-category {
@@ -240,6 +270,30 @@ export default {
 				}
 			}
 		}
+	}
+
+	.desktop {
+		display: grid;
+
+		@media (max-width: 764px) {
+			display: none;
+		}
+	}
+
+	.container-user {
+		align-items: center;
+		border: 1px solid;
+		border-radius: 50%;
+		display: flex;
+		justify-content: center;
+		height: 53px;
+		margin: 0 auto;
+		width: 53px;
+	}
+
+	.container-link-user {
+		display: flex;
+		justify-content: space-between;
 	}
 </style>
 
