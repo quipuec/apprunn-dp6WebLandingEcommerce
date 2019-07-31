@@ -20,7 +20,7 @@
 			</div>
 			<div class="order-payment">
 				<div class="order-payment-wrapper">
-					<div>
+					<div class="my-2">
 						<span class="label">Direccion de envio: </span><span class="order-info-data">Calle independencia 120 - Piso 16 - Miraflores</span>
 					</div>
 					<app-button
@@ -28,9 +28,10 @@
 						action="Añadir datos del deposito"
 						:background="backgroundColor"
 						:img="'/static/icons/hand.svg'"
+						@click="addPaymentInfo"
 					/>
 				</div>
-				<load-payment/>
+				<load-payment v-if="flagPayment"/>
 			</div>
 		</section>
 		<section class="table">
@@ -71,6 +72,10 @@ function backgroundColor() {
 	return `${process.env.COLOR_BASE}`;
 }
 
+function addPaymentInfo() {
+	this.flagPayment = !this.flagPayment;
+}
+
 function data() {
 	return {
 		columns: [
@@ -79,6 +84,7 @@ function data() {
 			{ value: 'quantity', title: 'Cantidad', responsive: true },
 			{ value: 'sub', title: 'Precio Subtotal', responsive: true },
 		],
+		flagPayment: false,
 		rows: [
 			{
 				product: {
@@ -117,6 +123,7 @@ export default {
 	},
 	data,
 	methods: {
+		addPaymentInfo,
 		goTo,
 	},
 };
@@ -207,8 +214,9 @@ export default {
 		align-items: center;
 		border-bottom: 1px solid color(border);
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-between;
-		margin: 0 40px;
+		margin: 10px 40px 0;
 		padding: 10px 0;
 	}
 
@@ -238,6 +246,7 @@ export default {
 		color: color(primary);
 		font-family: font(bold);
 		font-size: size(large);
+		margin-bottom: 0;
 		text-transform: uppercase;
 	}
 
@@ -248,6 +257,7 @@ export default {
 	.order-payment-wrapper {
 		align-items: center;
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-between;
 	}
 </style>

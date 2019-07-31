@@ -54,13 +54,16 @@ export default {
 <style lang="scss" scoped>
 	.profile-layout {
 		align-items: center;
-		display: flex;
-		flex-wrap: wrap;
-		height: 630px;
-		justify-content: flex-start;
+		display: grid;
+		grid-template-columns: 342px 1fr;
+		min-height: 630px;
 		margin: auto;
 		max-width: 1142px;
 		padding-top: 100px;
+
+		@media (max-width: 900px) {
+			grid-template-columns: 1fr;
+		}
 
 		@media (max-width: 768px) {
 			height: auto;

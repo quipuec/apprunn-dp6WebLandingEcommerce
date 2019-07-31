@@ -82,6 +82,10 @@ export default {
 		bottom: 100%;
 		position: absolute;
 		width: 100%;
+
+		@media (max-width: 900px) {
+			bottom: 90%;
+		}
 	}
 
 	.table-container {
