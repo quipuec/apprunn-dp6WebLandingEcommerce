@@ -11,6 +11,8 @@
 	</div>
 </template>
 <script>
+import cameraComponent from '@/components/shared/icons/camera-component';
+import editComponent from '@/components/shared/icons/edit-component';
 
 function editing() {
 	this.$router.push({ name: 'edit-user-data' });
@@ -31,8 +33,8 @@ function data() {
 export default {
 	name: 'user-data',
 	components: {
-		cameraComponent: () => import('@/components/shared/icons/camera-component'),
-		editComponent: () => import('@/components/shared/icons/edit-component'),
+		cameraComponent,
+		editComponent,
 	},
 	data,
 	methods: {
@@ -62,6 +64,27 @@ export default {
 		@media (max-width: 500px) {
 			margin-bottom: 20px;
 		}
+	}
+
+	.info-container {
+		align-items: flex-start;
+		display: grid;
+		font-family: font(medium);
+		grid-column-gap: 50px;
+		grid-template-columns: 1fr 1fr;
+		margin: 0 auto;
+		width: 280px;
+	}
+
+	.label {
+		color: color(base);
+		display: block;
+		font-size: size(small);
+	}
+
+	.user-content {
+		color: color(dark);
+		font-size: size(medium);
 	}
 </style>
 
