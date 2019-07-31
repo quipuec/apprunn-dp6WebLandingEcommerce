@@ -3,7 +3,7 @@
 		<div>
 			<span class="label-modal">¿Tienes una cuenta?</span>
 			<app-button 
-				background="#f01d1d"
+				:background="colorBase"
 				action="Iniciar Sesión"
 				thin
 				class="mb-3"
@@ -12,8 +12,8 @@
 			<app-button 
 				background="white"
 				action="Crear cuenta"
-				color="#4a4a4a"
-				border="#e6e6e6"
+				:color="colorBorder"
+				:border="colorBorder"
 				thin/>
 		</div>
 	</div>
@@ -21,8 +21,16 @@
 <script>
 import appButton from '@/components/shared/buttons/app-button';
 
+function data() {
+	return {
+		colorBase: process.env.COLOR_BASE,
+		colorBorder: process.env.COLOR_BORDER,
+	};
+}
+
 export default {
 	name: 'modal-login',
+	data,
 	components: {
 		appButton,
 	},
