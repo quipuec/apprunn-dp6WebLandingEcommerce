@@ -2086,7 +2086,7 @@ nav.v-toolbar {
 
 input.app-input::-webkit-input-placeholder {
 	color: color(border);
-	font-family: font(demi);
+	font-family: font(medium);
 	font-size: size(medium);
 }
 
