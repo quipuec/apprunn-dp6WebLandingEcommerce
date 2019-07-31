@@ -27,7 +27,15 @@
 							@click="goTo('user-orders')"
 						>Mis Órdenes</button>
 					</li>
-					<li class="user-action"><button class="user-action-btn ">Mis Favoritos</button></li>
+					<li class="user-action">
+						<button
+							:class="[
+								'user-action-btn',
+								{ 'active': $route.name === 'favorites'},
+							]"
+							@click="goTo('favorites')"
+						>Mis Favoritos</button>
+					</li>
 					<li class="user-action"><button class="user-action-btn ">Direcciones</button></li>
 					<li class="user-action user-logout"><button class="user-action-btn ">Cerrar sesión</button></li>
 				</ul>

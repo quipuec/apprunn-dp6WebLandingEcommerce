@@ -32,6 +32,11 @@ const route = {
 			name: 'order-detail',
 			component: () => import('@/components/profile/user-order-details'),
 		},
+		{
+			path: 'mis-favoritos',
+			name: 'favorites',
+			component: () => import('@/components/profile/favorites'),
+		},
 	],
 };
 
