@@ -1,7 +1,6 @@
 <template>
-<div class="content-section-links">
 	<div class="section-links">
-		<div v-for="(item, index) in sections" :key="index">
+		<div v-for="(item, index) in sections" :key="index" class="mb-2">
 			<p class="title-section-links">{{item.title}}</p>
 			<ul v-for="(link, index) in item.links" :key="index">
 				<li>
@@ -12,7 +11,6 @@
 			</ul>
 		</div>
 	</div>
-</div>
 </template>
 
 <script>
@@ -133,30 +131,43 @@ export default {
 ul, ol {
 	list-style: none;
 	padding-left: 0;
+
+	@media (max-width: 925px) {
+		text-align: center;
+	}
 }
 
 .title-section-links {
 	color: color(dark);
 	font-family: font(heavy);
 	font-size: size(xlarge);
+
+	@media (max-width: 925px) {
+		font-size: size(minmedium);
+		text-align: center;
+	}
 }
 
 .section-link {
 	color: color(dark);
-	font-family: font(book);
-	font-size: size(small);
+	font-family: font(regular);
+	font-size: size(minmedium);
 	text-decoration: none;
 }
 
 .section-links {
-	display: grid;
-  grid-column-gap: 93px;
-	grid-template-columns: auto auto auto auto;
+	display: flex;
+	justify-content: space-between;
+	padding: 0 38px;
+
+	@media (max-width: 925px) {
+		align-items: center;
+		flex-direction: column;
+		padding: 0 5px;
+	}
 }
 
-.content-section-links {
-	left: 50%;
-	position: relative;
-	transform: translateX(-50%);
+.mb-2 {
+	margin-bottom: 24px !important;
 }
 </style>

@@ -85,8 +85,8 @@
 		<v-layout>
 			<form-bulletin></form-bulletin>
 		</v-layout>
-		<v-layout mb-3 mt-5>
-			<section-links></section-links>
+		<v-layout mt-3>
+			<app-footer></app-footer>
 		</v-layout>
 		<v-layout wrap>
 			<v-flex xs12>
@@ -112,7 +112,7 @@
 	const appSearch = () => import('@/components/shared/inputs/app-input-search');
 	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
-	const sectionLinks = () => import('@/components/footer/section-links.vue');
+	const appFooter = () => import('@/components/footer/app-footer');
 	const itemMenu = () => import('@/components/header/item-menu');
 
 	function data() {
@@ -141,6 +141,7 @@
 		name: 'components',
 		data,
 		components: {
+			appFooter,
 			appButton,
 			appInput,
 			containerCompanyData,
@@ -151,7 +152,6 @@
 			appSearch,
 			buttonImage,
 			mediaCompanyData,
-			sectionLinks,
 			itemMenu,
 		},
 	};
