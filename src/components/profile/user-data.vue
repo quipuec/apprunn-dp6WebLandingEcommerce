@@ -84,6 +84,7 @@ export default {
 <style lang="scss" scoped>
 	.user-header {
 		margin-bottom: 20px;
+		margin-left: 40px;
 	}
 
 	.section-title {
@@ -91,6 +92,7 @@ export default {
 		font-family: font(bold);
 		font-size: size(large);
 		margin-bottom: 50px;
+		margin-left: 40px;
 		text-transform: uppercase;
 
 		@media (max-width: 500px) {
@@ -100,8 +102,8 @@ export default {
 
 	.info-container {
 		align-items: flex-start;
-		font-family: font(medium);
 		display: grid;
+		font-family: font(medium);
 		grid-column-gap: 50px;
 		grid-template-columns: 1fr 1fr;
 		margin: 0 auto;

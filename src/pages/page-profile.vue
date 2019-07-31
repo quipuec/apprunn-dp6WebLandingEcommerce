@@ -84,8 +84,8 @@ export default {
 
 	.user-avatar {
 		background-image: url('/static/img/user-avatar.jpg');
-		background-repeat: no-repeat;
 		background-position: center;
+		background-repeat: no-repeat;
 		background-size: contain;
 		border-radius: 50%;
 		height: 128px;
@@ -98,7 +98,8 @@ export default {
 		box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.08);
 		flex: 1 1 70%;
 		height: 100%;
-		padding: 17px 40px;
+		padding: 17px 0px;
+		position: relative;
 
 		@media (max-width: 768px) {
 			height: auto;
