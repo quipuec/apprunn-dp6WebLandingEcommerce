@@ -28,9 +28,9 @@ export default {
 
 <style lang="scss">
 .button-form {
+	background-color: color(dark);
 	border-bottom-right-radius: 6px;
 	border-top-right-radius: 6px;
-	background-color: color(dark);
 	color: color(white);
 	font-size: 15px;
 	min-height: 41px;
@@ -38,9 +38,9 @@ export default {
 }
 
 .text-subscription {
-	color: map-get($colors, dark);
-	font-family: map-get($fonts, demi);
-	font-size: map-get($sizes, medium);
+	color: color(dark);
+	font-family: font(demi);
+	font-size:  size(medium);
 	margin-bottom: 45px;
 }
 

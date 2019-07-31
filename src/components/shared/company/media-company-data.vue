@@ -32,29 +32,29 @@ export default {
 .container-media-company {
 	align-items: center;
 	display: flex;
-	padding: 0 52px;
+	padding: 0 45px;
 
-	@media (max-width: 760px) {
-		min-height: 52px;
+	@media (max-width: 715px) {
 		padding: 0 9px;
 	}
 }
 
 .text-company-data {
 	color: color(white);
-	font-size: 13px;
+	font-size: size(minmedium);
 	margin: 0 0 0 9px;
-	max-width: 100px;
+	max-width: 110px;
 
-	@media (max-width: 760px) {
+	@media (max-width: 715px) {
 		font-size: 8px;
-		max-width: 46px;
+		margin-left: 6px;
+		width: 68px;
 	}
 }
 
 .image-company {
-	@media (max-width: 760px) {
-		height: 17px;
+	@media (max-width: 715px) {
+		height: 19px;
 	}
 }
 </style>

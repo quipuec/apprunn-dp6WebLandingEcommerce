@@ -1,5 +1,5 @@
 <template>
-  <div class="container-media-company border">
+  <div class="container-company-data padding-container">
 		<media-company-data
 			image="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/customer-service.png"
 			image-height="30"
@@ -37,14 +37,23 @@ export default {
 
 
 <style lang="scss" scoped>
-	.border {
+	.padding-container {
 		background: color(primary);
 		border-radius: 5px;
-		padding: 10px 0;
+		padding: 9px 0;
+
+		@media (max-width: 715px) {
+			padding: 5px 0;
+		}
 	}
 
-	.container-media-company {
+	.container-company-data {
 		display: flex;
-		min-height: 66px;
+		height: 86px;
+
+		@media screen and (max-width: 715px) {
+			height: 52px;
+			width: 326px;
+		}
 	}
 </style>

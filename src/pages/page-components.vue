@@ -80,9 +80,7 @@
 			<v-flex xs12>
 				Datos de Compañias
 			</v-flex>
-			<div>
 				<container-company-data></container-company-data>
-			</div>
 		</v-layout>
 		<v-layout>
 			<form-bulletin></form-bulletin>
