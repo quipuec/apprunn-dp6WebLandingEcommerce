@@ -54,8 +54,8 @@ export default {
 <style lang="scss" scoped>
 	.info-container {
 		align-items: center;
-		font-family: font(medium);
 		display: grid;
+		font-family: font(medium);
 		grid-column-gap: 50px;
 		grid-template-columns: 1fr 1fr;
 		margin: 0 auto;

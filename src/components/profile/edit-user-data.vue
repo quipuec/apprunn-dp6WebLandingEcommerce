@@ -1,12 +1,5 @@
 <template>
 	<div>
-		<!-- <section class="user-header">
-			<edit-component class="mr-3"/>
-			<camera-component @click="loadAvatar"/>
-		</section>
-		<section>
-			<h3 class="section-title">Mis datos personales</h3>
-		</section> -->
 		<div class="form-container">
 			<form class="user-form">
 				<app-input class="user-name" placeholder="Nombre"/>
