@@ -1,9 +1,9 @@
 <template>
-		<div class="box-filter"
+		<button class="box-filter"
 		:style="`border-right: ${borderRight ? `1px solid ${borderRight}` : null}`">
 			<img :src="image" alt="">
 			<p class="title-filter">{{title}}</p>
-		</div>
+		</button>
 </template>
 
 <script>
