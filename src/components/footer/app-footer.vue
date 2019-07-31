@@ -20,7 +20,7 @@ export default {
 
 <style lang="scss" scoped>
 .company-footer {
-	color: map-get($colors, base);
+	color: color(base);
 	font-family: font(regular);
 	font-size: size(small);
 	margin-bottom: 0;
@@ -33,7 +33,7 @@ export default {
 }
 
 .content-company-footer {
-	border-top: 1px solid map-get($colors, base);
+	border-top: 1px solid color(base);
 	margin-top: 17px;
 	padding-bottom: 17px;
 }
