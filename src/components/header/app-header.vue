@@ -2,7 +2,7 @@
   <header class="app-header">
 		<div class="app-wrapper">
 			<div class="flex container-call-menu">
-				<call-menu text="Categorías" @change-menu="changeMenu"/>
+				<call-menu text="Categorías" @change-menu="changeMenu" :menu="menu"/>
 			</div>
 			<div class="flex container-header-logo">
 				<h1 class="app-header-logo">
@@ -106,6 +106,10 @@ export default {
 		logo: {
 			type: Object,
 			default: () => {},
+		},
+		menu: {
+			type: Boolean,
+			default: false,
 		},
 	},
 };
