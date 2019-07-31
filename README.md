@@ -44,6 +44,7 @@ COLOR_BASE=#F42B17
 COLOR_LINK=#006EDB
 COLOR_BORDER=#ACAAAA
 COLOR_HIGHLIGHT=#F8E71C
+COLOR_SECONDARY=#004e9c
 ```
 
 Now you can start the server, if you have any problems please ask @azulchic. She will not answer you, but worth the try.
