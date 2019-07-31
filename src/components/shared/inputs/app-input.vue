@@ -5,6 +5,7 @@
 			class="app-input"
 			:style="`border-color: ${borderColor}`"
 			:placeholder="placeholder"
+			@input="$emit('input', $event)"
 		/>
 	</div>
 </template>
@@ -14,7 +15,10 @@
 		name: 'app-input',
 		inheritAttrs: false,
 		props: {
-			borderColor: String,
+			borderColor: {
+				default: '#f5f3f3',
+				type: String,
+			},
 			placeholder: String,
 		},
 	};

@@ -25,12 +25,10 @@ APP_NAME=ecommerce
 APP_CODE=ecommerce
 ACL_URL=https://devacl.japisale.com/api
 CODE_PROJECT=japi_proyect
-COLORS=[‘#2c404a’, ‘#2c404a’, ‘#2c404a’]
 COMMERCE_CODE=mistore
-COMPANY_LOGIN_TITLE=Ecommerce
-COMPANY_LOGO=/static/img/icons/Xiaomi_store.svg
+COMPANY_LOGIN_TITLE=MRC
+COMPANY_LOGO=/static/img/mrc-logo.png
 DEFAULT_AVATAR=/static/img/icons/Xiaomi_logo.svg
-GREEN=#5ED52B
 PORT=1208
 PRODUCTS_URL=https://products2.perudatos.com
 ROLE_CODE=ROLEBASIC
@@ -41,6 +39,11 @@ VISA_MERCHAN_ID=650035214
 WAREHOUSE_ID=711
 WAREHOUSE_NAME=Xiaomi de Shell
 WAREHOUSE_ADDRESS=dirección de la tienda
+FORM_BACKGROUND=https://apprunn.s3.amazonaws.com/login-mrc-background.png
+COLOR_BASE=#F42B17
+COLOR_LINK=#006EDB
+COLOR_BORDER=#ACAAAA
+COLOR_HIGHLIGHT=#F8E71C
 ```
 
 Now you can start the server, if you have any problems please ask @azulchic. She will not answer you, but worth the try.

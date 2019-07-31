@@ -3,11 +3,11 @@
 		class="call-menu"
 		@click="toggleMenu">
 		<div class="call-menu-btn" :class="{open: menuIsVisible}">
-			<span class="call-menu-line"></span>
-			<span class="call-menu-line"></span>
-			<span class="call-menu-line"></span>
+			<span :style="`background: ${color}`" class="call-menu-line"></span>
+			<span :style="`background: ${color}`" class="call-menu-line"></span>
+			<span :style="`background: ${color}`" class="call-menu-line"></span>
 		</div>
-		<p class="call-menu-text mt-2">{{text}}</p>
+		<p :style="`color: ${color}`" class="call-menu-text mt-2">{{text}}</p>
 	</button>
 </template>
 <script>
@@ -28,6 +28,7 @@ export default {
 		toggleMenu,
 	},
 	props: {
+		color: String,
 		text: String,
 	},
 };
@@ -37,7 +38,7 @@ export default {
 	.call-menu {
 		align-items: center;
 		display: inline-flex;
-    flex-direction: column;
+		flex-direction: column;
 	}
 
 	.call-menu-btn {
@@ -53,7 +54,6 @@ export default {
 		}
 
 		.call-menu-line {
-			background: color(primary);
 			display: block;
 			height: 2px;
 			left: 9px;
@@ -106,7 +106,6 @@ export default {
 	}
 
 	.call-menu-text {
-		color: color(primary);
 		font-family: font(bold);
 		font-size: size(msmall);
 		margin-bottom: 0px;

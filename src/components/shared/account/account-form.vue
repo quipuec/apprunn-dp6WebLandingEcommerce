@@ -1,0 +1,171 @@
+<template>
+	<v-layout
+		wrap justify-center
+		class="account-form"
+	>
+		<v-flex xs12 text-xs-center>
+			<img :src="headingImage" :height="imgHeight" alt="">
+			<div class="form-title">
+				<span>{{ title }}</span>
+			</div>
+		</v-flex>
+		<v-flex xs12 text-xs-center>
+			<slot name="form"></slot>
+		</v-flex>
+		<v-flex xs12 text-xs-center>
+			<app-button
+				:action="title"
+				:background="color"
+				:disabled="disabled"
+			></app-button>
+		</v-flex>
+		<v-flex xs12 text-xs-center v-if="facebook">
+			<app-button
+				action="Iniciar Sesión"
+				:background="colorFacebook"
+				:disabled="disabled"
+				img="http://www.sclance.com/pngs/facebook-logo-white-png/facebook_logo_white_png_466292.png"
+				:img-border-color="colorFacebook"
+				img-height="25"
+				type="button"
+				@click="$emit('on-click')"
+			></app-button>
+		</v-flex>
+	</v-layout>
+</template>
+
+<script>
+	const appButton = () => import('@/components/shared/buttons/app-button');
+
+	function data() {
+		return {
+			colorFacebook: '#3a559f',
+		};
+	}
+
+	export default {
+		name: 'account-form',
+		components: {
+			appButton,
+		},
+		data,
+		props: {
+			color: String,
+			disabled: {
+				default: false,
+				type: Boolean,
+			},
+			facebook: {
+				default: false,
+				type: Boolean,
+			},
+			headingImage: String,
+			imgHeight: [Number, String],
+			title: String,
+		},
+	};
+</script>
+
+<style lang="scss" scoped>
+	.account-form {
+		background-color: color(white);
+		border-radius: 7px;
+		max-width: 304px;
+		min-height: 67vh;
+		padding-bottom: 54px;
+		padding-top: 62px;
+		width: 90%;
+		z-index: 1;
+
+		@media (min-width: 768px) {
+			min-height: 55vh;
+			max-width: 379px;
+			padding-bottom: 55px;
+			padding-top: 92.8px;
+		}
+	}
+
+	.form-title {
+		color: color(dark);
+		font-family: font(demi);
+		font-size: 13px;
+		font-weight: bold;
+		margin-top: 14.5px;
+		position: relative;
+
+		@media (min-width: 768px) {
+			font-size: size(medium);
+			margin-top: 30.8px;
+		}
+
+		span {
+			&:after,
+			&:before {
+				background-color: color(dark);
+				border-radius: 100%;
+				bottom: 0px;
+				content: '';
+				height: 3.2px;
+				margin: auto;
+				position: absolute;
+				top: 0px;
+				width: 3.2px;
+
+				@media (min-width: 768px) {
+					height: 4px;
+					width: 4px;
+				}
+			}
+
+			&:after {
+				left: calc(35% - 12px);
+
+				@media (min-width: 768px) {
+					left: calc(38% - 12px);
+				}
+			}
+
+			&:before {
+				right: calc(35% - 12px);
+
+				@media (min-width: 768px) {
+					right: calc(38% - 12px);
+				}
+			}
+		}
+
+		&:after,
+		&:before {
+			background-color: color(dark);
+			border-radius: 3px;
+			bottom: 0px;
+			content: '';
+			height: 3.2px;
+			margin: auto;
+			position: absolute;
+			top: 0px;
+			width: 65.9px;
+
+			@media (min-width: 768px) {
+				height: 4px;
+				width: 82px;
+			}
+		}
+
+		&:after {
+			left: 6%;
+
+			@media (min-width: 768px) {
+				left: 12%;
+			}
+		}
+
+		&:before {
+			right: 6%;
+
+			@media (min-width: 768px) {
+				right: 12%;
+			}
+		}
+	}
+</style>

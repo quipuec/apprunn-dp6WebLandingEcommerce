@@ -1,7 +1,7 @@
 <template>
 	<div class="product-container">
 		<section class="product-header">
-			<div class="product-discount">-20%</div>
+			<div :style="`background-color: ${baseColor}`" class="product-discount">-20%</div>
 			<div class="product-favorite">
 				<heart-component @click="productFavo" v-model="product.favorite"/>
 			</div>
@@ -48,6 +48,9 @@ export default {
 	methods: {
 		productFavo,
 	},
+	props: {
+		baseColor: String,
+	},
 };
 </script>
 <style lang="scss" scoped>
@@ -70,7 +73,6 @@ export default {
 	}
 
 	.product-discount {
-		background-color: color(primary);
 		border-radius: 5px;
 		color: color(white);
 		font-family: font(medium);
