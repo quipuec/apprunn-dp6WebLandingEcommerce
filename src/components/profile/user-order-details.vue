@@ -24,6 +24,7 @@
 						<span class="label">Direccion de envio: </span><span class="order-info-data">Calle independencia 120 - Piso 16 - Miraflores</span>
 					</div>
 					<app-button
+						v-if="!flagAddVoucher"
 						class="payment-btn"
 						action="Añadir datos del deposito"
 						:background="backgroundColor"
@@ -31,7 +32,7 @@
 						@click="addPaymentInfo"
 					/>
 				</div>
-				<load-payment v-if="flagPayment"/>
+				<load-payment v-if="flagAddVoucher"/>
 			</div>
 		</section>
 		<section class="table">
@@ -59,6 +60,7 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import appButton from '@/components/shared/buttons/app-button';
 import leftComponent from '@/components/shared/icons/left-component';
 import loadPayment from '@/components/profile/load-payment';
@@ -73,7 +75,7 @@ function backgroundColor() {
 }
 
 function addPaymentInfo() {
-	this.flagPayment = !this.flagPayment;
+	this.$store.commit('UPDATE_FLAG_ADD_COUCHER', true);
 }
 
 function data() {
@@ -84,7 +86,6 @@ function data() {
 			{ value: 'quantity', title: 'Cantidad', responsive: true },
 			{ value: 'sub', title: 'Precio Subtotal', responsive: true },
 		],
-		flagPayment: false,
 		rows: [
 			{
 				product: {
@@ -119,6 +120,9 @@ export default {
 		responsiveTable,
 	},
 	computed: {
+		...mapGetters([
+			'flagAddVoucher',
+		]),
 		backgroundColor,
 	},
 	data,
