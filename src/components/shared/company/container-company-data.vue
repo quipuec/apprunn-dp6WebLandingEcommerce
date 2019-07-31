@@ -50,7 +50,8 @@ export default {
 	.container-company-data {
 		display: flex;
 		height: 86px;
-
+		width: 701px;
+		
 		@media screen and (max-width: 715px) {
 			height: 52px;
 			width: 326px;

@@ -43,7 +43,7 @@ export default {
 	color: color(white);
 	font-size: size(minmedium);
 	margin: 0 0 0 9px;
-	max-width: 110px;
+	width: 110px;
 
 	@media (max-width: 715px) {
 		font-size: 8px;
