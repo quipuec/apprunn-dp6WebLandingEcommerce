@@ -1,37 +1,35 @@
 <template>
-	<v-layout
-		wrap justify-center
-		class="account-form"
-	>
-		<v-flex xs12 text-xs-center>
-			<img :src="headingImage" :height="imgHeight" alt="">
-			<div class="form-title">
-				<span>{{ title }}</span>
-			</div>
-		</v-flex>
-		<v-flex xs12 text-xs-center>
-			<slot name="form"></slot>
-		</v-flex>
-		<v-flex xs12 text-xs-center>
-			<app-button
-				:action="title"
-				:background="color"
-				:disabled="disabled"
-			></app-button>
-		</v-flex>
-		<v-flex xs12 text-xs-center v-if="facebook">
-			<app-button
-				action="Iniciar Sesión"
-				:background="colorFacebook"
-				:disabled="disabled"
-				img="http://www.sclance.com/pngs/facebook-logo-white-png/facebook_logo_white_png_466292.png"
-				:img-border-color="colorFacebook"
-				img-height="25"
-				type="button"
-				@click="$emit('on-click')"
-			></app-button>
-		</v-flex>
-	</v-layout>
+	<form class="account-form" @submit.prevent="$emit('on-submit')">
+		<v-layout wrap justify-center>
+			<v-flex xs12 text-xs-center>
+				<img :src="headingImage" :height="imgHeight" alt="">
+				<div class="form-title">
+					<span>{{ title }}</span>
+				</div>
+			</v-flex>
+			<v-flex xs12 text-xs-center>
+				<slot name="form"></slot>
+			</v-flex>
+			<v-flex xs12 text-xs-center>
+				<app-button
+					:action="title"
+					:background="color"
+					:disabled="disabled"
+					type="submit"
+				></app-button>
+			</v-flex>
+			<v-flex xs12 text-xs-center v-if="facebook">
+				<app-button
+					action="Iniciar Sesión"
+					:background="colorFacebook"
+					:disabled="disabled"
+					img="http://www.sclance.com/pngs/facebook-logo-white-png/facebook_logo_white_png_466292.png"
+					:img-border-color="colorFacebook"
+					img-height="25"
+				></app-button>
+			</v-flex>
+		</v-layout>
+	</form>
 </template>
 
 <script>

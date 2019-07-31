@@ -5,7 +5,7 @@
 				<app-input
 					placeholder="Nombre"
 					:value="model.name"
-					@input="$emit('set-model', { model: 'name', value: $event })"
+					@input="$emit('set-model', { model: 'name', value: $event.target.value })"
 				></app-input>
 				<span class="error-message" v-if="validatons.model.name.$invalid">
 					El nombre es requerido
@@ -15,7 +15,7 @@
 				<app-input
 					placeholder="Apellidos"
 					:value="model.lastname"
-					@input="$emit('set-model', { model: 'lastname', value: $event })"
+					@input="$emit('set-model', { model: 'lastname', value: $event.target.value })"
 				></app-input>
 				<span class="error-message" v-if="validatons.model.lastname.$invalid">
 					El apellido es requerido
@@ -26,7 +26,7 @@
 					type="email"
 					placeholder="E-mail"
 					:value="model.email"
-					@input="$emit('set-model', { model: 'email', value: $event })"
+					@input="$emit('set-model', { model: 'email', value: $event.target.value })"
 				></app-input>
 				<span class="error-message" v-if="!validatons.model.email.required">
 					El email es requerido
@@ -40,7 +40,7 @@
 					type="password"
 					placeholder="Contraseña"
 					:value="model.password"
-					@input="$emit('set-model', { model: 'password', value: $event })"
+					@input="$emit('set-model', { model: 'password', value: $event.target.value })"
 				></app-input>
 				<span class="error-message" v-if="validatons.model.password.$invalid">
 					La contraseña es requerida
@@ -51,7 +51,7 @@
 					type="password"
 					placeholder="Verificar contraseña"
 					:value="passwordVerified"
-					@input="$emit('set-model', { model: 'passwordVerified', value: $event })"
+					@input="$emit('set-model', { model: 'passwordVerified', value: $event.target.value })"
 				></app-input>
 				<span class="error-message" v-if="!validatons.passwordVerified.required">
 					Vuelva a escribir la contraseña

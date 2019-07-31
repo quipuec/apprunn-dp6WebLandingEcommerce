@@ -7,7 +7,7 @@
 			:heading-image="headingImage"
 			:img-height="width > 768 ? '39.3' : '38'"
 			title="Crear Cuenta"
-			@on-click="createAccount"
+			@on-submit="createAccount"
 		>
 			<register-form
 				:check-color="baseColor"
@@ -31,18 +31,45 @@
 		this.setWidth();
 	}
 
+	function cleanForm() {
+		this.flagTyc = false;
+		this.model = {
+			email: null,
+			lastname: null,
+			name: null,
+			password: null,
+		};
+		this.password = null;
+		this.passwordVerified = null;
+	}
+
 	async function createAccount() {
-		debugger;
+		this.loading = true;
 		const body = { ...this.model };
+		const headers = {
+			Authorization: `Bearer ${process.env.TOKEN}`,
+		};
 		body.codeApp = process.env.APP_CODE;
-		body.codeCompany = process.env.ACL_COMPANY_CODE;
 		body.codeProject = process.env.CODE_PROJECT;
-		body.codeRole = process.env.ROLEBASIC;
+		body.codeRole = process.env.ROLE_CODE;
 		try {
-			await this.$httpSales.post('customers-public', body);
+			await this.$httpSales.post('customers-public', body, { headers });
+			this.cleanForm();
 			this.showNotification('La cuenta ha sido creada exitosamente.');
+			const self = this;
+			setTimeout(() => {
+				self.showNotification('Se le ha enviado un correo electrónico para validar su cuenta.');
+			}, 5050);
 		} catch (err) {
-			this.showGenericError();
+			if (err.status === 400) {
+				if (err.data.message === 'CUSTOMER_EXIST_ERROR') {
+					this.showGenericError('El email ya ha sido registrado.');
+				}
+			} else if (err.status === 500) {
+				this.showGenericError();
+			}
+		} finally {
+			this.loading = false;
 		}
 	}
 
@@ -56,12 +83,12 @@
 
 	function setModel({ model, value }) {
 		if (model === 'passwordVerified' || model === 'flagTyc') {
-			this[model] = value.target.value;
+			this[model] = value;
 		} else {
 			if (model === 'password') {
-				this[model] = value.target.value;
+				this[model] = value;
 			}
-			this.model[model] = value.target.value;
+			this.model[model] = value;
 		}
 	}
 
@@ -124,6 +151,7 @@
 		created,
 		data,
 		methods: {
+			cleanForm,
 			createAccount,
 			setModel,
 			setWidth,

@@ -2,10 +2,10 @@
 	<div>
 		<input
 			v-bind="$attrs"
+			v-on="$listeners"
 			class="app-input"
 			:style="`border-color: ${borderColor}`"
 			:placeholder="placeholder"
-			@input="$emit('input', $event)"
 		/>
 	</div>
 </template>
@@ -30,7 +30,7 @@
 		border-radius: 7px;
 		border-style: solid;
 		border-width: 1px;
-		color: color(border);
+		color: color(base);
 		font-family: font(demi);
 		font-size: size(medium);
 		height: 46.8px;

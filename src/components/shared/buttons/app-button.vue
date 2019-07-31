@@ -2,6 +2,7 @@
 	<div>
 		<button
 			v-bind="$attrs"
+			v-on="$listeners"
 			class="app-button"
 			:class="{'thin': thin}"
 			:style="`background-color: ${background}; text-align: ${!img ? 'center' : 'left'} ; color: ${color}; border: ${border ? `1px solid ${border}` : null}`"

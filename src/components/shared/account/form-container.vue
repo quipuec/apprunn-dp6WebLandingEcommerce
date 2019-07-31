@@ -12,7 +12,7 @@
 			:heading-image="headingImage"
 			:img-height="imgHeight"
 			:title="title"
-			@on-click="$emit('on-click')"
+			@on-submit="$emit('on-submit')"
 		>
 			<slot slot="form"></slot>
 		</account-form>
