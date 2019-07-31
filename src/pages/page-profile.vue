@@ -42,7 +42,7 @@ export default {
 		@media (max-width: 768px) {
 			height: auto;
 			padding: 0 15px;
-			padding-top: 90px;
+			padding: 90px 15px 0px;
 		}
 	}
 
