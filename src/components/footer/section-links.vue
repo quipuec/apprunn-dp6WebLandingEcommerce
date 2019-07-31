@@ -161,8 +161,8 @@ ul, ol {
 	padding: 0 38px;
 
 	@media (max-width: 925px) {
-		flex-direction: column;
 		align-items: center;
+		flex-direction: column;
 		padding: 0 5px;
 	}
 }
