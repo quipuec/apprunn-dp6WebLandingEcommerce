@@ -5,7 +5,7 @@
 			<input type="text" placeholder="Ingresa tu correo Electrónico" class="input-form">
 			<button class="button-form">Suscríbete</button>
 		</div>
-		<div>
+		<div class="form-bulletin-description-company">
 			<div class="content-date-company">
 				<img src="/static/img/icons/telephone-1.svg" alt="">
 				<p class="item-date-company">[511] 326-0933 
@@ -33,8 +33,12 @@ export default {
 	border-top-right-radius: 6px;
 	color: color(white);
 	font-size: 15px;
-	min-height: 41px;
-	min-width: 148px;
+	min-height: 42px;
+	width: 148px;
+
+	@media screen and (max-width: 850px) {
+		width: 83px;
+	}
 }
 
 .text-subscription {
@@ -42,6 +46,10 @@ export default {
 	font-family: font(demi);
 	font-size:  size(medium);
 	margin-bottom: 45px;
+
+	@media (max-width: 850px) {
+		text-align: center;
+	}
 }
 
 .form-bulletin {
@@ -53,22 +61,39 @@ export default {
 	min-height: 209px;
 	padding: 40px 0px;
 	width: 100%;
+
+	@media (max-width: 850px) {
+		flex-direction: column;		
+	}
 }
 
 .item-date-company {
 	margin: 0 0 0 20px;
 	max-width: 109px;
+
+	@media (max-width: 850px) {
+		padding-top: 17px;
+	}
 }
 
 .content-date-company {
 	align-items: center;
 	display: flex;
 	margin-top: 11px;
+
+	@media (max-width: 850px) {
+		flex-direction: column;
+	}
 }
 
 .item-date-direction {
 	margin: 0 0 0 20px;
 	max-width: 190px;
+
+	@media (max-width: 850px) {
+		padding-top: 17px;
+		text-align: center;
+	}
 }
 
 .input-form {
@@ -76,8 +101,21 @@ export default {
 	border-radius: 6px;
 	left: 8px;
 	min-height: 41px;
-	min-width: 301px;
+	width: 301px;
 	padding-left: 13px;
 	position: relative;
+
+	@media (max-width: 650px) {
+		width: 205px;
+	}
+
+}
+
+.form-bulletin-description-company {
+	@media (max-width: 850px) {
+		display: flex;
+    flex-direction: column-reverse;
+		margin-top: 50px;
+	}
 }
 </style>
