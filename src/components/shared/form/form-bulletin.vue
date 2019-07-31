@@ -40,7 +40,7 @@ export default {
 	width: 148px;
 
 	@media screen and (max-width: 850px) {
-		font-size: 12px;
+		font-size: size(small);
 		width: 65px;
 	}
 }
@@ -103,7 +103,7 @@ export default {
 .input-form {
 	border: 1px solid color(dark);
 	border-radius: 6px;
-	font-size: 13px;
+	font-size: size(minmedium);
 	left: 8px;
 	min-height: 39px;
 	padding-left: 13px;
@@ -111,11 +111,10 @@ export default {
 	width: 301px;
 
 	@media (max-width: 650px) {
-		font-size: 11px;
+		font-size: size(msmall);
 		padding-left: 5px;
 		width: 160px;
 	}
-
 }
 
 .form-bulletin-description-company {
