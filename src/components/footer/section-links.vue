@@ -1,5 +1,4 @@
 <template>
-<div class="content-section-links">
 	<div class="section-links">
 		<div v-for="(item, index) in sections" :key="index">
 			<p class="title-section-links">{{item.title}}</p>
@@ -12,7 +11,6 @@
 			</ul>
 		</div>
 	</div>
-</div>
 </template>
 
 <script>
@@ -143,7 +141,7 @@ ul, ol {
 
 .section-link {
 	color: color(dark);
-	font-family: font(book);
+	font-family: font(regular);
 	font-size: size(small);
 	text-decoration: none;
 }
@@ -152,11 +150,6 @@ ul, ol {
 	display: grid;
   grid-column-gap: 93px;
 	grid-template-columns: auto auto auto auto;
-}
-
-.content-section-links {
-	left: 50%;
-	position: relative;
-	transform: translateX(-50%);
+	padding: 0 38px;
 }
 </style>

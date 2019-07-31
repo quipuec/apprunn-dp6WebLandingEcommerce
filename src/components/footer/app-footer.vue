@@ -1,6 +1,9 @@
 <template>
-	<div>
+	<div class="app-footer">
 		<section-links></section-links>
+		<div class="content-company-footer">
+			<p class="company-footer">© 2019   www.mrc.com  Todos los Derechos reservados.</p>
+		</div>
 	</div>
 </template>
 
@@ -16,5 +19,21 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.company-footer {
+	color: map-get($colors, base);
+	font-family: font(regular);
+	font-size: size(small);
+	margin-bottom: 0;
+	padding: 17px 0 0 35px;
+}
 
+.content-company-footer {
+	border-top: 1px solid map-get($colors, base);
+	margin-top: 17px;
+	padding-bottom: 17px;
+}
+
+.app-footer {
+	width: 100%;
+}
 </style>

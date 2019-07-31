@@ -86,7 +86,7 @@
 				(511) 326-8056"
 			></media-company-data>
 		</v-layout>
-		<v-layout mb-3 mt-5>
+		<v-layout mt-3>
 			<app-footer></app-footer>
 		</v-layout>
 	</div>
