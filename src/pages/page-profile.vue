@@ -55,9 +55,8 @@ export default {
 	.profile-layout {
 		align-items: center;
 		display: flex;
-		height: 630px;
-		justify-content: flex-start;
 		flex-wrap: wrap;
+		height: 630px;
 		justify-content: flex-start;
 		margin: auto;
 		max-width: 1142px;
@@ -65,8 +64,7 @@ export default {
 
 		@media (max-width: 768px) {
 			height: auto;
-			padding: 0 15px;
-			padding-top: 90px;
+			padding: 90px 15px 0;
 		}
 	}
 
@@ -103,8 +101,8 @@ export default {
 		border: 2px solid color(primary);
 		border-radius: 50%;
 		display: flex;
-		justify-content: center;
 		height: 148px;
+		justify-content: center;
 		width: 148px;
 	}
 

@@ -65,5 +65,26 @@ export default {
 			margin-bottom: 20px;
 		}
 	}
+
+	.info-container {
+		align-items: flex-start;
+		font-family: font(medium);
+		display: grid;
+		grid-column-gap: 50px;
+		grid-template-columns: 1fr 1fr;
+		margin: 0 auto;
+		width: 280px;
+	}
+
+	.label {
+		color: color(base);
+		display: block;
+		font-size: size(small);
+	}
+
+	.user-content {
+		color: color(dark);
+		font-size: size(medium);
+	}
 </style>
 

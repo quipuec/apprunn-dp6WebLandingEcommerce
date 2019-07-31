@@ -85,7 +85,7 @@ export default {
 		margin-bottom: 55px;
 
 		@media (max-width: 768px) {
-			.user-name, .user-lastname, .user-ruc, .user-province {
+			.user-name, .user-lastname, .user-ruc, .user-district {
 				grid-column: 1/3;
 			}
 
@@ -97,20 +97,20 @@ export default {
 				grid-row: 3;
 			}
 
-			.user-department, .user-district {
+			.user-department, .user-province {
 				grid-row: 4;
 			}
 
 			.user-ruc {
-				grid-row: 5;
-			}
-
-			.user-postcode, .user-phone {
 				grid-row: 6;
 			}
 
-			.user-province {
+			.user-postcode, .user-phone {
 				grid-row: 7;
+			}
+
+			.user-district {
+				grid-row: 5;
 			}
 		}
 	}
