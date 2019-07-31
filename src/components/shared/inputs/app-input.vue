@@ -4,7 +4,6 @@
 			v-bind="$attrs"
 			class="app-input"
 			:style="`border-color: ${borderColor}`"
-			:placeholder="placeholder"
 		/>
 	</div>
 </template>
@@ -15,7 +14,6 @@
 		inheritAttrs: false,
 		props: {
 			borderColor: String,
-			placeholder: String,
 		},
 	};
 </script>
@@ -23,10 +21,9 @@
 <style lang="scss" scoped>
 	.app-input {
 		background-color: color(background);
+		border: 1px solid color(border);
 		border-radius: 7px;
-		border-style: solid;
-		border-width: 1px;
-		color: color(border);
+		color: color(dark);
 		font-family: font(medium);
 		font-size: size(medium);
 		height: 46.8px;

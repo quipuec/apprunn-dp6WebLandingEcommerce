@@ -35,7 +35,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 	.ecommerce-select {
-
+		
 		.v-input__control {
 
 			.v-input__slot {

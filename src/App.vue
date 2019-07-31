@@ -2084,24 +2084,25 @@ input.app-input::-webkit-input-placeholder {
 }
 
 .ecommerce-select {
-	background-color: color(background);
-	font-family: font(medium);
-	height: 46.8px;
+	background-color: color(background) !important;
+	color: color(dark);
+	font-family: font(medium) !important;
+	height: 46.8px !important;
 
 	.v-input__control {
 
 		.v-input__slot {
 			border: 1px solid color(border) !important;
-			border-radius: 5px;
-			height: -webkit-fill-available;
-			min-height: inherit;
+			border-radius: 5px !important;
+			height: -webkit-fill-available !important;
+			min-height: inherit !important;
 
 			.v-select__selections {
-				padding-top: 0;
+				padding-top: 0 !important;
 			}
 
 			.v-input__append-inner {
-				margin-top: 10px;
+				margin-top: 10px !important;
 			}
 		}
 	}
