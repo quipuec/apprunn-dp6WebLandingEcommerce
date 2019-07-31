@@ -32,12 +32,16 @@ export default {
 	border-bottom-right-radius: 6px;
 	border-top-right-radius: 6px;
 	color: color(white);
-	font-size: 15px;
-	min-height: 42px;
+	font-family: font(demi);
+	font-size: size(medium);
+	min-height: 39px;
+	position: relative;
+  top: 1px;
 	width: 148px;
 
 	@media screen and (max-width: 850px) {
-		width: 83px;
+		font-size: 12px;
+		width: 65px;
 	}
 }
 
@@ -99,14 +103,17 @@ export default {
 .input-form {
 	border: 1px solid color(dark);
 	border-radius: 6px;
+	font-size: 13px;
 	left: 8px;
-	min-height: 41px;
-	width: 301px;
+	min-height: 39px;
 	padding-left: 13px;
 	position: relative;
+	width: 301px;
 
 	@media (max-width: 650px) {
-		width: 205px;
+		font-size: 11px;
+		padding-left: 5px;
+		width: 160px;
 	}
 
 }
