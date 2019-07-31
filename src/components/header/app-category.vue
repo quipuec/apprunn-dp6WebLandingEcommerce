@@ -326,7 +326,7 @@ export default {
 
 		.list-item {
 			border-right: 1px solid color(dark);
-			padding: 10px 20%;
+			padding: 10px 10%;
 		}
 
 		&.isMultiple {

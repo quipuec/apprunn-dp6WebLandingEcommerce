@@ -27,17 +27,15 @@
 		border-style: solid;
 		border-width: 1px;
 		color: color(border);
-		font-family: font(demi);
+		font-family: font(medium);
 		font-size: size(medium);
 		height: 46.8px;
-		max-width: 244.5px;
 		outline: none;
 		padding: 0px 16.2px;
 		width: 100%;
+	}
 
-		@media (min-width: 764px) {
-			height: 40px;
-			max-width: 306px;
-		}
+	.app-input::placeholder {
+		color: color(base);
 	}
 </style>
