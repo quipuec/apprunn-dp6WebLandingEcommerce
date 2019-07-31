@@ -96,7 +96,11 @@
 			</v-flex>
 		</v-layout>
 		<v-layout wrap>
-			<media-filter-product></media-filter-product>
+			<media-filter-product
+			image="/static/img/icons/icon-filter-product.svg"
+			title="Novedades"
+			color="white"
+			></media-filter-product>
 		</v-layout>	
 	</div>
 </template>
