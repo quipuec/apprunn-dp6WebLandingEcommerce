@@ -163,6 +163,7 @@ ul, ol {
 	@media (max-width: 925px) {
 		flex-direction: column;
 		align-items: center;
+		padding: 0 5px;
 	}
 }
 

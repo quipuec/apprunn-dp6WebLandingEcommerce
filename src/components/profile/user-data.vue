@@ -1,62 +1,13 @@
 <template>
 	<div>
 		<section class="user-header">
-			<edit-component @click="editing" class="mr-3"/>
+			<edit-component @click="editing" class="mr-3" :active="editActive"/>
 			<camera-component @click="loadAvatar"/>
 		</section>
 		<section>
 			<h3 class="section-title">Mis datos personales</h3>
 		</section>
-		<section class="info-container">
-			<div class="col">
-				<p>
-					<span class="label">Nombre:</span>
-					<span class="user-content">Manuel</span>
-				</p>
-				<p>
-					<span class="label">Apellidos:</span>
-					<span class="user-content">Amado</span>
-				</p>
-				<p>
-					<span class="label">Género:</span>
-					<span class="user-content">M</span>
-				</p>
-				<p>
-					<span class="label">Teléfono:</span>
-					<span class="user-content">999-333-222</span>
-				</p>
-				<p>
-					<span class="label">Provincia:</span>
-					<span class="user-content">Lima</span>
-				</p>
-				<p>
-					<span class="label">Correo:</span>
-					<span class="user-content">x@mail.com</span>
-				</p>
-			</div>
-			<div class="col">
-				<p>
-					<span class="label">DNI:</span>
-					<span class="user-content">45667890</span>
-				</p>
-				<p>
-					<span class="label">RUC:</span>
-					<span class="user-content">10145667890</span>
-				</p>
-				<p>
-					<span class="label">Código postal:</span>
-					<span class="user-content">Lima 34</span>
-				</p>
-				<p>
-					<span class="label">Departamento:</span>
-					<span class="user-content">Lima</span>
-				</p>
-				<p>
-					<span class="label">Distrito:</span>
-					<span class="user-content">Lima</span>
-				</p>
-			</div>
-		</section>
+		<router-view></router-view>
 	</div>
 </template>
 <script>
@@ -69,21 +20,37 @@ function editing() {
 
 function loadAvatar() {}
 
+function routeHandler(newRoute) {
+	this.editActive = newRoute === 'edit-user-data';
+}
+
+function data() {
+	return {
+		editActive: false,
+	};
+}
+
 export default {
 	name: 'user-data',
 	components: {
 		cameraComponent,
 		editComponent,
 	},
+	data,
 	methods: {
 		editing,
 		loadAvatar,
+		routeHandler,
+	},
+	watch: {
+		'$route.name': routeHandler,
 	},
 };
 </script>
 <style lang="scss" scoped>
 	.user-header {
 		margin-bottom: 20px;
+		margin-left: 40px;
 	}
 
 	.section-title {
@@ -91,6 +58,7 @@ export default {
 		font-family: font(bold);
 		font-size: size(large);
 		margin-bottom: 50px;
+		margin-left: 40px;
 		text-transform: uppercase;
 
 		@media (max-width: 500px) {
@@ -100,8 +68,8 @@ export default {
 
 	.info-container {
 		align-items: flex-start;
-		font-family: font(medium);
 		display: grid;
+		font-family: font(medium);
 		grid-column-gap: 50px;
 		grid-template-columns: 1fr 1fr;
 		margin: 0 auto;

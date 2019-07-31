@@ -1,28 +1,21 @@
 <template>
 	<div>
-		<section class="user-header">
-			<edit-component class="mr-3"/>
-			<camera-component @click="loadAvatar"/>
-		</section>
-		<section>
-			<h3 class="section-title">Mis datos personales</h3>
-		</section>
 		<div class="form-container">
 			<form class="user-form">
 				<app-input class="user-name" placeholder="Nombre"/>
 				<app-input class="user-dni" placeholder="DNI"/>
 				<app-input class="user-lastname" placeholder="Apellido"/>
 				<app-input class="user-ruc" placeholder="RUC"/>
-				<app-input class="user-gender" placeholder="Género"/>
+				<app-select class="user-gender" placeholder="Género"/>
 				<app-input class="user-postcode" placeholder="Código postal"/>
-				<app-input class="user-department" placeholder="Departamento"/>
+				<app-select class="user-department" placeholder="Departamento"/>
 				<app-input class="user-phone" placeholder="Teléfono"/>
-				<app-input class="user-province" placeholder="Provincia"/>
-				<app-input class="user-district" placeholder="Distrito"/>
+				<app-select class="user-district" placeholder="Distrito"/>
+				<app-select class="user-province" placeholder="Provincia"/>
 			</form>
 			<section class="btn-section mb-2">
 				<app-button save action="Guardar" class="action-button save"/>
-				<app-button cancel action="Cancelar" class="action-button cancel"/>
+				<app-button cancel action="Cancelar" class="action-button cancel" @click="goBack"/>
 			</section>
 		</div>
 	</div>
@@ -30,8 +23,13 @@
 <script>
 import appButton from '@/components/shared/buttons/app-button';
 import appInput from '@/components/shared/inputs/app-input';
+import appSelect from '@/components/shared/inputs/app-select';
 import cameraComponent from '@/components/shared/icons/camera-component';
 import editComponent from '@/components/shared/icons/edit-component';
+
+function goBack() {
+	this.$router.back();
+}
 
 function loadAvatar() {}
 
@@ -40,10 +38,12 @@ export default {
 	components: {
 		appButton,
 		appInput,
+		appSelect,
 		cameraComponent,
 		editComponent,
 	},
 	methods: {
+		goBack,
 		loadAvatar,
 	},
 };
@@ -60,6 +60,7 @@ export default {
 
 	.user-header {
 		margin-bottom: 20px;
+		margin-left: 40px;
 	}
 
 	.section-title {
@@ -67,6 +68,7 @@ export default {
 		font-family: font(bold);
 		font-size: size(large);
 		margin-bottom: 50px;
+		margin-left: 40px;
 		text-transform: uppercase;
 
 		@media (max-width: 500px) {
