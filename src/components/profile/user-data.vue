@@ -102,8 +102,8 @@ export default {
 
 	.info-container {
 		align-items: flex-start;
-		font-family: font(medium);
 		display: grid;
+		font-family: font(medium);
 		grid-column-gap: 50px;
 		grid-template-columns: 1fr 1fr;
 		margin: 0 auto;
