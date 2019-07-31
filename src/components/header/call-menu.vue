@@ -13,6 +13,7 @@
 <script>
 function toggleMenu() {
 	this.menuIsVisible = !this.menuIsVisible;
+	this.$emit('change-menu');
 }
 
 function data() {

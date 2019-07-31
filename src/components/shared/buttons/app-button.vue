@@ -26,8 +26,8 @@
 		name: 'app-button',
 		inheritAttrs: false,
 		props: {
-			background: String,
 			action: String,
+			background: String,
 			img: String,
 			imgBorderColor: String,
 			imgHeight: [String, Number],
@@ -53,7 +53,6 @@
 		width: 100%;
 
 		@media (min-width: 764px) {
-			height: 49px;
 			max-width: 182px;
 		}
 

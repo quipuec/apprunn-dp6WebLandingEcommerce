@@ -16,7 +16,9 @@
 					<li class="user-action user-logout"><button class="user-action-btn ">Cerrar sesión</button></li>
 				</ul>
 			</div>
-			<div class="profile-info"></div>
+			<div class="profile-info">
+				<router-view></router-view>
+			</div>
 		</section>
 	</layout-admin>
 </template>
@@ -30,14 +32,15 @@ export default {
 		align-items: center;
 		display: flex;
 		flex-wrap: wrap;
+		height: 630px;
 		justify-content: flex-start;
 		margin: auto;
 		max-width: 1142px;
 		padding-top: 100px;
 
-		@media (max-width: 500px) {
-			padding: 0 15px;
-			padding-top: 150px;
+		@media (max-width: 768px) {
+			height: auto;
+			padding: 90px 15px 0;
 		}
 	}
 
@@ -45,25 +48,26 @@ export default {
 		background-color: color(dark);
 		border-radius: 7px;
 		flex: 1 1 30%;
+		height: 100%;
 		padding: 122px 0 0;
 		position: relative;
 		text-align: center;
 
-		@media (max-width: 500px) {
-			padding: 64px 30px 14px;
+		@media (max-width: 768px) {
+			padding: 100px 0px 14px;
 		}
 	}
 
 	.user-avatar-container {
 		align-items: center;
-		bottom: 80%;
+		bottom: 85%;
 		display: flex;
 		justify-content: center;
 		position: absolute;
 		width: 100%;
 
-		@media (max-width: 500px) {
-			padding-right: 60px;
+		@media (max-width: 768px) {
+			bottom: 75%;
 		}
 	}
 
@@ -73,8 +77,8 @@ export default {
 		border: 2px solid color(primary);
 		border-radius: 50%;
 		display: flex;
-		justify-content: center;
 		height: 148px;
+		justify-content: center;
 		width: 148px;
 	}
 
@@ -94,17 +98,24 @@ export default {
 		box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.08);
 		flex: 1 1 70%;
 		height: 100%;
-		padding: 17px 44px;
+		padding: 17px 40px;
+
+		@media (max-width: 768px) {
+			height: auto;
+			padding: 17px 10px;
+		}
 	}
 
 	.user-actions {
 		align-items: center;
 		display: grid;
 		grid-template-columns: 1fr;
+		padding: 0 50px;
 
-		@media (max-width: 500px) {
+		@media (max-width: 768px) {
 			grid-column-gap: 10px;
 			grid-template-columns: repeat(2, 1fr);
+			padding: 0 75px;
 		}
 	}
 
@@ -142,7 +153,7 @@ export default {
 	.user-logout {
 		color: color(border);
 
-		@media (max-width: 500px) {
+		@media (max-width: 768px) {
 			grid-column: 2;
 		}
 	}

@@ -2,7 +2,7 @@
   	<header class="layout app-header">
 		<div class="app-wrapper">
 			<div class="flex container-call-menu">
-				<call-menu :color="baseColor" text="Categorías" />
+				<call-menu :color="baseColor" text="Categorías" @change-menu="changeMenu" />
 			</div>
 			<div class="flex container-header-logo">
 				<h1 class="app-header-logo">
@@ -54,6 +54,10 @@ function toogleSearch() {
 	this.isSearchMobile = !this.isSearchMobile;
 }
 
+function changeMenu() {
+	this.$emit('change-menu');
+}
+
 function data() {
 	return {
 		baseColor: process.env.COLOR_BASE,
@@ -97,6 +101,7 @@ export default {
 	data,
 	methods: {
 		toogleSearch,
+		changeMenu,
 	},
 	props: {
 		logo: {

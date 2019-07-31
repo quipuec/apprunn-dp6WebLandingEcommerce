@@ -5,7 +5,6 @@
 			v-on="$listeners"
 			class="app-input"
 			:style="`border-color: ${borderColor}`"
-			:placeholder="placeholder"
 		/>
 	</div>
 </template>
@@ -19,7 +18,6 @@
 				default: '#f5f3f3',
 				type: String,
 			},
-			placeholder: String,
 		},
 	};
 </script>
@@ -32,16 +30,10 @@
 		border-width: 1px;
 		color: color(base);
 		font-family: font(demi);
-		font-size: size(medium);
+		font-size: size(minmedium);
 		height: 46.8px;
-		max-width: 244.5px;
 		outline: none;
 		padding: 0px 16.2px;
 		width: 100%;
-
-		@media (min-width: 764px) {
-			height: 40px;
-			max-width: 306px;
-		}
 	}
 </style>
