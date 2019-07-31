@@ -77,6 +77,10 @@
 				</div>
 			</div>
 		</div>
+		<div class="container-option">
+			<div class="option-user"></div>
+			<div class="option-close"></div>
+		</div>
 	</div>
 </template>
 <script>
@@ -295,7 +299,7 @@ export default {
 		flex: 1 1 20%;
 
 		@media (max-width: 764px) {
-			height: calc(100vh - 165px);
+			height: calc(100vh - 240px);
 			overflow-y: scroll;
 		}
 	}
@@ -455,6 +459,21 @@ export default {
 				}
 			}
 		}
+	}
+
+	.container-option {
+		height: 100px;
+		display: none;
+		
+		@media (max-width: 764px) {
+			display: block;
+			font-size: size(small);
+		}
+	}
+
+	.option-user {
+		height: 50px;
+		border-bottom: 1px solid map-get($colors, border);
 	}
 </style>
 

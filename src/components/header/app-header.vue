@@ -17,7 +17,7 @@
 				</h1>
 				<div 
 					class="container-search flex"
-					:class="isSearchMobile ? 'open' : 'close'">
+					:class="isSearchMobile ? 'open' : null">
 					<app-search 
 						image="/static/img/search.svg"
 						color="#4a4a4a"/>
@@ -117,6 +117,7 @@ export default {
 <style lang="scss" scoped>
 	.app-header {
 		background: color(white);
+		overflow: hidden;
 		padding: 25px 6%;
 	}
 
@@ -223,12 +224,6 @@ export default {
 	.logo-image {
 		@media (max-width: 764px) {
 			height: 20px;
-		}
-	}
-
-	.close {
-		@media (max-width: 764px) {
-		 display: none;
 		}
 	}
 </style>
