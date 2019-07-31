@@ -25,6 +25,11 @@ export default {
 	font-size: size(small);
 	margin-bottom: 0;
 	padding: 17px 0 0 35px;
+
+	@media (max-width: 750px) {
+		padding-left: 0;
+		text-align: center;	
+	}
 }
 
 .content-company-footer {

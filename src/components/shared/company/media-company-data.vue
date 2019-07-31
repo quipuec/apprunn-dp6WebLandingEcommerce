@@ -1,7 +1,13 @@
 <template>
-	<div class="container-media-company">
-		<img :src="image" :width="imageWidth" :height="imageHeight" alt="">
-		<p class="text-company-data">
+	<div class="container-media-company"
+	:style="`border-right: ${borderRight ? `1px solid ${borderRight}` : null}; font-family: ${family ? `font(${family})` : null }`">
+		<img :src="image" :height="imageHeight" alt="" class="image-company">
+		<a href="#" v-if="categories">
+			<p class="text-company-data">
+				{{ description }}
+			</p>
+		</a>
+		<p class="text-company-data" v-else>
 			{{ description }}
 		</p>
 	</div>
@@ -13,9 +19,11 @@ export default {
 	props: {
 		image: String,
 		imageHeight: [String, Number],
-		imageWidth: [String, Number],
 		description: [String, Number],
 		borderCompany: String,
+		borderRight: String,
+		family: String,
+		categories: Boolean,
 	},
 };
 </script>
@@ -24,14 +32,30 @@ export default {
 .container-media-company {
 	align-items: center;
 	display: flex;
-	padding: 19px;
+	padding: 0 45px;
+
+	@media (max-width: 715px) {
+		padding: 0 9px;
+	}
 }
 
 .text-company-data {
-	color: map-get($colors, white);
-	font-family: map-get($fonts, medium);
-	font-size: 13px;
-	margin: 0 0 0 15px;
-	max-width: 100px;
+	color: color(white);
+	font-family: font(medium);
+	font-size: size(minmedium);
+	margin: 0 0 0 9px;
+	width: 110px;
+
+	@media (max-width: 715px) {
+		font-size: 8px;
+		margin-left: 6px;
+		width: 68px;
+	}
+}
+
+.image-company {
+	@media (max-width: 715px) {
+		height: 19px;
+	}
 }
 </style>

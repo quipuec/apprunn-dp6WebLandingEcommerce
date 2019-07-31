@@ -1,6 +1,6 @@
 <template>
 	<div class="section-links">
-		<div v-for="(item, index) in sections" :key="index">
+		<div v-for="(item, index) in sections" :key="index" class="mb-2">
 			<p class="title-section-links">{{item.title}}</p>
 			<ul v-for="(link, index) in item.links" :key="index">
 				<li>
@@ -131,25 +131,42 @@ export default {
 ul, ol {
 	list-style: none;
 	padding-left: 0;
+
+	@media (max-width: 925px) {
+		text-align: center;
+	}
 }
 
 .title-section-links {
 	color: color(dark);
 	font-family: font(heavy);
 	font-size: size(xlarge);
+
+	@media (max-width: 925px) {
+		font-size: size(minmedium);
+		text-align: center;
+	}
 }
 
 .section-link {
 	color: color(dark);
 	font-family: font(regular);
-	font-size: size(small);
+	font-size: size(minmedium);
 	text-decoration: none;
 }
 
 .section-links {
-	display: grid;
-  grid-column-gap: 93px;
-	grid-template-columns: auto auto auto auto;
+	display: flex;
+	justify-content: space-between;
 	padding: 0 38px;
+
+	@media (max-width: 925px) {
+		flex-direction: column;
+		align-items: center;
+	}
+}
+
+.mb-2 {
+	margin-bottom: 24px !important;
 }
 </style>
