@@ -8,4 +8,6 @@ module.exports = {
 	S3_IMAGES_URL: "'//s3.amazonaws.com/apprunn-acl/icons'",
 	COMPANY_LOGIN_TITLE: `'${process.env.COMPANY_LOGIN_TITLE}'`,
 	SALES_URL: `'${process.env.SALES_URL}'`,
+	COLOR_BASE: `'${process.env.COLOR_BASE}'`,
+	COLOR_BORDER: `'${process.env.COLOR_BORDER}'`,
 };
