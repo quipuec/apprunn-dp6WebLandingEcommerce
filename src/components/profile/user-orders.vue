@@ -123,7 +123,6 @@ export default {
 	.row-orderStatus {
 		grid-column: 2/3;
 		grid-row: 2/3;
-		white-space: nowrap;
 
 		@media (max-width: 600px) {
 			background-color: color(background);
