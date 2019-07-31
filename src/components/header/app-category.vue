@@ -363,8 +363,8 @@ export default {
 		border: 1px solid;
 		border-radius: 50%;
 		display: flex;
-		justify-content: center;
 		height: 53px;
+		justify-content: center;
 		margin: 0 auto;
 		width: 53px;
 	}
@@ -462,9 +462,9 @@ export default {
 	}
 
 	.container-option {
-		height: 100px;
 		display: none;
-		
+		height: 100px;
+
 		@media (max-width: 764px) {
 			display: block;
 			font-size: size(small);
@@ -472,8 +472,8 @@ export default {
 	}
 
 	.option-user {
-		height: 50px;
 		border-bottom: 1px solid map-get($colors, border);
+		height: 50px;
 	}
 </style>
 
