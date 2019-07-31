@@ -87,7 +87,7 @@
 			></media-company-data>
 		</v-layout>
 		<v-layout mb-3 mt-5>
-			<section-links></section-links>
+			<app-footer></app-footer>
 		</v-layout>
 	</div>
 </template>
@@ -101,7 +101,7 @@
 	const appSearch = () => import('@/components/shared/inputs/app-input-search');
 	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
-	const sectionLinks = () => import('@/components/footer/section-links.vue');
+	const appFooter = () => import('@/components/footer/app-footer');
 
 	function data() {
 		return {
@@ -123,6 +123,7 @@
 		name: 'components',
 		data,
 		components: {
+			appFooter,
 			appButton,
 			appInput,
 			callMenu,
@@ -131,7 +132,6 @@
 			appSearch,
 			buttonImage,
 			mediaCompanyData,
-			sectionLinks,
 		},
 	};
 </script>
