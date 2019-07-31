@@ -41,6 +41,7 @@ export default {
 
 .text-company-data {
 	color: color(white);
+	font-family: font(medium);
 	font-size: size(minmedium);
 	margin: 0 0 0 9px;
 	width: 110px;
