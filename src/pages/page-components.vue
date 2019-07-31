@@ -94,7 +94,10 @@
 				:data="dataCategory" 
 				color-select="#ed0000"/>
 			</v-flex>
-		</v-layout>		
+		</v-layout>
+		<v-layout wrap>
+			<media-filter-product></media-filter-product>
+		</v-layout>	
 	</div>
 </template>
 
@@ -110,6 +113,7 @@
 	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
 	const itemMenu = () => import('@/components/header/item-menu');
+	const mediaFilterProduct = () => import('@/components/shared/products/media-filter-product');
 
 	function data() {
 		return {
@@ -140,6 +144,7 @@
 			appButton,
 			appInput,
 			containerCompanyData,
+			mediaFilterProduct,
 			formBulletin,
 			callMenu,
 			productCard,

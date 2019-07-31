@@ -75,3 +75,10 @@
     font-weight: normal;
     src: local('Avenir Next LT Pro Heavy Italic'), url('/static/fonts/AvenirNextLTPro-HeavyIt.woff') format('woff');
 }
+
+@font-face {
+    font-family: 'Avenir Next Demi Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: ('Avenir Next Demi Bold'), url('/static/fonts/AvenirNext-DemiBold.woff') format('woff');
+}
