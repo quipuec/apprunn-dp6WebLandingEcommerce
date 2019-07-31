@@ -36,4 +36,17 @@
 		padding: 0px 16.2px;
 		width: 100%;
 	}
+
+	input.app-input::-webkit-input-placeholder {
+		color: color(border);
+		font-family: font(demi);
+		font-size: size(minmedium);
+	}
+
+	.app-input::placeholder {
+		color: color(border);
+		font-family: font(demi) !important;
+		font-size: size(minmedium) !important;
+		font-weight: normal !important;
+	}
 </style>

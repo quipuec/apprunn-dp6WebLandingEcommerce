@@ -128,7 +128,7 @@
 	}
 
 	.form-label {
-		color: color(border);
+		color: color(base);
 		font-family: font(demi);
 		font-size: size(xsmall);
 	}

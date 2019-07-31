@@ -104,8 +104,9 @@ button {
 
 input.app-input::-webkit-input-placeholder {
 	color: color(border);
-	font-family: font(demi);
-	font-size: size(minmedium);
+	font-family: font(demi) !important;
+	font-size: size(minmedium) !important;
+	font-weight: normal !important;
 }
 
 .product-rating {
