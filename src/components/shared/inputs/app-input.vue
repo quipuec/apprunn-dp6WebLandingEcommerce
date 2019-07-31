@@ -23,7 +23,7 @@
 		background-color: color(background);
 		border: 1px solid color(border);
 		border-radius: 7px;
-		color: color(dark);
+		color: color(base);
 		font-family: font(medium);
 		font-size: size(medium);
 		height: 46.8px;

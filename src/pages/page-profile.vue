@@ -108,8 +108,8 @@ export default {
 
 	.user-avatar {
 		background-image: url('/static/img/user-avatar.jpg');
-		background-repeat: no-repeat;
 		background-position: center;
+		background-repeat: no-repeat;
 		background-size: contain;
 		border-radius: 50%;
 		height: 128px;

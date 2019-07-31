@@ -2098,7 +2098,7 @@ input.app-input::-webkit-input-placeholder {
 
 .ecommerce-select {
 	background-color: color(background) !important;
-	color: color(dark);
+	color: color(base);
 	font-family: font(medium) !important;
 	height: 46.8px !important;
 

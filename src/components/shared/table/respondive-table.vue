@@ -171,13 +171,13 @@ export default {
 		}
 
 		th:first-child {
-			border-top-left-radius: 8px;
 			border-bottom-left-radius: 8px;
+			border-top-left-radius: 8px;
 		}
 
 		th:last-child {
-			border-top-right-radius: 8px;
 			border-bottom-right-radius: 8px;
+			border-top-right-radius: 8px;
 		}
 	}
 
