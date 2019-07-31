@@ -3,7 +3,8 @@
 		<simple-svg
 			:filepath="data.urlImage"
 			:fill="data.select ? colorSelect : null"
-			:width="'31'" />
+			class="img-menu"
+		/>
 		<span class="item-text" :style="data.select ? `color: ${colorSelect}` : '#4a4a4a'">{{data.name}}</span>
 	</div>
 </template>
@@ -30,6 +31,18 @@ export default {
 		font-family: font(bold);
 		font-size: size(medium);
 		margin-left: 12px;
+
+		@media (max-width: 764px) {
+			font-size: size(small);
+		}
+	}
+
+	.img-menu {
+		width: 31px;
+
+		@media (max-width: 764px) {
+			width: 24px;
+		}
 	}
 </style>
 

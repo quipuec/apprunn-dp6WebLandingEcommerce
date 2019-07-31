@@ -16,6 +16,10 @@ function toggleMenu() {
 	this.$emit('change-menu');
 }
 
+function menu(value) {
+	this.menuIsVisible = value;
+}
+
 function data() {
 	return {
 		menuIsVisible: false,
@@ -31,6 +35,13 @@ export default {
 	props: {
 		color: String,
 		text: String,
+		menu: {
+			type: Boolean,
+			default: false,
+		},
+	},
+	watch: {
+		menu,
 	},
 };
 

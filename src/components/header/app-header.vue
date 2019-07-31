@@ -2,7 +2,7 @@
   	<header class="layout app-header">
 		<div class="app-wrapper">
 			<div class="flex container-call-menu">
-				<call-menu :color="baseColor" text="Categorías" @change-menu="changeMenu" />
+				<call-menu :color="baseColor" text="Categorías" @change-menu="changeMenu" :menu="menu" />
 			</div>
 			<div class="flex container-header-logo">
 				<h1 class="app-header-logo">
@@ -17,7 +17,7 @@
 				</h1>
 				<div 
 					class="container-search flex"
-					:class="{'open' : isSearchMobile}">
+					:class="isSearchMobile ? 'open' : null">
 					<app-search 
 						image="/static/img/search.svg"
 						color="#4a4a4a"/>
@@ -107,6 +107,10 @@ export default {
 		logo: {
 			type: Object,
 			default: () => {},
+		},
+		menu: {
+			type: Boolean,
+			default: false,
 		},
 	},
 };
