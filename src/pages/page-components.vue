@@ -96,11 +96,7 @@
 			</v-flex>
 		</v-layout>
 		<v-layout wrap>
-			<media-filter-product
-			image="/static/img/icons/icon-filter-product.svg"
-			title="Novedades"
-			color="white"
-			></media-filter-product>
+			<component-filter-product></component-filter-product>
 		</v-layout>	
 	</div>
 </template>
@@ -117,7 +113,7 @@
 	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
 	const itemMenu = () => import('@/components/header/item-menu');
-	const mediaFilterProduct = () => import('@/components/shared/products/media-filter-product');
+	const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
 
 	function data() {
 		return {
@@ -148,7 +144,7 @@
 			appButton,
 			appInput,
 			containerCompanyData,
-			mediaFilterProduct,
+			componentFilterProduct,
 			formBulletin,
 			callMenu,
 			productCard,
