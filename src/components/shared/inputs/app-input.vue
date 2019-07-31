@@ -25,6 +25,7 @@
 <style lang="scss" scoped>
 	.app-input {
 		background-color: color(background);
+		border: 1px solid color(border);
 		border-radius: 7px;
 		border-style: solid;
 		border-width: 1px;
