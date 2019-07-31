@@ -2,7 +2,7 @@
 	<button 
 		class="call-menu"
 		@click="toggleMenu">
-		<div class="call-menu-btn" :class="{open: menuIsVisible}">
+		<div class="call-menu-btn" :class="{ 'open': menuIsVisible }">
 			<span :style="`background: ${color}`" class="call-menu-line"></span>
 			<span :style="`background: ${color}`" class="call-menu-line"></span>
 			<span :style="`background: ${color}`" class="call-menu-line"></span>

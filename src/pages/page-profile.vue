@@ -9,8 +9,24 @@
 				</div>
 				<h3 class="user-name">Manuel Amado</h3>
 				<ul class="user-actions">
-					<li class="user-action"><button class="user-action-btn active">Mis Datos</button></li>
-					<li class="user-action"><button class="user-action-btn ">Mis Órdenes</button></li>
+					<li class="user-action">
+						<button
+							:class="[
+								'user-action-btn',
+								{ 'active': $route.name === 'user-data-details' || $route.name === 'edit-user-data'},
+							]"
+							@click="goTo('user-data')"
+						>Mis Datos</button>
+					</li>
+					<li class="user-action">
+						<button
+							:class="[
+								'user-action-btn',
+								{ 'active': $route.name === 'user-orders'},
+							]"
+							@click="goTo('user-orders')"
+						>Mis Órdenes</button>
+					</li>
 					<li class="user-action"><button class="user-action-btn ">Mis Favoritos</button></li>
 					<li class="user-action"><button class="user-action-btn ">Direcciones</button></li>
 					<li class="user-action user-logout"><button class="user-action-btn ">Cerrar sesión</button></li>
@@ -23,8 +39,16 @@
 	</layout-admin>
 </template>
 <script>
+
+function goTo(name) {
+	this.$router.push({ name });
+}
+
 export default {
 	name: 'page-profile',
+	methods: {
+		goTo,
+	},
 };
 </script>
 <style lang="scss" scoped>
@@ -84,8 +108,8 @@ export default {
 
 	.user-avatar {
 		background-image: url('/static/img/user-avatar.jpg');
-		background-repeat: no-repeat;
 		background-position: center;
+		background-repeat: no-repeat;
 		background-size: contain;
 		border-radius: 50%;
 		height: 128px;
@@ -98,11 +122,11 @@ export default {
 		box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.08);
 		flex: 1 1 70%;
 		height: 100%;
-		padding: 17px 40px;
+		padding: 17px 0px;
+		position: relative;
 
 		@media (max-width: 768px) {
 			height: auto;
-			padding: 17px 10px;
 		}
 	}
 

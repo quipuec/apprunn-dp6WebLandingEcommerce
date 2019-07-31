@@ -86,10 +86,6 @@ html, body {
 	overflow-x: auto;
 }
 
-html, body.survey-page {
-	min-width: 0px !important;
-}
-
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
 	-webkit-appearance: none;
@@ -121,6 +117,31 @@ input.app-input::-webkit-input-placeholder {
 
 .slide-fade-leave-active {
   	transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.ecommerce-select {
+	background-color: color(background) !important;
+	color: color(base);
+	font-family: font(medium) !important;
+	height: 46.8px !important;
+
+	.v-input__control {
+
+		.v-input__slot {
+			border: 1px solid color(border) !important;
+			border-radius: 5px !important;
+			height: -webkit-fill-available !important;
+			min-height: inherit !important;
+
+			.v-select__selections {
+				padding-top: 0 !important;
+			}
+
+			.v-input__append-inner {
+				margin-top: 10px !important;
+			}
+		}
+	}
 }
 
 .slide-fade-enter, .slide-fade-leave-to {
