@@ -1,15 +1,17 @@
 <template>
-	<div class="filter-product">
-		<div class="box-filter">
+		<div class="box-filter"
+		:style="`border-right: ${borderRight ? `1px solid ${borderRight}` : null}`">
 			<img src="/static/img/icons/icon-filter-product.svg" alt="">
 			<p class="title-filter">Novedades</p>
 		</div>
-	</div>
 </template>
 
 <script>
 export default {
 	name: 'filter-product',
+	props: {
+		borderRight: String,
+	},
 };
 </script>
 
@@ -25,11 +27,12 @@ export default {
 	}
 }
 
-.filter-product {
-	background-color: red;
-}
+// .filter-product {
+// 	background-color: red;
+// }
 
 .box-filter {
+	background-color: red;
 	display: flex;
 	align-items: center;
 	flex-direction: row;
