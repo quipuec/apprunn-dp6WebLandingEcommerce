@@ -6,7 +6,7 @@
 				'app-button',
 				{ 'save-btn': save },
 				{ 'cancel-btn': cancel },
-				{'thin': thin },
+				{'thin': thin},
 			]"
 			:style="`background-color: ${background}; text-align: ${!img ? 'center' : 'left'} ; color: ${color}; border: ${border ? `1px solid ${border}` : null}`"
 			@click="clicked"
