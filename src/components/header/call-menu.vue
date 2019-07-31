@@ -2,7 +2,7 @@
 	<button 
 		class="call-menu"
 		@click="toggleMenu">
-		<div class="call-menu-btn" :class="{open: menuIsVisible}">
+		<div class="call-menu-btn" :class="{'open': menuIsVisible}">
 			<span class="call-menu-line"></span>
 			<span class="call-menu-line"></span>
 			<span class="call-menu-line"></span>
@@ -13,6 +13,7 @@
 <script>
 function toggleMenu() {
 	this.menuIsVisible = !this.menuIsVisible;
+	this.$emit('change-menu');
 }
 
 function data() {

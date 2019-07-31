@@ -76,19 +76,28 @@
 				if-number/>
 			</v-flex>
 		</v-layout>
+		<v-layout wrap>
+			<v-flex xs12>
+				Datos de Compañias
+			</v-flex>
+				<container-company-data></container-company-data>
+		</v-layout>
 		<v-layout>
-			<media-company-data
-				class="border"
-				image="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/customer-service.png"
-				image-width="30"
-				image-height="29"
-				description=" (511) 326-0933 
-				(511) 326-8056"
-			></media-company-data>
+			<form-bulletin></form-bulletin>
 		</v-layout>
 		<v-layout mb-3 mt-5>
 			<section-links></section-links>
 		</v-layout>
+		<v-layout wrap>
+			<v-flex xs12>
+				item menu categoria
+			</v-flex>
+			<v-flex xs12>
+				<item-menu 
+				:data="dataCategory" 
+				color-select="#ed0000"/>
+			</v-flex>
+		</v-layout>		
 	</div>
 </template>
 
@@ -97,11 +106,14 @@
 	const appInput = () => import('@/components/shared/inputs/app-input');
 	const callMenu = () => import('@/components/header/call-menu');
 	const productCard = () => import('@/components/products/product-card');
+	const containerCompanyData = () => import('@/components/shared/company/container-company-data');
+	const formBulletin = () => import('@/components/shared/form/form-bulletin');
 	const modalLogin = () => import('@/components/header/modal-login');
 	const appSearch = () => import('@/components/shared/inputs/app-input-search');
 	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
 	const sectionLinks = () => import('@/components/footer/section-links.vue');
+	const itemMenu = () => import('@/components/header/item-menu');
 
 	function data() {
 		return {
@@ -117,6 +129,12 @@
 					height: 20,
 				},
 			],
+			nameCategory: 'Mallas',
+			dataCategory: {
+				urlImage: '/static/img/category-malla.svg',
+				name: 'Malla',
+				select: false,
+			},
 		};
 	}
 	export default {
@@ -125,6 +143,8 @@
 		components: {
 			appButton,
 			appInput,
+			containerCompanyData,
+			formBulletin,
 			callMenu,
 			productCard,
 			modalLogin,
@@ -132,6 +152,7 @@
 			buttonImage,
 			mediaCompanyData,
 			sectionLinks,
+			itemMenu,
 		},
 	};
 </script>
@@ -155,9 +176,5 @@
 		grid-template-columns: repeat(auto-fit, minmax(214px, 1fr));
 		margin: auto;
 		max-width: 1070px;
-	}
-
-	.border {
-		background: map-get($colors, primary);
 	}
 </style>

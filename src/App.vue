@@ -1,6 +1,9 @@
 <template>
 	<v-app>
-		<app-header :logo="logo"/>
+		<app-header :logo="logo" @change-menu="changeMenu"/>
+		<transition name="slide-fade">
+			<app-menu-category v-show="showMenu"/>
+  	</transition>
 		<v-progress-linear
 			class="progress-bar"
 			color="success"
@@ -33,6 +36,7 @@
 
 <script>
 const appHeader = () => import('@/components/header/app-header');
+const appMenuCategory = () => import('@/components/header/app-category');
 
 function indeterminate() {
 	return this.$store.getters.indeterminate;
@@ -42,6 +46,10 @@ function snackbar() {
 	return this.$store.getters.snackbar;
 }
 
+function changeMenu() {
+	this.showMenu = !this.showMenu;
+}
+
 function data() {
 	return {
 		logo: {
@@ -49,6 +57,7 @@ function data() {
 			name: 'MRC',
 			height: 30,
 		},
+		showMenu: false,
 	};
 }
 
@@ -61,6 +70,10 @@ export default {
 	data,
 	components: {
 		appHeader,
+		appMenuCategory,
+	},
+	methods: {
+		changeMenu,
 	},
 };
 </script>
@@ -2073,7 +2086,7 @@ nav.v-toolbar {
 
 input.app-input::-webkit-input-placeholder {
 	color: color(border);
-	font-family: font(demi);
+	font-family: font(medium);
 	font-size: size(medium);
 }
 
@@ -2081,5 +2094,41 @@ input.app-input::-webkit-input-placeholder {
 	.v-icon {
 		padding: 0.2rem !important;
 	}
+}
+
+.ecommerce-select {
+	background-color: color(background) !important;
+	color: color(base);
+	font-family: font(medium) !important;
+	height: 46.8px !important;
+
+	.v-input__control {
+
+		.v-input__slot {
+			border: 1px solid color(border) !important;
+			border-radius: 5px !important;
+			height: -webkit-fill-available !important;
+			min-height: inherit !important;
+
+			.v-select__selections {
+				padding-top: 0 !important;
+			}
+
+			.v-input__append-inner {
+				margin-top: 10px !important;
+			}
+		}
+	}
+}
+
+.slide-fade-enter-active {
+  transition: all .8s ease;
+}
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to {
+	opacity: 0;
+  transform: translateX(10px);
 }
 </style>
