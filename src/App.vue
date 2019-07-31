@@ -2107,4 +2107,14 @@ input.app-input::-webkit-input-placeholder {
 		}
 	}
 }
+
+	.payment-btn {
+
+		button.app-button {
+
+			@media (min-width: 764px) {
+				min-width: 255px !important;
+			}
+		}
+	}
 </style>

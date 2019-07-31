@@ -1,7 +1,38 @@
 <template>
 	<div>
-		<section class="nav">Titulo</section>
-		<section class="header">header</section>
+		<section class="nav">
+			<left-component @click="goTo"/>
+			<p class="order-head">
+				<span class="order-state">solicitado</span> - <span>nro orden</span><span>147721</span>
+			</p>
+		</section>
+		<section class="header">
+			<div class="order-info">
+				<div>
+					<span class="label">Precio Total: </span><span class="order-info-data">PEN 320.10</span>
+				</div>
+				<div>
+					<span class="label">Fecha de la Orden: </span><span class="order-info-data">19/05/2019</span>
+				</div>
+				<div>
+					<span class="label">Estado: </span><span class="order-info-data">Pagado</span>
+				</div>
+			</div>
+			<div class="order-payment">
+				<div class="order-payment-wrapper">
+					<div>
+						<span class="label">Direccion de envio: </span><span class="order-info-data">Calle independencia 120 - Piso 16 - Miraflores</span>
+					</div>
+					<app-button
+						class="payment-btn"
+						action="Añadir datos del deposito"
+						:background="backgroundColor"
+						:img="'/static/icons/hand.svg'"
+					/>
+				</div>
+				<load-payment/>
+			</div>
+		</section>
 		<section class="table">
 			<responsive-table
 				:columns="columns"
@@ -27,7 +58,18 @@
 	</div>
 </template>
 <script>
+import appButton from '@/components/shared/buttons/app-button';
+import leftComponent from '@/components/shared/icons/left-component';
+import loadPayment from '@/components/profile/load-payment';
 import responsiveTable from '@/components/shared/table/respondive-table';
+
+function goTo() {
+	this.$router.back();
+}
+
+function backgroundColor() {
+	return `${process.env.COLOR_BASE}`;
+}
 
 function data() {
 	return {
@@ -65,9 +107,18 @@ function data() {
 export default {
 	name: 'user-order-details',
 	components: {
+		appButton,
+		leftComponent,
+		loadPayment,
 		responsiveTable,
 	},
+	computed: {
+		backgroundColor,
+	},
 	data,
+	methods: {
+		goTo,
+	},
 };
 </script>
 <style lang="scss" scoped>
@@ -146,5 +197,57 @@ export default {
 			background-color: color(background);
 			font-size: size(small);
 		}
+	}
+
+	.header {
+		margin: 0 30px 30px;
+	}
+
+	.order-info {
+		align-items: center;
+		border-bottom: 1px solid color(border);
+		display: flex;
+		justify-content: space-between;
+		margin: 0 40px;
+		padding: 10px 0;
+	}
+
+	.order-payment {
+		margin: 0 30px;
+		padding: 10px 0;
+	}
+
+	.label {
+		color: color(dark);
+		font-family: font(bold);
+		font-size: size(small);
+	}
+
+	.order-info-data {
+		color: color(dark);
+	}
+
+	.nav {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		margin: 15px 24px 10px;
+	}
+
+	.order-head {
+		color: color(primary);
+		font-family: font(bold);
+		font-size: size(large);
+		text-transform: uppercase;
+	}
+
+	.order-state {
+		font-family: font(heavy);
+	}
+
+	.order-payment-wrapper {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
 	}
 </style>
