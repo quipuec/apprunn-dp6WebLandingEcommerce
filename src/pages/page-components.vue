@@ -76,15 +76,14 @@
 				if-number/>
 			</v-flex>
 		</v-layout>
+		<v-layout wrap>
+			<v-flex xs12>
+				Datos de Compañias
+			</v-flex>
+				<container-company-data></container-company-data>
+		</v-layout>
 		<v-layout>
-			<media-company-data
-				class="border"
-				image="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/customer-service.png"
-				image-width="30"
-				image-height="29"
-				description=" (511) 326-0933 
-				(511) 326-8056"
-			></media-company-data>
+			<form-bulletin></form-bulletin>
 		</v-layout>
 		<v-layout wrap>
 			<v-flex xs12>
@@ -104,6 +103,8 @@
 	const appInput = () => import('@/components/shared/inputs/app-input');
 	const callMenu = () => import('@/components/header/call-menu');
 	const productCard = () => import('@/components/products/product-card');
+	const containerCompanyData = () => import('@/components/shared/company/container-company-data');
+	const formBulletin = () => import('@/components/shared/form/form-bulletin');
 	const modalLogin = () => import('@/components/header/modal-login');
 	const appSearch = () => import('@/components/shared/inputs/app-input-search');
 	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
@@ -138,6 +139,8 @@
 		components: {
 			appButton,
 			appInput,
+			containerCompanyData,
+			formBulletin,
 			callMenu,
 			productCard,
 			modalLogin,
@@ -168,9 +171,5 @@
 		grid-template-columns: repeat(auto-fit, minmax(214px, 1fr));
 		margin: auto;
 		max-width: 1070px;
-	}
-
-	.border {
-		background: map-get($colors, primary);
 	}
 </style>
