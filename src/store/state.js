@@ -9,10 +9,14 @@ export default {
 			color: 'primary',
 		},
 	},
+	order: {
+		bill: null,
+		delivery: null,
+		responsible: null,
+	},
 	pollData: {
 		progress: 0,
 	},
-	token: helper.getLocalToken(),
 	products: {
 		list: [],
 		params: {
@@ -22,6 +26,7 @@ export default {
 		},
 		toBuy: [],
 	},
+	token: helper.getLocalToken(),
 	user: {
 		email: '',
 		logo: 'ecommerce-logo.svg',
