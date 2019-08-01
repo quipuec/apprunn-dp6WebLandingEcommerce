@@ -26,8 +26,9 @@ export default {
 	margin: 0 0 0 17px;
 
 	@media (max-width: 650px) {
-		font-size: 11px;
-		margin: 9px 0 0 0;	
+		font-size: size(msmall);
+		margin: 9px 0 0 0;
+		width: 243px;
 	}
 }
 
