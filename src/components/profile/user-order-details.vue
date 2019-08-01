@@ -37,6 +37,7 @@
 		</section>
 		<section class="table">
 			<responsive-table
+				align-left
 				:columns="columns"
 				:rows="rows"
 				:pages="50"
@@ -156,6 +157,10 @@ export default {
 	.table {
 		margin: 0 50px;
 
+		@media (max-width: 600px) {
+			margin: 0 10px;
+		}
+
 		td {
 			padding: 10px 30px;
 		}
@@ -212,6 +217,10 @@ export default {
 
 	.header {
 		margin: 0 30px 30px;
+
+		@media (max-width: 600px) {
+			margin: 0 0px 30px;
+		}
 	}
 
 	.order-info {
@@ -248,14 +257,18 @@ export default {
 
 	.order-head {
 		color: color(primary);
-		font-family: font(bold);
+		font-family: font(demi);
 		font-size: size(large);
 		margin-bottom: 0;
 		text-transform: uppercase;
+
+		@media (max-width: 600px) {
+			font-size: size(small);
+		}
 	}
 
 	.order-state {
-		font-family: font(heavy);
+		font-family: font(bold);
 	}
 
 	.order-payment-wrapper {

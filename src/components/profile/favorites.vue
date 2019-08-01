@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<section>
-			<h3 class="section-title">Mis datos personales</h3>
+			<h3 class="section-title">Mis favoritos</h3>
 		</section>
 		<section class="table">
 			<responsive-table
@@ -94,11 +94,20 @@ export default {
 		}
 	}
 
+	.row-product {
+		grid-column: 1/3;
+
+		@media (max-width: 600px) {
+			align-items: center;
+			background-color: color(disabled);
+			display: flex;
+			height: 100%;
+		}
+	}
+
 	.product-name {
 		font-family: font(bold);
 		font-size: size(medium);
-		grid-column: 1;
-		grid-row: 1;
 
 		@media (max-width: 600px) {
 			font-size: size(small);
@@ -118,7 +127,6 @@ export default {
 		grid-row: 2;
 
 		@media (max-width: 600px) {
-			background-color: color(background);
 			font-size: size(small);
 		}
 	}
@@ -128,7 +136,6 @@ export default {
 		grid-row: 2;
 
 		@media (max-width: 600px) {
-			background-color: color(background);
 			font-size: size(small);
 			text-align: left;
 		}
@@ -139,9 +146,11 @@ export default {
 		display: flex;
 		grid-column: 3;
 		grid-row: 1;
+		height: 65px;
 
 		@media (max-width: 600px) {
-			// background-color: color(background);
+			background-color: color(disabled);
+			border: none;
 			font-size: size(small);
 		}
 	}

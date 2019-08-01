@@ -2,21 +2,10 @@
 	<div>
 		<button
 			v-bind="$attrs"
-<<<<<<< HEAD
-			:class="[
-				'app-button',
-				{ 'save-btn': save },
-				{ 'cancel-btn': cancel },
-				{'thin': thin},
-			]"
-			:style="`background-color: ${background}; text-align: ${!img ? 'center' : 'left'} ; color: ${color}; border: ${border ? `1px solid ${border}` : null}`"
-			@click="clicked"
-=======
 			v-on="$listeners"
 			class="app-button"
 			:class="{'thin': thin}"
 			:style="`background-color: ${background}; text-align: ${!img ? 'center' : 'left'} ; color: ${color}; border: ${border ? `1px solid ${border}` : null}`"
->>>>>>> 4411ae3d5b20b6cff15fd2950565fa43c86673aa
 		>
 			<span class="span-img" :style="`border-color: ${imgBorderColor}`" v-if="img">
 				<img
