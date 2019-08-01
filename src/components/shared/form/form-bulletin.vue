@@ -1,6 +1,6 @@
 <template>
 	<div class="form-bulletin">
-		<div>
+		<div class="content-description">
 			<p class="text-subscription">Suscríbete a Boletín</p>
 			<input type="text" placeholder="Ingresa tu correo Electrónico" class="input-form">
 			<button class="button-form">Suscríbete</button>
@@ -35,12 +35,12 @@ export default {
 	font-family: font(demi);
 	font-size: size(medium);
 	min-height: 39px;
-	position: relative;
-  top: 1px;
-	width: 148px;
+	width: 128px;
 
 	@media screen and (max-width: 850px) {
 		font-size: size(small);
+		position: relative;
+  	top: -1px;
 		width: 65px;
 	}
 }
@@ -50,9 +50,42 @@ export default {
 	font-family: font(demi);
 	font-size:  size(medium);
 	margin-bottom: 45px;
+	text-align: center;
 
 	@media (max-width: 850px) {
 		text-align: center;
+	}
+}
+
+.text-subscription::before {
+	border-top: 1px solid #4a4a4a;
+	color: #4a4a4a;
+  content: '';
+	height: 2px;
+	left: 0px;
+  position: absolute;
+	top: 9px;
+	width: 120px;
+	@media (max-width: 850px) {
+		left: 12px;
+		width: 80px;
+	}
+
+}
+
+.text-subscription::after {
+	content: '';
+	height: 2px;
+	border-top: 1px solid #4a4a4a;
+	color: #4a4a4a;
+	width: 120px;
+	position: absolute;
+	top: 9px;
+	right: 0px;
+
+	@media (max-width: 850px) {
+		right: 12px;
+		width: 80px;
 	}
 }
 
@@ -108,7 +141,7 @@ export default {
 	min-height: 39px;
 	padding-left: 13px;
 	position: relative;
-	width: 301px;
+	width: 281px;
 
 	@media (max-width: 650px) {
 		font-size: size(msmall);
@@ -123,5 +156,9 @@ export default {
     flex-direction: column-reverse;
 		margin-top: 50px;
 	}
+}
+
+.content-description {
+	position: relative;
 }
 </style>
