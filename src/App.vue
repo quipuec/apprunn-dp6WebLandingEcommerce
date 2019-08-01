@@ -1,8 +1,18 @@
 <template>
 	<v-app>
-		<app-header :logo="logo" @change-menu="changeMenu"/>
+		<app-header :logo="logo" @change-menu="changeMenu" :menu="showMenu"/>
 		<transition name="slide-fade">
-			<app-menu-category v-show="showMenu"/>
+			<div 
+				class="v-overlay v-overlay--absolute v-overlay--active mobile-overlay" 
+				@click="changeMenu"
+				v-if="showMenu"></div>
+  	</transition>
+		<transition name="slide-fade">
+			<app-menu-category 
+				v-if="showMenu" 
+				:img-user="user"
+				:color-base="colorBase"
+				:color-border="colorBorder"/>
   	</transition>
 		<v-progress-linear
 			class="progress-bar"
@@ -58,6 +68,13 @@ function data() {
 			height: 30,
 		},
 		showMenu: false,
+		user: {
+			urlImage: '/static/img/user.svg',
+			name: 'Login',
+			height: 25,
+		},
+		colorBase: process.env.COLOR_BASE,
+		colorBorder: process.env.COLOR_BORDER,
 	};
 }
 
@@ -112,11 +129,11 @@ input.app-input::-webkit-input-placeholder {
 }
 
 .slide-fade-enter-active {
-  	transition: all .8s ease;
+  	transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 
 .slide-fade-leave-active {
-  	transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  	transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 
 .ecommerce-select {
@@ -147,5 +164,13 @@ input.app-input::-webkit-input-placeholder {
 .slide-fade-enter, .slide-fade-leave-to {
 	opacity: 0;
   	transform: translateX(10px);
+}
+
+.mobile-overlay {
+	display: none;
+
+	@media (max-width: 764px) {
+		display: block;
+	}
 }
 </style>

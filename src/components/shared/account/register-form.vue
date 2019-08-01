@@ -1,7 +1,7 @@
 <template>
 	<div class="register-form">
 		<v-layout wrap align-start justify-center>
-			<v-flex xs5 pr-2 pb-2 text-xs-left>
+			<v-flex xs5 pr-2 pb-4 text-xs-left>
 				<app-input
 					placeholder="Nombre"
 					:value="model.name"
@@ -11,7 +11,7 @@
 					El nombre es requerido
 				</span>
 			</v-flex>
-			<v-flex xs7 pb-2 text-xs-left>
+			<v-flex xs7 pb-4 text-xs-left>
 				<app-input
 					placeholder="Apellidos"
 					:value="model.lastname"
@@ -21,7 +21,7 @@
 					El apellido es requerido
 				</span>
 			</v-flex>
-			<v-flex xs12 pb-2 text-xs-left>
+			<v-flex xs12 pb-4 text-xs-left>
 				<app-input
 					type="email"
 					placeholder="E-mail"
@@ -35,7 +35,7 @@
 					Ingrese un email válido
 				</span>
 			</v-flex>
-			<v-flex xs12 pb-2 text-xs-left>
+			<v-flex xs12 pb-4 text-xs-left>
 				<app-input
 					type="password"
 					placeholder="Contraseña"
@@ -60,7 +60,7 @@
 					Las contraseñas no coinciden
 				</span>
 			</v-flex>
-			<v-flex xs12 text-xs-left>
+			<v-flex xs12 mt-2 text-xs-left>
 				<v-checkbox
 					class="form-check"
 					:value="flagTyc"
@@ -125,6 +125,10 @@
 		@media (min-width: 768px) {
 			padding: 16px 36px 30px;
 		}
+
+		.flex {
+			position: relative;
+		}
 	}
 
 	.form-label {
@@ -144,6 +148,11 @@
 
 	.error-message {
 		color: color(primary);
+		display: block;
 		font-size: size(xsmall);
+		line-height: 1;
+		margin-top: 2px;
+		position: absolute;
+		width: 100%;
 	}
 </style>

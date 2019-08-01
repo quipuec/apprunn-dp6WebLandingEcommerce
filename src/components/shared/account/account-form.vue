@@ -73,7 +73,7 @@
 		min-height: 67vh;
 		padding-bottom: 54px;
 		padding-top: 62px;
-		width: 90%;
+		width: 100%;
 		z-index: 1;
 
 		@media (min-width: 768px) {
