@@ -125,6 +125,10 @@
 		@media (min-width: 768px) {
 			padding: 16px 36px 30px;
 		}
+
+		.flex {
+			position: relative;
+		}
 	}
 
 	.form-label {
