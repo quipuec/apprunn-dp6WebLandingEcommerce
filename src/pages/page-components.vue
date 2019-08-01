@@ -31,7 +31,7 @@
 				Boton categoría
 			</v-flex>
 			<v-flex xs12>
-				<call-menu text="Categorías"/>
+				<call-menu :color="baseColor" text="Categorías"/>
 			</v-flex>
 		</v-layout>
 		<v-layout>
@@ -39,11 +39,11 @@
 				Tarjetas de producto
 			</v-flex>
 			<section class="product-section">
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
 			</section>
 		</v-layout>
 		<v-layout wrap>
@@ -97,7 +97,14 @@
 				:data="dataCategory" 
 				color-select="#ed0000"/>
 			</v-flex>
-		</v-layout>		
+		</v-layout>
+		<v-layout wrap>
+			<media-filter-product
+			image="/static/img/icons/icon-filter-product.svg"
+			title="Novedades"
+			color="white"
+			></media-filter-product>
+		</v-layout>	
 	</div>
 </template>
 
@@ -114,9 +121,11 @@
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
 	const appFooter = () => import('@/components/footer/app-footer');
 	const itemMenu = () => import('@/components/header/item-menu');
+	const mediaFilterProduct = () => import('@/components/shared/products/media-filter-product');
 
 	function data() {
 		return {
+			baseColor: process.env.COLOR_BASE,
 			imagesButton: [
 				{
 					image: '/static/img/heart.svg',
@@ -145,6 +154,7 @@
 			appButton,
 			appInput,
 			containerCompanyData,
+			mediaFilterProduct,
 			formBulletin,
 			callMenu,
 			productCard,

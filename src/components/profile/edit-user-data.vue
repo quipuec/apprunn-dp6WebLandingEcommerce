@@ -14,8 +14,17 @@
 				<app-select class="user-province" placeholder="Provincia"/>
 			</form>
 			<section class="btn-section mb-2">
-				<app-button save action="Guardar" class="action-button save"/>
-				<app-button cancel action="Cancelar" class="action-button cancel" @click="goBack"/>
+				<app-button
+					:background="colorSecondary"
+					action="Guardar"
+					class="action-button save"
+				/>
+				<app-button
+					:background="colorBase"
+					action="Cancelar"
+					class="action-button cancel"
+					@click="goBack"
+				/>
 			</section>
 		</div>
 	</div>
@@ -33,6 +42,13 @@ function goBack() {
 
 function loadAvatar() {}
 
+function data() {
+	return {
+		colorBase: process.env.COLOR_BASE,
+		colorSecondary: process.env.COLOR_SECONDARY,
+	};
+}
+
 export default {
 	name: 'edit-user-profile',
 	components: {
@@ -42,6 +58,7 @@ export default {
 		cameraComponent,
 		editComponent,
 	},
+	data,
 	methods: {
 		goBack,
 		loadAvatar,
