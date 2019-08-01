@@ -31,7 +31,7 @@
 				Boton categoría
 			</v-flex>
 			<v-flex xs12>
-				<call-menu text="Categorías"/>
+				<call-menu :color="baseColor" text="Categorías"/>
 			</v-flex>
 		</v-layout>
 		<v-layout>
@@ -39,11 +39,11 @@
 				Tarjetas de producto
 			</v-flex>
 			<section class="product-section">
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
 			</section>
 		</v-layout>
 		<v-layout wrap>
@@ -117,6 +117,7 @@
 
 	function data() {
 		return {
+			baseColor: process.env.COLOR_BASE,
 			imagesButton: [
 				{
 					image: '/static/img/heart.svg',
