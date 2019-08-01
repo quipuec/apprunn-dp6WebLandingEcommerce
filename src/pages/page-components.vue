@@ -83,9 +83,6 @@
 				<container-company-data></container-company-data>
 		</v-layout>
 		<v-layout>
-			<section-visa></section-visa>
-		</v-layout>
-		<v-layout>
 			<form-bulletin></form-bulletin>
 		</v-layout>
 		<v-layout mt-3>
@@ -124,7 +121,6 @@
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
 	const appFooter = () => import('@/components/footer/app-footer');
 	const itemMenu = () => import('@/components/header/item-menu');
-	const sectionVisa = () => import('@/components/footer/section-visa');
 	const mediaFilterProduct = () => import('@/components/shared/products/media-filter-product');
 
 	function data() {
@@ -166,7 +162,6 @@
 			appSearch,
 			buttonImage,
 			mediaCompanyData,
-			sectionVisa,
 			itemMenu,
 		},
 	};

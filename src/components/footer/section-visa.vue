@@ -34,6 +34,7 @@ export default {
 
 .section-visa {
 	align-items: center;
+	background-color: white;
 	display: flex;
 	padding: 35px 0 18px 84px;
 	width: 100%;
