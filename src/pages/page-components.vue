@@ -82,9 +82,6 @@
 			</v-flex>
 				<container-company-data></container-company-data>
 		</v-layout>
-		<!-- <v-layout>
-			<form-bulletin></form-bulletin>
-		</v-layout> -->
 		<v-layout mt-3>
 			<app-footer></app-footer>
 		</v-layout>
@@ -114,7 +111,6 @@
 	const callMenu = () => import('@/components/header/call-menu');
 	const productCard = () => import('@/components/products/product-card');
 	const containerCompanyData = () => import('@/components/shared/company/container-company-data');
-	// const formBulletin = () => import('@/components/shared/form/form-bulletin');
 	const modalLogin = () => import('@/components/header/modal-login');
 	const appSearch = () => import('@/components/shared/inputs/app-input-search');
 	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
@@ -155,7 +151,6 @@
 			appInput,
 			containerCompanyData,
 			mediaFilterProduct,
-			// formBulletin,
 			callMenu,
 			productCard,
 			modalLogin,

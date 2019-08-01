@@ -1,9 +1,7 @@
 const route = {
-	path: '/login',
+	path: '/login/:tokenValidate?',
 	name: 'login',
-	meta: {
-		title: 'Iniciar Sesión',
-	},
+	props: true,
 	component: () => import('@/pages/page-login'),
 };
 

@@ -5,7 +5,7 @@
 			<div 
 				class="v-overlay v-overlay--absolute v-overlay--active mobile-overlay" 
 				@click="changeMenu"
-				v-if="showMenu"></div>
+				v-show="showMenu"></div>
   	</transition>
 	  <form-bulletin />
 	<transition name="slide-fade">
@@ -166,7 +166,7 @@ input.app-input::-webkit-input-placeholder {
 
 .slide-fade-enter, .slide-fade-leave-to {
 	opacity: 0;
-  	transform: translateX(10px);
+  transform: translateX(-20px);
 }
 
 .mobile-overlay {
