@@ -9,7 +9,7 @@
 			:img-height="width > 768 ? '39.3' : '38'"
 			title="Iniciar Sesión"
 			@on-submit="initSession"
-			@authenticate="authenticate"
+			@on-authenticate="authenticate"
 		>
 			<login-form
 				:model="model"
@@ -67,7 +67,7 @@
 		try {
 			const token = this.$auth.getToken();
 			const { data: response } = await this.$http.get(
-				'https://graph.facebook.com/v3.3/me?fields=id,email,first_name,last_name',
+				'https://graph.facebook.com/v4.0/me?fields=id,email,first_name,last_name',
 				{ params: { access_token: token } },
 			);
 			this.aclAuthentication(response);
