@@ -31,10 +31,10 @@ Vue.use(VueAuthenticate, {
 	baseUrl: process.env.ACL_URL,
 	providers: {
 		facebook: {
-			clientId: '663332910800121',
-			redirectUri: 'https://www.mistore.com.pe',
+			clientId: process.env.CLIENT_ID,
+			redirectUri: process.env.REDIRECT_URI,
 			responseType: 'token',
-			authorizationEndpoint: 'https://www.facebook.com/v3.3/dialog/oauth',
+			authorizationEndpoint: 'https://www.facebook.com/v4.0/dialog/oauth',
 		},
 	},
 });
@@ -52,6 +52,7 @@ const router = vueRouter(Vue);
 registerFilters(Vue);
 registerVuetify(Vue);
 Vue.prototype.$imageUrl = process.env.S3_IMAGES_URL;
+Vue.prototype.$clientId = process.env.CLIENT_ID;
 Vue.prototype.$userInfo = userInfo;
 Vue.config.productionTip = false;
 Vue.mixin(globalMixin);

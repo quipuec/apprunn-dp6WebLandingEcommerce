@@ -12,6 +12,7 @@
 			:heading-image="headingImage"
 			:img-height="imgHeight"
 			:title="title"
+			@authenticate="$emit('on-authenticate', $event)"
 			@on-submit="$emit('on-submit')"
 		>
 			<slot slot="form"></slot>
