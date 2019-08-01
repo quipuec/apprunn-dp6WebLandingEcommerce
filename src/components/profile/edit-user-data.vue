@@ -10,8 +10,13 @@
 				<app-input class="user-postcode" placeholder="Código postal"/>
 				<app-select class="user-department" placeholder="Departamento"/>
 				<app-input class="user-phone" placeholder="Teléfono"/>
+<<<<<<< HEAD
 				<app-input class="user-province" placeholder="Provincia"/>
 				<app-input class="user-district" placeholder="Distrito"/>
+=======
+				<app-select class="user-district" placeholder="Distrito"/>
+				<app-select class="user-province" placeholder="Provincia"/>
+>>>>>>> 4bbac2dea6c68d4baa6c0eeae52cc1172c9a0837
 			</form>
 			<section class="btn-section mb-2">
 				<app-button save action="Guardar" class="action-button save"/>
