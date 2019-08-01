@@ -2,6 +2,7 @@
 	<div>
 		<button
 			v-bind="$attrs"
+			v-on="$listeners"
 			class="app-button"
 			:class="{'thin': thin}"
 			:style="`background-color: ${background}; text-align: ${!img ? 'center' : 'left'} ; color: ${color}; border: ${border ? `1px solid ${border}` : null}`"
@@ -25,8 +26,8 @@
 		name: 'app-button',
 		inheritAttrs: false,
 		props: {
-			background: String,
 			action: String,
+			background: String,
 			img: String,
 			imgBorderColor: String,
 			imgHeight: [String, Number],
@@ -52,7 +53,6 @@
 		width: 100%;
 
 		@media (min-width: 764px) {
-			height: 49px;
 			max-width: 182px;
 		}
 

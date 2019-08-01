@@ -2,17 +2,22 @@
 	<button 
 		class="call-menu"
 		@click="toggleMenu">
-		<div class="call-menu-btn" :class="{open: menuIsVisible}">
-			<span class="call-menu-line"></span>
-			<span class="call-menu-line"></span>
-			<span class="call-menu-line"></span>
+		<div class="call-menu-btn" :class="{ 'open': menuIsVisible }">
+			<span :style="`background: ${color}`" class="call-menu-line"></span>
+			<span :style="`background: ${color}`" class="call-menu-line"></span>
+			<span :style="`background: ${color}`" class="call-menu-line"></span>
 		</div>
-		<p class="call-menu-text mt-2">{{text}}</p>
+		<p :style="`color: ${color}`" class="call-menu-text mt-2">{{text}}</p>
 	</button>
 </template>
 <script>
 function toggleMenu() {
 	this.menuIsVisible = !this.menuIsVisible;
+	this.$emit('change-menu');
+}
+
+function menu(value) {
+	this.menuIsVisible = value;
 }
 
 function data() {
@@ -28,7 +33,15 @@ export default {
 		toggleMenu,
 	},
 	props: {
+		color: String,
 		text: String,
+		menu: {
+			type: Boolean,
+			default: false,
+		},
+	},
+	watch: {
+		menu,
 	},
 };
 
@@ -37,7 +50,7 @@ export default {
 	.call-menu {
 		align-items: center;
 		display: inline-flex;
-    flex-direction: column;
+		flex-direction: column;
 	}
 
 	.call-menu-btn {
@@ -48,12 +61,11 @@ export default {
 		transition: .5s ease-in-out;
 		width: 36px;
 		
-		@media (max-width: 500px) {
+		@media (max-width: 764px) {
 			border: none;
 		}
 
 		.call-menu-line {
-			background: color(primary);
 			display: block;
 			height: 2px;
 			left: 9px;
@@ -76,7 +88,7 @@ export default {
 				transform-origin: left center;
 			}
 
-			@media (max-width: 500px) {
+			@media (max-width: 764px) {
 				width: 18px;
 			}
 		}
@@ -87,7 +99,7 @@ export default {
 				top: 9px;
 				transform: rotate(45deg);
 
-				@media (max-width: 500px) {
+				@media (max-width: 764px) {
 					top: 7px;
 				}
 			}
@@ -106,11 +118,11 @@ export default {
 	}
 
 	.call-menu-text {
-		color: color(primary);
 		font-family: font(bold);
 		font-size: size(msmall);
+		margin-bottom: 0px;
 
-		@media (max-width: 500px) {
+		@media (max-width: 764px) {
 			display: none;
 		}
 	}

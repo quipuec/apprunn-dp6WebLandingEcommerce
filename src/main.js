@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuelidate from 'vuelidate';
 import VueAnalytics from 'vue-analytics';
+import VueSimpleSVG from 'vue-simple-svg';
 import VueTheMask from 'vue-the-mask';
 import 'normalize.css';
 import App from './App';
@@ -20,6 +21,7 @@ import helper from './shared/helper';
 
 Vue.use(VueTheMask);
 Vue.use(Vuelidate);
+Vue.use(VueSimpleSVG);
 Vue.use(VueAnalytics, {
 	id: 'UA-XXXXXXX-1',
 	autoTracking: {

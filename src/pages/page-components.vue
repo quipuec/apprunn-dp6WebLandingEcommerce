@@ -31,7 +31,7 @@
 				Boton categoría
 			</v-flex>
 			<v-flex xs12>
-				<call-menu text="Categorías"/>
+				<call-menu :color="baseColor" text="Categorías"/>
 			</v-flex>
 		</v-layout>
 		<v-layout>
@@ -39,11 +39,11 @@
 				Tarjetas de producto
 			</v-flex>
 			<section class="product-section">
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
 			</section>
 		</v-layout>
 		<v-layout wrap>
@@ -85,6 +85,26 @@
 		<v-layout>
 			<form-bulletin></form-bulletin>
 		</v-layout>
+		<v-layout mt-3>
+			<app-footer></app-footer>
+		</v-layout>
+		<v-layout wrap>
+			<v-flex xs12>
+				item menu categoria
+			</v-flex>
+			<v-flex xs12>
+				<item-menu 
+				:data="dataCategory" 
+				color-select="#ed0000"/>
+			</v-flex>
+		</v-layout>
+		<v-layout wrap>
+			<media-filter-product
+			image="/static/img/icons/icon-filter-product.svg"
+			title="Novedades"
+			color="white"
+			></media-filter-product>
+		</v-layout>	
 	</div>
 </template>
 
@@ -99,9 +119,13 @@
 	const appSearch = () => import('@/components/shared/inputs/app-input-search');
 	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
+	const appFooter = () => import('@/components/footer/app-footer');
+	const itemMenu = () => import('@/components/header/item-menu');
+	const mediaFilterProduct = () => import('@/components/shared/products/media-filter-product');
 
 	function data() {
 		return {
+			baseColor: process.env.COLOR_BASE,
 			imagesButton: [
 				{
 					image: '/static/img/heart.svg',
@@ -114,15 +138,23 @@
 					height: 20,
 				},
 			],
+			nameCategory: 'Mallas',
+			dataCategory: {
+				urlImage: '/static/img/category-malla.svg',
+				name: 'Malla',
+				select: false,
+			},
 		};
 	}
 	export default {
 		name: 'components',
 		data,
 		components: {
+			appFooter,
 			appButton,
 			appInput,
 			containerCompanyData,
+			mediaFilterProduct,
 			formBulletin,
 			callMenu,
 			productCard,
@@ -130,6 +162,7 @@
 			appSearch,
 			buttonImage,
 			mediaCompanyData,
+			itemMenu,
 		},
 	};
 </script>
