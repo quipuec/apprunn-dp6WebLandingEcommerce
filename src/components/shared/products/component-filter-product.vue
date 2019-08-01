@@ -46,10 +46,12 @@ export default {
 	padding: 8px 190px;
 	width: 100%;
 
-	@media (max-width: 750px) {
+	@media (max-width: 950px) {
+		height: 102px;
 		grid-template-columns: auto auto;
 		// padding: 8px 46px;
 		width: 100%;
+		padding: 8px 80px;
 	}
 }
 </style>

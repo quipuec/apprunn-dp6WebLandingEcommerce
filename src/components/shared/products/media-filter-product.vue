@@ -40,11 +40,22 @@ export default {
 
 .box-filter {
 	display: flex;
+	justify-content: center;
 	padding: 0 46px;
+	margin-bottom: 6px;
 
 	@media (max-width: 750px) {
-		padding: 13px 0;
+		padding: 3px 0;
 	}
+}
+
+.box-filter:nth-child(1) {
+	border-bottom: 1px solid white;
+	padding-bottom: 13px;
+}
+
+.box-filter:nth-child(2) {
+	border-bottom: 1px solid white;
 }
 
 .circle-filter-product {
