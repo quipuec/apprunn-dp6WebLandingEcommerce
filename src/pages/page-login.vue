@@ -9,7 +9,7 @@
 			:img-height="width > 768 ? '39.3' : '38'"
 			title="Iniciar Sesión"
 			@on-submit="initSession"
-			@authenticate="authenticate"
+			@on-authenticate="authenticate"
 		>
 			<login-form
 				:model="model"
