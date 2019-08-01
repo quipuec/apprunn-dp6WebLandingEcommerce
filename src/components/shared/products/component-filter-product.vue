@@ -1,5 +1,5 @@
 <template>
-		<div class="component-filter-product">
+	<div class="component-filter-product">
 		<media-filter-product
 		border-right="#ffffff"
 		image="/static/img/icons/icon-filter-product.svg"
@@ -23,7 +23,7 @@
 		title="Ofertas"
 		color="white"
 		></media-filter-product>
-		</div>
+	</div>
 </template>
 
 <script>
