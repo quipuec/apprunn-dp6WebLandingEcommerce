@@ -46,20 +46,22 @@ export default {
 
 	@media (max-width: 750px) {
 		padding: 3px 0;
+		margin-bottom: 6px;
 	}
 }
 
 .box-filter:nth-child(1) {
-	border-bottom: 1px solid white;
+	border-bottom: 1px solid color(white);
 	padding-bottom: 13px;
 }
 
 .box-filter:nth-child(2) {
-	border-bottom: 1px solid white;
+	border-bottom: 1px solid color(white);
+	border-right: none !important;
 }
 
 .circle-filter-product {
-	background-color: #ffffff;
+	background-color: color(white);
 	border-radius: 50%;
 	height: 4px;
 	margin-left: 4px;
@@ -67,7 +69,7 @@ export default {
 }
 
 .border-bottom-product {
-	background-color: #ffffff;
+	background-color: color(white);
 	border-radius: 3px;
 	height: 4px;
 	width: 71px;
@@ -85,8 +87,8 @@ export default {
 }
 
 .filter-title {
+	align-items: flex-start;
 	display: flex;
 	flex-direction: column;
-	align-items: flex-start;
 }
 </style>
