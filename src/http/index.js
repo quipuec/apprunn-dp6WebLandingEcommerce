@@ -20,7 +20,7 @@ export function httpResponseInterceptor(error) {
 	let text = 'Su sesión expiró.';
 	const status = error.response.status;
 	if (status === 401) {
-		text = 'Token no válido';
+		text = 'Correo o contraseña inválidos';
 	} else if (status === 400) {
 		text = errors(error.response);
 	} else if (status === 403) {

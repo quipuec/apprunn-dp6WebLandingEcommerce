@@ -52,6 +52,7 @@
 				({ email: this.model.email } = params);
 				this.model.password = null;
 			} else if (response.data && response.data.token) {
+				localStorage.clear();
 				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, response.data.token);
 				this.$store.dispatch('setToken', response.data.token);
 				this.getCustomerData();
@@ -123,6 +124,7 @@
 			);
 			const { token } = response;
 			if (token) {
+				localStorage.clear();
 				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, token);
 				this.$store.dispatch('setToken', token);
 				this.getCustomerData();

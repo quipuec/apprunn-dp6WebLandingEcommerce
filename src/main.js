@@ -76,7 +76,6 @@ async function created() {
 	if (token) {
 		const { data: response } = await this.$httpSales.get('customers/current');
 		helper.setLocalData('ecommerce-user', response);
-		helper.setLocalData('acl-code', response.aclCode);
 		this.$store.dispatch('setUser', response);
 		Vue.prototype.$userInfo = this.$store.getters.user;
 	}
