@@ -7,7 +7,7 @@
 				@click="changeMenu"
 				v-show="showMenu"></div>
   	</transition>
-	  <form-bulletin />
+	<form-bulletin />
 	<transition name="slide-fade">
 		<app-menu-category 
 			v-if="showMenu" 

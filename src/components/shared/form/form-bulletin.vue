@@ -54,7 +54,7 @@ export default {
 }
 
 .text-subscription::before {
-		border-top: 1px solid color(border);
+		border-top: 1px solid color(semi-light);
 		content: '';
 		color: color(dark);
 		height: 3px;
@@ -70,7 +70,7 @@ export default {
 }
 
 .text-subscription::after {
-	border-top: 1px solid color(border);
+	border-top: 1px solid color(semi-light);
 	color: color(dark);
 	content: '';
 	height: 3px;
