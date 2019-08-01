@@ -5,10 +5,11 @@ export function httpRequestInterceptor(config) {
 	const headers = config.headers;
 	if (store.state.token) {
 		headers.common.Authorization = `Bearer ${store.state.token}`;
-		store.dispatch('toggleLoading', true);
 	} else {
-		this.$router.push({ name: 'register' });
+		const publicToken = process.env.TOKEN;
+		headers.common.Authorization = `Bearer ${publicToken}`;
 	}
+	store.dispatch('toggleLoading', true);
 	return config;
 }
 

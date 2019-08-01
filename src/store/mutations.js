@@ -25,12 +25,24 @@ function UPDATE_POLL_PROGRESS(state, number) {
 	Vue.set(state.pollData, 'progress', state.pollData.progress + number);
 }
 
+function SET_PRODUCTS(state, products) {
+	Vue.set(state.products, 'list', products);
+}
+
+function SET_PRODUCT_TO_BUY(state, product) {
+	const newProduct = { ...product };
+	newProduct.quantity = 1;
+	Vue.set(state.products, 'toBuy', state.products.toBuy.concat({ ...newProduct }));
+}
+
 const methods = {
 	clearUser,
 	setToken,
 	setUser,
 	showSnackBar,
 	toggleLoading,
+	SET_PRODUCTS,
+	SET_PRODUCT_TO_BUY,
 	UPDATE_POLL_PROGRESS,
 };
 

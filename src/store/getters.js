@@ -30,8 +30,13 @@ function pollData(state) {
 	return state.pollData;
 }
 
+function getProducts(state) {
+	return state.products.list;
+}
+
 const methods = {
 	companyLogo,
+	getProducts,
 	indeterminate,
 	pollData,
 	snackbar,

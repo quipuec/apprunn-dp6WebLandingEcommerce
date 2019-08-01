@@ -13,6 +13,7 @@ module.exports = {
 	COMMERCE_CODE: `'${process.env.COMMERCE_CODE}'`,
 	COMPANY_LOGIN_TITLE: `'${process.env.COMPANY_LOGIN_TITLE}'`,
 	COMPANY_LOGO: `'${process.env.COMPANY_LOGO}'`,
+	COLOR_DARK: `'${process.env.COLOR_DARK}'`,
 	DEFAULT_AVATAR: `'${process.env.DEFAULT_AVATAR}'`,
 	FORM_BACKGROUND: `'${process.env.FORM_BACKGROUND}'`,
 	PRODUCTS_URL: `'${process.env.PRODUCTS_URL}'`,
