@@ -1,13 +1,14 @@
 const asyncActions = {
-	LOAD_PRODUCTS: async ({ commit }, { context, params = {} }) => {
+	LOAD_PRODUCTS: async ({ commit, state }, { context }) => {
+		const { params } = state.products;
 		const request = [];
 		if (context.token) {
 			const headers = {
 				Authorization: `Bearer ${context.token}`,
 			};
-			request.push(context.$http.get('products/favorites', { headers, params }));
+			request.push(context.$httpProducts.get('products/favorites', { headers, params }));
 		} else {
-			request.push(context.$http.get('products-public', { params }));
+			request.push(context.$httpProducts.get('products-public', { params }));
 		}
 		const [{ data: products }] = await Promise.all(request);
 		commit('SET_PRODUCTS', products);

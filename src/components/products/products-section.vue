@@ -15,7 +15,7 @@
 import { mapGetters } from 'vuex';
 
 function beforeCreate() {
-	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params: this.getProductsParams });
+	this.$store.dispatch('LOAD_PRODUCTS', { context: this });
 }
 
 function data() {

@@ -63,8 +63,10 @@
 			height: 31px;
 			line-height: 31px;
 			margin-right: 11px;
-			padding: 3px 14px;
+			padding: 3px 0px;
+			text-align: center;
 			vertical-align: middle;
+			width: 41px;
 		}
 
 		&.thin {
