@@ -85,6 +85,9 @@
 		<v-layout>
 			<form-bulletin></form-bulletin>
 		</v-layout>
+		<v-layout mt-3>
+			<app-footer></app-footer>
+		</v-layout>
 		<v-layout wrap>
 			<v-flex xs12>
 				item menu categoria
@@ -116,6 +119,7 @@
 	const appSearch = () => import('@/components/shared/inputs/app-input-search');
 	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
+	const appFooter = () => import('@/components/footer/app-footer');
 	const itemMenu = () => import('@/components/header/item-menu');
 	const mediaFilterProduct = () => import('@/components/shared/products/media-filter-product');
 
@@ -145,6 +149,7 @@
 		name: 'components',
 		data,
 		components: {
+			appFooter,
 			appButton,
 			appInput,
 			containerCompanyData,

@@ -1,8 +1,18 @@
 <template>
 	<v-app>
-		<app-header :logo="logo" @change-menu="changeMenu"/>
+		<app-header :logo="logo" @change-menu="changeMenu" :menu="showMenu"/>
 		<transition name="slide-fade">
-			<app-menu-category v-show="showMenu"/>
+			<div 
+				class="v-overlay v-overlay--absolute v-overlay--active mobile-overlay" 
+				@click="changeMenu"
+				v-if="showMenu"></div>
+  	</transition>
+		<transition name="slide-fade">
+			<app-menu-category 
+				v-if="showMenu" 
+				:img-user="user"
+				:color-base="colorBase"
+				:color-border="colorBorder"/>
   	</transition>
 		<v-progress-linear
 			class="progress-bar"
@@ -58,6 +68,13 @@ function data() {
 			height: 30,
 		},
 		showMenu: false,
+		user: {
+			urlImage: '/static/img/user.svg',
+			name: 'Login',
+			height: 25,
+		},
+		colorBase: process.env.COLOR_BASE,
+		colorBorder: process.env.COLOR_BORDER,
 	};
 }
 
@@ -2096,14 +2113,47 @@ input.app-input::-webkit-input-placeholder {
 	}
 }
 
+.ecommerce-select {
+	background-color: color(background) !important;
+	color: color(base);
+	font-family: font(medium) !important;
+	height: 46.8px !important;
+
+	.v-input__control {
+
+		.v-input__slot {
+			border: 1px solid color(border) !important;
+			border-radius: 5px !important;
+			height: -webkit-fill-available !important;
+			min-height: inherit !important;
+
+			.v-select__selections {
+				padding-top: 0 !important;
+			}
+
+			.v-input__append-inner {
+				margin-top: 10px !important;
+			}
+		}
+	}
+}
+
 .slide-fade-enter-active {
-  transition: all .8s ease;
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 .slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 .slide-fade-enter, .slide-fade-leave-to {
 	opacity: 0;
   transform: translateX(10px);
+}
+
+.mobile-overlay {
+	display: none;
+
+	@media (max-width: 764px) {
+		display: block;
+	}
 }
 </style>
