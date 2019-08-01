@@ -2,8 +2,10 @@
 	<div class="form-bulletin">
 		<div class="content-description">
 			<p class="text-subscription">Suscríbete a Boletín</p>
-			<input type="text" placeholder="Ingresa tu correo Electrónico" class="input-form">
-			<button class="button-form">Suscríbete</button>
+			<div class="content-email">
+				<input type="text" placeholder="Ingresa tu correo Electrónico" class="input-form">
+				<button class="button-form">Suscríbete</button>
+			</div>
 		</div>
 		<div class="form-bulletin-description-company">
 			<div class="content-date-company">
@@ -144,6 +146,7 @@ export default {
 	min-height: 39px;
 	padding-left: 13px;
 	position: relative;
+	bottom: 1px;
 	width: 282px;
 
 	@media (max-width: 650px) {
@@ -163,5 +166,10 @@ export default {
 
 .content-description {
 	position: relative;
+}
+
+.content-email {
+	display: flex;
+	align-items: center;
 }
 </style>
