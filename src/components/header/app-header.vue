@@ -132,10 +132,12 @@ export default {
 		display: flex;
 		height: 76px;
 		padding: 0px 6%;
+		position: relative;
+		overflow: hidden;
 
 		@media (min-width: 768px) {
 			height: 99px;
-			overflow: hidden;
+			overflow: inherit;
 			padding: 0px 6%;
 		}
 	}
@@ -251,6 +253,7 @@ export default {
 	.app-modal-login {
 		position: absolute;
 		right: calc(6% + 85px);
+		top: 70px;
 		z-index: 6;
 
 		@media (max-width: 764px) {

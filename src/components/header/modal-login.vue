@@ -51,6 +51,7 @@ export default {
 	.label-modal {
 		color: color(base);
 		font-family: font(regular);
+		font-size: size(xsmall);
 	}
 </style>
 
