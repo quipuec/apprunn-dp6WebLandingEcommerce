@@ -79,8 +79,8 @@ export default {
 	content: '';
 	height: 2px;
 	position: absolute;
-	top: 9px;
 	right: 0px;
+	top: 9px;
 	width: 120px;
 
 	@media (max-width: 850px) {
