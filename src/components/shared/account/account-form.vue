@@ -18,14 +18,15 @@
 					type="submit"
 				></app-button>
 			</v-flex>
-			<v-flex xs12 text-xs-center v-if="facebook">
+			<v-flex xs12 mt-2 text-xs-center v-if="facebook">
 				<app-button
 					action="Iniciar Sesión"
 					:background="colorFacebook"
-					:disabled="disabled"
 					img="http://www.sclance.com/pngs/facebook-logo-white-png/facebook_logo_white_png_466292.png"
-					:img-border-color="colorFacebook"
+					img-border-color="#324988"
 					img-height="25"
+					type="button"
+					@click="$emit('authenticate', 'facebook')"
 				></app-button>
 			</v-flex>
 		</v-layout>
