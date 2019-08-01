@@ -31,18 +31,13 @@ export default {
 	background-color: color(dark);
 	border-bottom-right-radius: 6px;
 	border-top-right-radius: 6px;
+	bottom: 1px;
 	color: color(white);
 	font-family: font(demi);
 	font-size: size(medium);
 	min-height: 39px;
+	position: relative;
 	width: 128px;
-
-	@media screen and (max-width: 850px) {
-		font-size: size(small);
-		position: relative;
-  	top: -1px;
-		width: 65px;
-	}
 }
 
 .text-subscription {
@@ -53,35 +48,36 @@ export default {
 	text-align: center;
 
 	@media (max-width: 850px) {
+		margin-bottom: 31px;
 		text-align: center;
 	}
 }
 
 .text-subscription::before {
-		border-top: 1px solid #4a4a4a;
+		border-top: 1px solid color(border);
 		content: '';
-		color: #4a4a4a;
-		height: 2px;
-		left: 0px;
+		color: color(dark);
+		height: 3px;
+		left: 10px;
   	position: absolute;
 		top: 9px;
-		width: 120px;
+		width: 110px;
 	@media (max-width: 850px) {
-		left: 12px;
+		left: 15px;
 		width: 80px;
 	}
 
 }
 
 .text-subscription::after {
-	border-top: 1px solid #4a4a4a;
-	color: #4a4a4a;
+	border-top: 1px solid color(border);
+	color: color(dark);
 	content: '';
-	height: 2px;
+	height: 3px;
 	position: absolute;
-	right: 0px;
+	right: 8px;
 	top: 9px;
-	width: 120px;
+	width: 110px;
 
 	@media (max-width: 850px) {
 		right: 12px;
@@ -96,7 +92,7 @@ export default {
 	display: flex;
 	justify-content: space-around;
 	min-height: 209px;
-	padding: 40px 0px;
+	padding: 40px 0;
 	width: 100%;
 
 	@media (max-width: 850px) {
@@ -105,16 +101,22 @@ export default {
 }
 
 .item-date-company {
+	color: color(dark);
+	font-family: font(bold);
+	font-size: 16px;
 	margin: 0 0 0 20px;
-	max-width: 109px;
+	max-width: 136px;
 
 	@media (max-width: 850px) {
+		font-size: size(xlarge);
+		max-width: 151px;
 		padding-top: 17px;
 	}
 }
 
 .content-date-company {
 	align-items: center;
+	color: color(dark);
 	display: flex;
 	margin-top: 11px;
 
@@ -124,8 +126,9 @@ export default {
 }
 
 .item-date-direction {
+	font-size: size(minmedium);
 	margin: 0 0 0 20px;
-	max-width: 190px;
+	max-width: 170px;
 
 	@media (max-width: 850px) {
 		padding-top: 17px;
@@ -141,12 +144,12 @@ export default {
 	min-height: 39px;
 	padding-left: 13px;
 	position: relative;
-	width: 281px;
+	width: 282px;
 
 	@media (max-width: 650px) {
-		font-size: size(msmall);
-		padding-left: 5px;
-		width: 160px;
+		font-size: size(minmedium);
+		padding-left: 13px;
+		width: 197px;
 	}
 }
 
