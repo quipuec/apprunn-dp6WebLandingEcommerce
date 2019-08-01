@@ -1,5 +1,6 @@
 <template>
 	<v-app>
+		<app-banner-top :data="bannerTop"/>
 		<app-header :logo="logo" @change-menu="changeMenu" :menu="showMenu"/>
 		<transition name="slide-fade">
 			<div 
@@ -47,6 +48,7 @@
 <script>
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
+const appBannerTop = () => import('@/components/header/app-banner-top');
 
 function indeterminate() {
 	return this.$store.getters.indeterminate;
@@ -75,6 +77,10 @@ function data() {
 		},
 		colorBase: process.env.COLOR_BASE,
 		colorBorder: process.env.COLOR_BORDER,
+		bannerTop: {
+			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-top.png',
+			image: 'descuento',
+		},
 	};
 }
 
@@ -88,6 +94,7 @@ export default {
 	components: {
 		appHeader,
 		appMenuCategory,
+		appBannerTop,
 	},
 	methods: {
 		changeMenu,

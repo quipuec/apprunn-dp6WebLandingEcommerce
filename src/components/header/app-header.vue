@@ -117,6 +117,7 @@ export default {
 <style lang="scss" scoped>
 	.app-header {
 		background: color(white);
+		box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.11);
 		overflow: hidden;
 		padding: 25px 6%;
 	}
