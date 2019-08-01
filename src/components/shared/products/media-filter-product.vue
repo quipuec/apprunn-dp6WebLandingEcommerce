@@ -34,7 +34,7 @@ export default {
 	background-color: color(primary);
 	display: flex;
 	flex-direction: row;
-	padding: 10px 39px;
+	padding: 0 46px;
 
 	@media (max-width: 750px) {
 		border-bottom: 1px solid white;
