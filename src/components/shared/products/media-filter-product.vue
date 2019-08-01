@@ -52,7 +52,6 @@ export default {
 
 .box-filter:nth-child(1) {
 	border-bottom: 1px solid color(white);
-	padding-bottom: 13px;
 }
 
 .box-filter:nth-child(2) {
