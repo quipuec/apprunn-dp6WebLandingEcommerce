@@ -43,12 +43,13 @@ export default {
 	display: grid;
 	grid-template-columns: auto auto auto auto;
 	height: 67px;
-	padding: 8px 225px;
+	padding: 8px 190px;
 	width: 100%;
 
 	@media (max-width: 750px) {
 		grid-template-columns: auto auto;
-		width: 100%; 
+		// padding: 8px 46px;
+		width: 100%;
 	}
 }
 </style>

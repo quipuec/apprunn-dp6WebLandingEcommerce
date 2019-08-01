@@ -95,9 +95,6 @@
 				color-select="#ed0000"/>
 			</v-flex>
 		</v-layout>
-		<v-layout wrap>
-			<component-filter-product></component-filter-product>
-		</v-layout>	
 	</div>
 </template>
 

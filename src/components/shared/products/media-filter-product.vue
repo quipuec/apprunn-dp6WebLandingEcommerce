@@ -1,10 +1,17 @@
 <template>
-		<button class="box-filter"
-		:style="`border-right: ${borderRight ? `1px solid ${borderRight}` : null}`">
-			<img :src="image" alt="">
-			<p class="title-filter">{{title}}</p>
-			<p class="circle-filter"></p>
-		</button>
+	<button class="box-filter"
+	:style="`border-right: ${borderRight ? `1px solid ${borderRight}` : null}`">
+			<div>
+				<img :src="image" alt="">
+			</div>
+			<div class="filter-title">
+				<p class="title-filter">{{title}}</p>
+				<div class="content-border">
+					<div class="border-bottom-product"></div>
+					<div class="circle-filter-product"></div>
+				</div>
+			</div>
+	</button>
 </template>
 
 <script>
@@ -27,28 +34,48 @@ export default {
 	padding-left: 7px;
 	&:hover {
 		border-radius: 3px;
-		border-bottom: 3px solid white;
 		font-family: font(bold);
 	}
 }
 
-.circle-filter {
-	border-radius: 50%;
-	height: 4px;
-	width: 4px;
-	background-color: white;
-	position: relative;
-}
-
 .box-filter {
-	align-items: center;
 	display: flex;
-	flex-direction: row;
-	justify-content: center;
 	padding: 0 46px;
 
 	@media (max-width: 750px) {
-		border-bottom: 1px solid white;
+		padding: 13px 0;
 	}
+}
+
+.circle-filter-product {
+	background-color: #ffffff;
+	border-radius: 50%;
+	height: 4px;
+	margin-left: 4px;
+	width: 4px;
+}
+
+.border-bottom-product {
+	background-color: #ffffff;
+	border-radius: 3px;
+	height: 4px;
+	width: 71px;
+}
+
+.content-border {
+	display: flex;
+	margin-left: 7px;
+	position: relative;
+}
+
+.content-border:nth-child(4) {
+	position: relative;
+	left: 50px;
+}
+
+.filter-title {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
 }
 </style>
