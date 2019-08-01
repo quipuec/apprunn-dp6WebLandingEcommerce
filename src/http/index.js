@@ -7,7 +7,7 @@ export function httpRequestInterceptor(config) {
 		headers.common.Authorization = `Bearer ${store.state.token}`;
 		store.dispatch('toggleLoading', true);
 	} else {
-		this.$router.push('login');
+		this.$router.push({ name: 'register' });
 	}
 	return config;
 }
@@ -21,7 +21,7 @@ export function httpResponseInterceptor(error) {
 	store.dispatch('toggleLoading', false);
 	let text = 'Su sesión expiró.';
 	const status = error.response.status;
-	const loginRoute = { name: 'login' };
+	const loginRoute = { name: 'register' };
 	if (status === 401) {
 		this.$router.push(loginRoute);
 	} else if (status === 400) {
