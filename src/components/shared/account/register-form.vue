@@ -23,6 +23,7 @@
 			</v-flex>
 			<v-flex xs12 pb-4 text-xs-left>
 				<app-input
+					:disabled="emailDisabled"
 					type="email"
 					placeholder="E-mail"
 					:value="model.email"
@@ -90,6 +91,10 @@
 		},
 		props: {
 			checkColor: String,
+			emailDisabled: {
+				default: false,
+				type: Boolean,
+			},
 			flagTyc: {
 				default: false,
 				type: Boolean,
