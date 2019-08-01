@@ -2,6 +2,7 @@
 	<div>
 		<button
 			v-bind="$attrs"
+<<<<<<< HEAD
 			:class="[
 				'app-button',
 				{ 'save-btn': save },
@@ -10,6 +11,12 @@
 			]"
 			:style="`background-color: ${background}; text-align: ${!img ? 'center' : 'left'} ; color: ${color}; border: ${border ? `1px solid ${border}` : null}`"
 			@click="clicked"
+=======
+			v-on="$listeners"
+			class="app-button"
+			:class="{'thin': thin}"
+			:style="`background-color: ${background}; text-align: ${!img ? 'center' : 'left'} ; color: ${color}; border: ${border ? `1px solid ${border}` : null}`"
+>>>>>>> 4411ae3d5b20b6cff15fd2950565fa43c86673aa
 		>
 			<span class="span-img" :style="`border-color: ${imgBorderColor}`" v-if="img">
 				<img
@@ -26,26 +33,16 @@
 </template>
 
 <script>
-
-	function clicked() {
-		this.$emit('click');
-	}
-
 	export default {
 		name: 'app-button',
 		inheritAttrs: false,
-		methods: {
-			clicked,
-		},
 		props: {
 			action: String,
 			background: String,
-			cancel: Boolean,
 			img: String,
 			imgBorderColor: String,
 			imgHeight: [String, Number],
 			imgWidth: [String, Number],
-			save: Boolean,
 			color: {
 				type: String,
 				default: 'white',
@@ -87,13 +84,5 @@
 			font-size: size(small);
 			width: 170px;
 		}
-	}
-
-	.save-btn {
-		background-color: color(secondary);
-	}
-
-	.cancel-btn {
-		background-color: color(primary);
 	}
 </style>

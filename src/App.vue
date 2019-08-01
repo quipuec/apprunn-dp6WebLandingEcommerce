@@ -1,8 +1,18 @@
 <template>
 	<v-app>
-		<app-header :logo="logo" @change-menu="changeMenu"/>
+		<app-header :logo="logo" @change-menu="changeMenu" :menu="showMenu"/>
 		<transition name="slide-fade">
-			<app-menu-category v-show="showMenu"/>
+			<div 
+				class="v-overlay v-overlay--absolute v-overlay--active mobile-overlay" 
+				@click="changeMenu"
+				v-if="showMenu"></div>
+  	</transition>
+		<transition name="slide-fade">
+			<app-menu-category 
+				v-if="showMenu" 
+				:img-user="user"
+				:color-base="colorBase"
+				:color-border="colorBorder"/>
   	</transition>
 		<v-progress-linear
 			class="progress-bar"
@@ -53,11 +63,18 @@ function changeMenu() {
 function data() {
 	return {
 		logo: {
-			image: '/static/img/mrc-logo.png',
-			name: 'MRC',
+			image: process.env.COMPANY_LOGO,
+			name: process.env.COMPANY_LOGIN_TITLE,
 			height: 30,
 		},
 		showMenu: false,
+		user: {
+			urlImage: '/static/img/user.svg',
+			name: 'Login',
+			height: 25,
+		},
+		colorBase: process.env.COLOR_BASE,
+		colorBorder: process.env.COLOR_BORDER,
 	};
 }
 
@@ -79,85 +96,11 @@ export default {
 </script>
 
 <style lang="scss">
-
-.table-area {
-	.column .sortable .active .asc .text-xs-left {
-		display: none !important;
-	}	
-}
-
-.open-modal {
-	.v-btn__content {
-		color: map-get($colors, white) !important;
-		font-family: map-get($fonts, bold);
-		font-size: 14px;
-	}
-
-	.v-dialog .v-dialog--active .v-dialog--persistent {
-		bottom: 0 !important;
-		position: absolute !important;
-	}
-}
-
-.table-list {
-	.theme--light.v-btn:not(.v-btn--icon):not(.v-btn--flat) {
-		background-color: transparent;
-	}
-
-	.v-btn:not(.v-btn--depressed):not(.v-btn--flat) {
-		box-shadow: none;
-	}
-}
-
-.employees {
-	.v-btn__content {
-		font-size: map-get($fonts, small);
-	}
-
-	.v-select.v-text-field--enclosed:not(.v-text-field--single-line) .v-select__selections {
-		padding: 6px !important;
-	}
-
-	.v-input__slot {
-		width: 206px !important;
-	}
-
-	.v-btn {
-		height: 31px !important;
-	}
-
-	.v-btn:not(.v-btn--depressed):not(.v-btn--flat) {
-		box-shadow: none !important;
-	}
-
-	.theme--light.v-label {
-		color: map-get($colors, gray-medium) !important;
-	}
-	
-	.v-btn__content {
-		color: map-get($colors, secondary);
-	}
-
-	.theme--light.v-btn:not(.v-btn--icon):not(.v-btn--flat) {
-		background-color: map-get($colors, border-gray);
-		border: solid 1px map-get($colors, secondary);
-		border-radius: 4px;
-	}
-}
-
-.theme--light.v-text-field--box > .v-input__control > .v-input__slot {
-	background-color: none !important;
-}
-
 html, body {
 	color: color(black) !important;
 	font-family: font(regular) !important;
-	font-size: map-get($sizes, medium);
+	font-size: size(medium);
 	overflow-x: auto;
-}
-
-html, body.survey-page {
-	min-width: 0px !important;
 }
 
 input[type='number']::-webkit-inner-spin-button,
@@ -166,702 +109,68 @@ input[type='number']::-webkit-outer-spin-button {
 	margin: 0;
 }
 
-.application {
-	font-family: map-get($fonts, regular) !important;
+button {
+	cursor: pointer;
+	min-width: 5px;
+	outline: none;
 }
 
-.content {
-	background: color(white);
-	padding: 133px 12px 0px !important;
+input.app-input::-webkit-input-placeholder {
+	color: color(border);
+	font-family: font(demi) !important;
+	font-size: size(minmedium) !important;
+	font-weight: normal !important;
+}
 
-	&--wrap {
-		background-color: map-get($colors, white);
-		padding: 0px 12px;
-	}
-
-	@media (min-width: 768px) {
-		padding: 80px 0px 0px !important;
-	}
-
-	@media (min-width: 1264px) {
-		padding: 80px 0px 0px 53px !important;
+.product-rating {
+	.v-icon {
+		padding: 0.2rem !important;
 	}
 }
 
-.chk-all {
-	&.v-input-group {
-		.v-input-group__input {
-			.icon {
-				font-size: map-get($sizes, xlarge) !important;
-				height: map-get($sizes, xlarge);
-			}
-		}
-		.v-input-group__details {
-			display: none;
-		}
-	}
+.slide-fade-enter-active {
+  	transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 
-.bars-align {
-	max-width: 100%;
-
-	.v-list__tile {
-		border-bottom: 4px solid map-get($colors, success);
-		height: 72px;
-		justify-content: flex-end;
-		padding: 14px 0 21px;
-
-		&--avatar {
-			height: auto !important;
-		}
-	}
-
-	.v-btn {
-		color: map-get($colors, success);
-	}
-
-	.logo-company {
-		height: 72px;
-		margin-bottom: 21px;
-	}
-
-	.wrapper-avatar {
-		border-radius: 50%;
-	}
-
-	.icon-avatar {
-		height: 72px;
-		width: 72px;
-	}
-
-	.v-avatar {
-		border: 5px solid map-get($colors, white);
-		border-radius: 50%;
-		height: 76px !important;
-		width: 76px !important;
-	}
-
-	.avatar {
-		&-image {
-			justify-content: center;
-			margin-bottom: 21px;
-		}
-
-		&-name {
-			color: map-get($colors, white);
-			font-size: 16px;
-			font-family: map-get($fonts, bold);
-			text-align: center;
-		}
-
-		&-position {
-			color: map-get($colors, white);
-			font-family: map-get($fonts, light);
-			margin-bottom: 15px;
-			text-align: center;
-		}
-	}
+.slide-fade-leave-active {
+  	transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 
+.ecommerce-select {
+	background-color: color(background) !important;
+	color: color(base);
+	font-family: font(medium) !important;
+	height: 46.8px !important;
 
-.v-snack {
-	.v-btn {
-		color: map-get($colors, white) !important;
-	}
-}
+	.v-input__control {
 
-.pa-0 {
-	main.content {
-		padding: 0px !important;
-	}
-}
+		.v-input__slot {
+			border: 1px solid color(border) !important;
+			border-radius: 5px !important;
+			height: -webkit-fill-available !important;
+			min-height: inherit !important;
 
-.progress-bar {
-	left: 0px !important;
-	margin: 0px !important;
-	position: fixed !important;
-	right: 0px !important;
-	top: 120px !important;
-	z-index: 3;
-
-	@media (min-width: 768px) {
-		top: 72px !important;
-	}
-}
-
-.sidebar-bg {
-	&.v-list {
-		.v-list__group {
-			&__header {
-				&__prepend-icon,
-				&__append-icon {
-					display: none;
-				}
-
-				&:hover {
-					background: map-get($colors, black-bold);
-				}
-
-				.v-list__tile {
-					font-family: map-get($fonts, open-semibold);
-					font-size: map-get($sizes, xlarge);
-					padding: 0 16px 0 26px;
-
-					&:hover,
-					&--active {
-						background: transparent;
-
-						.item-action-sidebar {
-							.v-tooltip {
-								img {
-									filter: none;
-								}
-							}
-						}
-					}
-				}
-
-				.item-select {
-					background: map-get($colors, success);
-					border-radius: 0 41px 41px 0;
-					height: 100%;
-					left: 0;
-					margin-right: 20px;
-					opacity: 0;
-					position: absolute;
-					width: 6px;
-				}
-
-				&--active {
-					background: map-get($colors, black-bold);
-
-					.v-list__tile {
-						opacity: 1;
-					}
-
-					.item-select {
-						opacity: 1;
-					}
-
-					.item-action-sidebar {
-						.v-tooltip {
-							img {
-								filter: none;
-							}
-						}
-					}
-				}				
+			.v-select__selections {
+				padding-top: 0 !important;
 			}
 
-			&__items {
-				font-family: map-get($fonts, bold);
-
-				&.padding-items {
-					padding-bottom: 12px;
-				}
-
-				.v-list__tile {
-					font-size: map-get($sizes, small);
-					height: 48px;
-					padding-left: 50px;
-
-					&:hover {
-						background: transparent;
-
-						.item-action-sidebar {
-							.v-tooltip {
-								img {
-									filter: none;
-								}
-							}
-						}
-					}
-
-					&__action {
-						color: map-get($colors, white);
-						justify-content: flex-start;
-						margin-right: 18px;
-						min-width: 26px;
-
-						.v-icon {
-							color: inherit !important;
-							font-size: 6px;
-						}
-					}
-
-					&__content {
-						color: map-get($colors, white);
-					}
-				}
-
-				.item-sidebar-active {
-					.v-tooltip {
-						img {
-							filter: none;
-						}
-					}
-				}
-			}
-
-			&:before,
-			&:after {
-				background: rgba(0, 0, 0, 0.12);
-			}
-
-		}
-		&__tile {
-			height: auto;
-		}
-	}
-}
-
-.char-value-select {
-	&.input-group {
-		.input-group__input {
-			.icon {
-				font-size: map-get($sizes, xlarge) !important;
-				height: map-get($sizes, xlarge);
-			}
-		}
-
-		label {
-			color: map-get($colors, black) !important;
-			font-size: map-get($sizes, small);
-		}
-	}
-}
-
-.sidebar-border {
-	background-color: map-get($colors, secondary) !important;
-
-	.v-toolbar__content {
-		background: map-get($colors, secondary);
-		height: auto !important;
-		padding: 0px;
-
-		.v-list {
-			margin: 0px;
-			max-width: 100%;
-			padding: 0px;
-		}
-	}
-
-	.v-list__tile {
-		justify-content: center;
-	}
-
-	.v-list__group__header {
-		.v-list__tile {
-			&__action {
-				min-width: auto;
-				justify-content: flex-start;
-			}
-		}
-	}
-
-	&.v-navigation-drawer--mini-variant {
-		.v-list__tile {
-			padding: 12px !important;
-
-			&__action {
-				justify-content: center !important;
-				min-width: 100%;
-			}
-		}
-
-		.v-list__group__header {
-			.v-list__tile {
-				padding: 0px !important;
-
-				&__action {
-					min-width: 100%;
-					justify-content: center;
-
-					.v-icon {
-						color: inherit !important;
-					}
-				}
-
-				&__content {
-					display: none;
-				}
-			}
-		}
-	}
-
-	&:before {
-		border-bottom: 6px solid transparent;
-		border-right: 10px solid white;
-		border-top: 6px solid transparent;
-		content: '';
-		position: absolute;
-		right: 0px;
-		top: 29.5px;
-		z-index: 1;
-	}
-}
-
-.v-navigation-drawer {
-	&--mini-variant {
-		width: 70px !important;
-
-		.bars-align {
-			.icon-avatar {
-				height: 100%;
-				width: 100%;
-			}
-
-			.v-avatar {
-				border-width: 2px;
-				height: 41px !important;
-				width: 41px !important;
-			}
-		}
-
-		.logo-open {
-			display: none;
-		}
-
-		.v-list__tile__content {
-			display: none !important;
-		}
-
-		.v-list__tile .v-list__tile__action {
-			margin-right: 0px !important;
-		}
-	}
-
-	&--open {
-		.logo-close {
-			display: none;
-		}
-	}
-}
-
-.v-navigation-drawer--open.v-navigation-drawer--mini-variant {
-	.logo-close {
-		display: block !important;
-	}
-}
-
-.v-toolbar__content {
-	.v-list {
-		&:first-child {
-			margin-left: 0px !important;
-		}
-	}
-}
-
-.columns-menu {
-	&.v-menu__content {
-		background-color: white;
-		border-radius: 4px;
-		box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.4);
-		max-width: 154px;
-		padding-left: 5px;
-		padding-right: 5px;
-
-		.v-input {
-			label {
-				font-family: map-get($fonts, opens-semibold);
-				font-size: map-get($sizes, small);
-			}
-
-			&__input {
-				min-height: 20px;
-			}
-
-			.v-icon {
-				font-size: map-get($sizes, medium);
-				height: 5px !important;
-			}
-
-			&--selection-controls {
-				margin-top: 0px;
-			}
-
-			&--selection-controls__input {
-				height: 14px;
-				width: 14px;
-			}
-
-			&--selection-controls__ripple {
-				height: 10px;
-				transform: translate(7px, 12px);
-				width: 10px;
+			.v-input__append-inner {
+				margin-top: 10px !important;
 			}
 		}
 	}
 }
 
-.filter-select {
-	&.v-input {
-		background: white;
-		border-radius: 2px;
-		box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.2);
-		height: 33px;
-		padding: 0px;
-
-		&.shadow-inset {
-			border-radius: 3px;
-			box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.2);
-			height: 30px;
-
-			&-chip {
-				border-radius: 5px;
-				box-shadow: inset 0px 0px 1px 0px rgba(0, 0, 0, 0.5);
-				height: 30px;
-				left: 16px;
-				max-width: 160px;
-				position: absolute;
-				top: 1.5px;
-
-				input {
-					color: map-get($colors, subheaderText);
-					font-family: map-get($fonts, open-semibold);
-					font-size: map-get($sizes, medium);
-					padding: 0 19px;
-					text-align: right;
-				}
-
-				label {
-					color: map-get($colors, subheaderText);
-					font-family: map-get($fonts, open-semibold);
-					font-size: map-get($sizes, medium);
-					height: 30px;
-					left: auto;
-					line-height: 30px;
-					text-align: right;
-					right: 19px;
-				}
-			}
-
-			&-table {
-				border-radius: 3px;
-				box-shadow: none;
-				display: inline-flex;
-				height: 22px;
-				max-width: 72px;
-
-				.v-input-group__input {
-					min-height: 22px;
-				}
-
-				input {
-					border: 1px solid map-get($colors, gray);
-					border-radius: 4px;
-					color: map-get($colors, paginationText);
-					font-size: map-get($sizes, medium);
-					height: 37px;
-					padding: 0 5px;
-					text-align: right;
-				}
-
-				label {
-					color: map-get($colors, subheaderText);
-					font-size: map-get($sizes, medium);
-					height: 22px;
-					left: auto;
-					line-height: 22px;
-					text-align: right;
-					right: 5px;
-				}
-			}
-
-			.v-input-group__selections {
-				border-width: 1px;
-				height: 24px;
-
-				&__comma {
-					color: map-get($colors, paginationText) !important;
-				}
-			}
-
-			.v-input-group__append-icon {
-				width: 26px;
-			}
-
-			input {
-				color: map-get($colors, paginationText) !important;
-				font-family: map-get($fonts, open-semibold);
-				font-size: map-get($sizes, medium);
-				height: 30px;
-				padding-left: 14px;
-
-				&[readonly] {
-					color: map-get($colors, subheaderText) !important;
-				}
-			}
-
-			label {
-				color: map-get($colors, paginationText) !important;
-				height: 30px;
-				line-height: 30px;
-			}
-
-			&-calendar {
-				.v-icon {
-					background: map-get($colors, orange-btn);
-					border-bottom-right-radius: 2px;
-					border-top-right-radius: 2px;
-					color: white !important;
-					font-size: 24px;
-					height: 30px;
-					line-height: 32px;
-					padding-left: 3px;
-					width: 30px;
-				}
-
-				&.shadow-inset-calendar-start {
-					.icon {
-						background: map-get($colors, success);
-					}
-				}
-
-				&.shadow-inset-calendar-start,
-				&.shadow-inset-calendar-end {
-					.icon {
-						height: 28px;
-						line-height: 30px;
-					}
-				}
-
-				&.shadow-inset-calendar-requirement {
-					.icon {
-						background: white;
-						border: 1px solid map-get($colors, blue-purchase);
-						color: map-get($colors, blue-purchase) !important;
-						height: 28px;
-						line-height: 30px;
-					}
-				}
-			}
-
-			&.input-address {
-				.input-group__input {
-					padding-right: 7px;
-				}
-
-				.input-group__append-icon {
-					background-color: map-get($colors, orange-btn);
-					border-radius: 4px;
-					box-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.3);
-					color: white !important;
-					font-size: 16px;
-					height: 20px;
-					padding-top: 2px;
-					text-align: center;
-					width: 20px;
-				}
-			}
-
-			&.input-time-picker {
-				.input-group--text-field__suffix {
-					color: map-get($colors, paginationText) !important;
-					font-family: map-get($fonts, open-semibold);
-					font-size: map-get($sizes, medium);
-					height: 28px;
-					margin: 0px;
-					padding-right: 20px;
-				}
-			}
-
-			&.textarea-content {
-				border: none !important;
-				min-height: 85px;
-
-				label {
-					top: 5px;
-				}
-
-				.input-group__input {
-					border: none !important;
-				}
-
-				textarea {
-					padding-left: 16px;
-					padding-top: 7px;
-				}
-			}
-		}
-
-		&--autocomplete {
-			input {
-				color: map-get($colors, subheaderText);
-				font-size: 13px;
-				padding-left: 14px;
-			}
-		}
-
-		&--text-field {
-			label {
-				color: map-get($colors, subheaderText) !important;
-				font-family: map-get($fonts, open-light);
-				font-size: 13px;
-				height: 33px;
-				left: 13px;
-				line-height: 33px;
-				top: 0px;
-			}
-		}
-
-		&--select {
-			.input-group__selections {
-				border-right: 2px solid map-get($colors, grey-border);
-				height: 27px;
-				margin-top: 3px;
-
-				&__comma {
-					color: map-get($colors, subheaderText) !important;
-					font-family: map-get($fonts, open-light);
-					font-size: 13px;
-					padding-left: 13px;
-				}
-			}
-		}
-
-		.input-group__append-icon {
-			color: map-get($colors, subheaderText) !important;
-			font-size: 28px;
-			padding: 0px;
-			width: 25px;
-		}
-
-		.input-group__details {
-			display: none;
-		}
-	}
-
-	&.input-group.input-group--multiple {
-		height: auto;
-
-		.input-group__selections {
-			height: auto;
-			margin: 0px;
-			padding-left: 10px;
-		}
-	}
-
-	&-content {
-		.list {
-			&__tile {
-				color: map-get($colors, subheaderText);
-				font-family: map-get($fonts, open-light);
-				font-size: 13px;
-				height: 33px;
-			}
-		}
-	}
+.slide-fade-enter, .slide-fade-leave-to {
+	opacity: 0;
+  	transform: translateX(10px);
 }
 
-.show-error {
-	.input-group__details {
-		font-size: map-get($sizes, small10);
-		display: block !important;
-		padding-top: 0;
-	}
-	.input-group__details:before {
-		height: 0px;
+.mobile-overlay {
+	display: none;
+
+	@media (max-width: 764px) {
+		display: block;
 	}
 }
 
