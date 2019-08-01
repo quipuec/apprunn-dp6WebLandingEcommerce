@@ -2,6 +2,7 @@
 	<div>
 		<input
 			v-bind="$attrs"
+			v-on="$listeners"
 			class="app-input"
 			:style="`border-color: ${borderColor}`"
 		/>
@@ -13,7 +14,10 @@
 		name: 'app-input',
 		inheritAttrs: false,
 		props: {
-			borderColor: String,
+			borderColor: {
+				default: '#f5f3f3',
+				type: String,
+			},
 		},
 	};
 </script>
@@ -32,7 +36,16 @@
 		width: 100%;
 	}
 
+	input.app-input::-webkit-input-placeholder {
+		color: color(border);
+		font-family: font(demi);
+		font-size: size(minmedium);
+	}
+
 	.app-input::placeholder {
-		color: color(base);
+		color: color(border);
+		font-family: font(demi) !important;
+		font-size: size(minmedium) !important;
+		font-weight: normal !important;
 	}
 </style>

@@ -11,16 +11,30 @@
 				<app-select class="user-department" placeholder="Departamento"/>
 				<app-input class="user-phone" placeholder="Teléfono"/>
 <<<<<<< HEAD
+<<<<<<< HEAD
 				<app-input class="user-province" placeholder="Provincia"/>
 				<app-input class="user-district" placeholder="Distrito"/>
 =======
 				<app-select class="user-district" placeholder="Distrito"/>
 				<app-select class="user-province" placeholder="Provincia"/>
 >>>>>>> 4bbac2dea6c68d4baa6c0eeae52cc1172c9a0837
+=======
+				<app-select class="user-district" placeholder="Distrito"/>
+				<app-select class="user-province" placeholder="Provincia"/>
+>>>>>>> 4411ae3d5b20b6cff15fd2950565fa43c86673aa
 			</form>
 			<section class="btn-section mb-2">
-				<app-button save action="Guardar" class="action-button save"/>
-				<app-button cancel action="Cancelar" class="action-button cancel" @click="goBack"/>
+				<app-button
+					:background="colorSecondary"
+					action="Guardar"
+					class="action-button save"
+				/>
+				<app-button
+					:background="colorBase"
+					action="Cancelar"
+					class="action-button cancel"
+					@click="goBack"
+				/>
 			</section>
 		</div>
 	</div>
@@ -38,6 +52,13 @@ function goBack() {
 
 function loadAvatar() {}
 
+function data() {
+	return {
+		colorBase: process.env.COLOR_BASE,
+		colorSecondary: process.env.COLOR_SECONDARY,
+	};
+}
+
 export default {
 	name: 'edit-user-profile',
 	components: {
@@ -47,6 +68,7 @@ export default {
 		cameraComponent,
 		editComponent,
 	},
+	data,
 	methods: {
 		goBack,
 		loadAvatar,

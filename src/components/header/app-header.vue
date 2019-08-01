@@ -1,8 +1,8 @@
 <template>
-  <header class="app-header">
+  	<header class="layout app-header">
 		<div class="app-wrapper">
 			<div class="flex container-call-menu">
-				<call-menu text="Categorías" @change-menu="changeMenu" :menu="menu"/>
+				<call-menu :color="baseColor" text="Categorías" @change-menu="changeMenu" :menu="menu" />
 			</div>
 			<div class="flex container-header-logo">
 				<h1 class="app-header-logo">
@@ -60,6 +60,7 @@ function changeMenu() {
 
 function data() {
 	return {
+		baseColor: process.env.COLOR_BASE,
 		imagesButton: [
 			{
 				image: '/static/img/user.svg',
@@ -117,8 +118,13 @@ export default {
 <style lang="scss" scoped>
 	.app-header {
 		background: color(white);
-		overflow: hidden;
-		padding: 25px 6%;
+		height: 76px;
+		padding: 0px 6%;
+
+		@media (min-width: 768px) {
+			height: 99px;
+			padding: 0px 6%;
+		}
 	}
 
 	.app-wrapper {
@@ -169,6 +175,11 @@ export default {
 
 	.link-logo {
 		display: block;
+
+		@media (max-width: 768px) {
+			height: 20px !important;
+			line-height: 0.5 !important;
+		}
 	}
 
 	.app-header-logo {
@@ -222,7 +233,7 @@ export default {
 	}
 
 	.logo-image {
-		@media (max-width: 764px) {
+		@media (max-width: 768px) {
 			height: 20px;
 		}
 	}
