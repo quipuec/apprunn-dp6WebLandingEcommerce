@@ -169,7 +169,7 @@ export default {
 }
 
 .content-email {
-	display: flex;
 	align-items: center;
+	display: flex;
 }
 </style>
