@@ -1,5 +1,4 @@
 <template>
-	<div class="component-filter-product">
 		<div class="component-filter-product">
 		<media-filter-product
 		border-right="#ffffff"
@@ -25,7 +24,6 @@
 		color="white"
 		></media-filter-product>
 		</div>
-	</div>
 </template>
 
 <script>
@@ -41,10 +39,11 @@ export default {
 
 <style lang="scss" scoped>
 .component-filter-product {
+	background-color: color(primary);
 	display: grid;
 	grid-template-columns: auto auto auto auto;
 	height: 67px;
-	padding: 9px 0;
+	padding: 8px 225px;
 	width: 100%;
 
 	@media (max-width: 750px) {

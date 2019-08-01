@@ -3,6 +3,7 @@
 		:style="`border-right: ${borderRight ? `1px solid ${borderRight}` : null}`">
 			<img :src="image" alt="">
 			<p class="title-filter">{{title}}</p>
+			<p class="circle-filter"></p>
 		</button>
 </template>
 
@@ -25,15 +26,25 @@ export default {
 	margin-bottom: 0;
 	padding-left: 7px;
 	&:hover {
+		border-radius: 3px;
+		border-bottom: 3px solid white;
 		font-family: font(bold);
 	}
 }
 
+.circle-filter {
+	border-radius: 50%;
+	height: 4px;
+	width: 4px;
+	background-color: white;
+	position: relative;
+}
+
 .box-filter {
 	align-items: center;
-	background-color: color(primary);
 	display: flex;
 	flex-direction: row;
+	justify-content: center;
 	padding: 0 46px;
 
 	@media (max-width: 750px) {
