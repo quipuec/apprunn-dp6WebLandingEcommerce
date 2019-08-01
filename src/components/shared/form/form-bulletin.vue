@@ -58,14 +58,14 @@ export default {
 }
 
 .text-subscription::before {
-	border-top: 1px solid #4a4a4a;
-	color: #4a4a4a;
-  content: '';
-	height: 2px;
-	left: 0px;
-  position: absolute;
-	top: 9px;
-	width: 120px;
+		border-top: 1px solid #4a4a4a;
+		content: '';
+		color: #4a4a4a;
+		height: 2px;
+		left: 0px;
+  	position: absolute;
+		top: 9px;
+		width: 120px;
 	@media (max-width: 850px) {
 		left: 12px;
 		width: 80px;
@@ -74,14 +74,14 @@ export default {
 }
 
 .text-subscription::after {
-	content: '';
-	height: 2px;
 	border-top: 1px solid #4a4a4a;
 	color: #4a4a4a;
-	width: 120px;
+	content: '';
+	height: 2px;
 	position: absolute;
 	top: 9px;
 	right: 0px;
+	width: 120px;
 
 	@media (max-width: 850px) {
 		right: 12px;
