@@ -1,5 +1,6 @@
 <template>
 	<v-app>
+		<app-banner-top :data="bannerTop"/>
 		<app-header :logo="logo" @change-menu="changeMenu" :menu="showMenu"/>
 		<transition name="slide-fade">
 			<div 
@@ -7,21 +8,23 @@
 				@click="changeMenu"
 				v-show="showMenu"></div>
   	</transition>
-		<transition name="slide-fade">
-			<app-menu-category 
-				v-show="showMenu" 
-				:img-user="user"
-				:color-base="colorBase"
-				:color-border="colorBorder"/>
+	<section-visa></section-visa>
+	<form-bulletin />
+	<transition name="slide-fade">
+		<app-menu-category 
+			v-if="showMenu" 
+			:img-user="user"
+			:color-base="colorBase"
+			:color-border="colorBorder"/>
   	</transition>
-		<v-progress-linear
-			class="progress-bar"
-			color="success"
-			:indeterminate="indeterminate"
-			v-if="indeterminate"
-		></v-progress-linear>
-		<router-view></router-view>
-		<v-snackbar
+	<v-progress-linear
+		class="progress-bar"
+		color="success"
+		:indeterminate="indeterminate"
+		v-if="indeterminate"
+	></v-progress-linear>
+	<router-view></router-view>
+	<v-snackbar
 			:timeout="5000"
 			:color="snackbar.color"
 			top
@@ -47,6 +50,9 @@
 <script>
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
+const appBannerTop = () => import('@/components/header/app-banner-top');
+const formBulletin = () => import('@/components/shared/form/form-bulletin');
+const sectionVisa = () => import('@/components/footer/section-visa');
 
 function indeterminate() {
 	return this.$store.getters.indeterminate;
@@ -75,6 +81,10 @@ function data() {
 		},
 		colorBase: process.env.COLOR_BASE,
 		colorBorder: process.env.COLOR_BORDER,
+		bannerTop: {
+			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-top.png',
+			image: 'descuento',
+		},
 	};
 }
 
@@ -86,8 +96,11 @@ export default {
 	},
 	data,
 	components: {
+		sectionVisa,
 		appHeader,
 		appMenuCategory,
+		appBannerTop,
+		formBulletin,
 	},
 	methods: {
 		changeMenu,
