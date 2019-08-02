@@ -51,7 +51,7 @@ function data() {
 	return {
 		swiperOption: {
 			slidesPerView: 3,
-			spaceBetween: 30,
+			spaceBetween: 0,
 			slidesPerGroup: 3,
 			allowTouchMove: false,
 			navigation: {
@@ -90,7 +90,7 @@ export default {
 <style lang="scss" scoped>
 	.categories-carousel {
 		background: color(white);
-		padding: 115px 10% 108px;
+		padding: 115px 15% 108px;
 
 		@media (max-width: 1161px) {
 			padding: 35px 10%;
