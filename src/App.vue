@@ -1,5 +1,6 @@
 <template>
 	<v-app>
+		<app-banner-top :data="bannerTop"/>
 		<app-header :logo="logo" @change-menu="changeMenu" :menu="showMenu"/>
 		<transition name="slide-fade">
 			<div 
@@ -49,6 +50,7 @@
 <script>
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
+const appBannerTop = () => import('@/components/header/app-banner-top');
 const formBulletin = () => import('@/components/shared/form/form-bulletin');
 const sectionVisa = () => import('@/components/footer/section-visa');
 
@@ -79,6 +81,10 @@ function data() {
 		},
 		colorBase: process.env.COLOR_BASE,
 		colorBorder: process.env.COLOR_BORDER,
+		bannerTop: {
+			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-top.png',
+			image: 'descuento',
+		},
 	};
 }
 
@@ -93,6 +99,7 @@ export default {
 		sectionVisa,
 		appHeader,
 		appMenuCategory,
+		appBannerTop,
 		formBulletin,
 	},
 	methods: {
