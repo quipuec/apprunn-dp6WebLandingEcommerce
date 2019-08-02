@@ -6,16 +6,25 @@
 				<app-input class="user-dni" placeholder="DNI"/>
 				<app-input class="user-lastname" placeholder="Apellido"/>
 				<app-input class="user-ruc" placeholder="RUC"/>
-				<app-input class="user-gender" placeholder="Género"/>
+				<app-select class="user-gender" placeholder="Género"/>
 				<app-input class="user-postcode" placeholder="Código postal"/>
-				<app-input class="user-department" placeholder="Departamento"/>
+				<app-select class="user-department" placeholder="Departamento"/>
 				<app-input class="user-phone" placeholder="Teléfono"/>
-				<app-input class="user-province" placeholder="Provincia"/>
-				<app-input class="user-district" placeholder="Distrito"/>
+				<app-select class="user-district" placeholder="Distrito"/>
+				<app-select class="user-province" placeholder="Provincia"/>
 			</form>
 			<section class="btn-section mb-2">
-				<app-button save action="Guardar" class="action-button save"/>
-				<app-button cancel action="Cancelar" class="action-button cancel" @click="goBack"/>
+				<app-button
+					:background="colorSecondary"
+					action="Guardar"
+					class="action-button save"
+				/>
+				<app-button
+					:background="colorBase"
+					action="Cancelar"
+					class="action-button cancel"
+					@click="goBack"
+				/>
 			</section>
 		</div>
 	</div>
@@ -23,6 +32,7 @@
 <script>
 import appButton from '@/components/shared/buttons/app-button';
 import appInput from '@/components/shared/inputs/app-input';
+import appSelect from '@/components/shared/inputs/app-select';
 import cameraComponent from '@/components/shared/icons/camera-component';
 import editComponent from '@/components/shared/icons/edit-component';
 
@@ -32,14 +42,23 @@ function goBack() {
 
 function loadAvatar() {}
 
+function data() {
+	return {
+		colorBase: process.env.COLOR_BASE,
+		colorSecondary: process.env.COLOR_SECONDARY,
+	};
+}
+
 export default {
 	name: 'edit-user-profile',
 	components: {
 		appButton,
 		appInput,
+		appSelect,
 		cameraComponent,
 		editComponent,
 	},
+	data,
 	methods: {
 		goBack,
 		loadAvatar,

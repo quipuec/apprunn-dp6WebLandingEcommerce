@@ -2,14 +2,10 @@
 	<div>
 		<button
 			v-bind="$attrs"
-			:class="[
-				'app-button',
-				{ 'save-btn': save },
-				{ 'cancel-btn': cancel },
-				{'thin': thin},
-			]"
+			v-on="$listeners"
+			class="app-button"
+			:class="{'thin': thin}"
 			:style="`background-color: ${background}; text-align: ${!img ? 'center' : 'left'} ; color: ${color}; border: ${border ? `1px solid ${border}` : null}`"
-			@click="clicked"
 		>
 			<span class="span-img" :style="`border-color: ${imgBorderColor}`" v-if="img">
 				<img
@@ -26,26 +22,16 @@
 </template>
 
 <script>
-
-	function clicked() {
-		this.$emit('click');
-	}
-
 	export default {
 		name: 'app-button',
 		inheritAttrs: false,
-		methods: {
-			clicked,
-		},
 		props: {
 			action: String,
 			background: String,
-			cancel: Boolean,
 			img: String,
 			imgBorderColor: String,
 			imgHeight: [String, Number],
 			imgWidth: [String, Number],
-			save: Boolean,
 			color: {
 				type: String,
 				default: 'white',
@@ -77,8 +63,10 @@
 			height: 31px;
 			line-height: 31px;
 			margin-right: 11px;
-			padding: 3px 14px;
+			padding: 3px 0px;
+			text-align: center;
 			vertical-align: middle;
+			width: 41px;
 		}
 
 		&.thin {
@@ -87,13 +75,5 @@
 			font-size: size(small);
 			width: 170px;
 		}
-	}
-
-	.save-btn {
-		background-color: color(secondary);
-	}
-
-	.cancel-btn {
-		background-color: color(primary);
 	}
 </style>

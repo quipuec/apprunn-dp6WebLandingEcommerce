@@ -6,8 +6,6 @@ export function httpRequestInterceptor(config) {
 	if (store.state.token) {
 		headers.common.Authorization = `Bearer ${store.state.token}`;
 		store.dispatch('toggleLoading', true);
-	} else {
-		this.$router.push('login');
 	}
 	return config;
 }
@@ -21,9 +19,8 @@ export function httpResponseInterceptor(error) {
 	store.dispatch('toggleLoading', false);
 	let text = 'Su sesión expiró.';
 	const status = error.response.status;
-	const loginRoute = { name: 'login' };
 	if (status === 401) {
-		this.$router.push(loginRoute);
+		text = 'Correo o contraseña inválidos';
 	} else if (status === 400) {
 		text = errors(error.response);
 	} else if (status === 403) {

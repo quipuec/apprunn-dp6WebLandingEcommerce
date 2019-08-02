@@ -31,7 +31,7 @@
 				Boton categoría
 			</v-flex>
 			<v-flex xs12>
-				<call-menu text="Categorías"/>
+				<call-menu :color="baseColor" text="Categorías"/>
 			</v-flex>
 		</v-layout>
 		<v-layout>
@@ -39,11 +39,11 @@
 				Tarjetas de producto
 			</v-flex>
 			<section class="product-section">
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
-				<product-card class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
+				<product-card :base-color="baseColor" class="product-card"/>		
 			</section>
 		</v-layout>
 		<v-layout wrap>
@@ -82,8 +82,8 @@
 			</v-flex>
 				<container-company-data></container-company-data>
 		</v-layout>
-		<v-layout>
-			<form-bulletin></form-bulletin>
+		<v-layout mt-3>
+			<app-footer></app-footer>
 		</v-layout>
 		<v-layout wrap>
 			<v-flex xs12>
@@ -104,16 +104,17 @@
 	const callMenu = () => import('@/components/header/call-menu');
 	const productCard = () => import('@/components/products/product-card');
 	const containerCompanyData = () => import('@/components/shared/company/container-company-data');
-	const formBulletin = () => import('@/components/shared/form/form-bulletin');
 	const modalLogin = () => import('@/components/header/modal-login');
 	const appSearch = () => import('@/components/shared/inputs/app-input-search');
 	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
+	const appFooter = () => import('@/components/footer/app-footer');
 	const itemMenu = () => import('@/components/header/item-menu');
 	const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
 
 	function data() {
 		return {
+			baseColor: process.env.COLOR_BASE,
 			imagesButton: [
 				{
 					image: '/static/img/heart.svg',
@@ -138,11 +139,11 @@
 		name: 'components',
 		data,
 		components: {
+			appFooter,
 			appButton,
 			appInput,
 			containerCompanyData,
 			componentFilterProduct,
-			formBulletin,
 			callMenu,
 			productCard,
 			modalLogin,

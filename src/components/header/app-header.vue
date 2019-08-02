@@ -1,8 +1,8 @@
 <template>
-  <header class="app-header">
+  	<header class="app-header">
 		<div class="app-wrapper">
 			<div class="flex container-call-menu">
-				<call-menu text="Categorías" @change-menu="changeMenu"/>
+				<call-menu :color="baseColor" text="Categorías" @change-menu="changeMenu" :menu="menu" />
 			</div>
 			<div class="flex container-header-logo">
 				<h1 class="app-header-logo">
@@ -17,7 +17,7 @@
 				</h1>
 				<div 
 					class="container-search flex"
-					:class="{'open' : isSearchMobile}">
+					:class="isSearchMobile ? 'open' : null">
 					<app-search 
 						image="/static/img/search.svg"
 						color="#4a4a4a"/>
@@ -34,7 +34,7 @@
 					:data="search" 
 					class="icon-mobile"
 					@click-image="toogleSearch"/>
-				<button-image :data="imagesButton[0]" class="icon-desktop"/>
+				<button-image :data="imagesButton[0]" class="icon-desktop" @click-image="openModalLogin"/>
 				<button-image :data="imagesButton[1]" class="icon-medium icon-desktop"/>
 				<button-image
 					:data="imagesButton[2]"
@@ -43,12 +43,16 @@
 				/>
 			</div>
 		</div>
+		<modal-login 
+			class="app-modal-login"
+			v-show="modalLogin"/>
 	</header>
 </template>
 <script>
 const callMenu = () => import('@/components/header/call-menu');
 const appSearch = () => import('@/components/shared/inputs/app-input-search');
 const buttonImage = () => import('@/components/shared/buttons/app-button-image');
+const modalLogin = () => import('@/components/header/modal-login');
 
 function toogleSearch() {
 	this.isSearchMobile = !this.isSearchMobile;
@@ -58,8 +62,13 @@ function changeMenu() {
 	this.$emit('change-menu');
 }
 
+function openModalLogin() {
+	this.modalLogin = !this.modalLogin;
+}
+
 function data() {
 	return {
+		baseColor: process.env.COLOR_BASE,
 		imagesButton: [
 			{
 				image: '/static/img/user.svg',
@@ -88,6 +97,7 @@ function data() {
 			height: 20,
 		},
 		isSearchMobile: false,
+		modalLogin: false,
 	};
 }
 export default {
@@ -96,16 +106,22 @@ export default {
 		callMenu,
 		appSearch,
 		buttonImage,
+		modalLogin,
 	},
 	data,
 	methods: {
 		toogleSearch,
 		changeMenu,
+		openModalLogin,
 	},
 	props: {
 		logo: {
 			type: Object,
 			default: () => {},
+		},
+		menu: {
+			type: Boolean,
+			default: false,
 		},
 	},
 };
@@ -113,7 +129,17 @@ export default {
 <style lang="scss" scoped>
 	.app-header {
 		background: color(white);
-		padding: 25px 6%;
+		display: flex;
+		height: 76px;
+		padding: 0px 6%;
+		position: relative;
+		overflow: hidden;
+
+		@media (min-width: 768px) {
+			height: 99px;
+			overflow: inherit;
+			padding: 0px 6%;
+		}
 	}
 
 	.app-wrapper {
@@ -133,10 +159,7 @@ export default {
 		flex: 1 1 10%;
 		justify-content: center;
 
-		@media (max-width: 764px) {
-			border-right: none;
-			flex: 1 1 20%;
-		}
+		
 	}
 
 	.container-header-logo {
@@ -164,6 +187,11 @@ export default {
 
 	.link-logo {
 		display: block;
+
+		@media (max-width: 768px) {
+			height: 20px !important;
+			line-height: 0.5 !important;
+		}
 	}
 
 	.app-header-logo {
@@ -217,8 +245,19 @@ export default {
 	}
 
 	.logo-image {
-		@media (max-width: 764px) {
+		@media (max-width: 768px) {
 			height: 20px;
+		}
+	}
+
+	.app-modal-login {
+		position: absolute;
+		right: calc(6% + 85px);
+		top: 70px;
+		z-index: 6;
+
+		@media (max-width: 764px) {
+			display: none !important;
 		}
 	}
 </style>

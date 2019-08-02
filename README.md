@@ -2,7 +2,7 @@
 
 > a vuetify template along to vue-router, axios and some other stuff.
 
-> http://ecommerce-template.netlify.com/ [DEV]
+> https://ecommerce-template.netlify.com/ [DEV]
 
 ### Libraries Documentation
 
@@ -20,19 +20,25 @@ Read our official [guide](https://style-guide.eperedo.com/)
 Before you launch the server please create the .env file with the following values:
 
 ```bash
+APP_CODE=ecommerce
 ACL_COMPANY_CODE=taurus2
 APP_NAME=ecommerce
-APP_CODE=ecommerce
 ACL_URL=https://devacl.japisale.com/api
+CLIENT_ID=473070913240169
 CODE_PROJECT=japi_proyect
-COLORS=[‘#2c404a’, ‘#2c404a’, ‘#2c404a’]
+COLOR_BASE=#F42B17
+COLOR_BORDER=#ACAAAA
+COLOR_HIGHLIGHT=#F8E71C
+COLOR_LINK=#006EDB
+COLOR_SECONDARY=#004e9c
 COMMERCE_CODE=mistore
-COMPANY_LOGIN_TITLE=Ecommerce
-COMPANY_LOGO=/static/img/icons/Xiaomi_store.svg
+COMPANY_LOGIN_TITLE=MRC
+COMPANY_LOGO=/static/img/mrc-logo.png
 DEFAULT_AVATAR=/static/img/icons/Xiaomi_logo.svg
-GREEN=#5ED52B
+FORM_BACKGROUND=https://apprunn.s3.amazonaws.com/login-mrc-background.png
 PORT=1208
 PRODUCTS_URL=https://products2.perudatos.com
+REDIRECT_URI=https://ecommerce-template.netlify.com
 ROLE_CODE=ROLEBASIC
 SALES_URL=https://sales.perudatos.com
 UPLOAD_URL=https://production.perudatos.com
