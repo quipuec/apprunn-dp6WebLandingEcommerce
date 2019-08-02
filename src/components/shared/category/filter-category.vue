@@ -1,10 +1,12 @@
 <template>
-	<div></div>
+	<div>
+		hola
+	</div>
 </template>
 
 <script>
 export default {
-	name: 'page-category',
+	name: 'filter-category',
 };
 </script>
 

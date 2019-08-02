@@ -104,7 +104,10 @@
 			title="Novedades"
 			color="white"
 			></media-filter-product>
-		</v-layout>	
+		</v-layout>
+		<v-layout>
+			<filter-category></filter-category>
+		</v-layout>
 	</div>
 </template>
 
@@ -122,6 +125,7 @@
 	const appFooter = () => import('@/components/footer/app-footer');
 	const itemMenu = () => import('@/components/header/item-menu');
 	const mediaFilterProduct = () => import('@/components/shared/products/media-filter-product');
+	const filterCategory = () => import('@/components/shared/category/filter-category');
 
 	function data() {
 		return {
@@ -158,6 +162,7 @@
 			formBulletin,
 			callMenu,
 			productCard,
+			filterCategory,
 			modalLogin,
 			appSearch,
 			buttonImage,
