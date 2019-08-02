@@ -25,6 +25,7 @@ module.exports = {
 	COLOR_LINK:`'${process.env.COLOR_LINK}'`,
 	COLOR_HIGHLIGHT:`'${process.env.COLOR_HIGHLIGHT}'`,
 	COLOR_BORDER:`'${process.env.COLOR_BORDER}'`,
+	COLOR_SECONDARY: `'${process.env.COLOR_SECONDARY}'`,
 	STORAGE_USER_KEY: '"ecommerce"',
 	TOKEN: `'${process.env.TOKEN}'`,
 	UPLOAD_URL: `'${process.env.UPLOAD_URL}'`,

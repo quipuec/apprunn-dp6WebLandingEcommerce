@@ -7,21 +7,29 @@
 				<span>1232134323423</span>
 			</div>
 			<img src="" alt="foto del voucher" class="voucher-img">
-			<app-button save action="Editar" class="action-button save" @click="editVoucherData"/>
+			<app-button :background="bgSaveBtn" action="Editar" class="action-button save" @click="editVoucherData"/>
 		</div>
 		<div v-else class="deposit-fields">
 			<app-input placeholder="Nro de depósito" class="deposit"/>
 			<app-input placeholder="Foto de Voucher" class="voucher"/>
 		</div>
 		<div class="btn-section" v-if="!voucherLoaded">
-			<app-button save action="Guardar" class="action-button save" @click="loadVoucher"/>
-			<app-button cancel action="Cancelar" class="action-button cancel" @click="goBack"/>
+			<app-button :background="bgSaveBtn" action="Guardar" class="action-button save" @click="loadVoucher"/>
+			<app-button :background="bgCancelBtn" action="Cancelar" class="action-button cancel" @click="goBack"/>
 		</div>
 	</div>
 </template>
 <script>
 import appButton from '@/components/shared/buttons/app-button';
 import appInput from '@/components/shared/inputs/app-input';
+
+function bgSaveBtn() {
+	return process.env.COLOR_SECONDARY;
+}
+
+function bgCancelBtn() {
+	return process.env.COLOR_BASE;
+}
 
 function goBack() {
 	this.$store.commit('UPDATE_FLAG_ADD_COUCHER', false);
@@ -46,6 +54,10 @@ export default {
 	components: {
 		appButton,
 		appInput,
+	},
+	computed: {
+		bgCancelBtn,
+		bgSaveBtn,
 	},
 	data,
 	methods: {

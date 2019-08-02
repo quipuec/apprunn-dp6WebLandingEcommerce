@@ -5,7 +5,10 @@
 				<th
 					v-for="column in columns"
 					:key="column.id"
-					:class="column.responsive ? 'responsive-col': 'no-responsive'"
+					:class="[
+						column.responsive ? 'responsive-col': 'no-responsive',
+						{ 'first-column-head' : alignLeft },
+					]"
 				>{{column.title}}</th>
 			</tr>
 		</thead>
@@ -121,6 +124,10 @@ export default {
 		newPagination,
 	},
 	props: {
+		alignLeft: {
+			default: false,
+			type: Boolean,
+		},
 		columns: {
 			default: () => [],
 			type: Array,
@@ -202,6 +209,16 @@ export default {
 			align-items: center;
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
+		}
+	}
+
+	.first-column-head {
+		padding-left: 30px;
+		text-align: left;
+
+		@media (max-width: 600px) {
+			padding: 10px;
+			text-align: center;
 		}
 	}
 
