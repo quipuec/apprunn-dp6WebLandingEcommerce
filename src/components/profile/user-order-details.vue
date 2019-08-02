@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<section class="nav">
-			<left-component @click="goTo"/>
+			<left-component @click="goTo" class="go-back"/>
 			<p class="order-head">
 				<span class="order-state">solicitado</span> - <span>nro orden</span><span>147721</span>
 			</p>
@@ -219,7 +219,7 @@ export default {
 		margin: 0 30px 30px;
 
 		@media (max-width: 600px) {
-			margin: 0 0px 30px;
+			margin: 0 15px 30px;
 		}
 	}
 
@@ -231,11 +231,19 @@ export default {
 		justify-content: space-between;
 		margin: 10px 40px 0;
 		padding: 10px 0;
+
+		@media (max-width: 600px) {
+			margin: 10px 0;
+		}
 	}
 
 	.order-payment {
 		margin: 0 30px;
 		padding: 10px 0;
+
+		@media (max-width: 600px) {
+			margin: 0;
+		}
 	}
 
 	.label {
@@ -263,7 +271,9 @@ export default {
 		text-transform: uppercase;
 
 		@media (max-width: 600px) {
+			flex: 1 1 90%;
 			font-size: size(small);
+			text-align: center;
 		}
 	}
 
@@ -277,5 +287,19 @@ export default {
 		flex-wrap: wrap;
 		justify-content: space-between;
 		min-width: 305px;
+	}
+
+	.payment-btn {
+
+		@media (max-width: 600px) {
+			margin: auto;
+		}
+	}
+
+	.go-back {
+
+		@media (max-width: 600px) {
+			flex: 1 1 5%;
+		}
 	}
 </style>
