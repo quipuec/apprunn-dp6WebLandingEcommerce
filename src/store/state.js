@@ -12,6 +12,9 @@ export default {
 	pollData: {
 		progress: 0,
 	},
+	profile: {
+		flagAddVoucher: false,
+	},
 	token: helper.getLocalToken(),
 	products: {
 		list: [],
