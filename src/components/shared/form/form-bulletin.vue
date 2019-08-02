@@ -141,12 +141,12 @@ export default {
 .input-form {
 	border: 1px solid color(dark);
 	border-radius: 6px;
+	bottom: 1px;
 	font-size: size(minmedium);
 	left: 8px;
 	min-height: 39px;
 	padding-left: 13px;
 	position: relative;
-	bottom: 1px;
 	width: 282px;
 
 	@media (max-width: 650px) {
