@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Vuelidate from 'vuelidate';
 import VueAnalytics from 'vue-analytics';
 import VueSimpleSVG from 'vue-simple-svg';
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+import 'swiper/dist/css/swiper.css';
 import VueTheMask from 'vue-the-mask';
 import VueAuthenticate from 'vue-authenticate';
 import axios from 'axios';
@@ -46,6 +48,7 @@ Vue.use(VueAnalytics, {
 	disableScriptLoader: true,
 	sendHitTask: window.location.hostname === 'ecommerce.netlify.com',
 });
+Vue.use(VueAwesomeSwiper);
 
 const userInfo = helper.getLocalData('ecommerce-user');
 const router = vueRouter(Vue);
