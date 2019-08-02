@@ -7,6 +7,7 @@
 				@click="changeMenu"
 				v-show="showMenu"></div>
   	</transition>
+	<section-visa></section-visa>
 	<form-bulletin />
 	<transition name="slide-fade">
 		<app-menu-category 
@@ -49,6 +50,7 @@
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
 const formBulletin = () => import('@/components/shared/form/form-bulletin');
+const sectionVisa = () => import('@/components/footer/section-visa');
 
 function indeterminate() {
 	return this.$store.getters.indeterminate;
@@ -88,6 +90,7 @@ export default {
 	},
 	data,
 	components: {
+		sectionVisa,
 		appHeader,
 		appMenuCategory,
 		formBulletin,
