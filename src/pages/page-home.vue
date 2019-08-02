@@ -4,12 +4,14 @@
 		<categories-carousel 
 			:categories="categories"
 			:color-base="colorBase"/>
+		<section-settlement :color-base="colorBase"/>
 	</layout-admin>
 </template>
 
 <script>
 const bannerCarousel = () => import('@/components/home/banner-carousel');
 const categoriesCarousel = () => import('@/components/home/categories-carousel');
+const sectionSettlement = () => import('@/components/home/section-settlement');
 
 function data() {
 	return {
@@ -78,6 +80,7 @@ export default {
 	components: {
 		bannerCarousel,
 		categoriesCarousel,
+		sectionSettlement,
 	},
 };
 </script>
