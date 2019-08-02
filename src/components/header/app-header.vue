@@ -1,5 +1,5 @@
 <template>
-  	<header class="layout app-header">
+  	<header class="app-header">
 		<div class="app-wrapper">
 			<div class="flex container-call-menu">
 				<call-menu :color="baseColor" text="Categorías" @change-menu="changeMenu" :menu="menu" />
@@ -34,7 +34,7 @@
 					:data="search" 
 					class="icon-mobile"
 					@click-image="toogleSearch"/>
-				<button-image :data="imagesButton[0]" class="icon-desktop"/>
+				<button-image :data="imagesButton[0]" class="icon-desktop" @click-image="openModalLogin"/>
 				<button-image :data="imagesButton[1]" class="icon-medium icon-desktop"/>
 				<button-image
 					:data="imagesButton[2]"
@@ -43,12 +43,16 @@
 				/>
 			</div>
 		</div>
+		<modal-login 
+			class="app-modal-login"
+			v-show="modalLogin"/>
 	</header>
 </template>
 <script>
 const callMenu = () => import('@/components/header/call-menu');
 const appSearch = () => import('@/components/shared/inputs/app-input-search');
 const buttonImage = () => import('@/components/shared/buttons/app-button-image');
+const modalLogin = () => import('@/components/header/modal-login');
 
 function toogleSearch() {
 	this.isSearchMobile = !this.isSearchMobile;
@@ -56,6 +60,10 @@ function toogleSearch() {
 
 function changeMenu() {
 	this.$emit('change-menu');
+}
+
+function openModalLogin() {
+	this.modalLogin = !this.modalLogin;
 }
 
 function data() {
@@ -89,6 +97,7 @@ function data() {
 			height: 20,
 		},
 		isSearchMobile: false,
+		modalLogin: false,
 	};
 }
 export default {
@@ -97,11 +106,13 @@ export default {
 		callMenu,
 		appSearch,
 		buttonImage,
+		modalLogin,
 	},
 	data,
 	methods: {
 		toogleSearch,
 		changeMenu,
+		openModalLogin,
 	},
 	props: {
 		logo: {
@@ -118,11 +129,15 @@ export default {
 <style lang="scss" scoped>
 	.app-header {
 		background: color(white);
+		display: flex;
 		height: 76px;
 		padding: 0px 6%;
+		position: relative;
+		overflow: hidden;
 
 		@media (min-width: 768px) {
 			height: 99px;
+			overflow: inherit;
 			padding: 0px 6%;
 		}
 	}
@@ -144,10 +159,7 @@ export default {
 		flex: 1 1 10%;
 		justify-content: center;
 
-		@media (max-width: 764px) {
-			border-right: none;
-			flex: 1 1 20%;
-		}
+		
 	}
 
 	.container-header-logo {
@@ -235,6 +247,17 @@ export default {
 	.logo-image {
 		@media (max-width: 768px) {
 			height: 20px;
+		}
+	}
+
+	.app-modal-login {
+		position: absolute;
+		right: calc(6% + 85px);
+		top: 70px;
+		z-index: 6;
+
+		@media (max-width: 764px) {
+			display: none !important;
 		}
 	}
 </style>
