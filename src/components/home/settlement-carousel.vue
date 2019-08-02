@@ -1,6 +1,7 @@
 <template>
-	<div>
-		<h1>jajaja</h1>
+	<div class="settlement-carousel">
+		<div class="slider-sttlement-carousel">
+		</div>
 	</div>
 </template>
 <script>

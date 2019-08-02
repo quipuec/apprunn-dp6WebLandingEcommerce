@@ -62,6 +62,7 @@ function data() {
 				1161: {
 					slidesPerView: 1,
 					slidesPerGroup: 1,
+					allowTouchMove: true,
 				},
 			},
 		},

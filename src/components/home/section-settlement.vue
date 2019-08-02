@@ -3,14 +3,14 @@
 		<div>
 			<title-section 
 				title="Liquidación" 
-				:color="colorBorder"/>
+				:color="colorDark"/>
 		</div>
 		<settlement-carousel />
 	</div>
 </template>
 <script>
 const settlementCarousel = () => import('@/components/home/settlement-carousel');
-const titleSection = () => import('@/components/home/settlement-carousel');
+const titleSection = () => import('@/components/home/title-section');
 
 export default {
 	name: 'section-settlement',
@@ -19,7 +19,7 @@ export default {
 		titleSection,
 	},
 	props: {
-		colorBase: String,
+		colorDark: String,
 	},
 };
 </script>

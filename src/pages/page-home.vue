@@ -4,7 +4,7 @@
 		<categories-carousel 
 			:categories="categories"
 			:color-base="colorBase"/>
-		<section-settlement :color-base="colorBase"/>
+		<section-settlement :color-dark="colorDark"/>
 	</layout-admin>
 </template>
 
@@ -71,6 +71,7 @@ function data() {
 				select: false,
 			},
 		],
+		colorDark: process.env.COLOR_DARK,
 		colorBase: process.env.COLOR_BASE,
 	};
 }
