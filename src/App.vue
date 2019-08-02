@@ -203,4 +203,30 @@ input.app-input::-webkit-input-placeholder {
 		background: color(white);
 	}
 }
+
+.categories-carousel-slider, .section-settlement  {
+	.swiper-button-next {
+		background-image: url('/static/img/slider-arrow-rigth.svg');
+	}
+
+	.swiper-button-prev {
+		background-image: url('/static/img/slider-arrow-left.svg');
+	}
+
+	.swiper-button-next, .swiper-button-prev {
+		background-size: auto;
+		cursor: pointer;
+		height: 19px;
+		outline: none;
+		width: 13px;
+	}
+}
+
+.section-settlement {
+	.swiper-button-next, .swiper-button-prev {
+		@media (max-width: 1161px) {
+			display: none;
+		}
+	}
+}
 </style>

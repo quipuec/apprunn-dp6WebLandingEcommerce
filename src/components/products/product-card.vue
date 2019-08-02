@@ -1,5 +1,5 @@
 <template>
-	<div class="product-container">
+	<div class="product-container" :class="small ? 'small' : null">
 		<section class="product-header">
 			<div :style="`background-color: ${baseColor}`" class="product-discount">-20%</div>
 			<div class="product-favorite">
@@ -52,6 +52,10 @@ export default {
 	},
 	props: {
 		baseColor: String,
+		small: {
+			type: Boolean,
+			default: false,
+		},
 	},
 };
 </script>
@@ -60,7 +64,6 @@ export default {
 		background-color: color(white);
 		border-radius: 5px;
 		box-shadow: 0 2px 2px 0 rgba(31, 26, 26, 0.07);
-		// border: 3px solid color(border);
 		font-family: font(medium);
 		max-height: 330px;
 		padding: 10px;
@@ -68,6 +71,10 @@ export default {
 		@media (min-width: 500px) {
 			border: 3px solid color(border);
 			margin: 3px;
+		}
+
+		&.small {
+			max-width: 179px;
 		}
 	}
 
