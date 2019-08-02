@@ -1,13 +1,14 @@
 <template>
   <div class="section-visa">
 		<img :src="iconVisa" alt="" class="icon-visanet">
-		<p class="description-section-visa">Esta tienda está autorizada por Visa para realizar transacciones electrónicas.</p>
+		<p class="description-section-visa">{{description}}</p>
 	</div>  
 </template>
 
 <script>
 function data() {
 	return {
+		description: 'Esta tienda está autorizada por Visa para realizar transacciones electrónicas.',
 		iconVisa: '/static/img/icons/icon-visanet.png',
 	};
 }
