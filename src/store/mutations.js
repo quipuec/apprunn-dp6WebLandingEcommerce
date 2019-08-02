@@ -25,12 +25,17 @@ function UPDATE_POLL_PROGRESS(state, number) {
 	Vue.set(state.pollData, 'progress', state.pollData.progress + number);
 }
 
+function UPDATE_FLAG_ADD_COUCHER(state, flag) {
+	Vue.set(state.profile, 'flagAddVoucher', flag);
+}
+
 const methods = {
 	clearUser,
 	setToken,
 	setUser,
 	showSnackBar,
 	toggleLoading,
+	UPDATE_FLAG_ADD_COUCHER,
 	UPDATE_POLL_PROGRESS,
 };
 
