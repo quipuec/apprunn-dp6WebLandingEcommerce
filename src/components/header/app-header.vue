@@ -37,9 +37,10 @@
 				<button-image :data="imagesButton[0]" class="icon-desktop" @click-image="openModalLogin"/>
 				<button-image :data="imagesButton[1]" class="icon-medium icon-desktop"/>
 				<button-image
+					if-number
 					:data="imagesButton[2]"
 					:number="1"
-					if-number
+					@click-image="goTo('buy')"
 				/>
 			</div>
 		</div>
@@ -100,6 +101,7 @@ function data() {
 		modalLogin: false,
 	};
 }
+
 export default {
 	name: 'app-header',
 	components: {

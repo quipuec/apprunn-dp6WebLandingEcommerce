@@ -32,7 +32,11 @@ function SET_PRODUCTS(state, products) {
 function SET_PRODUCT_TO_BUY(state, product) {
 	const newProduct = { ...product };
 	newProduct.quantity = 1;
-	Vue.set(state.products, 'toBuy', state.products.toBuy.concat({ ...newProduct }));
+	Vue.set(state.order, 'products', state.order.products.concat({ ...newProduct }));
+}
+
+function SET_ORDER_ID(state, id) {
+	Vue.set(state.order, 'id', id);
 }
 
 const methods = {
@@ -41,6 +45,7 @@ const methods = {
 	setUser,
 	showSnackBar,
 	toggleLoading,
+	SET_ORDER_ID,
 	SET_PRODUCTS,
 	SET_PRODUCT_TO_BUY,
 	UPDATE_POLL_PROGRESS,

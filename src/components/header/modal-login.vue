@@ -3,18 +3,20 @@
 		<div>
 			<span class="label-modal">¿Tienes una cuenta?</span>
 			<app-button 
-				:background="colorBase"
-				action="Iniciar Sesión"
 				thin
 				class="mb-3"
+				action="Iniciar Sesión"
+				:background="colorBase"
+				@click="goTo('login')"
 				/>
 			<span class="label-modal">¿No tienes una cuenta?</span>
 			<app-button 
+				thin
 				background="white"
 				action="Crear cuenta"
 				:color="colorBorder"
 				:border="colorBorder"
-				thin/>
+			/>
 		</div>
 	</div>
 </template>

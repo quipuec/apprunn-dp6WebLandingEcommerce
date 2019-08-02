@@ -7,7 +7,7 @@
 				<router-view></router-view>
 			</section>
 			<section class="small">
-				Cuadro de resumen de orden
+				<summary-order/>
 			</section>
 		</div>
 	</div>
@@ -26,6 +26,9 @@ function stepThree() {
 
 export default {
 	name: 'page-buy',
+	components: {
+		summaryOrder: () => import(/* webpackChunkName: "summaryOrder" */ '@/components/order/summary-order'),
+	},
 	computed: {
 		stepOneAndTwo,
 		stepThree,

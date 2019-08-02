@@ -12,6 +12,8 @@ export default {
 	order: {
 		bill: null,
 		delivery: null,
+		id: null,
+		products: [],
 		responsible: null,
 	},
 	pollData: {
@@ -24,7 +26,6 @@ export default {
 			page: 1,
 			limit: 20,
 		},
-		toBuy: [],
 	},
 	token: helper.getLocalToken(),
 	user: {
