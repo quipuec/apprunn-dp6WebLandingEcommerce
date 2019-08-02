@@ -284,7 +284,10 @@ export default {
 		max-height: 502px;
 		min-height: 226px;
 		overflow-y: scroll;
+		position: absolute;
+		top: 179px;
 		z-index: 5;
+		width: 100%;
 
 		@media (max-width: 764px) {
 			height: 100vh;
@@ -292,6 +295,7 @@ export default {
 			min-height: none;
 			padding: 22px 8%;
 			position: absolute;
+			top: 0;
 			width: 85%;
 		}
 	}
