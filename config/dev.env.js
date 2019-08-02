@@ -14,6 +14,7 @@ module.exports = merge(prodEnv, {
 	COLOR_HIGHLIGHT: `'${process.env.COLOR_HIGHLIGHT}'`,
 	COLOR_LINK: `'${process.env.COLOR_LINK}'`,
 	COLOR_SECONDARY: `'${process.env.COLOR_SECONDARY}'`,
+	COLOR_DARK: `'${process.env.COLOR_DARK}'`,
 	COMMERCE_CODE: `'${process.env.COMMERCE_CODE}'`,
 	COMPANY_LOGIN_TITLE: `'${process.env.COMPANY_LOGIN_TITLE}'`,
 	COMPANY_LOGO: `'${process.env.COMPANY_LOGO}'`,
