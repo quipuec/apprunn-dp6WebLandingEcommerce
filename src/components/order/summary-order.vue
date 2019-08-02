@@ -1,7 +1,16 @@
 <template>
 	<div>
-		<app-button v-if="!getOrderId" action='Hacer pedido' @click='makeOrder'/>
-		<app-button v-else action='Pagar' @click="goTo('buy-payment')"/>
+		<app-button
+			v-if="!getOrderId"
+			action='Hacer pedido'
+			:background="globalColors.primary"
+			@click="makeOrder"
+		/>
+		<app-button
+			v-else action='Pagar'
+			:background="globalColors.primary"
+			@click="goTo('buy-payment')"
+		/>
 	</div>
 </template>
 <script>

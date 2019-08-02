@@ -7,21 +7,23 @@
 				@click="changeMenu"
 				v-show="showMenu"></div>
   	</transition>
-		<transition name="slide-fade">
-			<app-menu-category 
-				v-show="showMenu" 
-				:img-user="user"
-				:color-base="colorBase"
-				:color-border="colorBorder"/>
+	<section-visa></section-visa>
+	<transition name="slide-fade">
+		<app-menu-category 
+			v-if="showMenu" 
+			:img-user="user"
+			:color-base="colorBase"
+			:color-border="colorBorder"/>
   	</transition>
-		<v-progress-linear
-			class="progress-bar"
-			color="success"
-			:indeterminate="indeterminate"
-			v-if="indeterminate"
-		></v-progress-linear>
-		<router-view></router-view>
-		<v-snackbar
+	<v-progress-linear
+		class="progress-bar"
+		color="success"
+		:indeterminate="indeterminate"
+		v-if="indeterminate"
+	></v-progress-linear>
+	<router-view></router-view>
+	<form-bulletin />
+	<v-snackbar
 			:timeout="5000"
 			:color="snackbar.color"
 			top
@@ -47,6 +49,8 @@
 <script>
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
+const formBulletin = () => import('@/components/shared/form/form-bulletin');
+const sectionVisa = () => import('@/components/footer/section-visa');
 
 function indeterminate() {
 	return this.$store.getters.indeterminate;
@@ -86,8 +90,10 @@ export default {
 	},
 	data,
 	components: {
+		sectionVisa,
 		appHeader,
 		appMenuCategory,
+		formBulletin,
 	},
 	methods: {
 		changeMenu,

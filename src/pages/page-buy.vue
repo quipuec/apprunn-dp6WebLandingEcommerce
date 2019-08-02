@@ -47,13 +47,11 @@ export default {
 	}
 
 	.big {
-		background-color: color(primary);
 		flex: 1 1 65%;
 		margin: 0 10px;
 	}
 
 	.small {
-		background-color: color(secondary);
 		flex: 1 1 30%;
 		margin: 0 10px;
 	}

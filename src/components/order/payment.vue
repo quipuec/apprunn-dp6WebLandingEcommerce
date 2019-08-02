@@ -1,10 +1,11 @@
 <template>
 	<div>
-		<app-button v-if="!getOrderId" action='Tarjeta de crédito'/>
+		<app-button :background="globalColors.primary" action='Tarjeta de crédito'/>
 		<component :is="paymenMethodSelected"></component>
 	</div>
 </template>
 <script>
+import appButton from '@/components/shared/buttons/app-button';
 
 function data() {
 	return {
@@ -15,6 +16,7 @@ function data() {
 export default {
 	name: 'payment',
 	components: {
+		appButton,
 		visaPayment: () => import('@/components/order/visa-payment'),
 	},
 	data,
