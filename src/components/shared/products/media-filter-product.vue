@@ -52,11 +52,22 @@ export default {
 
 .box-filter:nth-child(1) {
 	border-bottom: 1px solid color(white);
+
+	@media (min-width: 950px) {
+		border-bottom: none;
+	}
 }
 
 .box-filter:nth-child(2) {
 	border-bottom: 1px solid color(white);
-	border-right: none !important;
+	
+	@media (max-width: 950px) {
+		border-right: none !important;
+	}
+
+	@media (min-width: 950px) {
+		border-bottom: none;
+	}
 }
 
 .circle-filter-product {
