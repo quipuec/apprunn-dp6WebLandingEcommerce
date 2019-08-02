@@ -198,7 +198,7 @@ input.app-input::-webkit-input-placeholder {
 	}
 }
 
-.categories-carousel-slider  {
+.categories-carousel-slider, .settlement-carousel {
 	.swiper-button-next {
 		background-image: url('/static/img/slider-arrow-rigth.svg');
 	}
@@ -213,6 +213,18 @@ input.app-input::-webkit-input-placeholder {
 		height: 19px;
 		outline: none;
 		width: 13px;
+	}
+}
+
+.settlement-carousel {
+	.product-container {
+		max-width: 178px;
+	}
+
+	.swiper-button-next, .swiper-button-prev {
+		@media (max-width: 1161px) {
+			display: none;
+		}
 	}
 }
 </style>

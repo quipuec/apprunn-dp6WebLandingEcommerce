@@ -1,25 +1,50 @@
 <template>
 	<div class="section-settlement">
-		<div>
-			<title-section 
-				title="Liquidación" 
-				:color="colorDark"/>
+		<div class="container-slider">
+			<settlement-carousel 
+				:color-base="colorBase" 
+				:color-dark="colorDark"/>
 		</div>
-		<settlement-carousel />
 	</div>
 </template>
 <script>
 const settlementCarousel = () => import('@/components/home/settlement-carousel');
-const titleSection = () => import('@/components/home/title-section');
 
 export default {
 	name: 'section-settlement',
 	components: {
 		settlementCarousel,
-		titleSection,
 	},
 	props: {
 		colorDark: String,
+		colorBase: String,
 	},
 };
 </script>
+<style lang="scss" scoped>
+	.section-settlement {
+		display: flex;
+		padding: 32px 5% 36px;
+
+		@media (max-width: 1161px) {
+			flex-direction: column;
+		}
+	}
+
+	.container-publicity {
+		width: 30%;
+
+		@media (max-width: 1161px) {
+			width: 100%;
+		}
+	}
+
+	.container-slider {
+		margin: auto;
+		width: 70%;
+		@media (max-width: 1161px) {
+			width: 100%;
+		}
+	}
+</style>
+

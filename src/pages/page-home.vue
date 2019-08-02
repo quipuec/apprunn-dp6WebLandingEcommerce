@@ -4,7 +4,9 @@
 		<categories-carousel 
 			:categories="categories"
 			:color-base="colorBase"/>
-		<section-settlement :color-dark="colorDark"/>
+		<section-settlement 
+			:color-dark="colorDark"
+			:color-base="colorBase"/>
 	</layout-admin>
 </template>
 
