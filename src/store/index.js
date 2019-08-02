@@ -21,6 +21,9 @@ const store = new Vuex.Store(
 			pollData: {
 				progress: 0,
 			},
+			profile: {
+				flagAddVoucher: false,
+			},
 			token: helper.getLocalToken(),
 			user: {
 				email: '',

@@ -27,7 +27,15 @@
 							@click="goTo('user-orders')"
 						>Mis Órdenes</button>
 					</li>
-					<li class="user-action"><button class="user-action-btn ">Mis Favoritos</button></li>
+					<li class="user-action">
+						<button
+							:class="[
+								'user-action-btn',
+								{ 'active': $route.name === 'favorites'},
+							]"
+							@click="goTo('favorites')"
+						>Mis Favoritos</button>
+					</li>
 					<li class="user-action"><button class="user-action-btn ">Direcciones</button></li>
 					<li class="user-action user-logout"><button class="user-action-btn ">Cerrar sesión</button></li>
 				</ul>
@@ -54,13 +62,16 @@ export default {
 <style lang="scss" scoped>
 	.profile-layout {
 		align-items: center;
-		display: flex;
-		flex-wrap: wrap;
-		height: 630px;
-		justify-content: flex-start;
+		display: grid;
+		grid-template-columns: 342px 1fr;
+		min-height: 630px;
 		margin: auto;
 		max-width: 1142px;
 		padding-top: 100px;
+
+		@media (max-width: 900px) {
+			grid-template-columns: 1fr;
+		}
 
 		@media (max-width: 768px) {
 			height: auto;
@@ -118,7 +129,7 @@ export default {
 	}
 
 	.profile-info {
-		background-color: color(disabled);
+		background-color: color(background);
 		box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.08);
 		flex: 1 1 70%;
 		height: 100%;

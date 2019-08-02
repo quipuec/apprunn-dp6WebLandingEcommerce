@@ -11,6 +11,7 @@
 		>
 			<register-form
 				:check-color="baseColor"
+				:email-disabled="emailDisabled"
 				:flag-tyc="flagTyc"
 				:model="model"
 				:password-verified="passwordVerified"
@@ -29,6 +30,15 @@
 
 	function created() {
 		this.setWidth();
+		this.modelFacebook = { ...this.$route.query };
+		this.emailDisabled = !!this.modelFacebook.id;
+		if (this.modelFacebook.id) {
+			this.setModel({ model: 'email', value: this.modelFacebook.email });
+			this.setModel({ model: 'lastname', value: this.modelFacebook.last_name });
+			this.setModel({ model: 'name', value: this.modelFacebook.first_name });
+			this.showNotification('Es necesario ingresar una contraseña para completar el registro.',
+				'info');
+		}
 	}
 
 	function cleanForm() {
@@ -38,6 +48,12 @@
 			lastname: null,
 			name: null,
 			password: null,
+		};
+		this.modelFacebook = {
+			email: null,
+			first_name: null,
+			id: null,
+			last_name: null,
 		};
 		this.password = null;
 		this.passwordVerified = null;
@@ -52,14 +68,23 @@
 		body.codeApp = process.env.APP_CODE;
 		body.codeProject = process.env.CODE_PROJECT;
 		body.codeRole = process.env.ROLE_CODE;
+		if (this.modelFacebook.id) {
+			body.provider = 2;
+			body.extUserId = this.modelFacebook.id;
+			body.activation = Number(!this.modelFacebook.email);
+		}
 		try {
 			await this.$httpSales.post('customers-public', body, { headers });
 			this.cleanForm();
 			this.showNotification('La cuenta ha sido creada exitosamente.');
-			const self = this;
-			setTimeout(() => {
-				self.showNotification('Se le ha enviado un correo electrónico para validar su cuenta.');
-			}, 5050);
+			if (!this.modelFacebook.id) {
+				const self = this;
+				setTimeout(() => {
+					self.showNotification('Se le ha enviado un correo electrónico para validar su cuenta.');
+				}, 5050);
+			} else {
+				this.initSession();
+			}
 		} catch (err) {
 			if (err.status === 400) {
 				if (err.data.message === 'CUSTOMER_EXIST_ERROR') {
@@ -75,6 +100,51 @@
 
 	function disabled() {
 		return this.$v.$invalid || this.loading;
+	}
+
+	async function getCustomerData() {
+		const headers = {
+			Authorization: `Bearer ${this.token}`,
+		};
+		const { data: userInfo } = await this.$httpSales.get('customers/current', { headers });
+		userInfo.dni = null;
+		userInfo.avatar = userInfo.urlImage || process.env.DEFAULT_AVATAR;
+		userInfo.fullName = userInfo.typePerson.fullName;
+		this.$store.dispatch('setUser', userInfo);
+	}
+
+	async function initSession() {
+		this.loading = true;
+		const body = {
+			codeApp: process.env.APP_CODE,
+			email: this.model.email,
+			password: null,
+		};
+		const headers = {
+			Authorization: `Bearer ${process.env.TOKEN}`,
+		};
+		try {
+			const { data: response } = await this.$httpAcl.post(
+				'authenticate',
+				body,
+				{ headers },
+			);
+			const { token } = response;
+			if (token) {
+				localStorage.clear();
+				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, token);
+				this.$store.dispatch('setToken', token);
+				this.getCustomerData();
+				this.cleanForm();
+				this.goTo('page-home');
+			}
+		} catch (err) {
+			if (err.status === 500) {
+				this.showGenericError();
+			}
+		} finally {
+			this.loading = false;
+		}
 	}
 
 	function mounted() {
@@ -124,6 +194,7 @@
 		return {
 			backgroundImage: process.env.FORM_BACKGROUND,
 			baseColor: process.env.COLOR_BASE,
+			emailDisabled: false,
 			flagTyc: false,
 			headingImage: '/static/img/sign-up.svg',
 			loading: false,
@@ -132,6 +203,12 @@
 				lastname: null,
 				name: null,
 				password: null,
+			},
+			modelFacebook: {
+				email: null,
+				first_name: null,
+				id: null,
+				last_name: null,
 			},
 			password: null,
 			passwordVerified: null,
@@ -153,6 +230,8 @@
 		methods: {
 			cleanForm,
 			createAccount,
+			getCustomerData,
+			initSession,
 			setModel,
 			setWidth,
 		},

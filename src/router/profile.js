@@ -27,6 +27,16 @@ const route = {
 			name: 'user-orders',
 			component: () => import('@/components/profile/user-orders'),
 		},
+		{
+			path: 'detalle-orden/:n',
+			name: 'order-detail',
+			component: () => import('@/components/profile/user-order-details'),
+		},
+		{
+			path: 'mis-favoritos',
+			name: 'favorites',
+			component: () => import('@/components/profile/favorites'),
+		},
 	],
 };
 
