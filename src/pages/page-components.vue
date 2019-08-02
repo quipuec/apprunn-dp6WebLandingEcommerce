@@ -105,7 +105,7 @@
 			color="white"
 			></media-filter-product>
 		</v-layout>
-		<v-layout>
+		<v-layout xs12 mt-3>
 			<filter-category></filter-category>
 		</v-layout>
 	</div>
