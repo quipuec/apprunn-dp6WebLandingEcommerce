@@ -41,12 +41,12 @@ export default {
 .box-filter {
 	display: flex;
 	justify-content: center;
-	padding: 0 46px;
 	margin-bottom: 6px;
+	padding: 0 46px;
 
 	@media (max-width: 750px) {
-		padding: 3px 0;
 		margin-bottom: 6px;
+		padding: 3px 0;
 	}
 }
 
@@ -81,8 +81,8 @@ export default {
 }
 
 .content-border:nth-child(4) {
-	position: relative;
 	left: 50px;
+	position: relative;
 }
 
 .filter-title {
