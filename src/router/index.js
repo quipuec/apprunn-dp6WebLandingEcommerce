@@ -18,6 +18,11 @@ export default function (Vue) {
 					Profile,
 				],
 			},
+			{
+				path: '/category',
+				name: 'page-categoty',
+				component: () => import('@/pages/page-category'),
+			},
 			login,
 			register,
 		],
