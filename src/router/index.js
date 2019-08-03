@@ -14,10 +14,10 @@ export default function (Vue) {
 				name: 'page-home',
 				component: () => import('@/pages/page-home'),
 				children: [
-					Components,
 					Profile,
 				],
 			},
+			Components,
 			login,
 			register,
 		],
