@@ -41,33 +41,7 @@ export default {
 .box-filter {
 	display: flex;
 	justify-content: center;
-	margin-bottom: 6px;
-	// padding: 0 46px;
-
-	@media (max-width: 750px) {
-		margin-bottom: 6px;
-		padding: 3px 0;
-	}
-}
-
-.box-filter:nth-child(1) {
-	border-bottom: 1px solid color(white);
-
-	@media (min-width: 950px) {
-		border-bottom: none;
-	}
-}
-
-.box-filter:nth-child(2) {
-	border-bottom: 1px solid color(white);
-	
-	@media (max-width: 950px) {
-		border-right: none !important;
-	}
-
-	@media (min-width: 950px) {
-		border-bottom: none;
-	}
+	width: 100%;
 }
 
 .circle-filter-product {

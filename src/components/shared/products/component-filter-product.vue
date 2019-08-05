@@ -5,10 +5,10 @@
 			v-for="filter in filters" 
 			:key="filter.id">
 				<media-filter-product
-				border-right="#ffffff"
-				:image="filter.icon"
-				:title="filter.title"
-				:color="filter.color"
+					:border-right="filter.border"
+					:image="filter.icon"
+					:title="filter.title"
+					:color="filter.color"
 				></media-filter-product>
 			</swiper-slide>
 			<div class="swiper-button-prev" slot="button-prev"></div>
@@ -22,44 +22,14 @@ const mediaFilterProduct = () => import('@/components/shared/products/media-filt
 
 function data() {
 	return {
-		filters: [
-			{
-				title: 'Novedades',
-				color: '#ffffff',
-				icon: '/static/img/icons/icon-filter-product.svg',
-			},
-			{
-				title: 'Populares',
-				color: '#ffffff',
-				icon: '/static/img/icons/icon-filter-product.svg',
-			},
-			{
-				title: 'Recomendados',
-				color: '#ffffff',
-				icon: '/static/img/icons/icon-filter-product.svg',
-			},
-			{
-				title: 'Ofertas',
-				color: '#ffffff',
-				icon: '/static/img/icons/icon-filter-product.svg',
-			},
-			{
-				title: 'Ofertas',
-				color: '#ffffff',
-				icon: '/static/img/icons/icon-filter-product.svg',
-			},
-			{
-				title: 'Ofertas',
-				color: '#ffffff',
-				icon: '/static/img/icons/icon-filter-product.svg',
-			},
-		],
 		swiperOption: {
-			slidesPerView: 3,
-			slidesPerGroup: 3,
-			loop: true,
-			centeredSlides: true,
-			// loopFillGroupWithBlank: true,
+			slidesPerView: 4,
+			slidesPerGroup: 1,
+			breakpoints: {
+				750: {
+					slidesPerView: 2,
+				},
+			},
 			navigation: {
 				nextEl: '.swiper-button-next',
 				prevEl: '.swiper-button-prev',
@@ -73,6 +43,12 @@ export default {
 	name: 'component-filter-product',
 	components: {
 		mediaFilterProduct,
+	},
+	props: {
+		filters: {
+			type: Array,
+			default: () => [],
+		},
 	},
 };
 </script>

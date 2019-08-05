@@ -833,10 +833,6 @@ input.app-input::-webkit-input-placeholder {
 		background-image: url('https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-prev.svg');
 		position: absolute;
 		left: 77px;
-	}
-
-	.swiper-slide {
-		width: 30%;
-	}
+	}	
 }
 </style>
