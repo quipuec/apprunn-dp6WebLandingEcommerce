@@ -86,6 +86,7 @@
 					this.$store.dispatch('setToken', response.data.token);
 					this.getCustomerData();
 					this.cleanForm();
+					this.showNotification('La cuenta ha sido creada exitosamente.');
 					this.goTo('page-home');
 				} else {
 					this.showNotification('La cuenta ha sido creada exitosamente.');
