@@ -11,6 +11,10 @@
 </template>
 
 <script>
+const bannerCarousel = () => import('@/components/home/banner-carousel');
+const categoriesCarousel = () => import('@/components/home/categories-carousel');
+const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
+const productsSection = () => import('@/components/products/products-section');
 
 function data() {
 	return {
@@ -77,10 +81,10 @@ export default {
 	name: 'page-home',
 	data,
 	components: {
-		bannerCarousel: () => import('@/components/home/banner-carousel'),
-		categoriesCarousel: () => import('@/components/home/categories-carousel'),
-		componentFilterProduct: () => import('@/components/shared/products/component-filter-product'),
-		productsSection: () => import('@/components/products/products-section'),
+		bannerCarousel,
+		categoriesCarousel,
+		componentFilterProduct,
+		productsSection,
 	},
 };
 </script>

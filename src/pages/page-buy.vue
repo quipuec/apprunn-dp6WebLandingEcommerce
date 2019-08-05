@@ -20,6 +20,9 @@
 import lib from '@/shared/lib';
 import { mapGetters } from 'vuex';
 
+const productInCar = () => import('@/components/products/product-in-car');
+const summaryOrder = () => import(/* webpackChunkName: "summaryOrder" */ '@/components/order/summary-order');
+
 function stepOneAndTwo() {
 	const step = lib.getDeeper('meta.step')(this.$route);
 	return step !== 3;
@@ -32,8 +35,8 @@ function stepThree() {
 export default {
 	name: 'page-buy',
 	components: {
-		summaryOrder: () => import(/* webpackChunkName: "summaryOrder" */ '@/components/order/summary-order'),
-		productInCar: () => import(/* webpackChunkName: "productInCar" */ '@/components/products/product-in-car'),
+		productInCar,
+		summaryOrder,
 	},
 	computed: {
 		...mapGetters([
@@ -61,7 +64,7 @@ export default {
 	}
 
 	.small {
-		flex: 1 1 30%;
+		flex: 1 1 20%;
 		margin: 0 10px;
 	}
 </style>

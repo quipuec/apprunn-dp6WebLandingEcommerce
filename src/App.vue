@@ -227,4 +227,20 @@ input.app-input::-webkit-input-placeholder {
 		width: 13px;
 	}
 }
+
+.text-area {
+	color: color(border) !important;
+	font-family: font(medium) !important;
+	font-size: size(small) !important;
+
+	.v-input__control {
+		
+		.v-input__slot {
+			background-color: white !important;
+			border: solid 1px color(border) !important;
+			border-radius: 5px !important;
+		}
+	}
+
+}
 </style>
