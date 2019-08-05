@@ -1,16 +1,18 @@
 <template>
-	<div class="buy-container">
-		<div v-if="stepThree">Resumen de orden - Header</div>
-		<div class="buy-layout">
-			<section class="big">
-				<div v-if="stepOneAndTwo">Tabla de productos</div>
-				<router-view></router-view>
-			</section>
-			<section class="small">
-				<summary-order/>
-			</section>
+	<layout-admin>
+		<div class="buy-container">
+			<div v-if="stepThree">Resumen de orden - Header</div>
+			<div class="buy-layout">
+				<section class="big">
+					<div v-if="stepOneAndTwo">Tabla de productos</div>
+					<router-view></router-view>
+				</section>
+				<section class="small">
+					<summary-order/>
+				</section>
+			</div>
 		</div>
-	</div>
+	</layout-admin>
 </template>
 <script>
 import lib from '@/shared/lib';

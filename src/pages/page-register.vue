@@ -74,7 +74,7 @@
 			body.activation = Number(!this.modelFacebook.email);
 		}
 		try {
-			const { data: response } = await this.$httpJapi.post(
+			const { data: response } = await this.$httpAcl.post(
 				'customers-public',
 				body,
 				{ headers },

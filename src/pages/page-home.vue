@@ -1,9 +1,9 @@
 <template>
 	<layout-admin>
+		<router-view></router-view>
 		<banner-carousel :banners="banners"/>
-		<div class="page-products">
-			<products-section/>
-		</div>
+		<component-filter-product></component-filter-product>
+		<products-section/>
 	</layout-admin>
 </template>
 
@@ -33,6 +33,7 @@ export default {
 	components: {
 		bannerCarousel: () => import('@/components/home/banner-carousel'),
 		productsSection: () => import('@/components/products/products-section'),
+		componentFilterProduct: () => import('@/components/shared/products/component-filter-product'),
 	},
 };
 </script>

@@ -16,10 +16,10 @@ export default function (Vue) {
 				component: () => import('@/pages/page-home'),
 				children: [
 					Components,
-					Order,
 					Profile,
 				],
 			},
+			Order,
 			login,
 			register,
 		],
