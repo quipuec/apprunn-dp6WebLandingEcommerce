@@ -2,7 +2,7 @@ const asyncActions = {
 	LOAD_PRODUCTS: async ({ commit, state }, { context }) => {
 		const { params } = state.products;
 		const request = [];
-		if (state.token) {
+		if (context.$store.state.token) {
 			request.push(context.$httpProducts.get('products/favorites', { params }));
 		} else {
 			request.push(context.$httpProducts.get('products-public', { params }));
