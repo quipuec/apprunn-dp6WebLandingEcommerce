@@ -29,6 +29,7 @@
 						@click-item="clickCategory"/>
 						<button class="btn-collapse" @click="clickCategory(list)">
 							<simple-svg
+								v-if="list.detail.length"
 								:filepath="imageArrow.urlImage"
 								:fill="colorBorder"
 								width="11"
@@ -37,13 +38,13 @@
 							/>
 						</button>
 					</div>
-					<div v-if="list.list && list.select" class="menu-mobile">
-						<div v-for="(listTwo, indexTwo) in list.list" :key="indexTwo" class="content-list-subcategory">
+					<div v-if="list.detail && list.select" class="menu-mobile">
+						<div v-for="(listTwo, indexTwo) in list.detail" :key="indexTwo" class="content-list-subcategory">
 							<div class="list-name-category list-subcategory">
-								<span class="list-item-name bold">{{listTwo.name}}</span>
+								<span class="list-item-name bold">{{listTwo.title}}</span>
 								<button @click="clickSubCategory(listTwo,index)">
 									<simple-svg
-										v-if="listTwo.list"
+										v-if="listTwo.detail.length"
 										:filepath="imageArrow.urlImage"
 										:fill="colorBorder"
 										width="11"
@@ -52,11 +53,11 @@
 									/>
 								</button>
 							</div>
-							<div v-if="listTwo.list && listTwo.select" class="content-sub-subcategory">
+							<div v-if="listTwo.detail && listTwo.select" class="content-sub-subcategory">
 								<span 
-									v-for="(listThree, indexThree) in listTwo.list" 
+									v-for="(listThree, indexThree) in listTwo.detail" 
 									:key="indexThree"
-									class="list-item-sub list-subcategory">{{listThree.name}}</span>
+									class="list-item-sub list-subcategory">{{listThree.title}}</span>
 							</div>
 						</div>
 					</div>
@@ -64,15 +65,15 @@
 			</div>
 			<div class="menu-list-item desktop" :class="isMoreTwo ? 'isMultiple' : 'isTwo'" v-if="selectCategory">
 				<div 
-					v-for="(item, index) in selectCategory.list" 
+					v-for="(item, index) in selectCategory.detail" 
 					:key="index"
 					class="list-item">
-					<span class="list-item-name bold">{{item.name}}</span>
-					<div v-if="item.list">
+					<span class="list-item-name bold">{{item.title}}</span>
+					<div v-if="item.detail">
 						<span 
-							v-for="(itemList, indexItem) in item.list" 
+							v-for="(itemList, indexItem) in item.detail" 
 							:key="indexItem"
-							class="list-item-sub">{{itemList.name}}</span>
+							class="list-item-sub">{{itemList.title}}</span>
 					</div>
 				</div>
 			</div>
@@ -99,7 +100,7 @@ function clickCategory(item) {
 			newCategory.select = windowWidth >= 764 ? true : !c.select;
 		} else {
 			newCategory.select = false;
-			newCategory.list = c.list.map((l) => {
+			newCategory.detail = c.detail.map((l) => {
 				const newSub = { ...l };
 				newSub.select = false;
 				return newSub;
@@ -115,7 +116,7 @@ function selectCategory() {
 }
 
 function isMoreTwo() {
-	return this.selectCategory ? this.selectCategory.list.length > 2 : false;
+	return this.selectCategory ? this.selectCategory.detail.length > 2 : false;
 }
 
 function oneSelectCategory() {
@@ -130,8 +131,8 @@ function destroyed() {
 }
 
 function clickSubCategory(item, index) {
-	if (this.categories[index].list) {
-		this.categories[index].list = this.categories[index].list.map((c) => {
+	if (this.categories[index].detail) {
+		this.categories[index].detail = this.categories[index].detail.map((c) => {
 			const newSubCategory = { ...c };
 			if (item.id === c.id) {
 				newSubCategory.select = !c.select;
@@ -145,103 +146,6 @@ function clickSubCategory(item, index) {
 
 function data() {
 	return {
-		categories: [
-			{
-				id: 1,
-				name: 'Mallas',
-				urlImage: '/static/img/category-mesh.svg',
-				select: false,
-				list: [
-					{
-						id: 11,
-						name: 'Tejidas Galvanizadas',
-					},
-					{
-						id: 12,
-						name: 'Electrosoldadas',
-					},
-					{
-						id: 13,
-						name: 'Malla Expanded Metal',
-					},
-					{
-						id: 14,
-						name: 'Mallas para Filtros y Tamizado',
-					},
-					{
-						id: 15,
-						name: 'Mallas de plancha perforada',
-					},
-				],
-			},
-			{
-				id: 2,
-				name: 'Resortes',
-				urlImage: '/static/img/category-springs.svg',
-				select: false,
-				list: [
-					{
-						id: 21,
-						name: 'Automotriz',
-						select: false,
-						list: [
-							{
-								name: 'Minería ',
-							},
-							{
-								name: 'Ferrocarriles y Vagones',
-							},
-							{
-								name: 'Puerta de Garaje',
-							},
-							{
-								name: 'Industria en General',
-							},
-						],
-					},
-					{
-						id: 22,
-						name: '4x4',
-						select: false,
-						list: [
-							{
-								name: 'Sistema a Gas',
-							},
-							{
-								name: 'Tuning',
-							},
-							{
-								name: 'Competencia',
-							},
-						],
-					},
-					{
-						id: 23,
-						name: '4x4',
-					},
-					{
-						id: 24,
-						name: '4x4',
-					},
-				],
-			},
-			{
-				id: 3,
-				name: 'Cables',
-				urlImage: '/static/img/category-cables.svg',
-				select: false,
-				list: [
-					{
-						id: 31,
-						name: 'Cables de alta ingeniería: BRIDON',
-					},
-					{
-						id: 32,
-						name: 'Cables de Acero Convencionales',
-					},
-				],
-			},
-		],
 		imageArrow: {
 			urlImage: '/static/img/arrow-down.svg',
 			name: 'Desplegar',
@@ -273,6 +177,10 @@ export default {
 		},
 		colorBase: String,
 		colorBorder: String,
+		categories: {
+			type: Array,
+			default: () => [],
+		},
 	},
 };
 </script>
@@ -310,7 +218,6 @@ export default {
 	}
 
 	.menu-app-category {
-		align-items: center;
 		display: flex;
 		padding: 33px 10%;
 
@@ -328,6 +235,7 @@ export default {
 		cursor: pointer;
 		display: grid;
 		flex: 1 1 80%;
+		height: fit-content;
 
 		.list-item {
 			border-right: 1px solid color(dark);

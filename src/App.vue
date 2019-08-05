@@ -13,7 +13,8 @@
 			v-if="showMenu" 
 			:img-user="user"
 			:color-base="colorBase"
-			:color-border="colorBorder"/>
+			:color-border="colorBorder"
+			:categories="getCategories"/>
   	</transition>
 	<v-progress-linear
 		class="progress-bar"
@@ -48,6 +49,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
 const appBannerTop = () => import('@/components/header/app-banner-top');
@@ -64,6 +67,10 @@ function snackbar() {
 
 function changeMenu() {
 	this.showMenu = !this.showMenu;
+}
+
+function beforeCreate() {
+	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
 }
 
 function data() {
@@ -93,8 +100,12 @@ export default {
 	computed: {
 		indeterminate,
 		snackbar,
+		...mapGetters([
+			'getCategories',
+		]),
 	},
 	data,
+	beforeCreate,
 	components: {
 		sectionVisa,
 		appHeader,

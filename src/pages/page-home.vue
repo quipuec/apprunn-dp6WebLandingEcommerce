@@ -3,7 +3,7 @@
 		<router-view></router-view>
 		<banner-carousel :banners="banners"/>
 		<categories-carousel 
-			:categories="categories"
+			:categories="getCategories"
 			:color-base="colorBase"/>
 		<component-filter-product></component-filter-product>
 		<products-section/>
@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const bannerCarousel = () => import('@/components/home/banner-carousel');
 const categoriesCarousel = () => import('@/components/home/categories-carousel');
 const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
@@ -85,6 +87,11 @@ export default {
 		categoriesCarousel,
 		componentFilterProduct,
 		productsSection,
+	},
+	computed: {
+		...mapGetters([
+			'getCategories',
+		]),
 	},
 };
 </script>

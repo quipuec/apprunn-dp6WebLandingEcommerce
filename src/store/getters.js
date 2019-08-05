@@ -40,6 +40,10 @@ function flagAddVoucher(state) {
 	return state.profile.flagAddVoucher;
 }
 
+function getCategories(state) {
+	return state.categories;
+}
+
 const methods = {
 	companyLogo,
 	getProducts,
@@ -52,6 +56,7 @@ const methods = {
 	token,
 	user,
 	userName,
+	getCategories,
 };
 
 export default methods;
