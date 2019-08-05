@@ -16,6 +16,18 @@ const categoriesCarousel = () => import('@/components/home/categories-carousel')
 const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
 const productsSection = () => import('@/components/products/products-section');
 
+function created() {
+	this.loadData();
+}
+
+async function loadData() {
+	try {
+		const { data: response } = await this.$httpProducts.get('banners-public');
+		this.banners = response;
+	} catch (error) {
+		this.showGenericError();
+	}
+}
 function data() {
 	return {
 		banners: [
@@ -85,6 +97,10 @@ export default {
 		categoriesCarousel,
 		componentFilterProduct,
 		productsSection,
+	},
+	created,
+	methods: {
+		loadData,
 	},
 };
 </script>
