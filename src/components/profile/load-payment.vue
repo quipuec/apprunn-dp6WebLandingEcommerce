@@ -32,7 +32,7 @@ function bgCancelBtn() {
 }
 
 function goBack() {
-	this.$store.commit('UPDATE_FLAG_ADD_COUCHER', false);
+	this.$store.commit('UPDATE_FLAG_ADD_VOUCHER', false);
 }
 
 function loadVoucher() {

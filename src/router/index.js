@@ -20,8 +20,9 @@ export default function (Vue) {
 			},
 			Components,
 			login,
-			register,
+			Order,
 			Profile,
+			register,
 		],
 	});
 	return config;

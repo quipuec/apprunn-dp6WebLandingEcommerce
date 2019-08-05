@@ -6,17 +6,15 @@
 			:categories="categories"
 			:color-base="colorBase"/>
 		<component-filter-product></component-filter-product>
-		<div class="page-products">
-			<products-section/>
-		</div>
+		<products-section/>
 	</layout-admin>
 </template>
 
 <script>
 const bannerCarousel = () => import('@/components/home/banner-carousel');
 const categoriesCarousel = () => import('@/components/home/categories-carousel');
-const productsSection = () => import('@/components/products/products-section');
 const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
+const productsSection = () => import('@/components/products/products-section');
 
 function data() {
 	return {
