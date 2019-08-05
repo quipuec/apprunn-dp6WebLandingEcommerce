@@ -125,9 +125,9 @@ export default {
 		color: color(dark);
 		font-size: size(small);
 		height: 35px;
-		overflow: hidden;
 		margin: 0;
 		max-width: 150px;
+		overflow: hidden;
 		text-overflow: ellipsis;
 		text-transform: capitalize;
 	}
