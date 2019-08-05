@@ -15,6 +15,7 @@ export default {
 		id: null,
 		products: [],
 		responsible: null,
+		total: null,
 	},
 	pollData: {
 		progress: 0,

@@ -1,7 +1,16 @@
 <template>
 	<div>
-		<app-button :background="globalColors.primary" action='Tarjeta de crédito'/>
-		<component :is="paymenMethodSelected"></component>
+		<app-button
+			action='Tarjeta de crédito o débito'
+			:active="paymenMethodSelected === paymentMethodName"
+			:background="globalColors.secondary"
+			:border="globalColors.secondary"
+			max-width="264px"
+			@click="onSelect(paymentMethodName)"
+		/>
+		<component
+			:is="paymenMethodSelected"
+		></component>
 	</div>
 </template>
 <script>
@@ -9,9 +18,14 @@ import appButton from '@/components/shared/buttons/app-button';
 
 const visaPayment = () => import('@/components/order/visa-payment');
 
+function onSelect(paymentName) {
+	this.paymenMethodSelected = paymentName;
+}
+
 function data() {
 	return {
-		paymenMethodSelected: 'visaPayment',
+		paymentMethodName: 'visaPayment',
+		paymenMethodSelected: '',
 	};
 }
 
@@ -22,6 +36,9 @@ export default {
 		visaPayment,
 	},
 	data,
+	methods: {
+		onSelect,
+	},
 };
 </script>
 
