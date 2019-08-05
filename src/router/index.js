@@ -16,11 +16,12 @@ export default function (Vue) {
 				component: () => import('@/pages/page-home'),
 				children: [
 					Components,
-					Profile,
 				],
 			},
-			Order,
+			Components,
 			login,
+			Order,
+			Profile,
 			register,
 		],
 	});

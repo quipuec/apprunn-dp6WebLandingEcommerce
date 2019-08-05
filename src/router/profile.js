@@ -1,5 +1,5 @@
 const route = {
-	path: 'perfil',
+	path: '/perfil',
 	name: 'profile',
 	redirect: '/perfil/mis-datos',
 	component: () => import(/* webpackChunkName: "profile" */ '@/pages/page-profile'),
