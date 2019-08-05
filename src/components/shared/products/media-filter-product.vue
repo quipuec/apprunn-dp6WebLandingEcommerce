@@ -41,6 +41,7 @@ export default {
 .box-filter {
 	display: flex;
 	justify-content: center;
+	height: 51px;
 	width: 100%;
 }
 

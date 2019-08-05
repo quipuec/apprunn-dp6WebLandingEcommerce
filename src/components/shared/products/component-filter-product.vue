@@ -57,7 +57,6 @@ export default {
 .component-filter-product {
 	background-color: color(primary);
 	display: grid;
-	// grid-template-columns: auto auto auto auto;
 	height: 67px;
 	padding: 8px 130px;
 	width: 100%;
@@ -76,10 +75,10 @@ export default {
 
 .component-filter {
 	align-items: center;
-	height: 67px;
+	background: color(primary);
 	display: flex;
+	height: 67px;
 	justify-content: center;
-	background: red;
   width: 100% !important;
 }
 </style>

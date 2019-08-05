@@ -56,12 +56,12 @@ export default {
 }
 
 .text-subscription::before {
-		border-top: 1px solid color(semi-light);
+		border-top: 1px solid color(base);
 		content: '';
 		color: color(dark);
 		height: 3px;
 		left: 10px;
-  	position: absolute;
+  		position: absolute;
 		top: 9px;
 		width: 110px;
 	@media (max-width: 850px) {
@@ -72,7 +72,7 @@ export default {
 }
 
 .text-subscription::after {
-	border-top: 1px solid color(semi-light);
+	border-top: 1px solid color(base);
 	color: color(dark);
 	content: '';
 	height: 3px;

@@ -824,15 +824,15 @@ input.app-input::-webkit-input-placeholder {
 
 .component-filter {
 	.swiper-button-next {
-		background-image: url('https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/keyboard-right-arrow-button.svg');
+		background-image: url('/static/img/icons/arrow-button-next-white.svg');
 		position: absolute;
 		right: 77px;
 	}
 
 	.swiper-button-prev {
-		background-image: url('https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-prev.svg');
-		position: absolute;
+		background-image: url('/static/img/icons/arrow-button-prev-white.svg');
 		left: 77px;
+		position: absolute;
 	}	
 }
 </style>
