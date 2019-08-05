@@ -2,36 +2,41 @@
 	<layout-admin>
 		<router-view></router-view>
 		<banner-carousel :banners="banners"/>
-		<categories-carousel 
+		<categories-carousel
 			:categories="categories"
 			:color-base="colorBase"/>
 		<component-filter-product></component-filter-product>
-		<products-section/>
+		<div class="page-products">
+			<products-section/>
+		</div>
+		<section-settlement 
+			:color-dark="colorDark"
+			:color-base="colorBase"/>
 	</layout-admin>
 </template>
 
 <script>
 const bannerCarousel = () => import('@/components/home/banner-carousel');
 const categoriesCarousel = () => import('@/components/home/categories-carousel');
-const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
+const sectionSettlement = () => import('@/components/home/section-settlement');
 const productsSection = () => import('@/components/products/products-section');
+const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
 
+function created() {
+	this.loadData();
+}
+
+async function loadData() {
+	try {
+		const { data: response } = await this.$httpProducts.get('banners-public');
+		this.banners = response;
+	} catch (error) {
+		this.showGenericError();
+	}
+}
 function data() {
 	return {
-		banners: [
-			{
-				id: 1,
-				webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-2.png',
-			},
-			{
-				id: 2,
-				webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-2.png',
-			},
-			{
-				id: 3,
-				webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-2.png',
-			},
-		],
+		banners: [],
 		categories: [
 			{
 				id: 1,
@@ -74,6 +79,7 @@ function data() {
 				select: false,
 			},
 		],
+		colorDark: process.env.COLOR_DARK,
 		colorBase: process.env.COLOR_BASE,
 	};
 }
@@ -83,8 +89,13 @@ export default {
 	components: {
 		bannerCarousel,
 		categoriesCarousel,
-		componentFilterProduct,
+		sectionSettlement,
 		productsSection,
+		componentFilterProduct,
+	},
+	created,
+	methods: {
+		loadData,
 	},
 };
 </script>
