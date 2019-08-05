@@ -15,7 +15,8 @@
 </template>
 <script>
 
-function clicked() {
+function clicked($event) {
+	$event.stopPropagation();
 	this.$emit('click', this.value);
 }
 

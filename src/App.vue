@@ -8,21 +8,23 @@
 				@click="changeMenu"
 				v-show="showMenu"></div>
   	</transition>
-		<transition name="slide-fade">
-			<app-menu-category 
-				v-show="showMenu" 
-				:img-user="user"
-				:color-base="colorBase"
-				:color-border="colorBorder"/>
+	<transition name="slide-fade">
+		<app-menu-category 
+			v-if="showMenu" 
+			:img-user="user"
+			:color-base="colorBase"
+			:color-border="colorBorder"/>
   	</transition>
-		<v-progress-linear
-			class="progress-bar"
-			color="success"
-			:indeterminate="indeterminate"
-			v-if="indeterminate"
-		></v-progress-linear>
-		<router-view></router-view>
-		<v-snackbar
+	<v-progress-linear
+		class="progress-bar"
+		color="success"
+		:indeterminate="indeterminate"
+		v-if="indeterminate"
+	></v-progress-linear>
+	<router-view></router-view>
+	<section-visa></section-visa>
+	<form-bulletin />
+	<v-snackbar
 			:timeout="5000"
 			:color="snackbar.color"
 			top
@@ -49,6 +51,8 @@
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
 const appBannerTop = () => import('@/components/header/app-banner-top');
+const formBulletin = () => import('@/components/shared/form/form-bulletin');
+const sectionVisa = () => import('@/components/footer/section-visa');
 
 function indeterminate() {
 	return this.$store.getters.indeterminate;
@@ -92,9 +96,11 @@ export default {
 	},
 	data,
 	components: {
+		sectionVisa,
 		appHeader,
 		appMenuCategory,
 		appBannerTop,
+		formBulletin,
 	},
 	methods: {
 		changeMenu,
@@ -185,7 +191,7 @@ input.app-input::-webkit-input-placeholder {
 	.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
 		border: 1px solid color(white);
 		height: 12px;
-    width: 12px;
+    	width: 12px;
 	}
 
 	.swiper-pagination-bullet {
@@ -195,6 +201,10 @@ input.app-input::-webkit-input-placeholder {
 
 	.swiper-pagination-bullet-active {
 		background: color(white);
+	}
+
+	.v-input--switch__thumb:not(.success--text) {
+		color: map-get($colors, error) !important;
 	}
 }
 

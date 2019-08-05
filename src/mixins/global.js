@@ -66,10 +66,27 @@ function stopClick() {
 	return false;
 }
 
+function globalColors() {
+	return {
+		background: '',
+		black: '',
+		base: process.env.COLOR_BORDER,
+		border: '',
+		dark: process.env.COLOR_DARK,
+		disabled: '',
+		highLight: process.env.COLOR_HIGHLIGHT,
+		primary: process.env.COLOR_BASE,
+		secondary: process.env.COLOR_SECONDARY,
+		terciary: process.env.COLOR_LINK,
+		white: '',
+	};
+}
+
 const mixin = {
 	data,
 	computed: {
 		token,
+		globalColors,
 	},
 	methods: {
 		getImageUrl,

@@ -1,15 +1,21 @@
 <template>
 	<layout-admin>
+		<router-view></router-view>
 		<banner-carousel :banners="banners"/>
 		<categories-carousel 
 			:categories="categories"
 			:color-base="colorBase"/>
+		<div class="page-products">
+			<products-section/>
+		</div>
+		<component-filter-product></component-filter-product>
 	</layout-admin>
 </template>
 
 <script>
 const bannerCarousel = () => import('@/components/home/banner-carousel');
 const categoriesCarousel = () => import('@/components/home/categories-carousel');
+const productsSection = () => import('@/components/products/products-section');
 
 function data() {
 	return {
@@ -78,6 +84,7 @@ export default {
 	components: {
 		bannerCarousel,
 		categoriesCarousel,
+		productsSection,
 	},
 };
 </script>

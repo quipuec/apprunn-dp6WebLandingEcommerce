@@ -30,8 +30,18 @@ function pollData(state) {
 	return state.pollData;
 }
 
+function getProducts(state) {
+	return state.products.list;
+}
+
+function flagAddVoucher(state) {
+	return state.profile.flagAddVoucher;
+}
+
 const methods = {
 	companyLogo,
+	getProducts,
+	flagAddVoucher,
 	indeterminate,
 	pollData,
 	snackbar,

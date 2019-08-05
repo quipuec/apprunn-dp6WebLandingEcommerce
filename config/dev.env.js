@@ -11,6 +11,7 @@ module.exports = merge(prodEnv, {
 	CODE_PROJECT: `'${process.env.CODE_PROJECT}'`,
 	COLOR_BASE: `'${process.env.COLOR_BASE}'`,
 	COLOR_BORDER: `'${process.env.COLOR_BORDER}'`,
+	COLOR_DARK: `'${process.env.COLOR_DARK}'`,
 	COLOR_HIGHLIGHT: `'${process.env.COLOR_HIGHLIGHT}'`,
 	COLOR_LINK: `'${process.env.COLOR_LINK}'`,
 	COLOR_SECONDARY: `'${process.env.COLOR_SECONDARY}'`,
