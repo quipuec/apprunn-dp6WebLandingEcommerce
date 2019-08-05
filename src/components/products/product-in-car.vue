@@ -76,13 +76,13 @@ export default {
 		display: flex;
 		flex-wrap: wrap;
 		margin-bottom: 10px;
-		padding: 22px 34px;
+		padding: 22px 34px 5px;
 	}
 
 	.grid-areas {
 		border-right: 1px solid color(border);
 		display: grid;
-		grid-gap: 20px;
+		grid-gap: 15px;
 		grid-template-areas:
 			"image description price quantity total"
 			"image comments comments comments comments";
@@ -103,6 +103,11 @@ export default {
 
 	.comments {
 		grid-area: comments;
+		margin-top: 20px;
+
+		@media (max-width: 600px) {
+			margin: 0;
+		}
 	}
 
 	.image {

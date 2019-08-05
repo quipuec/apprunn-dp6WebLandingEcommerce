@@ -19,6 +19,8 @@
 				<v-rating
 					small
 					class="product-rating"
+					background-color="#ffcc03"
+					color="#ffcc03"
 					v-model="product.rating"></v-rating>
 			</div>
 		</section>
@@ -67,12 +69,14 @@ export default {
 <style lang="scss" scoped>
 	.product-container {
 		background-color: color(white);
-		border: 3px solid color(border);
+		border-radius: 5px;
+		box-shadow: 0 2px 2px 0 rgba(31, 26, 26, 0.07);
 		font-family: font(medium);
 		height: auto;
 		padding: 10px;
 
 		@media (min-width: 500px) {
+			border: 3px solid color(border);
 			height: 330px;
 			margin: 3px;
 		}
@@ -82,6 +86,10 @@ export default {
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
+
+		@media (max-width: 500px) {
+			justify-content: center;
+		}
 	}
 
 	.product-discount {
@@ -90,11 +98,16 @@ export default {
 		font-family: font(medium);
 		font-size: size(large);
 		padding: 8px 15px;
+
+		@media (max-width: 500px) {
+			display: none;
+		}
 	}
 
 	.product-content {
 		align-items: center;
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		margin: 0 5px;
 		padding: 0 15px;
@@ -104,8 +117,8 @@ export default {
 			margin: 0 15px;
 		}
 
-		@media (min-width: 500px) {
-			flex-direction: column;
+		@media (max-width: 500px) {
+			padding: 0 10px;
 		}
 	}
 
@@ -125,7 +138,7 @@ export default {
 		color: color(dark);
 		font-size: size(small);
 		height: 35px;
-		margin: 0;
+		margin: 0 auto;
 		max-width: 150px;
 		overflow: hidden;
 		text-overflow: ellipsis;

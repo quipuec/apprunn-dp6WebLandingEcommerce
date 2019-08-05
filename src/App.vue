@@ -195,6 +195,7 @@ input.app-input::-webkit-input-placeholder {
 	}
 
 	.swiper-pagination-bullet {
+		background: transparent;
 		cursor: pointer;
 		opacity: 1;
 	}
@@ -208,7 +209,7 @@ input.app-input::-webkit-input-placeholder {
 	}
 }
 
-.categories-carousel-slider  {
+.categories-carousel-slider, .settlement-carousel {
 	.swiper-button-next {
 		background-image: url('/static/img/slider-arrow-rigth.svg');
 	}
