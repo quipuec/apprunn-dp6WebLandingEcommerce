@@ -14,7 +14,7 @@ const salesInstance = axios.create({
 
 export default function (Vue) {
 	/* eslint-disable no-param-reassign */
-	Vue.prototype.$http = productsInstance;
+	Vue.prototype.$httpProducts = productsInstance;
 	Vue.prototype.$httpAcl = aclInstance;
 	Vue.prototype.$httpSales = salesInstance;
 }

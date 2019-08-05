@@ -1,5 +1,6 @@
 <template>
 	<v-app>
+		<app-banner-top :data="bannerTop"/>
 		<app-header :logo="logo" @change-menu="changeMenu" :menu="showMenu"/>
 		<transition name="slide-fade">
 			<div 
@@ -7,21 +8,23 @@
 				@click="changeMenu"
 				v-show="showMenu"></div>
   	</transition>
-		<transition name="slide-fade">
-			<app-menu-category 
-				v-show="showMenu" 
-				:img-user="user"
-				:color-base="colorBase"
-				:color-border="colorBorder"/>
+	<transition name="slide-fade">
+		<app-menu-category 
+			v-if="showMenu" 
+			:img-user="user"
+			:color-base="colorBase"
+			:color-border="colorBorder"/>
   	</transition>
-		<v-progress-linear
-			class="progress-bar"
-			color="success"
-			:indeterminate="indeterminate"
-			v-if="indeterminate"
-		></v-progress-linear>
-		<router-view></router-view>
-		<v-snackbar
+	<v-progress-linear
+		class="progress-bar"
+		color="success"
+		:indeterminate="indeterminate"
+		v-if="indeterminate"
+	></v-progress-linear>
+	<router-view></router-view>
+	<section-visa></section-visa>
+	<form-bulletin />
+	<v-snackbar
 			:timeout="5000"
 			:color="snackbar.color"
 			top
@@ -47,6 +50,9 @@
 <script>
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
+const appBannerTop = () => import('@/components/header/app-banner-top');
+const formBulletin = () => import('@/components/shared/form/form-bulletin');
+const sectionVisa = () => import('@/components/footer/section-visa');
 
 function indeterminate() {
 	return this.$store.getters.indeterminate;
@@ -75,6 +81,10 @@ function data() {
 		},
 		colorBase: process.env.COLOR_BASE,
 		colorBorder: process.env.COLOR_BORDER,
+		bannerTop: {
+			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-top.png',
+			image: 'descuento',
+		},
 	};
 }
 
@@ -86,8 +96,11 @@ export default {
 	},
 	data,
 	components: {
+		sectionVisa,
 		appHeader,
 		appMenuCategory,
+		appBannerTop,
+		formBulletin,
 	},
 	methods: {
 		changeMenu,
@@ -163,7 +176,7 @@ input.app-input::-webkit-input-placeholder {
 
 .slide-fade-enter, .slide-fade-leave-to {
 	opacity: 0;
-  transform: translateX(-20px);
+  transform: translateX(-10px);
 }
 
 .mobile-overlay {
@@ -171,6 +184,47 @@ input.app-input::-webkit-input-placeholder {
 
 	@media (max-width: 764px) {
 		display: block;
+	}
+}
+
+.banner-carousel {
+	.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
+		border: 1px solid color(white);
+		height: 12px;
+    	width: 12px;
+	}
+
+	.swiper-pagination-bullet {
+		cursor: pointer;
+		opacity: 1;
+	}
+
+	.swiper-pagination-bullet-active {
+		background: color(white);
+	}
+
+	.v-input--switch__thumb:not(.success--text) {
+		color: map-get($colors, error) !important;
+	}
+}
+
+.categories-carousel-slider  {
+	.swiper-button-next {
+		background-image: url('/static/img/slider-arrow-rigth.svg');
+	}
+
+	.swiper-button-prev {
+		background-image: url('/static/img/slider-arrow-left.svg');
+	}
+
+	.swiper-button-next, .swiper-button-prev {
+		background-size: auto;
+		cursor: pointer;
+		height: 19px;
+		outline: none;
+		top: calc(50% - 26px);
+		transform: translateY(50%);
+		width: 13px;
 	}
 }
 </style>

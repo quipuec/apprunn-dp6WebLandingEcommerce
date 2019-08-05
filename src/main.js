@@ -2,6 +2,8 @@ import Vue from 'vue';
 import Vuelidate from 'vuelidate';
 import VueAnalytics from 'vue-analytics';
 import VueSimpleSVG from 'vue-simple-svg';
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+import 'swiper/dist/css/swiper.css';
 import VueTheMask from 'vue-the-mask';
 import VueAuthenticate from 'vue-authenticate';
 import axios from 'axios';
@@ -23,10 +25,10 @@ import store from './store';
 import helper from './shared/helper';
 
 registerAxios(Vue);
+Vue.use(VueAxios, axios);
 Vue.use(VueTheMask);
 Vue.use(Vuelidate);
 Vue.use(VueSimpleSVG);
-Vue.use(VueAxios, axios);
 Vue.use(VueAuthenticate, {
 	baseUrl: process.env.ACL_URL,
 	providers: {
@@ -46,6 +48,7 @@ Vue.use(VueAnalytics, {
 	disableScriptLoader: true,
 	sendHitTask: window.location.hostname === 'ecommerce.netlify.com',
 });
+Vue.use(VueAwesomeSwiper);
 
 const userInfo = helper.getLocalData('ecommerce-user');
 const router = vueRouter(Vue);
@@ -58,8 +61,8 @@ Vue.config.productionTip = false;
 Vue.mixin(globalMixin);
 
 async function created() {
-	this.$http.interceptors.request.use(this.httpRequestInterceptor);
-	this.$http.interceptors.response.use(
+	this.$httpProducts.interceptors.request.use(this.httpRequestInterceptor);
+	this.$httpProducts.interceptors.response.use(
 		this.httpResponseSuccessInterceptor,
 		this.httpResponseInterceptor,
 	);

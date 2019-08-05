@@ -34,18 +34,6 @@
 				<call-menu :color="baseColor" text="Categorías"/>
 			</v-flex>
 		</v-layout>
-		<v-layout>
-			<v-flex>
-				Tarjetas de producto
-			</v-flex>
-			<section class="product-section">
-				<product-card :base-color="baseColor" class="product-card"/>		
-				<product-card :base-color="baseColor" class="product-card"/>		
-				<product-card :base-color="baseColor" class="product-card"/>		
-				<product-card :base-color="baseColor" class="product-card"/>		
-				<product-card :base-color="baseColor" class="product-card"/>		
-			</section>
-		</v-layout>
 		<v-layout wrap>
 			<v-flex xs12>
 				Modal login
@@ -82,9 +70,6 @@
 			</v-flex>
 				<container-company-data></container-company-data>
 		</v-layout>
-		<v-layout>
-			<form-bulletin></form-bulletin>
-		</v-layout>
 		<v-layout mt-3>
 			<app-footer></app-footer>
 		</v-layout>
@@ -98,13 +83,6 @@
 				color-select="#ed0000"/>
 			</v-flex>
 		</v-layout>
-		<v-layout wrap>
-			<media-filter-product
-			image="/static/img/icons/icon-filter-product.svg"
-			title="Novedades"
-			color="white"
-			></media-filter-product>
-		</v-layout>
 		<v-layout xs12 mt-3>
 			<filter-category></filter-category>
 		</v-layout>
@@ -115,16 +93,13 @@
 	const appButton = () => import('@/components/shared/buttons/app-button');
 	const appInput = () => import('@/components/shared/inputs/app-input');
 	const callMenu = () => import('@/components/header/call-menu');
-	const productCard = () => import('@/components/products/product-card');
 	const containerCompanyData = () => import('@/components/shared/company/container-company-data');
-	const formBulletin = () => import('@/components/shared/form/form-bulletin');
 	const modalLogin = () => import('@/components/header/modal-login');
 	const appSearch = () => import('@/components/shared/inputs/app-input-search');
 	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
 	const appFooter = () => import('@/components/footer/app-footer');
 	const itemMenu = () => import('@/components/header/item-menu');
-	const mediaFilterProduct = () => import('@/components/shared/products/media-filter-product');
 	const filterCategory = () => import('@/components/shared/category/filter-category');
 
 	function data() {
@@ -158,10 +133,7 @@
 			appButton,
 			appInput,
 			containerCompanyData,
-			mediaFilterProduct,
-			formBulletin,
 			callMenu,
-			productCard,
 			filterCategory,
 			modalLogin,
 			appSearch,
