@@ -7,6 +7,7 @@
 				action="Iniciar Sesión"
 				thin
 				class="mb-3"
+				@click="goToPag('login')"
 				/>
 			<span class="label-modal">¿No tienes una cuenta?</span>
 			<app-button 
@@ -14,12 +15,18 @@
 				action="Crear cuenta"
 				:color="colorBorder"
 				:border="colorBorder"
+				@click="goToPag('register')"
 				thin/>
 		</div>
 	</div>
 </template>
 <script>
-import appButton from '@/components/shared/buttons/app-button';
+const appButton = () => import('@/components/shared/buttons/app-button');
+
+function goToPag(name) {
+	this.goTo(name);
+	this.$emit('close-modal');
+}
 
 function data() {
 	return {
@@ -33,6 +40,9 @@ export default {
 	data,
 	components: {
 		appButton,
+	},
+	methods: {
+		goToPag,
 	},
 };
 </script>
