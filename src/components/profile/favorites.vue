@@ -5,6 +5,7 @@
 		</section>
 		<section class="table">
 			<responsive-table
+				align-left
 				:columns="columns"
 				:rows="rows"
 				:pages="50"
@@ -22,8 +23,10 @@
 					<td class="product-unit-price">{{row.unitPrice}}</td>
 					<td class="product-date">{{row.createdAt}}</td>
 					<td class="product-actions">
-						<car-component class="action-btn"/>
-						<delete-component class="action-btn"/>
+						<div class="product-actions-wrapper">
+							<car-component class="action-btn"/>
+							<delete-component class="action-btn"/>
+						</div>
 					</td>
 				</template>
 			</responsive-table>
@@ -91,6 +94,10 @@ export default {
 
 		td {
 			padding: 10px 30px;
+
+			@media (max-width: 600px) {
+				padding: 10px 20px;
+			}
 		}
 	}
 
@@ -142,17 +149,18 @@ export default {
 	}
 
 	.product-actions {
-		align-items: center;
-		display: flex;
 		grid-column: 3;
 		grid-row: 1;
 		height: 65px;
 
 		@media (max-width: 600px) {
-			background-color: color(disabled);
-			border: none;
+			border-bottom: none;
 			font-size: size(small);
 		}
+	}
+
+	.product-actions-wrapper {
+		display: flex;
 	}
 
 	.row-product {

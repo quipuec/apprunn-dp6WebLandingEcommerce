@@ -191,7 +191,7 @@ input.app-input::-webkit-input-placeholder {
 	.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
 		border: 1px solid color(white);
 		height: 12px;
-    width: 12px;
+    	width: 12px;
 	}
 
 	.swiper-pagination-bullet {
@@ -236,5 +236,9 @@ input.app-input::-webkit-input-placeholder {
 			display: none;
 		}
 	}
+}
+
+.v-input--switch__thumb:not(.success--text) {
+	color: map-get($colors, error) !important;
 }
 </style>
