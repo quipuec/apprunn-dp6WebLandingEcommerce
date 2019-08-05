@@ -25,10 +25,10 @@ import store from './store';
 import helper from './shared/helper';
 
 registerAxios(Vue);
+Vue.use(VueAxios, axios);
 Vue.use(VueTheMask);
 Vue.use(Vuelidate);
 Vue.use(VueSimpleSVG);
-Vue.use(VueAxios, axios);
 Vue.use(VueAuthenticate, {
 	baseUrl: process.env.ACL_URL,
 	providers: {
@@ -61,8 +61,8 @@ Vue.config.productionTip = false;
 Vue.mixin(globalMixin);
 
 async function created() {
-	this.$http.interceptors.request.use(this.httpRequestInterceptor);
-	this.$http.interceptors.response.use(
+	this.$httpProducts.interceptors.request.use(this.httpRequestInterceptor);
+	this.$httpProducts.interceptors.response.use(
 		this.httpResponseSuccessInterceptor,
 		this.httpResponseInterceptor,
 	);

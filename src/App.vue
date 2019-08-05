@@ -191,10 +191,11 @@ input.app-input::-webkit-input-placeholder {
 	.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
 		border: 1px solid color(white);
 		height: 12px;
-    width: 12px;
+    	width: 12px;
 	}
 
 	.swiper-pagination-bullet {
+		background: transparent;
 		cursor: pointer;
 		opacity: 1;
 	}
@@ -218,6 +219,8 @@ input.app-input::-webkit-input-placeholder {
 		cursor: pointer;
 		height: 19px;
 		outline: none;
+		top: calc(50% - 26px);
+		transform: translateY(50%);
 		width: 13px;
 	}
 }
