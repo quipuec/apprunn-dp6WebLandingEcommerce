@@ -5,16 +5,15 @@
 		<categories-carousel 
 			:categories="categories"
 			:color-base="colorBase"/>
-		<div class="page-products">
-			<products-section/>
-		</div>
 		<component-filter-product></component-filter-product>
+		<products-section/>
 	</layout-admin>
 </template>
 
 <script>
 const bannerCarousel = () => import('@/components/home/banner-carousel');
 const categoriesCarousel = () => import('@/components/home/categories-carousel');
+const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
 const productsSection = () => import('@/components/products/products-section');
 
 function data() {
@@ -84,6 +83,7 @@ export default {
 	components: {
 		bannerCarousel,
 		categoriesCarousel,
+		componentFilterProduct,
 		productsSection,
 	},
 };

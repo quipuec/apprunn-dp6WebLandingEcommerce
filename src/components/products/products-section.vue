@@ -46,7 +46,7 @@ export default {
 		display: grid;
 		flex-wrap: wrap;
 		grid-template-columns: repeat(auto-fit, minmax(214px, 1fr));
-		margin: auto;
+		margin: 42px auto;
 		max-width: 1070px;
 	}
 </style>

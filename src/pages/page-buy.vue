@@ -1,19 +1,23 @@
 <template>
-	<div class="buy-container">
-		<div v-if="stepThree">Resumen de orden - Header</div>
-		<div class="buy-layout">
-			<section class="big">
-				<div v-if="stepOneAndTwo">Tabla de productos</div>
-				<router-view></router-view>
-			</section>
-			<section class="small">
-				Cuadro de resumen de orden
-			</section>
+	<layout-admin>
+		<div class="buy-container">
+			<div v-if="stepThree">Resumen de orden - Header</div>
+			<div class="buy-layout">
+				<section class="big">
+					<div v-if="stepOneAndTwo">Tabla de productos</div>
+					<router-view></router-view>
+				</section>
+				<section class="small">
+					<summary-order/>
+				</section>
+			</div>
 		</div>
-	</div>
+	</layout-admin>
 </template>
 <script>
 import lib from '@/shared/lib';
+
+const summaryOrder = () => import(/* webpackChunkName: "summaryOrder" */ '@/components/order/summary-order');
 
 function stepOneAndTwo() {
 	const step = lib.getDeeper('meta.step')(this.$route);
@@ -26,6 +30,9 @@ function stepThree() {
 
 export default {
 	name: 'page-buy',
+	components: {
+		summaryOrder,
+	},
 	computed: {
 		stepOneAndTwo,
 		stepThree,
@@ -44,13 +51,11 @@ export default {
 	}
 
 	.big {
-		background-color: color(primary);
 		flex: 1 1 65%;
 		margin: 0 10px;
 	}
 
 	.small {
-		background-color: color(secondary);
 		flex: 1 1 30%;
 		margin: 0 10px;
 	}
