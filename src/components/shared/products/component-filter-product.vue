@@ -26,7 +26,10 @@ function data() {
 			slidesPerView: 4,
 			slidesPerGroup: 1,
 			breakpoints: {
-				750: {
+				1200: {
+					slidesPerView: 3,
+				},
+				950: {
 					slidesPerView: 2,
 				},
 			},

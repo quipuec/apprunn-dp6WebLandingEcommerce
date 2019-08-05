@@ -827,12 +827,20 @@ input.app-input::-webkit-input-placeholder {
 		background-image: url('/static/img/icons/arrow-button-next-white.svg');
 		position: absolute;
 		right: 77px;
+
+		@media (max-width: 650px) {
+			right: 15px;
+		}
 	}
 
 	.swiper-button-prev {
 		background-image: url('/static/img/icons/arrow-button-prev-white.svg');
 		left: 77px;
 		position: absolute;
-	}	
+		
+		@media (max-width: 650px) {
+			left: 15px;
+		}
+	}
 }
 </style>
