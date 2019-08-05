@@ -1,10 +1,13 @@
 <template>
 	<layout-admin>
+		<router-view></router-view>
 		<banner-carousel :banners="banners"/>
+		<component-filter-product></component-filter-product>
 	</layout-admin>
 </template>
 
 <script>
+const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
 const bannerCarousel = () => import('@/components/home/banner-carousel');
 
 function data() {
@@ -29,6 +32,7 @@ export default {
 	name: 'page-home',
 	data,
 	components: {
+		componentFilterProduct,
 		bannerCarousel,
 	},
 };
