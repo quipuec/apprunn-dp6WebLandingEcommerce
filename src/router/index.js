@@ -14,9 +14,7 @@ export default function (Vue) {
 				path: '/',
 				name: 'page-home',
 				component: () => import('@/pages/page-home'),
-				children: [
-					Components,
-				],
+				children: [],
 			},
 			Components,
 			login,
