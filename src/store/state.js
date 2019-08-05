@@ -19,6 +19,9 @@ export default {
 	pollData: {
 		progress: 0,
 	},
+	profile: {
+		flagAddVoucher: false,
+	},
 	products: {
 		list: [],
 		params: {

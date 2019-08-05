@@ -3,7 +3,7 @@
 		<section class="product-header">
 			<div :style="`background-color: ${baseColor}`" class="product-discount">-20%</div>
 			<div class="product-favorite">
-				<heart-component @click="productFavo" v-model="product.favorite"/>
+				<heart-component @click="productFavo" :value="product.flagFavorite"/>
 			</div>
 		</section>
 		<section class="product-content">
@@ -112,7 +112,6 @@ export default {
 	.product-description-wrapper {
 		display: flex;
 		flex-direction: column;
-		margin: 0 5px !important;
 		width: 100%;
 	}
 
@@ -125,16 +124,17 @@ export default {
 	.product-description {
 		color: color(dark);
 		font-size: size(small);
-		overflow: hidden;
+		height: 35px;
 		margin: 0;
+		max-width: 150px;
+		overflow: hidden;
 		text-overflow: ellipsis;
 		text-transform: capitalize;
-		white-space: nowrap;
-		width: 100%;
 	}
 
 	.product-brand {
-		color: color(dark);
+		color: color(base);
+		font-size: size(xsmall);
 	}
 
 	.product-price-discount {

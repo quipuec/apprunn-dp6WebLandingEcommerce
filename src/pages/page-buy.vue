@@ -1,19 +1,24 @@
 <template>
-	<div class="buy-container">
-		<div v-if="stepThree">Resumen de orden - Header</div>
-		<div class="buy-layout">
-			<section class="big">
-				<div v-if="stepOneAndTwo">Tabla de productos</div>
-				<router-view></router-view>
-			</section>
-			<section class="small">
-				<summary-order/>
-			</section>
+	<layout-admin>
+		<div class="buy-container">
+			<div v-if="stepThree">Resumen de orden - Header</div>
+			<div class="buy-layout">
+				<section class="big">
+					<div v-if="stepOneAndTwo">
+						<product-in-car v-for="product in getProductToBuy" :key="product.id" :product="product"/>
+					</div>
+					<router-view></router-view>
+				</section>
+				<section class="small">
+					<summary-order/>
+				</section>
+			</div>
 		</div>
-	</div>
+	</layout-admin>
 </template>
 <script>
 import lib from '@/shared/lib';
+import { mapGetters } from 'vuex';
 
 function stepOneAndTwo() {
 	const step = lib.getDeeper('meta.step')(this.$route);
@@ -28,8 +33,12 @@ export default {
 	name: 'page-buy',
 	components: {
 		summaryOrder: () => import(/* webpackChunkName: "summaryOrder" */ '@/components/order/summary-order'),
+		productInCar: () => import(/* webpackChunkName: "productInCar" */ '@/components/products/product-in-car'),
 	},
 	computed: {
+		...mapGetters([
+			'getProductToBuy',
+		]),
 		stepOneAndTwo,
 		stepThree,
 	},
