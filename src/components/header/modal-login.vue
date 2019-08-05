@@ -16,6 +16,7 @@
 				action="Crear cuenta"
 				:color="colorBorder"
 				:border="colorBorder"
+				@click="goTo('register')"
 			/>
 		</div>
 	</div>

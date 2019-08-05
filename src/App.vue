@@ -206,6 +206,7 @@ input.app-input::-webkit-input-placeholder {
 	}
 
 	.swiper-pagination-bullet {
+		background: transparent;
 		cursor: pointer;
 		opacity: 1;
 	}
