@@ -102,8 +102,8 @@
 	const appButton = () => import('@/components/shared/buttons/app-button');
 	const appInput = () => import('@/components/shared/inputs/app-input');
 	const callMenu = () => import('@/components/header/call-menu');
-	const productCard = () => import('@/components/products/product-card');
 	const containerCompanyData = () => import('@/components/shared/company/container-company-data');
+	const productCard = () => import('@/components/products/product-card');
 	const modalLogin = () => import('@/components/header/modal-login');
 	const appSearch = () => import('@/components/shared/inputs/app-input-search');
 	const buttonImage = () => import('@/components/shared/buttons/app-button-image');

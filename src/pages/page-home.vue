@@ -2,13 +2,14 @@
 	<layout-admin>
 		<router-view></router-view>
 		<banner-carousel :banners="banners"/>
+		<div class="page-products">
+			<products-section/>
+		</div>
 		<component-filter-product></component-filter-product>
 	</layout-admin>
 </template>
 
 <script>
-const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
-const bannerCarousel = () => import('@/components/home/banner-carousel');
 
 function data() {
 	return {
@@ -32,8 +33,9 @@ export default {
 	name: 'page-home',
 	data,
 	components: {
-		componentFilterProduct,
-		bannerCarousel,
+		bannerCarousel: () => import('@/components/home/banner-carousel'),
+		componentFilterProduct: () => import('@/components/shared/products/component-filter-product'),
+		productsSection: () => import('@/components/products/products-section'),
 	},
 };
 </script>
