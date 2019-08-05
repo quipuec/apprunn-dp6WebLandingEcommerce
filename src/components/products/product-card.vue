@@ -1,5 +1,5 @@
 <template>
-	<div class="product-container">
+	<div class="product-container" @click="buyProduct">
 		<section class="product-header">
 			<div :style="`background-color: ${baseColor}`" class="product-discount">-20%</div>
 			<div class="product-favorite">
@@ -8,13 +8,13 @@
 		</section>
 		<section class="product-content">
 			<div>
-				<img class="product-img" src="/static/img/resorte.jpg" alt="imagen del product">
+				<img class="product-img" :src="product.urlImage" alt="imagen del product">
 			</div>
 			<div class="product-description-wrapper">
-				<p class="product-description">Descripción del producto</p>
-				<small class="product-brand">Marca</small>
-				<h3 class="product-price-discount">S/. 47.99</h3>
-				<small class="product-price">S/. 67.99</small>
+				<p class="product-description">{{product.description}}</p>
+				<small class="product-brand">{{product.warehouseProduct.brand.name}}</small>
+				<h3 class="product-price-discount">{{product.priceDiscount || 0}}</h3>
+				<small class="product-price">{{product.price || 0}}</small>
 				<small class="other-buy">+ 1000 compraron esto</small>
 				<v-rating
 					small
@@ -27,18 +27,20 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 
 function productFavo() {
-	this.product.favorite = !this.product.favorite;
+	if (this.token) {
+		this.$store.dispatch('SET_FAVORITE_FLAG', { context: this, product: this.product });
+		this.$store.dispatch('LOAD_PRODUCTS', { context: this, params: this.getProductsParams });
+	} else {
+		const text = 'Debe iniciar sesión para seleccionar producto como favorito';
+		this.$store.dispatch('showSnackBar', { text, color: 'error' });
+	}
 }
 
-function data() {
-	return {
-		product: {
-			favorite: false,
-			rating: 3,
-		},
-	};
+function buyProduct() {
+	this.$store.commit('SET_PRODUCT_TO_BUY', this.product);
 }
 
 export default {
@@ -46,12 +48,21 @@ export default {
 	components: {
 		heartComponent: () => import('@/components/shared/icons/heart-component'),
 	},
-	data,
+	computed: {
+		...mapGetters([
+			'getProductsParams',
+		]),
+	},
 	methods: {
+		buyProduct,
 		productFavo,
 	},
 	props: {
 		baseColor: String,
+		product: {
+			default: () => {},
+			type: Object,
+		},
 	},
 };
 </script>
@@ -60,13 +71,13 @@ export default {
 		background-color: color(white);
 		border-radius: 5px;
 		box-shadow: 0 2px 2px 0 rgba(31, 26, 26, 0.07);
-		// border: 3px solid color(border);
 		font-family: font(medium);
-		max-height: 330px;
+		height: auto;
 		padding: 10px;
 
 		@media (min-width: 500px) {
 			border: 3px solid color(border);
+			height: 330px;
 			margin: 3px;
 		}
 	}
@@ -99,7 +110,7 @@ export default {
 		flex-direction: column;
 		justify-content: center;
 		margin: 0 5px;
-		padding: 0 25px;
+		padding: 0 15px;
 		text-align: center;
 
 		div {
@@ -114,7 +125,7 @@ export default {
 	.product-description-wrapper {
 		display: flex;
 		flex-direction: column;
-		margin: 0 5px !important;
+		width: 100%;
 	}
 
 	.product-img {
@@ -126,11 +137,17 @@ export default {
 	.product-description {
 		color: color(dark);
 		font-size: size(small);
+		height: 35px;
 		margin: 0;
+		max-width: 150px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-transform: capitalize;
 	}
 
 	.product-brand {
-		color: color(dark);
+		color: color(base);
+		font-size: size(xsmall);
 	}
 
 	.product-price-discount {

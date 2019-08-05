@@ -27,11 +27,9 @@
 		background-color: color(background);
 		border: 1px solid color(border);
 		border-radius: 7px;
-		border-style: solid;
-		border-width: 1px;
 		color: color(base);
-		font-family: font(demi);
-		font-size: size(minmedium);
+		font-family: font(medium);
+		font-size: size(medium);
 		height: 46.8px;
 		outline: none;
 		padding: 0px 16.2px;
