@@ -112,7 +112,6 @@ export default {
 	.product-description-wrapper {
 		display: flex;
 		flex-direction: column;
-		margin: 0 5px !important;
 		width: 100%;
 	}
 
@@ -127,6 +126,7 @@ export default {
 		font-size: size(small);
 		overflow: hidden;
 		margin: 0;
+		max-width: 200px;
 		text-overflow: ellipsis;
 		text-transform: capitalize;
 		white-space: nowrap;

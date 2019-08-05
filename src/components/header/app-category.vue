@@ -283,7 +283,11 @@ export default {
 		box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.07);
 		max-height: 502px;
 		min-height: 226px;
+		overflow-y: scroll;
+		position: absolute;
+		top: 179px;
 		z-index: 5;
+		width: 100%;
 
 		@media (max-width: 764px) {
 			height: 100vh;
@@ -291,6 +295,7 @@ export default {
 			min-height: none;
 			padding: 22px 8%;
 			position: absolute;
+			top: 0;
 			width: 85%;
 		}
 	}

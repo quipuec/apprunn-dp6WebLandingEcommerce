@@ -3,7 +3,6 @@ import login from './login';
 import Components from './components';
 import Profile from './profile';
 import register from './register';
-import Products from './products';
 import Order from './buy';
 
 export default function (Vue) {
@@ -14,12 +13,10 @@ export default function (Vue) {
 			{
 				path: '/',
 				name: 'page-home',
-				redirect: '/productos',
 				component: () => import('@/pages/page-home'),
 				children: [
 					Components,
 					Order,
-					Products,
 					Profile,
 				],
 			},

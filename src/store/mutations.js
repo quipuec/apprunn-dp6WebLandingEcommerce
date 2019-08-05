@@ -35,6 +35,10 @@ function SET_PRODUCT_TO_BUY(state, product) {
 	Vue.set(state.products, 'toBuy', state.products.toBuy.concat({ ...newProduct }));
 }
 
+function UPDATE_FLAG_ADD_COUCHER(state, flag) {
+	Vue.set(state.profile, 'flagAddVoucher', flag);
+}
+
 const methods = {
 	clearUser,
 	setToken,
@@ -43,6 +47,7 @@ const methods = {
 	toggleLoading,
 	SET_PRODUCTS,
 	SET_PRODUCT_TO_BUY,
+	UPDATE_FLAG_ADD_COUCHER,
 	UPDATE_POLL_PROGRESS,
 };
 
