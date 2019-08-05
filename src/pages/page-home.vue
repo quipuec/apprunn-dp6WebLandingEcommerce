@@ -5,10 +5,10 @@
 		<categories-carousel
 			:categories="categories"
 			:color-base="colorBase"/>
+		<component-filter-product></component-filter-product>
 		<div class="page-products">
 			<products-section/>
 		</div>
-		<component-filter-product></component-filter-product>
 	</layout-admin>
 </template>
 
