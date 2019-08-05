@@ -17,6 +17,8 @@
 <script>
 import lib from '@/shared/lib';
 
+const summaryOrder = () => import(/* webpackChunkName: "summaryOrder" */ '@/components/order/summary-order');
+
 function stepOneAndTwo() {
 	const step = lib.getDeeper('meta.step')(this.$route);
 	return step !== 3;
@@ -29,7 +31,7 @@ function stepThree() {
 export default {
 	name: 'page-buy',
 	components: {
-		summaryOrder: () => import(/* webpackChunkName: "summaryOrder" */ '@/components/order/summary-order'),
+		summaryOrder,
 	},
 	computed: {
 		stepOneAndTwo,

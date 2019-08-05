@@ -30,8 +30,3 @@ export default {
 	name: 'product-in-car',
 };
 </script>
-<style lang="scss" scoped>
-	.product-title {
-		
-	}
-</style>

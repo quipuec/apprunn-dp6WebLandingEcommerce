@@ -7,6 +7,8 @@
 <script>
 import appButton from '@/components/shared/buttons/app-button';
 
+const visaPayment = () => import('@/components/order/visa-payment');
+
 function data() {
 	return {
 		paymenMethodSelected: 'visaPayment',
@@ -17,7 +19,7 @@ export default {
 	name: 'payment',
 	components: {
 		appButton,
-		visaPayment: () => import('@/components/order/visa-payment'),
+		visaPayment,
 	},
 	data,
 };
