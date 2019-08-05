@@ -124,17 +124,17 @@ export default {
 	.product-description {
 		color: color(dark);
 		font-size: size(small);
+		height: 35px;
 		overflow: hidden;
 		margin: 0;
-		max-width: 200px;
+		max-width: 150px;
 		text-overflow: ellipsis;
 		text-transform: capitalize;
-		white-space: nowrap;
-		width: 100%;
 	}
 
 	.product-brand {
-		color: color(dark);
+		color: color(base);
+		font-size: size(xsmall);
 	}
 
 	.product-price-discount {
