@@ -34,18 +34,6 @@
 				<call-menu :color="baseColor" text="Categorías"/>
 			</v-flex>
 		</v-layout>
-		<v-layout>
-			<v-flex>
-				Tarjetas de producto
-			</v-flex>
-			<section class="product-section">
-				<product-card :base-color="baseColor" class="product-card"/>		
-				<product-card :base-color="baseColor" class="product-card"/>		
-				<product-card :base-color="baseColor" class="product-card"/>		
-				<product-card :base-color="baseColor" class="product-card"/>		
-				<product-card :base-color="baseColor" class="product-card"/>		
-			</section>
-		</v-layout>
 		<v-layout wrap>
 			<v-flex xs12>
 				Modal login

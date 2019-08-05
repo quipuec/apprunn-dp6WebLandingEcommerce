@@ -9,32 +9,34 @@
 			<swiper :options="swiperOption">
         <swiper-slide>
 					<div>
-						<product-card :base-color="colorBase" class="product-card"/>
+						<product-card 
+							:base-color="colorBase" 
+							:product="product" 
+							class="product-card"/>
 					</div>
 				</swiper-slide>
 				<swiper-slide>
 					<div>
-						<product-card :base-color="colorBase" class="product-card"/>
+						<product-card 
+							:base-color="colorBase" 
+							:product="product" 
+							class="product-card"/>
 					</div>
 				</swiper-slide>
 				<swiper-slide>
 					<div>
-						<product-card :base-color="colorBase" class="product-card"/>
+						<product-card 
+							:base-color="colorBase" 
+							:product="product" 
+							class="product-card"/>
 					</div>
 				</swiper-slide>
 				<swiper-slide>
 					<div>
-						<product-card :base-color="colorBase" class="product-card"/>
-					</div>
-				</swiper-slide>
-				<swiper-slide>
-					<div>
-						<product-card :base-color="colorBase" class="product-card"/>
-					</div>
-				</swiper-slide>
-				<swiper-slide>
-					<div>
-						<product-card :base-color="colorBase" class="product-card"/>
+						<product-card 
+							:base-color="colorBase" 
+							:product="product" 
+							class="product-card"/>
 					</div>
 				</swiper-slide>
         <div class="swiper-button-prev" slot="button-prev"></div>
@@ -65,6 +67,15 @@ function data() {
 					allowTouchMove: true,
 					centeredSlides: true,
 					grabCursor: true,
+				},
+			},
+		},
+		product: {
+			urlImage: 'https://japi-static.s3.amazonaws.com/taurus/Xiaomi-Redmi_Note-6_6.jpg',
+			description: 'COMBO Xiaomi Redmi Note 6 Pro / 4GB 64GB Versión Global + Mica de vidrio templado 5D',
+			warehouseProduct: {
+				brand: {
+					name: 'Xiomi',
 				},
 			},
 		},
