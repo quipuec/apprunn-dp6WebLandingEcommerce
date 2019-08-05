@@ -83,6 +83,9 @@
 				color-select="#ed0000"/>
 			</v-flex>
 		</v-layout>
+		<v-layout xs12 mt-3>
+			<filter-category></filter-category>
+		</v-layout>
 	</div>
 </template>
 
@@ -91,14 +94,13 @@
 	const appInput = () => import('@/components/shared/inputs/app-input');
 	const callMenu = () => import('@/components/header/call-menu');
 	const containerCompanyData = () => import('@/components/shared/company/container-company-data');
-	const productCard = () => import('@/components/products/product-card');
 	const modalLogin = () => import('@/components/header/modal-login');
 	const appSearch = () => import('@/components/shared/inputs/app-input-search');
 	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
 	const appFooter = () => import('@/components/footer/app-footer');
 	const itemMenu = () => import('@/components/header/item-menu');
-	const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
+	const filterCategory = () => import('@/components/shared/category/filter-category');
 
 	function data() {
 		return {
@@ -131,9 +133,8 @@
 			appButton,
 			appInput,
 			containerCompanyData,
-			componentFilterProduct,
 			callMenu,
-			productCard,
+			filterCategory,
 			modalLogin,
 			appSearch,
 			buttonImage,
