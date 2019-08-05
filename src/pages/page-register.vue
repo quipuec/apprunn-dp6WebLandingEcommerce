@@ -74,16 +74,33 @@
 			body.activation = Number(!this.modelFacebook.email);
 		}
 		try {
-			await this.$httpSales.post('customers-public', body, { headers });
-			this.cleanForm();
-			this.showNotification('La cuenta ha sido creada exitosamente.');
-			if (!this.modelFacebook.id) {
+			const { data: response } = await this.$httpAcl.post(
+				'customers-public',
+				body,
+				{ headers },
+			);
+			if (this.modelFacebook && this.modelFacebook.id) {
+				if (response.data && response.data.token) {
+					localStorage.clear();
+					localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, response.data.token);
+					this.$store.dispatch('setToken', response.data.token);
+					this.getCustomerData();
+					this.cleanForm();
+					this.goTo('page-home');
+				} else {
+					this.showNotification('La cuenta ha sido creada exitosamente.');
+					const self = this;
+					setTimeout(() => {
+						self.showNotification('Se le ha enviado un correo electrónico para validar su cuenta.');
+					}, 5050);
+				}
+			} else {
+				this.cleanForm();
+				this.showNotification('La cuenta ha sido creada exitosamente.');
 				const self = this;
 				setTimeout(() => {
 					self.showNotification('Se le ha enviado un correo electrónico para validar su cuenta.');
 				}, 5050);
-			} else {
-				this.initSession();
 			}
 		} catch (err) {
 			if (err.status === 400) {
@@ -111,40 +128,6 @@
 		userInfo.avatar = userInfo.urlImage || process.env.DEFAULT_AVATAR;
 		userInfo.fullName = userInfo.typePerson.fullName;
 		this.$store.dispatch('setUser', userInfo);
-	}
-
-	async function initSession() {
-		this.loading = true;
-		const body = {
-			codeApp: process.env.APP_CODE,
-			email: this.model.email,
-			password: null,
-		};
-		const headers = {
-			Authorization: `Bearer ${process.env.TOKEN}`,
-		};
-		try {
-			const { data: response } = await this.$httpAcl.post(
-				'authenticate',
-				body,
-				{ headers },
-			);
-			const { token } = response;
-			if (token) {
-				localStorage.clear();
-				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, token);
-				this.$store.dispatch('setToken', token);
-				this.getCustomerData();
-				this.cleanForm();
-				this.goTo('page-home');
-			}
-		} catch (err) {
-			if (err.status === 500) {
-				this.showGenericError();
-			}
-		} finally {
-			this.loading = false;
-		}
 	}
 
 	function mounted() {
@@ -231,7 +214,6 @@
 			cleanForm,
 			createAccount,
 			getCustomerData,
-			initSession,
 			setModel,
 			setWidth,
 		},
