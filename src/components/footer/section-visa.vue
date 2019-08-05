@@ -21,7 +21,7 @@ export default {
 
 <style lang="scss" scoped>
 .description-section-visa {
-	color: color(light);
+	color: color(dark);
 	font-family: font(regular);
 	font-size: size(medium);
 	margin: 0 0 0 17px;
