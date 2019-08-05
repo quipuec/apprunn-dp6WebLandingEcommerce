@@ -8,8 +8,6 @@
 				@click="changeMenu"
 				v-show="showMenu"></div>
   	</transition>
-	<section-visa></section-visa>
-	<form-bulletin />
 	<transition name="slide-fade">
 		<app-menu-category 
 			v-if="showMenu" 
@@ -24,6 +22,8 @@
 		v-if="indeterminate"
 	></v-progress-linear>
 	<router-view></router-view>
+	<section-visa></section-visa>
+	<form-bulletin />
 	<v-snackbar
 			:timeout="5000"
 			:color="snackbar.color"
@@ -176,7 +176,7 @@ input.app-input::-webkit-input-placeholder {
 
 .slide-fade-enter, .slide-fade-leave-to {
 	opacity: 0;
-  transform: translateX(-20px);
+  transform: translateX(-10px);
 }
 
 .mobile-overlay {
@@ -184,6 +184,27 @@ input.app-input::-webkit-input-placeholder {
 
 	@media (max-width: 764px) {
 		display: block;
+	}
+}
+
+.banner-carousel {
+	.swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
+		border: 1px solid color(white);
+		height: 12px;
+    	width: 12px;
+	}
+
+	.swiper-pagination-bullet {
+		cursor: pointer;
+		opacity: 1;
+	}
+
+	.swiper-pagination-bullet-active {
+		background: color(white);
+	}
+
+	.v-input--switch__thumb:not(.success--text) {
+		color: map-get($colors, error) !important;
 	}
 }
 </style>
