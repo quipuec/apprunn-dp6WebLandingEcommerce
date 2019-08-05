@@ -30,20 +30,7 @@ async function loadData() {
 }
 function data() {
 	return {
-		banners: [
-			{
-				id: 1,
-				webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-2.png',
-			},
-			{
-				id: 2,
-				webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-2.png',
-			},
-			{
-				id: 3,
-				webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-2.png',
-			},
-		],
+		banners: [],
 		categories: [
 			{
 				id: 1,
