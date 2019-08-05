@@ -50,7 +50,7 @@ export default {
 <style lang="scss" scoped>
 	.buy-container {
 		margin: 0 auto;
-		max-width: 1200px;
+		padding: 0 6%;
 	}
 	.buy-layout {
 		align-items: flex-start;
@@ -66,5 +66,7 @@ export default {
 	.small {
 		flex: 1 1 20%;
 		margin: 0 10px;
+		position: sticky;
+		top: 0px;
 	}
 </style>

@@ -76,7 +76,7 @@ export default {
 		display: flex;
 		flex-wrap: wrap;
 		margin-bottom: 10px;
-		padding: 22px 34px;
+		padding: 22px 14px 22px 34px;
 	}
 
 	.grid-areas {

@@ -243,4 +243,18 @@ input.app-input::-webkit-input-placeholder {
 	}
 
 }
+
+.btn-order {
+	width: 100%;
+	
+	button.app-button {
+		height: 49px;
+		max-width: 100% !important;
+
+		@media (min-width: 764px) {
+			height: 49px;
+			max-width: 100% !important;
+		}
+	}
+}
 </style>
