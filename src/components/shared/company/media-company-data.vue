@@ -34,19 +34,18 @@ export default {
 	display: flex;
 	padding: 0 45px;
 
-	@media (max-width: 715px) {
+	@media (max-width: 1161px) {
 		padding: 0 9px;
 	}
 }
 
 .text-company-data {
 	color: color(white);
-	font-family: font(medium);
 	font-size: size(minmedium);
 	margin: 0 0 0 9px;
 	width: 110px;
 
-	@media (max-width: 715px) {
+	@media (max-width: 1161px) {
 		font-size: 8px;
 		margin-left: 6px;
 		width: 68px;
@@ -54,7 +53,7 @@ export default {
 }
 
 .image-company {
-	@media (max-width: 715px) {
+	@media (max-width: 1161px) {
 		height: 19px;
 	}
 }

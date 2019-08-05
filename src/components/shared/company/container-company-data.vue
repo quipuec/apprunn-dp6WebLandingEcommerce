@@ -42,7 +42,7 @@ export default {
 		border-radius: 5px;
 		padding: 9px 0;
 
-		@media (max-width: 715px) {
+		@media (max-width: 1161px) {
 			padding: 5px 0;
 		}
 	}
@@ -52,7 +52,7 @@ export default {
 		height: 86px;
 		width: 701px;
 		
-		@media screen and (max-width: 715px) {
+		@media screen and (max-width: 1161px) {
 			height: 52px;
 			width: 326px;
 		}
