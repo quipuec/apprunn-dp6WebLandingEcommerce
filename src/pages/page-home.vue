@@ -2,7 +2,7 @@
 	<layout-admin>
 		<router-view></router-view>
 		<banner-carousel :banners="banners"/>
-		<categories-carousel 
+		<categories-carousel
 			:categories="categories"
 			:color-base="colorBase"/>
 		<component-filter-product></component-filter-product>
