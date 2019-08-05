@@ -212,6 +212,8 @@ input.app-input::-webkit-input-placeholder {
 		cursor: pointer;
 		height: 19px;
 		outline: none;
+		top: calc(50% - 26px);
+		transform: translateY(50%);
 		width: 13px;
 	}
 }
