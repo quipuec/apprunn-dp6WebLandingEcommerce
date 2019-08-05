@@ -2,7 +2,7 @@
 	<layout-admin>
 		<router-view></router-view>
 		<banner-carousel :banners="banners"/>
-		<categories-carousel 
+		<categories-carousel
 			:categories="categories"
 			:color-base="colorBase"/>
 		<component-filter-product></component-filter-product>
@@ -16,22 +16,21 @@ const categoriesCarousel = () => import('@/components/home/categories-carousel')
 const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
 const productsSection = () => import('@/components/products/products-section');
 
+function created() {
+	this.loadData();
+}
+
+async function loadData() {
+	try {
+		const { data: response } = await this.$httpProducts.get('banners-public');
+		this.banners = response;
+	} catch (error) {
+		this.showGenericError();
+	}
+}
 function data() {
 	return {
-		banners: [
-			{
-				id: 1,
-				webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-2.png',
-			},
-			{
-				id: 2,
-				webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-2.png',
-			},
-			{
-				id: 3,
-				webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-2.png',
-			},
-		],
+		banners: [],
 		categories: [
 			{
 				id: 1,
@@ -85,6 +84,10 @@ export default {
 		categoriesCarousel,
 		componentFilterProduct,
 		productsSection,
+	},
+	created,
+	methods: {
+		loadData,
 	},
 };
 </script>
