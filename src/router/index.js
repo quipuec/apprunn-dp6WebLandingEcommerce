@@ -17,11 +17,12 @@ export default function (Vue) {
 				children: [
 					Components,
 					Order,
-					Profile,
 				],
 			},
+			Components,
 			login,
 			register,
+			Profile,
 		],
 	});
 	return config;
