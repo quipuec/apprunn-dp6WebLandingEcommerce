@@ -821,4 +821,22 @@ input.app-input::-webkit-input-placeholder {
 		display: block;
 	}
 }
+
+.component-filter {
+	.swiper-button-next {
+		background-image: url('https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/keyboard-right-arrow-button.svg');
+		position: absolute;
+		right: 77px;
+	}
+
+	.swiper-button-prev {
+		background-image: url('https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-prev.svg');
+		position: absolute;
+		left: 77px;
+	}
+
+	.swiper-slide {
+		width: 30%;
+	}
+}
 </style>

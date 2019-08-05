@@ -42,7 +42,7 @@ export default {
 	display: flex;
 	justify-content: center;
 	margin-bottom: 6px;
-	padding: 0 46px;
+	// padding: 0 46px;
 
 	@media (max-width: 750px) {
 		margin-bottom: 6px;
