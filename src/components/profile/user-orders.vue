@@ -17,7 +17,7 @@
 					<td class="row-wayDelivery">{{row.wayDelivery}}</td>
 					<td class="row-wayPayment">{{row.wayPayment}}</td>
 					<td class="row-actions">
-						<details-component class="action-btn"/>
+						<details-component class="action-btn" @click="seeDetails(row)"/>
 						<delete-component class="action-btn"/>
 					</td>
 				</template>
@@ -26,6 +26,10 @@
 	</div>
 </template>
 <script>
+
+function seeDetails({ order }) {
+	this.$router.push({ name: 'order-detail', params: { n: order } });
+}
 
 function data() {
 	return {
@@ -68,6 +72,9 @@ export default {
 		responsiveTable: () => import('@/components/shared/table/respondive-table'),
 	},
 	data,
+	methods: {
+		seeDetails,
+	},
 };
 </script>
 <style lang="scss" scoped>
@@ -75,6 +82,10 @@ export default {
 		bottom: 100%;
 		position: absolute;
 		width: 100%;
+
+		@media (max-width: 900px) {
+			bottom: 90%;
+		}
 	}
 
 	.table-container {
