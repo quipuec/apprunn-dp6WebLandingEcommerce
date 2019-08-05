@@ -2,9 +2,9 @@ const asyncActions = {
 	LOAD_PRODUCTS: async ({ commit, state }, { context }) => {
 		const { params } = state.products;
 		const request = [];
-		if (context.token) {
+		if (context.$store.state.token) {
 			const headers = {
-				Authorization: `Bearer ${context.token}`,
+				Authorization: `Bearer ${context.$store.state.token}`,
 			};
 			request.push(context.$httpProducts.get('products/favorites', { headers, params }));
 		} else {

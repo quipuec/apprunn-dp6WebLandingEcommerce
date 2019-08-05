@@ -1,11 +1,13 @@
 <template>
 	<layout-admin>
 		<banner-carousel :banners="banners"/>
+		<div class="page-products">
+			<products-section/>
+		</div>
 	</layout-admin>
 </template>
 
 <script>
-const bannerCarousel = () => import('@/components/home/banner-carousel');
 
 function data() {
 	return {
@@ -29,7 +31,8 @@ export default {
 	name: 'page-home',
 	data,
 	components: {
-		bannerCarousel,
+		bannerCarousel: () => import('@/components/home/banner-carousel'),
+		productsSection: () => import('@/components/products/products-section'),
 	},
 };
 </script>
