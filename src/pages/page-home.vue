@@ -6,15 +6,21 @@
 			:categories="categories"
 			:color-base="colorBase"/>
 		<component-filter-product></component-filter-product>
-		<products-section/>
+		<div class="page-products">
+			<products-section/>
+		</div>
+		<section-settlement 
+			:color-dark="colorDark"
+			:color-base="colorBase"/>
 	</layout-admin>
 </template>
 
 <script>
 const bannerCarousel = () => import('@/components/home/banner-carousel');
 const categoriesCarousel = () => import('@/components/home/categories-carousel');
-const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
+const sectionSettlement = () => import('@/components/home/section-settlement');
 const productsSection = () => import('@/components/products/products-section');
+const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
 
 function created() {
 	this.loadData();
@@ -73,6 +79,7 @@ function data() {
 				select: false,
 			},
 		],
+		colorDark: process.env.COLOR_DARK,
 		colorBase: process.env.COLOR_BASE,
 	};
 }
@@ -82,8 +89,9 @@ export default {
 	components: {
 		bannerCarousel,
 		categoriesCarousel,
-		componentFilterProduct,
+		sectionSettlement,
 		productsSection,
+		componentFilterProduct,
 	},
 	created,
 	methods: {
