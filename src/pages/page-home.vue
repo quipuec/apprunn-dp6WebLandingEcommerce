@@ -34,8 +34,8 @@ export default {
 	data,
 	components: {
 		bannerCarousel: () => import('@/components/home/banner-carousel'),
-		productsSection: () => import('@/components/products/products-section'),
 		componentFilterProduct: () => import('@/components/shared/products/component-filter-product'),
+		productsSection: () => import('@/components/products/products-section'),
 	},
 };
 </script>
