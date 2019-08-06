@@ -31,7 +31,7 @@ function created() {
 
 async function loadData() {
 	try {
-		const { data: response } = await this.$httpProducts.get('banners-public');
+		const { data: response } = await this.$httpProductsPublic.get('banners-public');
 		this.banners = response;
 	} catch (error) {
 		this.showGenericError();
