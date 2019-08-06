@@ -133,8 +133,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 	.summary-container {
-		position: relative;
-		top: 0px;
+		position: sticky;
+		top: 65px;
 	}
 
 	.summary-order {
