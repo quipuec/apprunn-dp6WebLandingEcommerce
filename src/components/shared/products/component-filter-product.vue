@@ -25,6 +25,7 @@ function data() {
 		swiperOption: {
 			slidesPerView: 4,
 			slidesPerGroup: 1,
+			centerInsufficientSlides: true,
 			breakpoints: {
 				1200: {
 					slidesPerView: 3,

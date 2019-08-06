@@ -823,6 +823,13 @@ input.app-input::-webkit-input-placeholder {
 }
 
 .component-filter {
+	.swiper-slide {
+		width: 360px !important;
+	}
+
+	.swiper-container {
+		width: 95%;
+	}
 	.swiper-button-next {
 		background-image: url('/static/img/icons/arrow-button-next-white.svg');
 		position: absolute;
