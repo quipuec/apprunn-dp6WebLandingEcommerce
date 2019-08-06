@@ -1,5 +1,5 @@
 <template>
-	<div class="product-container" @click="buyProduct">
+	<div class="product-container" :class="small ? 'small' : null" @click="buyProduct">
 		<section class="product-header">
 			<div :style="`background-color: ${baseColor}`" class="product-discount">-20%</div>
 			<div class="product-favorite">
@@ -59,6 +59,10 @@ export default {
 	},
 	props: {
 		baseColor: String,
+		small: {
+			type: Boolean,
+			default: false,
+		},
 		product: {
 			default: () => {},
 			type: Object,
@@ -79,6 +83,10 @@ export default {
 			border: 3px solid color(border);
 			height: 330px;
 			margin: 3px;
+		}
+
+		&.small {
+			max-width: 179px;
 		}
 	}
 

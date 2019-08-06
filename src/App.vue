@@ -207,13 +207,9 @@ input.app-input::-webkit-input-placeholder {
 	.swiper-pagination-bullet-active {
 		background: color(white);
 	}
-
-	.v-input--switch__thumb:not(.success--text) {
-		color: map-get($colors, error) !important;
-	}
 }
 
-.categories-carousel-slider, .settlement-carousel {
+.categories-carousel-slider, .section-settlement  {
 	.swiper-button-next {
 		background-image: url('/static/img/slider-arrow-rigth.svg');
 	}
@@ -246,7 +242,6 @@ input.app-input::-webkit-input-placeholder {
 			border-radius: 5px !important;
 		}
 	}
-
 }
 
 .btn-order {
@@ -259,6 +254,14 @@ input.app-input::-webkit-input-placeholder {
 		@media (min-width: 764px) {
 			height: 49px;
 			max-width: 100% !important;
+		}
+	}
+}
+
+.section-settlement {
+	.swiper-button-next, .swiper-button-prev {
+		@media (max-width: 1161px) {
+			display: none;
 		}
 	}
 }

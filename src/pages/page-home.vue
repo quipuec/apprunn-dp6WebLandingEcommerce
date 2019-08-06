@@ -12,6 +12,10 @@
 		<section-settlement 
 			:color-dark="colorDark"
 			:color-base="colorBase"/>
+		<app-banner-top 
+			:data="bannerTop"
+			:color="colorSecondary"
+			big/>
 	</layout-admin>
 </template>
 
@@ -19,6 +23,7 @@
 const bannerCarousel = () => import('@/components/home/banner-carousel');
 const categoriesCarousel = () => import('@/components/home/categories-carousel');
 const sectionSettlement = () => import('@/components/home/section-settlement');
+const appBannerTop = () => import('@/components/header/app-banner-top');
 const productsSection = () => import('@/components/products/products-section');
 const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
 
@@ -81,6 +86,11 @@ function data() {
 		],
 		colorDark: process.env.COLOR_DARK,
 		colorBase: process.env.COLOR_BASE,
+		colorSecondary: process.env.COLOR_SECONDARY,
+		bannerTop: {
+			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
+			image: 'descuento',
+		},
 	};
 }
 export default {
@@ -90,6 +100,7 @@ export default {
 		bannerCarousel,
 		categoriesCarousel,
 		sectionSettlement,
+		appBannerTop,
 		productsSection,
 		componentFilterProduct,
 	},
