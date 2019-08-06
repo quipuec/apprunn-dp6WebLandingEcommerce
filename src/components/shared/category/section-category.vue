@@ -137,7 +137,7 @@ li {
 .background-gray {
 	background-color: #f9f9f9;
 	padding: 56px 0;
-	width: 56%;
+	width: 70%;
 }
 
 .content-list {

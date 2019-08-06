@@ -7,7 +7,7 @@
 				:key="product.id"
 				:base-color="globalColors.primary"
 				:product="product"
-			/>	
+			/>
 		</section>
 	</div>
 </template>

@@ -132,7 +132,7 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	padding-bottom: 10px;
-	width: 55%;
+	width: 70%;
 }
 
 .input-price {
