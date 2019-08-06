@@ -1,9 +1,7 @@
 <template>
 	<div class="section-settlement">
 		<div class="container-slider">
-			<settlement-carousel 
-				:color-base="colorBase" 
-				:color-dark="colorDark"/>
+			<settlement-carousel/>
 		</div>
 	</div>
 </template>

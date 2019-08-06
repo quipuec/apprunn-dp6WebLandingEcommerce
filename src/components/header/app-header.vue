@@ -46,7 +46,8 @@
 		</div>
 		<modal-login 
 			class="app-modal-login"
-			v-show="modalLogin"/>
+			v-show="modalLogin"
+			@close-modal="closeModal"/>
 	</header>
 </template>
 <script>
@@ -65,6 +66,10 @@ function changeMenu() {
 
 function openModalLogin() {
 	this.modalLogin = !this.modalLogin;
+}
+
+function closeModal() {
+	this.modalLogin = false;
 }
 
 function data() {
@@ -115,6 +120,7 @@ export default {
 		toogleSearch,
 		changeMenu,
 		openModalLogin,
+		closeModal,
 	},
 	props: {
 		logo: {

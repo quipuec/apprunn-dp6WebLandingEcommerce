@@ -21,6 +21,7 @@ const asyncActions = {
 		const url = 'orders';
 		const { data: order } = await context.$httpSales.post(url, body);
 		commit('SET_ORDER_ID', order.id);
+		commit('SET_ORDER_TOTAL', order.total);
 	},
 };
 

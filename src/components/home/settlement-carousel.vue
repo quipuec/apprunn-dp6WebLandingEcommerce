@@ -3,40 +3,44 @@
 		<div>
 			<title-section 
 				title="Liquidación" 
-				:color="colorDark"/>
+				:color="globalColors.dark"/>
 		</div>
 		<div class="slider-sttlement-carousel">
 			<swiper :options="swiperOption">
         <swiper-slide>
 					<div>
 						<product-card 
-							:base-color="colorBase" 
-							:product="product" 
-							class="product-card"/>
+							:base-color="globalColors.primary" 
+							class="product-card"
+							:product="product"
+							small/>
 					</div>
 				</swiper-slide>
 				<swiper-slide>
 					<div>
 						<product-card 
-							:base-color="colorBase" 
-							:product="product" 
-							class="product-card"/>
+							:base-color="globalColors.primary" 
+							class="product-card"
+							:product="product"
+							small/>
 					</div>
 				</swiper-slide>
 				<swiper-slide>
 					<div>
 						<product-card 
-							:base-color="colorBase" 
-							:product="product" 
-							class="product-card"/>
+							:base-color="globalColors.primary" 
+							class="product-card"
+							:product="product"
+							small/>
 					</div>
 				</swiper-slide>
 				<swiper-slide>
 					<div>
 						<product-card 
-							:base-color="colorBase" 
-							:product="product" 
-							class="product-card"/>
+							:base-color="globalColors.primary" 
+							class="product-card"
+							:product="product"
+							small/>
 					</div>
 				</swiper-slide>
         <div class="swiper-button-prev" slot="button-prev"></div>
@@ -87,10 +91,6 @@ export default {
 	components: {
 		productCard,
 		titleSection,
-	},
-	props: {
-		colorBase: String,
-		colorDark: String,
 	},
 };
 </script>

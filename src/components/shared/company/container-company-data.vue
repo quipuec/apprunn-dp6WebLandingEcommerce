@@ -42,19 +42,21 @@ export default {
 		border-radius: 5px;
 		padding: 9px 0;
 
-		@media (max-width: 715px) {
+		@media (max-width: 860px) {
 			padding: 5px 0;
 		}
 	}
 
 	.container-company-data {
+		align-items: center;
 		display: flex;
 		height: 86px;
+		justify-content: space-around;
 		width: 701px;
 		
-		@media screen and (max-width: 715px) {
+		@media screen and (max-width: 860px) {
 			height: 52px;
-			width: 326px;
+			width: 80%;
 		}
 	}
 </style>

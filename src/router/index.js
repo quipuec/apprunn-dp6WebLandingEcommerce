@@ -20,7 +20,6 @@ export default function (Vue) {
 			},
 			Components,
 			login,
-			Order,
 			Profile,
 			register,
 		],
