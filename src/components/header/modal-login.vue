@@ -7,15 +7,15 @@
 				class="mb-3"
 				@click="goToPag('login')"
 				action="Iniciar Sesión"
-				:background="colorBase"
+				:background="globalColors.primary"
 				/>
 			<span class="label-modal">¿No tienes una cuenta?</span>
 			<app-button 
 				thin
 				background="white"
 				action="Crear cuenta"
-				:color="colorBorder"
-				:border="colorBorder"
+				:color="globalColors.base"
+				:border="globalColors.base"
 				@click="goToPag('register')"
 			/>
 		</div>
@@ -29,16 +29,8 @@ function goToPag(name) {
 	this.$emit('close-modal');
 }
 
-function data() {
-	return {
-		colorBase: process.env.COLOR_BASE,
-		colorBorder: process.env.COLOR_BORDER,
-	};
-}
-
 export default {
 	name: 'modal-login',
-	data,
 	components: {
 		appButton,
 	},
