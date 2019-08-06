@@ -7,7 +7,7 @@
 				class="mb-3"
 				action="Iniciar Sesión"
 				:background="colorBase"
-				@click="goTo('login')"
+				@click="goToLink('login')"
 				/>
 			<span class="label-modal">¿No tienes una cuenta?</span>
 			<app-button 
@@ -16,12 +16,18 @@
 				action="Crear cuenta"
 				:color="colorBorder"
 				:border="colorBorder"
+				@click="goToLink('register')"
 			/>
 		</div>
 	</div>
 </template>
 <script>
 import appButton from '@/components/shared/buttons/app-button';
+
+function goToLink(name) {
+	this.goTo(name);
+	this.$emit('close-modal');
+}
 
 function data() {
 	return {
@@ -35,6 +41,9 @@ export default {
 	data,
 	components: {
 		appButton,
+	},
+	methods: {
+		goToLink,
 	},
 };
 </script>

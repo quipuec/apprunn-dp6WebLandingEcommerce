@@ -2,9 +2,11 @@
 	<div class="app-category">
 		<div class="app-category-user">
 			<div class="container-user" :style="`border-color: ${colorBase}`">
-				<img :src="imgUser.urlImage" :alt="imgUser.name" :height="imgUser.height">
+				<img :src="imgUser.urlImage || imgUser.logo" :alt="imgUser.name" :height="imgUser.height">
 			</div>
-			<div class="container-link-user" :style="`border-color: ${colorBorder}`">
+			<div 
+				class="container-link-user" :style="`border-color: ${colorBorder}`"
+				v-if="!imgUser.urlImage">
 				<router-link 
 					to="/"
 					:style="`color: ${colorBase}`"
@@ -13,6 +15,9 @@
 					to="/"
 					:style="`color: ${colorBase}`"
 					class="link">Crear cuenta</router-link>
+			</div>
+			<div v-else>
+				<p class="user-name">{{imgUser.fullName}}</p>
 			</div>
 		</div>
 		<div class="menu-app-category">
@@ -479,6 +484,15 @@ export default {
 	.option-user {
 		border-bottom: 1px solid map-get($colors, border);
 		height: 50px;
+	}
+
+	.user-name {
+		color: color(dark);
+		font-family: font(bold);
+		font-size: size(small);
+		border-bottom: 1px solid color(border);
+		padding: 5px;
+		text-align: center;
 	}
 </style>
 

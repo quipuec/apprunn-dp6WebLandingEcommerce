@@ -34,7 +34,7 @@
 					:data="search" 
 					class="icon-mobile"
 					@click-image="toogleSearch"/>
-				<button-image :data="imagesButton[0]" class="icon-desktop" @click-image="openModalLogin"/>
+				<button-image :data="user" class="icon-desktop" @click-image="openModalLogin"/>
 				<button-image :data="imagesButton[1]" class="icon-medium icon-desktop"/>
 				<button-image
 					if-number
@@ -46,7 +46,9 @@
 		</div>
 		<modal-login 
 			class="app-modal-login"
-			v-show="modalLogin"/>
+			v-show="modalLogin"
+			@close-modal="closeModal"
+		/>
 	</header>
 </template>
 <script>
@@ -65,6 +67,10 @@ function changeMenu() {
 
 function openModalLogin() {
 	this.modalLogin = !this.modalLogin;
+}
+
+function closeModal() {
+	this.modalLogin = false;
 }
 
 function data() {
@@ -115,6 +121,7 @@ export default {
 		toogleSearch,
 		changeMenu,
 		openModalLogin,
+		closeModal,
 	},
 	props: {
 		logo: {
@@ -124,6 +131,10 @@ export default {
 		menu: {
 			type: Boolean,
 			default: false,
+		},
+		user: {
+			type: Object,
+			default: () => {},
 		},
 	},
 };

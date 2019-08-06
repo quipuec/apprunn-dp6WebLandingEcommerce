@@ -2,9 +2,9 @@
   <div class="app-button-image">
 		<button class="app-button" @click="$emit('click-image')">
 			<div class="button-number" v-if="ifNumber">{{number}}</div>
-			<img :src="data.image" 
+			<img :src="data.image || data.logo || data.urlImage" 
 				:alt="data.name"
-				:height="data.height" 
+				:height="data.height || 20" 
 			>
 		</button>
 	</div>

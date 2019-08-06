@@ -1,7 +1,11 @@
 <template>
 	<v-app>
 		<app-banner-top :data="bannerTop"/>
-		<app-header :logo="logo" @change-menu="changeMenu" :menu="showMenu"/>
+		<app-header 
+			:logo="logo" 
+			@change-menu="changeMenu" 
+			:menu="showMenu"
+			:user="user"/>
 		<transition name="slide-fade">
 			<div 
 				class="v-overlay v-overlay--absolute v-overlay--active mobile-overlay" 
@@ -48,6 +52,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
 const appBannerTop = () => import('@/components/header/app-banner-top');
@@ -74,11 +80,6 @@ function data() {
 			height: 30,
 		},
 		showMenu: false,
-		user: {
-			urlImage: '/static/img/user.svg',
-			name: 'Login',
-			height: 25,
-		},
 		colorBase: process.env.COLOR_BASE,
 		colorBorder: process.env.COLOR_BORDER,
 		bannerTop: {
@@ -93,6 +94,9 @@ export default {
 	computed: {
 		indeterminate,
 		snackbar,
+		...mapGetters([
+			'user',
+		]),
 	},
 	data,
 	components: {
