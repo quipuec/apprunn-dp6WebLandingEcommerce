@@ -286,7 +286,7 @@ input.app-input::-webkit-input-placeholder {
 	}
 
 	.swiper-container {
-		width: 95%;
+		width: 100%;
 	}
 	.swiper-button-next {
 		background-image: url('/static/img/icons/arrow-button-next-white.svg');
