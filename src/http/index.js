@@ -1,12 +1,15 @@
-import store from './../store';
+import store from '@/store';
 import errors from './errors';
+
 
 export function httpRequestInterceptor(config) {
 	const headers = config.headers;
 	if (store.state.token) {
 		headers.common.Authorization = `Bearer ${store.state.token}`;
-		store.dispatch('toggleLoading', true);
+	} else {
+		headers.common.Authorization = `Bearer ${process.env.TOKEN}`;
 	}
+	store.dispatch('toggleLoading', true);
 	return config;
 }
 

@@ -195,6 +195,7 @@ input.app-input::-webkit-input-placeholder {
 	}
 
 	.swiper-pagination-bullet {
+		background: transparent;
 		cursor: pointer;
 		opacity: 1;
 	}
@@ -226,6 +227,8 @@ input.app-input::-webkit-input-placeholder {
 		cursor: pointer;
 		height: 19px;
 		outline: none;
+		top: calc(50% - 26px);
+		transform: translateY(50%);
 		width: 13px;
 	}
 }
@@ -238,7 +241,4 @@ input.app-input::-webkit-input-placeholder {
 	}
 }
 
-.v-input--switch__thumb:not(.success--text) {
-	color: map-get($colors, error) !important;
-}
 </style>

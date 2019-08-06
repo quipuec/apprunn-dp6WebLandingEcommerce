@@ -25,7 +25,21 @@ function UPDATE_POLL_PROGRESS(state, number) {
 	Vue.set(state.pollData, 'progress', state.pollData.progress + number);
 }
 
-function UPDATE_FLAG_ADD_COUCHER(state, flag) {
+function SET_PRODUCTS(state, products) {
+	Vue.set(state.products, 'list', products);
+}
+
+function SET_PRODUCT_TO_BUY(state, product) {
+	const newProduct = { ...product };
+	newProduct.quantity = 1;
+	Vue.set(state.order, 'products', state.order.products.concat({ ...newProduct }));
+}
+
+function SET_ORDER_ID(state, id) {
+	Vue.set(state.order, 'id', id);
+}
+
+function UPDATE_FLAG_ADD_VOUCHER(state, flag) {
 	Vue.set(state.profile, 'flagAddVoucher', flag);
 }
 
@@ -35,7 +49,10 @@ const methods = {
 	setUser,
 	showSnackBar,
 	toggleLoading,
-	UPDATE_FLAG_ADD_COUCHER,
+	SET_ORDER_ID,
+	SET_PRODUCTS,
+	SET_PRODUCT_TO_BUY,
+	UPDATE_FLAG_ADD_VOUCHER,
 	UPDATE_POLL_PROGRESS,
 };
 

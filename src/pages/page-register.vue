@@ -74,7 +74,7 @@
 			body.activation = Number(!this.modelFacebook.email);
 		}
 		try {
-			const { data: response } = await this.$httpJapi.post(
+			const { data: response } = await this.$httpSales.post(
 				'customers-public',
 				body,
 				{ headers },
@@ -86,6 +86,7 @@
 					this.$store.dispatch('setToken', response.data.token);
 					this.getCustomerData();
 					this.cleanForm();
+					this.showNotification('La cuenta ha sido creada exitosamente.');
 					this.goTo('page-home');
 				} else {
 					this.showNotification('La cuenta ha sido creada exitosamente.');

@@ -76,7 +76,7 @@ function backgroundColor() {
 }
 
 function addPaymentInfo() {
-	this.$store.commit('UPDATE_FLAG_ADD_COUCHER', true);
+	this.$store.commit('UPDATE_FLAG_ADD_VOUCHER', true);
 }
 
 function data() {
