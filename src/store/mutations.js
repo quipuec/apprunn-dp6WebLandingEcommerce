@@ -43,6 +43,10 @@ function UPDATE_FLAG_ADD_VOUCHER(state, flag) {
 	Vue.set(state.profile, 'flagAddVoucher', flag);
 }
 
+function SET_ORDER_TOTAL(state, total) {
+	Vue.set(state.order, 'total', total);
+}
+
 const methods = {
 	clearUser,
 	setToken,
@@ -54,6 +58,7 @@ const methods = {
 	SET_PRODUCT_TO_BUY,
 	UPDATE_FLAG_ADD_VOUCHER,
 	UPDATE_POLL_PROGRESS,
+	SET_ORDER_TOTAL,
 };
 
 export default methods;

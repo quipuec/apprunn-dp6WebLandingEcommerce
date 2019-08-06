@@ -78,15 +78,17 @@ function buildBody() {
 		details: [
 			{
 				productId: 1,
-				discount: 10.45,
+				discount: 0,
 				quantity: 10,
+				salePrice: 20,
 				warehouseId: 493,
 				warehouseName: 'nombre del almacen',
 			},
 			{
 				productId: 2,
-				discount: 0.54,
+				discount: 0,
 				quantity: 15,
+				salePrice: 5,
 				warehouseId: 493,
 				warehouseName: 'nombre del almacen',
 			},
