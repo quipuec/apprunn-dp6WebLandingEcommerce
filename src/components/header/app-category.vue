@@ -4,9 +4,12 @@
 			<div class="container-user" :style="`border-color: ${colorBase}`">
 				<img :src="imgUser.urlImage || imgUser.logo" :alt="imgUser.name" :height="imgUser.height">
 			</div>
+			<div v-if="token">
+				<p class="user-name">{{imgUser.name}} {{imgUser.lastname}}</p>
+			</div>
 			<div 
 				class="container-link-user" :style="`border-color: ${colorBorder}`"
-				v-if="!imgUser.urlImage">
+				v-else>
 				<router-link 
 					to="/"
 					:style="`color: ${colorBase}`"
@@ -15,9 +18,6 @@
 					to="/"
 					:style="`color: ${colorBase}`"
 					class="link">Crear cuenta</router-link>
-			</div>
-			<div v-else>
-				<p class="user-name">{{imgUser.name}} {{imgUser.lastname}}</p>
 			</div>
 		</div>
 		<div class="menu-app-category">
@@ -83,7 +83,7 @@
 			</div>
 		</div>
 		<div class="container-option">
-			<div class="option-user" v-if="imgUser.urlImage">
+			<div class="option-user" v-if="token">
 				<button class="option" @click="goTo('user-orders')">
 					<img 
 						src="/static/img/app-order.svg" 
@@ -100,7 +100,7 @@
 				</button>
 			</div>
 			<div class="option-close">
-				<button class="option" v-if="imgUser.urlImage">
+				<button class="option" v-if="token">
 					<img 
 						src="/static/img/app-close.svg" 
 						alt="Cerrar Sesión"
@@ -112,6 +112,8 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 const itemMenu = () => import('@/components/header/item-menu');
 
 function created() {
@@ -293,6 +295,9 @@ export default {
 	computed: {
 		selectCategory,
 		isMoreTwo,
+		...mapGetters([
+			'token',
+		]),
 	},
 	props: {
 		imgUser: {

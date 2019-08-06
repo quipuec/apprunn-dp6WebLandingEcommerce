@@ -52,6 +52,8 @@
 	</header>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 const callMenu = () => import('@/components/header/call-menu');
 const appSearch = () => import('@/components/shared/inputs/app-input-search');
 const buttonImage = () => import('@/components/shared/buttons/app-button-image');
@@ -66,10 +68,10 @@ function changeMenu() {
 }
 
 function openModalLogin() {
-	if (!this.user.urlImage) {
-		this.modalLogin = !this.modalLogin;
-	} else {
+	if (this.token) {
 		this.goTo('profile');
+	} else {
+		this.modalLogin = !this.modalLogin;
 	}
 }
 
@@ -119,6 +121,11 @@ export default {
 		appSearch,
 		buttonImage,
 		modalLogin,
+	},
+	computed: {
+		...mapGetters([
+			'token',
+		]),
 	},
 	data,
 	methods: {
