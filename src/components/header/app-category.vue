@@ -17,7 +17,7 @@
 					class="link">Crear cuenta</router-link>
 			</div>
 			<div v-else>
-				<p class="user-name">{{imgUser.fullName}}</p>
+				<p class="user-name">{{imgUser.name}} {{imgUser.lastname}}</p>
 			</div>
 		</div>
 		<div class="menu-app-category">
@@ -83,8 +83,31 @@
 			</div>
 		</div>
 		<div class="container-option">
-			<div class="option-user"></div>
-			<div class="option-close"></div>
+			<div class="option-user" v-if="imgUser.urlImage">
+				<button class="option" @click="goTo('user-orders')">
+					<img 
+						src="/static/img/app-order.svg" 
+						alt="Mis órdenes"
+						class="mr-8">
+					<span>Mis órdenes</span>
+				</button>
+				<button class="option" @click="goTo('favorites')">
+					<img 
+						src="/static/img/app-favorite.svg" 
+						alt="Mis Favoritos"
+						class="mr-8">
+					<span>Mis Favoritos</span>
+				</button>
+			</div>
+			<div class="option-close">
+				<button class="option" v-if="imgUser.urlImage">
+					<img 
+						src="/static/img/app-close.svg" 
+						alt="Cerrar Sesión"
+						class="mr-8">
+					<span class="text-gray">Cerrar Sesión </span>
+				</button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -482,8 +505,12 @@ export default {
 	}
 
 	.option-user {
+		align-items: center;
 		border-bottom: 1px solid map-get($colors, border);
+		display: flex;
 		height: 50px;
+		justify-content: space-between;
+		margin-bottom: 14px;
 	}
 
 	.user-name {
@@ -493,6 +520,19 @@ export default {
 		border-bottom: 1px solid color(border);
 		padding: 5px;
 		text-align: center;
+	}
+
+	.option {
+		align-items: center;
+		display: flex;
+	}
+
+	.mr-8 {
+		margin-right: 8px;
+	}
+
+	.text-gray {
+		color: color(base);
 	}
 </style>
 

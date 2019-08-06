@@ -66,7 +66,11 @@ function changeMenu() {
 }
 
 function openModalLogin() {
-	this.modalLogin = !this.modalLogin;
+	if (!this.user.urlImage) {
+		this.modalLogin = !this.modalLogin;
+	} else {
+		this.goTo('profile');
+	}
 }
 
 function closeModal() {
