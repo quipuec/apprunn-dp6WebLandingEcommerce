@@ -12,7 +12,10 @@ export default {
 	order: {
 		bill: null,
 		delivery: null,
+		id: null,
+		products: [],
 		responsible: null,
+		total: null,
 	},
 	pollData: {
 		progress: 0,
@@ -27,7 +30,6 @@ export default {
 			page: 1,
 			limit: 20,
 		},
-		toBuy: [],
 	},
 	token: helper.getLocalToken(),
 	user: {

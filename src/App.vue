@@ -202,6 +202,7 @@ input.app-input::-webkit-input-placeholder {
 	}
 
 	.swiper-pagination-bullet {
+		background: transparent;
 		cursor: pointer;
 		opacity: 1;
 	}
@@ -209,13 +210,9 @@ input.app-input::-webkit-input-placeholder {
 	.swiper-pagination-bullet-active {
 		background: color(white);
 	}
-
-	.v-input--switch__thumb:not(.success--text) {
-		color: map-get($colors, error) !important;
-	}
 }
 
-.categories-carousel-slider  {
+.categories-carousel-slider, .section-settlement  {
 	.swiper-button-next {
 		background-image: url('/static/img/slider-arrow-rigth.svg');
 	}
@@ -232,6 +229,46 @@ input.app-input::-webkit-input-placeholder {
 		top: calc(50% - 26px);
 		transform: translateY(50%);
 		width: 13px;
+	}
+}
+
+.section-settlement {
+	.swiper-button-next, .swiper-button-prev {
+		@media (max-width: 1161px) {
+			display: none;
+		}
+	}
+}
+
+.start-js-btn.modal-opener.default {
+	background: url('/static/img/icons/icon-visanet.png') !important;
+	background-position: right 14px !important;
+	background-repeat: no-repeat !important;
+	border: 1px solid color(borderBtn) !important;
+	border-radius: 8px !important;
+	box-shadow: none !important;
+	color: color(textBtn) !important;
+	font-family: font(demi) !important;
+	font-size: size(large) !important;
+	font-weight: normal !important;
+	height: 65px !important;
+	margin-top: 55px;
+	position: relative;
+	text-shadow: none !important;
+	width: 213px !important;
+
+	&:before {
+		bottom: 0;
+		color: color(textBtn) !important;
+		content: 'Paga con';
+		font-family: font(demi) !important;
+		font-size: size(large) !important;
+		font-weight: normal !important;
+		height: 22px;
+		left: 18px;
+		margin: auto;
+		position: absolute;
+		top: 0;
 	}
 }
 </style>

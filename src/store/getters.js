@@ -1,3 +1,5 @@
+import orderGetters from '@/store/getters/order';
+
 function indeterminate(state) {
 	return state.appConfig.isLoading;
 }
@@ -43,6 +45,7 @@ const methods = {
 	getProducts,
 	flagAddVoucher,
 	indeterminate,
+	...orderGetters,
 	pollData,
 	snackbar,
 	themeColors,

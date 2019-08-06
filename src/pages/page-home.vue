@@ -2,38 +2,44 @@
 	<layout-admin>
 		<router-view></router-view>
 		<banner-carousel :banners="banners"/>
-		<categories-carousel 
+		<categories-carousel
 			:categories="categories"
 			:color-base="colorBase"/>
-		<component-filter-product />
+		<component-filter-product></component-filter-product>
 		<div class="page-products">
 			<products-section/>
 		</div>
+		<section-settlement/>
+		<app-banner-top 
+			:data="bannerTop"
+			:color="colorSecondary"
+			big/>
 	</layout-admin>
 </template>
 
 <script>
+const appBannerTop = () => import('@/components/header/app-banner-top');
 const bannerCarousel = () => import('@/components/home/banner-carousel');
 const categoriesCarousel = () => import('@/components/home/categories-carousel');
-const productsSection = () => import('@/components/products/products-section');
 const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
+const productsSection = () => import('@/components/products/products-section');
+const sectionSettlement = () => import('@/components/home/section-settlement');
 
+function created() {
+	this.loadData();
+}
+
+async function loadData() {
+	try {
+		const { data: response } = await this.$httpProducts.get('banners-public');
+		this.banners = response;
+	} catch (error) {
+		this.showGenericError();
+	}
+}
 function data() {
 	return {
-		banners: [
-			{
-				id: 1,
-				webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-2.png',
-			},
-			{
-				id: 2,
-				webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-2.png',
-			},
-			{
-				id: 3,
-				webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-2.png',
-			},
-		],
+		banners: [],
 		categories: [
 			{
 				id: 1,
@@ -76,17 +82,29 @@ function data() {
 				select: false,
 			},
 		],
+		colorDark: process.env.COLOR_DARK,
 		colorBase: process.env.COLOR_BASE,
+		colorSecondary: process.env.COLOR_SECONDARY,
+		bannerTop: {
+			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
+			image: 'descuento',
+		},
 	};
 }
 export default {
 	name: 'page-home',
 	data,
 	components: {
+		appBannerTop,
 		bannerCarousel,
 		categoriesCarousel,
-		productsSection,
 		componentFilterProduct,
+		productsSection,
+		sectionSettlement,
+	},
+	created,
+	methods: {
+		loadData,
 	},
 };
 </script>
