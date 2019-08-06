@@ -11,32 +11,36 @@
 					<div>
 						<product-card 
 							:base-color="colorBase" 
+							class="product-card"
 							:product="product" 
-							class="product-card"/>
+							small/>
 					</div>
 				</swiper-slide>
 				<swiper-slide>
 					<div>
 						<product-card 
 							:base-color="colorBase" 
+							class="product-card"
 							:product="product" 
-							class="product-card"/>
+							small/>
 					</div>
 				</swiper-slide>
 				<swiper-slide>
 					<div>
 						<product-card 
 							:base-color="colorBase" 
+							class="product-card"
 							:product="product" 
-							class="product-card"/>
+							small/>
 					</div>
 				</swiper-slide>
 				<swiper-slide>
 					<div>
 						<product-card 
 							:base-color="colorBase" 
+							class="product-card"
 							:product="product" 
-							class="product-card"/>
+							small/>
 					</div>
 				</swiper-slide>
         <div class="swiper-button-prev" slot="button-prev"></div>

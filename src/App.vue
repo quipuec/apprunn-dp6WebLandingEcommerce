@@ -203,13 +203,9 @@ input.app-input::-webkit-input-placeholder {
 	.swiper-pagination-bullet-active {
 		background: color(white);
 	}
-
-	.v-input--switch__thumb:not(.success--text) {
-		color: map-get($colors, error) !important;
-	}
 }
 
-.categories-carousel-slider, .settlement-carousel {
+.categories-carousel-slider, .section-settlement  {
 	.swiper-button-next {
 		background-image: url('/static/img/slider-arrow-rigth.svg');
 	}
@@ -226,6 +222,14 @@ input.app-input::-webkit-input-placeholder {
 		top: calc(50% - 26px);
 		transform: translateY(50%);
 		width: 13px;
+	}
+}
+
+.section-settlement {
+	.swiper-button-next, .swiper-button-prev {
+		@media (max-width: 1161px) {
+			display: none;
+		}
 	}
 }
 
