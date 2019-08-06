@@ -3,36 +3,39 @@
 		<div>
 			<span class="label-modal">¿Tienes una cuenta?</span>
 			<app-button 
-				:background="colorBase"
-				action="Iniciar Sesión"
 				thin
 				class="mb-3"
+				@click="goToPag('login')"
+				action="Iniciar Sesión"
+				:background="globalColors.primary"
 				/>
 			<span class="label-modal">¿No tienes una cuenta?</span>
 			<app-button 
+				thin
 				background="white"
 				action="Crear cuenta"
-				:color="colorBorder"
-				:border="colorBorder"
-				thin/>
+				:color="globalColors.base"
+				:border="globalColors.base"
+				@click="goToPag('register')"
+			/>
 		</div>
 	</div>
 </template>
 <script>
-import appButton from '@/components/shared/buttons/app-button';
+const appButton = () => import('@/components/shared/buttons/app-button');
 
-function data() {
-	return {
-		colorBase: process.env.COLOR_BASE,
-		colorBorder: process.env.COLOR_BORDER,
-	};
+function goToPag(name) {
+	this.goTo(name);
+	this.$emit('close-modal');
 }
 
 export default {
 	name: 'modal-login',
-	data,
 	components: {
 		appButton,
+	},
+	methods: {
+		goToPag,
 	},
 };
 </script>

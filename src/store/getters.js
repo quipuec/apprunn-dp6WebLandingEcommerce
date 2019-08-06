@@ -1,3 +1,5 @@
+import orderGetters from '@/store/getters/order';
+
 function indeterminate(state) {
 	return state.appConfig.isLoading;
 }
@@ -30,14 +32,20 @@ function pollData(state) {
 	return state.pollData;
 }
 
+function getProducts(state) {
+	return state.products.list;
+}
+
 function flagAddVoucher(state) {
 	return state.profile.flagAddVoucher;
 }
 
 const methods = {
 	companyLogo,
+	getProducts,
 	flagAddVoucher,
 	indeterminate,
+	...orderGetters,
 	pollData,
 	snackbar,
 	themeColors,

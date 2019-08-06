@@ -66,8 +66,8 @@ export default {
 	width: 100%;
 
 	@media (max-width: 950px) {
-		height: 102px;
 		grid-template-columns: auto auto;
+		height: 102px;
 		padding: 8px 80px;
 		width: 100%;
 	}

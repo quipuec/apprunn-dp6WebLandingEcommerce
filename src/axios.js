@@ -8,13 +8,21 @@ const productsInstance = axios.create({
 	baseURL: process.env.PRODUCTS_URL,
 });
 
+const productsPublicInstance = axios.create({
+	baseURL: process.env.PRODUCTS_URL,
+	headers: {
+		Authorization: `Bearer ${process.env.TOKEN}`,
+	},
+});
+
 const salesInstance = axios.create({
 	baseURL: process.env.SALES_URL,
 });
 
 export default function (Vue) {
 	/* eslint-disable no-param-reassign */
-	Vue.prototype.$http = productsInstance;
+	Vue.prototype.$httpProducts = productsInstance;
 	Vue.prototype.$httpAcl = aclInstance;
 	Vue.prototype.$httpSales = salesInstance;
+	Vue.prototype.$httpProductsPublic = productsPublicInstance;
 }

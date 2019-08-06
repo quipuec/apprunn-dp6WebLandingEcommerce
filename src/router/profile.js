@@ -1,8 +1,8 @@
 const route = {
-	path: 'perfil',
+	path: '/perfil',
 	name: 'profile',
 	redirect: '/perfil/mis-datos',
-	component: () => import('@/pages/page-profile'),
+	component: () => import(/* webpackChunkName: "profile" */ '@/pages/page-profile'),
 	children: [
 		{
 			path: 'mis-datos',
@@ -13,7 +13,7 @@ const route = {
 				{
 					path: 'editar',
 					name: 'edit-user-data',
-					component: () => import('@/components/profile/edit-user-data'),
+					component: () => import(/* webpackChunkName: "editUserData" */ '@/components/profile/edit-user-data'),
 				},
 				{
 					path: 'detalle',
@@ -25,7 +25,7 @@ const route = {
 		{
 			path: 'mis-ordenes',
 			name: 'user-orders',
-			component: () => import('@/components/profile/user-orders'),
+			component: () => import(/* webpackChunkName: "orders" */ '@/components/profile/user-orders'),
 		},
 		{
 			path: 'detalle-orden/:n',

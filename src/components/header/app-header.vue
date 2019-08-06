@@ -37,15 +37,17 @@
 				<button-image :data="imagesButton[0]" class="icon-desktop" @click-image="openModalLogin"/>
 				<button-image :data="imagesButton[1]" class="icon-medium icon-desktop"/>
 				<button-image
+					if-number
 					:data="imagesButton[2]"
 					:number="1"
-					if-number
+					@click-image="goTo('buy')"
 				/>
 			</div>
 		</div>
 		<modal-login 
 			class="app-modal-login"
-			v-show="modalLogin"/>
+			v-show="modalLogin"
+			@close-modal="closeModal"/>
 	</header>
 </template>
 <script>
@@ -64,6 +66,10 @@ function changeMenu() {
 
 function openModalLogin() {
 	this.modalLogin = !this.modalLogin;
+}
+
+function closeModal() {
+	this.modalLogin = false;
 }
 
 function data() {
@@ -100,6 +106,7 @@ function data() {
 		modalLogin: false,
 	};
 }
+
 export default {
 	name: 'app-header',
 	components: {
@@ -113,6 +120,7 @@ export default {
 		toogleSearch,
 		changeMenu,
 		openModalLogin,
+		closeModal,
 	},
 	props: {
 		logo: {

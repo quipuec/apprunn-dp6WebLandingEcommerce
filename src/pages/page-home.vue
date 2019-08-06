@@ -2,28 +2,84 @@
 	<layout-admin>
 		<router-view></router-view>
 		<banner-carousel :banners="banners"/>
-		<component-filter-product :filters="filters" ></component-filter-product>
+		<categories-carousel
+			:categories="categories"
+			:color-base="colorBase"/>
+		<component-filter-product :filters="filters"></component-filter-product>
+		<div class="page-products">
+			<products-section/>
+		</div>
+		<section-settlement/>
+		<app-banner-top 
+			:data="bannerTop"
+			:color="colorSecondary"
+			big/>
 	</layout-admin>
 </template>
 
 <script>
-const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
+const appBannerTop = () => import('@/components/header/app-banner-top');
 const bannerCarousel = () => import('@/components/home/banner-carousel');
+const categoriesCarousel = () => import('@/components/home/categories-carousel');
+const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
+const productsSection = () => import('@/components/products/products-section');
+const sectionSettlement = () => import('@/components/home/section-settlement');
 
+function created() {
+	this.loadData();
+}
+
+async function loadData() {
+	try {
+		const { data: response } = await this.$httpProductsPublic.get('banners-public');
+		this.banners = response;
+	} catch (error) {
+		this.showGenericError();
+	}
+}
 function data() {
 	return {
-		banners: [
+		banners: [],
+		categories: [
 			{
 				id: 1,
-				webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-2.png',
+				title: 'Resortes',
+				webImage: '/static/img/category-springs-white.svg',
+				urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/resorte2.png',
+				hover: false,
+				select: false,
 			},
 			{
 				id: 2,
-				webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-2.png',
+				title: 'Mayas',
+				webImage: '/static/img/category-mesh-white.svg',
+				urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/mayas.png',
+				hover: false,
+				select: false,
 			},
 			{
 				id: 3,
-				webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-2.png',
+				title: 'Cables',
+				webImage: '/static/img/category-cables-white.svg',
+				urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/cables.png',
+				hover: false,
+				select: false,
+			},
+			{
+				id: 4,
+				title: 'Resortes',
+				webImage: '/static/img/category-springs-white.svg',
+				urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/resorte2.png',
+				hover: false,
+				select: false,
+			},
+			{
+				id: 5,
+				title: 'Cables',
+				webImage: '/static/img/category-cables-white.svg',
+				urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/cables.png',
+				hover: false,
+				select: false,
 			},
 		],
 		filters: [
@@ -69,14 +125,29 @@ function data() {
 				icon: '/static/img/icons/icon-filter-product.svg',
 			},
 		],
+		colorDark: process.env.COLOR_DARK,
+		colorBase: process.env.COLOR_BASE,
+		colorSecondary: process.env.COLOR_SECONDARY,
+		bannerTop: {
+			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
+			image: 'descuento',
+		},
 	};
 }
 export default {
 	name: 'page-home',
 	data,
 	components: {
-		componentFilterProduct,
+		appBannerTop,
 		bannerCarousel,
+		categoriesCarousel,
+		componentFilterProduct,
+		productsSection,
+		sectionSettlement,
+	},
+	created,
+	methods: {
+		loadData,
 	},
 };
 </script>
