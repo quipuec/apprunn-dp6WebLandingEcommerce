@@ -43,7 +43,6 @@ export default {
 
 .text-company-data {
 	color: color(white);
-	font-size: size(minmedium);
 	margin: 0 0 0 9px;
 
 	@media (max-width: 860px) {

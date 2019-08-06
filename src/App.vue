@@ -66,6 +66,10 @@ function changeMenu() {
 	this.showMenu = !this.showMenu;
 }
 
+function routeHandler() {
+	this.showMenu = false;
+}
+
 function data() {
 	return {
 		logo: {
@@ -104,6 +108,9 @@ export default {
 	},
 	methods: {
 		changeMenu,
+	},
+	watch: {
+		$route: routeHandler,
 	},
 };
 </script>
