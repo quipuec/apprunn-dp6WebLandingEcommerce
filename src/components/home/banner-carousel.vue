@@ -6,7 +6,7 @@
 					v-for="banner in banners" 
 					:key="banner.id">
 					<div 
-						:style="`background-image: url(${banner.webImage})`"
+						:style="getBackground(banner)"
 						class="img-carousel">
 						<a 
 							v-if="banner.webLink"
@@ -24,6 +24,10 @@
 </template>
 <script>
 const companyData = () => import('@/components/shared/company/container-company-data');
+
+function getBackground(value) {
+	return `background-image: url(${value.webImage})`;
+}
 
 function data() {
 	return {
@@ -45,6 +49,9 @@ export default {
 	data,
 	components: {
 		companyData,
+	},
+	methods: {
+		getBackground,
 	},
 	props: {
 		banners: {

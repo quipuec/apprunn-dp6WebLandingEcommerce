@@ -1,7 +1,7 @@
 <template>
-	<div class="product-container" :class="small ? 'small' : null" @click="buyProduct">
-		<section class="product-header" :class="small ? 'small' : null">
-			<div :style="`background-color: ${baseColor}`" class="product-discount" :class="small ? 'small' : null">-20%</div>
+	<div class="product-container" :class="{ 'small': small }" @click="buyProduct">
+		<section class="product-header" :class="{ 'small': small }">
+			<div :style="`background-color: ${globalColors.primary}`" class="product-discount">-20%</div>
 			<div class="product-favorite">
 				<heart-component @click="productFavo" v-model="product.favorite"/>
 			</div>
@@ -58,7 +58,6 @@ export default {
 		productFavo,
 	},
 	props: {
-		baseColor: String,
 		small: {
 			type: Boolean,
 			default: false,
