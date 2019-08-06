@@ -241,4 +241,35 @@ input.app-input::-webkit-input-placeholder {
 	}
 }
 
+.start-js-btn.modal-opener.default {
+	background: url('/static/img/icons/icon-visanet.png') !important;
+	background-position: right 14px !important;
+	background-repeat: no-repeat !important;
+	border: 1px solid color(borderBtn) !important;
+	border-radius: 8px !important;
+	box-shadow: none !important;
+	color: color(textBtn) !important;
+	font-family: font(demi) !important;
+	font-size: size(large) !important;
+	font-weight: normal !important;
+	height: 65px !important;
+	margin-top: 55px;
+	position: relative;
+	text-shadow: none !important;
+	width: 213px !important;
+
+	&:before {
+		bottom: 0;
+		color: color(textBtn) !important;
+		content: 'Paga con';
+		font-family: font(demi) !important;
+		font-size: size(large) !important;
+		font-weight: normal !important;
+		height: 22px;
+		left: 18px;
+		margin: auto;
+		position: absolute;
+		top: 0;
+	}
+}
 </style>
