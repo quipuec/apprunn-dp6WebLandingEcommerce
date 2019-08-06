@@ -207,6 +207,14 @@ input.app-input::-webkit-input-placeholder {
 	.swiper-pagination-bullet-active {
 		background: color(white);
 	}
+
+	.swiper-container-horizontal > .swiper-pagination-bullets {
+		bottom: 71px;
+
+		@media (max-width: 1161px) {
+			bottom: 46px;
+		}
+	}
 }
 
 .categories-carousel-slider, .section-settlement  {

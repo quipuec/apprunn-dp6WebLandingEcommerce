@@ -12,7 +12,7 @@
 						<product-card 
 							:base-color="colorBase" 
 							class="product-card"
-							:product="product" 
+							:product="product"
 							small/>
 					</div>
 				</swiper-slide>
@@ -21,7 +21,7 @@
 						<product-card 
 							:base-color="colorBase" 
 							class="product-card"
-							:product="product" 
+							:product="product"
 							small/>
 					</div>
 				</swiper-slide>
@@ -30,7 +30,7 @@
 						<product-card 
 							:base-color="colorBase" 
 							class="product-card"
-							:product="product" 
+							:product="product"
 							small/>
 					</div>
 				</swiper-slide>
@@ -39,7 +39,7 @@
 						<product-card 
 							:base-color="colorBase" 
 							class="product-card"
-							:product="product" 
+							:product="product"
 							small/>
 					</div>
 				</swiper-slide>
