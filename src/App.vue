@@ -1,5 +1,5 @@
 <template>
-	<v-app>
+	<v-app class="main-container">
 		<app-banner-top :data="bannerTop"/>
 		<app-header :logo="logo" @change-menu="changeMenu" :menu="showMenu"/>
 		<transition name="slide-fade">
@@ -133,6 +133,10 @@ input.app-input::-webkit-input-placeholder {
 	font-family: font(demi) !important;
 	font-size: size(minmedium) !important;
 	font-weight: normal !important;
+}
+
+.main-container {
+	background-color: white !important;
 }
 
 .product-rating {

@@ -143,7 +143,9 @@ export default {
 		font-weight: bold;
 		height: 45px;
 		margin-bottom: 5px;
+		overflow: hidden;
 		text-align: left;
+		text-overflow: ellipsis;
 		width: 130px;
 	}
 

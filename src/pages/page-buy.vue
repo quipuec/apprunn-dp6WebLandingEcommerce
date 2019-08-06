@@ -1,20 +1,18 @@
 <template>
-	<layout-admin>
-		<div class="buy-container">
-			<div v-if="stepThree">Resumen de orden - Header</div>
-			<div class="buy-layout">
-				<section class="big">
-					<div v-if="stepOneAndTwo">
-						<product-in-car v-for="product in getProductToBuy" :key="product.id" :product="product"/>
-					</div>
-					<router-view></router-view>
-				</section>
-				<section class="small">
-					<summary-order/>
-				</section>
-			</div>
+	<div class="buy-container">
+		<div v-if="stepThree">Resumen de orden - Header</div>
+		<div class="buy-layout">
+			<section class="big">
+				<div v-if="stepOneAndTwo">
+					<product-in-car v-for="product in getProductToBuy" :key="product.id" :product="product"/>
+				</div>
+				<router-view></router-view>
+			</section>
+			<section class="small">
+				<summary-order/>
+			</section>
 		</div>
-	</layout-admin>
+	</div>
 </template>
 <script>
 import lib from '@/shared/lib';
@@ -50,7 +48,7 @@ export default {
 <style lang="scss" scoped>
 	.buy-container {
 		margin: 0 auto;
-		padding: 0 6%;
+		padding: 40px 6% 0;
 	}
 	.buy-layout {
 		align-items: flex-start;
@@ -65,8 +63,7 @@ export default {
 
 	.small {
 		flex: 1 1 20%;
+		height: 100%;
 		margin: 0 10px;
-		position: sticky;
-		top: 0px;
 	}
 </style>

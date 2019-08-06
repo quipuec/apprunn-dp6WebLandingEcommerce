@@ -130,6 +130,11 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+	.summary-container {
+		position: relative;
+		top: 0px;
+	}
+
 	.summary-order {
 		background-color: white;
 		border-radius: 20px;
