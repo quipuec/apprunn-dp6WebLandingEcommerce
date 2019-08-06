@@ -32,9 +32,11 @@ export default {
 .container-media-company {
 	align-items: center;
 	display: flex;
+	flex: 1 1 33.3%;
+	justify-content: center;
 	padding: 0 45px;
 
-	@media (max-width: 1161px) {
+	@media (max-width: 860px) {
 		padding: 0 9px;
 	}
 }
@@ -43,17 +45,15 @@ export default {
 	color: color(white);
 	font-size: size(minmedium);
 	margin: 0 0 0 9px;
-	width: 110px;
 
-	@media (max-width: 1161px) {
+	@media (max-width: 860px) {
 		font-size: 8px;
 		margin-left: 6px;
-		width: 68px;
 	}
 }
 
 .image-company {
-	@media (max-width: 1161px) {
+	@media (max-width: 860px) {
 		height: 19px;
 	}
 }

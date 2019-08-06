@@ -78,7 +78,7 @@ export default {
 		transform: translateX(-50%);
 		z-index: 1;
 
-		@media (max-width: 1161px) {
+		@media (max-width: 860px) {
 			bottom: -26px;
 		}
 	}
