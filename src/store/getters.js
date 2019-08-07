@@ -1,4 +1,5 @@
 import orderGetters from '@/store/getters/order';
+import geoGetters from '@/store/getters/geo';
 
 function indeterminate(state) {
 	return state.appConfig.isLoading;
@@ -45,6 +46,7 @@ const methods = {
 	getProducts,
 	flagAddVoucher,
 	indeterminate,
+	...geoGetters,
 	...orderGetters,
 	pollData,
 	snackbar,

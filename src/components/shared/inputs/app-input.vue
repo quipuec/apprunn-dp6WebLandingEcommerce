@@ -61,9 +61,4 @@
 		font-size: size(minmedium) !important;
 		font-weight: normal !important;
 	}
-
-	.err-message {
-		color: color(primary);
-		font-size: size(xsmall);
-	}
 </style>

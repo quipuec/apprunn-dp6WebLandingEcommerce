@@ -313,4 +313,9 @@ input.app-input::-webkit-input-placeholder {
 		top: 0;
 	}
 }
+
+.err-message {
+	color: color(primary);
+	font-size: size(xsmall);
+}
 </style>
