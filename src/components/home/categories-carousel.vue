@@ -59,9 +59,15 @@ function data() {
 				prevEl: '.swiper-button-prev',
 			},
 			breakpoints: {
-				1161: {
+				860: {
 					slidesPerView: 1,
 					slidesPerGroup: 1,
+					allowTouchMove: true,
+				},
+				1261: {
+					slidesPerView: 2,
+					slidesPerGroup: 2,
+					allowTouchMove: true,
 				},
 			},
 		},
@@ -92,7 +98,7 @@ export default {
 		background: color(white);
 		padding: 115px 15% 108px;
 
-		@media (max-width: 1161px) {
+		@media (max-width: 860px) {
 			padding: 35px 10%;
 		}
 	}
@@ -120,12 +126,12 @@ export default {
 			height: 67px;
 			position: absolute;
 
-			@media (max-width: 1161px) {
+			@media (max-width: 860px) {
 				height: 46px;
 			}
 		}
 
-		@media (max-width: 1161px) {
+		@media (max-width: 860px) {
 			height: 111px;
 			width: 140px;
 		}
@@ -143,7 +149,7 @@ export default {
 		transition: all .3s;
 		width: 220px;
 
-		@media (max-width: 1161px) {
+		@media (max-width: 860px) {
 			height: 122px;
 			width: 150px;
 		}

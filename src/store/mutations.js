@@ -47,6 +47,10 @@ function SET_CATEGORIES(state, categories) {
 	Vue.set(state, 'categories', categories);
 }
 
+function SET_ORDER_TOTAL(state, total) {
+	Vue.set(state.order, 'total', total);
+}
+
 const methods = {
 	clearUser,
 	setToken,
@@ -59,6 +63,7 @@ const methods = {
 	UPDATE_FLAG_ADD_VOUCHER,
 	UPDATE_POLL_PROGRESS,
 	SET_CATEGORIES,
+	SET_ORDER_TOTAL,
 };
 
 export default methods;

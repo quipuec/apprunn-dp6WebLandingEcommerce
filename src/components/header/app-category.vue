@@ -6,11 +6,11 @@
 			</div>
 			<div class="container-link-user" :style="`border-color: ${colorBorder}`">
 				<router-link 
-					to="/"
+					:to="{ name: 'login'}"
 					:style="`color: ${colorBase}`"
 					class="link">Iniciar Sesión</router-link>
 				<router-link 
-					to="/"
+					:to="{ name: 'register'}"
 					:style="`color: ${colorBase}`"
 					class="link">Crear cuenta</router-link>
 			</div>

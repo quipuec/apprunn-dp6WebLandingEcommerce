@@ -1,12 +1,12 @@
 <template>
-	<div class="product-container" @click="buyProduct">
-		<section class="product-header">
-			<div :style="`background-color: ${baseColor}`" class="product-discount">-20%</div>
+	<div class="product-container" :class="{ 'small': small }" @click="buyProduct">
+		<section class="product-header" :class="{ 'small': small }">
+			<div :style="`background-color: ${globalColors.primary}`" class="product-discount">-20%</div>
 			<div class="product-favorite">
 				<heart-component @click="productFavo" v-model="product.favorite"/>
 			</div>
 		</section>
-		<section class="product-content">
+		<section class="product-content" :class="small ? 'small' : null">
 			<div>
 				<img class="product-img" :src="product.urlImage" alt="imagen del product">
 			</div>
@@ -19,6 +19,8 @@
 				<v-rating
 					small
 					class="product-rating"
+					background-color="#ffcc03"
+					color="#ffcc03"
 					v-model="product.rating"></v-rating>
 			</div>
 		</section>
@@ -56,7 +58,10 @@ export default {
 		productFavo,
 	},
 	props: {
-		baseColor: String,
+		small: {
+			type: Boolean,
+			default: false,
+		},
 		product: {
 			default: () => {},
 			type: Object,
@@ -67,14 +72,21 @@ export default {
 <style lang="scss" scoped>
 	.product-container {
 		background-color: color(white);
-		border: 3px solid color(border);
+		border: 1px solid color(border);
+		box-shadow: 0 2px 2px 0 rgba(31, 26, 26, 0.07);
 		font-family: font(medium);
 		height: auto;
 		padding: 10px;
 
 		@media (min-width: 500px) {
+			border: 3px solid color(border);
+			border-radius: 5px;
 			height: 330px;
 			margin: 3px;
+		}
+
+		&.small {
+			max-width: 179px;
 		}
 	}
 
@@ -104,7 +116,13 @@ export default {
 			margin: 0 15px;
 		}
 
-		@media (min-width: 500px) {
+		@media (max-width: 500px) {
+			&.small {
+				flex-direction: column;
+			}
+		}
+
+		@media (min-width: 426px) {
 			flex-direction: column;
 		}
 	}

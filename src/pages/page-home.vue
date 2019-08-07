@@ -6,17 +6,26 @@
 			:categories="getCategories"
 			:color-base="colorBase"/>
 		<component-filter-product></component-filter-product>
-		<products-section/>
+		<div class="page-products">
+			<products-section/>
+		</div>
+		<section-settlement/>
+		<app-banner-top 
+			:data="bannerTop"
+			:color="colorSecondary"
+			big/>
 	</layout-admin>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 
+const appBannerTop = () => import('@/components/header/app-banner-top');
 const bannerCarousel = () => import('@/components/home/banner-carousel');
 const categoriesCarousel = () => import('@/components/home/categories-carousel');
 const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
 const productsSection = () => import('@/components/products/products-section');
+const sectionSettlement = () => import('@/components/home/section-settlement');
 
 function created() {
 	this.loadData();
@@ -24,7 +33,7 @@ function created() {
 
 async function loadData() {
 	try {
-		const { data: response } = await this.$httpProducts.get('banners-public');
+		const { data: response } = await this.$httpProductsPublic.get('banners-public');
 		this.banners = response;
 	} catch (error) {
 		this.showGenericError();
@@ -75,17 +84,25 @@ function data() {
 				select: false,
 			},
 		],
+		colorDark: process.env.COLOR_DARK,
 		colorBase: process.env.COLOR_BASE,
+		colorSecondary: process.env.COLOR_SECONDARY,
+		bannerTop: {
+			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
+			image: 'descuento',
+		},
 	};
 }
 export default {
 	name: 'page-home',
 	data,
 	components: {
+		appBannerTop,
 		bannerCarousel,
 		categoriesCarousel,
 		componentFilterProduct,
 		productsSection,
+		sectionSettlement,
 	},
 	computed: {
 		...mapGetters([
