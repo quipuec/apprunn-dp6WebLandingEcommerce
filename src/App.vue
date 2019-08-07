@@ -282,44 +282,24 @@ input.app-input::-webkit-input-placeholder {
 
 .component-filter {
 	.swiper-slide {
-		border-right: 1px solid white;
+		border-right: 1px solid color(white);
 		display: flex;
+		height: 51px;
 		justify-content: center;
-		// width: auto !important;
-		// padding: 0 70px;
 	}
 
-	// .swiper-slide:nth-child(4n) {
-	// 	justify-content: flex-start;
-	// 	padding-left: 50px;
-	// }
-
-	// .swiper-slider:nth-child(4n) {
-	// 	justify-content: flex-start;
-	// }
-
-	// .swiper-slide:nth-child(1) {
-	// 	margin-left: 90px;
-	// }
-
-	// .swiper-slide:nth-child(4) {
-	// 	margin-right: 120px;
-	// }
-	// .swiper-slide:nth-child(1) {
-	// 	justify-content: flex-end;
-	// }
-
-	// .swiper-slide:nth-child(4n) {
-	// 	justify-content: flex-start !important;
-	// }
+	.swiper-slide:nth-child(1) {
+		width: 305px !important;
+	}
 
 	.swiper-container {
 		width: 100%;
 	}
+	
 	.swiper-button-next {
 		background-image: url('/static/img/icons/arrow-button-next-white.svg');
 		position: absolute;
-		right: 77px;
+		right: 0;
 
 		@media (max-width: 650px) {
 			right: 15px;
@@ -328,7 +308,7 @@ input.app-input::-webkit-input-placeholder {
 
 	.swiper-button-prev {
 		background-image: url('/static/img/icons/arrow-button-prev-white.svg');
-		left: 77px;
+		left: 0;
 		position: absolute;
 		
 		@media (max-width: 650px) {

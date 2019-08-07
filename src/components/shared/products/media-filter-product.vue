@@ -6,6 +6,7 @@
 			</div>
 			<div class="filter-title">
 				<p class="title-filter">{{title}}</p>
+				<div class="circle-filter-product"></div>
 				<!-- <div class="content-border">
 					<div class="border-bottom-product"></div>
 					<div class="circle-filter-product"></div>
@@ -46,15 +47,27 @@ export default {
 
 	&:active {
 		border-bottom: 3px solid white;
+
+		.circle-filter-product {
+			display: block;
+		}
 	}
 }
 
 .circle-filter-product {
 	background-color: color(white);
 	border-radius: 50%;
+	display: none;
 	height: 4px;
 	margin-left: 4px;
+	position: relative;
+	left: 75px;
+	top: 1px;
 	width: 4px;
+}
+
+.circle-filter-product:nth-child(1) {
+	left: 305px;
 }
 
 .border-bottom-product {

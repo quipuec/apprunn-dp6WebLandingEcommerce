@@ -1,6 +1,7 @@
 <template>
 	<div class="component-filter">
-		<swiper :options="swiperOption">
+		<div class="swiper-filter">
+			<swiper :options="swiperOption">
 			<swiper-slide
 			v-for="filter in filters" 
 			:key="filter.id">
@@ -14,6 +15,7 @@
 			<div class="swiper-button-prev" slot="button-prev"></div>
       <div class="swiper-button-next" slot="button-next"></div>
 		</swiper>
+		</div>
 	</div>
 </template>
 
@@ -84,6 +86,11 @@ export default {
 	height: 67px;
 	justify-content: center;
   width: 100% !important;
+}
+
+.swiper-filter {
+	margin: auto;
+	width: 80%;
 }
 </style>
 

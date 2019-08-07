@@ -88,7 +88,6 @@ function data() {
 				title: 'Novedades',
 				color: process.env.COLOR_WHITE,
 				icon: '/static/img/icons/icon-filter-product.svg',
-				// border: '#ffffff',
 			},
 			{
 				id: 2,
@@ -110,13 +109,19 @@ function data() {
 			},
 			{
 				id: 5,
-				title: 'Ofertas',
+				title: 'Novedades',
 				color: process.env.COLOR_WHITE,
 				icon: '/static/img/icons/icon-filter-product.svg',
 			},
 			{
 				id: 6,
-				title: 'Ofertas',
+				title: 'Populares',
+				color: process.env.COLOR_WHITE,
+				icon: '/static/img/icons/icon-filter-product.svg',
+			},
+			{
+				id: 7,
+				title: 'Recomendados',
 				color: process.env.COLOR_WHITE,
 				icon: '/static/img/icons/icon-filter-product.svg',
 			},
