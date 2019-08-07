@@ -71,7 +71,7 @@ function validations() {
 	return {
 		responsible: {
 			dni: { required },
-			email: { required, email },
+			email: { email, required },
 			name: { required },
 			phone: { required },
 		},
