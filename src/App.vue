@@ -282,8 +282,36 @@ input.app-input::-webkit-input-placeholder {
 
 .component-filter {
 	.swiper-slide {
-		width: 360px !important;
+		border-right: 1px solid white;
+		display: flex;
+		justify-content: center;
+		// width: auto !important;
+		// padding: 0 70px;
 	}
+
+	// .swiper-slide:nth-child(4n) {
+	// 	justify-content: flex-start;
+	// 	padding-left: 50px;
+	// }
+
+	// .swiper-slider:nth-child(4n) {
+	// 	justify-content: flex-start;
+	// }
+
+	// .swiper-slide:nth-child(1) {
+	// 	margin-left: 90px;
+	// }
+
+	// .swiper-slide:nth-child(4) {
+	// 	margin-right: 120px;
+	// }
+	// .swiper-slide:nth-child(1) {
+	// 	justify-content: flex-end;
+	// }
+
+	// .swiper-slide:nth-child(4n) {
+	// 	justify-content: flex-start !important;
+	// }
 
 	.swiper-container {
 		width: 100%;

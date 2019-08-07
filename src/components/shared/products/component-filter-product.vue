@@ -27,7 +27,7 @@ function data() {
 			slidesPerGroup: 1,
 			centerInsufficientSlides: true,
 			breakpoints: {
-				1200: {
+				1250: {
 					slidesPerView: 3,
 				},
 				950: {

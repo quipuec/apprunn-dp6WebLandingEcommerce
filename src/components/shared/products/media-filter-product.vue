@@ -6,10 +6,10 @@
 			</div>
 			<div class="filter-title">
 				<p class="title-filter">{{title}}</p>
-				<div class="content-border">
+				<!-- <div class="content-border">
 					<div class="border-bottom-product"></div>
 					<div class="circle-filter-product"></div>
-				</div>
+				</div> -->
 			</div>
 	</button>
 </template>
@@ -39,10 +39,14 @@ export default {
 }
 
 .box-filter {
+	align-items: center;
 	display: flex;
 	justify-content: center;
-	height: 51px;
-	width: 100%;
+	width: auto;
+
+	&:active {
+		border-bottom: 3px solid white;
+	}
 }
 
 .circle-filter-product {
