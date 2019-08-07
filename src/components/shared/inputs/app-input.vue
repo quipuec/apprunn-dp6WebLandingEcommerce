@@ -1,23 +1,36 @@
 <template>
 	<div>
 		<input
-			v-bind="$attrs"
-			v-on="$listeners"
 			class="app-input"
+			v-bind="$attrs"
 			:style="`border-color: ${borderColor}`"
+			:value="value"
+			@input="sendValue"
 		/>
+		<span class="err-message">
+			<slot></slot>
+		</span>
 	</div>
 </template>
 
 <script>
+
+	function sendValue({ target }) {
+		this.$emit('input', target.value);
+	}
+
 	export default {
 		name: 'app-input',
 		inheritAttrs: false,
+		methods: {
+			sendValue,
+		},
 		props: {
 			borderColor: {
 				default: '#f5f3f3',
 				type: String,
 			},
+			value: null,
 		},
 	};
 </script>
@@ -47,5 +60,10 @@
 		font-family: font(demi) !important;
 		font-size: size(minmedium) !important;
 		font-weight: normal !important;
+	}
+
+	.err-message {
+		color: color(primary);
+		font-size: size(xsmall);
 	}
 </style>
