@@ -143,7 +143,7 @@ export default {
 		color: color(dark);
 		font-size: size(small);
 		height: 35px;
-		margin: 0;
+		margin: 0 auto;
 		max-width: 150px;
 		overflow: hidden;
 		text-overflow: ellipsis;
