@@ -146,8 +146,9 @@ export default {
 		font-family: font(demi);
 		font-size: size(msmall);
 		font-weight: bold;
-		height: 45px;
+		height: 30px;
 		margin-bottom: 5px;
+		overflow: hidden;
 		text-align: left;
 		width: 130px;
 	}
@@ -175,6 +176,7 @@ export default {
 		flex-direction: column;
 		justify-content: center;
 		margin: auto;
+		padding-left: 34px;
 
 		@media (max-width: 600px) {
 			flex-direction: row;
@@ -182,7 +184,6 @@ export default {
 	}
 
 	.action {
-		margin: 10px;
-		padding: 5px;
+		margin: 5px;
 	}
 </style>
