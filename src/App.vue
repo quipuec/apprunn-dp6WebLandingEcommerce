@@ -288,10 +288,6 @@ input.app-input::-webkit-input-placeholder {
 		justify-content: center;
 	}
 
-	.swiper-slide:nth-child(1) {
-		width: 305px !important;
-	}
-
 	.swiper-container {
 		width: 100%;
 	}

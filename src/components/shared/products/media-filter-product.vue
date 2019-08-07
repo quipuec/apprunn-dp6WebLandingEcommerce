@@ -7,10 +7,6 @@
 			<div class="filter-title">
 				<p class="title-filter">{{title}}</p>
 				<div class="circle-filter-product"></div>
-				<!-- <div class="content-border">
-					<div class="border-bottom-product"></div>
-					<div class="circle-filter-product"></div>
-				</div> -->
 			</div>
 	</button>
 </template>
@@ -44,14 +40,6 @@ export default {
 	display: flex;
 	justify-content: center;
 	width: auto;
-
-	&:active {
-		border-bottom: 3px solid white;
-
-		.circle-filter-product {
-			display: block;
-		}
-	}
 }
 
 .circle-filter-product {
