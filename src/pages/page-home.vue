@@ -1,6 +1,6 @@
 <template>
 	<layout-admin>
-		<router-view></router-view>
+		<!-- <router-view></router-view> -->
 		<banner-carousel :banners="banners"/>
 		<categories-carousel
 			:categories="categories"
