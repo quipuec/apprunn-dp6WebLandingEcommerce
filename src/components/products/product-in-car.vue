@@ -73,15 +73,20 @@ export default {
 		background-color: color(background);
 		border-radius: 20px;
 		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.18);
-		display: flex;
 		flex-wrap: wrap;
+		display: flex;
 		margin-bottom: 10px;
-		padding: 22px 34px 5px;
+		padding: 22px 5px 5px 34px;
+
+		@media (max-width: 700px) {
+			padding: 22px 34px 5px;
+		}
 	}
 
 	.grid-areas {
 		border-right: 1px solid color(border);
 		display: grid;
+		flex: 1 1 85%;
 		grid-gap: 15px;
 		grid-template-areas:
 			"image description price quantity total"
@@ -173,17 +178,18 @@ export default {
 	.actions {
 		align-items: center;
 		display: flex;
+		flex: 1 1 10%;
 		flex-direction: column;
 		justify-content: center;
 		margin: auto;
-		padding-left: 34px;
+		padding-left: 5px;
 
-		@media (max-width: 600px) {
+		@media (max-width: 700px) {
 			flex-direction: row;
 		}
 	}
 
 	.action {
-		margin: 5px;
+		margin: 5px 15px;
 	}
 </style>
