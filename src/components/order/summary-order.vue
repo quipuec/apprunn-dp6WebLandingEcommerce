@@ -56,6 +56,7 @@ function total() {
 function makeOrder() {
 	const body = this.buildBody();
 	this.$store.dispatch('CREATE_ORDER', { context: this, body });
+	this.goTo('buy-delivery');
 }
 
 function buildBody() {

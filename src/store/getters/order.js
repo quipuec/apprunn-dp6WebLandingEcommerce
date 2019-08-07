@@ -19,6 +19,9 @@ const getters = {
 	getTotalQuantityProducts(state) {
 		return state.order.products.length;
 	},
+	getFlagPickUp(state) {
+		return state.order.flagPickUp;
+	},
 };
 
 export default getters;
