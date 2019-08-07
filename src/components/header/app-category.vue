@@ -189,9 +189,9 @@ export default {
 		background: color(white);
 		border-top: solid 1px color(border);
 		box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.07);
-		max-height: 502px;
+		max-height: 369.6px;
 		min-height: 226px;
-		overflow-y: scroll;
+		// overflow-y: scroll;
 		position: absolute;
 		top: 179px;
 		z-index: 5;
@@ -201,6 +201,7 @@ export default {
 			height: 100vh;
 			max-height: none;
 			min-height: none;
+			overflow-y: scroll;
 			padding: 22px 8%;
 			position: absolute;
 			top: 0;
@@ -210,10 +211,12 @@ export default {
 
 	.menu-list-name-category {
 		flex: 1 1 20%;
+		overflow-y: scroll;
+    max-height: 312.6px;
 
 		@media (max-width: 764px) {
 			height: calc(100vh - 240px);
-			overflow-y: scroll;
+			max-height: none;
 		}
 	}
 
