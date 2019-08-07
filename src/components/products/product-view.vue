@@ -2,9 +2,12 @@
   <div class="product-view">
 		<div class="btns-product-view">
 			<button 
-				v-for="image in data.images" 
+				v-for="(image, index) in data.images" 
 				:key="image.id"
-				class="btn-product-view">
+				class="btn-product-view"
+				:class="{'select' : image.select }"
+				@click="goToSlider(index, image)"
+			>
 				<img 
 					:src="image.urlImage" 
 					:alt="image.name" 
@@ -12,7 +15,7 @@
 			</button>
 		</div>
 		<div class="slider-product-view">
-			<swiper>
+			<swiper ref="mySwiper">
 				<swiper-slide 
 					v-for="image in data.images" 
 					:key="image.id">
@@ -30,8 +33,27 @@
 </template>
 <script>
 
+function swiper() {
+	return this.$refs.mySwiper.swiper;
+}
+
+function goToSlider(index, image) {
+	this.swiper.slideTo(index, 1000, false);
+	this.data.images = this.data.images.map((i) => {
+		const newImage = { ...i };
+		newImage.select = i.id === image.id;
+		return newImage;
+	});
+}
+
 export default {
 	name: 'product-view',
+	computed: {
+		swiper,
+	},
+	methods: {
+		goToSlider,
+	},
 	props: {
 		data: {
 			type: Object,
@@ -62,7 +84,13 @@ export default {
 	}
 
 	.slider-product-view {
-		// max-width: 301px;
+		align-items: center;
+		background: color(white);
+		border-radius: 7px;
+		box-shadow: 0 2px 4px 0 rgba(213, 213, 213, 0.5);
+		display: flex;
+		height: 487px;
+		justify-content: center;
 		padding: 0 19px;
 		width: 80%;
 	}

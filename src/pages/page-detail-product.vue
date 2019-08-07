@@ -29,6 +29,11 @@ async function loadData() {
 	try {
 		const { data: response } = await this.isLoggedUser();
 		this.product = response;
+		this.product.images = this.product.images.map((i) => {
+			const newImage = { ...i };
+			newImage.select = false;
+			return newImage;
+		});
 	} catch (error) {
 		this.showGenericError();
 	}
