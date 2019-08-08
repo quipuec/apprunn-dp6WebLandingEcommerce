@@ -2,14 +2,16 @@
 	<div class="product-detail">
 		<div>
 			<heart-component 
-				v-model="data.favorite"
-				class="container-like"/>
+				v-model="data.flagFavorite"
+				class="container-like"
+				@click="addToFavorites"
+				:value="data.flagFavorite"/>
 		</div>
-		<div>
-			<div>
+		<div class="container-detail-information">
+			<div class="container-detail-name">
 				<p class="product-detail-name">{{data.name}}</p>
 			</div>
-			<div class="d-center">
+			<div class="d-center container-code-rating">
 				<span class="product-detail-code">{{data.code}}</span>
 				<div class="container-rating d-center">
 					<v-rating
@@ -17,7 +19,8 @@
 						class="product-rating"
 						background-color="#ffcc03"
 						color="#ffcc03"
-						v-model="data.rating">
+						v-model="data.rating"
+						readonly>
 					</v-rating>
 					<span class="text-rating">{{ data.rating }} / 5</span>
 				</div>
@@ -37,6 +40,27 @@ import { mapGetters } from 'vuex';
 
 const heartComponent = () => import('@/components/shared/icons/heart-component');
 
+function stopClick() {
+	return false;
+}
+
+async function addToFavorites() {
+	if (this.token) {
+		this.isLoading = true;
+		const headers = {
+			Authorization: `Bearer ${this.token}`,
+		};
+		const url = `products/favorite/${this.data.id}`;
+		const body = {
+			isFavorite: !this.data.flagFavorite,
+		};
+		await this.$httpProducts.post(url, body, { headers });
+		this.$emit('update');
+	} else {
+		this.showNotification('Debe iniciar sesión para agregar a favoritos', 'info');
+	}
+}
+
 export default {
 	name: 'product-detail',
 	components: {
@@ -45,7 +69,12 @@ export default {
 	computed: {
 		...mapGetters([
 			'getCurrencySymbol',
+			'token',
 		]),
+	},
+	methods: {
+		stopClick,
+		addToFavorites,
 	},
 	props: {
 		data: {
@@ -67,6 +96,10 @@ export default {
 		color: color(base);
 		flex: 1 1 30%;
 		font-size: size(medium);
+
+		@media screen and (max-width: 996px) {
+			display: none;
+		}
 	}
 
 	.d-center {
@@ -76,6 +109,11 @@ export default {
 
 	.container-rating  {
 		flex: 1 1 70%;
+
+		@media screen and (max-width: 996px) {
+			align-items: flex-end;
+			flex-direction: column;
+		}
 	}
 
 	.text-rating {
@@ -122,6 +160,10 @@ export default {
 
 	.mt-25 {
 		margin: 25px 0 15px 0;
+
+		@media screen and (max-width: 996px) {
+			margin: 0;
+		}
 	}
 
 	.product-detail {
@@ -133,6 +175,24 @@ export default {
 	.container-like {
 		@media screen and (max-width: 996px) {
 			margin: auto;
+		}
+	}
+
+	.container-detail-information {
+		@media screen and (max-width: 996px) {
+			display: flex;
+		}
+	}
+
+	.container-detail-name {
+		@media screen and (max-width: 996px) {
+			flex: 1 1 60%;
+		}
+	}
+
+	.container-code-rating {
+		@media screen and (max-width: 996px) {
+			flex: 1 1 40%;
 		}
 	}
 </style>

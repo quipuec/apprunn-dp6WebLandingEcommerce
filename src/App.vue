@@ -15,12 +15,6 @@
 			:color-base="colorBase"
 			:color-border="colorBorder"/>
   	</transition>
-	<v-progress-linear
-		class="progress-bar"
-		color="success"
-		:indeterminate="indeterminate"
-		v-if="indeterminate"
-	></v-progress-linear>
 	<router-view></router-view>
 	<section-visa></section-visa>
 	<form-bulletin />

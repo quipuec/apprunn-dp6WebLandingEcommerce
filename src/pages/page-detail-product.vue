@@ -6,7 +6,8 @@
 				class="container-product-view"/>
 			<productDetail 
 				:data="product"
-				class="container-product-detail"/>
+				class="container-product-detail"
+				@update="loadData"/>
 		</div>
 	</div>
 </template>
