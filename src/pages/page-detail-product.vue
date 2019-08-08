@@ -29,9 +29,9 @@ async function loadData() {
 	try {
 		const { data: response } = await this.isLoggedUser();
 		this.product = response;
-		this.product.images = this.product.images.map((i) => {
+		this.product.images = this.product.images.map((i, index) => {
 			const newImage = { ...i };
-			newImage.select = false;
+			newImage.select = index === 0;
 			return newImage;
 		});
 	} catch (error) {
