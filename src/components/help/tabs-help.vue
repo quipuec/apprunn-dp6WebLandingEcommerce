@@ -87,7 +87,7 @@ export default {
 	border-bottom: 5px solid color(secondary);
 	color: color(secondary);
 	font-family: font(bold);
-	font-size: 16px;
+	font-size: size(large);
 	padding-bottom: 7px;
 }
 
@@ -103,7 +103,7 @@ export default {
 .item-tabs {
 	color: color(base);
 	font-family: font(heavy);
-	font-size: 12px;
+	font-size: size(small);
 	padding: 8px 0;
 	text-align: left;
 	width: 294px;
