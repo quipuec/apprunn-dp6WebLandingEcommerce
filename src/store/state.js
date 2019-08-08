@@ -34,8 +34,9 @@ export default {
 	token: helper.getLocalToken(),
 	user: {
 		email: '',
-		logo: 'ecommerce-logo.svg',
+		logo: '/static/img/user.svg',
 		profileImage: '',
 		username: '',
 	},
+	categories: [],
 };

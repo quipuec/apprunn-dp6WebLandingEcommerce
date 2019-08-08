@@ -6,10 +6,7 @@
 			</div>
 			<div class="filter-title">
 				<p class="title-filter">{{title}}</p>
-				<div class="content-border">
-					<div class="border-bottom-product"></div>
-					<div class="circle-filter-product"></div>
-				</div>
+				<div class="circle-filter-product"></div>
 			</div>
 	</button>
 </template>
@@ -39,43 +36,26 @@ export default {
 }
 
 .box-filter {
+	align-items: center;
 	display: flex;
 	justify-content: center;
-	margin-bottom: 6px;
-	padding: 0 46px;
-
-	@media (max-width: 750px) {
-		margin-bottom: 6px;
-		padding: 3px 0;
-	}
-}
-
-.box-filter:nth-child(1) {
-	border-bottom: 1px solid color(white);
-
-	@media (min-width: 950px) {
-		border-bottom: none;
-	}
-}
-
-.box-filter:nth-child(2) {
-	border-bottom: 1px solid color(white);
-	
-	@media (max-width: 950px) {
-		border-right: none !important;
-	}
-
-	@media (min-width: 950px) {
-		border-bottom: none;
-	}
+	width: auto;
 }
 
 .circle-filter-product {
 	background-color: color(white);
 	border-radius: 50%;
+	display: none;
 	height: 4px;
 	margin-left: 4px;
+	position: relative;
+	left: 75px;
+	top: 1px;
 	width: 4px;
+}
+
+.circle-filter-product:nth-child(1) {
+	left: 305px;
 }
 
 .border-bottom-product {

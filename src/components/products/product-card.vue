@@ -3,7 +3,7 @@
 		<section class="product-header" :class="{ 'small': small }">
 			<div :style="`background-color: ${globalColors.primary}`" class="product-discount">-20%</div>
 			<div class="product-favorite">
-				<heart-component @click="productFavo" v-model="product.favorite"/>
+				<heart-component @click="productFavo" :value="product.flagFavorite"/>
 			</div>
 		</section>
 		<section class="product-content" :class="small ? 'small' : null">
@@ -149,7 +149,7 @@ export default {
 		color: color(dark);
 		font-size: size(small);
 		height: 35px;
-		margin: 0;
+		margin: 0 auto;
 		max-width: 150px;
 		overflow: hidden;
 		text-overflow: ellipsis;

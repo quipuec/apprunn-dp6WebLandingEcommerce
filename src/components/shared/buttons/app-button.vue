@@ -54,7 +54,6 @@
 	.app-button {
 		border-radius: 7px;
 		font-family: font(bold);
-		font-size: size(medium);
 		height: 39.5px;
 		letter-spacing: 0;
 		max-width: 175px;
