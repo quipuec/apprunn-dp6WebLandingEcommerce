@@ -41,15 +41,13 @@ export default {
 <style lang="scss" scoped>
 .menu-category {
 	background-color: #f9f9f9;
-	border-right: 1px solid #eaeaea;
-	padding: 0px 25px;
 	position: relative;
 	width: 90%;	
 }
 
 .btn-menu-category {
-  left: 330px;
+	left: 108%;
 	position: absolute;
-  top: 150px;
+	top: 150px;
 }
 </style>

@@ -21,6 +21,17 @@ const asyncActions = {
 		const url = 'orders';
 		const { data: order } = await context.$httpSales.post(url, body);
 		commit('SET_ORDER_ID', order.id);
+		commit('SET_ORDER_TOTAL', order.total);
+	},
+	LOAD_CATEGORIES: async ({ commit }, { context }) => {
+		let { data: response } = await context.$httpProductsPublic.get('e-categories-public');
+		response = response.map((r) => {
+			const newCategory = { ...r };
+			newCategory.select = false;
+			newCategory.hover = false;
+			return newCategory;
+		});
+		commit('SET_CATEGORIES', response);
 	},
 };
 

@@ -1,15 +1,12 @@
 <template>
-	<div>
 		<section class="product-section">
 			<product-card
 				class="product-card"
 				v-for="product in getProducts"
 				:key="product.id"
-				:base-color="globalColors.primary"
 				:product="product"
 			/>
 		</section>
-	</div>
 </template>
 <script>
 import { mapGetters } from 'vuex';

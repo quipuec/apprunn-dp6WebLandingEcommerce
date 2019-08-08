@@ -15,6 +15,7 @@ export default {
 		id: null,
 		products: [],
 		responsible: null,
+		total: null,
 	},
 	pollData: {
 		progress: 0,
@@ -33,8 +34,9 @@ export default {
 	token: helper.getLocalToken(),
 	user: {
 		email: '',
-		logo: 'ecommerce-logo.svg',
+		logo: '/static/img/user.svg',
 		profileImage: '',
 		username: '',
 	},
+	categories: [],
 };

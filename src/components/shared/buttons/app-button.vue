@@ -4,8 +4,8 @@
 			v-bind="$attrs"
 			v-on="$listeners"
 			class="app-button"
-			:class="{'thin': thin}"
-			:style="`background-color: ${background}; text-align: ${!img ? 'center' : 'left'} ; color: ${color}; border: ${border ? `1px solid ${border}` : null}`"
+			:class="{ 'thin': thin, 'active' : active }"
+			:style="`background-color: ${active ? background : 'transparent'}; text-align: ${!img ? 'center' : 'left'} ; color: ${active ? color : border}; border: ${border ? `1px solid ${border}` : null}; max-width: ${maxWidth}`"
 		>
 			<span class="span-img" :style="`border-color: ${imgBorderColor}`" v-if="img">
 				<img
@@ -27,16 +27,24 @@
 		inheritAttrs: false,
 		props: {
 			action: String,
+			active: {
+				default: true,
+				type: Boolean,
+			},
 			background: String,
-			img: String,
-			imgBorderColor: String,
-			imgHeight: [String, Number],
-			imgWidth: [String, Number],
+			border: String,
 			color: {
 				type: String,
 				default: 'white',
 			},
-			border: String,
+			img: String,
+			imgBorderColor: String,
+			imgHeight: [String, Number],
+			imgWidth: [String, Number],
+			maxWidth: {
+				type: String,
+				default: '182px',
+			},
 			thin: Boolean,
 		},
 	};
@@ -46,7 +54,6 @@
 	.app-button {
 		border-radius: 7px;
 		font-family: font(bold);
-		font-size: size(medium);
 		height: 39.5px;
 		letter-spacing: 0;
 		max-width: 175px;

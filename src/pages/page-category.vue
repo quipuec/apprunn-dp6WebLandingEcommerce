@@ -1,39 +1,40 @@
 <template>
-<div class="page-category">
-	<div class="menu-category">
-		<menu-category
-		:categories="categories"
-		></menu-category>
-	</div>
-	<div class="content-category">
-		<div class="space-between">
-			<section>
-		    	<v-breadcrumbs divider=">" :items="items">
-					<v-breadcrumbs-item 
-					v-for="(item, index) in categories" :key="index" 
-					:to="item.href"
-					:disabled="item.disabled"
-					:active-class="'breadcrumbs__item--active'">
-						<p class="title-category" >{{item.title}}</p>
-					</v-breadcrumbs-item>
-				</v-breadcrumbs>
-			</section>
-			<section>
-				pagination
-			</section>
-		</div>
+<div>
+	<div class="page-category">
+		<div class="menu-category">
+			<menu-category
+			:categories="categories"
+			></menu-category>
+			</div>
+		<div class="content-category">
+			<div class="content-sections">
+				<section>BreadCrumbs</section>
+				<section>Pagination</section>
+			</div>
 			<products-section/>
-		<section></section>
+		</div>
 	</div>
-</div>
+		<div>
+			<app-banner-top 
+				:data="bannerTop"
+				:color="colorSecondary"
+				big/>
+		</div>
+	</div>
 </template>
 
 <script>
 const menuCategory = () => import('@/components/shared/category/menu-category');
 const productsSection = () => import('@/components/products/products-section');
+const appBannerTop = () => import('@/components/header/app-banner-top');
 
 function data() {
 	return {
+		bannerTop: {
+			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
+			image: 'descuento',
+		},
+		colorSecondary: process.env.COLOR_SECONDARY,
 		categories: [
 			{
 				title: 'Automotriz',
@@ -101,6 +102,7 @@ export default {
 	data,
 	name: 'page-category',
 	components: {
+		appBannerTop,
 		menuCategory,
 		productsSection,
 	},
@@ -111,7 +113,6 @@ export default {
 .menu-category {
 	background-color: #f9f9f9;
 	border-right: 1px solid color(disabled);
-	height: 100vh;
 	padding: 0px 25px;
 	position: relative;
 	width: 25%;	
@@ -124,7 +125,6 @@ export default {
 
 .page-category {
 	display: flex;
-	height: 100vh;
 	width: 100%;
 }
 
@@ -136,5 +136,12 @@ export default {
 
 .title-category {
 	margin-bottom: 0;
+}
+
+.content-sections {
+	display: flex;
+	justify-content: space-between;
+	margin: 28px auto;
+  max-width: 1070px;
 }
 </style>

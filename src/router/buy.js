@@ -1,6 +1,6 @@
 const route = {
 	name: 'buy',
-	path: 'carrito-de-compras',
+	path: '/carrito-de-compras',
 	component: () => import('@/pages/page-buy'),
 	children: [
 		{

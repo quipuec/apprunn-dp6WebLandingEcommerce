@@ -1,7 +1,11 @@
 <template>
-	<v-app>
+	<v-app class="main-container">
 		<app-banner-top :data="bannerTop"/>
-		<app-header :logo="logo" @change-menu="changeMenu" :menu="showMenu"/>
+		<app-header 
+			:logo="logo" 
+			@change-menu="changeMenu" 
+			:menu="showMenu"
+			:user="user"/>
 		<transition name="slide-fade">
 			<div 
 				class="v-overlay v-overlay--absolute v-overlay--active mobile-overlay" 
@@ -13,7 +17,8 @@
 			v-if="showMenu" 
 			:img-user="user"
 			:color-base="colorBase"
-			:color-border="colorBorder"/>
+			:color-border="colorBorder"
+			:categories="getCategories"/>
   	</transition>
 	<v-progress-linear
 		class="progress-bar"
@@ -24,6 +29,7 @@
 	<router-view></router-view>
 	<section-visa></section-visa>
 	<form-bulletin />
+	<app-footer></app-footer>
 	<v-snackbar
 			:timeout="5000"
 			:color="snackbar.color"
@@ -48,11 +54,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
 const appBannerTop = () => import('@/components/header/app-banner-top');
 const formBulletin = () => import('@/components/shared/form/form-bulletin');
 const sectionVisa = () => import('@/components/footer/section-visa');
+const appFooter = () => import('@/components/footer/app-footer');
 
 function indeterminate() {
 	return this.$store.getters.indeterminate;
@@ -66,6 +75,14 @@ function changeMenu() {
 	this.showMenu = !this.showMenu;
 }
 
+function beforeCreate() {
+	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
+}
+
+function routeHandler() {
+	this.showMenu = false;
+}
+
 function data() {
 	return {
 		logo: {
@@ -74,11 +91,6 @@ function data() {
 			height: 30,
 		},
 		showMenu: false,
-		user: {
-			urlImage: '/static/img/user.svg',
-			name: 'Login',
-			height: 25,
-		},
 		colorBase: process.env.COLOR_BASE,
 		colorBorder: process.env.COLOR_BORDER,
 		bannerTop: {
@@ -93,17 +105,26 @@ export default {
 	computed: {
 		indeterminate,
 		snackbar,
+		...mapGetters([
+			'user',
+			'getCategories',
+		]),
 	},
 	data,
+	beforeCreate,
 	components: {
-		sectionVisa,
+		appFooter,
 		appHeader,
-		appMenuCategory,
 		appBannerTop,
+		appMenuCategory,
 		formBulletin,
+		sectionVisa,
 	},
 	methods: {
 		changeMenu,
+	},
+	watch: {
+		$route: routeHandler,
 	},
 };
 </script>
@@ -133,6 +154,11 @@ input.app-input::-webkit-input-placeholder {
 	font-family: font(demi) !important;
 	font-size: size(minmedium) !important;
 	font-weight: normal !important;
+}
+
+.main-container {
+	background-color: white !important;
+	height: 100vh;
 }
 
 .product-rating {
@@ -195,6 +221,7 @@ input.app-input::-webkit-input-placeholder {
 	}
 
 	.swiper-pagination-bullet {
+		background: transparent;
 		cursor: pointer;
 		opacity: 1;
 	}
@@ -203,12 +230,16 @@ input.app-input::-webkit-input-placeholder {
 		background: color(white);
 	}
 
-	.v-input--switch__thumb:not(.success--text) {
-		color: map-get($colors, error) !important;
+	.swiper-container-horizontal > .swiper-pagination-bullets {
+		bottom: 71px;
+
+		@media (max-width: 1161px) {
+			bottom: 46px;
+		}
 	}
 }
 
-.categories-carousel-slider  {
+.categories-carousel-slider, .section-settlement  {
 	.swiper-button-next {
 		background-image: url('/static/img/slider-arrow-rigth.svg');
 	}
@@ -230,6 +261,10 @@ input.app-input::-webkit-input-placeholder {
 
 
 .filters-category {
+	.theme--light.v-messages {
+		display: none;
+	}
+	
 	.v-input input {
 		color: color(base);
 	}
@@ -265,6 +300,106 @@ input.app-input::-webkit-input-placeholder {
 	.v-input--slider {
 		position: relative;
    		right: 46px;
+	}
+}		   
+.text-area {
+	color: color(border) !important;
+	font-family: font(medium) !important;
+	font-size: size(small) !important;
+
+	.v-input__control {
+		
+		.v-input__slot {
+			background-color: white !important;
+			border: solid 1px color(border) !important;
+			border-radius: 5px !important;
+		}
+	}
+}
+
+.btn-order {
+	width: 100%;
+	
+	button.app-button {
+		height: 49px;
+		max-width: 100% !important;
+
+		@media (min-width: 764px) {
+			height: 49px;
+			max-width: 100% !important;
+		}
+	}
+}
+
+.section-settlement {
+	.swiper-button-next, .swiper-button-prev {
+		@media (max-width: 1161px) {
+			display: none;
+		}
+	}
+}
+
+.start-js-btn.modal-opener.default {
+	background: url('/static/img/icons/icon-visanet.png') !important;
+	background-position: right 14px !important;
+	background-repeat: no-repeat !important;
+	border: 1px solid color(borderBtn) !important;
+	border-radius: 8px !important;
+	box-shadow: none !important;
+	color: color(base) !important;
+	font-family: font(demi) !important;
+	font-size: size(large) !important;
+	font-weight: normal !important;
+	height: 65px !important;
+	margin-top: 55px;
+	position: relative;
+	text-shadow: none !important;
+	width: 213px !important;
+
+	&:before {
+		bottom: 0;
+		color: color(base) !important;
+		content: 'Paga con';
+		font-family: font(demi) !important;
+		font-size: size(large) !important;
+		font-weight: normal !important;
+		height: 22px;
+		left: 18px;
+		margin: auto;
+		position: absolute;
+		top: 0;
+	}
+}
+.component-filter {
+	.swiper-slide {
+		border-right: 1px solid color(white);
+		display: flex;
+		height: 51px;
+		justify-content: center;
+	}
+
+	.swiper-container {
+		width: 100%;
+	}
+	
+	.swiper-button-next {
+		background-image: url('/static/img/icons/arrow-button-next-white.svg');
+		position: absolute;
+		right: 0;
+
+		@media (max-width: 650px) {
+			right: 15px;
+		}
+	}
+
+	.swiper-button-prev {
+		background-image: url('/static/img/icons/arrow-button-prev-white.svg');
+		left: 0;
+		position: absolute;
+		
+		@media (max-width: 650px) {
+			left: 15px;
+		}
 	}
 }
 
