@@ -155,6 +155,7 @@ input.app-input::-webkit-input-placeholder {
 
 .main-container {
 	background-color: white !important;
+	height: 100vh;
 }
 
 .product-rating {
@@ -299,7 +300,7 @@ input.app-input::-webkit-input-placeholder {
 	border: 1px solid color(borderBtn) !important;
 	border-radius: 8px !important;
 	box-shadow: none !important;
-	color: color(textBtn) !important;
+	color: color(base) !important;
 	font-family: font(demi) !important;
 	font-size: size(large) !important;
 	font-weight: normal !important;
@@ -311,7 +312,7 @@ input.app-input::-webkit-input-placeholder {
 
 	&:before {
 		bottom: 0;
-		color: color(textBtn) !important;
+		color: color(base) !important;
 		content: 'Paga con';
 		font-family: font(demi) !important;
 		font-size: size(large) !important;

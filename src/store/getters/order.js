@@ -16,6 +16,9 @@ const getters = {
 		return state.order.products.reduce(
 			(acc, { priceDiscount, quantity }) => twoDecimals(priceDiscount * quantity) + acc, 0);
 	},
+	getTotalQuantityProducts(state) {
+		return state.order.products.length;
+	},
 };
 
 export default getters;

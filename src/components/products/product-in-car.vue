@@ -97,11 +97,12 @@ export default {
 		@media (max-width: 600px) {
 			border-right: none;
 			border-bottom: 1px solid color(border);
+			grid-gap: 10px;
 			grid-template-areas:
 				"image description description"
 				"price quantity total"
 				"comments comments comments";
-			grid-template-columns: 1fr repeat(2, minmax(45px, 1fr));
+			grid-template-columns: 1fr repeat(2, minmax(45px, 75px));
 			padding: 0 0 10px 0;
 		}
 	}
