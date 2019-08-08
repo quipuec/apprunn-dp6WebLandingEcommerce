@@ -14,23 +14,6 @@
 				v-if="arrowUp"
 				:data="iconUp"
 				></button-image>
-				<!-- <button @click="closeList">
-					<img
-					v-if="arrowDown"
-					src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/up-arrow.svg" 
-					alt="" 
-					width="16px" 
-					height="13px"
-					>
-				</button> -->
-				<!-- <button @click="openList">
-					<img
-					v-if="arrowUp"
-					src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-down-sign-to-navigate.svg" 
-					alt="" 
-					width="16px" 
-					height="13px">
-				</button> -->
 			</div>
 		</div>
 		<div v-if="openArrow">
