@@ -4,7 +4,9 @@
 			<div v-if="stepThree">Resumen de orden - Header</div>
 			<div class="buy-layout">
 				<section class="big">
-					<div v-if="stepOneAndTwo">Tabla de productos</div>
+					<div v-if="stepOneAndTwo">
+						<product-in-car v-for="product in getProductToBuy" :key="product.id" :product="product"/>
+					</div>
 					<router-view></router-view>
 				</section>
 				<section class="small">
@@ -16,7 +18,9 @@
 </template>
 <script>
 import lib from '@/shared/lib';
+import { mapGetters } from 'vuex';
 
+const productInCar = () => import('@/components/products/product-in-car');
 const summaryOrder = () => import(/* webpackChunkName: "summaryOrder" */ '@/components/order/summary-order');
 
 function stepOneAndTwo() {
@@ -31,9 +35,13 @@ function stepThree() {
 export default {
 	name: 'page-buy',
 	components: {
+		productInCar,
 		summaryOrder,
 	},
 	computed: {
+		...mapGetters([
+			'getProductToBuy',
+		]),
 		stepOneAndTwo,
 		stepThree,
 	},
@@ -56,7 +64,7 @@ export default {
 	}
 
 	.small {
-		flex: 1 1 30%;
+		flex: 1 1 20%;
 		margin: 0 10px;
 	}
 </style>

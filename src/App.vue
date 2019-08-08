@@ -17,7 +17,8 @@
 			v-if="showMenu" 
 			:img-user="user"
 			:color-base="colorBase"
-			:color-border="colorBorder"/>
+			:color-border="colorBorder"
+			:categories="getCategories"/>
   	</transition>
 	<v-progress-linear
 		class="progress-bar"
@@ -72,6 +73,14 @@ function changeMenu() {
 	this.showMenu = !this.showMenu;
 }
 
+function beforeCreate() {
+	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
+}
+
+function routeHandler() {
+	this.showMenu = false;
+}
+
 function data() {
 	return {
 		logo: {
@@ -96,18 +105,23 @@ export default {
 		snackbar,
 		...mapGetters([
 			'user',
+			'getCategories',
 		]),
 	},
 	data,
+	beforeCreate,
 	components: {
-		sectionVisa,
 		appHeader,
-		appMenuCategory,
 		appBannerTop,
+		appMenuCategory,
 		formBulletin,
+		sectionVisa,
 	},
 	methods: {
 		changeMenu,
+	},
+	watch: {
+		$route: routeHandler,
 	},
 };
 </script>
@@ -207,6 +221,14 @@ input.app-input::-webkit-input-placeholder {
 	.swiper-pagination-bullet-active {
 		background: color(white);
 	}
+
+	.swiper-container-horizontal > .swiper-pagination-bullets {
+		bottom: 71px;
+
+		@media (max-width: 1161px) {
+			bottom: 46px;
+		}
+	}
 }
 
 .categories-carousel-slider, .section-settlement  {
@@ -226,6 +248,21 @@ input.app-input::-webkit-input-placeholder {
 		top: calc(50% - 26px);
 		transform: translateY(50%);
 		width: 13px;
+	}
+}
+
+.text-area {
+	color: color(border) !important;
+	font-family: font(medium) !important;
+	font-size: size(small) !important;
+
+	.v-input__control {
+		
+		.v-input__slot {
+			background-color: white !important;
+			border: solid 1px color(border) !important;
+			border-radius: 5px !important;
+		}
 	}
 }
 
@@ -266,6 +303,39 @@ input.app-input::-webkit-input-placeholder {
 		margin: auto;
 		position: absolute;
 		top: 0;
+	}
+}
+
+.component-filter {
+	.swiper-slide {
+		border-right: 1px solid color(white);
+		display: flex;
+		height: 51px;
+		justify-content: center;
+	}
+
+	.swiper-container {
+		width: 100%;
+	}
+	
+	.swiper-button-next {
+		background-image: url('/static/img/icons/arrow-button-next-white.svg');
+		position: absolute;
+		right: 0;
+
+		@media (max-width: 650px) {
+			right: 15px;
+		}
+	}
+
+	.swiper-button-prev {
+		background-image: url('/static/img/icons/arrow-button-prev-white.svg');
+		left: 0;
+		position: absolute;
+		
+		@media (max-width: 650px) {
+			left: 15px;
+		}
 	}
 }
 </style>

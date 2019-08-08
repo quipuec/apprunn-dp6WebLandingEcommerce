@@ -1,17 +1,15 @@
 <template>
 	<layout-admin>
-		<router-view></router-view>
+		<!-- <router-view></router-view> -->
 		<banner-carousel :banners="banners"/>
-		<categories-carousel
-			:categories="categories"
+		<categories-carousel 
+			:categories="getCategories"
 			:color-base="colorBase"/>
-		<component-filter-product></component-filter-product>
+		<component-filter-product :filters="filters"></component-filter-product>
 		<div class="page-products">
 			<products-section/>
 		</div>
-		<section-settlement 
-			:color-dark="colorDark"
-			:color-base="colorBase"/>
+		<section-settlement/>
 		<app-banner-top 
 			:data="bannerTop"
 			:color="colorSecondary"
@@ -20,12 +18,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
+const appBannerTop = () => import('@/components/header/app-banner-top');
 const bannerCarousel = () => import('@/components/home/banner-carousel');
 const categoriesCarousel = () => import('@/components/home/categories-carousel');
-const sectionSettlement = () => import('@/components/home/section-settlement');
-const appBannerTop = () => import('@/components/header/app-banner-top');
-const productsSection = () => import('@/components/products/products-section');
 const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
+const productsSection = () => import('@/components/products/products-section');
+const sectionSettlement = () => import('@/components/home/section-settlement');
 
 function created() {
 	this.loadData();
@@ -33,7 +33,7 @@ function created() {
 
 async function loadData() {
 	try {
-		const { data: response } = await this.$httpProducts.get('banners-public');
+		const { data: response } = await this.$httpProductsPublic.get('banners-public');
 		this.banners = response;
 	} catch (error) {
 		this.showGenericError();
@@ -84,6 +84,50 @@ function data() {
 				select: false,
 			},
 		],
+		filters: [
+			{
+				id: 1,
+				title: 'Novedades',
+				color: process.env.COLOR_WHITE,
+				icon: '/static/img/icons/icon-filter-product.svg',
+			},
+			{
+				id: 2,
+				title: 'Populares',
+				color: process.env.COLOR_WHITE,
+				icon: '/static/img/icons/icon-filter-product.svg',
+			},
+			{
+				id: 3,
+				title: 'Recomendados',
+				color: process.env.COLOR_WHITE,
+				icon: '/static/img/icons/icon-filter-product.svg',
+			},
+			{
+				id: 4,
+				title: 'Ofertas',
+				color: process.env.COLOR_WHITE,
+				icon: '/static/img/icons/icon-filter-product.svg',
+			},
+			{
+				id: 5,
+				title: 'Novedades',
+				color: process.env.COLOR_WHITE,
+				icon: '/static/img/icons/icon-filter-product.svg',
+			},
+			{
+				id: 6,
+				title: 'Populares',
+				color: process.env.COLOR_WHITE,
+				icon: '/static/img/icons/icon-filter-product.svg',
+			},
+			{
+				id: 7,
+				title: 'Recomendados',
+				color: process.env.COLOR_WHITE,
+				icon: '/static/img/icons/icon-filter-product.svg',
+			},
+		],
 		colorDark: process.env.COLOR_DARK,
 		colorBase: process.env.COLOR_BASE,
 		colorSecondary: process.env.COLOR_SECONDARY,
@@ -97,12 +141,17 @@ export default {
 	name: 'page-home',
 	data,
 	components: {
+		appBannerTop,
 		bannerCarousel,
 		categoriesCarousel,
-		sectionSettlement,
-		appBannerTop,
-		productsSection,
 		componentFilterProduct,
+		productsSection,
+		sectionSettlement,
+	},
+	computed: {
+		...mapGetters([
+			'getCategories',
+		]),
 	},
 	created,
 	methods: {

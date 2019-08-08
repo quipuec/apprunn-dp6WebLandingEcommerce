@@ -1,12 +1,12 @@
 <template>
-	<div class="product-container" :class="small ? 'small' : null" @click="buyProduct">
-		<section class="product-header">
-			<div :style="`background-color: ${baseColor}`" class="product-discount">-20%</div>
+	<div class="product-container" :class="{ 'small': small }" @click="buyProduct">
+		<section class="product-header" :class="{ 'small': small }">
+			<div :style="`background-color: ${globalColors.primary}`" class="product-discount">-20%</div>
 			<div class="product-favorite">
-				<heart-component @click="productFavo" v-model="product.favorite"/>
+				<heart-component @click="productFavo" :value="product.flagFavorite"/>
 			</div>
 		</section>
-		<section class="product-content">
+		<section class="product-content" :class="small ? 'small' : null">
 			<div>
 				<img class="product-img" :src="product.urlImage" alt="imagen del product">
 			</div>
@@ -58,7 +58,6 @@ export default {
 		productFavo,
 	},
 	props: {
-		baseColor: String,
 		small: {
 			type: Boolean,
 			default: false,
@@ -73,7 +72,7 @@ export default {
 <style lang="scss" scoped>
 	.product-container {
 		background-color: color(white);
-		border-radius: 5px;
+		border: 1px solid color(border);
 		box-shadow: 0 2px 2px 0 rgba(31, 26, 26, 0.07);
 		font-family: font(medium);
 		height: auto;
@@ -81,6 +80,7 @@ export default {
 
 		@media (min-width: 500px) {
 			border: 3px solid color(border);
+			border-radius: 5px;
 			height: 330px;
 			margin: 3px;
 		}
@@ -94,10 +94,6 @@ export default {
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
-
-		@media (max-width: 500px) {
-			justify-content: center;
-		}
 	}
 
 	.product-discount {
@@ -106,16 +102,11 @@ export default {
 		font-family: font(medium);
 		font-size: size(large);
 		padding: 8px 15px;
-
-		@media (max-width: 500px) {
-			display: none;
-		}
 	}
 
 	.product-content {
 		align-items: center;
 		display: flex;
-		flex-direction: column;
 		justify-content: center;
 		margin: 0 5px;
 		padding: 0 15px;
@@ -126,7 +117,13 @@ export default {
 		}
 
 		@media (max-width: 500px) {
-			padding: 0 10px;
+			&.small {
+				flex-direction: column;
+			}
+		}
+
+		@media (min-width: 426px) {
+			flex-direction: column;
 		}
 	}
 
@@ -146,7 +143,7 @@ export default {
 		color: color(dark);
 		font-size: size(small);
 		height: 35px;
-		margin: 0;
+		margin: 0 auto;
 		max-width: 150px;
 		overflow: hidden;
 		text-overflow: ellipsis;

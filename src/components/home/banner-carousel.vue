@@ -1,26 +1,33 @@
 <template>
 	<div class="banner-carousel">
-		<swiper :options="swiperOption">
-			<swiper-slide 
-				v-for="banner in banners" 
-				:key="banner.id">
-				<div 
-					:style="`background-image: url(${banner.webImage})`"
-					class="img-carousel"
-					@click="goToLink(banner)">
-					<a 
-						v-if="banner.webLink"
-						:href="banner.webLink" 
-						target="_blank"
-						class="banner-link">
-					</a>
-				</div>
-			</swiper-slide>
-			<div class="pagination-carousel swiper-pagination" slot="pagination"></div>
-    </swiper>
+		<div class="container-banner-carousel">
+			<swiper :options="swiperOption">
+				<swiper-slide 
+					v-for="banner in banners" 
+					:key="banner.id">
+					<div 
+						:style="getBackground(banner)"
+						class="img-carousel">
+						<a 
+							v-if="banner.webLink"
+							:href="banner.webLink"
+							target="_blank"
+							class="banner-link">
+						</a>
+					</div>
+				</swiper-slide>
+				<div class="pagination-carousel swiper-pagination" slot="pagination"></div>
+			</swiper>
+		</div>
+		<company-data class="banner-data"/>
 	</div>
 </template>
 <script>
+const companyData = () => import('@/components/shared/company/container-company-data');
+
+function getBackground(value) {
+	return `background-image: url(${value.webImage})`;
+}
 
 function data() {
 	return {
@@ -40,6 +47,12 @@ function data() {
 export default {
 	name: 'banner-carousel',
 	data,
+	components: {
+		companyData,
+	},
+	methods: {
+		getBackground,
+	},
 	props: {
 		banners: {
 			type: Array,
@@ -61,6 +74,22 @@ export default {
 		}
 	}
 
+	.banner-carousel {
+		position: relative;
+	}
+
+	.banner-data {
+		bottom: -43px;
+		left: 50%;
+		position: absolute;
+		transform: translateX(-50%);
+		z-index: 1;
+
+		@media (max-width: 860px) {
+			bottom: -26px;
+		}
+	}
+	
 	.banner-link {
 		display: block;
 		height: 100%;

@@ -1,11 +1,7 @@
 <template>
 	<div class="item-menu" @click="$emit('click-item', data)">
-		<simple-svg
-			:filepath="data.urlImage"
-			:fill="data.select ? colorSelect : null"
-			class="img-menu"
-		/>
-		<span class="item-text" :style="data.select ? `color: ${colorSelect}` : '#4a4a4a'">{{data.name}}</span>
+		<img :src="data.webImage" class="img-menu">
+		<span class="item-text" :style="data.select ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`">{{data.title}}</span>
 	</div>
 </template>
 <script>
@@ -16,7 +12,6 @@ export default {
 			type: Object,
 			default: () => {},
 		},
-		colorSelect: String,
 	},
 };
 </script>
@@ -38,6 +33,7 @@ export default {
 	}
 
 	.img-menu {
+		height: 32px;
 		width: 31px;
 
 		@media (max-width: 764px) {
