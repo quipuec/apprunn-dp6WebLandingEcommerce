@@ -35,7 +35,7 @@ import { mapGetters } from 'vuex';
 
 const appButton = () => import('@/components/shared/buttons/app-button');
 const productInCar = () => import('@/components/products/product-in-car');
-const summaryOrder = () => import(/* webpackChunkName: "summaryOrder" */ '@/components/order/summary-order');
+const summaryOrder = () => import('@/components/order/summary-order');
 
 function stepOneAndTwo() {
 	const step = lib.getDeeper('meta.step')(this.$route);

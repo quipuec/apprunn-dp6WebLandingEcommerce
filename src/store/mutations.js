@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import orderMutations from '@/store/mutations/order';
 
 function clearUser(state) {
 	Vue.set(state, 'token', null);
@@ -53,6 +54,7 @@ function SET_ORDER_TOTAL(state, total) {
 
 const methods = {
 	clearUser,
+	...orderMutations,
 	setToken,
 	setUser,
 	showSnackBar,
