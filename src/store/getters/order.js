@@ -12,6 +12,10 @@ const getters = {
 	getOrderId(state) {
 		return state.order.id;
 	},
+	getTotalToBuy(state) {
+		return state.order.products.reduce(
+			(acc, { priceDiscount, quantity }) => twoDecimals(priceDiscount * quantity) + acc, 0);
+	},
 };
 
 export default getters;

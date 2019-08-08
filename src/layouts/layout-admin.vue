@@ -1,5 +1,5 @@
 <template>
-	<v-content>
+	<v-content class="main-content">
 		<v-container fluid pa-0>
 			<section class="section-margin">
 				<slot></slot>
@@ -31,7 +31,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-	.section-margin {
+	.main-content {
 		background-color: white;
 	}
 </style>
