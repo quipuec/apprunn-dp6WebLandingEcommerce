@@ -42,6 +42,7 @@ import {
 	VInput,
 	VRating,
 	VRangeSlider,
+	VBreadcrumbs,
 } from 'vuetify';
 
 export default function (Vue) {
@@ -55,6 +56,7 @@ export default function (Vue) {
 				VApp,
 				VAutocomplete,
 				VBtn,
+				VBreadcrumbs,
 				VBtnToggle,
 				VCheckbox,
 				VChip,

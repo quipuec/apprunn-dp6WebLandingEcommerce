@@ -29,6 +29,7 @@
 	<router-view></router-view>
 	<section-visa></section-visa>
 	<form-bulletin />
+	<app-footer></app-footer>
 	<v-snackbar
 			:timeout="5000"
 			:color="snackbar.color"
@@ -60,6 +61,7 @@ const appMenuCategory = () => import('@/components/header/app-category');
 const appBannerTop = () => import('@/components/header/app-banner-top');
 const formBulletin = () => import('@/components/shared/form/form-bulletin');
 const sectionVisa = () => import('@/components/footer/section-visa');
+const appFooter = () => import('@/components/footer/app-footer');
 
 function indeterminate() {
 	return this.$store.getters.indeterminate;
@@ -111,6 +113,7 @@ export default {
 	data,
 	beforeCreate,
 	components: {
+		appFooter,
 		appHeader,
 		appBannerTop,
 		appMenuCategory,
@@ -397,6 +400,19 @@ input.app-input::-webkit-input-placeholder {
 		@media (max-width: 650px) {
 			left: 15px;
 		}
+	}
+}
+
+.page-category {
+	.v-breadcrumbs__item {
+		color: color(base);
+		font-family: font(medium);
+		font-size: size(medium);
+	}
+
+	.theme--light.v-breadcrumbs .v-breadcrumbs__divider, .theme--light.v-breadcrumbs .v-breadcrumbs__item--disabled {
+		color: color(primary);
+		font-family: font(medium);
 	}
 }
 </style>

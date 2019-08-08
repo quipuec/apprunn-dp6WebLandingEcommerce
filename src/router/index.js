@@ -4,6 +4,7 @@ import Components from './components';
 import Profile from './profile';
 import register from './register';
 import Order from './buy';
+import Category from './category';
 import ProductDetail from './detail-product';
 
 export default function (Vue) {
@@ -16,6 +17,7 @@ export default function (Vue) {
 				name: 'page-home',
 				component: () => import('@/pages/page-home'),
 			},
+			Category,
 			Components,
 			login,
 			Order,
