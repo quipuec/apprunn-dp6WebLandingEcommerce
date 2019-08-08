@@ -1,4 +1,7 @@
 import orderGetters from '@/store/getters/order';
+import lib from '@/shared/lib';
+
+const { getDeeper } = lib;
 
 function indeterminate(state) {
 	return state.appConfig.isLoading;
@@ -40,8 +43,14 @@ function flagAddVoucher(state) {
 	return state.profile.flagAddVoucher;
 }
 
+function getCurrencySymbol() {
+	const currencyDefault = JSON.parse(localStorage.getItem(`${process.env.STORAGE_USER_KEY}::currency-default`));
+	return getDeeper('symbol')(currencyDefault) || '';
+}
+
 const methods = {
 	companyLogo,
+	getCurrencySymbol,
 	getProducts,
 	flagAddVoucher,
 	indeterminate,
