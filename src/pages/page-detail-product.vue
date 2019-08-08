@@ -71,14 +71,26 @@ export default {
 <style lang="scss" scoped>
 	.container-product-view {
 		width: 50%;
+
+		@media screen and (max-width: 996px) {
+			width: 100%;
+		}
 	}
 
 	.detail-product {
 		padding: 53px 41px 0 41px;
+
+		@media screen and (max-width: 996px) {
+			padding: 27px 0 0;
+		}
 	}
 
 	.detail-product-top {
 		padding: 0 7%;
+
+		@media screen and (max-width: 996px) {
+			padding: 0;
+		}
 	}
 </style>
 

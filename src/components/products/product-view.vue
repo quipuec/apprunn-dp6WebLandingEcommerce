@@ -21,26 +21,16 @@
 					v-for="image in data.images" 
 					:key="image.id">
 					<div class="wrapper-image">
-						<!-- <img 
+						<img 
 							:src="image.urlImage" 
 							:alt="image.name"
 							class="image-product-slider"
-						> -->
-						<ProductZoomer
-							:base-images="images"
-							:base-zoomer-options="zoomerOptions"
-							class="image"
-						/>
+						>
 					</div>
 				</swiper-slide>
 				<div class="pagination-carousel swiper-pagination" slot="pagination"></div>
 			</swiper>
 		</div>
-		<!-- <ProductZoomer
-			:base-images="images"
-			:base-zoomer-options="zoomerOptions"
-			class="image"
-		/> -->
 	</div>
 </template>
 <script>
@@ -56,60 +46,23 @@ function goToSlider(index, image) {
 		newImage.select = i.id === image.id;
 		return newImage;
 	});
-	console.log(this.$refs.mySwiper.swiper);
 }
 
-
-function slideChange() {}
-
-// function images() {
-// 	// debugger;
-// 	const image = {
-// 		normal_size: [
-// 			{
-// 				id: 1,
-// 				url: 'http://yoohooworld.com/images/vue-product-zoomer/images/thumbs/1.jpeg',
-// 			},
-// 		],
-// 		large_size: [
-// 			{
-// 				id: 1,
-// 				url: 'http://yoohooworld.com/images/vue-product-zoomer/images/thumbs/1.jpeg',
-// 			},
-// 		],
-// 	};
-// 	return image;
-// }
 
 function data() {
 	return {
 		swiperOption: {
-			on: {
-				slideChange,
+			allowTouchMove: false,
+			breakpoints: {
+				996: {
+					slidesPerView: 2,
+					slidesPerGroup: 1,
+					allowTouchMove: true,
+					centeredSlides: true,
+					grabCursor: true,
+					spaceBetween: 30,
+				},
 			},
-		},
-		indexSlide: 0,
-		zoomerOptions: {
-			choosed_thumb_border_color: '#bbdefb',
-			hoverDelay: 300,
-			move_by_click: true,
-			pane: 'container-round',
-			scroll_items: 4,
-			zoomFactor: 2,
-		},
-		images: {
-			normal_size: [
-				{
-					id: 1,
-					url: 'https://japi-static.s3.amazonaws.com/taurus/mochila-crossbody2.jpg',
-				},
-			],
-			large_size: [
-				{
-					id: 1,
-					url: 'https://japi-static.s3.amazonaws.com/taurus/mochila-crossbody2.jpg',
-				},
-			],
 		},
 	};
 }
@@ -117,13 +70,10 @@ export default {
 	name: 'product-view',
 	computed: {
 		swiper,
-		// images,
 	},
 	data,
 	methods: {
 		goToSlider,
-		slideChange,
-		// images,
 	},
 	props: {
 		data: {
@@ -153,6 +103,10 @@ export default {
 		flex-direction: column;
 		margin-right: 20px;
 		width: 94px;
+
+		@media screen and (max-width: 996px) {
+			display: none;
+		}
 	}
 
 	.product-view {
@@ -167,6 +121,13 @@ export default {
 		height: 487px;
 		padding: 0 19px;
 		width: 80%;
+
+		@media screen and (max-width: 996px) {
+			background: transparent;
+			box-shadow: none;
+			height: 217px;
+			width: 100%;
+		}
 	}
 
 	.wrapper-image {
@@ -175,11 +136,19 @@ export default {
 		height: 487px;
 		justify-content: center;
 		width: 100%;
+
+		@media screen and (max-width: 996px) {
+			height: 217px;
+		}
 	}
 
 	.image-product-slider {
 		max-height: 487px;
 		max-width: 100%;
+
+		@media screen and (max-width: 996px) {
+			max-height: 217px;
+		}
 	}
 </style>
 
