@@ -1,36 +1,30 @@
 <template>
   <div class="page-help-center">
-		<div class="tabs-help-center">
-			tabs
-		</div>
-		<div class="components-help-center">
-			components
-		</div>
+		<tabs-help></tabs-help>
 	</div>  
 </template>
 
 <script>
+const tabsHelp = () => import('@/components/help/tabs-help');
+
 export default {
 	name: 'page-help-center',
+	components: {
+		tabsHelp,
+	},
 };
 </script>
 
 <style lang="scss" scoped>
 .page-help-center {
+	background-color: white;
 	display: flex;
 	justify-content: space-between;
 	padding: 59px 90px;
 	width: 100%;
 }
 
-.tabs-help-center {
-	width: 25%;
-}
-
-.components-help-center {
-	width: 75%;
-	@media (max-width: 850px) {
-		display: none;
-	}
+.content-tabs-help {
+	width: 30%;
 }
 </style>
