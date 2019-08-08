@@ -4,6 +4,7 @@ import Components from './components';
 import Profile from './profile';
 import register from './register';
 import Order from './buy';
+import Help from './help';
 
 export default function (Vue) {
 	Vue.use(Router);
@@ -18,6 +19,7 @@ export default function (Vue) {
 					Order,
 				],
 			},
+			Help,
 			Components,
 			login,
 			Profile,
