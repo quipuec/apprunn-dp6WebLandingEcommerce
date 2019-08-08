@@ -444,10 +444,10 @@ export default {
 	}
 
 	.user-name {
+		border-bottom: 1px solid color(border);
 		color: color(dark);
 		font-family: font(bold);
 		font-size: size(small);
-		border-bottom: 1px solid color(border);
 		padding: 5px;
 		text-align: center;
 	}
