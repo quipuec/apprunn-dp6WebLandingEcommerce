@@ -41,6 +41,7 @@ import {
 	VAvatar,
 	VInput,
 	VRating,
+	VRangeSlider,
 } from 'vuetify';
 
 export default function (Vue) {
@@ -48,6 +49,7 @@ export default function (Vue) {
 		Vuetify,
 		{
 			components: {
+				VRangeSlider,
 				VAvatar,
 				VAlert,
 				VApp,

@@ -1,7 +1,11 @@
 <template>
 	<v-app class="main-container">
 		<app-banner-top :data="bannerTop"/>
-		<app-header :logo="logo" @change-menu="changeMenu" :menu="showMenu"/>
+		<app-header 
+			:logo="logo" 
+			@change-menu="changeMenu" 
+			:menu="showMenu"
+			:user="user"/>
 		<transition name="slide-fade">
 			<div 
 				class="v-overlay v-overlay--absolute v-overlay--active mobile-overlay" 
@@ -85,11 +89,6 @@ function data() {
 			height: 30,
 		},
 		showMenu: false,
-		user: {
-			urlImage: '/static/img/user.svg',
-			name: 'Login',
-			height: 25,
-		},
 		colorBase: process.env.COLOR_BASE,
 		colorBorder: process.env.COLOR_BORDER,
 		bannerTop: {
@@ -101,6 +100,15 @@ function data() {
 
 export default {
 	name: 'app',
+	computed: {
+		indeterminate,
+		snackbar,
+		...mapGetters([
+			'user',
+			'getCategories',
+		]),
+	},
+	data,
 	beforeCreate,
 	components: {
 		appHeader,
@@ -109,14 +117,6 @@ export default {
 		formBulletin,
 		sectionVisa,
 	},
-	computed: {
-		indeterminate,
-		snackbar,
-		...mapGetters([
-			'getCategories',
-		]),
-	},
-	data,
 	methods: {
 		changeMenu,
 	},
@@ -256,6 +256,49 @@ input.app-input::-webkit-input-placeholder {
 	}
 }
 
+
+.filters-category {
+	.theme--light.v-messages {
+		display: none;
+	}
+	
+	.v-input input {
+		color: color(base);
+	}
+
+	.v-text-field__slot {
+		color: color(base) !important;
+		left: 1px;
+		position: relative;
+		top: 32px;
+	}
+
+	.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+		display: none !important;
+	}
+
+	.v-card__text {
+		padding: 0;
+	}
+
+	.v-slider__thumb {
+		background-color: color(base) !important;
+		border-color: color(base) !important;
+	}
+
+	.v-slider__thumb-container .primary--text {
+		color: color(base) !important;
+	}
+
+	.primary {
+		background-color: color(base) !important;
+	}
+
+	.v-input--slider {
+		position: relative;
+   		right: 46px;
+	}
+}		   
 .text-area {
 	color: color(border) !important;
 	font-family: font(medium) !important;
