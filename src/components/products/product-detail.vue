@@ -1,7 +1,9 @@
 <template>
 	<div class="product-detail">
 		<div>
-			<heart-component v-model="data.favorite"/>
+			<heart-component 
+				v-model="data.favorite"
+				class="container-like"/>
 		</div>
 		<div>
 			<div>
@@ -120,6 +122,18 @@ export default {
 
 	.mt-25 {
 		margin: 25px 0 15px 0;
+	}
+
+	.product-detail {
+		@media screen and (max-width: 996px) {
+			margin-top: 39px;
+		}
+	}
+
+	.container-like {
+		@media screen and (max-width: 996px) {
+			margin: auto;
+		}
 	}
 </style>
 

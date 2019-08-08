@@ -130,6 +130,7 @@ export default {
 			background: transparent;
 			box-shadow: none;
 			height: 217px;
+			padding: 0;
 			width: 100%;
 		}
 	}
