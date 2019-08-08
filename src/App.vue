@@ -1,7 +1,11 @@
 <template>
 	<v-app class="main-container">
 		<app-banner-top :data="bannerTop"/>
-		<app-header :logo="logo" @change-menu="changeMenu" :menu="showMenu"/>
+		<app-header 
+			:logo="logo" 
+			@change-menu="changeMenu" 
+			:menu="showMenu"
+			:user="user"/>
 		<transition name="slide-fade">
 			<div 
 				class="v-overlay v-overlay--absolute v-overlay--active mobile-overlay" 
@@ -85,11 +89,6 @@ function data() {
 			height: 30,
 		},
 		showMenu: false,
-		user: {
-			urlImage: '/static/img/user.svg',
-			name: 'Login',
-			height: 25,
-		},
 		colorBase: process.env.COLOR_BASE,
 		colorBorder: process.env.COLOR_BORDER,
 		bannerTop: {
@@ -101,6 +100,15 @@ function data() {
 
 export default {
 	name: 'app',
+	computed: {
+		indeterminate,
+		snackbar,
+		...mapGetters([
+			'user',
+			'getCategories',
+		]),
+	},
+	data,
 	beforeCreate,
 	components: {
 		appHeader,
@@ -109,14 +117,6 @@ export default {
 		formBulletin,
 		sectionVisa,
 	},
-	computed: {
-		indeterminate,
-		snackbar,
-		...mapGetters([
-			'getCategories',
-		]),
-	},
-	data,
 	methods: {
 		changeMenu,
 	},

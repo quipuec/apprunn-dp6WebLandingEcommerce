@@ -1,17 +1,22 @@
 <template>
 	<div class="app-category">
 		<div class="app-category-user">
-			<div class="container-user" :style="`border-color: ${colorBase}`">
-				<img :src="imgUser.urlImage" :alt="imgUser.name" :height="imgUser.height">
+			<div class="container-user" :style="`border-color: ${globalColors.primary}`">
+				<img :src="imageUser" :alt="imgUser.name" :height="imgUser.height">
 			</div>
-			<div class="container-link-user" :style="`border-color: ${colorBorder}`">
+			<div v-if="token">
+				<p class="user-name">{{imgUser.name}} {{imgUser.lastname}}</p>
+			</div>
+			<div 
+				class="container-link-user" :style="`border-color: ${globalColors.base}`"
+				v-else>
 				<router-link 
 					:to="{ name: 'login'}"
-					:style="`color: ${colorBase}`"
+					:style="`color: ${globalColors.primary}`"
 					class="link">Iniciar Sesión</router-link>
 				<router-link 
 					:to="{ name: 'register'}"
-					:style="`color: ${colorBase}`"
+					:style="`color: ${globalColors.primary}`"
 					class="link">Crear cuenta</router-link>
 			</div>
 		</div>
@@ -31,7 +36,7 @@
 							<simple-svg
 								v-if="list.detail.length"
 								:filepath="imageArrow.urlImage"
-								:fill="colorBorder"
+								:fill="globalColors.base"
 								width="11"
 								class="icon"
 								:class="{'rotate-icon': list.select}"
@@ -79,12 +84,37 @@
 			</div>
 		</div>
 		<div class="container-option">
-			<div class="option-user"></div>
-			<div class="option-close"></div>
+			<div class="option-user" v-if="token">
+				<button class="option" @click="goTo('user-orders')">
+					<img 
+						:src="imageOrder.urlImage" 
+						:alt="imageOrder.name"
+						class="mr-8">
+					<span>Mis órdenes</span>
+				</button>
+				<button class="option" @click="goTo('favorites')">
+					<img 
+						:src="imageFavorite.urlImage" 
+						:alt="imageFavorite.name"
+						class="mr-8">
+					<span>Mis Favoritos</span>
+				</button>
+			</div>
+			<div class="option-close">
+				<button class="option" v-if="token">
+					<img 
+						:src="imageClose.urlImage" 
+						:alt="imageClose.name"
+						class="mr-8">
+					<span class="text-gray">Cerrar Sesión </span>
+				</button>
+			</div>
 		</div>
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 const itemMenu = () => import('@/components/header/item-menu');
 
 function created() {
@@ -144,11 +174,27 @@ function clickSubCategory(item, index) {
 	}
 }
 
+function imageUser() {
+	return this.imgUser.urlImage || this.imgUser.logo || process.env.DEFAULT_AVATAR;
+}
+
 function data() {
 	return {
 		imageArrow: {
 			urlImage: '/static/img/arrow-down.svg',
 			name: 'Desplegar',
+		},
+		imageOrder: {
+			urlImage: '/static/img/app-order.svg',
+			name: 'Mis órdenes',
+		},
+		imageFavorite: {
+			urlImage: '/static/img/app-favorite.svg',
+			name: 'Mis favoritos',
+		},
+		imageClose: {
+			urlImage: '/static/img/app-close.svg',
+			name: 'Cerrar Sesión',
 		},
 	};
 }
@@ -169,14 +215,16 @@ export default {
 	computed: {
 		selectCategory,
 		isMoreTwo,
+		...mapGetters([
+			'token',
+		]),
+		imageUser,
 	},
 	props: {
 		imgUser: {
 			type: Object,
 			default: () => {},
 		},
-		colorBase: String,
-		colorBorder: String,
 		categories: {
 			type: Array,
 			default: () => [],
@@ -387,8 +435,34 @@ export default {
 	}
 
 	.option-user {
+		align-items: center;
 		border-bottom: 1px solid map-get($colors, border);
+		display: flex;
 		height: 50px;
+		justify-content: space-between;
+		margin-bottom: 14px;
+	}
+
+	.user-name {
+		border-bottom: 1px solid color(border);
+		color: color(dark);
+		font-family: font(bold);
+		font-size: size(small);
+		padding: 5px;
+		text-align: center;
+	}
+
+	.option {
+		align-items: center;
+		display: flex;
+	}
+
+	.mr-8 {
+		margin-right: 8px;
+	}
+
+	.text-gray {
+		color: color(base);
 	}
 </style>
 
