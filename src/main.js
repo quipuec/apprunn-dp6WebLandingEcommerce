@@ -4,7 +4,6 @@ import VueAnalytics from 'vue-analytics';
 import VueSimpleSVG from 'vue-simple-svg';
 import VueAwesomeSwiper from 'vue-awesome-swiper';
 import 'swiper/dist/css/swiper.css';
-import ProductZoomer from 'vue-product-zoomer';
 import VueTheMask from 'vue-the-mask';
 import VueAuthenticate from 'vue-authenticate';
 import axios from 'axios';
@@ -26,7 +25,6 @@ import store from './store';
 import helper from './shared/helper';
 
 registerAxios(Vue);
-Vue.use(ProductZoomer);
 Vue.use(VueAxios, axios);
 Vue.use(VueTheMask);
 Vue.use(Vuelidate);
