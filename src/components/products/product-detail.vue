@@ -30,7 +30,7 @@
 		<div>
 			<div class="d-center mt-25">
 				<span class="text-price-dis" :style="`color: ${globalColors.secondary}`">{{getCurrencySymbol}} {{data.priceDiscount || ''}}</span>
-				<div class="content-discount">{{data.percentageDiscount}}%</div>
+				<div class="content-discount">{{getDiscont}}%</div>
 			</div>
 			<span class="text-price">{{getCurrencySymbol}} {{data.price || ''}}</span>
 		</div>
@@ -62,6 +62,10 @@ async function addToFavorites() {
 	}
 }
 
+function getDiscont() {
+	return this.data.percentageDiscount * 100;
+}
+
 export default {
 	name: 'product-detail',
 	components: {
@@ -72,6 +76,7 @@ export default {
 			'getCurrencySymbol',
 			'token',
 		]),
+		getDiscont,
 	},
 	methods: {
 		stopClick,
