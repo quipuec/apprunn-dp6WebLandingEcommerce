@@ -14,15 +14,9 @@
 				thin
 				background="white"
 				action="Crear cuenta"
-<<<<<<< HEAD
-				:color="colorBorder"
-				:border="colorBorder"
-				@click="goTo('register')"
-=======
 				:color="globalColors.base"
 				:border="globalColors.base"
 				@click="goToPag('register')"
->>>>>>> 4749de324f71e736ee3ad585fcb85169cf7d0b34
 			/>
 		</div>
 	</div>
