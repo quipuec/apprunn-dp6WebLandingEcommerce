@@ -18,7 +18,7 @@ function isLoggedUser() {
 	if (this.token) {
 		return this.$httpProducts.get(`products/favorites/${this.id}`);
 	}
-	return this.$productsPublicInstance.get(`products-public/${this.id}`);
+	return this.$httpProductsPublic.get(`products-public/${this.id}`);
 }
 
 function created() {
