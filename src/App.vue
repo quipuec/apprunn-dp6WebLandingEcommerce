@@ -1,5 +1,5 @@
 <template>
-	<v-app>
+	<v-app class="main-container">
 		<app-banner-top :data="bannerTop"/>
 		<app-header :logo="logo" @change-menu="changeMenu" :menu="showMenu"/>
 		<transition name="slide-fade">
@@ -153,6 +153,10 @@ input.app-input::-webkit-input-placeholder {
 	font-weight: normal !important;
 }
 
+.main-container {
+	background-color: white !important;
+}
+
 .product-rating {
 	.v-icon {
 		padding: 0.2rem !important;
@@ -266,6 +270,20 @@ input.app-input::-webkit-input-placeholder {
 	}
 }
 
+.btn-order {
+	width: 100%;
+	
+	button.app-button {
+		height: 49px;
+		max-width: 100% !important;
+
+		@media (min-width: 764px) {
+			height: 49px;
+			max-width: 100% !important;
+		}
+	}
+}
+
 .section-settlement {
 	.swiper-button-next, .swiper-button-prev {
 		@media (max-width: 1161px) {
@@ -305,7 +323,6 @@ input.app-input::-webkit-input-placeholder {
 		top: 0;
 	}
 }
-
 .component-filter {
 	.swiper-slide {
 		border-right: 1px solid color(white);
