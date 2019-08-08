@@ -9,6 +9,12 @@
 				class="container-product-detail"
 				@update="loadData"/>
 		</div>
+		<div>
+			<product-tab 
+				class="container-product-tab"
+				:tabs="tabs"
+				:sections="product.sections"/>
+		</div>
 	</div>
 </template>
 <script>
@@ -16,6 +22,7 @@ import { mapGetters } from 'vuex';
 
 const productView = () => import('@/components/products/product-view');
 const productDetail = () => import('@/components/products/product-detail');
+const productTab = () => import('@/components/products/product-tab');
 
 function isLoggedUser() {
 	if (this.token) {
@@ -37,6 +44,8 @@ async function loadData() {
 			newImage.select = index === 0;
 			return newImage;
 		});
+		this.tabs = this.product.sections.map(p => p.name);
+		this.tabs.push('Comentarios');
 	} catch (error) {
 		this.showGenericError();
 	}
@@ -45,6 +54,7 @@ async function loadData() {
 function data() {
 	return {
 		product: {},
+		tabs: [],
 	};
 }
 
@@ -54,6 +64,7 @@ export default {
 	components: {
 		productView,
 		productDetail,
+		productTab,
 	},
 	computed: {
 		...mapGetters([
@@ -93,10 +104,12 @@ export default {
 	.detail-product-top {
 		display: flex;
 		justify-content: space-between;
+		margin-bottom: 92px;
 		padding: 0 7%;
 
 		@media screen and (max-width: 996px) {
 			flex-direction: column;
+			margin-bottom: 35px;
 			padding: 0;
 		}
 	}
@@ -107,6 +120,10 @@ export default {
 			padding: 0 5%;
 			width: 100%;
 		}
+	}
+
+	.container-product-tab {
+		width: 80%;
 	}
 </style>
 
