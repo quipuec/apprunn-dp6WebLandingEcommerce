@@ -267,4 +267,17 @@ input.app-input::-webkit-input-placeholder {
    		right: 46px;
 	}
 }
+
+.page-category {
+	.v-breadcrumbs__item {
+		color: #acaaaa;
+		font-family: font(medium);
+		font-size: 14px;
+	}
+
+	.theme--light.v-breadcrumbs .v-breadcrumbs__divider, .theme--light.v-breadcrumbs .v-breadcrumbs__item--disabled {
+		color: #f42b17;
+		font-family: font(medium);
+	}
+}
 </style>

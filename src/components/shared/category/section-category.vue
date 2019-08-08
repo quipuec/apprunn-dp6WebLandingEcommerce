@@ -39,41 +39,6 @@
 <script>
 function data() {
 	return {
-		categories: [
-			{
-				title: 'Automotriz',
-				filters: [
-					{
-						id: 1,
-						name: '4x4',
-					},
-					{
-						id: 2,
-						name: 'Sistema a Gas',
-					},
-					{
-						id: 3,
-						name: 'Tuning',
-					},
-					{
-						id: 4,
-						name: 'Competencia',
-					},
-				],
-			},
-			{
-				title: 'Minería',
-			},
-			{
-				title: 'Ferrocarriles y Vagones',
-			},
-			{
-				title: 'Puerta de Garaje',
-			},
-			{
-				title: 'Industria en General',
-			},
-		],
 		openArrow: false,
 		arrowUp: true,
 		arrowDown: false,
@@ -98,6 +63,12 @@ export default {
 	methods: {
 		closeList,
 		openList,
+	},
+	props: {
+		categories: {
+			type: Array,
+			default: () => [],
+		},
 	},
 };
 </script>
