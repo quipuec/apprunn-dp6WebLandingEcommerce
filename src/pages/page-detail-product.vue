@@ -1,10 +1,13 @@
 <template>
 	<layout-admin>
-		<div class="detail-product">
+		<div class="page-detail-product">
 			<div class="detail-product-top">
 				<product-view 
 					:data="product"
 					class="container-product-view"/>
+				<productDetail 
+					:data="product"
+					class="container-product-detail"/>
 			</div>
 		</div>
 	</layout-admin>
@@ -13,12 +16,13 @@
 import { mapGetters } from 'vuex';
 
 const productView = () => import('@/components/products/product-view');
+const productDetail = () => import('@/components/products/product-detail');
 
 function isLoggedUser() {
 	if (this.token) {
 		return this.$httpProducts.get(`products/favorites/${this.id}`);
 	}
-	return this.$productsPublicInstance.get(`products-public/${this.id}`);
+	return this.$httpProductsPublic.get(`products-public/${this.id}`);
 }
 
 function created() {
@@ -50,6 +54,7 @@ export default {
 	created,
 	components: {
 		productView,
+		productDetail,
 	},
 	computed: {
 		...mapGetters([
@@ -77,7 +82,7 @@ export default {
 		}
 	}
 
-	.detail-product {
+	.page-detail-product {
 		padding: 53px 41px 0 41px;
 
 		@media screen and (max-width: 996px) {
@@ -86,11 +91,17 @@ export default {
 	}
 
 	.detail-product-top {
+		display: flex;
+		justify-content: space-between;
 		padding: 0 7%;
 
 		@media screen and (max-width: 996px) {
 			padding: 0;
 		}
+	}
+
+	.container-product-detail {
+		width: 45%;
 	}
 </style>
 

@@ -70,6 +70,19 @@ function routeHandler() {
 	this.showMenu = false;
 }
 
+function created() {
+	if (!this.getLocalStorage(`${process.env.STORAGE_USER_KEY}::currency-default`)) {
+		this.loadData();
+	}
+}
+
+async function loadData() {
+	const aclCode = process.env.ACL_COMPANY_CODE;
+	const url = `companies/${aclCode}/acl`;
+	const { data: res } = await this.$httpSales.get(url);
+	this.setLocalData(`${process.env.STORAGE_USER_KEY}::currency-default`, res.currencyDefault);
+}
+
 function data() {
 	return {
 		logo: {
@@ -99,6 +112,7 @@ export default {
 		snackbar,
 	},
 	data,
+	created,
 	components: {
 		sectionVisa,
 		appHeader,
@@ -108,6 +122,7 @@ export default {
 	},
 	methods: {
 		changeMenu,
+		loadData,
 	},
 	watch: {
 		$route: routeHandler,

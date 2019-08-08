@@ -15,7 +15,7 @@
 					height="100%">
 			</button>
 		</div>
-		<div class="slider-product-view" v-if="data.images.length">
+		<div class="slider-product-view" v-if="data.images && data.images.length">
 			<swiper ref="mySwiper" :options="swiperOption">
 				<swiper-slide 
 					v-for="image in data.images" 
