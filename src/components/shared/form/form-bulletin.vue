@@ -61,7 +61,7 @@ export default {
 		color: color(dark);
 		height: 3px;
 		left: 10px;
-  	position: absolute;
+  		position: absolute;
 		top: 9px;
 		width: 110px;
 	@media (max-width: 850px) {

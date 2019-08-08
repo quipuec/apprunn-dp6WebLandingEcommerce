@@ -38,6 +38,16 @@ const asyncActions = {
 		const { data: parish } = await context.$httpSales.get(url);
 		commit('SET_PROVINCES', parish);
 	},
+	LOAD_CATEGORIES: async ({ commit }, { context }) => {
+		let { data: response } = await context.$httpProductsPublic.get('e-categories-public');
+		response = response.map((r) => {
+			const newCategory = { ...r };
+			newCategory.select = false;
+			newCategory.hover = false;
+			return newCategory;
+		});
+		commit('SET_CATEGORIES', response);
+	},
 };
 
 export default asyncActions;
