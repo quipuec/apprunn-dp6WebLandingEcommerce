@@ -8,24 +8,49 @@
 					{{help.title}}
 				</p>
 				<button
+				@click="seeThisHelp(item)"
 				type="button" 
 				class="item-tabs"
-				v-for="(item, indexItem) in help.items" :key="indexItem">
+				v-for="(item, indexItem) in help.items" :key="indexItem"
+				:class="[
+				{ 'active-help': currentHelp === item }
+				]">
 					{{item}}
 					</button>
 				</div>
 			</div>
 		</div>	
 		<div class="content-components">
-			componente
+			<warranty></warranty>
+			<component
+				class="content-help"
+				:is="currentHelpComponent"
+			></component>
 		</div>
 	</div>
 </template>
 
 <script>
+const warranty = () => import('@/components/help/warranty');
+
+function created() {
+	this.seeThisHelp(this.$route.params.helpSection);
+}
+
+function seeThisHelp(help) {
+	const opts = {
+		Garantía: warranty,
+	};
+	this.currentHelp = help;
+	this.currentHelpComponent = opts[help];
+	this.open = true;
+}
+
 
 function data() {
 	return {
+		currentHelpComponent: warranty,
+		currentHelp: '',
 		helps: [
 			{
 				title: 'INFORMACIÓN',
@@ -67,12 +92,20 @@ function data() {
 				],
 			},
 		],
+		open: false,
 	};
 }
 
 export default {
+	created,
 	data,
 	name: 'tabs-help',
+	components: {
+		warranty,
+	},
+	methods: {
+		seeThisHelp,
+	},
 };
 </script>
 
@@ -107,17 +140,27 @@ export default {
 	padding: 8px 0;
 	text-align: left;
 	width: 294px;
+
+	&:active {
+		color: #f42b17;
+		font-size: 12px;
+		font-family: font(bold);
+	}
 }
 .content-components {
 	padding-left: 77px;
-	width: 70%;
+	width: 75%;
 }
 
 .content-help {
-	width: 30%;
+	width: 25%;
 }
 
 .w-100 {
 	width: 100%;
+}
+
+.content-help {
+	max-width: 700px;
 }
 </style>
