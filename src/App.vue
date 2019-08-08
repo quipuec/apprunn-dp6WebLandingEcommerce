@@ -13,7 +13,8 @@
 			v-if="showMenu" 
 			:img-user="user"
 			:color-base="colorBase"
-			:color-border="colorBorder"/>
+			:color-border="colorBorder"
+			:categories="getCategories"/>
   	</transition>
 	<v-progress-linear
 		class="progress-bar"
@@ -48,6 +49,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
 const appBannerTop = () => import('@/components/header/app-banner-top');
@@ -64,6 +67,14 @@ function snackbar() {
 
 function changeMenu() {
 	this.showMenu = !this.showMenu;
+}
+
+function beforeCreate() {
+	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
+}
+
+function routeHandler() {
+	this.showMenu = false;
 }
 
 function data() {
@@ -90,20 +101,27 @@ function data() {
 
 export default {
 	name: 'app',
+	beforeCreate,
+	components: {
+		appHeader,
+		appBannerTop,
+		appMenuCategory,
+		formBulletin,
+		sectionVisa,
+	},
 	computed: {
 		indeterminate,
 		snackbar,
+		...mapGetters([
+			'getCategories',
+		]),
 	},
 	data,
-	components: {
-		sectionVisa,
-		appHeader,
-		appMenuCategory,
-		appBannerTop,
-		formBulletin,
-	},
 	methods: {
 		changeMenu,
+	},
+	watch: {
+		$route: routeHandler,
 	},
 };
 </script>
@@ -195,6 +213,7 @@ input.app-input::-webkit-input-placeholder {
 	}
 
 	.swiper-pagination-bullet {
+		background: transparent;
 		cursor: pointer;
 		opacity: 1;
 	}
@@ -203,12 +222,16 @@ input.app-input::-webkit-input-placeholder {
 		background: color(white);
 	}
 
-	.v-input--switch__thumb:not(.success--text) {
-		color: map-get($colors, error) !important;
+	.swiper-container-horizontal > .swiper-pagination-bullets {
+		bottom: 71px;
+
+		@media (max-width: 1161px) {
+			bottom: 46px;
+		}
 	}
 }
 
-.categories-carousel-slider  {
+.categories-carousel-slider, .section-settlement  {
 	.swiper-button-next {
 		background-image: url('/static/img/slider-arrow-rigth.svg');
 	}
@@ -230,6 +253,10 @@ input.app-input::-webkit-input-placeholder {
 
 
 .filters-category {
+	.theme--light.v-messages {
+		display: none;
+	}
+	
 	.v-input input {
 		color: color(base);
 	}
@@ -265,6 +292,93 @@ input.app-input::-webkit-input-placeholder {
 	.v-input--slider {
 		position: relative;
    		right: 46px;
+	}
+}		   
+.text-area {
+	color: color(border) !important;
+	font-family: font(medium) !important;
+	font-size: size(small) !important;
+
+	.v-input__control {
+		
+		.v-input__slot {
+			background-color: white !important;
+			border: solid 1px color(border) !important;
+			border-radius: 5px !important;
+		}
+	}
+}
+
+.section-settlement {
+	.swiper-button-next, .swiper-button-prev {
+		@media (max-width: 1161px) {
+			display: none;
+		}
+	}
+}
+
+.start-js-btn.modal-opener.default {
+	background: url('/static/img/icons/icon-visanet.png') !important;
+	background-position: right 14px !important;
+	background-repeat: no-repeat !important;
+	border: 1px solid color(borderBtn) !important;
+	border-radius: 8px !important;
+	box-shadow: none !important;
+	color: color(textBtn) !important;
+	font-family: font(demi) !important;
+	font-size: size(large) !important;
+	font-weight: normal !important;
+	height: 65px !important;
+	margin-top: 55px;
+	position: relative;
+	text-shadow: none !important;
+	width: 213px !important;
+
+	&:before {
+		bottom: 0;
+		color: color(textBtn) !important;
+		content: 'Paga con';
+		font-family: font(demi) !important;
+		font-size: size(large) !important;
+		font-weight: normal !important;
+		height: 22px;
+		left: 18px;
+		margin: auto;
+		position: absolute;
+		top: 0;
+	}
+}
+
+.component-filter {
+	.swiper-slide {
+		border-right: 1px solid color(white);
+		display: flex;
+		height: 51px;
+		justify-content: center;
+	}
+
+	.swiper-container {
+		width: 100%;
+	}
+	
+	.swiper-button-next {
+		background-image: url('/static/img/icons/arrow-button-next-white.svg');
+		position: absolute;
+		right: 0;
+
+		@media (max-width: 650px) {
+			right: 15px;
+		}
+	}
+
+	.swiper-button-prev {
+		background-image: url('/static/img/icons/arrow-button-prev-white.svg');
+		left: 0;
+		position: absolute;
+		
+		@media (max-width: 650px) {
+			left: 15px;
+		}
 	}
 }
 </style>

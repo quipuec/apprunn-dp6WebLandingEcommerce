@@ -28,7 +28,7 @@
 				<li>
 					<span class="title-list">{{item.title}}</span>
   			</li>
-				<ul v-for="(filter, index) in item.filters" :key="index">
+				<ul v-for="(filter, index) in item.filters" :key="index" class="list-filter">
     			<li class="item-li">{{filter.name}}</li>
   			</ul>
 			</div>
@@ -46,18 +46,22 @@ function data() {
 					{
 						id: 1,
 						name: '4x4',
+						select: false,
 					},
 					{
 						id: 2,
 						name: 'Sistema a Gas',
+						select: false,
 					},
 					{
 						id: 3,
 						name: 'Tuning',
+						select: false,
 					},
 					{
 						id: 4,
 						name: 'Competencia',
+						select: false,
 					},
 				],
 			},
@@ -105,13 +109,13 @@ export default {
 <style lang="scss" scoped>
 li {
 	color: color(dark);
-	&:hover {
+	&:active {
 		color: color(secondary);
 	}
 }
 
 .title-category {
-	color: color(red-category);
+	color: color(primary);
 	font-family: font(bold);
 	font-size: 18px;
 	margin: 0 0 0 10px;
@@ -119,13 +123,13 @@ li {
 
 .filter-category {
 	align-items: center;
-	border-bottom: 3px solid color(red-category); 
+	border-bottom: 3px solid color(primary); 
 	display: flex;
 	padding-bottom: 13px;
 }
 
 .content-image-arrow {
-	margin-left: 30px;
+	padding-left: 19px;
 }
 
 .title-list {
@@ -137,20 +141,24 @@ li {
 .background-gray {
 	background-color: #f9f9f9;
 	padding: 56px 0;
-	width: 56%;
+	width: 57%;
 }
 
 .content-list {
 	margin-top: 15px;
 }
 
-.item-li:hover {
+.item-li:active {
 	color: color(secondary);
 	font-family: font(bold);
 }
 
-.title-list:hover {
+.title-list:active {
 	color: color(secondary);
 	font-family: font(demi);
+}
+
+.list-filter {
+	list-style: none;
 }
 </style>

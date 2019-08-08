@@ -2,29 +2,30 @@
 	<div class="filters-category">
 		<div class="section-filter-row">
 			<p class="title-section">Filtros</p>
-			<button @click="openFilters">
-				<img
-				src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-down-sign-to-navigate.svg" 
-				alt="" 
-				width="16px" 
-				height="13px"
-				v-if="closeFilters">
-			</button>
-			<button @click="closeCategory">
-				<img
-				v-if="openUp"
-				src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/up-arrow.svg" 
-				alt="" 
-				width="16px" 
-				height="13px">
-			</button>
+			<div>
+				<button @click="openFilters">
+					<img
+					src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-down-sign-to-navigate.svg" 
+					alt="" 
+					width="16px" 
+					height="13px"
+					v-if="closeFilters">
+				</button>
+				<button @click="closeCategory">
+					<img
+					v-if="openUp"
+					src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/up-arrow.svg" 
+					alt="" 
+					width="16px" 
+					height="13px">
+				</button>
+			</div>
 		</div>
 		<div v-if="contentFilters">
 			<p class="text-price">Precio</p>
       	<v-layout row>
         	<v-flex shrink style="width: 60px">
           	<v-text-field
-						v-model="value3[0]"
 						class="mt-0"
 						hide-details
 						single-line
@@ -33,23 +34,24 @@
         	</v-flex>
         	<v-flex class="pl-3">
           	<v-range-slider
-            	v-model="value3"
-            	:max="60"
-            	:min="7"
-            	:step="10"
-          	></v-range-slider>
+            	:step="1"
+          	>
+			</v-range-slider>
         	</v-flex>
         	<v-flex shrink style="width: 20px">
-						<v-text-field
-							v-model="value3[1]"
-							class="mt-0 number"
-							hide-details
-							single-line
-							type="number"
-						></v-text-field>
-        </v-flex>
-      </v-layout>
-					<input type="text" class="input-price">
+				<v-text-field
+					class="mt-0 number"
+					hide-details
+					single-line
+					type="number"
+				></v-text-field>
+        	</v-flex>
+      	</v-layout>
+		  			<div class="content-number">
+				<p class="number-filter">7$</p>
+				<p class="number-filter">60$</p>
+			</div>
+					<input type="text" class="input-price" placeholder="40$">
 				<v-layout mt-5 mb-5>
 					<app-select class="input-filter" placeholder="Marca"/>
 				</v-layout>
@@ -89,7 +91,7 @@ function data() {
 		closeFilters: true,
 		contentFilters: false,
 		openUp: false,
-		value3: [7, 60],
+		// value3: [7, 60],
 	};
 }
 
@@ -144,6 +146,7 @@ export default {
 	font-size: 12px;
 	height: 24px;
 	margin-top: 9px;
+	padding-left: 10px;
 	width: 92px;
 }
 
@@ -155,5 +158,17 @@ export default {
 .number {
 	position: relative;
 	right: 20px;
+}
+
+.number-filter {
+	color: color(base);
+	font-family: font(regular);
+	font-size: size(small);
+}
+
+.content-number {
+	display: flex;
+	justify-content: space-between;
+	width: 78%;
 }
 </style>
