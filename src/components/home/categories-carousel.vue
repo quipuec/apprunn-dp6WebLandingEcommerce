@@ -105,6 +105,7 @@ export default {
 
 	.category-image {
 		align-items: center;
+		background-size: cover;
 		display: flex;
 		height: 163px;
 		justify-content: center;
@@ -112,7 +113,7 @@ export default {
 		width: 205px;
 
 		&::before {
-			background-image: linear-gradient(to bottom, rgba(60, 60, 60, 0.89), rgba(60, 60, 60, 0.89));
+			background-image: linear-gradient(to bottom, rgba(60, 60, 60, 0.89), rgba(60, 60, 60, 0.50));
 			bottom: 0;
 			content: '';
 			left: 0;

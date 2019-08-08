@@ -5,8 +5,8 @@
 			<app-button 
 				thin
 				class="mb-3"
-				@click="goToPag('login')"
 				action="Iniciar Sesión"
+				@click="goToLink('login')"
 				:background="globalColors.primary"
 				/>
 			<span class="label-modal">¿No tienes una cuenta?</span>
@@ -14,9 +14,9 @@
 				thin
 				background="white"
 				action="Crear cuenta"
+				@click="goToLink('register')"
 				:color="globalColors.base"
 				:border="globalColors.base"
-				@click="goToPag('register')"
 			/>
 		</div>
 	</div>
@@ -24,7 +24,7 @@
 <script>
 const appButton = () => import('@/components/shared/buttons/app-button');
 
-function goToPag(name) {
+function goToLink(name) {
 	this.goTo(name);
 	this.$emit('close-modal');
 }
@@ -35,7 +35,7 @@ export default {
 		appButton,
 	},
 	methods: {
-		goToPag,
+		goToLink,
 	},
 };
 </script>
