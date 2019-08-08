@@ -30,12 +30,12 @@ const route = {
 		{
 			path: 'detalle-orden/:n',
 			name: 'order-detail',
-			component: () => import('@/components/profile/user-order-details'),
+			component: () => import(/* webpackChunkName: "user-order-details" */ '@/components/profile/user-order-details'),
 		},
 		{
 			path: 'mis-favoritos',
 			name: 'favorites',
-			component: () => import('@/components/profile/favorites'),
+			component: () => import(/* webpackChunkName: "favorites" */ '@/components/profile/favorites'),
 		},
 	],
 };
