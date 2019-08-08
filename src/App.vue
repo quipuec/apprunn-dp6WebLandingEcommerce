@@ -251,6 +251,21 @@ input.app-input::-webkit-input-placeholder {
 	}
 }
 
+.text-area {
+	color: color(border) !important;
+	font-family: font(medium) !important;
+	font-size: size(small) !important;
+
+	.v-input__control {
+		
+		.v-input__slot {
+			background-color: white !important;
+			border: solid 1px color(border) !important;
+			border-radius: 5px !important;
+		}
+	}
+}
+
 .section-settlement {
 	.swiper-button-next, .swiper-button-prev {
 		@media (max-width: 1161px) {

@@ -30,3 +30,8 @@ export default {
 	data,
 };
 </script>
+<style lang="scss" scoped>
+	.section-margin {
+		background-color: white;
+	}
+</style>
