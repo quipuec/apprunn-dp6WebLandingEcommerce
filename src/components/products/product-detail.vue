@@ -10,9 +10,10 @@
 		<div class="container-detail-information">
 			<div class="container-detail-name">
 				<p class="product-detail-name">{{data.name}}</p>
+				<p class="product-detail-brand">{{data.warehouseProduct.brand.name}}</p>
 			</div>
 			<div class="d-center container-code-rating">
-				<span class="product-detail-code">{{data.code}}</span>
+				<span class="product-detail-code">#{{data.code}}</span>
 				<div class="container-rating d-center">
 					<v-rating
 						small
@@ -29,7 +30,7 @@
 		<div>
 			<div class="d-center mt-25">
 				<span class="text-price-dis" :style="`color: ${globalColors.secondary}`">{{getCurrencySymbol}} {{data.priceDiscount || ''}}</span>
-				<div class="content-discount">{{data.percentageDiscount | round }}</div>
+				<div class="content-discount">{{data.percentageDiscount}}%</div>
 			</div>
 			<span class="text-price">{{getCurrencySymbol}} {{data.price || ''}}</span>
 		</div>
@@ -89,7 +90,7 @@ export default {
 		color: color(dark);
 		font-family: font(bold);
 		font-size: size(xlarge);
-		margin: 20px 0 31px 0;
+		margin: 20px 0 5px 0;
 	}
 
 	.product-detail-code {
@@ -193,6 +194,15 @@ export default {
 	.container-code-rating {
 		@media screen and (max-width: 996px) {
 			flex: 1 1 40%;
+		}
+	}
+
+	.product-detail-brand {
+		font-size: size(small);
+		text-transform: uppercase;
+
+		@media screen and (max-width: 996px) {
+			font-size: size(xsmall);
 		}
 	}
 </style>
