@@ -15,7 +15,7 @@
 					height="100%">
 			</button>
 		</div>
-		<div class="slider-product-view">
+		<div class="slider-product-view" v-if="data.images.length">
 			<swiper ref="mySwiper" :options="swiperOption">
 				<swiper-slide 
 					v-for="image in data.images" 
@@ -30,6 +30,9 @@
 				</swiper-slide>
 				<div class="pagination-carousel swiper-pagination" slot="pagination"></div>
 			</swiper>
+		</div>
+		<div v-else class="slider-product-view-one">
+			<img :src="data.urlImage" :alt="data.name" height="90%">
 		</div>
 	</div>
 </template>
@@ -148,6 +151,23 @@ export default {
 
 		@media screen and (max-width: 996px) {
 			max-height: 217px;
+		}
+	}
+
+	.slider-product-view-one {
+		align-items: center;
+		background: color(white);
+		border-radius: 7px;
+		box-shadow: 0 2px 4px 0 rgba(213, 213, 213, 0.5);
+		display: flex;
+		height: 487px;
+		justify-content: center;
+		padding: 0 19px;
+		width: 80%;
+
+		@media screen and (max-width: 764px) {
+			height: 217px;
+			width: 70%;
 		}
 	}
 </style>
