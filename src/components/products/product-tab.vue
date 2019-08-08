@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="product-tab">
 		<v-tabs v-model="active">
 			<v-tab
 				v-for="(tab, index) in tabs"

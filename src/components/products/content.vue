@@ -21,7 +21,7 @@
 </template>
 <script>
 export default {
-	name: 'content',
+	name: 'content-text',
 	props: {
 		content: {
 			type: Object,
@@ -33,7 +33,6 @@ export default {
 <style lang="scss" scoped>
 	.wrapper-content {	
 		.content-description {
-			// color: color(text-grey-medium);
 			font-size: size(minmedium);
 			margin-bottom: 29px;
 		}
