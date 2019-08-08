@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import orderMutations from '@/store/mutations/order';
 
 function clearUser(state) {
 	Vue.set(state, 'token', null);
@@ -43,12 +44,17 @@ function UPDATE_FLAG_ADD_VOUCHER(state, flag) {
 	Vue.set(state.profile, 'flagAddVoucher', flag);
 }
 
+function SET_CATEGORIES(state, categories) {
+	Vue.set(state, 'categories', categories);
+}
+
 function SET_ORDER_TOTAL(state, total) {
 	Vue.set(state.order, 'total', total);
 }
 
 const methods = {
 	clearUser,
+	...orderMutations,
 	setToken,
 	setUser,
 	showSnackBar,
@@ -58,6 +64,7 @@ const methods = {
 	SET_PRODUCT_TO_BUY,
 	UPDATE_FLAG_ADD_VOUCHER,
 	UPDATE_POLL_PROGRESS,
+	SET_CATEGORIES,
 	SET_ORDER_TOTAL,
 };
 

@@ -1,9 +1,9 @@
 <template>
-	<div class="product-container" :class="{ 'small': small }" @click="buyProduct">
+	<div class="product-container" :class="{ 'small': small }" @click="goToProduct(product)">
 		<section class="product-header" :class="{ 'small': small }">
 			<div :style="`background-color: ${globalColors.primary}`" class="product-discount">-20%</div>
 			<div class="product-favorite">
-				<heart-component @click="productFavo" v-model="product.favorite"/>
+				<heart-component @click="productFavo" :value="product.flagFavorite"/>
 			</div>
 		</section>
 		<section class="product-content" :class="small ? 'small' : null">
@@ -43,6 +43,11 @@ function buyProduct() {
 	this.$store.commit('SET_PRODUCT_TO_BUY', this.product);
 }
 
+function goToProduct({ id }) {
+	const params = { id };
+	this.goTo('detail-product', { params });
+}
+
 export default {
 	name: 'product-card',
 	components: {
@@ -56,6 +61,7 @@ export default {
 	methods: {
 		buyProduct,
 		productFavo,
+		goToProduct,
 	},
 	props: {
 		small: {
@@ -143,7 +149,7 @@ export default {
 		color: color(dark);
 		font-size: size(small);
 		height: 35px;
-		margin: 0;
+		margin: 0 auto;
 		max-width: 150px;
 		overflow: hidden;
 		text-overflow: ellipsis;

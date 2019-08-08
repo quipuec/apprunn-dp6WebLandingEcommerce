@@ -1,7 +1,7 @@
 const route = {
 	name: 'buy',
 	path: '/carrito-de-compras',
-	component: () => import('@/pages/page-buy'),
+	component: () => import(/* webpackChunkName: "page-buy" */ '@/pages/page-buy'),
 	children: [
 		{
 			name: 'buy-delivery',
@@ -9,7 +9,7 @@ const route = {
 			meta: {
 				step: 2,
 			},
-			component: () => import('@/components/order/delivery'),
+			component: () => import(/* webpackChunkName: "delivery" */ '@/components/order/delivery'),
 		},
 		{
 			name: 'buy-payment',
@@ -17,7 +17,7 @@ const route = {
 			meta: {
 				step: 3,
 			},
-			component: () => import('@/components/order/payment'),
+			component: () => import(/* webpackChunkName: "payment" */ '@/components/order/payment'),
 		},
 	],
 };

@@ -1,5 +1,5 @@
 <template>
-	<v-content>
+	<v-content class="main-content">
 		<v-container fluid pa-0>
 			<section class="section-margin">
 				<slot></slot>
@@ -30,3 +30,8 @@ export default {
 	data,
 };
 </script>
+<style lang="scss" scoped>
+	.main-content {
+		background-color: white;
+	}
+</style>
