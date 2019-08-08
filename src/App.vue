@@ -13,7 +13,8 @@
 			v-if="showMenu" 
 			:img-user="user"
 			:color-base="colorBase"
-			:color-border="colorBorder"/>
+			:color-border="colorBorder"
+			:categories="getCategories"/>
   	</transition>
 	<v-progress-linear
 		class="progress-bar"
@@ -48,6 +49,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
 const appBannerTop = () => import('@/components/header/app-banner-top');
@@ -64,6 +67,10 @@ function snackbar() {
 
 function changeMenu() {
 	this.showMenu = !this.showMenu;
+}
+
+function beforeCreate() {
+	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
 }
 
 function routeHandler() {
@@ -94,18 +101,22 @@ function data() {
 
 export default {
 	name: 'app',
+	beforeCreate,
+	components: {
+		appHeader,
+		appBannerTop,
+		appMenuCategory,
+		formBulletin,
+		sectionVisa,
+	},
 	computed: {
 		indeterminate,
 		snackbar,
+		...mapGetters([
+			'getCategories',
+		]),
 	},
 	data,
-	components: {
-		sectionVisa,
-		appHeader,
-		appMenuCategory,
-		appBannerTop,
-		formBulletin,
-	},
 	methods: {
 		changeMenu,
 	},
@@ -310,6 +321,38 @@ input.app-input::-webkit-input-placeholder {
 		margin: auto;
 		position: absolute;
 		top: 0;
+	}
+}
+.component-filter {
+	.swiper-slide {
+		border-right: 1px solid color(white);
+		display: flex;
+		height: 51px;
+		justify-content: center;
+	}
+
+	.swiper-container {
+		width: 100%;
+	}
+	
+	.swiper-button-next {
+		background-image: url('/static/img/icons/arrow-button-next-white.svg');
+		position: absolute;
+		right: 0;
+
+		@media (max-width: 650px) {
+			right: 15px;
+		}
+	}
+
+	.swiper-button-prev {
+		background-image: url('/static/img/icons/arrow-button-prev-white.svg');
+		left: 0;
+		position: absolute;
+		
+		@media (max-width: 650px) {
+			left: 15px;
+		}
 	}
 }
 </style>
