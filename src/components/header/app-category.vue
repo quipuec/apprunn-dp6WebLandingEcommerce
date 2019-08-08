@@ -2,7 +2,7 @@
 	<div class="app-category">
 		<div class="app-category-user">
 			<div class="container-user" :style="`border-color: ${globalColors.primary}`">
-				<img :src="imgUser.urlImage || imgUser.logo" :alt="imgUser.name" :height="imgUser.height">
+				<img :src="imageUser" :alt="imgUser.name" :height="imgUser.height">
 			</div>
 			<div v-if="token">
 				<p class="user-name">{{imgUser.name}} {{imgUser.lastname}}</p>
@@ -174,6 +174,10 @@ function clickSubCategory(item, index) {
 	}
 }
 
+function imageUser() {
+	return this.imgUser.urlImage || this.imgUser.logo || process.env.DEFAULT_AVATAR;
+}
+
 function data() {
 	return {
 		imageArrow: {
@@ -214,6 +218,7 @@ export default {
 		...mapGetters([
 			'token',
 		]),
+		imageUser,
 	},
 	props: {
 		imgUser: {

@@ -2,7 +2,7 @@
   <div class="app-button-image">
 		<button class="app-button" @click="$emit('click-image')">
 			<div class="button-number" v-if="ifNumber">{{number}}</div>
-			<img :src="data.image || data.logo || data.urlImage" 
+			<img :src="imageUser"
 				:alt="data.name"
 				:height="data.height || 20" 
 			>
@@ -10,8 +10,15 @@
 	</div>
 </template>
 <script>
+function imageUser() {
+	return this.data.image || this.data.logo || this.data.urlImage || process.env.DEFAULT_AVATAR;
+}
+
 export default {
 	name: 'app-button-image',
+	computed: {
+		imageUser,
+	},
 	props: {
 		data: {
 			type: Object,
