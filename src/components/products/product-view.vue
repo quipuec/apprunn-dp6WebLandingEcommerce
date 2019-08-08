@@ -12,7 +12,7 @@
 				<img 
 					:src="image.urlImage" 
 					:alt="image.name" 
-					height="100%">
+					class="image-slider">
 			</button>
 		</div>
 		<div class="slider-product-view" v-if="data.images && data.images.length">
@@ -32,7 +32,7 @@
 			</swiper>
 		</div>
 		<div v-else class="slider-product-view-one">
-			<img :src="data.urlImage" :alt="data.name" height="90%">
+			<img :src="data.urlImage" :alt="data.name" class="image-slider">
 		</div>
 	</div>
 </template>
@@ -171,6 +171,10 @@ export default {
 			height: 217px;
 			width: 70%;
 		}
+	}
+
+	.image-slider {
+		height: 90%;
 	}
 </style>
 

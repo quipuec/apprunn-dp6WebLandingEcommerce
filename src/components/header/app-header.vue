@@ -34,7 +34,7 @@
 					:data="search" 
 					class="icon-mobile"
 					@click-image="toogleSearch"/>
-				<button-image :data="imagesButton[0]" class="icon-desktop" @click-image="openModalLogin"/>
+				<button-image :data="user" class="icon-desktop" @click-image="openModalLogin"/>
 				<button-image :data="imagesButton[1]" class="icon-medium icon-desktop"/>
 				<button-image
 					if-number
@@ -47,10 +47,13 @@
 		<modal-login 
 			class="app-modal-login"
 			v-show="modalLogin"
-			@close-modal="closeModal"/>
+			@close-modal="closeModal"
+		/>
 	</header>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 const callMenu = () => import('@/components/header/call-menu');
 const appSearch = () => import('@/components/shared/inputs/app-input-search');
 const buttonImage = () => import('@/components/shared/buttons/app-button-image');
@@ -65,7 +68,11 @@ function changeMenu() {
 }
 
 function openModalLogin() {
-	this.modalLogin = !this.modalLogin;
+	if (this.token) {
+		this.goTo('profile');
+	} else {
+		this.modalLogin = !this.modalLogin;
+	}
 }
 
 function closeModal() {
@@ -115,6 +122,11 @@ export default {
 		buttonImage,
 		modalLogin,
 	},
+	computed: {
+		...mapGetters([
+			'token',
+		]),
+	},
 	data,
 	methods: {
 		toogleSearch,
@@ -130,6 +142,10 @@ export default {
 		menu: {
 			type: Boolean,
 			default: false,
+		},
+		user: {
+			type: Object,
+			default: () => {},
 		},
 	},
 };

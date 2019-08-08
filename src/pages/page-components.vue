@@ -84,7 +84,7 @@
 			</v-flex>
 		</v-layout>
 		<v-layout xs12 mt-3>
-			<filter-category></filter-category>
+			<menu-category></menu-category>
 		</v-layout>
 	</div>
 </template>
@@ -100,7 +100,7 @@
 	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
 	const appFooter = () => import('@/components/footer/app-footer');
 	const itemMenu = () => import('@/components/header/item-menu');
-	const filterCategory = () => import('@/components/shared/category/filter-category');
+	const menuCategory = () => import('@/components/shared/category/menu-category');
 
 	function data() {
 		return {
@@ -134,10 +134,10 @@
 			appInput,
 			containerCompanyData,
 			callMenu,
-			filterCategory,
 			modalLogin,
 			appSearch,
 			buttonImage,
+			menuCategory,
 			mediaCompanyData,
 			itemMenu,
 		},

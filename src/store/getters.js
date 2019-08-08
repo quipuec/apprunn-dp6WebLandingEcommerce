@@ -48,6 +48,10 @@ function getCurrencySymbol() {
 	return getDeeper('symbol')(currencyDefault) || '';
 }
 
+function getCategories(state) {
+	return state.categories;
+}
+
 const methods = {
 	companyLogo,
 	getCurrencySymbol,
@@ -61,6 +65,7 @@ const methods = {
 	token,
 	user,
 	userName,
+	getCategories,
 };
 
 export default methods;

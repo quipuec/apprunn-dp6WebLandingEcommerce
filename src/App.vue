@@ -1,7 +1,11 @@
 <template>
-	<v-app>
+	<v-app class="main-container">
 		<app-banner-top :data="bannerTop"/>
-		<app-header :logo="logo" @change-menu="changeMenu" :menu="showMenu"/>
+		<app-header 
+			:logo="logo" 
+			@change-menu="changeMenu" 
+			:menu="showMenu"
+			:user="user"/>
 		<transition name="slide-fade">
 			<div 
 				class="v-overlay v-overlay--absolute v-overlay--active mobile-overlay" 
@@ -13,7 +17,8 @@
 			v-if="showMenu" 
 			:img-user="user"
 			:color-base="colorBase"
-			:color-border="colorBorder"/>
+			:color-border="colorBorder"
+			:categories="getCategories"/>
   	</transition>
 	<router-view></router-view>
 	<section-visa></section-visa>
@@ -42,6 +47,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
 const appBannerTop = () => import('@/components/header/app-banner-top');
@@ -60,6 +67,7 @@ function changeMenu() {
 	this.showMenu = !this.showMenu;
 }
 
+
 function routeHandler() {
 	this.showMenu = false;
 }
@@ -68,6 +76,7 @@ function created() {
 	if (!this.getLocalStorage(`${process.env.STORAGE_USER_KEY}::currency-default`)) {
 		this.loadData();
 	}
+	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
 }
 
 async function loadData() {
@@ -85,11 +94,6 @@ function data() {
 			height: 30,
 		},
 		showMenu: false,
-		user: {
-			urlImage: '/static/img/user.svg',
-			name: 'Login',
-			height: 25,
-		},
 		colorBase: process.env.COLOR_BASE,
 		colorBorder: process.env.COLOR_BORDER,
 		bannerTop: {
@@ -104,15 +108,19 @@ export default {
 	computed: {
 		indeterminate,
 		snackbar,
+		...mapGetters([
+			'user',
+			'getCategories',
+		]),
 	},
 	data,
 	created,
 	components: {
-		sectionVisa,
 		appHeader,
-		appMenuCategory,
 		appBannerTop,
+		appMenuCategory,
 		formBulletin,
+		sectionVisa,
 	},
 	methods: {
 		changeMenu,
@@ -149,6 +157,11 @@ input.app-input::-webkit-input-placeholder {
 	font-family: font(demi) !important;
 	font-size: size(minmedium) !important;
 	font-weight: normal !important;
+}
+
+.main-container {
+	background-color: white !important;
+	height: 100vh;
 }
 
 .product-rating {
@@ -249,6 +262,78 @@ input.app-input::-webkit-input-placeholder {
 	}
 }
 
+
+.filters-category {
+	.theme--light.v-messages {
+		display: none;
+	}
+	
+	.v-input input {
+		color: color(base);
+	}
+
+	.v-text-field__slot {
+		color: color(base) !important;
+		left: 1px;
+		position: relative;
+		top: 32px;
+	}
+
+	.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+		display: none !important;
+	}
+
+	.v-card__text {
+		padding: 0;
+	}
+
+	.v-slider__thumb {
+		background-color: color(base) !important;
+		border-color: color(base) !important;
+	}
+
+	.v-slider__thumb-container .primary--text {
+		color: color(base) !important;
+	}
+
+	.primary {
+		background-color: color(base) !important;
+	}
+
+	.v-input--slider {
+		position: relative;
+   		right: 46px;
+	}
+}		   
+.text-area {
+	color: color(border) !important;
+	font-family: font(medium) !important;
+	font-size: size(small) !important;
+
+	.v-input__control {
+		
+		.v-input__slot {
+			background-color: white !important;
+			border: solid 1px color(border) !important;
+			border-radius: 5px !important;
+		}
+	}
+}
+
+.btn-order {
+	width: 100%;
+	
+	button.app-button {
+		height: 49px;
+		max-width: 100% !important;
+
+		@media (min-width: 764px) {
+			height: 49px;
+			max-width: 100% !important;
+		}
+	}
+}
+
 .section-settlement {
 	.swiper-button-next, .swiper-button-prev {
 		@media (max-width: 1161px) {
@@ -264,7 +349,7 @@ input.app-input::-webkit-input-placeholder {
 	border: 1px solid color(borderBtn) !important;
 	border-radius: 8px !important;
 	box-shadow: none !important;
-	color: color(textBtn) !important;
+	color: color(base) !important;
 	font-family: font(demi) !important;
 	font-size: size(large) !important;
 	font-weight: normal !important;
@@ -276,7 +361,7 @@ input.app-input::-webkit-input-placeholder {
 
 	&:before {
 		bottom: 0;
-		color: color(textBtn) !important;
+		color: color(base) !important;
 		content: 'Paga con';
 		font-family: font(demi) !important;
 		font-size: size(large) !important;
@@ -286,6 +371,38 @@ input.app-input::-webkit-input-placeholder {
 		margin: auto;
 		position: absolute;
 		top: 0;
+	}
+}
+.component-filter {
+	.swiper-slide {
+		border-right: 1px solid color(white);
+		display: flex;
+		height: 51px;
+		justify-content: center;
+	}
+
+	.swiper-container {
+		width: 100%;
+	}
+	
+	.swiper-button-next {
+		background-image: url('/static/img/icons/arrow-button-next-white.svg');
+		position: absolute;
+		right: 0;
+
+		@media (max-width: 650px) {
+			right: 15px;
+		}
+	}
+
+	.swiper-button-prev {
+		background-image: url('/static/img/icons/arrow-button-prev-white.svg');
+		left: 0;
+		position: absolute;
+		
+		@media (max-width: 650px) {
+			left: 15px;
+		}
 	}
 }
 </style>
