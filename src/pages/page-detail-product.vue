@@ -1,5 +1,4 @@
 <template>
-	<layout-admin>
 		<div class="page-detail-product">
 			<div class="detail-product-top">
 				<product-view 
@@ -10,7 +9,6 @@
 					class="container-product-detail"/>
 			</div>
 		</div>
-	</layout-admin>
 </template>
 <script>
 import { mapGetters } from 'vuex';

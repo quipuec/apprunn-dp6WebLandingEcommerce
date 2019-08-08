@@ -24,9 +24,9 @@
 		<div>
 			<div>
 				<p class="text-price-dis" :style="`color: ${globalColors.secondary}`">{{getCurrencySymbol}} {{data.priceDiscount || ''}}</p>
-				<div>-20%</div>
+				<div class="content-discount">{{data.percentageDiscount | round }}</div>
 			</div>
-			<p>{{getCurrencySymbol}} {{data.price || ''}}</p>
+			<p class="text-price">{{getCurrencySymbol}} {{data.price || ''}}</p>
 		</div>
 	</div>
 </template>
@@ -67,10 +67,6 @@ export default {
 		font-size: size(medium);
 	}
 
-	.content-text-rating {
-		// display: flex;
-	}
-
 	.d-center {
 		align-items: center;
 		display: flex;
@@ -89,6 +85,22 @@ export default {
 	.text-price-dis {
 		font-family: font(bold);
 		font-size: 23px;
+	}
+
+	.content-discount {
+		align-items: center;
+		background: color(primary);
+		border-radius: 5px;
+		color: color(white);
+		display: flex;
+		height: 18px;
+		justify-content: center;
+		font-size: size(msmall);
+		width: 45px;
+	}
+
+	.text-price {
+		color: color(border);
 	}
 </style>
 
