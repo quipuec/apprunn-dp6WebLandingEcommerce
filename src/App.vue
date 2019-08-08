@@ -405,13 +405,13 @@ input.app-input::-webkit-input-placeholder {
 
 .page-category {
 	.v-breadcrumbs__item {
-		color: #acaaaa;
+		color: color(base);
 		font-family: font(medium);
-		font-size: 14px;
+		font-size: size(medium);
 	}
 
 	.theme--light.v-breadcrumbs .v-breadcrumbs__divider, .theme--light.v-breadcrumbs .v-breadcrumbs__item--disabled {
-		color: #f42b17;
+		color: color(primary);
 		font-family: font(medium);
 	}
 }

@@ -40,7 +40,9 @@ export default {
 
 <style lang="scss" scoped>
 .menu-category {
-	background-color: #f9f9f9;
+	background-color: color(background);
+	border-right: 1px solid color(borderBtn);
+	height: 100vh;
 	position: relative;
 	width: 90%;	
 }

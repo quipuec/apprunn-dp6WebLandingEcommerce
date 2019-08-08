@@ -138,7 +138,6 @@ export default {
 	justify-content: space-between;
 	padding-bottom: 10px;
 	width: 70%;
-	// width: 63%;
 }
 
 .input-price {
