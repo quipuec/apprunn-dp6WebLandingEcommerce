@@ -7,7 +7,7 @@
 				<p class="title-tabs">
 					{{help.title}}
 				</p>
-				<button 
+				<button
 				type="button" 
 				class="item-tabs"
 				v-for="(item, indexItem) in help.items" :key="indexItem">
@@ -92,7 +92,7 @@ export default {
 }
 
 .title-tabs {
-	border-bottom: 2px solid #e5e5e5;
+	border-bottom: 2px solid color(disabled);
 	color: color(dark);
 	font-family: font(bold);
 	font-size: font(medium);
@@ -101,14 +101,16 @@ export default {
 }
 
 .item-tabs {
-	color: #acaaaa;
+	color: color(base);
+	font-family: font(heavy);
 	font-size: 12px;
 	padding: 8px 0;
-	font-family: font(heavy);
+	text-align: left;
+	width: 294px;
 }
 .content-components {
-	width: 70%;
 	padding-left: 77px;
+	width: 70%;
 }
 
 .content-help {
