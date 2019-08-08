@@ -8,22 +8,21 @@
 					{{help.title}}
 				</p>
 				<button
+				:class="[
+				{ 'active-help' : currentHelp === item }
+				]"
 				@click="seeThisHelp(item)"
 				type="button" 
 				class="item-tabs"
 				v-for="(item, indexItem) in help.items" :key="indexItem"
-				:class="[
-				{ 'active-help': currentHelp === item }
-				]">
+				>
 					{{item}}
 					</button>
 				</div>
 			</div>
 		</div>	
 		<div class="content-components">
-			<warranty></warranty>
 			<component
-				class="content-help"
 				:is="currentHelpComponent"
 			></component>
 		</div>
@@ -32,10 +31,6 @@
 
 <script>
 const warranty = () => import('@/components/help/warranty');
-
-function created() {
-	this.seeThisHelp(this.$route.params.helpSection);
-}
 
 function seeThisHelp(help) {
 	const opts = {
@@ -97,7 +92,6 @@ function data() {
 }
 
 export default {
-	created,
 	data,
 	name: 'tabs-help',
 	components: {
@@ -140,13 +134,8 @@ export default {
 	padding: 8px 0;
 	text-align: left;
 	width: 294px;
-
-	&:active {
-		color: #f42b17;
-		font-size: 12px;
-		font-family: font(bold);
-	}
 }
+
 .content-components {
 	padding-left: 77px;
 	width: 75%;
@@ -160,7 +149,9 @@ export default {
 	width: 100%;
 }
 
-.content-help {
-	max-width: 700px;
+.active-help {
+	color: #f42b17;
+	font-size: 12px;
+	font-family: font(bold);
 }
 </style>
