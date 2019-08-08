@@ -48,6 +48,16 @@ const asyncActions = {
 		});
 		commit('SET_CATEGORIES', response);
 	},
+	LOAD_DIRECTIONS: async ({ commit }, context) => {
+		const url = 'customers-address';
+		const { data: directions } = await context.$httpSales.get(url);
+		commit('SET_DIRECTIONS', directions);
+	},
+	LOAD_WAREHOUSES: async ({ commit }, context) => {
+		const url = 'warehouse-public';
+		const { data: warehouses } = await context.$httpProductsPublic.get(url);
+		commit('SET_WAREHOUSES', warehouses);
+	},
 };
 
 export default asyncActions;

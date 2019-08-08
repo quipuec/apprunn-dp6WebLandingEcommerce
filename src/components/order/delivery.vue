@@ -18,26 +18,60 @@
 				<coffee-svg :active="getFlagPickUp === 2"/>
 			</app-button-order>
 		</section>
+		<address-component
+			v-if="getFlagPickUp === 2"
+			class="mt-4"
+			placeholder="Seleccione una tienda"
+			item-text="name"
+			item-value="id"
+			:options="getWarehouses"
+			v-model="selectedWarehouse"
+		/>
 		<responsible-form/>
-		<new-address/>
+		<div v-if="getFlagPickUp === 1">
+			<address-component
+				placeholder="Seleccione una dirección"
+				item-text="addressLine1"
+				item-value="id"
+				:options="getDirections"
+				v-model="selectedDirection"
+			/>
+			<new-address/>
+		</div>
 	</div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
 
+const addressComponent = () => import('@/components/order/address-component');
 const appButtonOrder = () => import('@/components/shared/buttons/app-button-order');
 const coffeeSvg = () => import('@/components/shared/icons/coffee-shop');
 const locationSvg = () => import('@/components/shared/icons/location');
 const newAddress = () => import('@/components/order/new-address');
 const responsibleForm = () => import('@/components/order/responsible-form');
 
+function created() {
+	this.$store.dispatch('LOAD_DIRECTIONS', this);
+	this.$store.dispatch('LOAD_WAREHOUSES', this);
+	this.selectedDirection = 0;
+	this.selectedWarehouse = 0;
+}
+
 function selected(val) {
 	this.$store.commit('SET_FLAG_PICKUP', val);
+}
+
+function data() {
+	return {
+		selectedDirection: null,
+		selectedWarehouse: null,
+	};
 }
 
 export default {
 	name: 'delivery',
 	components: {
+		addressComponent,
 		appButtonOrder,
 		coffeeSvg,
 		locationSvg,
@@ -47,8 +81,12 @@ export default {
 	computed: {
 		...mapGetters([
 			'getFlagPickUp',
+			'getDirections',
+			'getWarehouses',
 		]),
 	},
+	created,
+	data,
 	methods: {
 		selected,
 	},

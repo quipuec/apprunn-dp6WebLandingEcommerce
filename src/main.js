@@ -23,8 +23,10 @@ import registerFilters from './filters/global';
 import './global-components';
 import store from './store';
 import helper from './shared/helper';
+import registerMap from './vue-map';
 
 registerAxios(Vue);
+registerMap(Vue);
 Vue.use(VueAxios, axios);
 Vue.use(VueTheMask);
 Vue.use(Vuelidate);

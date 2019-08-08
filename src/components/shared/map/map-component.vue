@@ -1,9 +1,9 @@
 <template>
 	<GmapMap
-		:center="{lat:10, lng:10}"
-		:zoom="7"
+		:center="center"
+		:zoom="15"
 		map-type-id="terrain"
-		style="width: 500px; height: 300px"
+		style="width:100%;height: 400px;"
 	>
 	<GmapMarker
 		:key="index"
@@ -19,6 +19,10 @@
 
 function data() {
 	return {
+		center: {
+			lat: -77.0254634,
+			lng: -12.1190273,
+		},
 		markers: [
 			{
 				position: {

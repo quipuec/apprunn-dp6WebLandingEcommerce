@@ -53,6 +53,14 @@ function SET_ORDER_TOTAL(state, total) {
 	Vue.set(state.order, 'total', total);
 }
 
+function SET_WAREHOUSES(state, warehouses) {
+	Vue.set(state, 'warehouses', state.warehouses.concat(warehouses));
+}
+
+function SET_DIRECTIONS(state, directions) {
+	Vue.set(state, 'directions', state.directions.concat(directions));
+}
+
 const methods = {
 	clearUser,
 	...geoMutations,
@@ -61,9 +69,11 @@ const methods = {
 	setUser,
 	showSnackBar,
 	toggleLoading,
+	SET_DIRECTIONS,
 	SET_ORDER_ID,
 	SET_PRODUCTS,
 	SET_PRODUCT_TO_BUY,
+	SET_WAREHOUSES,
 	UPDATE_FLAG_ADD_VOUCHER,
 	UPDATE_POLL_PROGRESS,
 	SET_CATEGORIES,
