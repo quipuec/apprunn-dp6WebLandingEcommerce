@@ -4,7 +4,17 @@
 			<img src="/static/img/icons/shock-absorber.svg" alt="">
 			<p class="title-category">Resortes</p>
 			<div class="content-image-arrow">
-				<button @click="closeList">
+				<button-image
+				:data="iconDown"
+				@click-image="closeList"
+				v-if="arrowDown"
+				></button-image>
+				<button-image
+				@click-image="openList"
+				v-if="arrowUp"
+				:data="iconUp"
+				></button-image>
+				<!-- <button @click="closeList">
 					<img
 					v-if="arrowDown"
 					src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/up-arrow.svg" 
@@ -12,15 +22,15 @@
 					width="16px" 
 					height="13px"
 					>
-				</button>
-				<button @click="openList">
+				</button> -->
+				<!-- <button @click="openList">
 					<img
 					v-if="arrowUp"
 					src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-down-sign-to-navigate.svg" 
 					alt="" 
 					width="16px" 
 					height="13px">
-				</button>
+				</button> -->
 			</div>
 		</div>
 		<div v-if="openArrow">
@@ -37,8 +47,20 @@
 </template>
 
 <script>
+const buttonImage = () => import('@/components/shared/buttons/app-button-image');
+
 function data() {
 	return {
+		iconDown: {
+			image: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/up-arrow.svg',
+			name: 'up',
+			height: 15,
+		},
+		iconUp: {
+			image: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-down-sign-to-navigate.svg',
+			name: 'up',
+			height: 15,
+		},
 		categories: [
 			{
 				title: 'Automotriz',
@@ -103,6 +125,9 @@ export default {
 		closeList,
 		openList,
 	},
+	components: {
+		buttonImage,
+	},
 };
 </script>
 
@@ -129,7 +154,7 @@ li {
 }
 
 .content-image-arrow {
-	padding-left: 19px;
+	padding-left: 41px;
 }
 
 .title-list {
@@ -141,7 +166,7 @@ li {
 .background-gray {
 	background-color: color(disabled);
 	padding: 56px 0;
-	width: 57%;
+	width: 65%;
 }
 
 .content-list {

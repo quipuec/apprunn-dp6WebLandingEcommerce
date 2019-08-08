@@ -2,24 +2,15 @@
 	<div class="filters-category">
 		<div class="section-filter-row">
 			<p class="title-section">Filtros</p>
-			<div>
-				<button @click="openFilters">
-					<img
-					src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-down-sign-to-navigate.svg" 
-					alt="" 
-					width="16px" 
-					height="13px"
-					v-if="closeFilters">
-				</button>
-				<button @click="closeCategory">
-					<img
-					v-if="openUp"
-					src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/up-arrow.svg" 
-					alt="" 
-					width="16px" 
-					height="13px">
-				</button>
-			</div>
+				<button-image
+				:data="arrowUp"
+				@click-image="openFilters"
+				v-if="closeFilters">
+				</button-image>
+				<button-image
+				@click-image="closeCategory"
+				:data="arrowDown"
+				v-if="openUp"></button-image>
 		</div>
 		<div v-if="contentFilters">
 			<p class="text-price">Precio</p>
@@ -72,7 +63,9 @@
 </template>
 
 <script>
-import appSelect from '@/components/shared/inputs/app-select';
+const appSelect = () => import('@/components/shared/inputs/app-select');
+const buttonImage = () => import('@/components/shared/buttons/app-button-image');
+
 
 function closeCategory() {
 	this.contentFilters = false;
@@ -88,6 +81,16 @@ function openFilters() {
 
 function data() {
 	return {
+		arrowUp: {
+			image: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-down-sign-to-navigate.svg',
+			name: 'up',
+			height: 15,
+		},
+		arrowDown: {
+			image: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/up-arrow.svg',
+			name: 'down',
+			height: 15,
+		},
 		closeFilters: true,
 		contentFilters: false,
 		openUp: false,
@@ -103,13 +106,14 @@ export default {
 	},
 	components: {
 		appSelect,
+		buttonImage,
 	},
 };
 </script>
 
 <style lang="scss" scoped>
 .filters-category {
-	border-top: 1px solid #eaeaea;
+	border-top: 1px solid color(borderBtn);
 	padding-top: 40px;
 }
 
@@ -133,7 +137,7 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	padding-bottom: 10px;
-	width: 55%;
+	width: 63%;
 }
 
 .input-price {
