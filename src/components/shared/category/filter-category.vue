@@ -111,7 +111,7 @@ li {
 }
 
 .title-category {
-	color: color(red-category);
+	color: color(primary);
 	font-family: font(bold);
 	font-size: 18px;
 	margin: 0 0 0 10px;
@@ -119,7 +119,7 @@ li {
 
 .filter-category {
 	align-items: center;
-	border-bottom: 3px solid color(red-category); 
+	border-bottom: 3px solid color(primary); 
 	display: flex;
 	padding-bottom: 13px;
 }

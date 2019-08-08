@@ -305,4 +305,37 @@ input.app-input::-webkit-input-placeholder {
 		top: 0;
 	}
 }
+
+.component-filter {
+	.swiper-slide {
+		border-right: 1px solid color(white);
+		display: flex;
+		height: 51px;
+		justify-content: center;
+	}
+
+	.swiper-container {
+		width: 100%;
+	}
+	
+	.swiper-button-next {
+		background-image: url('/static/img/icons/arrow-button-next-white.svg');
+		position: absolute;
+		right: 0;
+
+		@media (max-width: 650px) {
+			right: 15px;
+		}
+	}
+
+	.swiper-button-prev {
+		background-image: url('/static/img/icons/arrow-button-prev-white.svg');
+		left: 0;
+		position: absolute;
+		
+		@media (max-width: 650px) {
+			left: 15px;
+		}
+	}
+}
 </style>
