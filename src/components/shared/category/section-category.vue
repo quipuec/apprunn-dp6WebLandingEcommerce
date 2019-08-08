@@ -139,7 +139,7 @@ li {
 }
 
 .background-gray {
-	background-color: #f9f9f9;
+	background-color: color(disabled);
 	padding: 56px 0;
 	width: 57%;
 }

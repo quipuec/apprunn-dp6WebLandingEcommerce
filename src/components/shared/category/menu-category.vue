@@ -22,8 +22,7 @@ export default {
 
 <style lang="scss" scoped>
 .menu-category {
-	background-color: #f9f9f9;
-	border-right: 1px solid #eaeaea;
+	background-color: color(disabled);
 	padding: 0px 25px;
 	width: 30%;	
 }

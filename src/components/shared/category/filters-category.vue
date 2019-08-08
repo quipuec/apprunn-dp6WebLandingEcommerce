@@ -91,7 +91,6 @@ function data() {
 		closeFilters: true,
 		contentFilters: false,
 		openUp: false,
-		// value3: [7, 60],
 	};
 }
 
