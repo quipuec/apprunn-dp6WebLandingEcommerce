@@ -1,7 +1,7 @@
 <template>
 	<div class="item-menu" @click="$emit('click-item', data)">
 		<img :src="data.webImage" class="img-menu">
-		<span class="item-text" :style="data.select ? `color: ${globalColors.primary}` : '#4a4a4a'">{{data.title}}</span>
+		<span class="item-text" :style="data.select ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`">{{data.title}}</span>
 	</div>
 </template>
 <script>

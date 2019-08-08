@@ -101,6 +101,14 @@ function data() {
 
 export default {
 	name: 'app',
+	beforeCreate,
+	components: {
+		appHeader,
+		appBannerTop,
+		appMenuCategory,
+		formBulletin,
+		sectionVisa,
+	},
 	computed: {
 		indeterminate,
 		snackbar,
@@ -109,14 +117,6 @@ export default {
 		]),
 	},
 	data,
-	beforeCreate,
-	components: {
-		sectionVisa,
-		appHeader,
-		appMenuCategory,
-		appBannerTop,
-		formBulletin,
-	},
 	methods: {
 		changeMenu,
 	},
