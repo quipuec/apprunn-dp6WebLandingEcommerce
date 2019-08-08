@@ -1,14 +1,14 @@
 <template>
-		<div class="page-detail-product">
-			<div class="detail-product-top">
-				<product-view 
-					:data="product"
-					class="container-product-view"/>
-				<productDetail 
-					:data="product"
-					class="container-product-detail"/>
-			</div>
+	<div class="page-detail-product">
+		<div class="detail-product-top">
+			<product-view 
+				:data="product"
+				class="container-product-view"/>
+			<productDetail 
+				:data="product"
+				class="container-product-detail"/>
 		</div>
+	</div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
@@ -81,6 +81,7 @@ export default {
 	}
 
 	.page-detail-product {
+		background: color(white);
 		padding: 53px 41px 0 41px;
 
 		@media screen and (max-width: 996px) {
@@ -94,6 +95,7 @@ export default {
 		padding: 0 7%;
 
 		@media screen and (max-width: 996px) {
+			flex-direction: column;
 			padding: 0;
 		}
 	}

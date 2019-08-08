@@ -22,11 +22,11 @@
 			</div>
 		</div>
 		<div>
-			<div>
-				<p class="text-price-dis" :style="`color: ${globalColors.secondary}`">{{getCurrencySymbol}} {{data.priceDiscount || ''}}</p>
+			<div class="d-center mt-25">
+				<span class="text-price-dis" :style="`color: ${globalColors.secondary}`">{{getCurrencySymbol}} {{data.priceDiscount || ''}}</span>
 				<div class="content-discount">{{data.percentageDiscount | round }}</div>
 			</div>
-			<p class="text-price">{{getCurrencySymbol}} {{data.price || ''}}</p>
+			<span class="text-price">{{getCurrencySymbol}} {{data.price || ''}}</span>
 		</div>
 	</div>
 </template>
@@ -96,11 +96,30 @@ export default {
 		height: 18px;
 		justify-content: center;
 		font-size: size(msmall);
+		margin-left: 10px;
 		width: 45px;
 	}
 
 	.text-price {
 		color: color(border);
+		font-family: font(bold);
+		font-size: size(large);
+		position: relative;
+
+		&::before {
+			border-color: color(border);
+			border-top: 2px solid;
+			content: "";
+			left: 0;
+			position: absolute;
+			right: 0;
+			top: 50%;
+			transform:rotate(-10deg);
+		}
+	}
+
+	.mt-25 {
+		margin: 25px 0 15px 0;
 	}
 </style>
 

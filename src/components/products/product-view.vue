@@ -56,6 +56,7 @@ function data() {
 	return {
 		swiperOption: {
 			allowTouchMove: false,
+			loop: true,
 			breakpoints: {
 				996: {
 					slidesPerView: 2,
