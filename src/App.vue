@@ -164,7 +164,6 @@ input.app-input::-webkit-input-placeholder {
 
 .main-container {
 	background-color: white !important;
-	height: 100vh;
 }
 
 .product-rating {
@@ -445,6 +444,32 @@ input.app-input::-webkit-input-placeholder {
 	.theme--light.v-breadcrumbs .v-breadcrumbs__divider, .theme--light.v-breadcrumbs .v-breadcrumbs__item--disabled {
 		color: color(primary);
 		font-family: font(medium);
+	}
+}
+
+.product-related {
+	.swiper-button-next {
+		background-image: url('/static/img/slider-arrow-rigth.svg');
+	}
+
+	.swiper-button-prev {
+		background-image: url('/static/img/slider-arrow-left.svg');
+	}
+
+	.swiper-button-next, .swiper-button-prev {
+		background-size: auto;
+		cursor: pointer;
+		height: 19px;
+		outline: none;
+		top: calc(50% - 26px);
+		transform: translateY(50%);
+		width: 13px;
+	}
+
+	@media screen and (max-width: 975px) {
+		.swiper-button-next, .swiper-button-prev {
+			display: none;
+		}
 	}
 }
 </style>
