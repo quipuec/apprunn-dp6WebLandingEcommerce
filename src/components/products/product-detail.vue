@@ -19,7 +19,7 @@
 						small
 						class="product-rating"
 						background-color="#ffcc03"
-						color="#ffcc03"
+						:color="globalColors.highLight"
 						v-model="data.rating"
 						readonly>
 					</v-rating>
@@ -46,20 +46,8 @@ function stopClick() {
 }
 
 async function addToFavorites() {
-	if (this.token) {
-		this.isLoading = true;
-		const headers = {
-			Authorization: `Bearer ${this.token}`,
-		};
-		const url = `products/favorite/${this.data.id}`;
-		const body = {
-			isFavorite: !this.data.flagFavorite,
-		};
-		await this.$httpProducts.post(url, body, { headers });
-		this.$emit('update');
-	} else {
-		this.showNotification('Debe iniciar sesión para agregar a favoritos', 'info');
-	}
+	this.$store.dispatch('SET_FAVORITE_FLAG', { context: this, product: this.data });
+	this.$set(this.data, 'flagFavorite', !this.data.flagFavorite);
 }
 
 function getDiscont() {
