@@ -7,6 +7,8 @@
 				<p class="title-tabs">
 					{{help.title}}
 				</p>
+				<button-image></button-image>
+				<img src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-up.svg" alt="">
 				<button
 				:class="[
 				{ 'active-help' : currentHelp === item }
@@ -40,6 +42,7 @@
 <script>
 const warranty = () => import('@/components/help/warranty');
 const appSlider = () => import('@/components/help/app-slider');
+const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 
 function seeThisHelp(help) {
 	const opts = {
@@ -53,6 +56,11 @@ function seeThisHelp(help) {
 
 function data() {
 	return {
+		arrowUp: {
+			image: '/static/img/user.svg',
+			name: 'Usuario',
+			height: 20,
+		},
 		currentHelpComponent: warranty,
 		currentHelp: '',
 		helps: [
@@ -104,6 +112,7 @@ export default {
 	data,
 	name: 'tabs-help',
 	components: {
+		buttonImage,
 		appSlider,
 		warranty,
 	},
@@ -157,6 +166,10 @@ export default {
 
 .content-help {
 	width: 25%;
+
+	@media (max-width: 950px) {
+		width: 100%;
+	}
 }
 
 .w-100 {
@@ -170,7 +183,7 @@ export default {
 }
 
 .slider-help {
-	@media (min-width: 950px) {
+	@media (min-width: 949px) {
 		display: none;
 	}
 }
