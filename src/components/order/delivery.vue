@@ -120,6 +120,10 @@ export default {
 	.btn {
 		flex: 1 1 40%;
 		margin: 0 10px;
+
+		@media (max-width: 600px) {
+			font-size: size(msmall);
+		}
 	}
 
 	.responsible {
@@ -131,7 +135,7 @@ export default {
 	}
 
 	.responsible-field {
-		flex: 1 1 40%;
+		flex: 1 1 47%;
 		height: 68px;
 	}
 </style>
