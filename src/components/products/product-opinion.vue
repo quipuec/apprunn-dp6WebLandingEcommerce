@@ -1,20 +1,20 @@
 <template>
 	<div>
 		<form-opinion @update="$emit('update-opinion')"/>
-		<!-- <opinion 
+		<opinion 
 			v-for="(item, index) in opinions" 
 			:key="index"
-			:opinion="item"/> -->
+			:opinion="item"/>
 	</div>
 </template>
 <script>
-// import opinion from '@/components/detail/opinion';
-import formOpinion from '@/components/products/form-opinion';
+const opinion = () => import('@/components/products/opinion');
+const formOpinion = () => import('@/components/products/form-opinion');
 
 export default {
 	name: 'wrapper-opinions',
 	components: {
-		// opinion,
+		opinion,
 		formOpinion,
 	},
 	props: {

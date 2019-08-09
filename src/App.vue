@@ -411,6 +411,11 @@ input.app-input::-webkit-input-placeholder {
 		background: color(gray);
 		border-radius: 5px;
 		justify-content: space-between;
+		margin-bottom: 39px;
+
+		@media screen and (max-width: 996px) {
+			height: 38px;
+		}
 	}
 
 	.v-tabs__item {

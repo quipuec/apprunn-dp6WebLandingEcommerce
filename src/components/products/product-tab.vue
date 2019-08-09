@@ -20,7 +20,7 @@
 				/>
       </v-tab-item>
 			<v-tab-item v-if="active === lastIndex">
-        <product-opinion />
+        <product-opinion :opinions="opinions" @update-opinion="$emit('update-opinion')"/>
       </v-tab-item>
 		</v-tabs>
 	</div>
@@ -52,6 +52,10 @@ export default {
 			default: () => [],
 		},
 		lastIndex: Number,
+		opinions: {
+			type: Array,
+			default: () => [],
+		},
 	},
 };
 </script>
@@ -65,6 +69,16 @@ export default {
 		height: 100%;
 		justify-content: center;
 		width: 100%;
+
+		@media screen and (max-width: 996px) {
+			font-size: 9px;
+		}
+	}
+
+	.product-tab {
+		@media screen and (max-width: 996px) {
+			padding: 0 13px;
+		}
 	}
 </style>
 

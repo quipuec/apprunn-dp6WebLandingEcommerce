@@ -14,7 +14,9 @@
 				class="container-product-tab"
 				:tabs="tabs"
 				:sections="product.sections"
-				:lastIndex="lastIndex"/>
+				:lastIndex="lastIndex"
+				:opinions="opinions"
+				@update-opinion="loadOpinions"/>
 		</div>
 	</div>
 </template>
@@ -34,6 +36,7 @@ function isLoggedUser() {
 
 function created() {
 	this.loadData();
+	this.loadOpinions();
 }
 
 async function loadData() {
@@ -53,11 +56,21 @@ async function loadData() {
 	}
 }
 
+async function loadOpinions() {
+	const params = {
+		typeQuestionAnswer: 3,
+		productId: this.id,
+	};
+	const { data: response } = await this.$httpProducts.get('question-answer', { params });
+	this.opinions = response;
+}
+
 function data() {
 	return {
 		product: {},
 		tabs: [],
 		lastIndex: 0,
+		opinions: [],
 	};
 }
 
@@ -78,6 +91,7 @@ export default {
 	methods: {
 		loadData,
 		isLoggedUser,
+		loadOpinions,
 	},
 	props: {
 		id: {
@@ -126,7 +140,11 @@ export default {
 	}
 
 	.container-product-tab {
-		width: 80%;
+		width: 65%;
+		
+		@media screen and (max-width: 996px) {
+			width: 100%;
+		}
 	}
 </style>
 

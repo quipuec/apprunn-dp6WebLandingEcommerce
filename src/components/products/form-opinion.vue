@@ -3,7 +3,8 @@
 		<div>
 			<div class="form-title">CALIFICANOS</div>
 			<v-rating
-				background-color="#ffcc03" 
+				:background-color="globalColors.highLight"
+				:color="globalColors.highLight"
 				v-model="value"
 			>
 			</v-rating>
@@ -18,6 +19,7 @@
 				:background="globalColors.primary"
 				action="Enviar"
 				class="form-btn"
+				:class="{'disabled': disabledBtn}"
 				:disabled="disabledBtn"
 				@click="sendOpinion"
 			/>
@@ -25,9 +27,9 @@
 	</div>
 </template>
 <script>
-// import { mapGetters } from 'vuex';
-const appButton = () => import('@/components/shared/buttons/app-button');
+import { mapGetters } from 'vuex';
 
+const appButton = () => import('@/components/shared/buttons/app-button');
 
 function data() {
 	return {
@@ -45,66 +47,33 @@ function disabledBtn() {
 }
 
 async function sendOpinion() {
-	// if (!this.token) {
-	// 	this.$message({
-	// 		message: 'Para realizar una opinión tiene que registrarse',
-	// 		showClose: true,
-	// 		type: 'error',
-	// 	});
-	// } else {
-	// 	const idProduct = this.$route.params.id;
-	// 	const token = this.token;
-	// 	const headers = {
-	// 		Authorization: `Bearer ${token}`,
-	// 	};
-	// 	const body = {
-	// 		description: this.model.description,
-	// 		typeQuestionAnswer: 3,
-	// 		rating: this.value,
-	// 		additionalInformation: {
-	// 			customerImage: this.model.avatar,
-	// 			name: this.model.name,
-	// 		},
-	// 	};
-	// 	try {
-	// 		await this.$httpQtc.post(`question-answer/${idProduct}/product`, body, { headers });
-	// 		this.clearForm();
-	// 		this.$emit('update');
-	// 	} catch (error) {
-	// 		this.$message({
-	// 			message: 'Error',
-	// 			showClose: true,
-	// 			type: 'error',
-	// 		});
-	// 	}
-	// }
+	if (!this.token) {
+		this.showGenericError('Para realizar una opinión tiene que registrarse');
+	} else {
+		const idProduct = this.$route.params.id;
+		const body = {
+			description: this.model.description,
+			typeQuestionAnswer: 3,
+			rating: this.value,
+			additionalInformation: {
+				customerImage: this.user.urlImage,
+				name: `${this.user.name} ${this.user.lastname}`,
+			},
+		};
+		try {
+			await this.$httpProducts.post(`question-answer/${idProduct}/product`, body);
+			this.clearForm();
+			this.$emit('update');
+		} catch (error) {
+			this.showGenericError();
+		}
+	}
 }
 
-// function clearForm() {
-// 	this.model.description = null;
-// 	this.value = null;
-// }
-
-
-// function setData(value) {
-// 	if (value) {
-// 		setTimeout(() => {
-// 			const dataNew = this.getUserInfo;
-// 			this.model.name = dataNew.fullName;
-// 			this.model.avatar = this.$store.state.user.avatar;
-// 		}, 300);
-// 	} else {
-// 		this.clearForm();
-// 	}
-// }
-
-// function created() {
-// 	if (this.token) {
-// 		const dataNew = this.getUserInfo;
-// 		this.model.name = dataNew.typePerson.fullName;
-// 		this.model.avatar = this.$store.state.user.avatar;
-// 	}
-// }
+function clearForm() {
+	this.model.description = null;
+	this.value = null;
+}
 
 export default {
 	name: 'form-opinion',
@@ -114,18 +83,14 @@ export default {
 	},
 	computed: {
 		disabledBtn,
-		// ...mapGetters([
-		// 	'token',
-		// 	'getUserInfo',
-		// ]),
+		...mapGetters([
+			'token',
+			'user',
+		]),
 	},
-	// created,
 	methods: {
 		sendOpinion,
-		// clearForm,
-	},
-	watch: {
-		// token: setData,
+		clearForm,
 	},
 };
 </script>
@@ -133,24 +98,38 @@ export default {
 	.form-option {
 		display: flex;
 		justify-content: space-between;
-		margin: 34px 0;
+		margin-bottom: 34px;
 
 		.form-title {
 			font-family: font(demi);
 			font-size: size(small);
-			margin-bottom: 15px;
+			margin-bottom: 0px;
+			padding-left: 0.5rem;
+
+			@media screen and (max-width: 996px) {
+				text-align: center;
+			}
+		}
+
+		@media screen and (max-width: 996px) {
+			align-items: center;
+			flex-direction: column;
 		}
 	}
 
 	.form-group {
 		width: 70%;
+
+		@media screen and (max-width: 996px) {
+			width: 100%;
+		}
 	}
 
 	.form-textarea {
-		background: color(gray);
+		background: color(disabled);
 		border: 1px solid color(border);
 		border-radius: 4px;
-		font-family: font(demi);
+		font-family: font(regular);
 		font-size: size(medium);
 		height: 86px;
 		margin-bottom: 18px;
@@ -163,6 +142,14 @@ export default {
 	.form-btn {
 		margin-left: auto;
 		width: 127px;
+
+		&.disabled {
+			opacity: 0.2;
+		}
+
+		@media screen and (max-width: 996px) {
+			margin: auto;
+		}
 	}
 </style>
 
