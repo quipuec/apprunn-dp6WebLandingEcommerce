@@ -10,15 +10,16 @@
 		<div class="container-detail-information">
 			<div class="container-detail-name">
 				<p class="product-detail-name">{{data.name}}</p>
+				<p class="product-detail-brand">{{data.warehouseProduct.brand.name}}</p>
 			</div>
 			<div class="d-center container-code-rating">
-				<span class="product-detail-code">{{data.code}}</span>
+				<span class="product-detail-code">#{{data.code}}</span>
 				<div class="container-rating d-center">
 					<v-rating
 						small
 						class="product-rating"
 						background-color="#ffcc03"
-						color="#ffcc03"
+						:color="globalColors.highLight"
 						v-model="data.rating"
 						readonly>
 					</v-rating>
@@ -29,7 +30,7 @@
 		<div>
 			<div class="d-center mt-25">
 				<span class="text-price-dis" :style="`color: ${globalColors.secondary}`">{{getCurrencySymbol}} {{data.priceDiscount || ''}}</span>
-				<div class="content-discount">{{data.percentageDiscount | round }}</div>
+				<div class="content-discount">{{getDiscont}}%</div>
 			</div>
 			<span class="text-price">{{getCurrencySymbol}} {{data.price || ''}}</span>
 		</div>
@@ -45,20 +46,12 @@ function stopClick() {
 }
 
 async function addToFavorites() {
-	if (this.token) {
-		this.isLoading = true;
-		const headers = {
-			Authorization: `Bearer ${this.token}`,
-		};
-		const url = `products/favorite/${this.data.id}`;
-		const body = {
-			isFavorite: !this.data.flagFavorite,
-		};
-		await this.$httpProducts.post(url, body, { headers });
-		this.$emit('update');
-	} else {
-		this.showNotification('Debe iniciar sesión para agregar a favoritos', 'info');
-	}
+	this.$store.dispatch('SET_FAVORITE_FLAG', { context: this, product: this.data });
+	this.$set(this.data, 'flagFavorite', !this.data.flagFavorite);
+}
+
+function getDiscont() {
+	return this.data.percentageDiscount * 100;
 }
 
 export default {
@@ -71,6 +64,7 @@ export default {
 			'getCurrencySymbol',
 			'token',
 		]),
+		getDiscont,
 	},
 	methods: {
 		stopClick,
@@ -89,7 +83,7 @@ export default {
 		color: color(dark);
 		font-family: font(bold);
 		font-size: size(xlarge);
-		margin: 20px 0 31px 0;
+		margin: 20px 0 5px 0;
 	}
 
 	.product-detail-code {
@@ -193,6 +187,15 @@ export default {
 	.container-code-rating {
 		@media screen and (max-width: 996px) {
 			flex: 1 1 40%;
+		}
+	}
+
+	.product-detail-brand {
+		font-size: size(small);
+		text-transform: uppercase;
+
+		@media screen and (max-width: 996px) {
+			font-size: size(xsmall);
 		}
 	}
 </style>
