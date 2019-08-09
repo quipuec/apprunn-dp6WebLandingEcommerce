@@ -108,6 +108,12 @@ export default {
 		closeList,
 		openList,
 	},
+	props: {
+		categories: {
+			type: Array,
+			default: () => [],
+		},
+	},
 	components: {
 		buttonImage,
 	},
@@ -137,7 +143,7 @@ li {
 }
 
 .content-image-arrow {
-	padding-left: 41px;
+	padding-left: 65px;
 }
 
 .title-list {
@@ -147,9 +153,8 @@ li {
 }
 
 .background-gray {
-	background-color: color(disabled);
 	padding: 56px 0;
-	width: 65%;
+	width: 71%;
 }
 
 .content-list {
