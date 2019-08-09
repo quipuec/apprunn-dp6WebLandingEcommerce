@@ -216,9 +216,9 @@ export default {
 }
 
 .active-help {
-	color: #f42b17;
-	font-size: 12px;
+	color: color(primary);
 	font-family: font(bold);
+	font-size: 12px;
 }
 
 .slider-help {

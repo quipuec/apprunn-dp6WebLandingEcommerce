@@ -38,14 +38,14 @@ export default {
 <style lang="scss" scoped>
 .slider-container {
 	background-color: color(white);
+	bottom: 0;
 	height: 100vh;
+	left: 0;
 	margin-top: 169px;
 	padding: 25px 36px;
 	position: absolute;
 	top: 0;
 	right: 0;
-	bottom: 0;
-	left: 0;
 	width: 100%;
 	z-index: 99;
 }
@@ -67,7 +67,7 @@ export default {
 .title-center {
 	color: color(secondary);
 	font-family: font(bold);
-	font-size: 13px;
+	font-size: size(minmedium);
 	text-align: center;
 	width: 95%;
 }
