@@ -5,7 +5,7 @@
 				<button 
 				class="close-btn" 
 				@click="closeSlider">
-					X
+					<img src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/left-arrow.svg" alt="" width="19px" height="13px">
 				</button>
 				<span class="title-center">{{title}}</span>
 			</div>
@@ -17,7 +17,6 @@
 <script>
 
 function closeSlider() {
-	debugger;
 	this.$emit('input', false);
 }
 
@@ -54,15 +53,18 @@ export default {
 	align-items: center;
 	justify-content: flex-start;
 	text-transform: uppercase;
+	padding-top: 22px;
 }
 
 .close-btn {
 	background: transparent;
 	border: none;
-	color: white;
 }
 
 .title-center {
+		color: #06539f;
+	font-size: 13px;
+	font-family: font(bold);
 	text-align: center;
 	width: 95%;
 }

@@ -4,22 +4,36 @@
 			<div class="w-100">
 				<div class="title-help">CENTRO DE AYUDA</div>
 				<div v-for="(help, index) in helps" :key="index">
-				<p class="title-tabs">
+				<div class="title-tabs">
 					{{help.title}}
-				</p>
-				<button-image></button-image>
-				<img src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-up.svg" alt="">
-				<button
-				:class="[
-				{ 'active-help' : currentHelp === item }
-				]"
-				@click="seeThisHelp(item)"
-				type="button" 
-				class="item-tabs"
-				v-for="(item, indexItem) in help.items" :key="indexItem"
-				>
-					{{item}}
-					</button>
+					<div>
+						<button-image
+						:data="openArrow"
+						class="icon-close"
+						v-if="arrowTabs"
+						@click-image="closeList"
+						></button-image>
+						<button-image
+						:data="closeArrow"
+						class="icon-close"
+						@click-image="openList"
+						v-if="openArrowTabs"
+						></button-image>
+					</div>
+				</div>
+				<div v-if="listHelp">
+					<button
+					:class="[
+					{ 'active-help' : currentHelp === item }
+					]"
+					@click="seeThisHelp(item)"
+					type="button" 
+					class="item-tabs"
+					v-for="(item, indexItem) in help.items" :key="indexItem"
+					>
+						{{item}}
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>	
@@ -53,13 +67,32 @@ function seeThisHelp(help) {
 	this.open = true;
 }
 
+function closeList() {
+	this.listHelp = false;
+	this.arrowTabs = false;
+	this.openArrowTabs = true;
+}
+
+function openList() {
+	this.listHelp = true;
+	this.arrowTabs = true;
+	this.openArrowTabs = false;
+}
 
 function data() {
 	return {
-		arrowUp: {
-			image: '/static/img/user.svg',
-			name: 'Usuario',
-			height: 20,
+		openArrowTabs: true,
+		arrowTabs: false,
+		listHelp: false,
+		openArrow: {
+			image: '/static/img/icons/arrow-gray-help.svg',
+			name: 'open',
+			height: 13,
+		},
+		closeArrow: {
+			image: '/static/img/icons/arrow-down-gray.svg',
+			name: 'close',
+			height: 13,
 		},
 		currentHelpComponent: warranty,
 		currentHelp: '',
@@ -117,6 +150,8 @@ export default {
 		warranty,
 	},
 	methods: {
+		closeList,
+		openList,
 		seeThisHelp,
 	},
 };
@@ -127,6 +162,7 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	padding: 20px;
+	width: 100%;
 }
 
 .title-help {
@@ -138,8 +174,11 @@ export default {
 }
 
 .title-tabs {
+	align-items: center;
 	border-bottom: 2px solid color(disabled);
 	color: color(dark);
+	display: flex;
+	justify-content: space-between;
 	font-family: font(bold);
 	font-size: font(medium);
 	margin-top: 22px;
@@ -184,6 +223,12 @@ export default {
 
 .slider-help {
 	@media (min-width: 949px) {
+		display: none;
+	}
+}
+
+.icon-close {
+	@media (min-width: 950px) {
 		display: none;
 	}
 }
