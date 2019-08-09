@@ -240,7 +240,7 @@ export default {
 		max-height: 369.6px;
 		min-height: 226px;
 		position: absolute;
-		top: 179px;
+		top: 188px;
 		z-index: 5;
 		width: 100%;
 

@@ -15,7 +15,7 @@ function setUser(state, user) {
 }
 
 function showSnackBar(state, snackbar) {
-	Vue.set(state.appConfig, 'snackbar', snackbar);
+	Vue.set(state.appConfig, 'snackbar', { ...snackbar });
 }
 
 function toggleLoading(state, value) {

@@ -10,12 +10,21 @@ const asyncActions = {
 		const [{ data: products }] = await Promise.all(request);
 		commit('SET_PRODUCTS', products);
 	},
-	SET_FAVORITE_FLAG: async (state, { context, product }) => {
-		const url = `products/favorite/${context.product.id}`;
+	SET_FAVORITE_FLAG: async ({ commit }, { context, product }) => {
+		const url = `products/favorite/${product.id}`;
 		const body = {
-			isFavorite: product.flagFavorite,
+			isFavorite: !product.flagFavorite,
 		};
-		await this.$httpQtc.post(url, body);
+		if (context.$store.state.token) {
+			await context.$httpProducts.post(url, body);
+		} else {
+			const message = {
+				text: 'Debe iniciar sesión para agregar a favoritos',
+				isVisible: true,
+				color: 'error',
+			};
+			commit('showSnackBar', message);
+		}
 	},
 	CREATE_ORDER: async ({ commit }, { context, body }) => {
 		const url = 'orders';

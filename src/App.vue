@@ -20,12 +20,6 @@
 			:color-border="colorBorder"
 			:categories="getCategories"/>
   	</transition>
-	<v-progress-linear
-		class="progress-bar"
-		color="success"
-		:indeterminate="indeterminate"
-		v-if="indeterminate"
-	></v-progress-linear>
 	<router-view></router-view>
 	<section-visa></section-visa>
 	<form-bulletin />
@@ -75,12 +69,23 @@ function changeMenu() {
 	this.showMenu = !this.showMenu;
 }
 
-function beforeCreate() {
-	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
-}
 
 function routeHandler() {
 	this.showMenu = false;
+}
+
+function created() {
+	if (!this.getLocalStorage(`${process.env.STORAGE_USER_KEY}::currency-default`)) {
+		this.loadData();
+	}
+	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
+}
+
+async function loadData() {
+	const aclCode = process.env.ACL_COMPANY_CODE;
+	const url = `companies/${aclCode}/acl`;
+	const { data: res } = await this.$httpSales.get(url);
+	this.setLocalData(`${process.env.STORAGE_USER_KEY}::currency-default`, res.currencyDefault);
 }
 
 function data() {
@@ -111,7 +116,7 @@ export default {
 		]),
 	},
 	data,
-	beforeCreate,
+	created,
 	components: {
 		appFooter,
 		appHeader,
@@ -122,6 +127,7 @@ export default {
 	},
 	methods: {
 		changeMenu,
+		loadData,
 	},
 	watch: {
 		$route: routeHandler,
