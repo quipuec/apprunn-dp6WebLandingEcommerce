@@ -83,7 +83,7 @@ function data() {
 	return {
 		openArrowTabs: true,
 		arrowTabs: false,
-		listHelp: false,
+		listHelp: true,
 		openArrow: {
 			image: '/static/img/icons/arrow-gray-help.svg',
 			name: 'open',

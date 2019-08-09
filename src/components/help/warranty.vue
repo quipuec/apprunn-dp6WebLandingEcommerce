@@ -70,7 +70,7 @@ table {
 }
 
 table, td, th {
-	border: 2px solid black;
+	border: 2px solid color(black);
 	padding: 4px;
 }
 
@@ -79,21 +79,25 @@ table, td, th {
 	font-family: font(bold);
 	font-size: 16px;
 	@media (max-width: 950px) {
-		color: #004e9c;
+		color: color(secondary);
 		font-size: 16px;
 		margin-top: 32px;
 	}
 }
 
 .subtitle-component {
-	color: #4a4a4a;
-	font-size: 14px;
+	color: color(dark);
 	font-family: font(demi);
+	font-size: 14px;
+
+	@media (max-width: 950px) {
+		width: 200px;
+	}
 }
 
 .description-component {
-	font-size: 12px;
 	font-family: font(regular);
+	font-size: 12px;
 }
 
 .title-table {

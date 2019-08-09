@@ -39,6 +39,7 @@ export default {
 .slider-container {
 	background-color: color(white);
 	height: 100vh;
+	margin-top: 169px;
 	padding: 25px 36px;
 	position: absolute;
 	top: 0;
