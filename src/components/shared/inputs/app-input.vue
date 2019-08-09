@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="input-container">
 		<input
 			class="app-input"
 			v-bind="$attrs"
@@ -36,6 +36,11 @@
 </script>
 
 <style lang="scss" scoped>
+	.input-container {
+		display: flex;
+		flex-direction: column;
+	}
+
 	.app-input {
 		background-color: color(background);
 		border: 1px solid color(border);

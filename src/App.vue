@@ -1,7 +1,11 @@
 <template>
 	<v-app class="main-container">
 		<app-banner-top :data="bannerTop"/>
-		<app-header :logo="logo" @change-menu="changeMenu" :menu="showMenu"/>
+		<app-header 
+			:logo="logo" 
+			@change-menu="changeMenu" 
+			:menu="showMenu"
+			:user="user"/>
 		<transition name="slide-fade">
 			<div 
 				class="v-overlay v-overlay--absolute v-overlay--active mobile-overlay" 
@@ -13,17 +17,13 @@
 			v-if="showMenu" 
 			:img-user="user"
 			:color-base="colorBase"
-			:color-border="colorBorder"/>
+			:color-border="colorBorder"
+			:categories="getCategories"/>
   	</transition>
-	<v-progress-linear
-		class="progress-bar"
-		color="success"
-		:indeterminate="indeterminate"
-		v-if="indeterminate"
-	></v-progress-linear>
 	<router-view></router-view>
 	<section-visa></section-visa>
 	<form-bulletin />
+	<app-footer></app-footer>
 	<v-snackbar
 			:timeout="5000"
 			:color="snackbar.color"
@@ -48,11 +48,14 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
 const appBannerTop = () => import('@/components/header/app-banner-top');
 const formBulletin = () => import('@/components/shared/form/form-bulletin');
 const sectionVisa = () => import('@/components/footer/section-visa');
+const appFooter = () => import('@/components/footer/app-footer');
 
 function indeterminate() {
 	return this.$store.getters.indeterminate;
@@ -66,8 +69,23 @@ function changeMenu() {
 	this.showMenu = !this.showMenu;
 }
 
+
 function routeHandler() {
 	this.showMenu = false;
+}
+
+function created() {
+	if (!this.getLocalStorage(`${process.env.STORAGE_USER_KEY}::currency-default`)) {
+		this.loadData();
+	}
+	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
+}
+
+async function loadData() {
+	const aclCode = process.env.ACL_COMPANY_CODE;
+	const url = `companies/${aclCode}/acl`;
+	const { data: res } = await this.$httpSales.get(url);
+	this.setLocalData(`${process.env.STORAGE_USER_KEY}::currency-default`, res.currencyDefault);
 }
 
 function data() {
@@ -78,11 +96,6 @@ function data() {
 			height: 30,
 		},
 		showMenu: false,
-		user: {
-			urlImage: '/static/img/user.svg',
-			name: 'Login',
-			height: 25,
-		},
 		colorBase: process.env.COLOR_BASE,
 		colorBorder: process.env.COLOR_BORDER,
 		bannerTop: {
@@ -97,17 +110,24 @@ export default {
 	computed: {
 		indeterminate,
 		snackbar,
+		...mapGetters([
+			'user',
+			'getCategories',
+		]),
 	},
 	data,
+	created,
 	components: {
-		sectionVisa,
+		appFooter,
 		appHeader,
-		appMenuCategory,
 		appBannerTop,
+		appMenuCategory,
 		formBulletin,
+		sectionVisa,
 	},
 	methods: {
 		changeMenu,
+		loadData,
 	},
 	watch: {
 		$route: routeHandler,
@@ -245,6 +265,49 @@ input.app-input::-webkit-input-placeholder {
 	}
 }
 
+
+.filters-category {
+	.theme--light.v-messages {
+		display: none;
+	}
+	
+	.v-input input {
+		color: color(base);
+	}
+
+	.v-text-field__slot {
+		color: color(base) !important;
+		left: 1px;
+		position: relative;
+		top: 32px;
+	}
+
+	.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+		display: none !important;
+	}
+
+	.v-card__text {
+		padding: 0;
+	}
+
+	.v-slider__thumb {
+		background-color: color(base) !important;
+		border-color: color(base) !important;
+	}
+
+	.v-slider__thumb-container .primary--text {
+		color: color(base) !important;
+	}
+
+	.primary {
+		background-color: color(base) !important;
+	}
+
+	.v-input--slider {
+		position: relative;
+   		right: 46px;
+	}
+}		   
 .text-area {
 	color: color(border) !important;
 	font-family: font(medium) !important;
@@ -317,5 +380,51 @@ input.app-input::-webkit-input-placeholder {
 .err-message {
 	color: color(primary);
 	font-size: size(xsmall);
+}
+
+.component-filter {
+	.swiper-slide {
+		border-right: 1px solid color(white);
+		display: flex;
+		height: 51px;
+		justify-content: center;
+	}
+
+	.swiper-container {
+		width: 100%;
+	}
+	
+	.swiper-button-next {
+		background-image: url('/static/img/icons/arrow-button-next-white.svg');
+		position: absolute;
+		right: 0;
+
+		@media (max-width: 650px) {
+			right: 15px;
+		}
+	}
+
+	.swiper-button-prev {
+		background-image: url('/static/img/icons/arrow-button-prev-white.svg');
+		left: 0;
+		position: absolute;
+		
+		@media (max-width: 650px) {
+			left: 15px;
+		}
+	}
+}
+
+.page-category {
+	.v-breadcrumbs__item {
+		color: color(base);
+		font-family: font(medium);
+		font-size: size(medium);
+	}
+
+	.theme--light.v-breadcrumbs .v-breadcrumbs__divider, .theme--light.v-breadcrumbs .v-breadcrumbs__item--disabled {
+		color: color(primary);
+		font-family: font(medium);
+	}
 }
 </style>

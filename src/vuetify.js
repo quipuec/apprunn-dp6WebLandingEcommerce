@@ -41,6 +41,8 @@ import {
 	VAvatar,
 	VInput,
 	VRating,
+	VRangeSlider,
+	VBreadcrumbs,
 } from 'vuetify';
 
 export default function (Vue) {
@@ -48,11 +50,13 @@ export default function (Vue) {
 		Vuetify,
 		{
 			components: {
+				VRangeSlider,
 				VAvatar,
 				VAlert,
 				VApp,
 				VAutocomplete,
 				VBtn,
+				VBreadcrumbs,
 				VBtnToggle,
 				VCheckbox,
 				VChip,

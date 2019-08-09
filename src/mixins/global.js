@@ -82,6 +82,15 @@ function globalColors() {
 	};
 }
 
+function getLocalStorage(key) {
+	const items = JSON.parse(localStorage.getItem(key));
+	return items;
+}
+
+function setLocalData(key, setData) {
+	return localStorage.setItem(key, JSON.stringify(setData));
+}
+
 const mixin = {
 	data,
 	computed: {
@@ -90,10 +99,12 @@ const mixin = {
 	},
 	methods: {
 		getImageUrl,
+		getLocalStorage,
 		goTo,
 		loadData,
 		onSearch,
 		replaceString,
+		setLocalData,
 		showGenericError,
 		showNotification,
 		showRow,
