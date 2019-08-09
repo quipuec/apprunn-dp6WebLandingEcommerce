@@ -154,11 +154,10 @@ export default {
 	.app-header {
 		background: color(white);
 		display: flex;
-		height: 76px;
+		height: inherit;
 		padding: 0px 6%;
 		box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.11);
 		position: relative;
-		overflow: hidden;
 
 		@media (min-width: 768px) {
 			height: 99px;
@@ -170,8 +169,13 @@ export default {
 	.app-wrapper {
 		align-items: center;
 		display: flex;
+		height: 75px;
 		position: relative;
 		width: 100%;
+
+		@media (min-width: 768px) {
+			height: 95px;
+		}
 	}
 
 	.flex {
