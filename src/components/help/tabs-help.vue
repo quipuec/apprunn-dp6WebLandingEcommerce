@@ -26,11 +26,20 @@
 				:is="currentHelpComponent"
 			></component>
 		</div>
+		<app-slider
+		class="slider-help"
+		:title="currentHelp"
+		v-model="open">
+			<component
+			:is="currentHelpComponent"
+			></component>
+		</app-slider>
 	</div>
 </template>
 
 <script>
 const warranty = () => import('@/components/help/warranty');
+const appSlider = () => import('@/components/help/app-slider');
 
 function seeThisHelp(help) {
 	const opts = {
@@ -95,6 +104,7 @@ export default {
 	data,
 	name: 'tabs-help',
 	components: {
+		appSlider,
 		warranty,
 	},
 	methods: {
@@ -139,6 +149,10 @@ export default {
 .content-components {
 	padding-left: 77px;
 	width: 75%;
+
+	@media (max-width: 950px) {
+		display: none;
+	}
 }
 
 .content-help {
@@ -153,5 +167,11 @@ export default {
 	color: #f42b17;
 	font-size: 12px;
 	font-family: font(bold);
+}
+
+.slider-help {
+	@media (min-width: 950px) {
+		display: none;
+	}
 }
 </style>
