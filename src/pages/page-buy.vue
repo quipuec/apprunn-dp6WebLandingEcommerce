@@ -68,7 +68,8 @@ export default {
 		display: grid;
 		grid-template-rows: 1fr;
 		margin: 0 auto;
-		padding: 40px 6% 0;
+		max-width: 1186px;
+		padding: 40px 0;
 
 		@media (max-width: 600px) {
 			padding: 40px 10px 0;
@@ -82,13 +83,13 @@ export default {
 	}
 
 	.big {
-		flex: 1 1 65%;
-		height: 100%;
+		flex: 1 1 50%;
+		height: max-content;
 		margin: 0 10px;
 	}
 
 	.small {
-		flex: 1 1 20%;
+		flex: 1 1 5%;
 		height: 100%;
 		margin: 0 10px;
 	}
