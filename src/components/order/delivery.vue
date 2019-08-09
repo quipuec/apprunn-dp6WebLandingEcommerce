@@ -24,19 +24,27 @@
 			placeholder="Seleccione una tienda"
 			item-text="name"
 			item-value="id"
+			:address="selectedWarehouse.name"
+			:center="warehouesesCenter"
+			:disable-map="disableMapButtonByWarehouse"
+			:markers="singleOrMultiMarkersOnWarehouses"
 			:options="getWarehouses"
-			v-model="selectedWarehouse"
+			:zoom="warehousesZoom"
+			:value="selectedWarehouse.id"
+			@input="warehouseSelected"
 		/>
 		<responsible-form/>
 		<div v-if="getFlagPickUp === 1">
 			<address-component
+				hide-map-button
 				placeholder="Seleccione una dirección"
 				item-text="addressLine1"
 				item-value="id"
 				:options="getDirections"
-				v-model="selectedDirection"
+				:value="selectedDirection.id"
+				@input="directionSelected"
 			/>
-			<new-address/>
+			<new-address v-if="selectedDirection.id === 0"/>
 		</div>
 	</div>
 </template>
@@ -53,18 +61,123 @@ const responsibleForm = () => import('@/components/order/responsible-form');
 function created() {
 	this.$store.dispatch('LOAD_DIRECTIONS', this);
 	this.$store.dispatch('LOAD_WAREHOUSES', this);
-	this.selectedDirection = 0;
-	this.selectedWarehouse = 0;
 }
 
 function selected(val) {
+	const delivery = val === 1 ? this.favoriteDirection : null;
+	this.$store.commit('SET_DELIVERY_PLACE', delivery);
 	this.$store.commit('SET_FLAG_PICKUP', val);
+}
+
+function warehousesMarkers() {
+	const warehousesLocation = this.getWarehouses.reduce((list, w) => {
+		const { name, id, location } = w;
+		if (location) {
+			const { x, y } = location;
+			const marker = {};
+			marker.id = id;
+			marker.name = name;
+			marker.position = location ? { lat: x, lng: y } : {};
+			return list.concat(marker);
+		}
+		return list;
+	}, []);
+	return warehousesLocation;
+}
+
+
+function handlerDeliveryAddress(newDelivery) {
+	const { addressLine1, id, name, position } = newDelivery;
+	if (this.getFlagPickUp === 1) {
+		this.clearSelectedWarehouse();
+		this.selectedDirection.id = id;
+		this.selectedDirection.addressLine1 = addressLine1;
+		this.selectedDirection.position = position;
+	} else {
+		this.clearSelectedDirection();
+		this.selectedWarehouse.id = id;
+		this.selectedWarehouse.name = name;
+		this.selectedWarehouse.position = position;
+	}
+}
+
+function singleOrMultiMarkersOnWarehouses() {
+	return this.selectedWarehouse.id ? [this.selectedWarehouse] : this.warehousesMarkers;
+}
+
+function warehouesesCenter() {
+	const len = this.singleOrMultiMarkersOnWarehouses.length;
+	const avrg = this.singleOrMultiMarkersOnWarehouses.reduce((o, { position }) => {
+		const newO = o;
+		if (position) {
+			const { lat, lng } = position;
+			newO.lat = (newO.lat || 0) + lat;
+			newO.lng = (newO.lng || 0) + lng;
+			return newO;
+		}
+		newO.lat = 0;
+		newO.lng = 0;
+		return newO;
+	}, {});
+	return { lat: avrg.lat / len, lng: avrg.lng / len };
+}
+
+function warehousesZoom() {
+	return this.selectedWarehouse.id ? 16 : 12;
+}
+
+function disableMapButtonByWarehouse() {
+	if (this.selectedWarehouse.id) {
+		const { position } = this.selectedWarehouse;
+		return !position;
+	}
+	return false;
+}
+
+function warehouseSelected(id) {
+	const w = this.getWarehouses.find(war => war.id === id);
+	this.$store.commit('SET_DELIVERY_PLACE', w);
+}
+
+function directionSelected(id) {
+	const w = this.getDirections.find(war => war.id === id);
+	this.$store.commit('SET_DELIVERY_PLACE', w);
+}
+
+function clearSelectedDirection() {
+	this.selectedDirection = {
+		id: 0,
+		addressLine1: '',
+		position: {},
+	};
+}
+
+function clearSelectedWarehouse() {
+	this.selectedWarehouse = {
+		id: 0,
+		name: '',
+		position: {},
+	};
+}
+
+function handlerDirectionsChange(newDirections) {
+	this.favoriteDirection = newDirections.find(f => f.isFavorite);
+	this.$store.commit('SET_DELIVERY_PLACE', this.favoriteDirection);
 }
 
 function data() {
 	return {
-		selectedDirection: null,
-		selectedWarehouse: null,
+		favoriteDirection: {},
+		selectedDirection: {
+			id: 0,
+			addressLine1: '',
+			position: {},
+		},
+		selectedWarehouse: {
+			id: 0,
+			name: '',
+			position: {},
+		},
 	};
 }
 
@@ -80,15 +193,34 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getDeliveryAddress',
 			'getFlagPickUp',
 			'getDirections',
 			'getWarehouses',
 		]),
+		disableMapButtonByWarehouse,
+		singleOrMultiMarkersOnWarehouses,
+		warehouesesCenter,
+		warehousesMarkers,
+		warehousesZoom,
 	},
 	created,
 	data,
 	methods: {
+		clearSelectedDirection,
+		clearSelectedWarehouse,
+		directionSelected,
+		handlerDeliveryAddress,
+		handlerDirectionsChange,
 		selected,
+		warehouseSelected,
+	},
+	watch: {
+		getDeliveryAddress: {
+			deep: true,
+			handler: handlerDeliveryAddress,
+		},
+		getDirections: handlerDirectionsChange,
 	},
 };
 </script>

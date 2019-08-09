@@ -1,9 +1,9 @@
 <template>
 	<GmapMap
 		:center="center"
-		:zoom="15"
-		map-type-id="terrain"
-		style="width:100%;height: 400px;"
+		:zoom="zoom"
+		style="width:100%;height:400px;"
+		@click="setCoords"
 	>
 	<GmapMarker
 		:key="index"
@@ -11,31 +11,44 @@
 		:position="m.position"
 		:clickable="true"
 		:draggable="true"
-		@click="center=m.position"
+		@click="selectedMarker(m)"
 	/>
 	</GmapMap>	
 </template>
 <script>
 
-function data() {
-	return {
-		center: {
-			lat: -77.0254634,
-			lng: -12.1190273,
-		},
-		markers: [
-			{
-				position: {
-					lat: 70,
-					lng: 12,
-				},
-			},
-		],
-	};
+function selectedMarker(args) {
+	this.$store.commit('SET_DELIVERY_PLACE', args);
+}
+
+function setCoords(args) {
+	console.log(args.latLng.lat());
 }
 
 export default {
 	name: 'map-component',
-	data,
+	methods: {
+		setCoords,
+		selectedMarker,
+	},
+	props: {
+		center: {
+			default() {
+				return {
+					lat: -12.1192694,
+					lng: -77.0290169,
+				};
+			},
+			type: Object,
+		},
+		markers: {
+			default: () => [],
+			type: Array,
+		},
+		zoom: {
+			default: 12,
+			type: Number,
+		},
+	},
 };
 </script>

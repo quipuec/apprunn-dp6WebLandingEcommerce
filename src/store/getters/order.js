@@ -22,6 +22,9 @@ const getters = {
 	getFlagPickUp(state) {
 		return state.order.flagPickUp;
 	},
+	getDeliveryAddress(state) {
+		return state.order.delivery;
+	},
 };
 
 export default getters;

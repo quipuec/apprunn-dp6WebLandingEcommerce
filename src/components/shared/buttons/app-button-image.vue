@@ -1,6 +1,10 @@
 <template>
   <div class="app-button-image">
-		<button class="app-button" @click="$emit('click-image')">
+		<button
+			class="app-button"
+			@click="$emit('click-image')"
+			v-bind="$attrs"
+		>
 			<div class="button-number" v-if="ifNumber">{{number}}</div>
 			<img :src="imageUser"
 				:alt="data.name"
@@ -19,6 +23,7 @@ export default {
 	computed: {
 		imageUser,
 	},
+	inheritAttrs: false,
 	props: {
 		data: {
 			type: Object,
