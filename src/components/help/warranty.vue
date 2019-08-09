@@ -78,6 +78,11 @@ table, td, th {
 	color: color(primary);
 	font-family: font(bold);
 	font-size: 16px;
+	@media (max-width: 950px) {
+		color: #004e9c;
+		font-size: 16px;
+		margin-top: 32px;
+	}
 }
 
 .subtitle-component {
@@ -100,5 +105,9 @@ table, td, th {
 .table-warranty {
 	margin-top: 35px;
 	width: 60%;
+
+	@media (max-width: 950px) {
+		width: 100%;
+	}
 }
 </style>

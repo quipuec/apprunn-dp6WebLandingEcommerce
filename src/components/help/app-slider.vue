@@ -37,8 +37,9 @@ export default {
 
 <style lang="scss" scoped>
 .slider-container {
-	background-color: white;
+	background-color: color(white);
 	height: 100vh;
+	padding: 25px 36px;
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -49,11 +50,12 @@ export default {
 }
 
 .content-app-slider {
-	display: flex;
 	align-items: center;
+	border-bottom: 4px solid color(secondary); 
+	display: flex;
 	justify-content: flex-start;
+	padding: 22px 0 11px 0;
 	text-transform: uppercase;
-	padding-top: 22px;
 }
 
 .close-btn {
@@ -62,9 +64,9 @@ export default {
 }
 
 .title-center {
-		color: #06539f;
-	font-size: 13px;
+	color: color(secondary);
 	font-family: font(bold);
+	font-size: 13px;
 	text-align: center;
 	width: 95%;
 }
