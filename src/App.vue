@@ -405,4 +405,25 @@ input.app-input::-webkit-input-placeholder {
 		}
 	}
 }
+
+.product-tab {
+	.v-tabs__container {
+		background: color(gray);
+		border-radius: 5px;
+		justify-content: space-between;
+	}
+
+	.v-tabs__item {
+		border-radius: 5px;
+		padding: 0;
+	}
+
+	.v-tabs__item--active {
+		background: transparent !important;
+	}
+
+	.v-tabs__div {
+		flex: 1 1 auto;
+	}
+}
 </style>

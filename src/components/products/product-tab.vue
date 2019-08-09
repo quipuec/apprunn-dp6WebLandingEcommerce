@@ -1,12 +1,16 @@
 <template>
   <div class="product-tab">
-		<v-tabs v-model="active">
+		<v-tabs 
+			v-model="active" 
+			slider-color="transparent">
 			<v-tab
 				v-for="(tab, index) in tabs"
 				:key="index"
 				ripple
 			>
-				{{ tab }}
+				<div 
+					:style="active === index ? `background-color: ${globalColors.primary}; color: white` : null"
+					class="text-tab">{{ tab }}</div>
 			</v-tab>
 			<v-tab-item v-for="(section, index) in sections" :key="index">
         <content-text
@@ -15,14 +19,15 @@
 					:key="subSection.id"
 				/>
       </v-tab-item>
-			<v-tab-item>
-        <p>cococco</p>
+			<v-tab-item v-if="active === lastIndex">
+        <product-opinion />
       </v-tab-item>
 		</v-tabs>
 	</div>
 </template>
 <script>
 const contentText = () => import('@/components/products/content');
+const productOpinion = () => import('@/components/products/product-opinion');
 
 function data() {
 	return {
@@ -35,6 +40,7 @@ export default {
 	data,
 	components: {
 		contentText,
+		productOpinion,
 	},
 	props: {
 		tabs: {
@@ -45,7 +51,21 @@ export default {
 			type: Array,
 			default: () => [],
 		},
+		lastIndex: Number,
 	},
 };
 </script>
+<style lang="scss" scoped>
+	.text-tab {
+		align-items: center;
+		border-radius: 5px;
+		display: flex;
+		font-family: font(bold);
+		font-size: size(medium);
+		height: 100%;
+		justify-content: center;
+		width: 100%;
+	}
+</style>
+
 

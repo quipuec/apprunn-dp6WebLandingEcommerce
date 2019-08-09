@@ -13,7 +13,8 @@
 			<product-tab 
 				class="container-product-tab"
 				:tabs="tabs"
-				:sections="product.sections"/>
+				:sections="product.sections"
+				:lastIndex="lastIndex"/>
 		</div>
 	</div>
 </template>
@@ -46,6 +47,7 @@ async function loadData() {
 		});
 		this.tabs = this.product.sections.map(p => p.name);
 		this.tabs.push('Comentarios');
+		this.lastIndex = this.product.sections.length;
 	} catch (error) {
 		this.showGenericError();
 	}
@@ -55,6 +57,7 @@ function data() {
 	return {
 		product: {},
 		tabs: [],
+		lastIndex: 0,
 	};
 }
 
