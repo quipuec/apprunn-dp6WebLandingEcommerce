@@ -133,7 +133,7 @@ export default {
 	font-size: size(small);
 	padding: 8px 0;
 	text-align: left;
-	width: 294px;
+	width: 100%;
 }
 
 .content-components {
