@@ -8,7 +8,7 @@
 	<GmapMarker
 		:key="index"
 		v-for="(m, index) in markers"
-		:position="m.position"
+		:position="m.location"
 		:clickable="true"
 		:draggable="true"
 		@click="selectedMarker(m)"

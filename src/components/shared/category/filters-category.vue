@@ -113,7 +113,7 @@ export default {
 
 <style lang="scss" scoped>
 .filters-category {
-	border-top: 1px solid color(borderBtn);
+	border-top: 1px solid color(border);
 	padding-top: 40px;
 }
 
@@ -137,7 +137,7 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	padding-bottom: 10px;
-	width: 63%;
+	width: 70%;
 }
 
 .input-price {

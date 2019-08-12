@@ -77,7 +77,7 @@ function warehousesMarkers() {
 			const marker = {};
 			marker.id = id;
 			marker.name = name;
-			marker.position = location ? { lat: x, lng: y } : {};
+			marker.location = location ? { lat: x, lng: y } : {};
 			return list.concat(marker);
 		}
 		return list;
@@ -87,17 +87,17 @@ function warehousesMarkers() {
 
 
 function handlerDeliveryAddress(newDelivery) {
-	const { addressLine1, id, name, position } = newDelivery;
+	const { addressLine1, id, location, name } = newDelivery;
 	if (this.getFlagPickUp === 1) {
 		this.clearSelectedWarehouse();
 		this.selectedDirection.id = id;
 		this.selectedDirection.addressLine1 = addressLine1;
-		this.selectedDirection.position = position;
+		this.selectedDirection.location = location;
 	} else {
 		this.clearSelectedDirection();
 		this.selectedWarehouse.id = id;
 		this.selectedWarehouse.name = name;
-		this.selectedWarehouse.position = position;
+		this.selectedWarehouse.location = location;
 	}
 }
 
@@ -107,12 +107,12 @@ function singleOrMultiMarkersOnWarehouses() {
 
 function warehouesesCenter() {
 	const len = this.singleOrMultiMarkersOnWarehouses.length;
-	const avrg = this.singleOrMultiMarkersOnWarehouses.reduce((o, { position }) => {
+	const avrg = this.singleOrMultiMarkersOnWarehouses.reduce((o, { location }) => {
 		const newO = o;
-		if (position) {
-			const { lat, lng } = position;
-			newO.lat = (newO.lat || 0) + lat;
-			newO.lng = (newO.lng || 0) + lng;
+		if (location) {
+			const { lat, lng, x, y } = location;
+			newO.lat = (newO.lat || 0) + (lat || x);
+			newO.lng = (newO.lng || 0) + (lng || y);
 			return newO;
 		}
 		newO.lat = 0;
@@ -128,8 +128,8 @@ function warehousesZoom() {
 
 function disableMapButtonByWarehouse() {
 	if (this.selectedWarehouse.id) {
-		const { position } = this.selectedWarehouse;
-		return !position;
+		const { location } = this.selectedWarehouse;
+		return !location;
 	}
 	return false;
 }
@@ -148,7 +148,7 @@ function clearSelectedDirection() {
 	this.selectedDirection = {
 		id: 0,
 		addressLine1: '',
-		position: {},
+		location: {},
 	};
 }
 
@@ -156,13 +156,19 @@ function clearSelectedWarehouse() {
 	this.selectedWarehouse = {
 		id: 0,
 		name: '',
-		position: {},
+		location: {},
 	};
 }
 
 function handlerDirectionsChange(newDirections) {
-	this.favoriteDirection = newDirections.find(f => f.isFavorite);
-	this.$store.commit('SET_DELIVERY_PLACE', this.favoriteDirection);
+	if (this.getFlagPickUp === 1) {
+		this.favoriteDirection = newDirections.find(f => f.isFavorite);
+		const directionDelivery = this.getDeliveryAddress || this.favoriteDirection;
+		this.$store.commit('SET_DELIVERY_PLACE', directionDelivery);
+	} else {
+		const warehouseDirection = this.getDeliveryAddress || this.selectedWarehouse;
+		this.$store.commit('SET_DELIVERY_PLACE', warehouseDirection);
+	}
 }
 
 function data() {
@@ -171,12 +177,12 @@ function data() {
 		selectedDirection: {
 			id: 0,
 			addressLine1: '',
-			position: {},
+			location: {},
 		},
 		selectedWarehouse: {
 			id: 0,
 			name: '',
-			position: {},
+			location: {},
 		},
 	};
 }
@@ -235,6 +241,23 @@ export default {
 	.btn {
 		flex: 1 1 40%;
 		margin: 0 10px;
+
+		@media (max-width: 600px) {
+			font-size: size(msmall);
+		}
+	}
+
+	.responsible {
+		align-items: center;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		margin-top: 30px;
+	}
+
+	.responsible-field {
+		flex: 1 1 47%;
+		height: 68px;
 	}
 </style>
 

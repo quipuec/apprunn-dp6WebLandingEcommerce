@@ -20,15 +20,10 @@
 			:color-border="colorBorder"
 			:categories="getCategories"/>
   	</transition>
-	<v-progress-linear
-		class="progress-bar"
-		color="success"
-		:indeterminate="indeterminate"
-		v-if="indeterminate"
-	></v-progress-linear>
 	<router-view></router-view>
 	<section-visa></section-visa>
 	<form-bulletin />
+	<app-footer></app-footer>
 	<v-snackbar
 			:timeout="5000"
 			:color="snackbar.color"
@@ -60,6 +55,7 @@ const appMenuCategory = () => import('@/components/header/app-category');
 const appBannerTop = () => import('@/components/header/app-banner-top');
 const formBulletin = () => import('@/components/shared/form/form-bulletin');
 const sectionVisa = () => import('@/components/footer/section-visa');
+const appFooter = () => import('@/components/footer/app-footer');
 
 function indeterminate() {
 	return this.$store.getters.indeterminate;
@@ -73,12 +69,23 @@ function changeMenu() {
 	this.showMenu = !this.showMenu;
 }
 
-function beforeCreate() {
-	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
-}
 
 function routeHandler() {
 	this.showMenu = false;
+}
+
+function created() {
+	if (!this.getLocalStorage(`${process.env.STORAGE_USER_KEY}::currency-default`)) {
+		this.loadData();
+	}
+	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
+}
+
+async function loadData() {
+	const aclCode = process.env.ACL_COMPANY_CODE;
+	const url = `companies/${aclCode}/acl`;
+	const { data: res } = await this.$httpSales.get(url);
+	this.setLocalData(`${process.env.STORAGE_USER_KEY}::currency-default`, res.currencyDefault);
 }
 
 function data() {
@@ -109,8 +116,9 @@ export default {
 		]),
 	},
 	data,
-	beforeCreate,
+	created,
 	components: {
+		appFooter,
 		appHeader,
 		appBannerTop,
 		appMenuCategory,
@@ -119,6 +127,7 @@ export default {
 	},
 	methods: {
 		changeMenu,
+		loadData,
 	},
 	watch: {
 		$route: routeHandler,
@@ -340,7 +349,7 @@ input.app-input::-webkit-input-placeholder {
 	background: url('/static/img/icons/icon-visanet.png') !important;
 	background-position: right 14px !important;
 	background-repeat: no-repeat !important;
-	border: 1px solid color(borderBtn) !important;
+	border: 1px solid color(border) !important;
 	border-radius: 8px !important;
 	box-shadow: none !important;
 	color: color(base) !important;
@@ -403,6 +412,19 @@ input.app-input::-webkit-input-placeholder {
 		@media (max-width: 650px) {
 			left: 15px;
 		}
+	}
+}
+
+.page-category {
+	.v-breadcrumbs__item {
+		color: color(base);
+		font-family: font(medium);
+		font-size: size(medium);
+	}
+
+	.theme--light.v-breadcrumbs .v-breadcrumbs__divider, .theme--light.v-breadcrumbs .v-breadcrumbs__item--disabled {
+		color: color(primary);
+		font-family: font(medium);
 	}
 }
 </style>

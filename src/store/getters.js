@@ -1,5 +1,8 @@
 import orderGetters from '@/store/getters/order';
 import geoGetters from '@/store/getters/geo';
+import lib from '@/shared/lib';
+
+const { getDeeper } = lib;
 
 function indeterminate(state) {
 	return state.appConfig.isLoading;
@@ -41,6 +44,11 @@ function flagAddVoucher(state) {
 	return state.profile.flagAddVoucher;
 }
 
+function getCurrencySymbol() {
+	const currencyDefault = JSON.parse(localStorage.getItem(`${process.env.STORAGE_USER_KEY}::currency-default`));
+	return getDeeper('symbol')(currencyDefault) || '';
+}
+
 function getCategories(state) {
 	return state.categories;
 }
@@ -56,6 +64,7 @@ function getWarehouses(state) {
 const methods = {
 	companyLogo,
 	getDirections,
+	getCurrencySymbol,
 	getProducts,
 	getWarehouses,
 	flagAddVoucher,
