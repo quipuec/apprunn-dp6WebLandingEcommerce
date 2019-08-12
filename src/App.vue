@@ -424,10 +424,7 @@ input.app-input::-webkit-input-placeholder {
 
 .product-tab {
 	.v-tabs__container {
-		background: color(gray);
 		border-radius: 5px;
-		justify-content: space-between;
-		margin-bottom: 39px;
 
 		@media screen and (max-width: 996px) {
 			height: 38px;
@@ -439,12 +436,12 @@ input.app-input::-webkit-input-placeholder {
 		padding: 0;
 	}
 
-	.v-tabs__item--active {
-		background: transparent !important;
+	.v-tabs__wrapper {
+		margin-bottom: 39px;
 	}
 
-	.v-tabs__div {
-		flex: 1 1 auto;
+	.material-icons {
+		margin-top: 10px;
 	}
 }
 

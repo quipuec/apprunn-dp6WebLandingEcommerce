@@ -2,7 +2,10 @@
   <div class="product-tab">
 		<v-tabs 
 			v-model="active" 
-			slider-color="transparent">
+			slider-color="transparent"
+			show-arrows
+			color="#f1f1f1"
+		>
 			<v-tab
 				v-for="(tab, index) in tabs"
 				:key="index"
@@ -68,6 +71,7 @@ export default {
 		font-size: size(medium);
 		height: 100%;
 		justify-content: center;
+		padding: 0 10px;
 		width: 100%;
 
 		@media screen and (max-width: 996px) {
