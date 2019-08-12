@@ -1,15 +1,16 @@
 <template>
 	<div>
 		<v-select
-          outline
+      outline
 		  hide-details
 		  menu-props="auto"
 		  append-icon="expand_more"
 		  class="ecommerce-select"
-          :items="items"
-          v-bind="$attrs"
+      :items="items"
+      v-bind="$attrs"
 		  @input="sendValue"
-        ></v-select>
+			@click:append-outer="clear"
+    ></v-select>
 	</div>
 </template>
 <script>
@@ -18,11 +19,16 @@ function sendValue(val) {
 	this.$emit('input', val);
 }
 
+function clear() {
+	this.$emit('clear');
+}
+
 export default {
 	name: 'app-select',
 	inheritAttrs: false,
 	methods: {
 		sendValue,
+		clear,
 	},
 	props: {
 		items: {
