@@ -46,6 +46,9 @@
 			/>
 			<new-address v-if="selectedDirection.id === 0"/>
 		</div>
+		<section class="billing-section">
+			<billing/>
+		</section>
 	</div>
 </template>
 <script>
@@ -53,6 +56,7 @@ import { mapGetters } from 'vuex';
 
 const addressComponent = () => import('@/components/order/address-component');
 const appButtonOrder = () => import('@/components/shared/buttons/app-button-order');
+const billing = () => import('@/components/order/billing');
 const coffeeSvg = () => import('@/components/shared/icons/coffee-shop');
 const locationSvg = () => import('@/components/shared/icons/location');
 const newAddress = () => import('@/components/order/new-address');
@@ -192,6 +196,7 @@ export default {
 	components: {
 		addressComponent,
 		appButtonOrder,
+		billing,
 		coffeeSvg,
 		locationSvg,
 		newAddress,
