@@ -9,6 +9,11 @@ export default {
 			color: 'primary',
 		},
 	},
+	geo: {
+		departments: [],
+		districts: [],
+		provinces: [],
+	},
 	order: {
 		bill: null,
 		delivery: null,

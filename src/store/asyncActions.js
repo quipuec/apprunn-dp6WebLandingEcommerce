@@ -32,6 +32,21 @@ const asyncActions = {
 		commit('SET_ORDER_ID', order.id);
 		commit('SET_ORDER_TOTAL', order.total);
 	},
+	LOAD_DEPARTMENTS: async ({ commit }, context) => {
+		const url = 'province';
+		const { data: departments } = await context.$httpSales.get(url);
+		commit('SET_DEPARTMENTS', departments);
+	},
+	LOAD_DISTRICTS: async ({ commit }, { context, departmentId }) => {
+		const url = `cities/${departmentId}`;
+		const { data: districts } = await context.$httpSales.get(url);
+		commit('SET_DISTRICTS', districts);
+	},
+	LOAD_PROVINCES: async ({ commit }, { context, districtId }) => {
+		const url = `parish/${districtId}`;
+		const { data: parish } = await context.$httpSales.get(url);
+		commit('SET_PROVINCES', parish);
+	},
 	LOAD_CATEGORIES: async ({ commit }, { context }) => {
 		let { data: response } = await context.$httpProductsPublic.get('e-categories-public');
 		response = response.map((r) => {

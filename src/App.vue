@@ -182,20 +182,27 @@ input.app-input::-webkit-input-placeholder {
 
 .ecommerce-select {
 	background-color: color(background) !important;
-	color: color(base);
 	font-family: font(medium) !important;
 	height: 46.8px !important;
 
 	.v-input__control {
-
+		
 		.v-input__slot {
 			border: 1px solid color(border) !important;
-			border-radius: 5px !important;
+			border-radius: 7px !important;
 			height: -webkit-fill-available !important;
 			min-height: inherit !important;
 
 			.v-select__selections {
+				color: color(base);
 				padding-top: 0 !important;
+
+				input::placeholder {
+					color: color(border);
+					font-family: font(demi) !important;
+					font-size: size(minmedium) !important;
+					font-weight: normal !important;
+				}
 			}
 
 			.v-input__append-inner {
@@ -375,6 +382,12 @@ input.app-input::-webkit-input-placeholder {
 		top: 0;
 	}
 }
+
+.err-message {
+	color: color(primary);
+	font-size: size(xsmall);
+}
+
 .component-filter {
 	.swiper-slide {
 		border-right: 1px solid color(white);

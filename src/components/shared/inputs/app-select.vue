@@ -11,6 +11,9 @@
 		  @input="sendValue"
 			@click:append-outer="clear"
     ></v-select>
+		<span class="err-message">
+			<slot></slot>
+		</span>
 	</div>
 </template>
 <script>
