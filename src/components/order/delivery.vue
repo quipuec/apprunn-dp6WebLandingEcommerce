@@ -87,7 +87,7 @@ function warehousesMarkers() {
 
 
 function handlerDeliveryAddress(newDelivery) {
-	const { addressLine1, id, location, name } = newDelivery;
+	const { addressLine1, id, location, name } = newDelivery || {};
 	if (this.getFlagPickUp === 1) {
 		this.clearSelectedWarehouse();
 		this.selectedDirection.id = id;
@@ -135,7 +135,12 @@ function disableMapButtonByWarehouse() {
 }
 
 function warehouseSelected(id) {
-	const w = this.getWarehouses.find(war => war.id === id);
+	const index = this.getWarehouses.findIndex(war => war.id === id);
+	const w = this.getWarehouses[index];
+	if (w.location) {
+		const { x, y } = w.location;
+		w.location = { lat: x, lng: y };
+	}
 	this.$store.commit('SET_DELIVERY_PLACE', w);
 }
 
