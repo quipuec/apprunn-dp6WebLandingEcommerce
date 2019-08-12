@@ -1,4 +1,5 @@
 import orderGetters from '@/store/getters/order';
+import geoGetters from '@/store/getters/geo';
 import lib from '@/shared/lib';
 
 const { getDeeper } = lib;
@@ -58,6 +59,7 @@ const methods = {
 	getProducts,
 	flagAddVoucher,
 	indeterminate,
+	...geoGetters,
 	...orderGetters,
 	pollData,
 	snackbar,

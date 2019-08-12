@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import orderMutations from '@/store/mutations/order';
+import geoMutations from '@/store/mutations/geo';
 
 function clearUser(state) {
 	Vue.set(state, 'token', null);
@@ -54,6 +55,7 @@ function SET_ORDER_TOTAL(state, total) {
 
 const methods = {
 	clearUser,
+	...geoMutations,
 	...orderMutations,
 	setToken,
 	setUser,
