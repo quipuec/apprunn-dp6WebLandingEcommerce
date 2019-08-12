@@ -93,16 +93,17 @@ table, td, th {
 	@media (max-width: 950px) {
 		width: 200px;
 	}
+	font-size: size(medium);
 }
 
 .description-component {
 	font-family: font(regular);
-	font-size: 12px;
+	font-size: size(small);
 }
 
 .title-table {
 	color: color(primary);
-	font-size: 14px;
+	font-size: size(medium);
 	text-align: left;
 }
 

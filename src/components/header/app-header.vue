@@ -34,7 +34,7 @@
 					:data="search" 
 					class="icon-mobile"
 					@click-image="toogleSearch"/>
-				<button-image :data="imagesButton[0]" class="icon-desktop" @click-image="openModalLogin"/>
+				<button-image :data="user" class="icon-desktop" @click-image="openModalLogin"/>
 				<button-image :data="imagesButton[1]" class="icon-medium icon-desktop"/>
 				<button-image
 					if-number
@@ -47,10 +47,13 @@
 		<modal-login 
 			class="app-modal-login"
 			v-show="modalLogin"
-			@close-modal="closeModal"/>
+			@close-modal="closeModal"
+		/>
 	</header>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 const callMenu = () => import('@/components/header/call-menu');
 const appSearch = () => import('@/components/shared/inputs/app-input-search');
 const buttonImage = () => import('@/components/shared/buttons/app-button-image');
@@ -65,7 +68,11 @@ function changeMenu() {
 }
 
 function openModalLogin() {
-	this.modalLogin = !this.modalLogin;
+	if (this.token) {
+		this.goTo('profile');
+	} else {
+		this.modalLogin = !this.modalLogin;
+	}
 }
 
 function closeModal() {
@@ -115,6 +122,11 @@ export default {
 		buttonImage,
 		modalLogin,
 	},
+	computed: {
+		...mapGetters([
+			'token',
+		]),
+	},
 	data,
 	methods: {
 		toogleSearch,
@@ -131,6 +143,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		user: {
+			type: Object,
+			default: () => {},
+		},
 	},
 };
 </script>
@@ -138,11 +154,10 @@ export default {
 	.app-header {
 		background: color(white);
 		display: flex;
-		height: 76px;
+		height: inherit;
 		padding: 0px 6%;
 		box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.11);
 		position: relative;
-		overflow: hidden;
 
 		@media (min-width: 768px) {
 			height: 99px;
@@ -154,8 +169,13 @@ export default {
 	.app-wrapper {
 		align-items: center;
 		display: flex;
+		height: 75px;
 		position: relative;
 		width: 100%;
+
+		@media (min-width: 768px) {
+			height: 95px;
+		}
 	}
 
 	.flex {

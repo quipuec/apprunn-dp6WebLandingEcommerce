@@ -5,6 +5,8 @@ import Profile from './profile';
 import register from './register';
 import Order from './buy';
 import Help from './help';
+import Category from './category';
+import ProductDetail from './detail-product';
 
 export default function (Vue) {
 	Vue.use(Router);
@@ -15,15 +17,15 @@ export default function (Vue) {
 				path: '/',
 				name: 'page-home',
 				component: () => import('@/pages/page-home'),
-				children: [
-					Order,
-				],
 			},
 			Help,
+			Category,
 			Components,
 			login,
+			Order,
 			Profile,
 			register,
+			ProductDetail,
 		],
 	});
 	return config;

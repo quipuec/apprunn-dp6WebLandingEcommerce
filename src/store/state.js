@@ -9,9 +9,15 @@ export default {
 			color: 'primary',
 		},
 	},
+	geo: {
+		departments: [],
+		districts: [],
+		provinces: [],
+	},
 	order: {
 		bill: null,
 		delivery: null,
+		flagPickUp: 1,
 		id: null,
 		products: [],
 		responsible: null,
@@ -34,8 +40,9 @@ export default {
 	token: helper.getLocalToken(),
 	user: {
 		email: '',
-		logo: 'ecommerce-logo.svg',
+		logo: '/static/img/user.svg',
 		profileImage: '',
 		username: '',
 	},
+	categories: [],
 };

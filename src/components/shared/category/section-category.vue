@@ -4,23 +4,16 @@
 			<img src="/static/img/icons/shock-absorber.svg" alt="">
 			<p class="title-category">Resortes</p>
 			<div class="content-image-arrow">
-				<button @click="closeList">
-					<img
-					v-if="arrowDown"
-					src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/up-arrow.svg" 
-					alt="" 
-					width="16px" 
-					height="13px"
-					>
-				</button>
-				<button @click="openList">
-					<img
-					v-if="arrowUp"
-					src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-down-sign-to-navigate.svg" 
-					alt="" 
-					width="16px" 
-					height="13px">
-				</button>
+				<button-image
+				:data="iconDown"
+				@click-image="closeList"
+				v-if="arrowDown"
+				></button-image>
+				<button-image
+				@click-image="openList"
+				v-if="arrowUp"
+				:data="iconUp"
+				></button-image>
 			</div>
 		</div>
 		<div v-if="openArrow">
@@ -28,7 +21,7 @@
 				<li>
 					<span class="title-list">{{item.title}}</span>
   			</li>
-				<ul v-for="(filter, index) in item.filters" :key="index">
+				<ul v-for="(filter, index) in item.filters" :key="index" class="list-filter">
     			<li class="item-li">{{filter.name}}</li>
   			</ul>
 			</div>
@@ -37,8 +30,20 @@
 </template>
 
 <script>
+const buttonImage = () => import('@/components/shared/buttons/app-button-image');
+
 function data() {
 	return {
+		iconDown: {
+			image: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/up-arrow.svg',
+			name: 'up',
+			height: 15,
+		},
+		iconUp: {
+			image: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-down-sign-to-navigate.svg',
+			name: 'up',
+			height: 15,
+		},
 		categories: [
 			{
 				title: 'Automotriz',
@@ -46,18 +51,22 @@ function data() {
 					{
 						id: 1,
 						name: '4x4',
+						select: false,
 					},
 					{
 						id: 2,
 						name: 'Sistema a Gas',
+						select: false,
 					},
 					{
 						id: 3,
 						name: 'Tuning',
+						select: false,
 					},
 					{
 						id: 4,
 						name: 'Competencia',
+						select: false,
 					},
 				],
 			},
@@ -99,19 +108,28 @@ export default {
 		closeList,
 		openList,
 	},
+	props: {
+		categories: {
+			type: Array,
+			default: () => [],
+		},
+	},
+	components: {
+		buttonImage,
+	},
 };
 </script>
 
 <style lang="scss" scoped>
 li {
 	color: color(dark);
-	&:hover {
+	&:active {
 		color: color(secondary);
 	}
 }
 
 .title-category {
-	color: color(red-category);
+	color: color(primary);
 	font-family: font(bold);
 	font-size: 18px;
 	margin: 0 0 0 10px;
@@ -119,13 +137,13 @@ li {
 
 .filter-category {
 	align-items: center;
-	border-bottom: 3px solid color(red-category); 
+	border-bottom: 3px solid color(primary); 
 	display: flex;
 	padding-bottom: 13px;
 }
 
 .content-image-arrow {
-	margin-left: 30px;
+	padding-left: 65px;
 }
 
 .title-list {
@@ -135,22 +153,25 @@ li {
 }
 
 .background-gray {
-	background-color: #f9f9f9;
-	padding: 57px 22px;
-	width: 30%;
+	padding: 56px 0;
+	width: 71%;
 }
 
 .content-list {
 	margin-top: 15px;
 }
 
-.item-li:hover {
+.item-li:active {
 	color: color(secondary);
 	font-family: font(bold);
 }
 
-.title-list:hover {
+.title-list:active {
 	color: color(secondary);
 	font-family: font(demi);
+}
+
+.list-filter {
+	list-style: none;
 }
 </style>

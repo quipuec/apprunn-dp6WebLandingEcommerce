@@ -1,12 +1,87 @@
 <template>
 	<div>
-		Direccion y facturacion
+		<section class="delivery">
+			<app-button-order
+				button-title="Envío a Domicilio"
+				class="btn"
+				:active="getFlagPickUp === 1"
+				@click="selected(1)"
+			>
+				<location-svg :active="getFlagPickUp === 1"/>
+			</app-button-order>
+			<app-button-order
+				button-title="Recoger en Tienda"
+				class="btn"
+				@click="selected(2)"
+				:active="getFlagPickUp === 2"
+			>
+				<coffee-svg :active="getFlagPickUp === 2"/>
+			</app-button-order>
+		</section>
+		<responsible-form/>
+		<new-address/>
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
+const appButtonOrder = () => import('@/components/shared/buttons/app-button-order');
+const coffeeSvg = () => import('@/components/shared/icons/coffee-shop');
+const locationSvg = () => import('@/components/shared/icons/location');
+const newAddress = () => import('@/components/order/new-address');
+const responsibleForm = () => import('@/components/order/responsible-form');
+
+function selected(val) {
+	this.$store.commit('SET_FLAG_PICKUP', val);
+}
 
 export default {
 	name: 'delivery',
+	components: {
+		appButtonOrder,
+		coffeeSvg,
+		locationSvg,
+		newAddress,
+		responsibleForm,
+	},
+	computed: {
+		...mapGetters([
+			'getFlagPickUp',
+		]),
+	},
+	methods: {
+		selected,
+	},
 };
 </script>
+<style lang="scss" scoped>
+	.delivery {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+		width: 100%;
+	}
+
+	.btn {
+		flex: 1 1 40%;
+		margin: 0 10px;
+
+		@media (max-width: 600px) {
+			font-size: size(msmall);
+		}
+	}
+
+	.responsible {
+		align-items: center;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		margin-top: 30px;
+	}
+
+	.responsible-field {
+		flex: 1 1 47%;
+		height: 68px;
+	}
+</style>
 

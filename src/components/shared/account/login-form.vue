@@ -7,7 +7,7 @@
 					type="email"
 					placeholder="E-mail"
 					:value="model.email"
-					@input="$emit('set-model', { model: 'email', value: $event.target.value })"
+					@input="$emit('set-model', { model: 'email', value: $event })"
 				></app-input>
 				<span class="error-message" v-if="!validatons.model.email.required">
 					El email es requerido
@@ -21,7 +21,7 @@
 					type="password"
 					placeholder="Contraseña"
 					:value="model.password"
-					@input="$emit('set-model', { model: 'password', value: $event.target.value })"
+					@input="$emit('set-model', { model: 'password', value: $event })"
 				></app-input>
 				<span class="error-message" v-if="validatons.model.password.$invalid">
 					La contraseña es requerida

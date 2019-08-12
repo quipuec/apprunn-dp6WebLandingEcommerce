@@ -10,6 +10,9 @@
           v-bind="$attrs"
 		  @input="sendValue"
         ></v-select>
+		<span class="err-message">
+			<slot></slot>
+		</span>
 	</div>
 </template>
 <script>
