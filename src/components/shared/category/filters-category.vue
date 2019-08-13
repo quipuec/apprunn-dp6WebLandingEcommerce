@@ -113,7 +113,7 @@ export default {
 
 <style lang="scss" scoped>
 .filters-category {
-	border-top: 1px solid color(borderBtn);
+	border-top: 1px solid color(border);
 	padding-top: 40px;
 }
 

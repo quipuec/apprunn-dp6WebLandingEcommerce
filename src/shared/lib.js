@@ -17,6 +17,19 @@ const methods = {
 		return newItem;
 	},
 	decimals: d => n => Number(n.toFixed(d)),
+	isEmpty: (arg) => {
+		if (Array.isArray(arg)) {
+			return arg.length === 0;
+		}
+		if (typeof arg === 'object' && arg !== null) {
+			return Object.keys(arg).length === 0;
+		}
+		if (typeof arg === 'string' || typeof arg === 'number') {
+			return !arg;
+		}
+		return !arg;
+	},
+	atLeastOneTrue: (...args) => args.some(a => a),
 
 };
 export default methods;

@@ -83,4 +83,9 @@
 			width: 170px;
 		}
 	}
+
+	[disabled] {
+		background-color: color(disabled) !important;
+		cursor: not-allowed;
+	}
 </style>

@@ -1,37 +1,54 @@
 <template>
 	<GmapMap
-		:center="{lat:10, lng:10}"
-		:zoom="7"
-		map-type-id="terrain"
-		style="width: 500px; height: 300px"
+		:center="center"
+		:zoom="zoom"
+		style="width:100%;height:400px;"
+		@click="setCoords"
 	>
 	<GmapMarker
 		:key="index"
 		v-for="(m, index) in markers"
-		:position="m.position"
+		:position="m.location"
 		:clickable="true"
 		:draggable="true"
-		@click="center=m.position"
+		@click="selectedMarker(m)"
 	/>
 	</GmapMap>	
 </template>
 <script>
 
-function data() {
-	return {
-		markers: [
-			{
-				position: {
-					lat: 70,
-					lng: 12,
-				},
-			},
-		],
-	};
+function selectedMarker(args) {
+	this.$store.commit('SET_DELIVERY_PLACE', args);
+}
+
+function setCoords(args) {
+	console.log(args.latLng.lat());
 }
 
 export default {
 	name: 'map-component',
-	data,
+	methods: {
+		setCoords,
+		selectedMarker,
+	},
+	props: {
+		center: {
+			default() {
+				return {
+					lat: -12.1192694,
+					lng: -77.0290169,
+				};
+			},
+			type: Object,
+		},
+		markers: {
+			default: () => [],
+			type: Array,
+		},
+		zoom: {
+			default: 12,
+			type: Number,
+		},
+	},
 };
 </script>
