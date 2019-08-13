@@ -1,13 +1,15 @@
 <template>
-  <div class="app-button-image">
-		<button class="app-button" @click="$emit('click-image')">
-			<div class="button-number" v-if="ifNumber">{{number}}</div>
-			<img :src="imageUser"
-				:alt="data.name"
-				:height="data.height || 20" 
-			>
-		</button>
-	</div>
+	<button
+		class="app-button"
+		@click="$emit('click-image')"
+		v-bind="$attrs"
+	>
+		<div class="button-number" v-if="ifNumber">{{number}}</div>
+		<img :src="imageUser"
+			:alt="data.name"
+			:height="data.height || 20" 
+		>
+	</button>
 </template>
 <script>
 function imageUser() {
@@ -19,6 +21,7 @@ export default {
 	computed: {
 		imageUser,
 	},
+	inheritAttrs: false,
 	props: {
 		data: {
 			type: Object,
@@ -50,6 +53,11 @@ export default {
 
 	.app-button {
 		position: relative;
+	}
+
+	[disabled] {
+		background-color: color(disabled);
+		cursor: not-allowed;
 	}
 </style>
 

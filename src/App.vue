@@ -355,7 +355,7 @@ input.app-input::-webkit-input-placeholder {
 	background: url('/static/img/icons/icon-visanet.png') !important;
 	background-position: right 14px !important;
 	background-repeat: no-repeat !important;
-	border: 1px solid color(borderBtn) !important;
+	border: 1px solid color(border) !important;
 	border-radius: 8px !important;
 	box-shadow: none !important;
 	color: color(base) !important;
@@ -423,10 +423,7 @@ input.app-input::-webkit-input-placeholder {
 
 .product-tab {
 	.v-tabs__container {
-		background: color(gray);
 		border-radius: 5px;
-		justify-content: space-between;
-		margin-bottom: 39px;
 
 		@media screen and (max-width: 996px) {
 			height: 38px;
@@ -438,12 +435,12 @@ input.app-input::-webkit-input-placeholder {
 		padding: 0;
 	}
 
-	.v-tabs__item--active {
-		background: transparent !important;
+	.v-tabs__wrapper {
+		margin-bottom: 39px;
 	}
 
-	.v-tabs__div {
-		flex: 1 1 auto;
+	.material-icons {
+		margin-top: 10px;
 	}
 }
 
@@ -483,6 +480,49 @@ input.app-input::-webkit-input-placeholder {
 		.swiper-button-next, .swiper-button-prev {
 			display: none;
 		}
+	}
+}
+
+.product-tab {
+	.v-tabs__div {
+		flex: 1 1 auto;
+		max-width: none;
+	}
+}
+
+.billing-style {
+
+	.v-input--selection-controls__input {
+		width: 46px !important;
+
+		input {
+			max-height: 46px !important;
+		}
+
+		.v-input--switch__track {
+			border-radius: 3px !important;
+			height: 20px !important;
+		}
+
+		.accent--text {
+			color: color(primary) !important;
+		}
+
+		.v-input--switch__thumb {
+			border-radius: 3px !important;
+			top: calc(50% - 7px) !important;
+		}
+
+	}
+
+	&.v-input--is-dirty .v-input--selection-controls__ripple,
+	&.v-input--is-dirty .v-input--switch__thumb {
+		transform: translate(24px, 0) !important;
+	}
+
+	.v-label {
+		font-family: font(demi) !important;
+		font-size: size(medium) !important;
 	}
 }
 </style>
