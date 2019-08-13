@@ -422,6 +422,29 @@ input.app-input::-webkit-input-placeholder {
 	}
 }
 
+.product-tab {
+	.v-tabs__container {
+		border-radius: 5px;
+
+		@media screen and (max-width: 996px) {
+			height: 38px;
+		}
+	}
+
+	.v-tabs__item {
+		border-radius: 5px;
+		padding: 0;
+	}
+
+	.v-tabs__wrapper {
+		margin-bottom: 39px;
+	}
+
+	.material-icons {
+		margin-top: 10px;
+	}
+}
+
 .page-category {
 	.v-breadcrumbs__item {
 		color: color(base);
@@ -432,6 +455,13 @@ input.app-input::-webkit-input-placeholder {
 	.theme--light.v-breadcrumbs .v-breadcrumbs__divider, .theme--light.v-breadcrumbs .v-breadcrumbs__item--disabled {
 		color: color(primary);
 		font-family: font(medium);
+	}
+}
+
+.product-tab {
+	.v-tabs__div {
+		flex: 1 1 auto;
+		max-width: none;
 	}
 }
 

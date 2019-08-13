@@ -4,7 +4,7 @@
 			v-bind="$attrs"
 			v-on="$listeners"
 			class="app-button"
-			:class="{ 'thin': thin, 'active' : active }"
+			:class="{ 'thin': thin, 'active' : active}"
 			:style="`background-color: ${active ? background : 'transparent'}; text-align: ${!img ? 'center' : 'left'} ; color: ${active ? color : border}; border: ${border ? `1px solid ${border}` : null}; max-width: ${maxWidth}`"
 		>
 			<span class="span-img" :style="`border-color: ${imgBorderColor}`" v-if="img">
