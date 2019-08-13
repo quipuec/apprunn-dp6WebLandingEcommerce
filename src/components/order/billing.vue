@@ -100,6 +100,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+	.billing-switch {
+		margin-bottom: 30px;
+	}
+	
 	.billing-form {
 		align-items: center;
 		display: flex;
