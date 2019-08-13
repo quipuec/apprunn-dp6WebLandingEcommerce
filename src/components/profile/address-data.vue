@@ -5,7 +5,7 @@
 		</section>
 		<section class="table">
 			<responsive-table
-				align-left
+				class="address"
 				:columns="columns"
 				:rows="getAddress"
 				:pages="totalPage"
@@ -86,18 +86,18 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+	.address {
 
-	.product-info-container {
-		align-items: center;
-		display: grid;
-		grid-column-gap: 20px;
-		grid-template-columns: 50px 1fr;
+		td {
+			font-size: size(small);
+			padding: 5px !important;
+		}
 	}
 
 	.table {
 		margin: 0 50px;
 		
-		@media (max-width: 600px) {
+		@media (max-width: 680px) {
 			margin: 0 10px;
 		}
 
