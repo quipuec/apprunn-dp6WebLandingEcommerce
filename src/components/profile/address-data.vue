@@ -124,6 +124,7 @@ export default {
 		@media (max-width: 600px) {
 			align-items: center;
 			background-color: white;
+			border-bottom: none;
 			display: flex;
 			height: 100%;
 		}

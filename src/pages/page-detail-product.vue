@@ -9,6 +9,15 @@
 				class="container-product-detail"
 				@update="loadData"/>
 		</div>
+		<div>
+			<product-tab 
+				class="container-product-tab"
+				:tabs="tabs"
+				:sections="product.sections"
+				:lastIndex="lastIndex"
+				:opinions="opinions"
+				@update-opinion="loadOpinions"/>
+		</div>
 	</div>
 </template>
 <script>
@@ -16,6 +25,7 @@ import { mapGetters } from 'vuex';
 
 const productView = () => import('@/components/products/product-view');
 const productDetail = () => import('@/components/products/product-detail');
+const productTab = () => import('@/components/products/product-tab');
 
 function isLoggedUser() {
 	if (this.token) {
@@ -26,6 +36,7 @@ function isLoggedUser() {
 
 function created() {
 	this.loadData();
+	this.loadOpinions();
 }
 
 async function loadData() {
@@ -37,14 +48,29 @@ async function loadData() {
 			newImage.select = index === 0;
 			return newImage;
 		});
+		this.tabs = this.product.sections.map(p => p.name);
+		this.tabs.push('Comentarios');
+		this.lastIndex = this.product.sections.length;
 	} catch (error) {
 		this.showGenericError();
 	}
 }
 
+async function loadOpinions() {
+	const params = {
+		typeQuestionAnswer: 3,
+		productId: this.id,
+	};
+	const { data: response } = await this.$httpProducts.get('question-answer', { params });
+	this.opinions = response;
+}
+
 function data() {
 	return {
 		product: {},
+		tabs: [],
+		lastIndex: 0,
+		opinions: [],
 	};
 }
 
@@ -54,6 +80,7 @@ export default {
 	components: {
 		productView,
 		productDetail,
+		productTab,
 	},
 	computed: {
 		...mapGetters([
@@ -64,6 +91,7 @@ export default {
 	methods: {
 		loadData,
 		isLoggedUser,
+		loadOpinions,
 	},
 	props: {
 		id: {
@@ -93,10 +121,12 @@ export default {
 	.detail-product-top {
 		display: flex;
 		justify-content: space-between;
+		margin-bottom: 92px;
 		padding: 0 7%;
 
 		@media screen and (max-width: 996px) {
 			flex-direction: column;
+			margin-bottom: 35px;
 			padding: 0;
 		}
 	}
@@ -105,6 +135,14 @@ export default {
 		width: 45%;
 		@media screen and (max-width: 996px) {
 			padding: 0 5%;
+			width: 100%;
+		}
+	}
+
+	.container-product-tab {
+		width: 65%;
+		
+		@media screen and (max-width: 996px) {
 			width: 100%;
 		}
 	}

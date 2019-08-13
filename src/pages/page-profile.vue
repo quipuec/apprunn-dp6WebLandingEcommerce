@@ -83,6 +83,7 @@ export default {
 		@media (max-width: 768px) {
 			height: auto;
 			padding: 90px 15px 0;
+			position: relative;
 		}
 	}
 
