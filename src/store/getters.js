@@ -1,4 +1,5 @@
 import orderGetters from '@/store/getters/order';
+import geoGetters from '@/store/getters/geo';
 import lib from '@/shared/lib';
 
 const { getDeeper } = lib;
@@ -52,12 +53,23 @@ function getCategories(state) {
 	return state.categories;
 }
 
+function getDirections(state) {
+	return state.directions;
+}
+
+function getWarehouses(state) {
+	return state.warehouses;
+}
+
 const methods = {
 	companyLogo,
+	getDirections,
 	getCurrencySymbol,
 	getProducts,
+	getWarehouses,
 	flagAddVoucher,
 	indeterminate,
+	...geoGetters,
 	...orderGetters,
 	pollData,
 	snackbar,

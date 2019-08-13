@@ -32,6 +32,21 @@ const asyncActions = {
 		commit('SET_ORDER_ID', order.id);
 		commit('SET_ORDER_TOTAL', order.total);
 	},
+	LOAD_DEPARTMENTS: async ({ commit }, context) => {
+		const url = 'province';
+		const { data: departments } = await context.$httpSales.get(url);
+		commit('SET_DEPARTMENTS', departments);
+	},
+	LOAD_DISTRICTS: async ({ commit }, { context, departmentId }) => {
+		const url = `cities/${departmentId}`;
+		const { data: districts } = await context.$httpSales.get(url);
+		commit('SET_DISTRICTS', districts);
+	},
+	LOAD_PROVINCES: async ({ commit }, { context, districtId }) => {
+		const url = `parish/${districtId}`;
+		const { data: parish } = await context.$httpSales.get(url);
+		commit('SET_PROVINCES', parish);
+	},
 	LOAD_CATEGORIES: async ({ commit }, { context }) => {
 		let { data: response } = await context.$httpProductsPublic.get('e-categories-public');
 		response = response.map((r) => {
@@ -41,6 +56,16 @@ const asyncActions = {
 			return newCategory;
 		});
 		commit('SET_CATEGORIES', response);
+	},
+	LOAD_DIRECTIONS: async ({ commit }, context) => {
+		const url = 'customers-address';
+		const { data: directions } = await context.$httpSales.get(url);
+		commit('SET_DIRECTIONS', directions);
+	},
+	LOAD_WAREHOUSES: async ({ commit }, context) => {
+		const url = 'warehouse-public';
+		const { data: warehouses } = await context.$httpProductsPublic.get(url);
+		commit('SET_WAREHOUSES', warehouses);
 	},
 };
 

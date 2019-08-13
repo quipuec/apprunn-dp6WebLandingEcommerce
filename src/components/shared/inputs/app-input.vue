@@ -27,7 +27,7 @@
 		},
 		props: {
 			borderColor: {
-				default: '#f5f3f3',
+				default: '#e6e6e6',
 				type: String,
 			},
 			value: null,
@@ -65,10 +65,5 @@
 		font-family: font(demi) !important;
 		font-size: size(minmedium) !important;
 		font-weight: normal !important;
-	}
-
-	.err-message {
-		color: color(primary);
-		font-size: size(xsmall);
 	}
 </style>

@@ -182,20 +182,27 @@ input.app-input::-webkit-input-placeholder {
 
 .ecommerce-select {
 	background-color: color(background) !important;
-	color: color(base);
 	font-family: font(medium) !important;
 	height: 46.8px !important;
 
 	.v-input__control {
-
+		
 		.v-input__slot {
 			border: 1px solid color(border) !important;
-			border-radius: 5px !important;
+			border-radius: 7px !important;
 			height: -webkit-fill-available !important;
 			min-height: inherit !important;
 
 			.v-select__selections {
+				color: color(base);
 				padding-top: 0 !important;
+
+				input::placeholder {
+					color: color(border);
+					font-family: font(demi) !important;
+					font-size: size(minmedium) !important;
+					font-weight: normal !important;
+				}
 			}
 
 			.v-input__append-inner {
@@ -348,7 +355,7 @@ input.app-input::-webkit-input-placeholder {
 	background: url('/static/img/icons/icon-visanet.png') !important;
 	background-position: right 14px !important;
 	background-repeat: no-repeat !important;
-	border: 1px solid color(borderBtn) !important;
+	border: 1px solid color(border) !important;
 	border-radius: 8px !important;
 	box-shadow: none !important;
 	color: color(base) !important;
@@ -375,6 +382,12 @@ input.app-input::-webkit-input-placeholder {
 		top: 0;
 	}
 }
+
+.err-message {
+	color: color(primary);
+	font-size: size(xsmall);
+}
+
 .component-filter {
 	.swiper-slide {
 		border-right: 1px solid color(white);
@@ -410,10 +423,7 @@ input.app-input::-webkit-input-placeholder {
 
 .product-tab {
 	.v-tabs__container {
-		background: color(gray);
 		border-radius: 5px;
-		justify-content: space-between;
-		margin-bottom: 39px;
 
 		@media screen and (max-width: 996px) {
 			height: 38px;
@@ -425,12 +435,12 @@ input.app-input::-webkit-input-placeholder {
 		padding: 0;
 	}
 
-	.v-tabs__item--active {
-		background: transparent !important;
+	.v-tabs__wrapper {
+		margin-bottom: 39px;
 	}
 
-	.v-tabs__div {
-		flex: 1 1 auto;
+	.material-icons {
+		margin-top: 10px;
 	}
 }
 
@@ -474,6 +484,49 @@ input.app-input::-webkit-input-placeholder {
 		.swiper-slide-active {
 			min-width: 170px !important;
 		}
+	
+	}
+}
+.product-tab {
+	.v-tabs__div {
+		flex: 1 1 auto;
+		max-width: none;
+	}
+}
+
+.billing-style {
+
+	.v-input--selection-controls__input {
+		width: 46px !important;
+
+		input {
+			max-height: 46px !important;
+		}
+
+		.v-input--switch__track {
+			border-radius: 3px !important;
+			height: 20px !important;
+		}
+
+		.accent--text {
+			color: color(primary) !important;
+		}
+
+		.v-input--switch__thumb {
+			border-radius: 3px !important;
+			top: calc(50% - 7px) !important;
+		}
+
+	}
+
+	&.v-input--is-dirty .v-input--selection-controls__ripple,
+	&.v-input--is-dirty .v-input--switch__thumb {
+		transform: translate(24px, 0) !important;
+	}
+
+	.v-label {
+		font-family: font(demi) !important;
+		font-size: size(medium) !important;
 	}
 }
 </style>

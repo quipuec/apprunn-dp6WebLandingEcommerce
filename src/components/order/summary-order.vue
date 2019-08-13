@@ -31,9 +31,10 @@
 		<section class="btns-summary-order">
 			<app-button
 				v-if="!getOrderId"
-				class="btn-order"
 				action="Pasar a caja"
+				class="btn-order"
 				:background="globalColors.primary"
+				:disabled="invalidOrder"
 				@click="makeOrder"
 			/>
 			<app-button
@@ -122,6 +123,7 @@ export default {
 			'getOrderId',
 			'getProductsToBuy',
 			'getTotalToBuy',
+			'invalidOrder',
 		]),
 		total,
 	},
