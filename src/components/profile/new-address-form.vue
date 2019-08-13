@@ -8,54 +8,83 @@
 			<span v-if="$v.newAddress.name.$invalid">El alias es requerido</span>
 		</app-input>
 		<app-select
+			item-text="name"
+			item-value="id"
 			placeholder="Departamento"
 			class="mx-1 my-1 address-department"
-			v-model="newAddress.departmentId"
+			:items="departments"
+			v-model="newAddress.provinceId"
+			@input="selectDepartment"
 		>
-			<span v-if="$v.newAddress.departmentId.$invalid">El departamento es requerido</span>
+			<span v-if="$v.newAddress.provinceId.$invalid">El departamento es requerido</span>
 		</app-select>
 		<app-select
+			item-text="name"
+			item-value="id"
 			placeholder="Provincia"
 			class="mx-1 my-1 address-province"
-			v-model="newAddress.provinceId"
+			:items="provinces"
+			v-model="newAddress.cityId"
+			@input="selectProvince"
 		>
-			<span v-if="$v.newAddress.provinceId.$invalid">La provincia es requerida</span>
+			<span v-if="$v.newAddress.cityId.$invalid">La provincia es requerida</span>
 		</app-select>
 		<app-select
+			item-text="name"
+			item-value="id"
 			placeholder="Distrito"
 			class="mx-1 my-1 address-district"
-			v-model="newAddress.districtId"
+			:items="districts"
+			v-model="newAddress.parishId"
 		>
-			<span v-if="$v.newAddress.districtId.$invalid">El distrito es requerido</span>
+			<span v-if="$v.newAddress.parishId.$invalid">El distrito es requerido</span>
 		</app-select>
 		<app-input
 			placeholder="Dirección"
 			class="mx-1 my-1 address-location"
-			v-model="newAddress.address"
+			v-model="newAddress.addressLine1"
 		>
-			<span v-if="$v.newAddress.address.$invalid">La dirección es requerida</span>
+			<span v-if="$v.newAddress.addressLine1.$invalid">La dirección es requerida</span>
 		</app-input>
 		<plus-component @click="addNewAddress" class="add-new-address-btn"/>
 	</form>	
 </template>
 <script>
 import { required } from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
 
 const appInput = () => import('@/components/shared/inputs/app-input');
 const appSelect = () => import('@/components/shared/inputs/app-select');
 const plusComponent = () => import('@/components/shared/icons/plus-component');
 
-function addNewAddress() {
-	this.$store.dispatch('NEW_ADDRESS', this.newAddress);
+function created() {
+	this.$store.dispatch('LOAD_DEPARTMENTS', this);
+}
+
+async function addNewAddress() {
+	try {
+		await this.$store.dispatch('NEW_ADDRESS', { context: this, newAddress: this.newAddress });
+		this.showNotification('Nueva dirección agregada');
+	} catch (error) {
+		this.showGenericError('No fue posible agregar la nueva dirección. Verifique la información');
+	}
+}
+
+function selectDepartment(id) {
+	this.$store.dispatch('LOAD_PROVINCES', { context: this, departmentId: id });
+}
+
+function selectProvince(id) {
+	this.$store.dispatch('LOAD_DISTRICTS', { context: this, districtId: id });
 }
 
 function validations() {
 	return {
 		newAddress: {
-			address: { required },
-			departmentId: { required },
-			districtId: { required },
+			addressLine1: { required },
+			cityId: { required },
 			name: { required },
+			parishId: { required },
 			provinceId: { required },
 		},
 	};
@@ -64,10 +93,10 @@ function validations() {
 function data() {
 	return {
 		newAddress: {
-			address: '',
-			departmentId: null,
-			districtId: null,
+			addressLine1: '',
+			cityId: null,
 			name: '',
+			parishId: null,
 			provinceId: null,
 		},
 	};
@@ -80,9 +109,19 @@ export default {
 		appSelect,
 		plusComponent,
 	},
+	computed: {
+		...mapGetters([
+			'departments',
+			'districts',
+			'provinces',
+		]),
+	},
+	created,
 	data,
 	methods: {
 		addNewAddress,
+		selectDepartment,
+		selectProvince,
 	},
 	validations,
 };
