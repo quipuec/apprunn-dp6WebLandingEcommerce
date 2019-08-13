@@ -53,6 +53,10 @@ function getCategories(state) {
 	return state.categories;
 }
 
+function totalProducts(state) {
+	return state.productsSelected ? state.productsSelected.length : 0;
+}
+
 const methods = {
 	companyLogo,
 	getCurrencySymbol,
@@ -68,6 +72,7 @@ const methods = {
 	user,
 	userName,
 	getCategories,
+	totalProducts,
 };
 
 export default methods;

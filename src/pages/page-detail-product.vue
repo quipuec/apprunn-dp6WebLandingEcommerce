@@ -10,7 +10,8 @@
 				class="container-product-detail"
 				@update="loadData"
 				@select="selectFeature"
-				@clear="clearFeatures"/>
+				@clear="clearFeatures"
+				@click-quantity="clickQuantity"/>
 		</div>
 		<div>
 			<product-tab 
@@ -219,6 +220,18 @@ function newRoute() {
 	this.loadOpinions();
 }
 
+function clickQuantity(value) {
+	let num = this.product.quantity;
+	const newProductdetail = { ...this.product };
+	if (value === 'less' && num === 1) {
+		num = 1;
+	} else {
+		num = value === 'more' ? num += 1 : num -= 1;
+	}
+	this.$set(newProductdetail, 'quantity', num);
+	this.product = { ...newProductdetail };
+}
+
 function data() {
 	return {
 		product: {},
@@ -262,6 +275,7 @@ export default {
 		filterProduct,
 		possibleFeature,
 		clearFeatures,
+		clickQuantity,
 	},
 	props: {
 		id: {

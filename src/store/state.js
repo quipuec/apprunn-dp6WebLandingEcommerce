@@ -45,4 +45,6 @@ export default {
 		username: '',
 	},
 	categories: [],
+	productsSelected: null,
+	totalProducts: 0,
 };

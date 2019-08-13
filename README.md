@@ -75,4 +75,3 @@ npm run build
 5. PRO - Products
 6. COM - Components (Header, Subheader, Filters, Searcher, Footer, Carrousel, etc...)
 7. LOG - Login, register, etc.
-

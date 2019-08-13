@@ -38,7 +38,10 @@
 			:features="features"
 			@select="selecFeature"
 			@clear="$emit('clear')"/>
-		<product-buy />	
+		<product-buy 
+			@click="clickQuantity"
+			@add-to-car="addToCar"
+			:number="data.quantity"/>
 	</div>
 </template>
 <script>
@@ -65,6 +68,25 @@ function selecFeature(index, value) {
 	this.$emit('select', index, value);
 }
 
+function clickQuantity(value) {
+	this.$emit('click-quantity', value);
+}
+
+function noStock() {
+	const stock = !!this.data.stock;
+	const positiveStock = this.data.stock > 0;
+	return !(stock && positiveStock);
+}
+
+function addToCar() {
+	if (!this.noStock) {
+		this.$store.dispatch('addProductToBuyCar', this.data);
+		this.goTo('buy');
+	} else {
+		this.showGenericError('Producto sin stock');
+	}
+}
+
 export default {
 	name: 'product-detail',
 	components: {
@@ -78,11 +100,14 @@ export default {
 			'token',
 		]),
 		getDiscont,
+		noStock,
 	},
 	methods: {
 		stopClick,
 		addToFavorites,
 		selecFeature,
+		clickQuantity,
+		addToCar,
 	},
 	props: {
 		data: {

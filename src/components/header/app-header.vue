@@ -39,7 +39,7 @@
 				<button-image
 					if-number
 					:data="imagesButton[2]"
-					:number="1"
+					:number="totalProducts"
 					@click-image="goTo('buy')"
 				/>
 			</div>
@@ -58,6 +58,11 @@ const callMenu = () => import('@/components/header/call-menu');
 const appSearch = () => import('@/components/shared/inputs/app-input-search');
 const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 const modalLogin = () => import('@/components/header/modal-login');
+
+function mounted() {
+	const ls = JSON.parse(localStorage.getItem('ecommerce::product-select'));
+	this.$store.dispatch('updateProductSelect', ls);
+}
 
 function toogleSearch() {
 	this.isSearchMobile = !this.isSearchMobile;
@@ -125,6 +130,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'token',
+			'totalProducts',
 		]),
 	},
 	data,
@@ -134,6 +140,7 @@ export default {
 		openModalLogin,
 		closeModal,
 	},
+	mounted,
 	props: {
 		logo: {
 			type: Object,

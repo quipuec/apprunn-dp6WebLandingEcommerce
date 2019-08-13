@@ -53,6 +53,17 @@ function SET_ORDER_TOTAL(state, total) {
 	Vue.set(state.order, 'total', total);
 }
 
+function UPDATE_PRODUCTS_SELECTED(state, products) {
+	if (products) {
+		localStorage.setItem('ecommerce::product-select', JSON.stringify(products));
+		Vue.set(state, 'productsSelected', [...products]);
+	} else {
+		localStorage.removeItem('ecommerce::product-select');
+		Vue.set(state, 'productsSelected', []);
+	}
+}
+
+
 const methods = {
 	clearUser,
 	...geoMutations,
@@ -68,6 +79,7 @@ const methods = {
 	UPDATE_POLL_PROGRESS,
 	SET_CATEGORIES,
 	SET_ORDER_TOTAL,
+	UPDATE_PRODUCTS_SELECTED,
 };
 
 export default methods;
