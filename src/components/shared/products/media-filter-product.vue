@@ -2,7 +2,7 @@
 	<button class="box-filter"
 	:style="`border-right: ${borderRight ? `1px solid ${borderRight}` : null}`">
 			<div>
-				<img :src="image" alt="">
+				<img :src="urlImage" alt="">
 			</div>
 			<div class="filter-title">
 				<p class="title-filter">{{title}}</p>
@@ -15,7 +15,7 @@
 export default {
 	name: 'filter-product',
 	props: {
-		image: String,
+		urlImage: String,
 		borderRight: String,
 		title: String,
 	},

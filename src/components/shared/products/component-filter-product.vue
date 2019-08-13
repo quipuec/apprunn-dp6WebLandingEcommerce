@@ -7,7 +7,7 @@
 			:key="filter.id">
 				<media-filter-product
 					:border-right="filter.border"
-					:image="filter.icon"
+					:url-image="filter.icon"
 					:title="filter.title"
 					:color="filter.color"
 				></media-filter-product>
