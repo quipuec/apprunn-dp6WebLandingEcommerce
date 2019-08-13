@@ -21,7 +21,7 @@
 						></button-image>
 					</div>
 				</div>
-				<div v-if="help.deploy">
+				<div v-if="!help.deploy">
 					<button
 					:class="[
 					{ 'active-help' : currentHelp === item }
@@ -103,8 +103,8 @@ function data() {
 				],
 			},
 			{
-				deploy: false,
 				id: 2,
+				deploy: false,
 				title: 'PAGO Y ENVÍO',
 				items: [
 					'Forma de Pago',

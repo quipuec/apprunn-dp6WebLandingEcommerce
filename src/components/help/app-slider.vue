@@ -50,8 +50,8 @@ export default {
 	z-index: 99;
 
 	@media (max-width: 950px)  {
-		padding: 0px 36px;
-		min-height: 850px;
+		height: 925px;
+		padding: 0 36px;
 	}
 }
 
