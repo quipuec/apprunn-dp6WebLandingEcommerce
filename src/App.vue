@@ -457,4 +457,11 @@ input.app-input::-webkit-input-placeholder {
 		font-family: font(medium);
 	}
 }
+
+.product-tab {
+	.v-tabs__div {
+		flex: 1 1 auto;
+		max-width: none;
+	}
+}
 </style>
