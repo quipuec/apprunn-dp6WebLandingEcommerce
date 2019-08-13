@@ -1,5 +1,5 @@
 <template>
-	<div class="form-option">
+	<form class="form-option">
 		<div>
 			<div class="form-title">CALIFICANOS</div>
 			<v-rating
@@ -24,7 +24,7 @@
 				@click="sendOpinion"
 			/>
 		</div>
-	</div>
+	</form>
 </template>
 <script>
 import { mapGetters } from 'vuex';
