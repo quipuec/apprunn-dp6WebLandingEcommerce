@@ -10,7 +10,7 @@
 		<div class="container-detail-information">
 			<div class="container-detail-name">
 				<p class="product-detail-name">{{data.name}}</p>
-				<p class="product-detail-brand">{{data.warehouseProduct.brand.name}}</p>
+				<p class="product-detail-brand">{{data.warehouseProduct ? data.warehouseProduct.brand.name : null}}</p>
 			</div>
 			<div class="d-center container-code-rating">
 				<span class="product-detail-code">#{{data.code}}</span>
