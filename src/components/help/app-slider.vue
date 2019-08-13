@@ -41,13 +41,18 @@ export default {
 	bottom: 0;
 	height: 100vh;
 	left: 0;
-	margin-top: 169px;
+	margin-top: 155px;
 	padding: 25px 36px;
 	position: absolute;
 	top: 0;
 	right: 0;
 	width: 100%;
 	z-index: 99;
+
+	@media (max-width: 950px)  {
+		padding: 0px 36px;
+		min-height: 850px;
+	}
 }
 
 .content-app-slider {

@@ -93,12 +93,14 @@ export default {
 	box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.08);
 	display: flex;
 	justify-content: space-around;
-	min-height: 209px;
+	height: 209px;
 	padding: 40px 0;
 	width: 100%;
 
 	@media (max-width: 850px) {
-		flex-direction: column;		
+		padding: 15px 0;
+		height: 411px;
+		flex-direction: column;
 	}
 }
 

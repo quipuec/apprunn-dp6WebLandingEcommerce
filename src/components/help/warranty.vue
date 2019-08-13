@@ -81,7 +81,7 @@ table, td, th {
 	@media (max-width: 950px) {
 		color: color(secondary);
 		font-size: 16px;
-		margin-top: 32px;
+		margin-top: 20px;
 	}
 }
 
@@ -108,7 +108,7 @@ table, td, th {
 }
 
 .table-warranty {
-	margin-top: 35px;
+	margin-top: 15px;
 	width: 60%;
 
 	@media (max-width: 950px) {

@@ -10,18 +10,18 @@
 						<button-image
 						:data="openArrow"
 						class="icon-close"
-						v-if="arrowTabs"
-						@click-image="closeList"
+						v-if="help.deploy"
+						@click-image="deploy(index)"
 						></button-image>
 						<button-image
 						:data="closeArrow"
 						class="icon-close"
-						@click-image="openList"
-						v-if="openArrowTabs"
+						@click-image="deploy(index)"
+						v-if="!help.deploy"
 						></button-image>
 					</div>
 				</div>
-				<div v-if="listHelp">
+				<div v-if="help.deploy">
 					<button
 					:class="[
 					{ 'active-help' : currentHelp === item }
@@ -67,16 +67,8 @@ function seeThisHelp(help) {
 	this.open = true;
 }
 
-function closeList() {
-	this.listHelp = false;
-	this.arrowTabs = false;
-	this.openArrowTabs = true;
-}
-
-function openList() {
-	this.listHelp = true;
-	this.arrowTabs = true;
-	this.openArrowTabs = false;
+function deploy(index) {
+	this.helps[index].deploy = !this.helps[index].deploy;
 }
 
 function data() {
@@ -98,6 +90,8 @@ function data() {
 		currentHelp: '',
 		helps: [
 			{
+				id: 1,
+				deploy: false,
 				title: 'INFORMACIÓN',
 				items: [
 					'Ubicación y Horario de Trabajo',
@@ -109,6 +103,8 @@ function data() {
 				],
 			},
 			{
+				deploy: false,
+				id: 2,
 				title: 'PAGO Y ENVÍO',
 				items: [
 					'Forma de Pago',
@@ -117,6 +113,8 @@ function data() {
 				],
 			},
 			{
+				id: 3,
+				deploy: false,
 				title: 'POLÍTICAS DE LA EMPRESA',
 				items: [
 					'Política de garantía',
@@ -126,6 +124,8 @@ function data() {
 				],
 			},
 			{
+				id: 4,
+				deploy: false,
 				title: 'SERVICIO AL CLIENTE',
 				items: [
 					'Contáctenos',
@@ -150,8 +150,7 @@ export default {
 		warranty,
 	},
 	methods: {
-		closeList,
-		openList,
+		deploy,
 		seeThisHelp,
 	},
 };
