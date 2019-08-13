@@ -56,10 +56,10 @@ function SET_ORDER_TOTAL(state, total) {
 function UPDATE_PRODUCTS_SELECTED(state, products) {
 	if (products) {
 		localStorage.setItem('ecommerce::product-select', JSON.stringify(products));
-		Vue.set(state, 'productsSelected', [...products]);
+		Vue.set(state.order, 'products', [...products]);
 	} else {
 		localStorage.removeItem('ecommerce::product-select');
-		Vue.set(state, 'productsSelected', []);
+		Vue.set(state.order, 'products', []);
 	}
 }
 
