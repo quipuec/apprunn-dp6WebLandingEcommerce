@@ -93,7 +93,7 @@ export default {
 		}
 
 		&.small {
-			height: 319px;
+			min-height: 319px;
 			max-width: 179px;
 		}
 	}
@@ -132,6 +132,12 @@ export default {
 
 		@media (min-width: 426px) {
 			flex-direction: column;
+		}
+
+		@media (max-width: 975px) {
+			&.small {
+				padding: 0px;
+			}
 		}
 	}
 

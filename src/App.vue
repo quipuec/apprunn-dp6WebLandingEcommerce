@@ -481,8 +481,8 @@ input.app-input::-webkit-input-placeholder {
 			display: none;
 		}
 
-		.swiper-slide-active {
-			min-width: 170px !important;
+		.swiper-slide {
+			// min-width: 170px !important;
 		}
 	
 	}

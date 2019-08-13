@@ -4,7 +4,7 @@
 			title="Productos relacionados" 
 			:color="globalColors.dark"/>
 		<div class="container-slider-related">
-			<swiper :options="swiperOption">
+			<swiper :options="getOptions">
 				<swiper-slide 
 					v-for="product in relateds" 
 					:key="product.id">
@@ -26,31 +26,77 @@
 const productCard = () => import('@/components/products/product-card');
 const titleSection = () => import('@/components/home/title-section');
 
-function created() {
-	const numberSlider = this.relateds.length < 5 ? this.relateds.length : 5;
-	this.swiperOption.slidesPerView = numberSlider;
-	this.swiperOption.slidesPerGroup = numberSlider;
+
+function getOptions() {
+	if (this.relateds.length >= 5) {
+		return this.swiperOption;
+	}
+
+	if (this.relateds.length >= 4) {
+		return this.swiperOptionOne;
+	}
+	return this.swiperOptionTwo;
 }
 
 function data() {
 	return {
 		swiperOption: {
-			loop: true,
-			slidesPerView: 1,
+			slidesPerView: 5,
 			spaceBetween: 10,
-			slidesPerGroup: 1,
-			allowTouchMove: false,
 			navigation: {
 				nextEl: '.swiper-button-next',
 				prevEl: '.swiper-button-prev',
 			},
 			breakpoints: {
 				975: {
-					slidesPerView: 2,
+					slidesPerView: 4,
 					slidesPerGroup: 1,
 					allowTouchMove: true,
+					spaceBetween: 10,
+				},
+				652: {
+					slidesPerView: 3,
+				},
+				466: {
+					slidesPerView: 2,
 					centeredSlides: true,
 					grabCursor: true,
+				},
+			},
+		},
+		swiperOptionOne: {
+			slidesPerView: 4,
+			spaceBetween: 10,
+			navigation: {
+				nextEl: '.swiper-button-next',
+				prevEl: '.swiper-button-prev',
+			},
+			breakpoints: {
+				975: {
+					slidesPerView: 3,
+					slidesPerGroup: 1,
+					allowTouchMove: true,
+					spaceBetween: 10,
+				},
+				652: {
+					slidesPerView: 2,
+					centeredSlides: true,
+					grabCursor: true,
+				},
+			},
+		},
+		swiperOptionTwo: {
+			slidesPerView: 3,
+			spaceBetween: 10,
+			navigation: {
+				nextEl: '.swiper-button-next',
+				prevEl: '.swiper-button-prev',
+			},
+			breakpoints: {
+				975: {
+					slidesPerView: 3,
+					slidesPerGroup: 1,
+					allowTouchMove: true,
 					spaceBetween: 10,
 				},
 			},
@@ -59,10 +105,12 @@ function data() {
 }
 export default {
 	name: 'product-related',
-	created,
 	components: {
 		titleSection,
 		productCard,
+	},
+	computed: {
+		getOptions,
 	},
 	data,
 	props: {
