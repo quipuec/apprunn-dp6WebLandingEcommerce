@@ -462,7 +462,7 @@ input.app-input::-webkit-input-placeholder {
 
 	&.v-input--is-dirty .v-input--selection-controls__ripple,
 	&.v-input--is-dirty .v-input--switch__thumb {
-		transform: translate(24px, 0);
+		transform: translate(24px, 0) !important;
 	}
 
 	.v-label {
