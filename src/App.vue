@@ -443,17 +443,31 @@ input.app-input::-webkit-input-placeholder {
 		input {
 			max-height: 46px !important;
 		}
+
 		.v-input--switch__track {
-			border-radius: 0 !important;
+			border-radius: 3px !important;
 			height: 20px !important;
 		}
+
 		.accent--text {
 			color: color(primary) !important;
 		}
+
 		.v-input--switch__thumb {
-			border-radius: 0 !important;
+			border-radius: 3px !important;
 			top: calc(50% - 7px) !important;
 		}
+
+	}
+
+	&.v-input--is-dirty .v-input--selection-controls__ripple,
+	&.v-input--is-dirty .v-input--switch__thumb {
+		transform: translate(24px, 0);
+	}
+
+	.v-label {
+		font-family: font(demi) !important;
+		font-size: size(medium) !important;
 	}
 }
 </style>
