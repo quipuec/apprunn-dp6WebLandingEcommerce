@@ -20,6 +20,7 @@ export default {
 	order: {
 		bill: null,
 		delivery: null,
+		flagBill: false,
 		flagPickUp: 1,
 		id: null,
 		products: [],
