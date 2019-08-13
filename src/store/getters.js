@@ -54,10 +54,20 @@ function getCategories(state) {
 	return state.categories;
 }
 
+function getDirections(state) {
+	return state.directions;
+}
+
+function getWarehouses(state) {
+	return state.warehouses;
+}
+
 const methods = {
 	companyLogo,
+	getDirections,
 	getCurrencySymbol,
 	getProducts,
+	getWarehouses,
 	flagAddVoucher,
 	indeterminate,
 	...geoGetters,

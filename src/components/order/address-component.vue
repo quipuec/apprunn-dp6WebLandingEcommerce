@@ -7,9 +7,18 @@
 			:value="value"
 			@input="sendValue"
 		/>
-		<app-button-img :data="objImg" class="map-button" @click-image="openModal"/>
-		<modal-component v-model="showMap">
-			<map-component/>
+		<app-button-img
+			v-if="!hideMapButton"
+			class="map-button"
+			:disabled="disableMap"
+			:data="objImg"
+			@click-image="openModal(true)"
+		/>
+		<modal-component v-model="showMap" @input="openModal">
+			<section class="map-title">
+				<h4 class="direction-title">Dirección: {{address}}</h4>
+			</section>
+			<map-component :markers="markers" :center="center" :zoom="zoom"/>
 		</modal-component>
 	</div>
 </template>
@@ -23,8 +32,8 @@ function sendValue(val) {
 	this.$emit('input', val);
 }
 
-function openModal() {
-	this.showMap = true;
+function openModal(val) {
+	this.showMap = val;
 }
 
 function data() {
@@ -52,10 +61,31 @@ export default {
 		sendValue,
 	},
 	props: {
+		address: {
+			default: '',
+			type: String,
+		},
+		center: {
+			default: () => {},
+			type: Object,
+		},
+		disableMap: {
+			default: false,
+			type: Boolean,
+		},
+		hideMapButton: {
+			default: false,
+			type: Boolean,
+		},
+		markers: {
+			default: () => [],
+			type: Array,
+		},
 		options: {
 			default: () => [],
 			type: Array,
 		},
+		zoom: Number,
 		value: null,
 	},
 };
@@ -72,14 +102,24 @@ export default {
 		background-color: color(primary);
 		border: 1px solid color(primary);
 		display: flex;
+		flex: 1 1 6%;
 		height: 100%;
 		justify-content: center;
-		transform: translateX(-10px);
-		width: 45px;
 	}
 
 	.address-select {
-		width: calc(100% - 45px);
+		flex: 1 1 100%;
+	}
+
+	.map-title {
+		background-color: white;
+	}
+
+	.direction-title {
+		color: color(dark);
+		font-family: font(demi);
+		font-size: size(large);
+		padding: 20px 30px;
 	}
 </style>
 
