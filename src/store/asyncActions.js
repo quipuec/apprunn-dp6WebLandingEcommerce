@@ -57,6 +57,11 @@ const asyncActions = {
 		});
 		commit('SET_CATEGORIES', response);
 	},
+	LOAD_USER_ADDRESS: async ({ commit }, { context, params }) => {
+		const { data: address, headers } = await context.$httpSales.get('customers-address', { params });
+		commit('SET_USER_ADDRESS', address);
+		return Number(headers['x-last-page']);
+	},
 };
 
 export default asyncActions;

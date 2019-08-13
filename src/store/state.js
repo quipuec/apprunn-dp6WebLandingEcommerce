@@ -27,6 +27,7 @@ export default {
 		progress: 0,
 	},
 	profile: {
+		address: [],
 		flagAddVoucher: false,
 	},
 	products: {
