@@ -38,6 +38,7 @@
 			:features="features"
 			@select="selecFeature"
 			@clear="$emit('clear')"/>
+		<product-buy />	
 	</div>
 </template>
 <script>
@@ -45,6 +46,7 @@ import { mapGetters } from 'vuex';
 
 const heartComponent = () => import('@/components/shared/icons/heart-component');
 const productChildrens = () => import('@/components/products/product-childrens');
+const productBuy = () => import('@/components/products/product-buy');
 
 function stopClick() {
 	return false;
@@ -68,6 +70,7 @@ export default {
 	components: {
 		heartComponent,
 		productChildrens,
+		productBuy,
 	},
 	computed: {
 		...mapGetters([
