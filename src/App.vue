@@ -480,11 +480,6 @@ input.app-input::-webkit-input-placeholder {
 		.swiper-button-next, .swiper-button-prev {
 			display: none;
 		}
-
-		.swiper-slide {
-			// min-width: 170px !important;
-		}
-	
 	}
 }
 .product-tab {
