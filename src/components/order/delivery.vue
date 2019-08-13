@@ -264,5 +264,9 @@ export default {
 		flex: 1 1 47%;
 		height: 68px;
 	}
+
+	.billing-section {
+		margin-top: 50px;
+	}
 </style>
 

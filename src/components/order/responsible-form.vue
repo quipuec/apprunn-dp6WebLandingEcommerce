@@ -42,6 +42,7 @@ import { required, email } from 'vuelidate/lib/validators';
 const appInput = () => import('@/components/shared/inputs/app-input');
 
 function validateForm() {
+	this.$store.commit('SET_RESPONSIBLE', null);
 	if (!this.$v.$invalid) {
 		this.$store.commit('SET_RESPONSIBLE', this.responsible);
 	}
