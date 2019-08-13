@@ -30,6 +30,7 @@ export default {
 			font-family: font(bold);
 			font-size: size(large);
 			margin: 0 16px;
+			text-align: center;
 		}
 
 		.m-r-1 {

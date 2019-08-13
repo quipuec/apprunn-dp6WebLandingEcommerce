@@ -51,7 +51,7 @@ function data() {
 					allowTouchMove: true,
 					centeredSlides: true,
 					grabCursor: true,
-					spaceBetween: 30,
+					spaceBetween: 10,
 				},
 			},
 		},

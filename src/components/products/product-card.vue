@@ -93,6 +93,7 @@ export default {
 		}
 
 		&.small {
+			height: 319px;
 			max-width: 179px;
 		}
 	}

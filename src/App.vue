@@ -470,6 +470,10 @@ input.app-input::-webkit-input-placeholder {
 		.swiper-button-next, .swiper-button-prev {
 			display: none;
 		}
+
+		.swiper-slide-active {
+			min-width: 170px !important;
+		}
 	}
 }
 </style>
