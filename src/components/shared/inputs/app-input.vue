@@ -27,7 +27,7 @@
 		},
 		props: {
 			borderColor: {
-				default: '#f5f3f3',
+				default: '#e6e6e6',
 				type: String,
 			},
 			value: null,
