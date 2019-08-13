@@ -4,7 +4,7 @@
 			<div class="button-number" v-if="ifNumber">{{number}}</div>
 			<img :src="imageUser"
 				:alt="data.name"
-				:height="data.height || 20" 
+				:height="data.height || 20"
 			>
 		</button>
 	</div>

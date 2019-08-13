@@ -3,6 +3,9 @@
 		<section>
 			<h3 class="section-title">direcciones</h3>
 		</section>
+		<section>
+			<new-address-form/>
+		</section>
 		<section class="table">
 			<responsive-table
 				class="address"
@@ -31,6 +34,8 @@
 <script>
 import { mapGetters } from 'vuex';
 import lib from '@/shared/lib';
+
+const newAddressForm = () => import('@/components/profile/new-address-form');
 
 async function created() {
 	this.totalPage = await this.$store.dispatch('LOAD_USER_ADDRESS',
@@ -68,9 +73,10 @@ function data() {
 export default {
 	name: 'address',
 	components: {
-		starComponent: () => import('@/components/shared/icons/star-component'),
 		deleteComponent: () => import('@/components/shared/icons/delete-component'),
+		newAddressForm,
 		responsiveTable: () => import('@/components/shared/table/respondive-table'),
+		starComponent: () => import('@/components/shared/icons/star-component'),
 	},
 	computed: {
 		...mapGetters([
