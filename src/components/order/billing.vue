@@ -52,6 +52,7 @@ import { mapGetters } from 'vuex';
 const appInput = () => import('@/components/shared/inputs/app-input');
 
 function validateForm() {
+	this.$store.commit('SET_BILLING_INFO', null);
 	if (!this.$v.$invalid) {
 		this.$store.commit('SET_BILLING_INFO', this.billing);
 	}
