@@ -1,26 +1,26 @@
 <template>
-  <div class="tabs-help">
-		<div class="content-help">
-			<div class="w-100">
-				<div class="title-help">CENTRO DE AYUDA</div>
-				<div v-for="(help, index) in helps" :key="index">
-				<div class="title-tabs">
-					{{help.title}}
-					<div>
-						<button-image
-						:data="openArrow"
-						class="icon-close"
-						v-if="help.deploy"
-						@click-image="deploy(index)"
-						></button-image>
-						<button-image
-						:data="closeArrow"
-						class="icon-close"
-						@click-image="deploy(index)"
-						v-if="!help.deploy"
-						></button-image>
-					</div>
+<div class="tabs-help">
+	<div class="content-help">
+		<div class="w-100">
+			<div class="title-help">CENTRO DE AYUDA</div>
+			<div v-for="(help, index) in helps" :key="index">
+			<div class="title-tabs">
+				{{help.title}}
+				<div>
+					<button-image
+					:data="openArrow"
+					class="icon-close"
+					v-if="help.deploy"
+					@click-image="deploy(index)"
+					></button-image>
+					<button-image
+					:data="closeArrow"
+					class="icon-close"
+					@click-image="deploy(index)"
+					v-if="!help.deploy"
+					></button-image>
 				</div>
+			</div>
 				<div v-if="!help.deploy">
 					<button
 					:class="[
@@ -32,25 +32,25 @@
 					v-for="(item, indexItem) in help.items" :key="indexItem"
 					>
 						{{item}}
-						</button>
-					</div>
+					</button>
 				</div>
 			</div>
-		</div>	
-		<div class="content-components">
-			<component
-				:is="currentHelpComponent"
-			></component>
 		</div>
-		<app-slider
-		class="slider-help"
-		:title="currentHelp"
-		v-model="open">
-			<component
+	</div>	
+	<div class="content-components">
+		<component
 			:is="currentHelpComponent"
-			></component>
-		</app-slider>
+		></component>
 	</div>
+	<app-slider
+	class="slider-help"
+	:title="currentHelp"
+	v-model="open">
+		<component
+		:is="currentHelpComponent"
+		></component>
+	</app-slider>
+</div>
 </template>
 
 <script>
@@ -157,6 +157,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.list-help {
+	@media (min-width: 950px) {
+		display: none;
+	}
+}
+
+.list-responsive {
+	@media (min-width: 950px) {
+		display: none;
+	}
+}
+
 .tabs-help {
 	display: flex;
 	justify-content: space-between;
@@ -229,6 +241,12 @@ export default {
 .icon-close {
 	@media (min-width: 950px) {
 		display: none;
+	}
+}
+
+.list-help-desktop {
+	@media (min-width: 950px) {
+		display: block;
 	}
 }
 </style>
