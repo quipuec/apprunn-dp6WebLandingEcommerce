@@ -174,7 +174,7 @@ export default {
 	}
 
 	.address-province {
-		grid-column: 3;
+		grid-column: 4;
 		grid-row: 2;
 		text-transform: lowercase;
 
@@ -186,7 +186,7 @@ export default {
 	}
 
 	.address-city {
-		grid-column: 4;
+		grid-column: 3;
 		grid-row: 2;
 		text-transform: lowercase;
 
