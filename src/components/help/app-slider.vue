@@ -41,7 +41,7 @@ export default {
 	bottom: 0;
 	height: 100vh;
 	left: 0;
-	margin-top: 155px;
+	margin-top: 166px;
 	padding: 25px 36px;
 	position: absolute;
 	top: 0;
