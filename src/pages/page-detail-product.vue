@@ -22,7 +22,7 @@
 			<product-related 
 				:relateds="relateds"
 				v-if="relateds.length"
-				@update="updateRelated"/>
+			/>
 		</div>
 	</div>
 </template>
@@ -79,18 +79,13 @@ function newRoute() {
 	this.loadOpinions();
 }
 
-function updateRelated() {
-	console.log('hahahaha');
-	this.relateds = [...this.relateds];
-}
-
 function data() {
 	return {
-		product: {},
-		tabs: [],
 		lastIndex: 0,
 		opinions: [],
+		product: {},
 		relateds: [],
+		tabs: [],
 	};
 }
 
@@ -110,11 +105,10 @@ export default {
 	},
 	data,
 	methods: {
-		loadData,
 		isLoggedUser,
+		loadData,
 		loadOpinions,
 		newRoute,
-		updateRelated,
 	},
 	props: {
 		id: {
