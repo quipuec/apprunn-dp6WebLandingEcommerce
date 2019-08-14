@@ -2,8 +2,8 @@
 	<layout-admin>
 		<!-- <router-view></router-view> -->
 		<banner-carousel :banners="banners"/>
-		<categories-carousel 
-			:categories="getCategories"
+		<categories-carousel
+ 			:categories="getCategories"
 			:color-base="colorBase"/>
 		<component-filter-product 
 		:filters="filters"></component-filter-product>
@@ -32,11 +32,10 @@ function created() {
 	this.loadData();
 	this.loadFilters();
 }
-
 async function loadFilters() {
 	try {
 		const { data: response } = await this.$httpProductsPublic.get('filters-public');
-		this.filters = response.data;
+		this.filters = response;
 	} catch (error) {
 		this.showGenericError();
 	}

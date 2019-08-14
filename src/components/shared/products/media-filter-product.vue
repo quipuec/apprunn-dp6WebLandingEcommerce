@@ -1,8 +1,9 @@
 <template>
 	<button class="box-filter"
-	:style="`border-right: ${borderRight ? `1px solid ${borderRight}` : null}`">
+	:style="`border-right: ${borderRight ? `1px solid ${borderRight}` : null}`"
+	>
 			<div>
-				<img :src="urlImage" alt="">
+				<img :src="urlImage" alt="" height="23px" width="23px">
 			</div>
 			<div class="filter-title">
 				<p class="title-filter">{{title}}</p>

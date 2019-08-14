@@ -7,7 +7,7 @@
 			:key="filter.id">
 				<media-filter-product
 					:border-right="filter.border"
-					:url-image="filter.icon"
+					:url-image="filter.urlImage"
 					:title="filter.title"
 					:color="filter.color"
 				></media-filter-product>
@@ -90,7 +90,7 @@ export default {
 
 .swiper-filter {
 	margin: auto;
-	width: 80%;
+	width: 85%;
 }
 </style>
 
