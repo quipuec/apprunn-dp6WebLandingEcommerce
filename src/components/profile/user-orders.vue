@@ -1,21 +1,22 @@
 <template>
 	<div>
-		<profile-tab class="web-tab"/>
+		<profile-tab class="web-tab" @status-changed="statusChanged"/>
 		<div class="table-container">
 			<responsive-table
 				:columns="columns"
-				:rows="rows"
-				:pages="50"
+				:rows="getOrders"
+				:pages="lastPage"
+				@page-changed="changePage"
 			>
 				<template slot-scope="{ row }">
-					<td class="row-date">{{row.date}}</td>
+					<td class="row-date">{{row.createdAt}}</td>
 					<td class="row-order">
-						<span class="row-order-label">Nro. Orden: </span>{{row.order}}</td>
+						<span class="row-order-label">Nro. Orden: </span>{{row.number}}</td>
 					<td class="row-totalOrder">
-						<span class="row-totalOrder-label">Total: </span>{{row.totalOrder}}</td>
-					<td class="row-orderStatus">{{row.orderStatus}}</td>
-					<td class="row-wayDelivery">{{row.wayDelivery}}</td>
-					<td class="row-wayPayment">{{row.wayPayment}}</td>
+						<span class="row-totalOrder-label">Total: </span>{{row.total}}</td>
+					<td class="row-orderStatus">{{getValue('orderState.name', row)}}</td>
+					<td class="row-wayDelivery">{{row.pickUpName}}</td>
+					<td class="row-wayPayment">{{getValue('wayPayment.name', row)}}</td>
 					<td class="row-actions">
 						<details-component class="action-btn" @click="seeDetails(row)"/>
 						<delete-component class="action-btn"/>
@@ -26,9 +27,42 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+import lib from '@/shared/lib';
+
+function created() {
+	this.$store.dispatch('LOAD_ORDERS_STATUS', this);
+}
+
+async function getStatusHandler() {
+	({ id: this.orderStatusId } = lib.find(lib.equality('code', 'REQUESTED'), this.getStatus));
+	this.loadOrders(this.orderStatusId);
+}
+
+async function loadOrders(orderStatusId) {
+	this.lastPage = await this.$store.dispatch(
+		'LOAD_ORDERS',
+		{ context: this, params: this.params, orderStatusId },
+	);
+}
 
 function seeDetails({ order }) {
 	this.$router.push({ name: 'order-detail', params: { n: order } });
+}
+
+function getValue(route, order) {
+	return lib.getDeeper(route)(order);
+}
+
+
+function changePage(page) {
+	this.params.page = page;
+	this.loadOrders(this.orderStatusId);
+}
+
+function statusChanged(id) {
+	this.orderStatusId = id;
+	this.loadOrders(this.orderStatusId);
 }
 
 function data() {
@@ -42,24 +76,12 @@ function data() {
 			{ value: 'wayPayment', title: 'Método de pago', responsive: true },
 			{ value: '', title: 'Acción' },
 		],
-		rows: [
-			{
-				date: '23/04/2019',
-				order: '1471',
-				totalOrder: 320,
-				orderStatus: 'No pagado',
-				wayPayment: 'Pago en tienda',
-				wayDelivery: 'Recojo en tienda',
-			},
-			{
-				date: '23/04/2019',
-				order: '1471',
-				totalOrder: 320,
-				orderStatus: 'No pagado',
-				wayPayment: 'Pago en tienda',
-				wayDelivery: 'Envío a domicilio',
-			},
-		],
+		lastPage: 0,
+		orderStatusId: 0,
+		params: {
+			limit: 5,
+			page: 1,
+		},
 	};
 }
 
@@ -71,9 +93,24 @@ export default {
 		profileTab: () => import('@/components/shared/tabs/profile-tab'),
 		responsiveTable: () => import('@/components/shared/table/respondive-table'),
 	},
+	computed: {
+		...mapGetters([
+			'getOrders',
+			'getStatus',
+		]),
+	},
+	created,
 	data,
 	methods: {
+		changePage,
+		getStatusHandler,
+		getValue,
+		loadOrders,
 		seeDetails,
+		statusChanged,
+	},
+	watch: {
+		getStatus: getStatusHandler,
 	},
 };
 </script>
