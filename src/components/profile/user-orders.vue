@@ -46,8 +46,8 @@ async function loadOrders(orderStatusId) {
 	);
 }
 
-function seeDetails({ order }) {
-	this.$router.push({ name: 'order-detail', params: { n: order } });
+function seeDetails(order) {
+	this.$router.push({ name: 'order-detail', params: { id: order.id } });
 }
 
 function getValue(route, order) {

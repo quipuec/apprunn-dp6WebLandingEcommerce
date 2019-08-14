@@ -3,30 +3,34 @@
 		<section class="nav">
 			<left-component @click="goTo" class="go-back"/>
 			<p class="order-head">
-				<span class="order-state">solicitado</span> - <span>nro orden</span><span>147721</span>
+				<span class="order-state">
+					{{getValue('orderState.name', getOrderDetails)}}
+				</span> - <span>nro orden </span>
+				<span>{{getValue('number', getOrderDetails)}}</span>
 			</p>
 		</section>
 		<section class="header">
 			<div class="order-info">
 				<div>
-					<span class="label">Precio Total: </span><span class="order-info-data">PEN 320.10</span>
+					<span class="label">Precio Total: </span><span class="order-info-data">{{getValue('total', getOrderDetails)}}</span>
 				</div>
 				<div>
-					<span class="label">Fecha de la Orden: </span><span class="order-info-data">19/05/2019</span>
+					<span class="label">Fecha de la Orden: </span><span class="order-info-data">{{getValue('createdAt', getOrderDetails)}}</span>
 				</div>
 				<div>
-					<span class="label">Estado: </span><span class="order-info-data">Pagado</span>
+					<span class="label">Estado: </span><span class="order-info-data">{{getValue('orderState.name', getOrderDetails)}}</span>
 				</div>
 			</div>
 			<div class="order-payment">
 				<div class="order-payment-wrapper">
-					<div class="my-2">
-						<span class="label">Direccion de envio: </span><span class="order-info-data">Calle independencia 120 - Piso 16 - Miraflores</span>
+					<div class="my-2 delivery-address">
+						<span class="label">Direccion de envio: </span><span class="order-info-data">{{getValue('deliveryAddress.address', getOrderDetails)}}</span>
 					</div>
 					<app-button
 						v-if="!flagAddVoucher"
-						class="payment-btn"
+						class="payment-btn mx-2"
 						action="Añadir datos del deposito"
+						max-width="276px"
 						:background="backgroundColor"
 						:img="'/static/icons/hand.svg'"
 						@click="addPaymentInfo"
@@ -39,22 +43,21 @@
 			<responsive-table
 				align-left
 				:columns="columns"
-				:rows="rows"
-				:pages="50"
+				:rows="getOrderDetails.details"
 			>
 				<template slot-scope="{ row }">
 					<td class="row-product">
 						<div class="product-info-container">
-							<img :src="row.product.img" alt="imagen del producto" class="product-img"/>
+							<img :src="row.productImage" alt="imagen del producto" class="product-img"/>
 							<div class="text-xs-left">
-								<h4 class="product-name">{{row.product.name}}</h4>
-								<span class="product-description">{{row.product.description}}</span>
+								<h4 class="product-name">{{row.productName}}</h4>
+								<span class="product-description">{{row.description}}</span>
 							</div>
 						</div>
 					</td>
-					<td class="product-unit-price">{{row.unitPrice}}</td>
+					<td class="product-unit-price">{{row.salePrice}}</td>
 					<td class="product-quantity">{{row.quantity}}</td>
-					<td class="product-sub">{{row.sub}}</td>
+					<td class="product-sub">{{row.total}}</td>
 				</template>
 			</responsive-table>
 		</section>
@@ -66,6 +69,12 @@ import appButton from '@/components/shared/buttons/app-button';
 import leftComponent from '@/components/shared/icons/left-component';
 import loadPayment from '@/components/profile/load-payment';
 import responsiveTable from '@/components/shared/table/respondive-table';
+import lib from '@/shared/lib';
+
+function created() {
+	({ id: this.orderId } = this.$route.params);
+	this.$store.dispatch('LOAD_ORDER_DETAILS', { context: this, orderId: this.orderId });
+}
 
 function goTo() {
 	this.$router.back();
@@ -79,6 +88,10 @@ function addPaymentInfo() {
 	this.$store.commit('UPDATE_FLAG_ADD_VOUCHER', true);
 }
 
+function getValue(route, order) {
+	return lib.getDeeper(route)(order);
+}
+
 function data() {
 	return {
 		columns: [
@@ -87,28 +100,7 @@ function data() {
 			{ value: 'quantity', title: 'Cantidad', responsive: true },
 			{ value: 'sub', title: 'Precio Subtotal', responsive: true },
 		],
-		rows: [
-			{
-				product: {
-					img: '/static/img/resorte.jpg',
-					description: 'Descripcion',
-					name: 'nombre',
-				},
-				unitPrice: 320,
-				quantity: 2,
-				sub: 640,
-			},
-			{
-				product: {
-					img: '/static/img/resorte.jpg',
-					description: 'Descripcion',
-					name: 'nombre',
-				},
-				unitPrice: 320,
-				quantity: 2,
-				sub: 640,
-			},
-		],
+		orderId: 0,
 	};
 }
 
@@ -123,12 +115,15 @@ export default {
 	computed: {
 		...mapGetters([
 			'flagAddVoucher',
+			'getOrderDetails',
 		]),
 		backgroundColor,
 	},
+	created,
 	data,
 	methods: {
 		addPaymentInfo,
+		getValue,
 		goTo,
 	},
 };
@@ -290,8 +285,12 @@ export default {
 	}
 
 	.payment-btn {
+		display: flex;
+		justify-content: flex-end;
+		flex: 1 1 40%;
 
 		@media (max-width: 600px) {
+			justify-content: center;
 			margin: auto;
 		}
 	}
@@ -300,6 +299,14 @@ export default {
 
 		@media (max-width: 600px) {
 			flex: 1 1 5%;
+		}
+	}
+
+	.delivery-address {
+		flex: 1 1 50%;
+
+		@media (max-width: 600px) {
+			margin-right: 40px;
 		}
 	}
 </style>

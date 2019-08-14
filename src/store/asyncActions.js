@@ -100,6 +100,12 @@ const asyncActions = {
 		commit('SET_ORDERS', setUpDateInOrders);
 		return Number(headers['x-last-page']);
 	},
+	LOAD_ORDER_DETAILS: async ({ commit }, { context, orderId }) => {
+		const url = `orders/${orderId}`;
+		const { data: orderDetails } = await context.$httpSales.get(url);
+		orderDetails.createdAt = helper.formatDate(orderDetails.createdAt);
+		commit('SET_ORDER_DETAILS', orderDetails);
+	},
 };
 
 export default asyncActions;
