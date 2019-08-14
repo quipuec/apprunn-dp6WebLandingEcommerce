@@ -3,7 +3,10 @@
 	<div class="content-help">
 		<div class="w-100">
 			<div class="title-help">CENTRO DE AYUDA</div>
-			<div v-for="(help, index) in helps" :key="index">
+			<div
+			v-for="(help, index) in helps" 
+			:key="index"
+			>
 			<div class="title-tabs">
 				{{help.title}}
 				<div>
@@ -71,20 +74,9 @@ function deploy(index) {
 	this.helps[index].deploy = !this.helps[index].deploy;
 }
 
-function created() {
-	this.widthArrow();
-}
-
-function mounted() {
-	window.addEventListener('resize', this.widthArrow);
-}
-
-function widthArrow() {
-	this.widthDesktop = window.innerWidth;
-}
-
 function data() {
 	return {
+
 		widthDesktop: 0,
 		width: 0,
 		openArrowTabs: true,
@@ -156,9 +148,7 @@ function data() {
 }
 
 export default {
-	created,
 	data,
-	mounted,
 	name: 'tabs-help',
 	components: {
 		buttonImage,
@@ -168,7 +158,6 @@ export default {
 	methods: {
 		deploy,
 		seeThisHelp,
-		widthArrow,
 	},
 };
 </script>
