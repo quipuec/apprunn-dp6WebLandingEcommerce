@@ -22,8 +22,8 @@
 					<td class="address-location">{{row.addressLine1}}</td>
 					<td class="address-actions">
 						<div class="address-actions-wrapper">
-							<star-component class="action-btn"/>
-							<delete-component class="action-btn"/>
+							<star-component class="action-btn" @click="favoriteAddress(row)" v-model="row.isFavorite"/>
+							<delete-component class="action-btn" @click="deleteAddress(row)"/>
 						</div>
 					</td>
 				</template>
@@ -37,7 +37,11 @@ import lib from '@/shared/lib';
 
 const newAddressForm = () => import('@/components/profile/new-address-form');
 
-async function created() {
+function created() {
+	this.loadAddress();
+}
+
+async function loadAddress() {
 	this.totalPage = await this.$store.dispatch('LOAD_USER_ADDRESS',
 		{ context: this, params: { page: this.currentPage, limit: this.limit } },
 	);
@@ -52,6 +56,30 @@ function pageChange(page) {
 	this.$store.dispatch('LOAD_USER_ADDRESS',
 		{ context: this, params: { page: this.currentPage, limit: this.limit } },
 	);
+}
+
+async function favoriteAddress(address) {
+	const { isFavorite, id } = address;
+	const body = {
+		isFavorite: !isFavorite,
+	};
+	try {
+		await this.$store.dispatch('SET_FAVORITE_ADDRESS', { context: this, body, id });
+		this.loadAddress();
+		this.showNotification('Dirección actualizada como favorita');
+	} catch (error) {
+		this.showGenericError('No fue posible seleccionar como favorita esa dirección');
+	}
+}
+
+async function deleteAddress({ id, name }) {
+	try {
+		await this.$store.dispatch('DELETE_ADDRESS', { context: this, id });
+		this.showNotification(`Dirección ${name.toUpperCase()} eliminada con éxito`);
+		this.loadAddress();
+	} catch (error) {
+		this.showGenericError('No fue posible eliminar la dirección. Intente más tarde');
+	}
 }
 
 function data() {
@@ -86,7 +114,10 @@ export default {
 	created,
 	data,
 	methods: {
+		deleteAddress,
+		favoriteAddress,
 		getValue,
+		loadAddress,
 		pageChange,
 	},
 };

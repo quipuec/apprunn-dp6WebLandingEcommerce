@@ -78,6 +78,12 @@ const asyncActions = {
 			{ commit },
 			{ context, params: { page: 1, limit: 5 } });
 	},
+	SET_FAVORITE_ADDRESS: async (state, { context, body, id }) => {
+		await context.$httpSales.patch(`customers-address/${id}`, body);
+	},
+	DELETE_ADDRESS: async (state, { context, id }) => {
+		await context.$httpSales.delete(`customers-address/${id}`);
+	},
 };
 
 export default asyncActions;
