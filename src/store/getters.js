@@ -1,5 +1,6 @@
 import orderGetters from '@/store/getters/order';
 import geoGetters from '@/store/getters/geo';
+import profileGetters from '@/store/getters/profile';
 import lib from '@/shared/lib';
 
 const { getDeeper } = lib;
@@ -71,6 +72,7 @@ const methods = {
 	indeterminate,
 	...geoGetters,
 	...orderGetters,
+	...profileGetters,
 	pollData,
 	snackbar,
 	themeColors,

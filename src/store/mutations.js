@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import orderMutations from '@/store/mutations/order';
 import geoMutations from '@/store/mutations/geo';
+import profileMutations from '@/store/mutations/profile';
 
 function clearUser(state) {
 	Vue.set(state, 'token', null);
@@ -65,6 +66,7 @@ const methods = {
 	clearUser,
 	...geoMutations,
 	...orderMutations,
+	...profileMutations,
 	setToken,
 	setUser,
 	showSnackBar,
