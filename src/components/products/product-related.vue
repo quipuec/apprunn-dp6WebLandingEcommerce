@@ -4,7 +4,7 @@
 			title="Productos relacionados" 
 			:color="globalColors.dark"/>
 		<div class="container-slider-related">
-			<swiper :options="getOptions">
+			<swiper :options="getOptions" ref="mySwiper">
 				<swiper-slide 
 					v-for="product in relateds" 
 					:key="product.id">
@@ -16,9 +16,17 @@
 							small/>
 					</div>
 				</swiper-slide>
-				<div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
 			</swiper>
+			<div 
+				v-if="viewButtons"
+				class="container-buttons-slider">
+				<button @click="nextSlider" class="btn btn-rigth">
+					<img src="/static/img/slider-arrow-rigth.svg" alt="adelante">
+				</button>
+				<button @click="prevSlider" class="btn btn-left">
+					<img src="/static/img/slider-arrow-left.svg" alt="atras">
+				</button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -38,6 +46,22 @@ function getOptions() {
 	return this.swiperOptionTwo;
 }
 
+function nextSlider() {
+	this.swiper.slideNext();
+}
+
+function prevSlider() {
+	this.swiper.slidePrev();
+}
+
+function swiper() {
+	return this.$refs.mySwiper.swiper;
+}
+
+function viewButtons() {
+	return this.relateds.length >= 5;
+}
+
 function data() {
 	return {
 		swiperOption: {
@@ -48,13 +72,13 @@ function data() {
 				prevEl: '.swiper-button-prev',
 			},
 			breakpoints: {
-				975: {
+				1000: {
 					slidesPerView: 4,
 					slidesPerGroup: 1,
 					allowTouchMove: true,
 					spaceBetween: 10,
 				},
-				652: {
+				700: {
 					slidesPerView: 3,
 				},
 				466: {
@@ -111,6 +135,12 @@ export default {
 	},
 	computed: {
 		getOptions,
+		swiper,
+		viewButtons,
+	},
+	methods: {
+		nextSlider,
+		prevSlider,
 	},
 	data,
 	props: {
@@ -133,6 +163,29 @@ export default {
 
 	.container-slider-related {
 		margin-top: 22px;
+		position: relative;
+	}
+
+	.container-buttons-slider {
+		position: absolute;
+		top: 50%;
+		width: 100%;
+
+		.btn {
+			position: absolute;
+		}
+
+		.btn-rigth {
+			right: -12px;
+		}
+
+		.btn-left {
+			left: -12px;
+		}
+
+		@media screen and (max-width: 1000px) {
+			display: none;
+		}
 	}
 </style>
 
