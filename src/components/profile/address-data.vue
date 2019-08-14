@@ -17,8 +17,8 @@
 				<template slot-scope="{ row }">
 					<td class="address-name">{{row.name || '--'}}</td>
 					<td class="address-department">{{getValue('province.name', row) || '--'}}</td>
-					<td class="address-province">{{getValue('parish.name', row) || '--'}}</td>
 					<td class="address-city">{{getValue('city.name', row) || '--'}}</td>
+					<td class="address-province">{{getValue('parish.name', row) || '--'}}</td>
 					<td class="address-location">{{row.addressLine1}}</td>
 					<td class="address-actions">
 						<div class="address-actions-wrapper">
@@ -78,7 +78,7 @@ async function deleteAddress({ id, name }) {
 		this.showNotification(`Dirección ${name.toUpperCase()} eliminada con éxito`);
 		this.loadAddress();
 	} catch (error) {
-		this.showGenericError('No fue posible eliminar la dirección. Intente más tarde');
+		this.showGenericError('Esta dirección es usada actualmente en un Pedido');
 	}
 }
 
@@ -153,7 +153,7 @@ export default {
 		grid-row: 2;
 
 		@media (max-width: 600px) {
-			align-items: center;
+			align-items: flex-start;
 			background-color: white;
 			border-bottom: none;
 			display: flex;
@@ -210,6 +210,7 @@ export default {
 	.address-location {
 		grid-column: 1/4;
 		grid-row: 1;
+		text-align: left;
 
 		@media (max-width: 600px) {
 			font-family: font(demi);
