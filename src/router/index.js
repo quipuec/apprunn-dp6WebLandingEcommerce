@@ -27,6 +27,9 @@ export default function (Vue) {
 			register,
 			ProductDetail,
 		],
+		scrollBehavior() {
+			return { x: 0, y: 0 };
+		},
 	});
 	return config;
 }
