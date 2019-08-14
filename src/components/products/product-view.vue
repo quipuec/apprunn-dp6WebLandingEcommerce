@@ -174,7 +174,7 @@ export default {
 	}
 
 	.image-slider {
-		height: 90%;
+		height: 70%;
 	}
 </style>
 
