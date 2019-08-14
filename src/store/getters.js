@@ -54,7 +54,7 @@ function getCategories(state) {
 }
 
 function totalProducts(state) {
-	return state.productsSelected ? state.productsSelected.length : 0;
+	return state.order.products ? state.order.products.length : 0;
 }
 
 function getDirections(state) {
