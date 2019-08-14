@@ -13,7 +13,7 @@ const methods = {
 	},
 	setNewProperty: (prop, v) => (item) => {
 		const newItem = item;
-		newItem[prop] = typeof v === 'function' ? v(item) : item;
+		newItem[prop] = typeof v === 'function' ? v(item) : v;
 		return newItem;
 	},
 	decimals: d => n => Number(n.toFixed(d)),
