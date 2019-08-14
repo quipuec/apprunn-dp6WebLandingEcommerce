@@ -3,6 +3,9 @@
 		<section>
 			<h3 class="section-title">direcciones</h3>
 		</section>
+		<section>
+			<new-address-form/>
+		</section>
 		<section class="table">
 			<responsive-table
 				class="address"
@@ -19,8 +22,8 @@
 					<td class="address-location">{{row.addressLine1}}</td>
 					<td class="address-actions">
 						<div class="address-actions-wrapper">
-							<star-component class="action-btn"/>
-							<delete-component class="action-btn"/>
+							<star-component class="action-btn" @click="favoriteAddress(row)" v-model="row.isFavorite"/>
+							<delete-component class="action-btn" @click="deleteAddress(row)"/>
 						</div>
 					</td>
 				</template>
@@ -32,7 +35,13 @@
 import { mapGetters } from 'vuex';
 import lib from '@/shared/lib';
 
-async function created() {
+const newAddressForm = () => import('@/components/profile/new-address-form');
+
+function created() {
+	this.loadAddress();
+}
+
+async function loadAddress() {
 	this.totalPage = await this.$store.dispatch('LOAD_USER_ADDRESS',
 		{ context: this, params: { page: this.currentPage, limit: this.limit } },
 	);
@@ -47,6 +56,30 @@ function pageChange(page) {
 	this.$store.dispatch('LOAD_USER_ADDRESS',
 		{ context: this, params: { page: this.currentPage, limit: this.limit } },
 	);
+}
+
+async function favoriteAddress(address) {
+	const { isFavorite, id } = address;
+	const body = {
+		isFavorite: !isFavorite,
+	};
+	try {
+		await this.$store.dispatch('SET_FAVORITE_ADDRESS', { context: this, body, id });
+		this.loadAddress();
+		this.showNotification('Dirección actualizada como favorita');
+	} catch (error) {
+		this.showGenericError('No fue posible seleccionar como favorita esa dirección');
+	}
+}
+
+async function deleteAddress({ id, name }) {
+	try {
+		await this.$store.dispatch('DELETE_ADDRESS', { context: this, id });
+		this.showNotification(`Dirección ${name.toUpperCase()} eliminada con éxito`);
+		this.loadAddress();
+	} catch (error) {
+		this.showGenericError('No fue posible eliminar la dirección. Intente más tarde');
+	}
 }
 
 function data() {
@@ -68,9 +101,10 @@ function data() {
 export default {
 	name: 'address',
 	components: {
-		starComponent: () => import('@/components/shared/icons/star-component'),
 		deleteComponent: () => import('@/components/shared/icons/delete-component'),
+		newAddressForm,
 		responsiveTable: () => import('@/components/shared/table/respondive-table'),
+		starComponent: () => import('@/components/shared/icons/star-component'),
 	},
 	computed: {
 		...mapGetters([
@@ -80,7 +114,10 @@ export default {
 	created,
 	data,
 	methods: {
+		deleteAddress,
+		favoriteAddress,
 		getValue,
+		loadAddress,
 		pageChange,
 	},
 };
@@ -118,6 +155,7 @@ export default {
 		@media (max-width: 600px) {
 			align-items: center;
 			background-color: white;
+			border-bottom: none;
 			display: flex;
 			height: 100%;
 		}
