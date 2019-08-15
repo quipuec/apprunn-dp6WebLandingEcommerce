@@ -7,7 +7,7 @@
 				<button-image
 				:data="iconDown"
 				@click-image="closeList"
-				v-if="arrowDown"
+				v-if="!arrowUp"
 				></button-image>
 				<button-image
 				@click-image="openList"
@@ -18,7 +18,7 @@
 		</div>
 		<div v-if="openArrow">
 			<div class="content-list" v-for="(item, index) in categories" :key="index">
-				<li>
+				<li @click="filterSubCategory">
 					<span class="title-list">{{item.title}}</span>
   			</li>
 				<ul v-for="(filter, index) in item.filters" :key="index" class="list-filter">
@@ -31,6 +31,10 @@
 
 <script>
 const buttonImage = () => import('@/components/shared/buttons/app-button-image');
+
+function filterSubCategory() {
+	this.$emit('filter');
+}
 
 function data() {
 	return {
@@ -45,8 +49,8 @@ function data() {
 			height: 15,
 		},
 		openArrow: true,
-		arrowUp: true,
 		arrowDown: false,
+		arrowUp: false,
 	};
 }
 
@@ -63,10 +67,14 @@ function openList() {
 }
 
 export default {
-	data,
 	name: 'filter-category',
+	components: {
+		buttonImage,
+	},
+	data,
 	methods: {
 		closeList,
+		filterSubCategory,
 		openList,
 	},
 	props: {
@@ -74,9 +82,6 @@ export default {
 			type: Array,
 			default: () => [],
 		},
-	},
-	components: {
-		buttonImage,
 	},
 };
 </script>
@@ -104,12 +109,9 @@ li {
 
 .title-list {
 	color: color(base);
+	cursor: pointer;
 	font-family: font(regular);
 	font-size: 14px;
-
-	&:hover {
-		color: red;
-	}
 }
 
 .section-category {

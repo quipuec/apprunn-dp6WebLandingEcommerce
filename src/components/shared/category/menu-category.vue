@@ -3,10 +3,11 @@
 		<div>
 			<section-category
 			:categories="categories"
+			@filter="filterCategory"
 			></section-category>
 		</div>
 		<filters-category></filters-category>
-		<button class="btn-menu-category">
+		<button class="btn-menu-category" @click="openCategory">
 			<img src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-point-to-right-(1).svg" alt="" width="15px" height="15px">
 		</button>
 	</div>
@@ -15,6 +16,14 @@
 <script>
 const sectionCategory = () => import('@/components/shared/category/section-category');
 const filtersCategory = () => import('@/components/shared/category/filters-category');
+
+function filterCategory() {
+	this.$emit('filter');
+}
+
+function openCategory() {
+	this.category = false;
+}
 
 function data() {
 	return {
@@ -28,6 +37,10 @@ export default {
 	components: {
 		sectionCategory,
 		filtersCategory,
+	},
+	methods: {
+		filterCategory,
+		openCategory,
 	},
 	props: {
 		categories: {

@@ -527,18 +527,38 @@ input.app-input::-webkit-input-placeholder {
 
 .page-category {
 	.primary {
-		background-color: #004e9c !important;
-		color: white !important;
+		background-color: color(secondary) !important;
+		color: color(white) !important;
 	}
 
 	.v-pagination__item {
-		color: #acaaaa !important;
-		font-size: 12px !important;
 		box-shadow: none;
+		color: color(base) !important;
+		font-size: 12px !important;
 	}
 
 	.v-pagination__item--active {
-		color: white !important;
+		color: color(white) !important;
 	}
+
+	.theme--light.v-pagination .v-pagination__item {
+		color: #acaaaa;
+		font-family: font(medium);
+		height: 20px;
+		margin: 3px;
+		min-width: 17px;
+	}
+
+	.v-pagination__navigation {
+		box-shadow: none;
+	}
+
+	.v-pagination {
+		height: 21px;
+	}
+
+	.theme--light.v-pagination .v-pagination__navigation .v-icon {
+		padding: 0 !important;
+	} 
 }
 </style>

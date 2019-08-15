@@ -8,19 +8,31 @@
 			</div>
 		<div class="content-category">
 			<div class="content-sections">
-				<section>BreadCrumbs</section>
 				<section>
+					<v-breadcrumbs 
+					:items="items" 
+					divider=">"></v-breadcrumbs>
+				</section>
+				<section class="section-pagination-category">
+					<p class="total-products">{{listProducts.length}} productos</p>
 					<v-layout class="text-xs-center" v-show="totalPages">
 						<v-pagination
-						:length="totalPages"
+						:length="2"
 						:total-visible="pagesVisible"
 						v-model="page"
-						@input="updateData"
+						@input="updateProductCard"
 						></v-pagination>
 					</v-layout>
 				</section>
 			</div>
-			<products-section/>
+			<section class="section-product-card">
+				<product-card
+				class="product-card"
+				v-for="product in listProducts"
+				:key="product.id"
+				:product="product"
+				/>
+			</section>
 		</div>
 	</div>
 		<div>
@@ -33,22 +45,39 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const menuCategory = () => import('@/components/shared/category/menu-category');
 const productsSection = () => import('@/components/products/products-section');
 const appBannerTop = () => import('@/components/header/app-banner-top');
+const productCard = () => import('@/components/products/product-card');
 
-function updateData() {
-	this.$emit('data');
+async function loadProduct() {
+	const params = {
+		page: this.page,
+	};
+	const url = 'products-public';
+	({ data: this.listProducts } = await this.$httpProductsPublic.get(url, { params }));
+}
+
+function created() {
+	this.loadProduct();
 }
 
 function pagesVisible() {
 	return this.totalPages < 5 ? this.totalPages : 5;
 }
 
+function updateProductCard(value) {
+	this.page = value;
+	this.loadProduct();
+}
+
 function data() {
 	return {
+		page: 1,
+		listProducts: [],
 		totalPages: 5,
-		page: 3,
 		bannerTop: {
 			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
 			image: 'descuento',
@@ -119,16 +148,22 @@ function data() {
 
 export default {
 	name: 'page-category',
+	created,
 	components: {
+		productCard,
 		appBannerTop,
 		menuCategory,
 		productsSection,
 	},
 	computed: {
 		pagesVisible,
+		...mapGetters([
+			'token',
+		]),
 	},
 	methods: {
-		updateData,
+		updateProductCard,
+		loadProduct,
 	},
 	data,
 };
@@ -167,5 +202,26 @@ export default {
 	justify-content: space-between;
 	margin: 28px auto;
   max-width: 1070px;
+}
+
+.total-products {
+	color: #acaaaa;
+	font-family: font(medium);
+	font-size: 12px;
+	margin-bottom: 0;
+}
+
+.section-pagination-category {
+	align-items: center;
+	display: flex;
+}
+
+.section-product-card {
+	align-items: center;
+	display: grid;
+	flex-wrap: wrap;
+	grid-template-columns: repeat(auto-fit, minmax(214px, 1fr));
+	margin: 42px auto;
+	max-width: 1070px;
 }
 </style>

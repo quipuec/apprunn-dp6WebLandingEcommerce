@@ -4,18 +4,18 @@
 			<p class="title-section">Filtros</p>
 				<button-image
 				:data="arrowUp"
-				@click-image="openFilters"
-				v-if="closeFilters">
+				@click-image="closeCategory"
+				v-if="openUp">
 				</button-image>
 				<button-image
-				@click-image="closeCategory"
+				@click-image="openFilters"
 				:data="arrowDown"
-				v-if="openUp"></button-image>
+				v-if="closeFilters"></button-image>
 		</div>
 		<div v-if="contentFilters">
 			<p class="text-price">Precio</p>
       	<v-layout row>
-        	<v-flex shrink style="width: 60px">
+      		<v-flex shrink style="width: 60px">
           	<v-text-field
 						class="mt-0"
 						hide-details
@@ -25,11 +25,10 @@
         	</v-flex>
         	<v-flex class="pl-3">
           	<v-range-slider
-            	:step="1"
-          	>
-			</v-range-slider>
+            	:step="1">
+						</v-range-slider>
         	</v-flex>
-        	<v-flex shrink style="width: 20px">
+      <v-flex shrink style="width: 20px">
 				<v-text-field
 					class="mt-0 number"
 					hide-details
@@ -68,13 +67,13 @@ const buttonImage = () => import('@/components/shared/buttons/app-button-image')
 
 
 function closeCategory() {
-	this.contentFilters = false;
+	this.contentFilters = true;
 	this.openUp = false;
 	this.closeFilters = true;
 }
 
 function openFilters() {
-	this.contentFilters = true;
+	this.contentFilters = false;
 	this.openUp = true;
 	this.closeFilters = false;
 }
@@ -92,7 +91,7 @@ function data() {
 			height: 15,
 		},
 		closeFilters: true,
-		contentFilters: false,
+		contentFilters: true,
 		openUp: false,
 	};
 }
