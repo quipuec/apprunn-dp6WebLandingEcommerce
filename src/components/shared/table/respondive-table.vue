@@ -13,7 +13,11 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="row in rows" :key="row.id" class="grid-system">
+			<tr 
+				v-for="row in rows" :key="row.id" 
+				class="grid-system"
+				:class="{'auto': auto}"
+				>
 				<slot v-bind:row="row"></slot>
 			</tr>
 		</tbody>
@@ -140,6 +144,10 @@ export default {
 			default: () => [],
 			type: Array,
 		},
+		auto: {
+			default: false,
+			type: Boolean,
+		},
 	},
 };
 </script>
@@ -209,6 +217,10 @@ export default {
 			align-items: center;
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
+		}
+
+		&.auto{
+			border-bottom: 1px solid color(border);
 		}
 	}
 

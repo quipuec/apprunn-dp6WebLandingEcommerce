@@ -1,7 +1,7 @@
 <template>
   <div class="product-buy">
 		<div>
-			<button class="btn-stores">Ver tiendas disponibles</button>
+			<button class="btn-stores" @click="$emit('open-dialog')">Ver tiendas disponibles</button>
 		</div>
 		<div class="container-buttons">
 			<quantityButton 

@@ -41,6 +41,7 @@
 		<product-buy 
 			@click="clickQuantity"
 			@add-to-car="addToCar"
+			@open-dialog="$emit('open-dialog')"
 			:number="data.quantity"/>
 	</div>
 </template>
