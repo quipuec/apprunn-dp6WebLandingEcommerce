@@ -3,39 +3,55 @@
 		<v-dialog 
 			v-model="dialogModal"  
 			max-width="766px"
-			@input="closeModal">
+			@input="closeModal"
+			class="warehouses-modal">
 			<v-card>
 				<v-card-title>
-					<p 
+					<div 
 						class="title-modal"
-						:style="`background: ${globalColors.primary}`"><span class="bold">Disponibilidad</span> en tiendas</p> 
+						:style="`background: ${globalColors.primary}`">
+						<p><span class="bold">Disponibilidad</span> en tiendas</p>
+						<button @click="$emit('change-modal', false)">
+							<img src="/static/img/close-modal.svg" alt="cerrar">
+						</button>
+					</div> 
 				</v-card-title>
-				<v-card-text>
-					<responsive-table
-						:columns="columns"
-						:rows="rows"
-						auto
-					>
-						<template slot-scope="{ row }">
-							<td class="td-auto">
-								<div>{{row.warehouse.name}}</div>
-								<div>{{row.warehouse.address}}</div>
-							</td>
-							<td class="td-auto">{{row.stock}}</td>
-							<td class="td-auto">
-								<div class="icon-map">
-									<img src="/static/img/map.svg" alt="mapa">
-								</div>
-							</td>
-						</template>
-					</responsive-table>
-				</v-card-text>
+				<transition name="go-left" mode="out-in" tag="div">
+					<v-card-text v-if="showMap" key="map">
+						<p>
+							<span><b>{{selectedWarehouse.autocomplete}}: </b></span>
+							<span>{{selectedWarehouse.warehouse.address}}</span>
+						</p>
+							<map-component :location="warehouseLocation"/>
+					</v-card-text>
+					<v-card-text v-else key="warehouse-table">
+						<responsive-table
+							:columns="columns"
+							:rows="rows"
+							auto
+						>
+							<template slot-scope="{ row }">
+								<td class="td-auto">
+									<div class="text-left bold">{{row.warehouse.name}}</div>
+									<div class="text-left">{{row.warehouse.address}}</div>
+								</td>
+								<td class="td-auto">{{row.stock}}</td>
+								<td class="td-auto">
+									<button class="icon-map" @click="goToMap(row)" v-if="warehouseLatLon(row)">
+										<img src="/static/img/map.svg" alt="mapa">
+									</button>
+								</td>
+							</template>
+						</responsive-table>
+					</v-card-text>
+				</transition>
 			</v-card>
 		</v-dialog>
 	</div>
 </template>
 <script>
 const responsiveTable = () => import('@/components/shared/table/respondive-table');
+const mapComponent = () => import('@/components/shared/map/map-component');
 
 function warehouseLatLon(row) {
 	const { warehouse: { location } } = row;
@@ -49,6 +65,16 @@ function closeModal(value) {
 
 function dialog(value) {
 	this.dialogModal = value;
+	if (!value) {
+		this.showMap = false;
+	}
+}
+
+function goToMap(row) {
+	this.showMap = true;
+	this.selectedWarehouse = row;
+	const { warehouse: { location: { x, y } } } = row;
+	this.warehouseLocation = { lat: x, lng: y };
 }
 
 function data() {
@@ -59,16 +85,24 @@ function data() {
 			{ value: 'map', title: 'Mapa', responsive: true },
 		],
 		dialogModal: false,
+		showMap: false,
+		selectedWarehouse: {},
+		warehouseLocation: {
+			lat: 0,
+			lng: 0,
+		},
 	};
 }
 export default {
 	name: 'warehouses-modal',
 	components: {
 		responsiveTable,
+		mapComponent,
 	},
 	data,
 	methods: {
 		closeModal,
+		goToMap,
 		warehouseLatLon,
 	},
 	props: {
@@ -104,10 +138,25 @@ export default {
 		.bold {
 			font-family: font(bold);
 		}
+
+		@media screen and (max-width: 764px) {
+			display: flex;
+			justify-content: space-between;
+		}
 	}
 
 	.td-auto {
 		border-bottom: none !important;
+		font-size: size(small);
 		height: auto !important;
+		padding: 10px 0;
+	}
+
+	.bold {
+		font-family: font(bold);
+	}
+
+	.text-left {
+		text-align: left;
 	}
 </style>

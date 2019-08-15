@@ -342,8 +342,8 @@ export default {
 
 	.container-product-detail {
 		width: 45%;
+		
 		@media screen and (max-width: 996px) {
-			padding: 0 5%;
 			width: 100%;
 		}
 	}

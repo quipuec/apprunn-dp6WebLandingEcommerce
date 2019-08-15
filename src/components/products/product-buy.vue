@@ -1,6 +1,6 @@
 <template>
   <div class="product-buy">
-		<div>
+		<div class="container-btn-open">
 			<button class="btn-stores" @click="$emit('open-dialog')">Ver tiendas disponibles</button>
 		</div>
 		<div class="container-buttons">
@@ -58,14 +58,32 @@ export default {
 			border-bottom: 1px solid color(dark);
 			font-size: size(small);
 			margin-bottom: 18px;
+
+			@media screen and (max-width: 996px) {
+				margin-bottom: 0px;
+			}
 		}
 
 		.container-buttons {
 			display: flex;
+
+			@media screen and (max-width: 996px) {
+				justify-content: center;
+				padding: 0 5%;
+			}
 		}
 
 		.continer-quantity-button {
 			margin-right: 17px;
+		}
+	}
+
+	.container-btn-open{
+		@media screen and (max-width: 996px) {
+			border: 1px solid color(border);
+			padding: 15px;
+			margin-bottom: 33px;
+			text-align: center;
 		}
 	}
 </style>
