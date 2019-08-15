@@ -158,7 +158,6 @@ export default {
 		padding: 0px 6%;
 		box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.11);
 		position: relative;
-		z-index: 250;
 
 		@media (min-width: 768px) {
 			height: 99px;

@@ -542,7 +542,7 @@ input.app-input::-webkit-input-placeholder {
 	}
 
 	.theme--light.v-pagination .v-pagination__item {
-		color: #acaaaa;
+		color: color(base);
 		font-family: font(medium);
 		height: 20px;
 		margin: 3px;

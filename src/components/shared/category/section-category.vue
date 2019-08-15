@@ -95,7 +95,7 @@ li {
 .title-category {
 	color: color(primary);
 	font-family: font(bold);
-	font-size: 18px;
+	font-size: size(xlarge);
 	margin: 0 0 0 10px;
 	width: 100%;
 }
@@ -111,7 +111,7 @@ li {
 	color: color(base);
 	cursor: pointer;
 	font-family: font(regular);
-	font-size: 14px;
+	font-size: size(medium);
 }
 
 .section-category {

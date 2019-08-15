@@ -205,7 +205,7 @@ export default {
 }
 
 .total-products {
-	color: #acaaaa;
+	color: color(base);
 	font-family: font(medium);
 	font-size: 12px;
 	margin-bottom: 0;
