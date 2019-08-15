@@ -9,6 +9,21 @@
 				class="container-product-detail"
 				@update="loadData"/>
 		</div>
+		<div>
+			<product-tab 
+				class="container-product-tab"
+				:tabs="tabs"
+				:sections="product.sections"
+				:lastIndex="lastIndex"
+				:opinions="opinions"
+				@update-opinion="loadOpinions"/>
+		</div>
+		<div>
+			<product-related 
+				:relateds="relateds"
+				v-if="relateds.length"
+			/>
+		</div>
 	</div>
 </template>
 <script>
@@ -16,6 +31,8 @@ import { mapGetters } from 'vuex';
 
 const productView = () => import('@/components/products/product-view');
 const productDetail = () => import('@/components/products/product-detail');
+const productTab = () => import('@/components/products/product-tab');
+const productRelated = () => import('@/components/products/product-related');
 
 function isLoggedUser() {
 	if (this.token) {
@@ -26,25 +43,49 @@ function isLoggedUser() {
 
 function created() {
 	this.loadData();
+	this.loadOpinions();
 }
 
 async function loadData() {
-	try {
-		const { data: response } = await this.isLoggedUser();
-		this.product = response;
-		this.product.images = this.product.images.map((i, index) => {
-			const newImage = { ...i };
-			newImage.select = index === 0;
-			return newImage;
-		});
-	} catch (error) {
-		this.showGenericError();
-	}
+	const requests = [
+		this.$httpProductsPublic.get(`products-public/${this.id}/related`),
+	];
+	requests.push(this.isLoggedUser());
+	([
+		{ data: this.relateds },
+		{ data: this.product },
+	] = await Promise.all(requests));
+	this.product.images = this.product.images.map((i, index) => {
+		const newImage = { ...i };
+		newImage.select = index === 0;
+		return newImage;
+	});
+	this.tabs = this.product.sections.map(p => p.name);
+	this.tabs.push('Comentarios');
+	this.lastIndex = this.product.sections.length;
+}
+
+async function loadOpinions() {
+	const params = {
+		typeQuestionAnswer: 3,
+		productId: this.id,
+	};
+	const { data: response } = await this.$httpProducts.get('question-answer', { params });
+	this.opinions = response;
+}
+
+function newRoute() {
+	this.loadData();
+	this.loadOpinions();
 }
 
 function data() {
 	return {
+		lastIndex: 0,
+		opinions: [],
 		product: {},
+		relateds: [],
+		tabs: [],
 	};
 }
 
@@ -54,6 +95,8 @@ export default {
 	components: {
 		productView,
 		productDetail,
+		productTab,
+		productRelated,
 	},
 	computed: {
 		...mapGetters([
@@ -62,13 +105,18 @@ export default {
 	},
 	data,
 	methods: {
-		loadData,
 		isLoggedUser,
+		loadData,
+		loadOpinions,
+		newRoute,
 	},
 	props: {
 		id: {
 			type: [Number, String],
 		},
+	},
+	watch: {
+		$route: newRoute,
 	},
 };
 </script>
@@ -83,20 +131,17 @@ export default {
 
 	.page-detail-product {
 		background: color(white);
-		padding: 53px 41px 0 41px;
-
-		@media screen and (max-width: 996px) {
-			padding: 27px 0 0;
-		}
 	}
 
 	.detail-product-top {
 		display: flex;
 		justify-content: space-between;
-		padding: 0 7%;
+		margin-bottom: 92px;
+		padding: 53px 7% 0;
 
 		@media screen and (max-width: 996px) {
 			flex-direction: column;
+			margin-bottom: 35px;
 			padding: 0;
 		}
 	}
@@ -105,6 +150,14 @@ export default {
 		width: 45%;
 		@media screen and (max-width: 996px) {
 			padding: 0 5%;
+			width: 100%;
+		}
+	}
+
+	.container-product-tab {
+		width: 65%;
+		
+		@media screen and (max-width: 996px) {
 			width: 100%;
 		}
 	}

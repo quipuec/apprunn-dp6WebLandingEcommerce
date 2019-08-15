@@ -6,7 +6,7 @@ export default function (Vue) {
 			key: 'AIzaSyAiBgECkdiXxPjb3d74UUQE_LY6PhtIHT4',
 			libraries: 'places', // This is required if you use the Autocomplete plugin
 		},
-		installComponents: true,
+		// installComponents: true,
 		// If you intend to programmatically custom event listener code
 		// (e.g. `this.$refs.gmap.$on('zoom_changed', someFunc)`)
 		// instead of going through Vue templates (e.g. `<GmapMap @zoom_changed="someFunc">`)

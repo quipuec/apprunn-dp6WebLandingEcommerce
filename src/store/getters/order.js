@@ -1,11 +1,10 @@
 import lib from '@/shared/lib';
 
-const { setNewProperty, decimals } = lib;
-const twoDecimals = decimals(2);
+const twoDecimals = lib.decimals(2);
 
 const getters = {
 	getProductToBuy(state) {
-		const products = state.order.products.map(setNewProperty(
+		const products = state.order.products.map(lib.setNewProperty(
 			'total', ({ priceDiscount, quantity }) => twoDecimals(quantity * priceDiscount)));
 		return products;
 	},
@@ -21,6 +20,19 @@ const getters = {
 	},
 	getFlagPickUp(state) {
 		return state.order.flagPickUp;
+	},
+	getDeliveryAddress(state) {
+		return state.order.delivery;
+	},
+	invalidOrder(state) {
+		const { responsible, delivery, flagBill, bill } = state.order;
+		const invalidResponsible = lib.isEmpty(responsible);
+		const invalidDelivery = lib.isEmpty(delivery) || !delivery.id;
+		const invalidBill = flagBill ? lib.isEmpty(bill) : false;
+		return lib.atLeastOneTrue(invalidResponsible, invalidDelivery, invalidBill);
+	},
+	getFlagBill(state) {
+		return state.order.flagBill;
 	},
 };
 
