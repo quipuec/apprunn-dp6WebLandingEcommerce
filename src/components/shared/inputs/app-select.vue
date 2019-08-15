@@ -8,6 +8,7 @@
 		  class="ecommerce-select"
       :items="items"
       v-bind="$attrs"
+		  :value="value"
 		  @input="sendValue"
 			@click:append-outer="clear"
     ></v-select>

@@ -9,6 +9,9 @@ export default {
 			color: 'primary',
 		},
 	},
+	directions: [
+		{ id: 0, addressLine1: 'Nueva dirección' },
+	],
 	geo: {
 		departments: [],
 		districts: [],
@@ -17,6 +20,7 @@ export default {
 	order: {
 		bill: null,
 		delivery: null,
+		flagBill: false,
 		flagPickUp: 1,
 		id: null,
 		products: [],
@@ -27,6 +31,7 @@ export default {
 		progress: 0,
 	},
 	profile: {
+		address: [],
 		flagAddVoucher: false,
 	},
 	products: {
@@ -45,4 +50,7 @@ export default {
 		username: '',
 	},
 	categories: [],
+	warehouses: [
+		{ id: 0, name: 'Seleccione una tienda' },
+	],
 };
