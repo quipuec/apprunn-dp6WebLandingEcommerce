@@ -1,14 +1,23 @@
 <template>
 <div>
+	<section class="billing-header-content">
+		<div class="billin-header">
+			<img src="/static/icons/tax.svg" alt="ícono de impuestos">
+			<h2 class="billing-section-title">Facturación</h2>
+		</div>
+		<p class="billing-text-regular">Activa esta opción para solicitar factura. No aplican productos que indicaban "No se emite factura".</p>
+		<p class="billing-text-highlight">Estimado cliente, recuerda que solamente recibirás factura sobre compras realizadas a Linio o a sellers obligados a facturar. Gracias!</p>
+	</section>
 	<div class="billing-switch">
 		<v-switch
 			hide-details
 			label="Solicitar Factura"
 			class="billing-style"
-			v-model="wantBill"
+			:value="getFlagBill"
+			@change="changeBillSelection"
 		></v-switch>
 	</div>	
-	<form class="billing-form">
+	<form class="billing-form" v-if="getFlagBill">
 		<app-input
 			placeholder="Razón Social"
 			class="mx-2 my-1 rzSocial-field"
@@ -37,21 +46,26 @@
 </div>
 </template>
 <script>
-import { required, requiredIf } from 'vuelidate/lib/validators';
+import { required } from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
 
 const appInput = () => import('@/components/shared/inputs/app-input');
 
 function validateForm() {
+	this.$store.commit('SET_BILLING_INFO', null);
 	if (!this.$v.$invalid) {
 		this.$store.commit('SET_BILLING_INFO', this.billing);
 	}
+}
+
+function changeBillSelection(val) {
+	this.$store.commit('SET_BILL_SELECTION', val);
 }
 
 function validations() {
 	return {
 		billing: {
 			address: { required },
-			bill: { required: requiredIf(() => this.wantBill) },
 			ruc: { required },
 			rzSocial: { required },
 		},
@@ -65,7 +79,6 @@ function data() {
 			ruc: '',
 			rzSocial: '',
 		},
-		wantBill: true,
 	};
 }
 
@@ -74,8 +87,14 @@ export default {
 	components: {
 		appInput,
 	},
+	computed: {
+		...mapGetters([
+			'getFlagBill',
+		]),
+	},
 	data,
 	methods: {
+		changeBillSelection,
 		validateForm,
 	},
 	validations,
@@ -100,6 +119,36 @@ export default {
 
 	.address-field {
 		flex: 1 1 100%;
+	}
+
+	.billin-header {
+		color: color(dark);
+		display: flex;
+		font-size: size(medium);
+		margin-bottom: 40px;
+	}
+
+	.billing-section-title {
+		font-family: font(bold);
+		font-size: size(large);
+		margin-left: 20px;
+		text-transform: uppercase;
+	}
+
+	.billing-text-regular {
+		font-family: font(regular);
+	}
+
+	.billing-text-highlight {
+		font-family: font(medium);
+	}
+
+	.billing-header-content {
+		margin-bottom: 40px;
+	}
+
+	.billing-switch {
+		margin-bottom: 30px;
 	}
 </style>
 

@@ -37,15 +37,15 @@ const asyncActions = {
 		const { data: departments } = await context.$httpSales.get(url);
 		commit('SET_DEPARTMENTS', departments);
 	},
-	LOAD_DISTRICTS: async ({ commit }, { context, departmentId }) => {
+	LOAD_PROVINCES: async ({ commit }, { context, departmentId }) => {
 		const url = `cities/${departmentId}`;
 		const { data: districts } = await context.$httpSales.get(url);
-		commit('SET_DISTRICTS', districts);
+		commit('SET_PROVINCES', districts);
 	},
-	LOAD_PROVINCES: async ({ commit }, { context, districtId }) => {
+	LOAD_DISTRICTS: async ({ commit }, { context, districtId }) => {
 		const url = `parish/${districtId}`;
 		const { data: parish } = await context.$httpSales.get(url);
-		commit('SET_PROVINCES', parish);
+		commit('SET_DISTRICTS', parish);
 	},
 	LOAD_CATEGORIES: async ({ commit }, { context }) => {
 		let { data: response } = await context.$httpProductsPublic.get('e-categories-public');
@@ -57,6 +57,11 @@ const asyncActions = {
 		});
 		commit('SET_CATEGORIES', response);
 	},
+	LOAD_USER_ADDRESS: async ({ commit }, { context, params }) => {
+		const { data: address, headers } = await context.$httpSales.get('customers-address', { params });
+		commit('SET_USER_ADDRESS', address);
+		return Number(headers['x-last-page']);
+	},
 	LOAD_DIRECTIONS: async ({ commit }, context) => {
 		const url = 'customers-address';
 		const { data: directions } = await context.$httpSales.get(url);
@@ -66,6 +71,18 @@ const asyncActions = {
 		const url = 'warehouse-public';
 		const { data: warehouses } = await context.$httpProductsPublic.get(url);
 		commit('SET_WAREHOUSES', warehouses);
+	},
+	NEW_ADDRESS: async ({ commit }, { context, newAddress }) => {
+		await context.$httpSales.post('customers-address', newAddress);
+		asyncActions.LOAD_USER_ADDRESS(
+			{ commit },
+			{ context, params: { page: 1, limit: 5 } });
+	},
+	SET_FAVORITE_ADDRESS: async (state, { context, body, id }) => {
+		await context.$httpSales.patch(`customers-address/${id}`, body);
+	},
+	DELETE_ADDRESS: async (state, { context, id }) => {
+		await context.$httpSales.delete(`customers-address/${id}`);
 	},
 };
 

@@ -27,7 +27,8 @@
 		<div>
 			<product-related 
 				:relateds="relateds"
-				v-if="relateds.length"/>
+				v-if="relateds.length"
+			/>
 		</div>
 		<warehouses-modal 
 			:dialog="dialogWarehouses"
@@ -255,10 +256,9 @@ function closeModal(value) {
 
 function data() {
 	return {
-		product: {},
-		tabs: [],
 		lastIndex: 0,
 		opinions: [],
+		product: {},
 		relateds: [],
 		childrens: [],
 		allFeatures: [],
@@ -271,6 +271,7 @@ function data() {
 		dialogWarehouses: false,
 		cities: [],
 		warehouses: [],
+		tabs: [],
 	};
 }
 
@@ -292,8 +293,8 @@ export default {
 	data,
 	methods: {
 		assignProduct,
-		loadData,
 		isLoggedUser,
+		loadData,
 		loadOpinions,
 		newRoute,
 		selectFeature,
@@ -342,7 +343,7 @@ export default {
 
 	.container-product-detail {
 		width: 45%;
-		
+
 		@media screen and (max-width: 996px) {
 			width: 100%;
 		}

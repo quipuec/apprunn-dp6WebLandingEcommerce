@@ -182,6 +182,8 @@ export default {
 
 			@media (max-width: 600px) {
 				display: table-cell;
+				overflow: hidden;
+				text-overflow: ellipsis;
 			}
 		}
 
