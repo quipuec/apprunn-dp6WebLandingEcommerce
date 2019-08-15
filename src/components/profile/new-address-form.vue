@@ -2,7 +2,7 @@
 	<form class="new-addres-form">
 		<app-input
 			placeholder="Alias"
-			class="mx-1 my-1 address-name"
+			class="mx-1 my-1 address-name addres-field"
 			v-model="newAddress.name"
 		>
 			<span v-if="$v.newAddress.name.$invalid">El alias es requerido</span>
@@ -11,7 +11,7 @@
 			item-text="name"
 			item-value="id"
 			placeholder="Departamento"
-			class="mx-1 my-1 address-department"
+			class="mx-1 my-1 address-department addres-field"
 			:items="departments"
 			v-model="newAddress.provinceId"
 			@input="selectDepartment"
@@ -22,7 +22,7 @@
 			item-text="name"
 			item-value="id"
 			placeholder="Provincia"
-			class="mx-1 my-1 address-province"
+			class="mx-1 my-1 address-province addres-field"
 			:items="provinces"
 			v-model="newAddress.cityId"
 			@input="selectProvince"
@@ -33,7 +33,7 @@
 			item-text="name"
 			item-value="id"
 			placeholder="Distrito"
-			class="mx-1 my-1 address-district"
+			class="mx-1 my-1 address-district addres-field"
 			:items="districts"
 			v-model="newAddress.parishId"
 		>
@@ -41,7 +41,7 @@
 		</app-select>
 		<app-input
 			placeholder="Dirección"
-			class="mx-1 my-1 address-location"
+			class="mx-1 my-1 address-location addres-field"
 			v-model="newAddress.addressLine1"
 		>
 			<span v-if="$v.newAddress.addressLine1.$invalid">La dirección es requerida</span>
@@ -65,6 +65,7 @@ async function addNewAddress() {
 	try {
 		await this.$store.dispatch('NEW_ADDRESS', { context: this, newAddress: this.newAddress });
 		this.showNotification('Nueva dirección agregada');
+		this.clearNewAddressForm();
 	} catch (error) {
 		this.showGenericError('No fue posible agregar la nueva dirección. Verifique la información');
 	}
@@ -87,6 +88,16 @@ function validations() {
 			parishId: { required },
 			provinceId: { required },
 		},
+	};
+}
+
+function clearNewAddressForm() {
+	this.newAddress = {
+		addressLine1: '',
+		cityId: null,
+		name: '',
+		parishId: null,
+		provinceId: null,
 	};
 }
 
@@ -120,6 +131,7 @@ export default {
 	data,
 	methods: {
 		addNewAddress,
+		clearNewAddressForm,
 		selectDepartment,
 		selectProvince,
 	},
@@ -133,6 +145,10 @@ export default {
 		flex-wrap: wrap;
 		justify-content: space-between;
 		margin: 0 50px 30px;
+
+		@media (max-width: 600px) {
+			margin: 0 10px 30px;
+		}
 	}
 
 	.address-name,
@@ -176,5 +192,9 @@ export default {
 		.add-new-address-btn {
 			order: 5;
 		}
+	}
+
+	.addres-field {
+		height: 62px;
 	}
 </style>
