@@ -137,7 +137,7 @@ export default {
 	}
 
 	.profile-info {
-		background-color: color(background);
+		background-color: color(disabled);
 		box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.08);
 		flex: 1 1 70%;
 		height: 100%;
