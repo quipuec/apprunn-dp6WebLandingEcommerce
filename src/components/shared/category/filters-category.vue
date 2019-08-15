@@ -137,7 +137,7 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	padding-bottom: 10px;
-	width: 70%;
+	width: 100%;
 }
 
 .input-price {

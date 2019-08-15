@@ -1,9 +1,9 @@
 <template>
-	<div class="background-gray">
+	<div class="section-category">
 		<div class="filter-category">
-			<img src="/static/img/icons/shock-absorber.svg" alt="">
-			<p class="title-category">Resortes</p>
-			<div class="content-image-arrow">
+			<img :src="$route.query.categories.urlImage" alt="" width="22px" height="21px">
+			<p class="title-category">{{$route.query.categories.title}}</p>
+			<div>
 				<button-image
 				:data="iconDown"
 				@click-image="closeList"
@@ -44,46 +44,7 @@ function data() {
 			name: 'up',
 			height: 15,
 		},
-		categories: [
-			{
-				title: 'Automotriz',
-				filters: [
-					{
-						id: 1,
-						name: '4x4',
-						select: false,
-					},
-					{
-						id: 2,
-						name: 'Sistema a Gas',
-						select: false,
-					},
-					{
-						id: 3,
-						name: 'Tuning',
-						select: false,
-					},
-					{
-						id: 4,
-						name: 'Competencia',
-						select: false,
-					},
-				],
-			},
-			{
-				title: 'Minería',
-			},
-			{
-				title: 'Ferrocarriles y Vagones',
-			},
-			{
-				title: 'Puerta de Garaje',
-			},
-			{
-				title: 'Industria en General',
-			},
-		],
-		openArrow: false,
+		openArrow: true,
 		arrowUp: true,
 		arrowDown: false,
 	};
@@ -123,9 +84,7 @@ export default {
 <style lang="scss" scoped>
 li {
 	color: color(dark);
-	&:active {
-		color: color(secondary);
-	}
+
 }
 
 .title-category {
@@ -133,6 +92,7 @@ li {
 	font-family: font(bold);
 	font-size: 18px;
 	margin: 0 0 0 10px;
+	width: 100%;
 }
 
 .filter-category {
@@ -142,33 +102,29 @@ li {
 	padding-bottom: 13px;
 }
 
-.content-image-arrow {
-	padding-left: 65px;
-}
-
 .title-list {
 	color: color(base);
 	font-family: font(regular);
 	font-size: 14px;
+
+	&:hover {
+		color: red;
+	}
 }
 
-.background-gray {
+.section-category {
 	padding: 56px 0;
-	width: 71%;
+	width: 100%;
 }
 
 .content-list {
 	margin-top: 15px;
+	min-width: 207px;
 }
 
 .item-li:active {
 	color: color(secondary);
 	font-family: font(bold);
-}
-
-.title-list:active {
-	color: color(secondary);
-	font-family: font(demi);
 }
 
 .list-filter {

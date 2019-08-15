@@ -524,4 +524,21 @@ input.app-input::-webkit-input-placeholder {
 		font-size: size(medium) !important;
 	}
 }
+
+.page-category {
+	.primary {
+		background-color: #004e9c !important;
+		color: white !important;
+	}
+
+	.v-pagination__item {
+		color: #acaaaa !important;
+		font-size: 12px !important;
+		box-shadow: none;
+	}
+
+	.v-pagination__item--active {
+		color: white !important;
+	}
+}
 </style>

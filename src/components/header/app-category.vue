@@ -123,6 +123,7 @@ function created() {
 }
 
 function clickCategory(item) {
+	this.goTo('category', { query: { id: item.id, title: item.title, categories: item } });
 	const windowWidth = window.innerWidth;
 	this.categories = this.categories.map((c) => {
 		const newCategory = { ...c };
@@ -180,6 +181,7 @@ function imageUser() {
 
 function data() {
 	return {
+		colorBorder: process.env.COLOR_DARK,
 		imageArrow: {
 			urlImage: '/static/img/arrow-down.svg',
 			name: 'Desplegar',

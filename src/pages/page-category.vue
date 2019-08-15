@@ -3,13 +3,22 @@
 	<div class="page-category">
 		<div class="menu-category">
 			<menu-category
-			:categories="categories"
+			:categories="$route.query.categories.detail"
 			></menu-category>
 			</div>
 		<div class="content-category">
 			<div class="content-sections">
 				<section>BreadCrumbs</section>
-				<section>Pagination</section>
+				<section>
+					<v-layout class="text-xs-center" v-show="totalPages">
+						<v-pagination
+						:length="totalPages"
+						:total-visible="pagesVisible"
+						v-model="page"
+						@input="updateData"
+						></v-pagination>
+					</v-layout>
+				</section>
 			</div>
 			<products-section/>
 		</div>
@@ -28,8 +37,18 @@ const menuCategory = () => import('@/components/shared/category/menu-category');
 const productsSection = () => import('@/components/products/products-section');
 const appBannerTop = () => import('@/components/header/app-banner-top');
 
+function updateData() {
+	this.$emit('data');
+}
+
+function pagesVisible() {
+	return this.totalPages < 5 ? this.totalPages : 5;
+}
+
 function data() {
 	return {
+		totalPages: 5,
+		page: 3,
 		bannerTop: {
 			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
 			image: 'descuento',
@@ -99,13 +118,19 @@ function data() {
 }
 
 export default {
-	data,
 	name: 'page-category',
 	components: {
 		appBannerTop,
 		menuCategory,
 		productsSection,
 	},
+	computed: {
+		pagesVisible,
+	},
+	methods: {
+		updateData,
+	},
+	data,
 };
 </script>
 
