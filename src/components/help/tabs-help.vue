@@ -13,14 +13,14 @@
 					<button-image
 					:data="openArrow"
 					class="icon-close"
-					v-if="help.deploy"
+					v-if="!help.deploy"
 					@click-image="deploy(index)"
 					></button-image>
 					<button-image
 					:data="closeArrow"
 					class="icon-close"
 					@click-image="deploy(index)"
-					v-if="!help.deploy"
+					v-if="help.deploy"
 					></button-image>
 				</div>
 			</div>

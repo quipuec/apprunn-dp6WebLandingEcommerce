@@ -41,7 +41,6 @@ export default {
 	bottom: 0;
 	height: 100vh;
 	left: 0;
-	margin-top: 166px;
 	padding: 25px 36px;
 	position: absolute;
 	top: 0;
@@ -50,7 +49,7 @@ export default {
 	z-index: 99;
 
 	@media (max-width: 950px)  {
-		height: 925px;
+		height: 945px;
 		padding: 0 36px;
 	}
 }

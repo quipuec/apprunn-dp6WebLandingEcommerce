@@ -21,6 +21,7 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	padding: 59px 90px;
+	position: relative;
 	width: 100%;
 
 	@media (max-width: 950px) {
