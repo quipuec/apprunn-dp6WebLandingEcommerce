@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="details-main-container">
 		<section class="nav">
 			<left-component @click="goTo" class="go-back"/>
 			<p class="order-head">
@@ -24,7 +24,14 @@
 			<div class="order-payment">
 				<div class="order-payment-wrapper">
 					<div class="my-2 delivery-address">
-						<span class="label">Direccion de envio: </span><span class="order-info-data">{{getValue('deliveryAddress.address', getOrderDetails)}}</span>
+						<span v-if="flagPickUp === 1" class="label">
+							Direccion de envio: 
+							<span class="order-info-data">{{getValue('deliveryAddress.addressLine1', getOrderDetails)}}</span>
+						</span>
+						<span v-else class="label">
+							Direccion de recojo: 
+							<span class="order-info-data">{{getValue('warehouseName', getOrderDetails)}}</span>
+						</span>
 					</div>
 					<app-button
 						v-if="!flagAddVoucher"
@@ -92,6 +99,10 @@ function getValue(route, order) {
 	return lib.getDeeper(route)(order);
 }
 
+function flagPickUp() {
+	return lib.getDeeper('flagPickUp')(this.getOrderDetails);
+}
+
 function data() {
 	return {
 		columns: [
@@ -118,6 +129,7 @@ export default {
 			'getOrderDetails',
 		]),
 		backgroundColor,
+		flagPickUp,
 	},
 	created,
 	data,
@@ -129,6 +141,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+	.details-main-container {
+		font-family: font(regular);
+	}
 	.product-info-container {
 		align-items: center;
 		display: grid;
@@ -249,6 +264,7 @@ export default {
 
 	.order-info-data {
 		color: color(dark);
+		font-family: font(regular);
 	}
 
 	.nav {
