@@ -11,7 +11,9 @@
 				@update="loadData"
 				@select="selectFeature"
 				@clear="clearFeatures"
-				@click-quantity="clickQuantity"/>
+				@click-quantity="clickQuantity"
+				@open-dialog="openDialog"
+				/>
 		</div>
 		<div class="container-general-tab">
 			<product-tab 
@@ -28,6 +30,10 @@
 				v-if="relateds.length"
 			/>
 		</div>
+		<warehouses-modal 
+			:dialog="dialogWarehouses"
+			:rows="warehouses"
+			@change-modal="closeModal"/>
 	</div>
 </template>
 <script>
@@ -37,6 +43,7 @@ const productView = () => import('@/components/products/product-view');
 const productDetail = () => import('@/components/products/product-detail');
 const productTab = () => import('@/components/products/product-tab');
 const productRelated = () => import('@/components/products/product-related');
+const warehousesModal = () => import('@/components/products/warehouses-modal');
 
 function created() {
 	this.loadData();
@@ -232,6 +239,20 @@ function clickQuantity(value) {
 	this.product = { ...newProductdetail };
 }
 
+async function openDialog() {
+	try {
+		const { data: response } = await this.$httpProductsPublic.get(`products-public/${this.product.id}/stock-by-warehouse`);
+		this.warehouses = response;
+		this.dialogWarehouses = true;
+	} catch (error) {
+		this.showGenericError();
+	}
+}
+
+function closeModal(value) {
+	this.dialogWarehouses = value;
+}
+
 function data() {
 	return {
 		lastIndex: 0,
@@ -246,6 +267,9 @@ function data() {
 		productsFilter: [],
 		productFather: {},
 		disabledBtn: false,
+		dialogWarehouses: false,
+		cities: [],
+		warehouses: [],
 		featuresFather: [],
 		tabs: [],
 	};
@@ -259,6 +283,7 @@ export default {
 		productDetail,
 		productTab,
 		productRelated,
+		warehousesModal,
 	},
 	computed: {
 		...mapGetters([
@@ -276,6 +301,8 @@ export default {
 		newRoute,
 		possibleFeature,
 		clickQuantity,
+		openDialog,
+		closeModal,
 		selectFeature,
 	},
 	props: {
@@ -316,8 +343,8 @@ export default {
 
 	.container-product-detail {
 		width: 45%;
+
 		@media screen and (max-width: 996px) {
-			padding: 0 5%;
 			width: 100%;
 		}
 	}

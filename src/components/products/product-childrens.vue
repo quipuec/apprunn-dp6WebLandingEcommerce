@@ -49,6 +49,11 @@ export default {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
+
+		@media screen and (max-width: 996px) {
+			margin-bottom: 50px;
+			padding: 0 5%;
+		}
 	}
 
 	.select-feature {
