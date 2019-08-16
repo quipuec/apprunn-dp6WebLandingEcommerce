@@ -1,10 +1,10 @@
 <template>
   <div 
 		class="app-banner-top"
-		:class="big ? 'big' : null">
+		:class="[big ? 'big' : null, small ? 'small' : null]">
 		<div 
 			:style="`background-image: url(${data.urlImage})`"
-			:class="big ? 'big' : null"
+			:class="[big ? 'big' : null, small ? 'small' : null]"
 			class="image-banner">
 			<app-button
 				action="ENCUÉNTRALO AQUÍ"
@@ -13,6 +13,7 @@
 				type="button"
 				class="btn-find"
 			></app-button>
+			<button v-if="small" class="btn-more">Ver más</button>
 		</div>
 	</div>
 </template>
@@ -30,6 +31,10 @@ export default {
 			default: () => {},
 		},
 		big: {
+			type: Boolean,
+			default: false,
+		},
+		small: {
 			type: Boolean,
 			default: false,
 		},
@@ -55,6 +60,10 @@ export default {
 				height: 287px;
 			}
 		}
+
+		&.small {
+			padding: 0;
+		}
 	}
 	
 	.image-banner {
@@ -63,6 +72,7 @@ export default {
 		background-repeat: no-repeat;
 		background-size: cover;
 		height: 65px;
+		position: relative;
 		width: 100%;
 
 		&.big {
@@ -71,6 +81,11 @@ export default {
 			@media (max-width: 764px) {
 				height: 287px;
 			}
+		}
+
+		&.small {
+			height: 413px;
+			max-width: 337px;
 		}
 	}
 
@@ -88,6 +103,20 @@ export default {
 			top: auto;
 			transform: translateX(-50%);
 		}
+	}
+
+	.btn-more {
+		border: 1px solid color(white);
+		bottom: 123px;
+		color: color(white);
+		font-family: font(bold);
+		font-size: size(large);
+		height: 30px;
+		left: 50%;
+		max-width: 193px;
+		position: absolute;
+		transform: translateX(-50%);
+		width: 80%; 
 	}
 </style>
 
