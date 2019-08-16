@@ -7,6 +7,7 @@ import Order from './buy';
 import Help from './help';
 import Category from './category';
 import ProductDetail from './detail-product';
+import restorePassword from './restore-password';
 
 export default function (Vue) {
 	Vue.use(Router);
@@ -26,6 +27,7 @@ export default function (Vue) {
 			Profile,
 			register,
 			ProductDetail,
+			restorePassword,
 		],
 		scrollBehavior() {
 			return { x: 0, y: 0 };

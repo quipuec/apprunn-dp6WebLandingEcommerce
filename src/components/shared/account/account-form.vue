@@ -4,7 +4,8 @@
 			<v-flex xs12 text-xs-center>
 				<img :src="headingImage" :height="imgHeight" alt="">
 				<div class="form-title">
-					<span>{{ title }}</span>
+					<span v-html="title"></span>
+					<!-- <div v-html="title"></div> -->
 				</div>
 			</v-flex>
 			<v-flex xs12 text-xs-center>
