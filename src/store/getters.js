@@ -66,8 +66,13 @@ function getWarehouses(state) {
 	return state.warehouses;
 }
 
+function genders(state) {
+	return state.genders;
+}
+
 const methods = {
 	companyLogo,
+	genders,
 	getDirections,
 	getCurrencySymbol,
 	getProducts,
