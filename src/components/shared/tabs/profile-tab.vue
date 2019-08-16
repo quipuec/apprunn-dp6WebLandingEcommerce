@@ -1,39 +1,36 @@
 <template>
 	<section class="tabs-container">
 		<button
-			@click="selectIt"
-			:value="1"
-			:class="['tab-btn', { 'active': activeTab === '1' }]"
 			type="button"
-		>Solicitado</button>
-		<button
+			v-for="status in getStatus"
+			:key="status.id"
+			:value="status.id"
+			:class="['tab-btn', { 'active': activeTab === status.id }]"
 			@click="selectIt"
-			:value="2"
-			:class="['tab-btn', { 'active': activeTab === '2' }]"
-			type="button"
-		>En camino</button>
-		<button
-			@click="selectIt"
-			:value="3"
-			:class="['tab-btn', { 'active': activeTab === '3'	}]"
-			type="button"
-		>Entregado</button>
+		>{{status.name}}</button>
 	</section>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 
 function selectIt($e) {
-	this.activeTab = $e.target.value;
+	this.activeTab = Number($e.target.value);
+	this.$emit('status-changed', this.activeTab);
 }
 
 function data() {
 	return {
-		activeTab: '1',
+		activeTab: 2,
 	};
 }
 
 export default {
 	name: 'profile-tab',
+	computed: {
+		...mapGetters([
+			'getStatus',
+		]),
+	},
 	data,
 	methods: {
 		selectIt,

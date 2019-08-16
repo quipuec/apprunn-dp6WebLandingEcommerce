@@ -28,7 +28,7 @@ const route = {
 			component: () => import(/* webpackChunkName: "orders" */ '@/components/profile/user-orders'),
 		},
 		{
-			path: 'detalle-orden/:n',
+			path: 'detalle-orden/:id',
 			name: 'order-detail',
 			component: () => import(/* webpackChunkName: "user-order-details" */ '@/components/profile/user-order-details'),
 		},

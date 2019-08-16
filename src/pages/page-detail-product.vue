@@ -15,7 +15,7 @@
 				@open-dialog="openDialog"
 				/>
 		</div>
-		<div>
+		<div class="container-general-tab">
 			<product-tab 
 				class="container-product-tab"
 				:tabs="tabs"
@@ -106,7 +106,7 @@ async function loadData() {
 					{ name: feature.value,
 						active: false,
 						possible: false,
-						disabled: false,
+						disabled:	false,
 						code: feature.code,
 					},
 				],
@@ -185,7 +185,6 @@ function possibleFeature(possibles) {
 		this.assignProduct(this.productsFilter[0]);
 		this.disabledBtn = false;
 	} else {
-		this.assignProduct(this.productSelect);
 		this.disabledBtn = true;
 	}
 }
@@ -271,6 +270,7 @@ function data() {
 		dialogWarehouses: false,
 		cities: [],
 		warehouses: [],
+		featuresFather: [],
 		tabs: [],
 	};
 }
@@ -293,17 +293,17 @@ export default {
 	data,
 	methods: {
 		assignProduct,
+		clearFeatures,
+		filterProduct,
 		isLoggedUser,
 		loadData,
 		loadOpinions,
 		newRoute,
-		selectFeature,
-		filterProduct,
 		possibleFeature,
-		clearFeatures,
 		clickQuantity,
 		openDialog,
 		closeModal,
+		selectFeature,
 	},
 	props: {
 		id: {
@@ -354,6 +354,14 @@ export default {
 		
 		@media screen and (max-width: 996px) {
 			width: 100%;
+		}
+	}
+
+	.container-general-tab {
+		padding: 0 7%;
+
+		@media screen and (max-width: 764px) {
+			padding: 0 5%;
 		}
 	}
 </style>
