@@ -13,7 +13,7 @@
 				@clear="clearFeatures"
 				@click-quantity="clickQuantity"/>
 		</div>
-		<div>
+		<div class="container-general-tab">
 			<product-tab 
 				class="container-product-tab"
 				:tabs="tabs"
@@ -25,7 +25,8 @@
 		<div>
 			<product-related 
 				:relateds="relateds"
-				v-if="relateds.length"/>
+				v-if="relateds.length"
+			/>
 		</div>
 	</div>
 </template>
@@ -177,7 +178,6 @@ function possibleFeature(possibles) {
 		this.assignProduct(this.productsFilter[0]);
 		this.disabledBtn = false;
 	} else {
-		this.assignProduct(this.productSelect);
 		this.disabledBtn = true;
 	}
 }
@@ -234,10 +234,9 @@ function clickQuantity(value) {
 
 function data() {
 	return {
-		product: {},
-		tabs: [],
 		lastIndex: 0,
 		opinions: [],
+		product: {},
 		relateds: [],
 		childrens: [],
 		allFeatures: [],
@@ -247,6 +246,8 @@ function data() {
 		productsFilter: [],
 		productFather: {},
 		disabledBtn: false,
+		featuresFather: [],
+		tabs: [],
 	};
 }
 
@@ -267,15 +268,15 @@ export default {
 	data,
 	methods: {
 		assignProduct,
-		loadData,
+		clearFeatures,
+		filterProduct,
 		isLoggedUser,
+		loadData,
 		loadOpinions,
 		newRoute,
-		selectFeature,
-		filterProduct,
 		possibleFeature,
-		clearFeatures,
 		clickQuantity,
+		selectFeature,
 	},
 	props: {
 		id: {
@@ -326,6 +327,14 @@ export default {
 		
 		@media screen and (max-width: 996px) {
 			width: 100%;
+		}
+	}
+
+	.container-general-tab {
+		padding: 0 7%;
+
+		@media screen and (max-width: 764px) {
+			padding: 0 5%;
 		}
 	}
 </style>

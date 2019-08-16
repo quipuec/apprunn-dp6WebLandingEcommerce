@@ -43,7 +43,7 @@ function swiper() {
 }
 
 function goToSlider(index, image) {
-	this.swiper.slideTo(index, 1000, false);
+	this.swiper.slideTo(index + 1, 1000, false);
 	this.data.images = this.data.images.map((i) => {
 		const newImage = { ...i };
 		newImage.select = i.id === image.id;

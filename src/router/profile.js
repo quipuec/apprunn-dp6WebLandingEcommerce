@@ -37,6 +37,11 @@ const route = {
 			name: 'favorites',
 			component: () => import(/* webpackChunkName: "favorites" */ '@/components/profile/favorites'),
 		},
+		{
+			path: 'mis-direcciones',
+			name: 'address',
+			component: () => import(/* webpackChunkName: "address" */ '@/components/profile/address-data'),
+		},
 	],
 };
 
