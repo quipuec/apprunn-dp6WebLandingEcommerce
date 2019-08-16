@@ -11,9 +11,12 @@
 				@update="loadData"
 				@select="selectFeature"
 				@clear="clearFeatures"
-				@click-quantity="clickQuantity"/>
+				@click-quantity="clickQuantity"
+				@open-dialog="openDialog"
+				/>
 		</div>
-		<div class="container-general-tab">
+		<div class="detail-tab-publicity">
+			<product-publicity class="container-publicity desktop"/>
 			<product-tab 
 				class="container-product-tab"
 				:tabs="tabs"
@@ -28,15 +31,27 @@
 				v-if="relateds.length"
 			/>
 		</div>
+		<product-publicity class="container-publicity mobile"/>
+		<app-banner-top 
+			:data="bannerTop"
+			:color="globalColors.secondary"
+			big/>
+		<warehouses-modal 
+			:dialog="dialogWarehouses"
+			:rows="warehouses"
+			@change-modal="closeModal"/>
 	</div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
 
+const appBannerTop = () => import('@/components/header/app-banner-top');
 const productView = () => import('@/components/products/product-view');
 const productDetail = () => import('@/components/products/product-detail');
 const productTab = () => import('@/components/products/product-tab');
 const productRelated = () => import('@/components/products/product-related');
+const warehousesModal = () => import('@/components/products/warehouses-modal');
+const productPublicity = () => import('@/components/products/product-publicity');
 
 function created() {
 	this.loadData();
@@ -177,8 +192,6 @@ function possibleFeature(possibles) {
 		});
 		this.assignProduct(this.productsFilter[0]);
 		this.disabledBtn = false;
-	} else {
-		this.disabledBtn = true;
 	}
 }
 
@@ -232,6 +245,20 @@ function clickQuantity(value) {
 	this.product = { ...newProductdetail };
 }
 
+async function openDialog() {
+	try {
+		const { data: response } = await this.$httpProductsPublic.get(`products-public/${this.product.id}/stock-by-warehouse`);
+		this.warehouses = response;
+		this.dialogWarehouses = true;
+	} catch (error) {
+		this.showGenericError();
+	}
+}
+
+function closeModal(value) {
+	this.dialogWarehouses = value;
+}
+
 function data() {
 	return {
 		lastIndex: 0,
@@ -246,6 +273,13 @@ function data() {
 		productsFilter: [],
 		productFather: {},
 		disabledBtn: false,
+		dialogWarehouses: false,
+		cities: [],
+		warehouses: [],
+		bannerTop: {
+			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
+			image: 'descuento',
+		},
 		featuresFather: [],
 		tabs: [],
 	};
@@ -255,10 +289,13 @@ export default {
 	name: 'page-detail-product',
 	created,
 	components: {
-		productView,
+		appBannerTop,
 		productDetail,
+		productPublicity,
+		productView,
 		productTab,
 		productRelated,
+		warehousesModal,
 	},
 	computed: {
 		...mapGetters([
@@ -276,6 +313,8 @@ export default {
 		newRoute,
 		possibleFeature,
 		clickQuantity,
+		openDialog,
+		closeModal,
 		selectFeature,
 	},
 	props: {
@@ -316,17 +355,42 @@ export default {
 
 	.container-product-detail {
 		width: 45%;
+
 		@media screen and (max-width: 996px) {
-			padding: 0 5%;
 			width: 100%;
 		}
 	}
 
 	.container-product-tab {
-		width: 65%;
-		
-		@media screen and (max-width: 996px) {
-			width: 100%;
+		flex: 1 1 70%;
+	}
+
+	.container-publicity {
+		flex: 1 1 30%;
+		margin-right: 29px;
+	}
+
+	.detail-tab-publicity {
+		display: flex;
+		justify-content: space-between;
+		padding: 0 3%;
+
+		@media screen and (max-width: 764px) {
+			flex-direction: column;
+			padding: 0;
+		}
+	}
+
+	.mobile {
+		display: none;
+		@media screen and (max-width: 764px) {
+			display: block;
+		}
+	}
+
+	.desktop {
+		@media screen and (max-width: 764px) {
+			display: none;
 		}
 	}
 

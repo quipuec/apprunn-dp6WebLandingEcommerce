@@ -12,6 +12,10 @@ export default {
 	directions: [
 		{ id: 0, addressLine1: 'Nueva dirección' },
 	],
+	genders: [
+		{ id: 1, title: 'Femenino' },
+		{ id: 2, title: 'Masculino' },
+	],
 	geo: {
 		departments: [],
 		districts: [],
@@ -36,6 +40,7 @@ export default {
 	profile: {
 		address: [],
 		flagAddVoucher: false,
+		userData: null,
 	},
 	products: {
 		list: [],

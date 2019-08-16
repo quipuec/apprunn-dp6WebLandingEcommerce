@@ -13,6 +13,17 @@
 <script>
 import cameraComponent from '@/components/shared/icons/camera-component';
 import editComponent from '@/components/shared/icons/edit-component';
+import { mapGetters } from 'vuex';
+
+function created() {
+	this.loadGeoData();
+}
+
+async function loadGeoData() {
+	this.$store.dispatch('LOAD_DEPARTMENTS', this);
+	this.$store.dispatch('LOAD_PROVINCES', { context: this, departmentId: this.user.provinceId });
+	this.$store.dispatch('LOAD_DISTRICTS', { context: this, districtId: this.user.cityId });
+}
 
 function editing() {
 	this.$router.push({ name: 'edit-user-data' });
@@ -36,9 +47,16 @@ export default {
 		cameraComponent,
 		editComponent,
 	},
+	computed: {
+		...mapGetters([
+			'user',
+		]),
+	},
+	created,
 	data,
 	methods: {
 		editing,
+		loadGeoData,
 		loadAvatar,
 		routeHandler,
 	},
