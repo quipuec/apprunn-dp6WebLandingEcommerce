@@ -6,10 +6,14 @@
 				class="container-product-view"/>
 			<productDetail 
 				:data="product"
+				:features="features"
 				class="container-product-detail"
-				@update="loadData"/>
+				@update="loadData"
+				@select="selectFeature"
+				@clear="clearFeatures"
+				@click-quantity="clickQuantity"/>
 		</div>
-		<div>
+		<div class="container-general-tab">
 			<product-tab 
 				class="container-product-tab"
 				:tabs="tabs"
@@ -34,6 +38,11 @@ const productDetail = () => import('@/components/products/product-detail');
 const productTab = () => import('@/components/products/product-tab');
 const productRelated = () => import('@/components/products/product-related');
 
+function created() {
+	this.loadData();
+	this.loadOpinions();
+}
+
 function isLoggedUser() {
 	if (this.token) {
 		return this.$httpProducts.get(`products/favorites/${this.id}`);
@@ -41,18 +50,15 @@ function isLoggedUser() {
 	return this.$httpProductsPublic.get(`products-public/${this.id}`);
 }
 
-function created() {
-	this.loadData();
-	this.loadOpinions();
-}
-
 async function loadData() {
 	const requests = [
 		this.$httpProductsPublic.get(`products-public/${this.id}/related`),
+		this.$httpProductsPublic.get(`products-public/${this.id}/children`),
 	];
 	requests.push(this.isLoggedUser());
 	([
 		{ data: this.relateds },
+		{ data: this.childrens },
 		{ data: this.product },
 	] = await Promise.all(requests));
 	this.product.images = this.product.images.map((i, index) => {
@@ -60,9 +66,125 @@ async function loadData() {
 		newImage.select = index === 0;
 		return newImage;
 	});
+	this.product.quantity = 1;
+	this.productFather = { ...this.product };
 	this.tabs = this.product.sections.map(p => p.name);
 	this.tabs.push('Comentarios');
 	this.lastIndex = this.product.sections.length;
+	this.allFeatures = this.childrens.reduce((acum, children) => acum.concat(children.features), []);
+	this.features = this.allFeatures.reduce((acum, feature) => {
+		const index = acum.findIndex(a => a.name === feature.name);
+		if (index > -1) {
+			const indexValue = acum[index].values.findIndex(i => i.name === feature.value);
+			if (indexValue === -1) {
+				const value = {
+					name: feature.value,
+					active: false,
+					possible: false,
+					disabled: false,
+					code: feature.code,
+				};
+				acum[index].values.push(value);
+			}
+		} else {
+			acum.push({ name: feature.name,
+				value: 'PADRE',
+				values: [
+					{ name: feature.name,
+						active: false,
+						possible: false,
+						disabled: true,
+						code: 'PADRE',
+					},
+					{ name: feature.value,
+						active: false,
+						possible: false,
+						disabled: false,
+						code: feature.code,
+					},
+				],
+			});
+		}
+		return acum;
+	}, []);
+	if (this.childrens.length) {
+		this.disabledBtn = true;
+	}
+}
+
+function selectFeature(index, value) {
+	this.featureSelect.push({ name: this.features[index].name, code: value });
+	this.filterProduct(this.featureSelect);
+}
+
+function filterProduct(filters) {
+	const numFilter = filters.length;
+	this.arrayPossible = [];
+	this.productsFilter = this.childrens.reduce((acum, children) => {
+		const flagFilter = [];
+		filters.forEach((filter) => {
+			if (children.features.filter(f => f.name === filter.name &&
+				f.code === filter.code).length) {
+				flagFilter.push(filter);
+			}
+		});
+		if (flagFilter.length === numFilter) {
+			acum.push(children);
+			children.features.forEach((element) => {
+				if (this.arrayPossible.length) {
+					const index = this.arrayPossible.findIndex(a => a.name === element.name
+						&& a.value === element.value);
+					if (index === -1) {
+						this.arrayPossible.push({ name: element.name, value: element.code });
+					}
+				} else {
+					this.arrayPossible.push({ name: element.name, value: element.code });
+				}
+			});
+		}
+		return acum;
+	}, []);
+	this.possibleFeature(this.arrayPossible);
+}
+
+function possibleFeature(possibles) {
+	this.features = this.features.map((element, index) => {
+		element.values.forEach((value, indexValue) => {
+			if (this.productsFilter.length === 1) {
+				const flag = possibles.filter(p => p.value === value.code);
+				this.$set(this.features[index].values[indexValue], 'active', !!flag.length);
+				this.$set(this.features[index].values[indexValue], 'possible', false);
+				this.$set(this.features[index].values[indexValue], 'disabled', !flag.length);
+				if (value.code === 'PADRE') {
+					this.$set(this.features[index].values[indexValue], 'disabled', true);
+				}
+				if (value.active) {
+					this.$set(this.features[index], 'value', value.code);
+				}
+			} else {
+				const flag = possibles.filter(p => p.value === value.code && !value.active);
+				this.$set(this.features[index].values[indexValue], 'possible', !!flag.length);
+				this.$set(this.features[index].values[indexValue], 'disabled', !flag.length);
+			}
+		});
+		return element;
+	});
+	if (this.productsFilter.length === 1) {
+		this.productsFilter[0].images = this.productsFilter[0].images.map((i, index) => {
+			const newImage = { ...i };
+			newImage.select = index === 0;
+			return newImage;
+		});
+		this.assignProduct(this.productsFilter[0]);
+		this.disabledBtn = false;
+	} else {
+		this.disabledBtn = true;
+	}
+}
+
+function assignProduct(product) {
+	this.product = { ...product };
+	this.product.quantity = 1;
 }
 
 async function loadOpinions() {
@@ -74,9 +196,40 @@ async function loadOpinions() {
 	this.opinions = response;
 }
 
+function clearFeatures() {
+	this.features = this.features.map((element) => {
+		const newElement = { ...element };
+		newElement.value = 'PADRE';
+		newElement.values = element.values.map((v) => {
+			const newValue = { ...v };
+			newValue.active = false;
+			newValue.possible = false;
+			newValue.disabled = v.code === 'PADRE';
+			return newValue;
+		});
+		return newElement;
+	});
+	this.featureSelect = [];
+	this.arrayPossible = [];
+	this.productsFilter = [];
+	this.product = { ...this.productFather };
+}
+
 function newRoute() {
 	this.loadData();
 	this.loadOpinions();
+}
+
+function clickQuantity(value) {
+	let num = this.product.quantity;
+	const newProductdetail = { ...this.product };
+	if (value === 'less' && num === 1) {
+		num = 1;
+	} else {
+		num = value === 'more' ? num += 1 : num -= 1;
+	}
+	this.$set(newProductdetail, 'quantity', num);
+	this.product = { ...newProductdetail };
 }
 
 function data() {
@@ -85,6 +238,15 @@ function data() {
 		opinions: [],
 		product: {},
 		relateds: [],
+		childrens: [],
+		allFeatures: [],
+		features: [],
+		featureSelect: [],
+		arrayPossible: [],
+		productsFilter: [],
+		productFather: {},
+		disabledBtn: false,
+		featuresFather: [],
 		tabs: [],
 	};
 }
@@ -105,10 +267,16 @@ export default {
 	},
 	data,
 	methods: {
+		assignProduct,
+		clearFeatures,
+		filterProduct,
 		isLoggedUser,
 		loadData,
 		loadOpinions,
 		newRoute,
+		possibleFeature,
+		clickQuantity,
+		selectFeature,
 	},
 	props: {
 		id: {
@@ -159,6 +327,14 @@ export default {
 		
 		@media screen and (max-width: 996px) {
 			width: 100%;
+		}
+	}
+
+	.container-general-tab {
+		padding: 0 7%;
+
+		@media screen and (max-width: 764px) {
+			padding: 0 5%;
 		}
 	}
 </style>

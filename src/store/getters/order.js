@@ -40,6 +40,9 @@ const getters = {
 	getStatus(state) {
 		return state.order.status;
 	},
+	getOrderDetails(state) {
+		return state.order.details;
+	},
 };
 
 export default getters;

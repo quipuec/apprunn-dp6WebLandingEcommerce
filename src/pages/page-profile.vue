@@ -22,7 +22,7 @@
 						<button
 							:class="[
 								'user-action-btn',
-								{ 'active': $route.name === 'user-orders'},
+								{ 'active': $route.name === 'user-orders' || $route.name === 'order-detail' },
 							]"
 							@click="goTo('user-orders')"
 						>Mis Órdenes</button>
