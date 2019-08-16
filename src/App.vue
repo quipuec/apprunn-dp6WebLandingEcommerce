@@ -140,7 +140,6 @@ html, body {
 	color: color(black) !important;
 	font-family: font(regular) !important;
 	font-size: size(medium);
-	overflow-x: auto;
 }
 
 input[type='number']::-webkit-inner-spin-button,
