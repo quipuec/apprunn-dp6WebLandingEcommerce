@@ -39,7 +39,7 @@
 				<button-image
 					if-number
 					:data="imagesButton[2]"
-					:number="1"
+					:number="totalProducts"
 					@click-image="goTo('buy')"
 				/>
 			</div>
@@ -58,6 +58,11 @@ const callMenu = () => import('@/components/header/call-menu');
 const appSearch = () => import('@/components/shared/inputs/app-input-search');
 const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 const modalLogin = () => import('@/components/header/modal-login');
+
+function mounted() {
+	const ls = this.getLocalStorage(`${process.env.STORAGE_USER_KEY}::product-select`);
+	this.$store.dispatch('updateProductSelect', ls);
+}
 
 function toogleSearch() {
 	this.isSearchMobile = !this.isSearchMobile;
@@ -125,6 +130,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'token',
+			'totalProducts',
 		]),
 	},
 	data,
@@ -134,6 +140,7 @@ export default {
 		openModalLogin,
 		closeModal,
 	},
+	mounted,
 	props: {
 		logo: {
 			type: Object,
@@ -153,11 +160,13 @@ export default {
 <style lang="scss" scoped>
 	.app-header {
 		background: color(white);
+		box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.11);box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.11);
 		display: flex;
 		height: inherit;
+		overflow: hidden;
 		padding: 0px 6%;
-		box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.11);
 		position: relative;
+		widows: 100vw;
 
 		@media (min-width: 768px) {
 			height: 99px;

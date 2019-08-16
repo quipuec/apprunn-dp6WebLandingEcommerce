@@ -259,7 +259,7 @@ export default {
 	.menu-list-name-category {
 		flex: 1 1 20%;
 		overflow-y: scroll;
-    max-height: 312.6px;
+		max-height: 312.6px;
 
 		@media (max-width: 764px) {
 			height: calc(100vh - 240px);
