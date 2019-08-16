@@ -3,7 +3,8 @@
 	<div class="page-category">
 		<div class="menu-category">
 			<menu-category
-			:categories="$route.query.categories.detail"
+			:categories="this.arrayCategory"
+			:title-category="this.titleCategory"
 			></menu-category>
 			</div>
 		<div class="content-category">
@@ -11,13 +12,15 @@
 				<section>
 					<v-breadcrumbs 
 					:items="items" 
-					divider=">"></v-breadcrumbs>
+					divider=">">
+						<span class="title-breadcrumbs-category">{{this.$route.query.title}}</span>
+					</v-breadcrumbs>
 				</section>
 				<section class="section-pagination-category">
 					<p class="total-products">{{listProducts.length}} productos</p>
 					<v-layout class="text-xs-center" v-show="totalPages">
 						<v-pagination
-						:length="2"
+						:length="this.lastPage"
 						:total-visible="pagesVisible"
 						v-model="page"
 						@input="updateProductCard"
@@ -53,14 +56,24 @@ const appBannerTop = () => import('@/components/header/app-banner-top');
 const productCard = () => import('@/components/products/product-card');
 
 async function loadProduct() {
-	const params = {
-		page: this.page,
-	};
-	const url = 'products-public';
-	({ data: this.listProducts } = await this.$httpProductsPublic.get(url, { params }));
+	try {
+		const params = {
+			page: this.page,
+		};
+		const url = `products-public?eCategories=${this.categoryId}`;
+		const response = await this.$httpProductsPublic.get(url, { params });
+		this.listProducts = response.data;
+		this.lastPage = Number(response.headers['x-last-page']);
+	} catch (error) {
+		this.showGenericError();
+	}
 }
 
 function created() {
+	this.arrayCategory = this.$route.query.categories.detail;
+	this.subCategories = this.$route.query.categories.detail;
+	this.titleCategory = this.$route.query.title;
+	this.categoryId = this.$route.query.id;
 	this.loadProduct();
 }
 
@@ -75,57 +88,16 @@ function updateProductCard(value) {
 
 function data() {
 	return {
-		page: 1,
-		listProducts: [],
-		totalPages: 5,
 		bannerTop: {
 			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
 			image: 'descuento',
 		},
-		colorSecondary: process.env.COLOR_SECONDARY,
-		categories: [
-			{
-				title: 'Automotriz',
-				filters: [
-					{
-						id: 1,
-						name: '4x4',
-						href: '',
-						disabled: false,
-					},
-					{
-						id: 2,
-						href: '',
-						name: 'Sistema a Gas',
-						disabled: false,
-					},
-					{
-						href: '',
-						id: 3,
-						name: 'Tuning',
-						disabled: false,
-					},
-					{
-						id: 4,
-						href: '',
-						name: 'Competencia',
-						disabled: false,
-					},
-				],
-			},
-			{
-				title: 'Minería',
-			},
-			{
-				title: 'Ferrocarriles y Vagones',
-			},
-			{
-				title: 'Puerta de Garaje',
-			},
-			{
-				title: 'Industria en General',
-			},
-		],
+		categoryId: null,
+		lastPage: 0,
+		listSubCategories: [],
+		listProducts: [],
+		page: 1,
+		totalPages: 5,
 		items: [
 			{
 				text: 'Resortes',
@@ -172,7 +144,7 @@ export default {
 <style lang="scss" scoped>
 .menu-category {
 	background-color: color(background);
-	padding: 0px 25px;
+	padding: 0px 15px;
 	position: relative;
 	width: 25%;	
 }
@@ -223,5 +195,11 @@ export default {
 	grid-template-columns: repeat(auto-fit, minmax(214px, 1fr));
 	margin: 42px auto;
 	max-width: 1070px;
+}
+
+.title-breadcrumbs-category {
+	color: #acaaaa;
+	font-size: 16px;
+	font-family: font(medium)
 }
 </style>

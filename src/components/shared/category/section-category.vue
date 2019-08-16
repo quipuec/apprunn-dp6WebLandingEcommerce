@@ -1,7 +1,7 @@
 <template>
 	<div class="section-category">
 		<div class="filter-category">
-			<img :src="$route.query.categories.urlImage" alt="" width="22px" height="21px">
+			<img :src="$route.query.categories.webImage" alt="" width="22px" height="21px">
 			<p class="title-category">{{$route.query.categories.title}}</p>
 			<div>
 				<button-image
