@@ -34,12 +34,17 @@
 			</div>
 			<span class="text-price">{{getCurrencySymbol}} {{data.price || ''}}</span>
 		</div>
+		<product-childrens 
+			:features="features"
+			@select="selecFeature"
+			@clear="$emit('clear')"/>
 	</div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
 
 const heartComponent = () => import('@/components/shared/icons/heart-component');
+const productChildrens = () => import('@/components/products/product-childrens');
 
 function stopClick() {
 	return false;
@@ -54,10 +59,15 @@ function getDiscont() {
 	return this.data.percentageDiscount * 100;
 }
 
+function selecFeature(index, value) {
+	this.$emit('select', index, value);
+}
+
 export default {
 	name: 'product-detail',
 	components: {
 		heartComponent,
+		productChildrens,
 	},
 	computed: {
 		...mapGetters([
@@ -69,11 +79,16 @@ export default {
 	methods: {
 		stopClick,
 		addToFavorites,
+		selecFeature,
 	},
 	props: {
 		data: {
 			type: Object,
 			default: () => {},
+		},
+		features: {
+			type: Array,
+			default: () => [],
 		},
 	},
 };
