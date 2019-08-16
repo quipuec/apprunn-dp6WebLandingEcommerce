@@ -80,6 +80,7 @@ export default {
 		background-color: color(white);
 		border: 1px solid color(border);
 		box-shadow: 0 2px 2px 0 rgba(31, 26, 26, 0.07);
+		cursor: pointer;
 		font-family: font(medium);
 		height: auto;
 		padding: 10px;
@@ -92,6 +93,7 @@ export default {
 		}
 
 		&.small {
+			min-height: 319px;
 			max-width: 179px;
 		}
 	}
@@ -130,6 +132,12 @@ export default {
 
 		@media (min-width: 426px) {
 			flex-direction: column;
+		}
+
+		@media (max-width: 975px) {
+			&.small {
+				padding: 0px;
+			}
 		}
 	}
 
