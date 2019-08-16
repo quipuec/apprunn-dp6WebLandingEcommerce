@@ -60,7 +60,7 @@ const buttonImage = () => import('@/components/shared/buttons/app-button-image')
 const modalLogin = () => import('@/components/header/modal-login');
 
 function mounted() {
-	const ls = JSON.parse(localStorage.getItem('ecommerce::product-select'));
+	const ls = this.getLocalStorage(`${process.env.STORAGE_USER_KEY}::product-select`);
 	this.$store.dispatch('updateProductSelect', ls);
 }
 
@@ -160,11 +160,11 @@ export default {
 <style lang="scss" scoped>
 	.app-header {
 		background: color(white);
+		box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.11);box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.11);
 		display: flex;
 		height: inherit;
-		padding: 0px 6%;
-		box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.11);
 		overflow: hidden;
+		padding: 0px 6%;
 		position: relative;
 		widows: 100vw;
 

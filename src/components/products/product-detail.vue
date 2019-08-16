@@ -10,7 +10,7 @@
 		<div class="container-detail-information">
 			<div class="container-detail-name">
 				<p class="product-detail-name">{{data.name}}</p>
-				<p class="product-detail-brand">{{data.warehouseProduct ? data.warehouseProduct.brand.name : null}}</p>
+				<p class="product-detail-brand">{{getBrandName(data) || '--'}}</p>
 			</div>
 			<div class="d-center container-code-rating">
 				<span class="product-detail-code">#{{data.code}}</span>
@@ -46,6 +46,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import lib from '@/shared/lib';
 
 const heartComponent = () => import('@/components/shared/icons/heart-component');
 const productChildrens = () => import('@/components/products/product-childrens');
@@ -87,6 +88,10 @@ function addToCar() {
 	}
 }
 
+function getBrandName(data) {
+	return lib.getDeeper('warehouseProduct.brand.name')(data);
+}
+
 export default {
 	name: 'product-detail',
 	components: {
@@ -103,11 +108,12 @@ export default {
 		noStock,
 	},
 	methods: {
-		stopClick,
-		addToFavorites,
-		selecFeature,
-		clickQuantity,
 		addToCar,
+		addToFavorites,
+		clickQuantity,
+		getBrandName,
+		stopClick,
+		selecFeature,
 	},
 	props: {
 		data: {
