@@ -2,22 +2,51 @@
 	<div>
 		<div class="form-container">
 			<form class="user-form">
-				<app-input class="user-name" placeholder="Nombre"/>
-				<app-input class="user-dni" placeholder="DNI"/>
-				<app-input class="user-lastname" placeholder="Apellido"/>
-				<app-input class="user-ruc" placeholder="RUC"/>
-				<app-select class="user-gender" placeholder="Género"/>
-				<app-input class="user-postcode" placeholder="Código postal"/>
-				<app-select class="user-department" placeholder="Departamento"/>
-				<app-input class="user-phone" placeholder="Teléfono"/>
-				<app-select class="user-district" placeholder="Distrito"/>
-				<app-select class="user-province" placeholder="Provincia"/>
+				<app-input class="user-name" placeholder="Nombre" v-model="userData.name"/>
+				<app-input class="user-dni" placeholder="DNI" v-model="userData.dni"/>
+				<app-input class="user-lastname" placeholder="Apellido" v-model="userData.lastname"/>
+				<app-input class="user-ruc" placeholder="RUC" v-model="userData.ruc"/>
+				<app-select
+					class="user-gender"
+					placeholder="Género"
+					item-text="title"
+					item-value="id"
+					:items="genders"
+					v-model="userData.gender"
+				/>
+				<app-input class="user-postcode" placeholder="Código postal" v-model="userData.postalCode"/>
+				<app-select
+					class="user-department"
+					placeholder="Departamento"
+					item-text="name"
+					item-value="id"
+					:items="departments"
+					v-model="userData.provinceId"
+				/>
+				<app-input class="user-phone" placeholder="Teléfono" v-model="userData.phone"/>
+				<app-select
+					class="user-district"
+					placeholder="Distrito"
+					item-text="name"
+					item-value="id"
+					:items="districts"
+					v-model="userData.parishId"
+				/>
+				<app-select
+					class="user-province"
+					placeholder="Provincia"
+					item-text="name"
+					item-value="id"
+					:items="provinces"
+					v-model="userData.cityId"
+				/>
 			</form>
 			<section class="btn-section mb-2">
 				<app-button
-					:background="colorSecondary"
 					action="Guardar"
 					class="action-button save"
+					:background="colorSecondary"
+					@click="saveUserInfo"
 				/>
 				<app-button
 					:background="colorBase"
@@ -30,11 +59,17 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import appButton from '@/components/shared/buttons/app-button';
 import appInput from '@/components/shared/inputs/app-input';
 import appSelect from '@/components/shared/inputs/app-select';
 import cameraComponent from '@/components/shared/icons/camera-component';
 import editComponent from '@/components/shared/icons/edit-component';
+import lib from '@/shared/lib';
+
+function created() {
+	this.userData = this.user || this.userData;
+}
 
 function goBack() {
 	this.$router.back();
@@ -42,10 +77,52 @@ function goBack() {
 
 function loadAvatar() {}
 
+function saveUserInfo() {
+	const body = this.buildBody(this.userData);
+	try {
+		this.$store.dispatch('UPDATE_USER_DATA', { context: this, body });
+		this.showNotification('Actualización exitosa');
+		this.$router.push({ name: 'user-data-details' });
+	} catch (error) {
+		this.showGenericError('No fue posible actualizar los datos');
+	}
+}
+
+function buildBody(userData) {
+	return lib.compose(
+		lib.setNewProperty('name', userData.name),
+		lib.setNewProperty('lastname', userData.lastname),
+		lib.setNewProperty('rzSocial', userData.rzSocial),
+		lib.setNewProperty('address', userData.address),
+		lib.setNewProperty('phone', userData.phone),
+		lib.setNewProperty('phoneNumbers', userData.phoneNumbers),
+		lib.setNewProperty('ruc', userData.ruc),
+		lib.setNewProperty('dni', userData.dni),
+		lib.setNewProperty('gender', userData.gender),
+		lib.setNewProperty('postalCode', userData.postalCode),
+		lib.setNewProperty('provinceId', userData.provinceId),
+		lib.setNewProperty('cityId', userData.cityId),
+		lib.setNewProperty('countryId', userData.countryId),
+		lib.setNewProperty('parishId', userData.parishId),
+	)({});
+}
+
 function data() {
 	return {
 		colorBase: process.env.COLOR_BASE,
 		colorSecondary: process.env.COLOR_SECONDARY,
+		userData: {
+			cityId: null,
+			dni: '',
+			gender: null,
+			lastname: '',
+			name: '',
+			parishId: null,
+			phone: '',
+			postalCode: '',
+			provinceId: null,
+			ruc: '',
+		},
 	};
 }
 
@@ -58,10 +135,22 @@ export default {
 		cameraComponent,
 		editComponent,
 	},
+	computed: {
+		...mapGetters([
+			'departments',
+			'districts',
+			'genders',
+			'provinces',
+			'user',
+		]),
+	},
+	created,
 	data,
 	methods: {
+		buildBody,
 		goBack,
 		loadAvatar,
+		saveUserInfo,
 	},
 };
 </script>

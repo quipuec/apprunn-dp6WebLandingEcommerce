@@ -27,7 +27,7 @@
 				</div>
 			</div>
 		</div>
-		<div>
+		<div class="container-detail-bottom">
 			<div class="d-center mt-25">
 				<span class="text-price-dis" :style="`color: ${globalColors.secondary}`">{{getCurrencySymbol}} {{data.priceDiscount || ''}}</span>
 				<div class="content-discount">{{getDiscont}}%</div>
@@ -41,6 +41,7 @@
 		<product-buy 
 			@click="clickQuantity"
 			@add-to-car="addToCar"
+			@open-dialog="$emit('open-dialog')"
 			:number="data.quantity"/>
 	</div>
 </template>
@@ -224,6 +225,7 @@ export default {
 	.container-detail-information {
 		@media screen and (max-width: 996px) {
 			display: flex;
+			padding: 0 5%;
 		}
 	}
 
@@ -245,6 +247,13 @@ export default {
 
 		@media screen and (max-width: 996px) {
 			font-size: size(xsmall);
+		}
+	}
+
+	.container-detail-bottom {
+		@media screen and (max-width: 996px) {
+			padding: 0 5%;
+			margin-bottom: 50px;
 		}
 	}
 </style>
