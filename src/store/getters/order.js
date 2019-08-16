@@ -34,6 +34,15 @@ const getters = {
 	getFlagBill(state) {
 		return state.order.flagBill;
 	},
+	getOrders(state) {
+		return state.order.list;
+	},
+	getStatus(state) {
+		return state.order.status;
+	},
+	getOrderDetails(state) {
+		return state.order.details;
+	},
 };
 
 export default getters;

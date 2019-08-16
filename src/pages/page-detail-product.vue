@@ -16,7 +16,7 @@
 				/>
 		</div>
 		<div class="detail-tab-publicity">
-			<product-publicity class="container-publicity desktop"/>	
+			<product-publicity class="container-publicity desktop"/>
 			<product-tab 
 				class="container-product-tab"
 				:tabs="tabs"
@@ -276,11 +276,12 @@ function data() {
 		dialogWarehouses: false,
 		cities: [],
 		warehouses: [],
-		tabs: [],
 		bannerTop: {
 			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
 			image: 'descuento',
 		},
+		featuresFather: [],
+		tabs: [],
 	};
 }
 
@@ -304,17 +305,17 @@ export default {
 	data,
 	methods: {
 		assignProduct,
+		clearFeatures,
+		filterProduct,
 		isLoggedUser,
 		loadData,
 		loadOpinions,
 		newRoute,
-		selectFeature,
-		filterProduct,
 		possibleFeature,
-		clearFeatures,
 		clickQuantity,
 		openDialog,
 		closeModal,
+		selectFeature,
 	},
 	props: {
 		id: {
@@ -390,6 +391,14 @@ export default {
 	.desktop {
 		@media screen and (max-width: 764px) {
 			display: none;
+		}
+	}
+
+	.container-general-tab {
+		padding: 0 7%;
+
+		@media screen and (max-width: 764px) {
+			padding: 0 5%;
 		}
 	}
 </style>
