@@ -4,10 +4,11 @@
 			<div class="w-100">
 				<div class="title-help">CENTRO DE AYUDA</div>
 					<div
-						v-for="(help, index) in helps" 
-						:key="index">
-						<div class="title-tabs">
-							{{help.title}}
+					v-for="(help, index) in helps" 
+					:key="index"
+					>
+					<div class="title-tabs">
+						{{help.title}}
 						<div>
 							<button-image
 							:data="openArrow"
@@ -24,17 +25,17 @@
 						</div>
 					</div>
 					<div v-if="!help.deploy">
-						<div v-for="(item, indexItem) in help.items" :key="indexItem">
-							<button-image
-							:data="iconTabs"
-							:class="[
-							{ 'active-help' : currentHelp === item }
-							]"
-							@click-image="seeThisHelp(item)"
-							class="item-tabs"
-							:title="item"
-							/>
-						</div>
+						<button
+						:class="[
+						{ 'active-help' : currentHelp === item }
+						]"
+						@click="seeThisHelp(item)"
+						type="button" 
+						class="item-tabs"
+						v-for="(item, indexItem) in help.items" :key="indexItem"
+						>
+							{{item}}
+						</button>
 					</div>
 				</div>
 			</div>
@@ -75,11 +76,7 @@ function deploy(index) {
 
 function data() {
 	return {
-		iconTabs: {
-			image: '',
-			height: 0,
-			name: '',
-		},
+
 		widthDesktop: 0,
 		width: 0,
 		openArrowTabs: true,
@@ -154,8 +151,8 @@ export default {
 	data,
 	name: 'tabs-help',
 	components: {
-		appSlider,
 		buttonImage,
+		appSlider,
 		warranty,
 	},
 	methods: {
