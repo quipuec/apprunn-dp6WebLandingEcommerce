@@ -49,6 +49,7 @@ export default {
 	.product-total {
 		color: color(secondary);
 		font-size: size(large);
+		text-align: center;
 	}
 
 	.product-name {
