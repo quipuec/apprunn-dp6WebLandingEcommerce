@@ -3,7 +3,7 @@
 	:style="`border-right: ${borderRight ? `1px solid ${borderRight}` : null}`"
 	>
 			<div>
-				<img :src="urlImage" alt="" height="23px" width="23px">
+				<img :src="urlImage" alt="">
 			</div>
 			<div class="filter-title">
 				<p class="title-filter">{{title}}</p>
@@ -82,5 +82,12 @@ export default {
 	align-items: flex-start;
 	display: flex;
 	flex-direction: column;
+}
+
+.box-filter {
+	img {
+		height: 23px;
+		width: 23px;
+	}
 }
 </style>
