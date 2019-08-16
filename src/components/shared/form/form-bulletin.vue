@@ -98,9 +98,9 @@ export default {
 	width: 100%;
 
 	@media (max-width: 850px) {
-		padding: 15px 0;
-		height: 411px;
 		flex-direction: column;
+		height: 411px;
+		padding: 15px 0;
 	}
 }
 

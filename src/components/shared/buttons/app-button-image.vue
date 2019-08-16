@@ -9,6 +9,7 @@
 			:alt="data.name"
 			:height="data.height || 20" 
 		>
+		{{name}}
 	</button>
 </template>
 <script>
@@ -26,6 +27,10 @@ export default {
 		data: {
 			type: Object,
 			default: () => {},
+		},
+		name: {
+			type: String,
+			default: '',
 		},
 		url: String,
 		ifNumber: {

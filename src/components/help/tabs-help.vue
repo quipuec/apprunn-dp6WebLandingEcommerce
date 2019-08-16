@@ -1,59 +1,58 @@
 <template>
-<div class="tabs-help">
-	<div class="content-help">
-		<div class="w-100">
-			<div class="title-help">CENTRO DE AYUDA</div>
-			<div
-			v-for="(help, index) in helps" 
-			:key="index"
-			>
-			<div class="title-tabs">
-				{{help.title}}
-				<div>
-					<button-image
-					:data="openArrow"
-					class="icon-close"
-					v-if="!help.deploy"
-					@click-image="deploy(index)"
-					></button-image>
-					<button-image
-					:data="closeArrow"
-					class="icon-close"
-					@click-image="deploy(index)"
-					v-if="help.deploy"
-					></button-image>
+	<div class="tabs-help">
+		<div class="content-help">
+			<div class="w-100">
+				<div class="title-help">CENTRO DE AYUDA</div>
+					<div
+						v-for="(help, index) in helps" 
+						:key="index">
+						<div class="title-tabs">
+							{{help.title}}
+						<div>
+							<button-image
+							:data="openArrow"
+							class="icon-close"
+							v-if="!help.deploy"
+							@click-image="deploy(index)"
+							></button-image>
+							<button-image
+							:data="closeArrow"
+							class="icon-close"
+							@click-image="deploy(index)"
+							v-if="help.deploy"
+							></button-image>
+						</div>
+					</div>
+					<div v-if="!help.deploy">
+						<div v-for="(item, indexItem) in help.items" :key="indexItem">
+							<button-image
+							:data="iconTabs"
+							:class="[
+							{ 'active-help' : currentHelp === item }
+							]"
+							@click-image="seeThisHelp(item)"
+							class="item-tabs"
+							:name="item"
+							/>
+						</div>
+					</div>
 				</div>
 			</div>
-				<div v-if="!help.deploy">
-					<button
-					:class="[
-					{ 'active-help' : currentHelp === item }
-					]"
-					@click="seeThisHelp(item)"
-					type="button" 
-					class="item-tabs"
-					v-for="(item, indexItem) in help.items" :key="indexItem"
-					>
-						{{item}}
-					</button>
-				</div>
-			</div>
+		</div>	
+		<div class="content-components">
+			<component
+				:is="currentHelpComponent"
+			></component>
 		</div>
-	</div>	
-	<div class="content-components">
-		<component
+		<app-slider
+		class="slider-help"
+		:title="currentHelp"
+		v-model="open">
+			<component
 			:is="currentHelpComponent"
-		></component>
+			></component>
+		</app-slider>
 	</div>
-	<app-slider
-	class="slider-help"
-	:title="currentHelp"
-	v-model="open">
-		<component
-		:is="currentHelpComponent"
-		></component>
-	</app-slider>
-</div>
 </template>
 
 <script>
@@ -76,7 +75,11 @@ function deploy(index) {
 
 function data() {
 	return {
-
+		iconTabs: {
+			image: '',
+			height: 0,
+			name: '',
+		},
 		widthDesktop: 0,
 		width: 0,
 		openArrowTabs: true,
@@ -84,8 +87,8 @@ function data() {
 		listHelp: true,
 		openArrow: {
 			image: '/static/img/icons/arrow-gray-help.svg',
-			name: 'open',
 			height: 13,
+			name: 'open',
 		},
 		closeArrow: {
 			image: '/static/img/icons/arrow-down-gray.svg',
@@ -151,8 +154,8 @@ export default {
 	data,
 	name: 'tabs-help',
 	components: {
-		buttonImage,
 		appSlider,
+		buttonImage,
 		warranty,
 	},
 	methods: {

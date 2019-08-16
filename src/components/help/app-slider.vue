@@ -2,11 +2,11 @@
 	<transition name="fade-lateral" mode="out-in">
 		<div v-if="value" class="slider-container">
 			<div class="content-app-slider title">
-				<button 
-				class="close-btn" 
-				@click="closeSlider">
-					<img src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/left-arrow.svg" alt="" width="19px" height="13px">
-				</button>
+				<button-image
+				:data="leftArrow"
+				class="icon-close"
+				@click-image="closeSlider"
+				></button-image>
 				<span class="title-center">{{title}}</span>
 			</div>
 			<slot></slot>
@@ -15,13 +15,28 @@
 </template>
 
 <script>
+const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 
 function closeSlider() {
 	this.$emit('input', false);
 }
 
+function data() {
+	return {
+		leftArrow: {
+			image: '/static/img/icons/arrow-left-slider-help.svg',
+			name: 'arrow-left',
+			height: 13,
+		},
+	};
+}
+
 export default {
 	name: 'app-slider',
+	components: {
+		buttonImage,
+	},
+	data,
 	methods: {
 		closeSlider,
 	},
