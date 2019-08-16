@@ -53,6 +53,8 @@ export default {
 		username: '',
 	},
 	categories: [],
+	productsSelected: null,
+	totalProducts: 0,
 	warehouses: [
 		{ id: 0, name: 'Seleccione una tienda' },
 	],

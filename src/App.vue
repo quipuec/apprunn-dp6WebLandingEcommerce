@@ -483,6 +483,7 @@ input.app-input::-webkit-input-placeholder {
 		}
 	}
 }
+
 .product-tab {
 	.v-tabs__div {
 		flex: 1 1 auto;
