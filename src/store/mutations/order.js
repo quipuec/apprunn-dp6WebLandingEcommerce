@@ -22,4 +22,7 @@ export default {
 	SET_ORDER_STATUS(state, status) {
 		Vue.set(state.order, 'status', status);
 	},
+	SET_ORDER_DETAILS(state, details) {
+		Vue.set(state.order, 'details', details);
+	},
 };
