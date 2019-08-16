@@ -17,11 +17,16 @@ export default {
 
 <style lang="scss" scoped>
 .page-help-center {
-	background-color: white;
+	background-color: color(white);
 	display: flex;
 	justify-content: space-between;
 	padding: 59px 90px;
+	position: relative;
 	width: 100%;
+
+	@media (max-width: 950px) {
+		padding: 22px 19px;
+	}
 }
 
 .content-tabs-help {

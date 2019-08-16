@@ -30,6 +30,15 @@ const methods = {
 		return !arg;
 	},
 	atLeastOneTrue: (...args) => args.some(a => a),
+	find: (fn, arr) => arr.find(fn),
+	/* eslint-disable prefer-const */
+	equality: (...args) => {
+		let [prop1, prop2] = args;
+		if (!prop2) prop2 = prop1;
+		return function equalityInner(item) {
+			return typeof item === 'object' ? item[prop1] === prop2 : item === prop1;
+		};
+	},
 
 };
 export default methods;

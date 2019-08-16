@@ -1,23 +1,42 @@
 <template>
-  <div class="tabs-help">
+	<div class="tabs-help">
 		<div class="content-help">
 			<div class="w-100">
 				<div class="title-help">CENTRO DE AYUDA</div>
-				<div v-for="(help, index) in helps" :key="index">
-				<p class="title-tabs">
-					{{help.title}}
-				</p>
-				<button
-				:class="[
-				{ 'active-help' : currentHelp === item }
-				]"
-				@click="seeThisHelp(item)"
-				type="button" 
-				class="item-tabs"
-				v-for="(item, indexItem) in help.items" :key="indexItem"
-				>
-					{{item}}
-					</button>
+					<div
+					v-for="(help, index) in helps" 
+					:key="index"
+					>
+					<div class="title-tabs">
+						{{help.title}}
+						<div>
+							<button-image
+							:data="openArrow"
+							class="icon-close"
+							v-if="!help.deploy"
+							@click-image="deploy(index)"
+							></button-image>
+							<button-image
+							:data="closeArrow"
+							class="icon-close"
+							@click-image="deploy(index)"
+							v-if="help.deploy"
+							></button-image>
+						</div>
+					</div>
+					<div v-if="!help.deploy">
+						<button
+						:class="[
+						{ 'active-help' : currentHelp === item }
+						]"
+						@click="seeThisHelp(item)"
+						type="button" 
+						class="item-tabs"
+						v-for="(item, indexItem) in help.items" :key="indexItem"
+						>
+							{{item}}
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>	
@@ -26,11 +45,21 @@
 				:is="currentHelpComponent"
 			></component>
 		</div>
+		<app-slider
+		class="slider-help"
+		:title="currentHelp"
+		v-model="open">
+			<component
+			:is="currentHelpComponent"
+			></component>
+		</app-slider>
 	</div>
 </template>
 
 <script>
 const warranty = () => import('@/components/help/warranty');
+const appSlider = () => import('@/components/help/app-slider');
+const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 
 function seeThisHelp(help) {
 	const opts = {
@@ -41,13 +70,34 @@ function seeThisHelp(help) {
 	this.open = true;
 }
 
+function deploy(index) {
+	this.helps[index].deploy = !this.helps[index].deploy;
+}
 
 function data() {
 	return {
+
+		widthDesktop: 0,
+		width: 0,
+		openArrowTabs: true,
+		arrowTabs: false,
+		listHelp: true,
+		openArrow: {
+			image: '/static/img/icons/arrow-gray-help.svg',
+			height: 13,
+			name: 'open',
+		},
+		closeArrow: {
+			image: '/static/img/icons/arrow-down-gray.svg',
+			height: 13,
+			name: 'close',
+		},
 		currentHelpComponent: warranty,
 		currentHelp: '',
 		helps: [
 			{
+				id: 1,
+				deploy: false,
 				title: 'INFORMACIÓN',
 				items: [
 					'Ubicación y Horario de Trabajo',
@@ -59,6 +109,8 @@ function data() {
 				],
 			},
 			{
+				id: 2,
+				deploy: false,
 				title: 'PAGO Y ENVÍO',
 				items: [
 					'Forma de Pago',
@@ -67,6 +119,8 @@ function data() {
 				],
 			},
 			{
+				id: 3,
+				deploy: false,
 				title: 'POLÍTICAS DE LA EMPRESA',
 				items: [
 					'Política de garantía',
@@ -76,6 +130,8 @@ function data() {
 				],
 			},
 			{
+				id: 4,
+				deploy: false,
 				title: 'SERVICIO AL CLIENTE',
 				items: [
 					'Contáctenos',
@@ -95,19 +151,35 @@ export default {
 	data,
 	name: 'tabs-help',
 	components: {
+		buttonImage,
+		appSlider,
 		warranty,
 	},
 	methods: {
+		deploy,
 		seeThisHelp,
 	},
 };
 </script>
 
 <style lang="scss" scoped>
+.list-help {
+	@media (min-width: 950px) {
+		display: none;
+	}
+}
+
+.list-responsive {
+	@media (min-width: 950px) {
+		display: none;
+	}
+}
+
 .tabs-help {
 	display: flex;
 	justify-content: space-between;
 	padding: 20px;
+	width: 100%;
 }
 
 .title-help {
@@ -119,8 +191,11 @@ export default {
 }
 
 .title-tabs {
+	align-items: center;
 	border-bottom: 2px solid color(disabled);
 	color: color(dark);
+	display: flex;
+	justify-content: space-between;
 	font-family: font(bold);
 	font-size: font(medium);
 	margin-top: 22px;
@@ -139,10 +214,18 @@ export default {
 .content-components {
 	padding-left: 77px;
 	width: 75%;
+
+	@media (max-width: 950px) {
+		display: none;
+	}
 }
 
 .content-help {
 	width: 25%;
+
+	@media (max-width: 950px) {
+		width: 100%;
+	}
 }
 
 .w-100 {
@@ -150,8 +233,26 @@ export default {
 }
 
 .active-help {
-	color: #f42b17;
-	font-size: 12px;
+	color: color(primary);
 	font-family: font(bold);
+	font-size: 12px;
+}
+
+.slider-help {
+	@media (min-width: 949px) {
+		display: none;
+	}
+}
+
+.icon-close {
+	@media (min-width: 950px) {
+		display: none;
+	}
+}
+
+.list-help-desktop {
+	@media (min-width: 950px) {
+		display: block;
+	}
 }
 </style>

@@ -77,12 +77,21 @@ table, td, th {
 .title-component {
 	color: color(primary);
 	font-family: font(bold);
-	font-size: 16px;
+	font-size: size(large);
+	@media (max-width: 950px) {
+		color: color(secondary);
+		margin-top: 20px;
+	}
 }
 
 .subtitle-component {
 	color: color(dark);
 	font-family: font(demi);
+	font-size: size(medium);
+
+	@media (max-width: 950px) {
+		width: 200px;
+	}
 	font-size: size(medium);
 }
 
@@ -98,7 +107,11 @@ table, td, th {
 }
 
 .table-warranty {
-	margin-top: 35px;
+	margin-top: 15px;
 	width: 60%;
+
+	@media (max-width: 950px) {
+		width: 100%;
+	}
 }
 </style>
