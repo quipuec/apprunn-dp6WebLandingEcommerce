@@ -11,6 +11,7 @@
 			<slot></slot>
 		</span>
 		<span>{{buttonTitle}}</span>
+		<slot name="after"></slot>
 	</button>
 </template>
 <script>

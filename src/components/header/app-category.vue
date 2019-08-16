@@ -123,6 +123,7 @@ function created() {
 }
 
 function clickCategory(item) {
+	debugger;
 	this.goTo('category', { query: { id: item.id, categories: item } });
 	const windowWidth = window.innerWidth;
 	this.categories = this.categories.map((c) => {
@@ -261,7 +262,7 @@ export default {
 	.menu-list-name-category {
 		flex: 1 1 20%;
 		overflow-y: scroll;
-    max-height: 312.6px;
+		max-height: 312.6px;
 
 		@media (max-width: 764px) {
 			height: calc(100vh - 240px);

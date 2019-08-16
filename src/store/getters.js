@@ -54,6 +54,10 @@ function getCategories(state) {
 	return state.categories;
 }
 
+function totalProducts(state) {
+	return state.order.products ? state.order.products.length : 0;
+}
+
 function getDirections(state) {
 	return state.directions;
 }
@@ -80,6 +84,7 @@ const methods = {
 	user,
 	userName,
 	getCategories,
+	totalProducts,
 };
 
 export default methods;

@@ -20,11 +20,14 @@ export default {
 	order: {
 		bill: null,
 		delivery: null,
+		details: null,
 		flagBill: false,
 		flagPickUp: 1,
 		id: null,
+		list: [],
 		products: [],
 		responsible: null,
+		status: [],
 		total: null,
 	},
 	pollData: {
@@ -50,6 +53,8 @@ export default {
 		username: '',
 	},
 	categories: [],
+	productsSelected: null,
+	totalProducts: 0,
 	warehouses: [
 		{ id: 0, name: 'Seleccione una tienda' },
 	],

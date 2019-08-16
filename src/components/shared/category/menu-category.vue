@@ -1,13 +1,14 @@
 <template>
-	<div class="menu-category" v-if="close">
+	<div class="menu-category">
 		<div>
 			<section-category
 			:categories="categories"
 			@filter="filterCategory"
+			:title-category="titleCategory"
 			></section-category>
 		</div>
 		<filters-category></filters-category>
-		<button class="btn-menu-category" @click="openCategory">
+		<button class="btn-menu-category">
 			<img src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-point-to-right-(1).svg" alt="" width="15px" height="15px">
 		</button>
 	</div>
@@ -18,11 +19,7 @@ const sectionCategory = () => import('@/components/shared/category/section-categ
 const filtersCategory = () => import('@/components/shared/category/filters-category');
 
 function filterCategory() {
-	this.$emit('filter');
-}
-
-function openCategory() {
-	this.category = false;
+	this.$emit('filter', this.categories);
 }
 
 function data() {
@@ -40,11 +37,14 @@ export default {
 	},
 	methods: {
 		filterCategory,
-		openCategory,
 	},
 	props: {
 		categories: {
 			type: Array,
+			default: () => [],
+		},
+		titleCategory: {
+			type: String,
 			default: () => [],
 		},
 	},
@@ -61,8 +61,8 @@ export default {
 }
 
 .btn-menu-category {
-	left: 108%;
+	left: 107%;
 	position: absolute;
-	top: 150px;
+	top: 370px;
 }
 </style>

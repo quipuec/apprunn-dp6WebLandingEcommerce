@@ -10,7 +10,7 @@
 		<div class="container-detail-information">
 			<div class="container-detail-name">
 				<p class="product-detail-name">{{data.name}}</p>
-				<p class="product-detail-brand">{{data.warehouseProduct.brand.name}}</p>
+				<p class="product-detail-brand">{{getBrandName(data) || '--'}}</p>
 			</div>
 			<div class="d-center container-code-rating">
 				<span class="product-detail-code">#{{data.code}}</span>
@@ -34,12 +34,23 @@
 			</div>
 			<span class="text-price">{{getCurrencySymbol}} {{data.price || ''}}</span>
 		</div>
+		<product-childrens 
+			:features="features"
+			@select="selecFeature"
+			@clear="$emit('clear')"/>
+		<product-buy 
+			@click="clickQuantity"
+			@add-to-car="addToCar"
+			:number="data.quantity"/>
 	</div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import lib from '@/shared/lib';
 
 const heartComponent = () => import('@/components/shared/icons/heart-component');
+const productChildrens = () => import('@/components/products/product-childrens');
+const productBuy = () => import('@/components/products/product-buy');
 
 function stopClick() {
 	return false;
@@ -54,10 +65,39 @@ function getDiscont() {
 	return this.data.percentageDiscount * 100;
 }
 
+function selecFeature(index, value) {
+	this.$emit('select', index, value);
+}
+
+function clickQuantity(value) {
+	this.$emit('click-quantity', value);
+}
+
+function noStock() {
+	const stock = !!this.data.stock;
+	const positiveStock = this.data.stock > 0;
+	return !(stock && positiveStock);
+}
+
+function addToCar() {
+	if (!this.noStock) {
+		this.$store.dispatch('addProductToBuyCar', this.data);
+		this.goTo('buy');
+	} else {
+		this.showGenericError('Producto sin stock');
+	}
+}
+
+function getBrandName(data) {
+	return lib.getDeeper('warehouseProduct.brand.name')(data);
+}
+
 export default {
 	name: 'product-detail',
 	components: {
 		heartComponent,
+		productChildrens,
+		productBuy,
 	},
 	computed: {
 		...mapGetters([
@@ -65,15 +105,24 @@ export default {
 			'token',
 		]),
 		getDiscont,
+		noStock,
 	},
 	methods: {
-		stopClick,
+		addToCar,
 		addToFavorites,
+		clickQuantity,
+		getBrandName,
+		stopClick,
+		selecFeature,
 	},
 	props: {
 		data: {
 			type: Object,
 			default: () => {},
+		},
+		features: {
+			type: Array,
+			default: () => [],
 		},
 	},
 };
