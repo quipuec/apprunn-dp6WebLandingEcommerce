@@ -200,6 +200,7 @@ export default {
 			background-color: color(background);
 			font-size: size(small);
 			line-height: 45px;
+			overflow: hidden;
 		}
 	}
 
