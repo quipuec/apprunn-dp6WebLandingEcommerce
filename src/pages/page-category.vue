@@ -50,10 +50,10 @@
 <script>
 import { mapGetters } from 'vuex';
 
-const menuCategory = () => import('@/components/shared/category/menu-category');
-const productsSection = () => import('@/components/products/products-section');
 const appBannerTop = () => import('@/components/header/app-banner-top');
+const menuCategory = () => import('@/components/shared/category/menu-category');
 const productCard = () => import('@/components/products/product-card');
+const productsSection = () => import('@/components/products/products-section');
 
 async function loadProduct() {
 	try {
@@ -93,11 +93,6 @@ function data() {
 			image: 'descuento',
 		},
 		categoryId: null,
-		lastPage: 0,
-		listSubCategories: [],
-		listProducts: [],
-		page: 1,
-		totalPages: 5,
 		items: [
 			{
 				text: 'Resortes',
@@ -115,6 +110,11 @@ function data() {
 				href: 'breadcrumbs_link_2',
 			},
 		],
+		lastPage: 0,
+		listSubCategories: [],
+		listProducts: [],
+		page: 1,
+		totalPages: 5,
 	};
 }
 

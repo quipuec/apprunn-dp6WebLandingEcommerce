@@ -38,6 +38,8 @@ function filterSubCategory() {
 
 function data() {
 	return {
+		arrowDown: false,
+		arrowUp: false,
 		iconDown: {
 			image: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/up-arrow.svg',
 			name: 'up',
@@ -49,8 +51,6 @@ function data() {
 			height: 15,
 		},
 		openArrow: true,
-		arrowDown: false,
-		arrowUp: false,
 	};
 }
 

@@ -106,6 +106,16 @@ const asyncActions = {
 		orderDetails.createdAt = helper.formatDate(orderDetails.createdAt);
 		commit('SET_ORDER_DETAILS', orderDetails);
 	},
+	UPDATE_USER_DATA: async (state, { context, body }) => {
+		const url = 'customers-public';
+		await context.$httpSales.patch(url, body);
+		asyncActions.LOAD_USER_DATA(state, context);
+	},
+	LOAD_USER_DATA: async ({ commit }, context) => {
+		const url = 'customers/current';
+		const { data: user } = await context.$httpSales.get(url);
+		commit('setUser', user);
+	},
 };
 
 export default asyncActions;

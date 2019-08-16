@@ -123,7 +123,6 @@ function created() {
 }
 
 function clickCategory(item) {
-	debugger;
 	this.goTo('category', { query: { id: item.id, categories: item } });
 	const windowWidth = window.innerWidth;
 	this.categories = this.categories.map((c) => {

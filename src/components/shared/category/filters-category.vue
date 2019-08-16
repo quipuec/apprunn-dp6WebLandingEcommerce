@@ -67,15 +67,15 @@ const buttonImage = () => import('@/components/shared/buttons/app-button-image')
 
 
 function closeCategory() {
+	this.closeFilters = true;
 	this.contentFilters = true;
 	this.openUp = false;
-	this.closeFilters = true;
 }
 
 function openFilters() {
+	this.closeFilters = false;
 	this.contentFilters = false;
 	this.openUp = true;
-	this.closeFilters = false;
 }
 
 function data() {
@@ -100,8 +100,8 @@ export default {
 	data,
 	name: 'filters-category',
 	methods: {
-		openFilters,
 		closeCategory,
+		openFilters,
 	},
 	components: {
 		appSelect,

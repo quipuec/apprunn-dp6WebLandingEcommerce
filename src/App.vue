@@ -536,7 +536,7 @@ input.app-input::-webkit-input-placeholder {
 	.v-pagination__item {
 		box-shadow: none;
 		color: color(base) !important;
-		font-size: 12px !important;
+		font-size: size(small) !important;
 	}
 
 	.v-pagination__item--active {
@@ -562,5 +562,35 @@ input.app-input::-webkit-input-placeholder {
 	.theme--light.v-pagination .v-pagination__navigation .v-icon {
 		padding: 0 !important;
 	} 
+}	
+	.v-dialog {
+		@media screen and (max-width: 764px) {
+			margin: 0 !important;
+
+			.v-card  {
+				height: 100vh;
+			}
+		}
+	}
+
+	.v-dialog:not(.v-dialog--fullscreen) {
+		@media screen and (max-width: 764px) {
+			max-height: none !important;
+		}
+	}
+
+	.go-left-enter {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+
+	.go-left-leave-to {
+		opacity: 0;
+		transform: translateX(-100%);
+	}
+
+	.go-left-enter-active,
+	.go-left-leave-active {
+		transition: all 0.2s cubic-bezier(.32,1.09,.62,.98);
 }
 </style>

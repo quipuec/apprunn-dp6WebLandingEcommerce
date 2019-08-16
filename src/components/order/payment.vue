@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<products-buyed/>
 		<app-button
 			action='Tarjeta de crédito o débito'
 			:active="paymenMethodSelected === paymentMethodName"
@@ -16,6 +17,7 @@
 <script>
 import appButton from '@/components/shared/buttons/app-button';
 
+const productsBuyed = () => import('@/components/order/products-buyed');
 const visaPayment = () => import('@/components/order/visa-payment');
 
 function onSelect(paymentName) {
@@ -33,6 +35,7 @@ export default {
 	name: 'payment',
 	components: {
 		appButton,
+		productsBuyed,
 		visaPayment,
 	},
 	data,

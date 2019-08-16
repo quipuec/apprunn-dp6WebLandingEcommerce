@@ -15,8 +15,8 @@
 </template>
 
 <script>
-const sectionCategory = () => import('@/components/shared/category/section-category');
 const filtersCategory = () => import('@/components/shared/category/filters-category');
+const sectionCategory = () => import('@/components/shared/category/section-category');
 
 function filterCategory() {
 	this.$emit('filter', this.categories);
@@ -32,8 +32,8 @@ export default {
 	data,
 	name: 'menu-category',
 	components: {
-		sectionCategory,
 		filtersCategory,
+		sectionCategory,
 	},
 	methods: {
 		filterCategory,
