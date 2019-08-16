@@ -26,7 +26,7 @@
 					<div class="my-2 delivery-address">
 						<span v-if="flagPickUp === 1" class="label">
 							Direccion de envio: 
-							<span class="order-info-data">{{getValue('deliveryAddress.addressLine1', getOrderDetails)}}</span>
+							<span class="order-info-data">{{getValue('customerAddress.addressLine1', getOrderDetails)}}</span>
 						</span>
 						<span v-else class="label">
 							Direccion de recojo: 
@@ -50,7 +50,7 @@
 			<responsive-table
 				align-left
 				:columns="columns"
-				:rows="getOrderDetails.details"
+				:rows="details"
 			>
 				<template slot-scope="{ row }">
 					<td class="row-product">
@@ -103,6 +103,10 @@ function flagPickUp() {
 	return lib.getDeeper('flagPickUp')(this.getOrderDetails);
 }
 
+function details() {
+	return lib.getDeeper('details')(this.getOrderDetails);
+}
+
 function data() {
 	return {
 		columns: [
@@ -129,6 +133,7 @@ export default {
 			'getOrderDetails',
 		]),
 		backgroundColor,
+		details,
 		flagPickUp,
 	},
 	created,
