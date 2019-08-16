@@ -1,6 +1,11 @@
 <template>
 	<div class="buy-container">
-		<div v-if="stepThree">Resumen de orden - Header</div>
+		<div v-if="stepThree" class="summary">
+			<summary-in-payment
+				:delivery="{}"
+				:billing="{}"
+			/>
+		</div>
 		<div class="buy-layout">
 			<section class="big">
 				<div v-if="stepOneAndTwo">
@@ -36,6 +41,7 @@ import { mapGetters } from 'vuex';
 const appButton = () => import('@/components/shared/buttons/app-button');
 const productInCar = () => import('@/components/products/product-in-car');
 const summaryOrder = () => import('@/components/order/summary-order');
+const summaryInPayment = () => import('@/components/order/summary-in-payment');
 
 function stepOneAndTwo() {
 	const step = lib.getDeeper('meta.step')(this.$route);
@@ -52,6 +58,7 @@ export default {
 		appButton,
 		productInCar,
 		summaryOrder,
+		summaryInPayment,
 	},
 	computed: {
 		...mapGetters([
@@ -144,5 +151,10 @@ export default {
 		@media (max-width: 600px) {
 			width: 190px !important;
 		}
+	}
+
+	.summary {
+		border-bottom: 3px solid color(primary);
+		padding: 30px 0;
 	}
 </style>
