@@ -23,8 +23,10 @@ export default {
 		flagBill: false,
 		flagPickUp: 1,
 		id: null,
+		list: [],
 		products: [],
 		responsible: null,
+		status: [],
 		total: null,
 	},
 	pollData: {

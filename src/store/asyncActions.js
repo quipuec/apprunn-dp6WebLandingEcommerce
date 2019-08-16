@@ -1,8 +1,11 @@
+import lib from '@/shared/lib';
+import helper from '@/shared/helper';
+
 const asyncActions = {
 	LOAD_PRODUCTS: async ({ commit, state }, { context }) => {
 		const { params } = state.products;
 		const request = [];
-		if (context.$store.state.token) {
+		if (state.token) {
 			request.push(context.$httpProducts.get('products/favorites', { params }));
 		} else {
 			request.push(context.$httpProducts.get('products-public', { params }));
@@ -10,12 +13,12 @@ const asyncActions = {
 		const [{ data: products }] = await Promise.all(request);
 		commit('SET_PRODUCTS', products);
 	},
-	SET_FAVORITE_FLAG: async ({ commit }, { context, product }) => {
+	SET_FAVORITE_FLAG: async ({ commit, state }, { context, product }) => {
 		const url = `products/favorite/${product.id}`;
 		const body = {
 			isFavorite: !product.flagFavorite,
 		};
-		if (context.$store.state.token) {
+		if (state.token) {
 			await context.$httpProducts.post(url, body);
 		} else {
 			const message = {
@@ -83,6 +86,19 @@ const asyncActions = {
 	},
 	DELETE_ADDRESS: async (state, { context, id }) => {
 		await context.$httpSales.delete(`customers-address/${id}`);
+	},
+	LOAD_ORDERS_STATUS: async ({ commit }, context) => {
+		const { data: orderStatus } = await context.$httpSales.get('order-states');
+		commit('SET_ORDER_STATUS', orderStatus);
+	},
+	LOAD_ORDERS: async ({ commit }, { context, params, orderStatusId }) => {
+		const url = `orders?orderStateId=${orderStatusId}`;
+		const { data: orders, headers } = await context.$httpSales.get(url, { params });
+		const setUpDateInOrders = orders.map(
+			lib.setNewProperty('createdAt', ({ createdAt }) => helper.formatDate(createdAt)),
+		);
+		commit('SET_ORDERS', setUpDateInOrders);
+		return Number(headers['x-last-page']);
 	},
 };
 

@@ -16,4 +16,10 @@ export default {
 	SET_BILLING_INFO(state, billData) {
 		Vue.set(state.order, 'bill', billData);
 	},
+	SET_ORDERS(state, orders) {
+		Vue.set(state.order, 'list', orders);
+	},
+	SET_ORDER_STATUS(state, status) {
+		Vue.set(state.order, 'status', status);
+	},
 };
