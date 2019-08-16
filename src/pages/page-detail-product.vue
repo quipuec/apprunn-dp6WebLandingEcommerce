@@ -80,14 +80,15 @@ async function loadData() {
 					name: feature.value,
 					active: false,
 					possible: false,
-					disabled: false,
+					disabled: true,
 					code: feature.code,
 				};
 				acum[index].values.push(value);
 			}
 		} else {
+			const featerFather = this.product.features.filter(p => p.name === feature.name);
 			acum.push({ name: feature.name,
-				value: 'PADRE',
+				value: featerFather[0].code,
 				values: [
 					{ name: feature.name,
 						active: false,
@@ -98,7 +99,7 @@ async function loadData() {
 					{ name: feature.value,
 						active: false,
 						possible: false,
-						disabled: false,
+						disabled: true,
 						code: feature.code,
 					},
 				],
@@ -233,6 +234,7 @@ function data() {
 		productsFilter: [],
 		productFather: {},
 		disabledBtn: false,
+		featuresFather: [],
 		tabs: [],
 	};
 }
