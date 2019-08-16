@@ -5,6 +5,7 @@
 			<responsive-table
 				:columns="columns"
 				:rows="getOrders"
+				:page="params.page"
 				:pages="lastPage"
 				@page-changed="changePage"
 			>
@@ -56,12 +57,13 @@ function getValue(route, order) {
 
 
 function changePage(page) {
-	this.params.page = page;
 	this.loadOrders(this.orderStatusId);
+	this.params.page = page;
 }
 
 function statusChanged(id) {
 	this.orderStatusId = id;
+	this.params.page = 1;
 	this.loadOrders(this.orderStatusId);
 }
 
