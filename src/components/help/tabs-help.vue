@@ -89,8 +89,8 @@ function data() {
 		},
 		closeArrow: {
 			image: '/static/img/icons/arrow-down-gray.svg',
-			name: 'close',
 			height: 13,
+			name: 'close',
 		},
 		currentHelpComponent: warranty,
 		currentHelp: '',

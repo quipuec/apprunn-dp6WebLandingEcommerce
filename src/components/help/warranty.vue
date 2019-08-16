@@ -77,10 +77,9 @@ table, td, th {
 .title-component {
 	color: color(primary);
 	font-family: font(bold);
-	font-size: 16px;
+	font-size: size(large);
 	@media (max-width: 950px) {
 		color: color(secondary);
-		font-size: 16px;
 		margin-top: 20px;
 	}
 }
@@ -88,7 +87,7 @@ table, td, th {
 .subtitle-component {
 	color: color(dark);
 	font-family: font(demi);
-	font-size: 14px;
+	font-size: size(medium);
 
 	@media (max-width: 950px) {
 		width: 200px;
