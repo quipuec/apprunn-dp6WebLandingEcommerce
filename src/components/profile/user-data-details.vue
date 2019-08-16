@@ -3,57 +3,118 @@
 		<div class="col">
 			<p>
 				<span class="label">Nombre:</span>
-				<span class="user-content">Manuel</span>
+				<span class="user-content">{{user.name}}</span>
 			</p>
 			<p>
 				<span class="label">Apellidos:</span>
-				<span class="user-content">Amado</span>
+				<span class="user-content">{{user.lastname}}</span>
 			</p>
 			<p>
 				<span class="label">Género:</span>
-				<span class="user-content">M</span>
+				<span class="user-content">{{getGenderName(user.gender)}}</span>
 			</p>
 			<p>
-				<span class="label">Departamento:</span>
-				<span class="user-content">Lima</span>
+				<span class="label">Teléfono:</span>
+				<span class="user-content">{{getValue('phone', user)}}</span>
 			</p>
 			<p>
-				<span class="label">Distrito:</span>
-				<span class="user-content">Lima</span>
+				<span class="label">Provincia:</span>
+				<span class="user-content">{{provinceHandler()}}</span>
+			</p>
+			<p>
+				<span class="label">Correo:</span>
+				<span class="user-content">{{getValue('email', user)}}</span>
 			</p>
 		</div>
 		<div class="col">
 			<p>
 				<span class="label">DNI:</span>
-				<span class="user-content">45667890</span>
+				<span class="user-content">{{getValue('typePerson.documentNumber', user)}}</span>
 			</p>
 			<p>
 				<span class="label">RUC:</span>
-				<span class="user-content">10145667890</span>
+				<span class="user-content">{{getValue('ruc', user)}}</span>
 			</p>
 			<p>
 				<span class="label">Código postal:</span>
-				<span class="user-content">Lima 34</span>
+				<span class="user-content">{{getValue('postalCode', user)}}</span>
 			</p>
 			<p>
-				<span class="label">Teléfono:</span>
-				<span class="user-content">999-333-222</span>
+				<span class="label">Departamento:</span>
+				<span class="user-content">{{departmentsHandler()}}</span>
 			</p>
 			<p>
-				<span class="label">Correo:</span>
-				<span class="user-content">x@mail.com</span>
+				<span class="label">Distrito:</span>
+				<span class="user-content">{{districtsHandler()}}</span>
 			</p>
 		</div>
 	</section>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+import lib from '@/shared/lib';
+
+function getGenderName(id) {
+	const { title } = lib.find(lib.equality('id', id), this.genders);
+	return title;
+}
+
+function getValue(route, user) {
+	return lib.getDeeper(route)(user);
+}
+
+function departmentsHandler() {
+	if (lib.isEmpty(this.departments)) {
+		return '--';
+	}
+	const { name } = lib.find(lib.equality('id', this.user.provinceId), this.departments);
+	return name;
+}
+
+function districtsHandler() {
+	if (lib.isEmpty(this.districts)) {
+		return '--';
+	}
+	const { name } = lib.find(lib.equality('id', this.user.parishId), this.districts);
+	return name;
+}
+
+function provinceHandler() {
+	if (lib.isEmpty(this.provinces)) {
+		return '--';
+	}
+	const { name } = lib.find(lib.equality('id', this.user.cityId), this.provinces);
+	return name;
+}
+
 export default {
 	name: 'user-data-details',
+	computed: {
+		...mapGetters([
+			'departments',
+			'districts',
+			'genders',
+			'provinces',
+			'user',
+		]),
+	},
+	methods: {
+		departmentsHandler,
+		districtsHandler,
+		getGenderName,
+		getValue,
+		provinceHandler,
+	},
+	watch: {
+		departments: departmentsHandler,
+		districts: districtsHandler,
+		provinces: provinceHandler,
+	},
 };
 </script>
 <style lang="scss" scoped>
 	.info-container {
-		align-items: center;
+		align-items: flex-start;
 		display: grid;
 		font-family: font(medium);
 		grid-column-gap: 50px;
