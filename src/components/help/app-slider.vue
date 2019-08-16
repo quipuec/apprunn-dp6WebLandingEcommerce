@@ -25,8 +25,8 @@ function data() {
 	return {
 		leftArrow: {
 			image: '/static/img/icons/arrow-left-slider-help.svg',
-			name: 'arrow-left',
 			height: 13,
+			name: 'arrow-left',
 		},
 	};
 }
@@ -58,8 +58,8 @@ export default {
 	left: 0;
 	padding: 25px 36px;
 	position: absolute;
-	top: 0;
 	right: 0;
+	top: 0;
 	width: 100%;
 	z-index: 99;
 

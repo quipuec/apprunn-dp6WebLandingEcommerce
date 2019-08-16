@@ -32,7 +32,7 @@
 							]"
 							@click-image="seeThisHelp(item)"
 							class="item-tabs"
-							:name="item"
+							:title="item"
 							/>
 						</div>
 					</div>

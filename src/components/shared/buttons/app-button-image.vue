@@ -9,7 +9,7 @@
 			:alt="data.name"
 			:height="data.height || 20" 
 		>
-		{{name}}
+		{{title}}
 	</button>
 </template>
 <script>
@@ -28,7 +28,7 @@ export default {
 			type: Object,
 			default: () => {},
 		},
-		name: {
+		title: {
 			type: String,
 			default: '',
 		},
