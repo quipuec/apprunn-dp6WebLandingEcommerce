@@ -15,7 +15,8 @@
 				@open-dialog="openDialog"
 				/>
 		</div>
-		<div>
+		<div class="detail-tab-publicity">
+			<product-publicity class="container-publicity desktop"/>	
 			<product-tab 
 				class="container-product-tab"
 				:tabs="tabs"
@@ -30,6 +31,11 @@
 				v-if="relateds.length"
 			/>
 		</div>
+		<product-publicity class="container-publicity mobile"/>
+		<app-banner-top 
+			:data="bannerTop"
+			:color="globalColors.secondary"
+			big/>
 		<warehouses-modal 
 			:dialog="dialogWarehouses"
 			:rows="warehouses"
@@ -39,11 +45,13 @@
 <script>
 import { mapGetters } from 'vuex';
 
+const appBannerTop = () => import('@/components/header/app-banner-top');
 const productView = () => import('@/components/products/product-view');
 const productDetail = () => import('@/components/products/product-detail');
 const productTab = () => import('@/components/products/product-tab');
 const productRelated = () => import('@/components/products/product-related');
 const warehousesModal = () => import('@/components/products/warehouses-modal');
+const productPublicity = () => import('@/components/products/product-publicity');
 
 function created() {
 	this.loadData();
@@ -184,9 +192,6 @@ function possibleFeature(possibles) {
 		});
 		this.assignProduct(this.productsFilter[0]);
 		this.disabledBtn = false;
-	} else {
-		this.assignProduct(this.productSelect);
-		this.disabledBtn = true;
 	}
 }
 
@@ -272,6 +277,10 @@ function data() {
 		cities: [],
 		warehouses: [],
 		tabs: [],
+		bannerTop: {
+			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
+			image: 'descuento',
+		},
 	};
 }
 
@@ -279,8 +288,10 @@ export default {
 	name: 'page-detail-product',
 	created,
 	components: {
-		productView,
+		appBannerTop,
 		productDetail,
+		productPublicity,
+		productView,
 		productTab,
 		productRelated,
 		warehousesModal,
@@ -350,10 +361,35 @@ export default {
 	}
 
 	.container-product-tab {
-		width: 65%;
-		
-		@media screen and (max-width: 996px) {
-			width: 100%;
+		flex: 1 1 70%;
+	}
+
+	.container-publicity {
+		flex: 1 1 30%;
+		margin-right: 29px;
+	}
+
+	.detail-tab-publicity {
+		display: flex;
+		justify-content: space-between;
+		padding: 0 3%;
+
+		@media screen and (max-width: 764px) {
+			flex-direction: column;
+			padding: 0;
+		}
+	}
+
+	.mobile {
+		display: none;
+		@media screen and (max-width: 764px) {
+			display: block;
+		}
+	}
+
+	.desktop {
+		@media screen and (max-width: 764px) {
+			display: none;
 		}
 	}
 </style>
