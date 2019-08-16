@@ -52,7 +52,7 @@ export default {
 	}
 
 	.select-feature {
-		width: 45%;
 		margin-bottom: 22px;
+		width: 45%;
 	}
 </style>
