@@ -91,6 +91,10 @@ export default {
 .swiper-filter {
 	margin: auto;
 	width: 85%;
+
+	@media (max-width: 950px) {
+		width: 90%;
+	}
 }
 </style>
 

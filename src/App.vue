@@ -407,7 +407,8 @@ input.app-input::-webkit-input-placeholder {
 		right: 0;
 
 		@media (max-width: 650px) {
-			right: 15px;
+			outline: none;
+			right: -6px;
 		}
 	}
 
@@ -417,7 +418,8 @@ input.app-input::-webkit-input-placeholder {
 		position: absolute;
 		
 		@media (max-width: 650px) {
-			left: 15px;
+			left: -6px;
+			outline: none;
 		}
 	}
 }

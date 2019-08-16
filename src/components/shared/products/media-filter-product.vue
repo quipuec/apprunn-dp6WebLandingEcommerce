@@ -30,6 +30,7 @@ export default {
 	font-size: size(medium);
 	margin-bottom: 0;
 	padding-left: 7px;
+	width: 80px;
 	&:hover {
 		border-radius: 3px;
 		font-family: font(bold);
