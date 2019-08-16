@@ -35,7 +35,12 @@ export default {
 		border-radius: 8px;
 		border: solid 1px color(border);
 		font-family: font(bold);
+		margin-bottom: 70px;
 		padding: 27px 92px 27px 55px;
+
+		@media (max-width: 600px) {
+			padding: 27px 20px 26px 21px;
+		}
 	}
 
 	.grid-product {
@@ -44,20 +49,43 @@ export default {
     	grid-column-gap: 40px;
 		grid-template-columns: 1fr 90px 0.5fr;
 		transform: translateX(15px);
+
+		@media (max-width: 600px) {
+			grid-column-gap: 0px;
+			grid-row-gap: 10px;
+			transform: translateX(0px);
+		}
 	}
 
 	.product-total {
 		color: color(secondary);
 		font-size: size(large);
+
+		@media (max-width: 600px) {
+			color: color(primary);
+			grid-column: 2/4;
+			grid-row: 2;
+			text-align: right;
+		}
 	}
 
 	.product-name {
 		color: color(dark);
+
+		@media (max-width: 600px) {
+			grid-column: 1/4;
+			grid-row: 1;
+		}
 	}
 
 	.product-quantity {
 		color: color(dark);
 		font-family: font(medium);
+
+		@media (max-width: 600px) {
+			grid-column: 1/2;
+			grid-row: 2;
+		}
 	}
 
 	.list {

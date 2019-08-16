@@ -155,6 +155,7 @@ export default {
 
 	.summary {
 		border-bottom: 3px solid color(primary);
+		margin-bottom: 30px;
 		padding: 30px 0;
 	}
 </style>
