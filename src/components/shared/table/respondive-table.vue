@@ -13,7 +13,11 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr v-for="row in rows" :key="row.id" class="grid-system">
+			<tr 
+				v-for="row in rows" :key="row.id" 
+				class="grid-system"
+				:class="{'auto': auto}"
+				>
 				<slot v-bind:row="row"></slot>
 			</tr>
 		</tbody>
@@ -48,6 +52,7 @@
 <script>
 
 function created() {
+	this.currentPage = this.page;
 	this.arrPageRange = Array.from({ length: this.pageRange }, (el, i) => i + 1);
 }
 
@@ -76,16 +81,16 @@ function initialPagination() {
 	return [].concat(this.arrPageRange, '...', this.pages);
 }
 
-function changePage(page) {
-	if (page === '...') {
+function changePage(newPage) {
+	if (newPage === '...') {
 		this.nextRange(this.currentPage, 1);
 	} else {
-		if (page < 1) {
+		if (newPage < 1) {
 			this.currentPage = 1;
-		} else if (page > this.pages) {
+		} else if (newPage > this.pages) {
 			this.currentPage = this.pages;
 		} else {
-			this.currentPage = page;
+			this.currentPage = newPage;
 		}
 		this.$emit('page-changed', this.currentPage);
 	}
@@ -99,6 +104,12 @@ function nextRange(currentPage, n) {
 		this.currentPage = arr[0];
 	}
 	return [].concat(arr, '...', this.pages);
+}
+
+function page(newPage, oldPage) {
+	if (newPage !== oldPage) {
+		this.currentPage = newPage;
+	}
 }
 
 function data() {
@@ -132,6 +143,10 @@ export default {
 			default: () => [],
 			type: Array,
 		},
+		page: {
+			default: 1,
+			type: Number,
+		},
 		pages: {
 			default: 0,
 			type: [Number, String],
@@ -140,6 +155,13 @@ export default {
 			default: () => [],
 			type: Array,
 		},
+		auto: {
+			default: false,
+			type: Boolean,
+		},
+	},
+	watch: {
+		page,
 	},
 };
 </script>
@@ -211,6 +233,10 @@ export default {
 			align-items: center;
 			display: grid;
 			grid-template-columns: repeat(auto-fit, minmax(20px, 1fr));
+		}
+
+		&.auto{
+			border-bottom: 1px solid color(border);
 		}
 	}
 

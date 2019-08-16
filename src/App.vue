@@ -140,7 +140,6 @@ html, body {
 	color: color(black) !important;
 	font-family: font(regular) !important;
 	font-size: size(medium);
-	overflow-x: auto;
 }
 
 input[type='number']::-webkit-inner-spin-button,
@@ -406,7 +405,8 @@ input.app-input::-webkit-input-placeholder {
 		right: 0;
 
 		@media (max-width: 650px) {
-			right: 15px;
+			outline: none;
+			right: -6px;
 		}
 	}
 
@@ -416,7 +416,8 @@ input.app-input::-webkit-input-placeholder {
 		position: absolute;
 		
 		@media (max-width: 650px) {
-			left: 15px;
+			left: -6px;
+			outline: none;
 		}
 	}
 }
@@ -482,6 +483,7 @@ input.app-input::-webkit-input-placeholder {
 		}
 	}
 }
+
 .product-tab {
 	.v-tabs__div {
 		flex: 1 1 auto;
@@ -523,5 +525,36 @@ input.app-input::-webkit-input-placeholder {
 		font-family: font(demi) !important;
 		font-size: size(medium) !important;
 	}
+}
+
+	.v-dialog {
+		@media screen and (max-width: 764px) {
+			margin: 0 !important;
+
+			.v-card  {
+				height: 100vh;
+			}
+		}
+	}
+
+	.v-dialog:not(.v-dialog--fullscreen) {
+		@media screen and (max-width: 764px) {
+			max-height: none !important;
+		}
+	}
+
+	.go-left-enter {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+
+	.go-left-leave-to {
+		opacity: 0;
+		transform: translateX(-100%);
+	}
+
+	.go-left-enter-active,
+	.go-left-leave-active {
+		transition: all 0.2s cubic-bezier(.32,1.09,.62,.98);
 }
 </style>

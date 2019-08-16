@@ -54,6 +54,10 @@ function getCategories(state) {
 	return state.categories;
 }
 
+function totalProducts(state) {
+	return state.order.products ? state.order.products.length : 0;
+}
+
 function getDirections(state) {
 	return state.directions;
 }
@@ -62,8 +66,13 @@ function getWarehouses(state) {
 	return state.warehouses;
 }
 
+function genders(state) {
+	return state.genders;
+}
+
 const methods = {
 	companyLogo,
+	genders,
 	getDirections,
 	getCurrencySymbol,
 	getProducts,
@@ -80,6 +89,7 @@ const methods = {
 	user,
 	userName,
 	getCategories,
+	totalProducts,
 };
 
 export default methods;
