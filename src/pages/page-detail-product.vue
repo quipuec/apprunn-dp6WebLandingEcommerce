@@ -106,7 +106,7 @@ async function loadData() {
 					{ name: feature.value,
 						active: false,
 						possible: false,
-						disabled:	false,
+						disabled: false,
 						code: feature.code,
 					},
 				],
