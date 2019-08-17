@@ -60,6 +60,7 @@ export default {
 	.product-total {
 		color: color(secondary);
 		font-size: size(large);
+		text-align: center;
 
 		@media (max-width: 600px) {
 			color: color(primary);
