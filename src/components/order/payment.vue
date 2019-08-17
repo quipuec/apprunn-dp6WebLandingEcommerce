@@ -47,7 +47,7 @@ function data() {
 			{ id: 2, paymentMethodName: 'depositPayment', title: 'Banca por internet o depósito' },
 			{ id: 3, paymentMethodName: 'recievedPayment', title: 'Paga tu compra al recibir' },
 		],
-		paymenMethodSelected: '',
+		paymenMethodSelected: 'depositPayment',
 	};
 }
 

@@ -8,7 +8,7 @@
 		</div>
 		<div class="buy-layout">
 			<section class="big">
-				<div v-if="stepOneAndTwo">
+				<div v-if="stepOneAndTwo" class="mb-5">
 					<product-in-car v-for="product in getProductToBuy" :key="product.id" :product="product"/>
 					<div class="footter-products-buy">
 						<app-button

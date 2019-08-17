@@ -14,7 +14,7 @@
 				<p class="summary-amount-container separate">
 					<span>Envío</span><span class="summary-amount">{{shippingCost}}</span>
 				</p>
-				<p class="summary-amount-container separate shipping">
+				<p class="summary-amount-container separate shipping" v-if="stepThree">
 					<button
 						type="button"
 						class="shipping-cost"
@@ -30,7 +30,7 @@
 		</section>
 		<section class="btns-summary-order">
 			<app-button
-				v-if="!getOrderId"
+				v-if="getOrderId"
 				action="Pasar a caja"
 				class="btn-order"
 				:background="globalColors.primary"
@@ -38,17 +38,19 @@
 				@click="makeOrder"
 			/>
 			<app-button
-				v-else action='Pagar'
+				v-else
+				action='Pagar'
 				class="btn-order"
 				:background="globalColors.primary"
-				@click="goTo('buy-payment')"
+				@click="goTo('buy-delivery')"
 			/>
 		</section>
 	</div>
 </template>
 <script>
-import appButton from '@/components/shared/buttons/app-button';
 import { mapGetters } from 'vuex';
+import appButton from '@/components/shared/buttons/app-button';
+import lib from '@/shared/lib';
 
 function total() {
 	return (this.getTotalToBuy - this.discount) + this.shippingCost;
@@ -106,6 +108,10 @@ function buildBody() {
 	};
 }
 
+function stepThree() {
+	return lib.getDeeper('meta.step')(this.$route) === 3;
+}
+
 function data() {
 	return {
 		discount: 0,
@@ -125,6 +131,7 @@ export default {
 			'getTotalToBuy',
 			'invalidOrder',
 		]),
+		stepThree,
 		total,
 	},
 	data,
