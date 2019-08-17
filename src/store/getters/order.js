@@ -43,6 +43,9 @@ const getters = {
 	getOrderDetails(state) {
 		return state.order.details;
 	},
+	getResponsible(state) {
+		return state.order.responsible;
+	},
 };
 
 export default getters;

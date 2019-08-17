@@ -30,19 +30,19 @@
 		</section>
 		<section class="btns-summary-order">
 			<app-button
-				v-if="getOrderId"
+				v-if="stepOne"
+				action='Pagar'
+				class="btn-order"
+				:background="globalColors.primary"
+				@click="goTo('buy-delivery')"
+			/>
+			<app-button
+				v-else-if="stepTwo"
 				action="Pasar a caja"
 				class="btn-order"
 				:background="globalColors.primary"
 				:disabled="invalidOrder"
 				@click="makeOrder"
-			/>
-			<app-button
-				v-else
-				action='Pagar'
-				class="btn-order"
-				:background="globalColors.primary"
-				@click="goTo('buy-delivery')"
 			/>
 		</section>
 	</div>
@@ -64,39 +64,14 @@ function makeOrder() {
 
 function buildBody() {
 	return {
-		flagKardex: 1,
-		flagPickUp: 2,
+		flagPickUp: this.getFlagPickUp,
 		paymentStateId: 1,
-		comments: 'Comment created by a test',
-		additionalInfo: null,
-		warehouseId: 493,
-		warehouseName: 'Lima',
-		warehouseAddress: '',
-		deliveryAddress: null,
-		responsiblePickUp: {
-			name: 'Celso Espinoza',
-			dni: '44556677',
-			phone: '998877665',
-			email: 'espinoza.arce13@gmail.com',
-		},
-		details: [
-			{
-				productId: 1,
-				discount: 0,
-				quantity: 10,
-				salePrice: 20,
-				warehouseId: 493,
-				warehouseName: 'nombre del almacen',
-			},
-			{
-				productId: 2,
-				discount: 0,
-				quantity: 15,
-				salePrice: 5,
-				warehouseId: 493,
-				warehouseName: 'nombre del almacen',
-			},
-		],
+		warehouseId: process.env.WAREHOUSE_ID,
+		warehouseName: process.env.WAREHOUSE_NAME,
+		warehouseAddress: process.env.WAREHOUSE_ADDRESS,
+		deliveryAddress: this.getDeliveryAddress,
+		responsiblePickUp: this.getResponsible,
+		details: this.getOrderDetails,
 		customerAddress: {
 			type: 1,
 			name: 'Mansión en Palo Alto',
@@ -110,6 +85,14 @@ function buildBody() {
 
 function stepThree() {
 	return lib.getDeeper('meta.step')(this.$route) === 3;
+}
+
+function stepOne() {
+	return lib.getDeeper('meta.step')(this.$route) === 1;
+}
+
+function stepTwo() {
+	return lib.getDeeper('meta.step')(this.$route) === 2;
 }
 
 function data() {
@@ -126,12 +109,18 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getDeliveryAddress',
+			'getFlagPickUp',
 			'getOrderId',
+			'getOrderDetails',
 			'getProductsToBuy',
+			'getResponsible',
 			'getTotalToBuy',
 			'invalidOrder',
 		]),
+		stepOne,
 		stepThree,
+		stepTwo,
 		total,
 	},
 	data,

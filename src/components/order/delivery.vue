@@ -1,5 +1,9 @@
 <template>
-	<div>
+	<div class="main-container-delivery">
+		<div class="section-title">
+			<img :src="logo.section" alt="logo del método de pago">
+			<h2 class="payment-section-title">¿COMÓ QUIERES RECIBIR TU PRODUCTO?</h2>
+		</div>
 		<section class="delivery">
 			<app-button-order
 				button-title="Envío a Domicilio"
@@ -178,6 +182,9 @@ function handlerDirectionsChange(newDirections) {
 function data() {
 	return {
 		favoriteDirection: {},
+		logo: {
+			section: '/static/icons/delivery-truck.svg',
+		},
 		selectedDirection: {
 			id: 0,
 			addressLine1: '',
@@ -268,5 +275,22 @@ export default {
 	.billing-section {
 		margin-top: 50px;
 	}
-</style>
 
+	.payment-section-title {
+		font-size: size(large);
+		font-family: font(bold);
+		margin-left: 12px;
+		text-transform: uppercase;
+	}
+
+	.section-title {
+		align-items: baseline;
+		display: flex;
+		justify-content: flex-start;
+		margin-bottom: 40px;
+	}
+
+	.main-container-delivery {
+		margin-top: 60px;
+	}
+</style>
