@@ -1,15 +1,15 @@
 <template>
 	<div class="summary-main-container">
-		<div class="summary-grid" name="delivery" v-if="isNotEmptyDelivery">
+		<div class="summary-grid" name="delivery">
 			<img :src="iconSvg.location" alt="ícono de localización">
 			<div class="summary-content-delivery">
-				<h4 class="summary-title">Envío a domicilio</h4>
+				<h4 class="summary-title">{{pickUpName}}</h4>
 				<span class="">
-					<span>mariana, Ramirez</span>
-					<span class="mx-3">DNI: 79183783</span>
-					<span>Teléfono: 970127070</span>
+					<span>{{getResponsibleName}}</span>
+					<span class="mx-3">DNI: {{getDni}}</span>
+					<span>Teléfono: {{getPhone}}</span>
 				</span>
-				<span>Dirección: Calle independencia 120 - Miraflores - Lima, Perú</span>
+				<span>Dirección: {{getDirection}}</span>
 			</div>
 		</div>
 		<div class="summary-grid" name="billing" v-if="isNotEmptyBilling">
@@ -23,17 +23,46 @@
 				<span>Domicilio fiscal: Calle independencia 120 - Miraflores - Lima, Perú</span>
 			</div>
 		</div>
+		<div class="summary-grid" name="billing" v-if="stepFour">
+			<img :src="iconSvg.pay" alt="ícono de factura">
+			<div class="summary-content">
+				<h4 class="summary-title">Método de pago</h4>
+				<span></span>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
 import lib from '@/shared/lib';
+import { mapGetters } from 'vuex';
 
 function isNotEmptyBilling() {
-	return !(lib.isEmpty(this.billing));
+	const dataBill = lib.getDeeper('dataBill')(this.getOrderInfo);
+	return !(lib.isEmpty(dataBill));
 }
 
-function isNotEmptyDelivery() {
-	return !(lib.isEmpty(this.delivery));
+function pickUpName() {
+	return lib.getDeeper('pickUpName')(this.getOrderInfo);
+}
+
+function getResponsibleName() {
+	return lib.getDeeper('responsiblePickUp.name')(this.getOrderInfo);
+}
+
+function getDni() {
+	return lib.getDeeper('responsiblePickUp.dni')(this.getOrderInfo);
+}
+
+function getPhone() {
+	return lib.getDeeper('responsiblePickUp.phone')(this.getOrderInfo);
+}
+
+function getDirection() {
+	return lib.getDeeper('deliveryAddress.addressLine1')(this.getOrderInfo);
+}
+
+function stepFour() {
+	return this.$route.meta.step === 4;
 }
 
 function data() {
@@ -41,6 +70,7 @@ function data() {
 		iconSvg: {
 			location: '/static/icons/red-localization.svg',
 			bill: '/static/icons/red-bill.svg',
+			pay: '/static/icons/pay.svg',
 		},
 	};
 }
@@ -48,20 +78,18 @@ function data() {
 export default {
 	name: 'summary-in-payment',
 	computed: {
+		...mapGetters([
+			'getOrderInfo',
+		]),
+		getDirection,
+		getDni,
+		getPhone,
+		getResponsibleName,
 		isNotEmptyBilling,
-		isNotEmptyDelivery,
+		pickUpName,
+		stepFour,
 	},
 	data,
-	props: {
-		delivery: {
-			default: () => {},
-			type: Object,
-		},
-		billing: {
-			default: () => {},
-			type: Object,
-		},
-	},
 };
 </script>
 <style lang="scss" scoped>

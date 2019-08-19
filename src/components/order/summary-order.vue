@@ -6,13 +6,13 @@
 			</div>
 			<div class="summary-amounts">
 				<p class="summary-amount-container separate">
-					<span>Subtotal</span><span class="summary-amount">{{getTotalToBuy}}</span>
+					<span>Subtotal</span><span class="summary-amount">{{getCurrencySymbol}}. {{getTotalToBuy}}</span>
 				</p>
 				<p class="summary-amount-container separate">
-					<span>Descuento</span><span class="summary-amount">{{discount}}</span>
+					<span>Descuento</span><span class="summary-amount">{{getCurrencySymbol}}. {{discount}}</span>
 				</p>
 				<p class="summary-amount-container separate">
-					<span>Envío</span><span class="summary-amount">{{shippingCost}}</span>
+					<span>Envío</span><span class="summary-amount">{{getCurrencySymbol}}. {{shippingCost}}</span>
 				</p>
 				<p class="summary-amount-container separate shipping" v-if="stepThree">
 					<button
@@ -24,7 +24,7 @@
 					</button>
 				</p>
 				<p class="summary-amount-container total">
-					<span>Total</span><span class="summary-total">{{total}}</span>
+					<span>Total</span><span class="summary-total">{{getCurrencySymbol}}. {{total}}</span>
 				</p>
 			</div>
 		</section>
@@ -45,7 +45,7 @@
 				@click="makeOrder(false)"
 			/>
 			<app-button
-				v-else
+				v-else-if="stepThree"
 				action="Pagar"
 				class="btn-order"
 				:background="globalColors.primary"
@@ -73,6 +73,7 @@ async function makeOrder(flagFinish) {
 	await this.$store.dispatch(dispatchName, dispatchObj);
 	if (flagFinish) {
 		this.goTo('buy-summary');
+		this.$store.commit('EMPTY_CAR');
 	} else {
 		this.goTo('buy-payment');
 	}
@@ -193,6 +194,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getBillingData',
+			'getCurrencySymbol',
 			'getCustomerAddress',
 			'getCustomerAddressId',
 			'getDeliveryAddress',

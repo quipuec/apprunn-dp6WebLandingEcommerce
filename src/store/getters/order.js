@@ -18,7 +18,9 @@ const getters = {
 		return state.order.id;
 	},
 	getTotalToBuy(state) {
-		return state.order.products.reduce(
+		const { products, order } = state.order;
+		const newProducts = order ? order.details : products;
+		return newProducts.reduce(
 			(acc, { priceDiscount, salePrice, quantity }) =>
 				twoDecimals((priceDiscount || salePrice) * quantity) + acc, 0);
 	},
@@ -48,7 +50,9 @@ const getters = {
 		return state.order.status;
 	},
 	getOrderDetails(state) {
-		return state.order.products;
+		const { products, order } = state.order;
+		const newProducts = order ? order.details : products;
+		return newProducts;
 	},
 	getResponsible(state) {
 		return state.order.responsible;
@@ -76,6 +80,9 @@ const getters = {
 	},
 	getFlagStatusOrder(state) {
 		return state.order.flagStatusOrder;
+	},
+	getWaysPayments(state) {
+		return state.order.waysPayments;
 	},
 };
 

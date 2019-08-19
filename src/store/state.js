@@ -44,6 +44,7 @@ export default {
 		shippingCost: 0,
 		status: [],
 		total: null,
+		waysPayments: null,
 	},
 	pollData: {
 		progress: 0,

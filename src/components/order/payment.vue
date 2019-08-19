@@ -8,7 +8,7 @@
 			</div>
 			<div class="methods-container">
 				<app-button
-					v-for="method in waysPayment"
+					v-for="method in getWaysPayments"
 					:key="method.id"
 					max-width="360px"
 					class="method-item"
@@ -26,7 +26,9 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 import appButton from '@/components/shared/buttons/app-button';
+import lib from '@/shared/lib';
 
 const depositPayment = () => import('@/components/order/deposit-payment');
 const productsBuyed = () => import('@/components/order/products-buyed');
@@ -34,7 +36,11 @@ const recievedPayment = () => import('@/components/order/recieved-payment');
 const visaPayment = () => import('@/components/order/visa-payment');
 
 function created() {
-	this.loadWayPayment();
+	if (lib.isEmpty(this.getWaysPayments)) {
+		this.$store.dispatch('LOAD_WAY_PAYMENT', this);
+	} else {
+		this.onSelect(this.getWaysPayments[2]);
+	}
 }
 
 function onSelect(method) {
@@ -54,9 +60,8 @@ function paymentMethodSelectedComponent() {
 	return opt[this.paymentMethodSelected];
 }
 
-async function loadWayPayment() {
-	({ data: this.waysPayment } = await this.$httpSales.get('way-payment'));
-	this.onSelect(this.waysPayment[2]);
+function getWaysPayments() {
+	this.onSelect(this.getWaysPayments[2]);
 }
 
 function data() {
@@ -65,7 +70,6 @@ function data() {
 			section: '/static/icons/payment.svg',
 		},
 		paymentMethodSelected: '',
-		waysPayment: [],
 	};
 }
 
@@ -79,13 +83,18 @@ export default {
 		visaPayment,
 	},
 	computed: {
+		...mapGetters([
+			'getWaysPayments',
+		]),
 		paymentMethodSelectedComponent,
 	},
 	created,
 	data,
 	methods: {
-		loadWayPayment,
 		onSelect,
+	},
+	watch: {
+		getWaysPayments,
 	},
 };
 </script>

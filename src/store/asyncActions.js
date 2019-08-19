@@ -126,6 +126,10 @@ const asyncActions = {
 		const { data: user } = await context.$httpSales.get(url);
 		commit('setUser', user);
 	},
+	LOAD_WAY_PAYMENT: async ({ commit }, context) => {
+		const { data: waysPayment } = await context.$httpSales.get('way-payment');
+		commit('SET_WAYS_PAYMENT', waysPayment);
+	},
 };
 
 export default asyncActions;
