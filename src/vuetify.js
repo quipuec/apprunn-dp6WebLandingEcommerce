@@ -43,6 +43,7 @@ import {
 	VRating,
 	VRangeSlider,
 	VBreadcrumbs,
+	VPagination,
 } from 'vuetify';
 
 export default function (Vue) {
@@ -92,6 +93,7 @@ export default function (Vue) {
 				VSwitch,
 				VTreeview,
 				VRating,
+				VPagination,
 			},
 			theme: {
 				primary: '#487fff',
