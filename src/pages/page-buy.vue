@@ -60,6 +60,12 @@ function stepTwo() {
 	return lib.getDeeper('meta.step')(this.$route) === 2;
 }
 
+function getProductToBuyHandler(newProducts) {
+	if (newProducts.length === 0) {
+		this.goTo('page-home');
+	}
+}
+
 function data() {
 	return {
 		logo: {
@@ -86,6 +92,15 @@ export default {
 		stepTwo,
 	},
 	data,
+	methods: {
+		getProductToBuyHandler,
+	},
+	watch: {
+		getProductToBuy: {
+			deep: true,
+			handler: getProductToBuyHandler,
+		},
+	},
 };
 </script>
 <style lang="scss" scoped>

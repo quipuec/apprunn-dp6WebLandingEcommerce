@@ -17,17 +17,17 @@
 			<div class="summary-content">
 				<h4 class="summary-title">Solicitud de Factura</h4>
 				<div>
-					<span class="mr-3">RUC: 20676555658</span>
-					<span>Razón Social: Apprun, SAC</span>
+					<span class="mr-3">RUC: {{getRuc}}</span>
+					<span>Razón Social: {{getRzSocial}}</span>
 				</div>
-				<span>Domicilio fiscal: Calle independencia 120 - Miraflores - Lima, Perú</span>
+				<span>Domicilio fiscal: {{getAddress}}</span>
 			</div>
 		</div>
 		<div class="summary-grid" name="billing" v-if="stepFour">
 			<img :src="iconSvg.pay" alt="ícono de factura">
 			<div class="summary-content">
 				<h4 class="summary-title">Método de pago</h4>
-				<span></span>
+				<span>{{getWayPayment}}</span>
 			</div>
 		</div>
 	</div>
@@ -37,8 +37,8 @@ import lib from '@/shared/lib';
 import { mapGetters } from 'vuex';
 
 function isNotEmptyBilling() {
-	const dataBill = lib.getDeeper('dataBill')(this.getOrderInfo);
-	return !(lib.isEmpty(dataBill));
+	const customerBill = lib.getDeeper('customerBill')(this.getOrderInfo);
+	return !(lib.isEmpty(customerBill));
 }
 
 function pickUpName() {
@@ -65,6 +65,22 @@ function stepFour() {
 	return this.$route.meta.step === 4;
 }
 
+function getWayPayment() {
+	return lib.getDeeper('wayPayment.description')(this.getOrderInfo);
+}
+
+function getRuc() {
+	return lib.getDeeper('customerBill.ruc')(this.getOrderInfo);
+}
+
+function getRzSocial() {
+	return lib.getDeeper('customerBill.rzSocial')(this.getOrderInfo);
+}
+
+function getAddress() {
+	return lib.getDeeper('customerBill.address')(this.getOrderInfo);
+}
+
 function data() {
 	return {
 		iconSvg: {
@@ -81,10 +97,14 @@ export default {
 		...mapGetters([
 			'getOrderInfo',
 		]),
+		getAddress,
 		getDirection,
 		getDni,
 		getPhone,
 		getResponsibleName,
+		getRuc,
+		getRzSocial,
+		getWayPayment,
 		isNotEmptyBilling,
 		pickUpName,
 		stepFour,
@@ -94,7 +114,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 	.summary-main-container {
-		align-items: center;
+		align-items: flex-start;
 		display: flex;
 		justify-content: space-around;
 	}

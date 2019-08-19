@@ -40,7 +40,7 @@
 					if-number
 					:data="imagesButton[2]"
 					:number="totalProducts"
-					@click-image="goTo('buy')"
+					@click-image="goShopping"
 				/>
 			</div>
 		</div>
@@ -82,6 +82,14 @@ function openModalLogin() {
 
 function closeModal() {
 	this.modalLogin = false;
+}
+
+function goShopping() {
+	if (this.token) {
+		this.goTo('buy');
+	} else {
+		this.showGenericError('Debe iniciar sesión');
+	}
 }
 
 function data() {
@@ -135,10 +143,11 @@ export default {
 	},
 	data,
 	methods: {
-		toogleSearch,
 		changeMenu,
-		openModalLogin,
 		closeModal,
+		goShopping,
+		toogleSearch,
+		openModalLogin,
 	},
 	mounted,
 	props: {

@@ -29,6 +29,7 @@ import { mapGetters } from 'vuex';
 import lib from '@/shared/lib';
 
 function created() {
+	debugger;
 	this.showSuccessVisa = !lib.isEmpty(this.getOrderInfo.gatewayAuthorizationResponse);
 	this.showSuccessDeposit = !lib.isEmpty(this.getOrderInfo.wayPaymentId);
 	this.showFailure = !lib.isEmpty(this.getOrderInfo.gatewayErrorCode);
