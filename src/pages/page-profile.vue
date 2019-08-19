@@ -22,7 +22,7 @@
 						<button
 							:class="[
 								'user-action-btn',
-								{ 'active': $route.name === 'user-orders'},
+								{ 'active': $route.name === 'user-orders' || $route.name === 'order-detail' },
 							]"
 							@click="goTo('user-orders')"
 						>Mis Órdenes</button>
@@ -36,7 +36,14 @@
 							@click="goTo('favorites')"
 						>Mis Favoritos</button>
 					</li>
-					<li class="user-action"><button class="user-action-btn ">Direcciones</button></li>
+					<li class="user-action">
+						<button
+							:class="[
+								'user-action-btn',
+								{ 'active': $route.name === 'address'},
+							]"
+							@click="goTo('address')"
+						>Direcciones</button></li>
 					<li class="user-action user-logout"><button class="user-action-btn ">Cerrar sesión</button></li>
 				</ul>
 			</div>
@@ -76,6 +83,7 @@ export default {
 		@media (max-width: 768px) {
 			height: auto;
 			padding: 90px 15px 0;
+			position: relative;
 		}
 	}
 
@@ -129,7 +137,7 @@ export default {
 	}
 
 	.profile-info {
-		background-color: color(background);
+		background-color: color(disabled);
 		box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.08);
 		flex: 1 1 70%;
 		height: 100%;

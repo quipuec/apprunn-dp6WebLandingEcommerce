@@ -2,10 +2,11 @@
 	<layout-admin>
 		<!-- <router-view></router-view> -->
 		<banner-carousel :banners="banners"/>
-		<categories-carousel 
-			:categories="getCategories"
+		<categories-carousel
+ 			:categories="getCategories"
 			:color-base="colorBase"/>
-		<component-filter-product :filters="filters"></component-filter-product>
+		<component-filter-product 
+		:filters="filters"></component-filter-product>
 		<div class="page-products">
 			<products-section/>
 		</div>
@@ -29,6 +30,15 @@ const sectionSettlement = () => import('@/components/home/section-settlement');
 
 function created() {
 	this.loadData();
+	this.loadFilters();
+}
+async function loadFilters() {
+	try {
+		const { data: response } = await this.$httpProductsPublic.get('filters-public');
+		this.filters = response;
+	} catch (error) {
+		this.showGenericError();
+	}
 }
 
 async function loadData() {
@@ -41,6 +51,7 @@ async function loadData() {
 }
 function data() {
 	return {
+		filters: [],
 		banners: [],
 		categories: [
 			{
@@ -84,50 +95,6 @@ function data() {
 				select: false,
 			},
 		],
-		filters: [
-			{
-				id: 1,
-				title: 'Novedades',
-				color: process.env.COLOR_WHITE,
-				icon: '/static/img/icons/icon-filter-product.svg',
-			},
-			{
-				id: 2,
-				title: 'Populares',
-				color: process.env.COLOR_WHITE,
-				icon: '/static/img/icons/icon-filter-product.svg',
-			},
-			{
-				id: 3,
-				title: 'Recomendados',
-				color: process.env.COLOR_WHITE,
-				icon: '/static/img/icons/icon-filter-product.svg',
-			},
-			{
-				id: 4,
-				title: 'Ofertas',
-				color: process.env.COLOR_WHITE,
-				icon: '/static/img/icons/icon-filter-product.svg',
-			},
-			{
-				id: 5,
-				title: 'Novedades',
-				color: process.env.COLOR_WHITE,
-				icon: '/static/img/icons/icon-filter-product.svg',
-			},
-			{
-				id: 6,
-				title: 'Populares',
-				color: process.env.COLOR_WHITE,
-				icon: '/static/img/icons/icon-filter-product.svg',
-			},
-			{
-				id: 7,
-				title: 'Recomendados',
-				color: process.env.COLOR_WHITE,
-				icon: '/static/img/icons/icon-filter-product.svg',
-			},
-		],
 		colorDark: process.env.COLOR_DARK,
 		colorBase: process.env.COLOR_BASE,
 		colorSecondary: process.env.COLOR_SECONDARY,
@@ -155,6 +122,7 @@ export default {
 	},
 	created,
 	methods: {
+		loadFilters,
 		loadData,
 	},
 };

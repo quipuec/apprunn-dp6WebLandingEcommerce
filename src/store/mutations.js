@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import orderMutations from '@/store/mutations/order';
 import geoMutations from '@/store/mutations/geo';
+import profileMutations from '@/store/mutations/profile';
 
 function clearUser(state) {
 	Vue.set(state, 'token', null);
@@ -53,6 +54,16 @@ function SET_ORDER_TOTAL(state, total) {
 	Vue.set(state.order, 'total', total);
 }
 
+function UPDATE_PRODUCTS_SELECTED(state, products) {
+	if (products) {
+		localStorage.setItem('ecommerce::product-select', JSON.stringify(products));
+		Vue.set(state.order, 'products', [...products]);
+	} else {
+		localStorage.removeItem('ecommerce::product-select');
+		Vue.set(state.order, 'products', []);
+	}
+}
+
 function SET_WAREHOUSES(state, warehouses) {
 	Vue.set(state, 'warehouses', state.warehouses.concat(warehouses));
 }
@@ -65,6 +76,7 @@ const methods = {
 	clearUser,
 	...geoMutations,
 	...orderMutations,
+	...profileMutations,
 	setToken,
 	setUser,
 	showSnackBar,
@@ -78,6 +90,7 @@ const methods = {
 	UPDATE_POLL_PROGRESS,
 	SET_CATEGORIES,
 	SET_ORDER_TOTAL,
+	UPDATE_PRODUCTS_SELECTED,
 };
 
 export default methods;

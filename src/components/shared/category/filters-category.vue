@@ -14,50 +14,49 @@
 		</div>
 		<div v-if="contentFilters">
 			<p class="text-price">Precio</p>
-      	<v-layout row>
-        	<v-flex shrink style="width: 60px">
-          	<v-text-field
-						class="mt-0"
-						hide-details
-						single-line
-						type="number"
-          	></v-text-field>
-        	</v-flex>
-        	<v-flex class="pl-3">
-          	<v-range-slider
-            	:step="1"
-          	>
-			</v-range-slider>
-        	</v-flex>
-        	<v-flex shrink style="width: 20px">
-				<v-text-field
-					class="mt-0 number"
+      <v-layout row>
+        <v-flex shrink style="width: 60px">
+					<v-text-field
+					class="mt-0"
 					hide-details
 					single-line
 					type="number"
-				></v-text-field>
-        	</v-flex>
-      	</v-layout>
-		  			<div class="content-number">
+					></v-text-field>
+        </v-flex>
+        <v-flex class="pl-3">
+					<v-range-slider
+						:step="1">
+					</v-range-slider>
+        </v-flex>
+        <v-flex shrink style="width: 20px">
+					<v-text-field
+						class="mt-0 number"
+						hide-details
+						single-line
+						type="number"
+					></v-text-field>
+      	</v-flex>
+      </v-layout>
+		  <div class="content-number">
 				<p class="number-filter">7$</p>
 				<p class="number-filter">60$</p>
 			</div>
-					<input type="text" class="input-price" placeholder="40$">
-				<v-layout mt-5 mb-5>
-					<app-select class="input-filter" placeholder="Marca"/>
-				</v-layout>
-				<v-layout mt-3 mb-5>
-					<app-select class="input-filter" placeholder="Modelo"/>
-				</v-layout>
-				<v-layout mt-3 mb-5>
-					<app-select class="input-filter" placeholder="Año"/>
-				</v-layout>
-				<v-layout mb-5>
-					<app-select class="input-filter" placeholder="Lado"/>
-				</v-layout>
-				<v-layout mb-3>
-					<app-select class="input-filter" placeholder="Tipo"/>
-				</v-layout>
+			<input type="text" class="input-price" placeholder="40$">
+			<v-layout mt-5 mb-5>
+				<app-select class="input-filter" placeholder="Marca"/>
+			</v-layout>
+			<v-layout mt-3 mb-5>
+				<app-select class="input-filter" placeholder="Modelo"/>
+			</v-layout>
+			<v-layout mt-3 mb-5>
+				<app-select class="input-filter" placeholder="Año"/>
+			</v-layout>
+			<v-layout mb-5>
+				<app-select class="input-filter" placeholder="Lado"/>
+			</v-layout>
+			<v-layout mb-3>
+				<app-select class="input-filter" placeholder="Tipo"/>
+			</v-layout>
 		</div>
 	</div>
 </template>

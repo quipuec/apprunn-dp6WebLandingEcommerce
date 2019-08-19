@@ -12,6 +12,10 @@ export default {
 	directions: [
 		{ id: 0, addressLine1: 'Nueva dirección' },
 	],
+	genders: [
+		{ id: 1, title: 'Femenino' },
+		{ id: 2, title: 'Masculino' },
+	],
 	geo: {
 		departments: [],
 		districts: [],
@@ -20,17 +24,23 @@ export default {
 	order: {
 		bill: null,
 		delivery: null,
+		details: null,
+		flagBill: false,
 		flagPickUp: 1,
 		id: null,
+		list: [],
 		products: [],
 		responsible: null,
+		status: [],
 		total: null,
 	},
 	pollData: {
 		progress: 0,
 	},
 	profile: {
+		address: [],
 		flagAddVoucher: false,
+		userData: null,
 	},
 	products: {
 		list: [],
@@ -48,6 +58,8 @@ export default {
 		username: '',
 	},
 	categories: [],
+	productsSelected: null,
+	totalProducts: 0,
 	warehouses: [
 		{ id: 0, name: 'Seleccione una tienda' },
 	],

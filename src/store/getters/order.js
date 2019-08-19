@@ -25,10 +25,23 @@ const getters = {
 		return state.order.delivery;
 	},
 	invalidOrder(state) {
-		const { responsible, delivery } = state.order;
+		const { responsible, delivery, flagBill, bill } = state.order;
 		const invalidResponsible = lib.isEmpty(responsible);
 		const invalidDelivery = lib.isEmpty(delivery) || !delivery.id;
-		return lib.atLeastOneTrue(invalidResponsible, invalidDelivery);
+		const invalidBill = flagBill ? lib.isEmpty(bill) : false;
+		return lib.atLeastOneTrue(invalidResponsible, invalidDelivery, invalidBill);
+	},
+	getFlagBill(state) {
+		return state.order.flagBill;
+	},
+	getOrders(state) {
+		return state.order.list;
+	},
+	getStatus(state) {
+		return state.order.status;
+	},
+	getOrderDetails(state) {
+		return state.order.details;
 	},
 };
 

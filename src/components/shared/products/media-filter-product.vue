@@ -1,8 +1,9 @@
 <template>
 	<button class="box-filter"
-	:style="`border-right: ${borderRight ? `1px solid ${borderRight}` : null}`">
+	:style="`border-right: ${borderRight ? `1px solid ${borderRight}` : null}`"
+	>
 			<div>
-				<img :src="image" alt="">
+				<img :src="urlImage" alt="">
 			</div>
 			<div class="filter-title">
 				<p class="title-filter">{{title}}</p>
@@ -15,7 +16,7 @@
 export default {
 	name: 'filter-product',
 	props: {
-		image: String,
+		urlImage: String,
 		borderRight: String,
 		title: String,
 	},
@@ -29,6 +30,7 @@ export default {
 	font-size: size(medium);
 	margin-bottom: 0;
 	padding-left: 7px;
+	width: 80px;
 	&:hover {
 		border-radius: 3px;
 		font-family: font(bold);
@@ -80,5 +82,12 @@ export default {
 	align-items: flex-start;
 	display: flex;
 	flex-direction: column;
+}
+
+.box-filter {
+	img {
+		height: 23px;
+		width: 23px;
+	}
 }
 </style>

@@ -1,5 +1,6 @@
 import orderGetters from '@/store/getters/order';
 import geoGetters from '@/store/getters/geo';
+import profileGetters from '@/store/getters/profile';
 import lib from '@/shared/lib';
 
 const { getDeeper } = lib;
@@ -53,6 +54,10 @@ function getCategories(state) {
 	return state.categories;
 }
 
+function totalProducts(state) {
+	return state.order.products ? state.order.products.length : 0;
+}
+
 function getDirections(state) {
 	return state.directions;
 }
@@ -61,8 +66,13 @@ function getWarehouses(state) {
 	return state.warehouses;
 }
 
+function genders(state) {
+	return state.genders;
+}
+
 const methods = {
 	companyLogo,
+	genders,
 	getDirections,
 	getCurrencySymbol,
 	getProducts,
@@ -71,6 +81,7 @@ const methods = {
 	indeterminate,
 	...geoGetters,
 	...orderGetters,
+	...profileGetters,
 	pollData,
 	snackbar,
 	themeColors,
@@ -78,6 +89,7 @@ const methods = {
 	user,
 	userName,
 	getCategories,
+	totalProducts,
 };
 
 export default methods;

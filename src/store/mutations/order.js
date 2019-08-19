@@ -10,4 +10,19 @@ export default {
 	SET_DELIVERY_PLACE(state, address) {
 		Vue.set(state.order, 'delivery', address);
 	},
+	SET_BILL_SELECTION(state, flag) {
+		Vue.set(state.order, 'flagBill', flag);
+	},
+	SET_BILLING_INFO(state, billData) {
+		Vue.set(state.order, 'bill', billData);
+	},
+	SET_ORDERS(state, orders) {
+		Vue.set(state.order, 'list', orders);
+	},
+	SET_ORDER_STATUS(state, status) {
+		Vue.set(state.order, 'status', status);
+	},
+	SET_ORDER_DETAILS(state, details) {
+		Vue.set(state.order, 'details', details);
+	},
 };
