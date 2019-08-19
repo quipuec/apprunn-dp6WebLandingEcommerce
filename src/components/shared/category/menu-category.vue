@@ -45,7 +45,7 @@ export default {
 		},
 		titleCategory: {
 			type: String,
-			default: () => [],
+			default: '',
 		},
 	},
 };

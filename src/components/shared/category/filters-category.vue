@@ -15,7 +15,7 @@
 		<div v-if="contentFilters">
 			<p class="text-price">Precio</p>
       	<v-layout row>
-      		<v-flex shrink style="width: 60px">
+      		<v-flex shrink class="input-number-price-min">
           	<v-text-field
 						class="mt-0"
 						hide-details
@@ -28,40 +28,71 @@
             	:step="1">
 						</v-range-slider>
         	</v-flex>
-      <v-flex shrink style="width: 20px">
-				<v-text-field
-					class="mt-0 number"
-					hide-details
-					single-line
-					type="number"
-				></v-text-field>
+      		<v-flex shrink class="input-number-price-max">
+						<v-text-field
+							class="mt-0 number"
+							hide-details
+							single-line
+							type="number"
+						></v-text-field>
         	</v-flex>
       	</v-layout>
-		  			<div class="content-number">
-				<p class="number-filter">7$</p>
-				<p class="number-filter">60$</p>
-			</div>
-					<input type="text" class="input-price" placeholder="40$">
+		  	<div class="content-number">
+					<p class="number-filter">{{getCurrencySymbol}} {{filters.priceMin}}</p>
+					<p class="number-filter">{{getCurrencySymbol}} {{filters.priceMax}}</p>
+				</div>
+				<app-input
+				class="field"
+				type="text"
+				v-model="filters.price" />
 				<v-layout mt-5 mb-5>
-					<app-select class="input-filter" placeholder="Marca"/>
+					<app-select 
+					item-text="name"
+					item-value="id"
+					class="input-filter" 
+					placeholder="Marca"
+					v-model="filters.brand"/>
 				</v-layout>
 				<v-layout mt-3 mb-5>
-					<app-select class="input-filter" placeholder="Modelo"/>
+					<app-select 
+					item-text="name"
+					item-value="id"
+					class="input-filter" 
+					placeholder="Modelo"
+					v-model="filters.model"/>
 				</v-layout>
 				<v-layout mt-3 mb-5>
-					<app-select class="input-filter" placeholder="Año"/>
+					<app-select 
+					item-text="name"
+					item-value="id"
+					class="input-filter" 
+					placeholder="Año"
+					v-model="filters.year"/>
 				</v-layout>
 				<v-layout mb-5>
-					<app-select class="input-filter" placeholder="Lado"/>
+					<app-select 
+					item-text="name"
+					item-value="id"
+					class="input-filter" 
+					placeholder="Lado"
+					v-model="filters.side"/>
 				</v-layout>
 				<v-layout mb-3>
-					<app-select class="input-filter" placeholder="Tipo"/>
+					<app-select 
+					item-text="name"
+					item-value="id"
+					class="input-filter" 
+					placeholder="Tipo"
+					v-model="filters.type"/>
 				</v-layout>
 		</div>
 	</div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
+const appInput = () => import('@/components/shared/inputs/app-input');
 const appSelect = () => import('@/components/shared/inputs/app-select');
 const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 
@@ -80,6 +111,16 @@ function openFilters() {
 
 function data() {
 	return {
+		filters: {
+			brand: '',
+			model: '',
+			side: '',
+			price: '',
+			priceMin: 7,
+			priceMax: 60,
+			type: null,
+			year: null,
+		},
 		arrowUp: {
 			image: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-down-sign-to-navigate.svg',
 			name: 'up',
@@ -99,11 +140,18 @@ function data() {
 export default {
 	data,
 	name: 'filters-category',
+	computed: {
+		...mapGetters([
+			'getCurrencySymbol',
+			'token',
+		]),
+	},
 	methods: {
 		closeCategory,
 		openFilters,
 	},
 	components: {
+		appInput,
 		appSelect,
 		buttonImage,
 	},
@@ -172,5 +220,13 @@ export default {
 	display: flex;
 	justify-content: space-between;
 	width: 78%;
+}
+
+.input-number-price-min {
+	width: 75px;
+}
+
+.input-number-price-max {
+	width: 20px;
 }
 </style>

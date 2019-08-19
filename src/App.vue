@@ -298,6 +298,7 @@ input.app-input::-webkit-input-placeholder {
 	.v-slider__thumb {
 		background-color: color(base) !important;
 		border-color: color(base) !important;
+		left: -6px;
 	}
 
 	.v-slider__thumb-container .primary--text {

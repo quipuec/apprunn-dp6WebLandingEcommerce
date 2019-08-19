@@ -4,7 +4,7 @@
 		<div class="menu-category">
 			<menu-category
 			:categories="this.arrayCategory"
-			:title-category="this.titleCategory"
+			:title-category="title"
 			></menu-category>
 			</div>
 		<div class="content-category">
@@ -48,12 +48,17 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
-
 const appBannerTop = () => import('@/components/header/app-banner-top');
 const menuCategory = () => import('@/components/shared/category/menu-category');
 const productCard = () => import('@/components/products/product-card');
 const productsSection = () => import('@/components/products/products-section');
+
+function created() {
+	({ title: this.title, id: this.categoryId } = this.$route.query);
+	this.arrayCategory = this.$route.query.categories.detail;
+	this.subCategories = this.$route.query.categories.detail;
+	this.loadProduct();
+}
 
 async function loadProduct() {
 	try {
@@ -61,20 +66,12 @@ async function loadProduct() {
 			page: this.page,
 		};
 		const url = `products-public?eCategories=${this.categoryId}`;
-		const response = await this.$httpProductsPublic.get(url, { params });
-		this.listProducts = response.data;
-		this.lastPage = Number(response.headers['x-last-page']);
+		const { data: products, headers } = await this.$httpProductsPublic.get(url, { params });
+		this.listProducts = products;
+		this.lastPage = Number(headers['x-last-page']);
 	} catch (error) {
 		this.showGenericError();
 	}
-}
-
-function created() {
-	this.arrayCategory = this.$route.query.categories.detail;
-	this.subCategories = this.$route.query.categories.detail;
-	this.titleCategory = this.$route.query.title;
-	this.categoryId = this.$route.query.id;
-	this.loadProduct();
 }
 
 function pagesVisible() {
@@ -93,6 +90,7 @@ function data() {
 			image: 'descuento',
 		},
 		categoryId: null,
+		colorSecondary: process.env.COLOR_SECONDARY,
 		items: [
 			{
 				text: 'Resortes',
@@ -129,9 +127,6 @@ export default {
 	},
 	computed: {
 		pagesVisible,
-		...mapGetters([
-			'token',
-		]),
 	},
 	methods: {
 		updateProductCard,
