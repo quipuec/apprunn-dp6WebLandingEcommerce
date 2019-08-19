@@ -12,6 +12,7 @@
 			:heading-image="headingImage"
 			:img-height="imgHeight"
 			:title="title"
+			:title-btn="titleBtn"
 			@authenticate="$emit('on-authenticate', $event)"
 			@on-submit="$emit('on-submit')"
 		>
@@ -39,6 +40,7 @@
 			headingImage: String,
 			imgHeight: [Number, String],
 			title: String,
+			titleBtn: String,
 		},
 	};
 </script>

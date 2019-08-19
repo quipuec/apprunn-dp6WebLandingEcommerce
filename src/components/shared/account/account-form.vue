@@ -13,7 +13,7 @@
 			</v-flex>
 			<v-flex xs12 text-xs-center>
 				<app-button
-					:action="title"
+					:action="titleBtn || title"
 					:background="color"
 					:disabled="disabled"
 					type="submit"
@@ -62,6 +62,7 @@
 			headingImage: String,
 			imgHeight: [Number, String],
 			title: String,
+			titleBtn: String,
 		},
 	};
 </script>
