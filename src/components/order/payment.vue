@@ -8,19 +8,19 @@
 			</div>
 			<div class="methods-container">
 				<app-button
-					v-for="method in methods"
+					v-for="method in waysPayment"
 					:key="method.id"
 					max-width="360px"
 					class="method-item"
-					:action="method.title"
-					:active="paymenMethodSelected === method.paymentMethodName"
+					:action="method.name"
+					:active="paymentMethodSelected === method.code"
 					:background="globalColors.secondary"
 					:border="globalColors.secondary"
-					@click="onSelect(method.paymentMethodName)"
+					@click="onSelect(method)"
 				/>
 			</div>
 			<component class="component-container"
-				:is="paymenMethodSelected"
+				:is="paymentMethodSelectedComponent"
 			></component>
 		</section>
 	</div>
@@ -33,8 +33,28 @@ const productsBuyed = () => import('@/components/order/products-buyed');
 const recievedPayment = () => import('@/components/order/recieved-payment');
 const visaPayment = () => import('@/components/order/visa-payment');
 
-function onSelect(paymentMethodName) {
-	this.paymenMethodSelected = paymentMethodName;
+function created() {
+	this.loadWayPayment();
+}
+
+function onSelect(method) {
+	this.paymentMethodSelected = method.code;
+	const bankAccountId = method.code === 'IBD' ? 1 : null;
+	this.$store.commit('SET_WAY_PAYMENT', { wayPayment: method.id, id: bankAccountId });
+}
+
+function paymentMethodSelectedComponent() {
+	const opt = {
+		CDC: 'visaPayment',
+		PPR: 'recievedPayment',
+		IBD: 'depositPayment',
+	};
+	return opt[this.paymentMethodSelected];
+}
+
+async function loadWayPayment() {
+	({ data: this.waysPayment } = await this.$httpSales.get('way-payment'));
+	this.paymentMethodSelected = 'IBD';
 }
 
 function data() {
@@ -42,12 +62,8 @@ function data() {
 		logo: {
 			section: '/static/icons/payment.svg',
 		},
-		methods: [
-			{ id: 1, paymentMethodName: 'visaPayment', title: 'Tarjeta de crédito o débito' },
-			{ id: 2, paymentMethodName: 'depositPayment', title: 'Banca por internet o depósito' },
-			{ id: 3, paymentMethodName: 'recievedPayment', title: 'Paga tu compra al recibir' },
-		],
-		paymenMethodSelected: 'depositPayment',
+		paymentMethodSelected: '',
+		waysPayment: [],
 	};
 }
 
@@ -60,8 +76,13 @@ export default {
 		recievedPayment,
 		visaPayment,
 	},
+	computed: {
+		paymentMethodSelectedComponent,
+	},
+	created,
 	data,
 	methods: {
+		loadWayPayment,
 		onSelect,
 	},
 };

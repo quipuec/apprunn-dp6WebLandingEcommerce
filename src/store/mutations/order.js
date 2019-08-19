@@ -9,21 +9,18 @@ export default {
 	},
 	SET_DELIVERY_PLACE(state, address) {
 		Vue.set(state.order, 'delivery', address);
+		if (address && address.addressLine1 && address.id) {
+			Vue.set(state.order, 'customerAddressId', address.id);
+		}
 	},
 	SET_BILL_SELECTION(state, flag) {
 		Vue.set(state.order, 'flagBill', flag);
 	},
-	SET_BILLING_INFO(state, billData) {
-		Vue.set(state.order, 'bill', billData);
-	},
 	SET_ORDERS(state, orders) {
 		Vue.set(state.order, 'list', orders);
 	},
-	SET_ORDER_STATUS(state, status) {
-		Vue.set(state.order, 'status', status);
-	},
 	SET_ORDER_DETAILS(state, details) {
-		Vue.set(state.order, 'details', details);
+		Vue.set(state.order, 'products', [...details]);
 	},
 	UPDATE_PRODUCTS_TO_BUY(state, { id, quantity }) {
 		const { products } = state.order;
@@ -38,5 +35,20 @@ export default {
 		products.splice(index, 1);
 		Vue.set(state.order, 'products', [...products]);
 		localStorage.setItem('ecommerce::product-select', JSON.stringify([...products]));
+	},
+	SET_SHIPPING_COST(state, amount) {
+		Vue.set(state.order, 'shippingCost', amount);
+	},
+	SET_CUSTOMER_ADDRESS(state, address) {
+		Vue.set(state.order, 'customerAddress', address);
+	},
+	SET_BILLING_DATA(state, bill) {
+		Vue.set(state.order, 'bill', bill);
+	},
+	SET_ORDER_STATUS(state, orderStatus) {
+		Vue.set(state.order, 'orderStatus', orderStatus);
+	},
+	SET_WAY_PAYMENT(state, wayPayment) {
+		Vue.set(state.order, 'paymentMethod', wayPayment);
 	},
 };

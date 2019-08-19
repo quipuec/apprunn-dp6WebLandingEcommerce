@@ -1,31 +1,26 @@
 <template>
 	<div class="buyed-main-container">
 		<ol class="buyed-products-container">
-			<li class="list">
+			<li class="list" v-for="product in getOrderDetails" :key="product.id">
 				<div class="grid-product">
-					<span class="product-name">Hoco. Audífonos con micrófono Original Hoco. Audífonos con micrófono Original </span>
-					<span class="product-quantity">Cantidad: 100</span>
-					<h3 class="product-total">S/. 1.4567</h3>
-				</div>
-			</li>
-			<li class="list">
-				<div class="grid-product">
-					<span class="product-name">Hoco. Audífonos con micrófono Original </span>
-					<span class="product-quantity">Cantidad: 100</span>
-					<h3 class="product-total">S/. 1.4567</h3>
+					<span class="product-name">{{product.description}}</span>
+					<span class="product-quantity">Cantidad: {{product.quantity}}</span>
+					<h3 class="product-total">{{getCurrencySymbol}}{{product.total}}</h3>
 				</div>
 			</li>
 		</ol>
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
 	name: 'products-buyed',
-	props: {
-		products: {
-			default: () => [],
-			type: Array,
-		},
+	computed: {
+		...mapGetters([
+			'getCurrencySymbol',
+			'getOrderDetails',
+		]),
 	},
 };
 </script>

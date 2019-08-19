@@ -29,11 +29,11 @@ const asyncActions = {
 			commit('showSnackBar', message);
 		}
 	},
-	CREATE_ORDER: async ({ commit }, { context, body }) => {
+	CREATE_ORDER: async (store, { context, body }) => {
 		const url = 'orders';
 		const { data: order } = await context.$httpSales.post(url, body);
-		commit('SET_ORDER_ID', order.id);
-		commit('SET_ORDER_TOTAL', order.total);
+		localStorage.setItem('ecommerce-order', JSON.stringify(order));
+		store.dispatch('getOrderData', order);
 	},
 	LOAD_DEPARTMENTS: async ({ commit }, context) => {
 		const url = 'province';

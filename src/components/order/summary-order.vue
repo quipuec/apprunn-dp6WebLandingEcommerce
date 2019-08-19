@@ -42,7 +42,14 @@
 				class="btn-order"
 				:background="globalColors.primary"
 				:disabled="invalidOrder"
-				@click="makeOrder"
+				@click="makeOrder(false)"
+			/>
+			<app-button
+				v-else
+				action="Pagar"
+				class="btn-order"
+				:background="globalColors.primary"
+				@click="makeOrder(true)"
 			/>
 		</section>
 	</div>
@@ -56,31 +63,101 @@ function total() {
 	return (this.getTotalToBuy - this.discount) + this.shippingCost;
 }
 
-function makeOrder() {
-	const body = this.buildBody();
-	this.$store.dispatch('CREATE_ORDER', { context: this, body });
-	this.goTo('buy-delivery');
+async function makeOrder(flagFinish) {
+	const body = this.buildBody(flagFinish);
+	await this.$store.dispatch('CREATE_ORDER', { context: this, body });
+	if (flagFinish) {
+		this.goTo('buy-summary');
+	} else {
+		this.goTo('buy-payment');
+	}
 }
 
-function buildBody() {
-	return {
+function buildBody(flagFinish) {
+	const body = {
+		costShipping: this.getShippingCost,
+		customerAddressId: this.getCustomerAddressId,
+		customerAddress: this.getCustomerAddressId ? null : this.getCustomerAddress,
+		customerBill: this.getBillingData,
+		deliveryAddress: this.getDeliveryAddress,
+		details: this.getDetails(this.getOrderDetails),
 		flagPickUp: this.getFlagPickUp,
-		paymentStateId: 1,
+		responsiblePickUp: this.getResponsible,
 		warehouseId: process.env.WAREHOUSE_ID,
 		warehouseName: process.env.WAREHOUSE_NAME,
 		warehouseAddress: process.env.WAREHOUSE_ADDRESS,
-		deliveryAddress: this.getDeliveryAddress,
-		responsiblePickUp: this.getResponsible,
-		details: this.getOrderDetails,
-		customerAddress: {
-			type: 1,
-			name: 'Mansión en Palo Alto',
-			addressLine1: 'Dirección de Palo Alto',
-			zipcode: '94301',
-			documentNumber: '38726496',
-		},
-		commerceCode: process.env.COMMERCE_CODE,
 	};
+	if (this.getOrderId && this.getOrderStatus) {
+		body.orderStateId = this.orderStateId;
+		body.flagStatusOrder = flagFinish ? 3 : this.getOrderStatus;
+		body.bankAccountId = flagFinish ? this.getWayPayment.bankAccountId : null;
+		body.wayPaymentId = flagFinish ? this.getWayPayment.id : null;
+	}
+	body.commerceCode = process.env.COMMERCE_CODE;
+	return body;
+}
+
+function getDetails(products) {
+	return products.map((p) => {
+		const { taxes } = p;
+		const newTaxes = this.setTaxes(taxes);
+		const newP = {
+			alternateCode: p.alternateCode,
+			brandId: lib.getDeeper('warehouseProduct.brandId')(p) || p.brandId,
+			brandName: lib.getDeeper('warehouseProduct.brand.name')(p) || p.brandName,
+			categoryId: p.categoryId,
+			categoryName: lib.getDeeper('category.name')(p) || p.categoryName,
+			codeTaxes: taxes[0].code,
+			description: p.description,
+			discount: p.discount || 0,
+			discountPercentage: p.discountPercentage || 0,
+			product: {
+				id: p.id || p.productId,
+				taxes: [...newTaxes],
+				type: lib.getDeeper('typeInfo.id')(p) || lib.getDeeper('product.type')(p),
+			},
+			productCode: p.code || p.productCode,
+			productId: p.id || p.productId,
+			productImage: p.urlImage || p.productImage,
+			productName: p.name || p.productName,
+			quantity: p.quantity,
+			salePrice: p.priceDiscount || p.salePrice,
+			stockQuantity: p.stock,
+			taxes: newTaxes,
+			unit: p.unit,
+			unitCode: p.unit.code,
+			unitConversion: 1,
+			unitId: p.unitId,
+			unitName: p.unit.name,
+			unitQuantity: p.quantity,
+			warehouseId: process.env.WAREHOUSE_ID,
+			warehouseName: process.env.WAREHOUSE_NAME,
+		};
+		return newP;
+	});
+}
+
+function setTaxes(taxes) {
+	const newTaxes = [];
+	if (!taxes && taxes.length === 0) {
+		newTaxes[0] = {
+			code: '01',
+			codeTable: 'TABLE17',
+			codePercentage: '01',
+			flagSales: true,
+			flagPurchases: false,
+		};
+	} else {
+		const tax = taxes[0];
+		newTaxes[0] = {
+			code: tax.code,
+			codeTable: tax.codeTable,
+			codePercentage: tax.codePercentage,
+			flagSales: Boolean(tax.flagSales),
+			flagPurchases: Boolean(tax.flagPurchases),
+		};
+	}
+	return newTaxes;
 }
 
 function stepThree() {
@@ -109,13 +186,20 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getBillingData',
+			'getCustomerAddress',
+			'getCustomerAddressId',
 			'getDeliveryAddress',
 			'getFlagPickUp',
-			'getOrderId',
 			'getOrderDetails',
+			'getOrderId',
+			'getOrderStateId',
+			'getOrderStatus',
 			'getProductsToBuy',
 			'getResponsible',
+			'getShippingCost',
 			'getTotalToBuy',
+			'getWayPayment',
 			'invalidOrder',
 		]),
 		stepOne,
@@ -126,7 +210,9 @@ export default {
 	data,
 	methods: {
 		buildBody,
+		getDetails,
 		makeOrder,
+		setTaxes,
 	},
 };
 </script>

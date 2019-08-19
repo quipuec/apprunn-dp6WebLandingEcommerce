@@ -1,15 +1,15 @@
 <template>
 	<div class="product-container">
 		<section class="grid-areas">
-			<img :src="product.urlImage" alt="imagen del producto" class="product-img image">
+			<img :src="product.productImage || product.urlImage" alt="imagen del producto" class="product-img image">
 			<div class="description">
 				<p class="product-title">Producto</p>
 				<p class="product-content">{{product.description}}</p>
-				<p class="product-brand">{{product.warehouseProduct.brand.name}}</p>
+				<p class="product-brand">{{product.brandName || product.warehouseProduct.brand.name}}</p>
 			</div>
 			<div class="price text-xs-center">
 				<p class="product-title">Precio UND</p>
-				<p class="product-price">{{product.priceDiscount}}</p>
+				<p class="product-price">{{product.salePrice || product.priceDiscount}}</p>
 			</div>
 			<div class="quantity text-xs-center">
 				<p class="product-title">Cantidad</p>
