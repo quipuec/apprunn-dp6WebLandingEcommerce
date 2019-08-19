@@ -45,8 +45,8 @@ function flagAddVoucher(state) {
 	return state.profile.flagAddVoucher;
 }
 
-function getCurrencySymbol() {
-	const currencyDefault = JSON.parse(localStorage.getItem(`${process.env.STORAGE_USER_KEY}::currency-default`));
+function getCurrencySymbol(state) {
+	const { currencyDefault } = state;
 	return getDeeper('symbol')(currencyDefault) || '';
 }
 

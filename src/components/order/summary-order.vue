@@ -65,7 +65,12 @@ function total() {
 
 async function makeOrder(flagFinish) {
 	const body = this.buildBody(flagFinish);
-	await this.$store.dispatch('CREATE_ORDER', { context: this, body });
+	const orderExist = !lib.isEmpty(this.getOrderInfo);
+	const dispatchName = orderExist ? 'UPDATE_ORDER' : 'CREATE_ORDER';
+	const dispatchObj = orderExist
+		? { context: this, id: this.getOrderInfo.id, body }
+		: { context: this, body };
+	await this.$store.dispatch(dispatchName, dispatchObj);
 	if (flagFinish) {
 		this.goTo('buy-summary');
 	} else {
@@ -88,12 +93,13 @@ function buildBody(flagFinish) {
 		warehouseAddress: process.env.WAREHOUSE_ADDRESS,
 	};
 	if (this.getOrderId && this.getOrderStatus) {
-		body.orderStateId = this.orderStateId;
-		body.flagStatusOrder = flagFinish ? 3 : this.getOrderStatus;
+		body.orderStateId = this.getOrderStatus;
+		body.flagStatusOrder = flagFinish ? 3 : this.getFlagStatusOrder;
 		body.bankAccountId = flagFinish ? this.getWayPayment.bankAccountId : null;
-		body.wayPaymentId = flagFinish ? this.getWayPayment.id : null;
+		body.wayPaymentId = flagFinish ? this.getWayPayment.wayPayment : null;
+	} else {
+		body.commerceCode = process.env.COMMERCE_CODE;
 	}
-	body.commerceCode = process.env.COMMERCE_CODE;
 	return body;
 }
 
@@ -191,8 +197,10 @@ export default {
 			'getCustomerAddressId',
 			'getDeliveryAddress',
 			'getFlagPickUp',
+			'getFlagStatusOrder',
 			'getOrderDetails',
 			'getOrderId',
+			'getOrderInfo',
 			'getOrderStateId',
 			'getOrderStatus',
 			'getProductsToBuy',

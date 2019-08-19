@@ -32,6 +32,16 @@ const asyncActions = {
 	CREATE_ORDER: async (store, { context, body }) => {
 		const url = 'orders';
 		const { data: order } = await context.$httpSales.post(url, body);
+		asyncActions.GET_ORDER_INFO(store, { context, id: order.id });
+	},
+	UPDATE_ORDER: async (store, { context, id, body }) => {
+		const url = `orders/${id}`;
+		const { data: order } = await context.$httpSales.patch(url, body);
+		asyncActions.GET_ORDER_INFO(store, { context, id: order.id });
+	},
+	GET_ORDER_INFO: async (store, { context, id }) => {
+		const url = `orders/${id}`;
+		const { data: order } = await context.$httpSales.get(url);
 		localStorage.setItem('ecommerce-order', JSON.stringify(order));
 		store.dispatch('getOrderData', order);
 	},

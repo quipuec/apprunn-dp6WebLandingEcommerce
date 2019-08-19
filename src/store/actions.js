@@ -39,6 +39,7 @@ function updateProductSelect(context, product) {
 }
 
 function getOrderData({ commit }, order) {
+	commit('SET_ORDER_INFO', order);
 	commit('SET_FLAG_PICKUP', order.flagPickUp);
 	commit('SET_RESPONSIBLE', order.responsiblePickUp);
 	commit('SET_DELIVERY_PLACE', order.deliveryAddress);
@@ -49,6 +50,7 @@ function getOrderData({ commit }, order) {
 	commit('SET_SHIPPING_COST', order.costShipping);
 	commit('SET_CUSTOMER_ADDRESS', order.customerAddress);
 	commit('SET_ORDER_STATUS', order.orderStateId);
+	commit('SET_FLAG_STATUS_ORDER', order.flagStatusOrder);
 }
 
 const methods = {

@@ -71,6 +71,12 @@ const getters = {
 	getWayPayment(state) {
 		return state.order.paymentMethod;
 	},
+	getOrderInfo(state) {
+		return state.order.order;
+	},
+	getFlagStatusOrder(state) {
+		return state.order.flagStatusOrder;
+	},
 };
 
 export default getters;

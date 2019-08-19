@@ -48,7 +48,13 @@ export default {
 	SET_ORDER_STATUS(state, orderStatus) {
 		Vue.set(state.order, 'orderStatus', orderStatus);
 	},
+	SET_FLAG_STATUS_ORDER(state, flagStatusOrder) {
+		Vue.set(state.order, 'flagStatusOrder', flagStatusOrder);
+	},
 	SET_WAY_PAYMENT(state, wayPayment) {
 		Vue.set(state.order, 'paymentMethod', wayPayment);
+	},
+	SET_ORDER_INFO(state, order) {
+		Vue.set(state.order, 'order', order);
 	},
 };

@@ -38,9 +38,11 @@ function created() {
 }
 
 function onSelect(method) {
+	this.$store.commit('SET_WAY_PAYMENT', { wayPayment: null, bankAccountId: null });
 	this.paymentMethodSelected = method.code;
-	const bankAccountId = method.code === 'IBD' ? 1 : null;
-	this.$store.commit('SET_WAY_PAYMENT', { wayPayment: method.id, id: bankAccountId });
+	if (method.code === 'IBD') {
+		this.$store.commit('SET_WAY_PAYMENT', { wayPayment: method.id, bankAccountId: 1 });
+	}
 }
 
 function paymentMethodSelectedComponent() {
@@ -54,7 +56,7 @@ function paymentMethodSelectedComponent() {
 
 async function loadWayPayment() {
 	({ data: this.waysPayment } = await this.$httpSales.get('way-payment'));
-	this.paymentMethodSelected = 'IBD';
+	this.onSelect(this.waysPayment[2]);
 }
 
 function data() {
