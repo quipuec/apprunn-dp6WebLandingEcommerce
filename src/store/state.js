@@ -63,4 +63,5 @@ export default {
 	warehouses: [
 		{ id: 0, name: 'Seleccione una tienda' },
 	],
+	filters: [],
 };

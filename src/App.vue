@@ -79,6 +79,7 @@ function created() {
 		this.loadData();
 	}
 	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
+	this.loadFilters();
 }
 
 async function loadData() {
@@ -86,6 +87,20 @@ async function loadData() {
 	const url = `companies/${aclCode}/acl`;
 	const { data: res } = await this.$httpSales.get(url);
 	this.setLocalData(`${process.env.STORAGE_USER_KEY}::currency-default`, res.currencyDefault);
+}
+
+async function loadFilters() {
+	try {
+		const { data: response } = await this.$httpProductsPublic.get('filters-public');
+		const filters = response.map((f, index) => {
+			const newFilter = { ...f };
+			newFilter.select = index === 0;
+			return newFilter;
+		});
+		this.$store.dispatch('updateFilters', filters);
+	} catch (error) {
+		this.showGenericError();
+	}
 }
 
 function data() {
@@ -128,6 +143,7 @@ export default {
 	methods: {
 		changeMenu,
 		loadData,
+		loadFilters,
 	},
 	watch: {
 		$route: routeHandler,

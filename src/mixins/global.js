@@ -13,6 +13,16 @@ function data() {
 	};
 }
 
+Math.easeInOutQuad = (t, b, c, d) => {
+	let time = t;
+	time /= d / 2;
+	if (time < 1) {
+		return (((c / 2) * time) * time) + b;
+	}
+	time -= 1;
+	return ((-c / 2) * ((time * (time - 2)) - 1)) + b;
+};
+
 function goTo(name, options) {
 	this.$router.push({ name, ...options });
 }
@@ -91,6 +101,25 @@ function setLocalData(key, setData) {
 	return localStorage.setItem(key, JSON.stringify(setData));
 }
 
+function scrollTo(element, duration, fit) {
+	const to = document.getElementsByClassName(element)[0].offsetTop;
+	const start = window.scrollY;
+	const change = fit ? to - start : to - start - 100;
+	let currentTime = 0;
+	const increment = 20;
+
+	const animateScroll = () => {
+		currentTime += increment;
+		const val = Math.easeInOutQuad(currentTime, start, change, duration);
+		window.scrollTo(0, val);
+		if (currentTime < duration) {
+			setTimeout(animateScroll, increment);
+		}
+	};
+	animateScroll();
+	this.isVisible = false;
+}
+
 const mixin = {
 	data,
 	computed: {
@@ -109,6 +138,7 @@ const mixin = {
 		showNotification,
 		showRow,
 		stopClick,
+		scrollTo,
 	},
 };
 

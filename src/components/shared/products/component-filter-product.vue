@@ -3,7 +3,7 @@
 		<div class="swiper-filter">
 			<swiper :options="swiperOption">
 			<swiper-slide
-			v-for="filter in filters" 
+			v-for="filter in getFilters"
 			:key="filter.id">
 				<media-filter-product
 					:border-right="filter.border"
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const mediaFilterProduct = () => import('@/components/shared/products/media-filter-product');
 
 function filterSelect({ id }) {
@@ -53,14 +55,13 @@ export default {
 	components: {
 		mediaFilterProduct,
 	},
+	computed: {
+		...mapGetters([
+			'getFilters',
+		]),
+	},
 	methods: {
 		filterSelect,
-	},
-	props: {
-		filters: {
-			type: Array,
-			default: () => [],
-		},
 	},
 };
 </script>

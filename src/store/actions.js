@@ -38,6 +38,10 @@ function updateProductSelect(context, product) {
 	context.commit('UPDATE_PRODUCTS_SELECTED', product);
 }
 
+function updateFilters(context, filters) {
+	this.commit('UPDATE_FILTERS', filters);
+}
+
 const methods = {
 	clearUser,
 	setUser,
@@ -46,6 +50,7 @@ const methods = {
 	toggleLoading,
 	addProductToBuyCar,
 	updateProductSelect,
+	updateFilters,
 };
 
 export default methods;
