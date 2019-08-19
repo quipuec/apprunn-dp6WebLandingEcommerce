@@ -1,13 +1,18 @@
 <template>
-	<button class="box-filter"
-	:style="`border-right: ${borderRight ? `1px solid ${borderRight}` : null}`"
+	<button 
+		class="box-filter"
+		:style="`border-right: ${borderRight ? `1px solid ${borderRight}` : null}`"
+		@click="$emit('click', filter)"
 	>
 			<div>
-				<img :src="urlImage" alt="">
+				<img :src="filter.urlImage" :alt="filter.title">
 			</div>
 			<div class="filter-title">
-				<p class="title-filter">{{title}}</p>
-				<div class="circle-filter-product"></div>
+				<p class="title-filter">{{filter.title}}</p>
+				<div class="content-select" v-if="filter.select">
+					<div class="line"></div>
+					<div class="circle"></div>
+				</div>
 			</div>
 	</button>
 </template>
@@ -16,9 +21,11 @@
 export default {
 	name: 'filter-product',
 	props: {
-		urlImage: String,
 		borderRight: String,
-		title: String,
+		filter: {
+			default: () => {},
+			type: Object,
+		},
 	},
 };
 </script>
@@ -42,22 +49,6 @@ export default {
 	display: flex;
 	justify-content: center;
 	width: auto;
-}
-
-.circle-filter-product {
-	background-color: color(white);
-	border-radius: 50%;
-	display: none;
-	height: 4px;
-	margin-left: 4px;
-	position: relative;
-	left: 75px;
-	top: 1px;
-	width: 4px;
-}
-
-.circle-filter-product:nth-child(1) {
-	left: 305px;
 }
 
 .border-bottom-product {
@@ -88,6 +79,27 @@ export default {
 	img {
 		height: 23px;
 		width: 23px;
+	}
+}
+
+.content-select {
+	display: flex;
+	margin-left: 7px;
+	width: 100%;
+
+	.line {
+		background: color(white);
+		border-radius: 4px;
+		height: 4px;
+		margin-right: 5px;
+		width: 90%;
+	}
+
+	.circle {
+		background: color(white);
+		border-radius: 50%;
+		height: 4px;
+		width: 4px;
 	}
 }
 </style>
