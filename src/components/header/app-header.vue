@@ -1,5 +1,5 @@
 <template>
-  	<header class="app-header">
+  	<header class="app-header fixed">
 		<div class="app-wrapper">
 			<div class="flex container-call-menu">
 				<call-menu :color="baseColor" text="Categorías" @change-menu="changeMenu" :menu="menu" />

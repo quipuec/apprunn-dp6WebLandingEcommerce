@@ -57,11 +57,11 @@ export default {
 	border-right: 1px solid color(border);
 	height: 100vh;
 	position: relative;
-	width: 90%;	
+	width: 95%;	
 }
 
 .btn-menu-category {
-	left: 107%;
+	left: 104%;
 	position: absolute;
 	top: 370px;
 }
