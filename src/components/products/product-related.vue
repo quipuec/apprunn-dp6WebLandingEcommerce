@@ -34,7 +34,6 @@
 const productCard = () => import('@/components/products/product-card');
 const titleSection = () => import('@/components/home/title-section');
 
-
 function getOptions() {
 	if (this.relateds.length >= 5) {
 		return this.swiperOption;

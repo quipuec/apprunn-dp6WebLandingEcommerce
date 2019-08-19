@@ -16,7 +16,7 @@
 			<img :src="iconSvg.bill" alt="ícono de factura">
 			<div class="summary-content">
 				<h4 class="summary-title">Solicitud de Factura</h4>
-				<div>
+				<div class="bill-data">
 					<span class="mr-3">RUC: 20676555658</span>
 					<span>Razón Social: Apprun, SAC</span>
 				</div>
@@ -29,11 +29,11 @@
 import lib from '@/shared/lib';
 
 function isNotEmptyBilling() {
-	return !(lib.isEmpty(this.billing));
+	return (lib.isEmpty(this.billing));
 }
 
 function isNotEmptyDelivery() {
-	return !(lib.isEmpty(this.delivery));
+	return (lib.isEmpty(this.delivery));
 }
 
 function data() {
@@ -68,7 +68,12 @@ export default {
 	.summary-main-container {
 		align-items: center;
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-around;
+
+		@media(max-width: 600px) {
+			margin: 0 50px;
+		}
 	}
 
 	.summary-grid {
@@ -87,6 +92,18 @@ export default {
 	.summary-content-delivery {
 		align-items: flex-start;
 		display: grid;
-		grid-template-rows: repeat(3, 1fr);
+		grid-template-rows: 22px 1fr 1fr;
+		margin-bottom: 20px;
+
+		@media (max-width: 600px) {
+		}
+	}
+
+	.bill-data {
+
+		@media (max-width: 600px) {
+			display: flex;
+			flex-direction: column;
+		}
 	}
 </style>
