@@ -32,10 +32,6 @@ const sectionSettlement = () => import('@/components/home/section-settlement');
 
 function created() {
 	this.loadData();
-	const params = {
-		filters: this.getFilters[0].id,
-	};
-	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
 }
 
 

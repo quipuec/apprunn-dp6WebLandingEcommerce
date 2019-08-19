@@ -98,6 +98,10 @@ async function loadFilters() {
 			return newFilter;
 		});
 		this.$store.dispatch('updateFilters', filters);
+		const params = {
+			filters: filters[0].id,
+		};
+		this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
 	} catch (error) {
 		this.showGenericError();
 	}
