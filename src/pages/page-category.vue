@@ -17,7 +17,10 @@
 					<span class="text-breadcrumb">{{this.$route.query.categories.title}}</span>
 				</section>
 				<section class="section-filter-responsive">
-					<img src="/static/img/icons/icon-filter-category.svg" alt="" class="icon-filter">
+					<button-image
+					:data="iconFilter"
+					class="icon-filter"
+					/>
 					<button class="title-filter" @click="filterProducts">Filtrar por</button>
 				</section>
 				<section class="section-pagination-category">
@@ -61,6 +64,7 @@
 
 <script>
 const appBannerTop = () => import('@/components/header/app-banner-top');
+const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 const menuCategory = () => import('@/components/shared/category/menu-category');
 const productCard = () => import('@/components/products/product-card');
 const productsSection = () => import('@/components/products/products-section');
@@ -111,6 +115,11 @@ function data() {
 			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
 			image: 'descuento',
 		},
+		iconFilter: {
+			image: '/static/img/icons/icon-filter-category.svg',
+			name: 'filtros',
+			height: 16,
+		},
 		categoryId: null,
 		colorSecondary: process.env.COLOR_SECONDARY,
 		items: [
@@ -143,6 +152,7 @@ export default {
 	created,
 	components: {
 		appBannerTop,
+		buttonImage,
 		menuCategory,
 		sliderCategory,
 		productCard,

@@ -3,7 +3,10 @@
 		<div class="slider-category">
 			<div class="slider-category-content">
 				<div class="content-icon-broom">
-					<img src="/static/img/icons/magic-broom.svg" alt="" class="icon-broom">
+					<button-image
+					:data="broom"
+					class="icon-close"
+					 />
 					<p class="text-broom">Limpiar</p>
 				</div>
 				<div>
@@ -33,6 +36,7 @@
 
 <script>
 const appButton = () => import('@/components/shared/buttons/app-button');
+const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 const filtersCategory = () => import('@/components/shared/category/filters-category');
 const sectionCategory = () => import('@/components/shared/category/section-category');
 
@@ -40,13 +44,25 @@ function closeSlider() {
 	this.$emit('close', false);
 }
 
+function data() {
+	return {
+		broom: {
+			image: '/static/img/icons/magic-broom.svg',
+			name: 'Limpiar',
+			height: 21,
+		},
+	};
+}
+
 export default {
 	name: 'slider-category',
+	data,
 	methods: {
 		closeSlider,
 	},
 	components: {
 		appButton,
+		buttonImage,
 		filtersCategory,
 		sectionCategory,
 	},
@@ -68,10 +84,6 @@ export default {
 
 .slider-category-responsive {
 	background-color: color(border);
-}
-
-.icon-broom {
-	height: 20px;
 }
 
 .text-broom {
