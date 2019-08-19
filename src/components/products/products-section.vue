@@ -11,10 +11,6 @@
 <script>
 import { mapGetters } from 'vuex';
 
-function beforeCreate() {
-	// this.$store.dispatch('LOAD_PRODUCTS', { context: this });
-}
-
 function data() {
 	return {
 		page: 0,
@@ -24,7 +20,6 @@ function data() {
 
 export default {
 	name: 'page-products',
-	beforeCreate,
 	components: {
 		productCard: () => import('@/components/products/product-card'),
 	},
