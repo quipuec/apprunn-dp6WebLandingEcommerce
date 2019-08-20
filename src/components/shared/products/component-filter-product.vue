@@ -7,9 +7,8 @@
 			:key="filter.id">
 				<media-filter-product
 					:border-right="filter.border"
-					:url-image="filter.urlImage"
-					:title="filter.title"
-					:color="filter.color"
+					:filter="filter"
+					@click="filterSelect"
 				></media-filter-product>
 			</swiper-slide>
 			<div class="swiper-button-prev" slot="button-prev"></div>
@@ -21,6 +20,10 @@
 
 <script>
 const mediaFilterProduct = () => import('@/components/shared/products/media-filter-product');
+
+function filterSelect({ id }) {
+	this.$emit('click-filter', id);
+}
 
 function data() {
 	return {
@@ -49,6 +52,9 @@ export default {
 	name: 'component-filter-product',
 	components: {
 		mediaFilterProduct,
+	},
+	methods: {
+		filterSelect,
 	},
 	props: {
 		filters: {

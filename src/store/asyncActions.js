@@ -2,8 +2,7 @@ import lib from '@/shared/lib';
 import helper from '@/shared/helper';
 
 const asyncActions = {
-	LOAD_PRODUCTS: async ({ commit, state }, { context }) => {
-		const { params } = state.products;
+	LOAD_PRODUCTS: async ({ commit, state }, { context, params }) => {
 		const request = [];
 		if (state.token) {
 			request.push(context.$httpProducts.get('products/favorites', { params }));
