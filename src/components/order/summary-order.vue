@@ -14,7 +14,7 @@
 				<p class="summary-amount-container separate">
 					<span>Envío</span><span class="summary-amount">{{shippingCost}}</span>
 				</p>
-				<p class="summary-amount-container separate shipping">
+				<p class="summary-amount-container separate shipping" v-if="stepThree">
 					<button
 						type="button"
 						class="shipping-cost"
@@ -30,80 +30,146 @@
 		</section>
 		<section class="btns-summary-order">
 			<app-button
-				v-if="!getOrderId"
+				v-if="stepOne"
+				action='Pagar'
+				class="btn-order"
+				:background="globalColors.primary"
+				@click="goTo('buy-delivery')"
+			/>
+			<app-button
+				v-else-if="stepTwo"
 				action="Pasar a caja"
 				class="btn-order"
 				:background="globalColors.primary"
 				:disabled="invalidOrder"
-				@click="makeOrder"
+				@click="makeOrder(false)"
 			/>
 			<app-button
-				v-else action='Pagar'
+				v-else
+				action="Pagar"
 				class="btn-order"
 				:background="globalColors.primary"
-				@click="goTo('buy-payment')"
+				@click="makeOrder(true)"
 			/>
 		</section>
 	</div>
 </template>
 <script>
-import appButton from '@/components/shared/buttons/app-button';
 import { mapGetters } from 'vuex';
+import appButton from '@/components/shared/buttons/app-button';
+import lib from '@/shared/lib';
 
 function total() {
 	return (this.getTotalToBuy - this.discount) + this.shippingCost;
 }
 
-function makeOrder() {
-	const body = this.buildBody();
-	this.$store.dispatch('CREATE_ORDER', { context: this, body });
-	this.goTo('buy-delivery');
+async function makeOrder(flagFinish) {
+	const body = this.buildBody(flagFinish);
+	await this.$store.dispatch('CREATE_ORDER', { context: this, body });
+	if (flagFinish) {
+		this.goTo('buy-summary');
+	} else {
+		this.goTo('buy-payment');
+	}
 }
 
-function buildBody() {
-	return {
-		flagKardex: 1,
-		flagPickUp: 2,
-		paymentStateId: 1,
-		comments: 'Comment created by a test',
-		additionalInfo: null,
-		warehouseId: 493,
-		warehouseName: 'Lima',
-		warehouseAddress: '',
-		deliveryAddress: null,
-		responsiblePickUp: {
-			name: 'Celso Espinoza',
-			dni: '44556677',
-			phone: '998877665',
-			email: 'espinoza.arce13@gmail.com',
-		},
-		details: [
-			{
-				productId: 1,
-				discount: 0,
-				quantity: 10,
-				salePrice: 20,
-				warehouseId: 493,
-				warehouseName: 'nombre del almacen',
-			},
-			{
-				productId: 2,
-				discount: 0,
-				quantity: 15,
-				salePrice: 5,
-				warehouseId: 493,
-				warehouseName: 'nombre del almacen',
-			},
-		],
-		customerAddress: {
-			type: 1,
-			name: 'Mansión en Palo Alto',
-			addressLine1: 'Dirección de Palo Alto',
-			zipcode: '94301',
-			documentNumber: '38726496',
-		},
-		commerceCode: process.env.COMMERCE_CODE,
+function buildBody(flagFinish) {
+	const body = {
+		costShipping: this.getShippingCost,
+		customerAddressId: this.getCustomerAddressId,
+		customerAddress: this.getCustomerAddressId ? null : this.getCustomerAddress,
+		customerBill: this.getBillingData,
+		deliveryAddress: this.getDeliveryAddress,
+		details: this.getDetails(this.getOrderDetails),
+		flagPickUp: this.getFlagPickUp,
+		responsiblePickUp: this.getResponsible,
+		warehouseId: process.env.WAREHOUSE_ID,
+		warehouseName: process.env.WAREHOUSE_NAME,
+		warehouseAddress: process.env.WAREHOUSE_ADDRESS,
 	};
+	if (this.getOrderId && this.getOrderStatus) {
+		body.orderStateId = this.orderStateId;
+		body.flagStatusOrder = flagFinish ? 3 : this.getOrderStatus;
+		body.bankAccountId = flagFinish ? this.getWayPayment.bankAccountId : null;
+		body.wayPaymentId = flagFinish ? this.getWayPayment.id : null;
+	}
+	body.commerceCode = process.env.COMMERCE_CODE;
+	return body;
+}
+
+function getDetails(products) {
+	return products.map((p) => {
+		const { taxes } = p;
+		const newTaxes = this.setTaxes(taxes);
+		const newP = {
+			alternateCode: p.alternateCode,
+			brandId: lib.getDeeper('warehouseProduct.brandId')(p) || p.brandId,
+			brandName: lib.getDeeper('warehouseProduct.brand.name')(p) || p.brandName,
+			categoryId: p.categoryId,
+			categoryName: lib.getDeeper('category.name')(p) || p.categoryName,
+			codeTaxes: taxes[0].code,
+			description: p.description,
+			discount: p.discount || 0,
+			discountPercentage: p.discountPercentage || 0,
+			product: {
+				id: p.id || p.productId,
+				taxes: [...newTaxes],
+				type: lib.getDeeper('typeInfo.id')(p) || lib.getDeeper('product.type')(p),
+			},
+			productCode: p.code || p.productCode,
+			productId: p.id || p.productId,
+			productImage: p.urlImage || p.productImage,
+			productName: p.name || p.productName,
+			quantity: p.quantity,
+			salePrice: p.priceDiscount || p.salePrice,
+			stockQuantity: p.stock,
+			taxes: newTaxes,
+			unit: p.unit,
+			unitCode: p.unit.code,
+			unitConversion: 1,
+			unitId: p.unitId,
+			unitName: p.unit.name,
+			unitQuantity: p.quantity,
+			warehouseId: process.env.WAREHOUSE_ID,
+			warehouseName: process.env.WAREHOUSE_NAME,
+		};
+		return newP;
+	});
+}
+
+function setTaxes(taxes) {
+	const newTaxes = [];
+	if (!taxes && taxes.length === 0) {
+		newTaxes[0] = {
+			code: '01',
+			codeTable: 'TABLE17',
+			codePercentage: '01',
+			flagSales: true,
+			flagPurchases: false,
+		};
+	} else {
+		const tax = taxes[0];
+		newTaxes[0] = {
+			code: tax.code,
+			codeTable: tax.codeTable,
+			codePercentage: tax.codePercentage,
+			flagSales: Boolean(tax.flagSales),
+			flagPurchases: Boolean(tax.flagPurchases),
+		};
+	}
+	return newTaxes;
+}
+
+function stepThree() {
+	return lib.getDeeper('meta.step')(this.$route) === 3;
+}
+
+function stepOne() {
+	return lib.getDeeper('meta.step')(this.$route) === 1;
+}
+
+function stepTwo() {
+	return lib.getDeeper('meta.step')(this.$route) === 2;
 }
 
 function data() {
@@ -120,17 +186,33 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getBillingData',
+			'getCustomerAddress',
+			'getCustomerAddressId',
+			'getDeliveryAddress',
+			'getFlagPickUp',
+			'getOrderDetails',
 			'getOrderId',
+			'getOrderStateId',
+			'getOrderStatus',
 			'getProductsToBuy',
+			'getResponsible',
+			'getShippingCost',
 			'getTotalToBuy',
+			'getWayPayment',
 			'invalidOrder',
 		]),
+		stepOne,
+		stepThree,
+		stepTwo,
 		total,
 	},
 	data,
 	methods: {
 		buildBody,
+		getDetails,
 		makeOrder,
+		setTaxes,
 	},
 };
 </script>

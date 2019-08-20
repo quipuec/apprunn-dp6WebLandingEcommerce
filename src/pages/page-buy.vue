@@ -1,9 +1,18 @@
 <template>
 	<div class="buy-container">
-		<div v-if="stepThree">Resumen de orden - Header</div>
+		<div v-if="stepThree" class="summary">
+			<summary-in-payment
+				:delivery="{}"
+				:billing="{}"
+			/>
+		</div>
 		<div class="buy-layout">
 			<section class="big">
-				<div v-if="stepOneAndTwo">
+				<div v-if="stepOneAndTwo" class="mb-5">
+					<div class="section-title" v-if="stepTwo">
+						<img :src="logo.section" alt="logo del método de pago">
+						<h2 class="payment-section-title">PRODUCTOS </h2>
+					</div>
 					<product-in-car v-for="product in getProductToBuy" :key="product.id" :product="product"/>
 					<div class="footter-products-buy">
 						<app-button
@@ -36,6 +45,7 @@ import { mapGetters } from 'vuex';
 const appButton = () => import('@/components/shared/buttons/app-button');
 const productInCar = () => import('@/components/products/product-in-car');
 const summaryOrder = () => import('@/components/order/summary-order');
+const summaryInPayment = () => import('@/components/order/summary-in-payment');
 
 function stepOneAndTwo() {
 	const step = lib.getDeeper('meta.step')(this.$route);
@@ -46,12 +56,25 @@ function stepThree() {
 	return lib.getDeeper('meta.step')(this.$route) === 3;
 }
 
+function stepTwo() {
+	return lib.getDeeper('meta.step')(this.$route) === 2;
+}
+
+function data() {
+	return {
+		logo: {
+			section: '/static/icons/shopping-basket.svg',
+		},
+	};
+}
+
 export default {
 	name: 'page-buy',
 	components: {
 		appButton,
 		productInCar,
 		summaryOrder,
+		summaryInPayment,
 	},
 	computed: {
 		...mapGetters([
@@ -60,7 +83,9 @@ export default {
 		]),
 		stepOneAndTwo,
 		stepThree,
+		stepTwo,
 	},
+	data,
 };
 </script>
 <style lang="scss" scoped>
@@ -144,5 +169,25 @@ export default {
 		@media (max-width: 600px) {
 			width: 190px !important;
 		}
+	}
+
+	.summary {
+		border-bottom: 3px solid color(primary);
+		margin-bottom: 30px;
+		padding: 30px 0;
+	}
+
+	.payment-section-title {
+		font-size: size(large);
+		font-family: font(bold);
+		margin-left: 12px;
+		text-transform: uppercase;
+	}
+
+	.section-title {
+		align-items: baseline;
+		display: flex;
+		justify-content: flex-start;
+		margin-bottom: 40px;
 	}
 </style>

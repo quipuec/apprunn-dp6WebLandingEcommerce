@@ -96,9 +96,15 @@ function searchProduct(value) {
 	const id = value.trim() ? null : this.getFilters[0].id;
 	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
 	this.isSearchMobile = false;
-	this.goTo('page-home');
 	this.updateFilter(id);
-	this.scrollTo('transition-product-section', 800, true);
+	if (this.$route.name !== 'page-home') {
+		this.goTo('page-home');
+		setTimeout(() => {
+			this.scrollTo('transition-product-section', 800, true);
+		}, 1000);
+	} else {
+		this.scrollTo('transition-product-section', 800, true);
+	}
 }
 
 function updateFilter(id) {
