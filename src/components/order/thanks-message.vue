@@ -31,6 +31,9 @@ import lib from '@/shared/lib';
 function created() {
 	this.showSuccessVisa = !lib.isEmpty(this.getOrderInfo.gatewayAuthorizationResponse);
 	this.showSuccessDeposit = !lib.isEmpty(this.getOrderInfo.wayPaymentId);
+	console.log(this.showSuccessDeposit);
+	console.log('=======');
+	console.log(this.getOrderInfo.wayPaymentId);
 	this.showFailure = !lib.isEmpty(this.getOrderInfo.gatewayErrorCode);
 }
 

@@ -61,7 +61,7 @@ function stepTwo() {
 }
 
 function getProductToBuyHandler(newProducts) {
-	if (newProducts.length === 0) {
+	if (newProducts && newProducts.length === 0) {
 		this.goTo('page-home');
 	}
 }

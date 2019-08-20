@@ -4,15 +4,18 @@ const twoDecimals = lib.decimals(2);
 
 const getters = {
 	getProductToBuy(state) {
-		const products = lib.map(
-			lib.setNewProperty(
-				'total',
-				({ salePrice, priceDiscount, quantity }) =>
-					twoDecimals(quantity * (salePrice || priceDiscount)),
-			),
-			state.order.products,
-		);
-		return products;
+		if (state.order.products) {
+			const products = lib.map(
+				lib.setNewProperty(
+					'total',
+					({ salePrice, priceDiscount, quantity }) =>
+						twoDecimals(quantity * (salePrice || priceDiscount)),
+				),
+				state.order.products,
+			);
+			return products;
+		}
+		return [];
 	},
 	getOrderId(state) {
 		return state.order.id;
