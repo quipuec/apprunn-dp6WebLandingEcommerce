@@ -9,6 +9,7 @@ export default {
 			color: 'primary',
 		},
 	},
+	currencyDefault: null,
 	directions: [
 		{ id: 0, addressLine1: 'Nueva dirección' },
 	],
@@ -29,8 +30,10 @@ export default {
 		details: null,
 		flagBill: false,
 		flagPickUp: 1,
+		flagStatusOrder: null,
 		id: null,
 		list: [],
+		order: null,
 		orderStatus: null,
 		paymentMethod: {
 			bankAccountId: null,
@@ -41,6 +44,7 @@ export default {
 		shippingCost: 0,
 		status: [],
 		total: null,
+		waysPayments: null,
 	},
 	pollData: {
 		progress: 0,

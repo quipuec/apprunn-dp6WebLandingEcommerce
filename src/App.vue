@@ -82,10 +82,7 @@ function created() {
 }
 
 async function loadData() {
-	const aclCode = process.env.ACL_COMPANY_CODE;
-	const url = `companies/${aclCode}/acl`;
-	const { data: res } = await this.$httpSales.get(url);
-	this.setLocalData(`${process.env.STORAGE_USER_KEY}::currency-default`, res.currencyDefault);
+	this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
 }
 
 function data() {

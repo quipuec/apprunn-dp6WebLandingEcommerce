@@ -48,7 +48,20 @@ export default {
 	SET_ORDER_STATUS(state, orderStatus) {
 		Vue.set(state.order, 'orderStatus', orderStatus);
 	},
+	SET_FLAG_STATUS_ORDER(state, flagStatusOrder) {
+		Vue.set(state.order, 'flagStatusOrder', flagStatusOrder);
+	},
 	SET_WAY_PAYMENT(state, wayPayment) {
 		Vue.set(state.order, 'paymentMethod', wayPayment);
+	},
+	SET_ORDER_INFO(state, order) {
+		Vue.set(state.order, 'order', order);
+	},
+	EMPTY_CAR(state) {
+		localStorage.removeItem('ecommerce::product-select');
+		Vue.set(state.order, 'products', null);
+	},
+	SET_WAYS_PAYMENT(state, waysPayments) {
+		Vue.set(state.order, 'waysPayments', waysPayments);
 	},
 };

@@ -40,7 +40,6 @@
 	</div>
 </template>
 <script>
-import lib from '@/shared/lib';
 
 const commentsComponent = () => import('@/components/shared/icons/comments-component');
 const textArea = () => import('@/components/shared/inputs/text-area');
@@ -64,8 +63,7 @@ function clickQuantity(val) {
 }
 
 function stepOne() {
-	const step = lib.getDeeper('meta.step')(this.$route);
-	return step === 1;
+	return this.$route.meta.step === 1;
 }
 
 function deleteProduct() {

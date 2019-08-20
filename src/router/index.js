@@ -7,6 +7,7 @@ import Order from './buy';
 import Help from './help';
 import Category from './category';
 import ProductDetail from './detail-product';
+import SummaryOrder from './summary-order';
 
 export default function (Vue) {
 	Vue.use(Router);
@@ -18,14 +19,15 @@ export default function (Vue) {
 				name: 'page-home',
 				component: () => import('@/pages/page-home'),
 			},
-			Help,
 			Category,
 			Components,
+			Help,
 			login,
 			Order,
+			ProductDetail,
 			Profile,
 			register,
-			ProductDetail,
+			SummaryOrder,
 		],
 		scrollBehavior() {
 			return { x: 0, y: 0 };

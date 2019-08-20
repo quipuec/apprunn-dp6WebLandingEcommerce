@@ -81,11 +81,15 @@ function noStock() {
 }
 
 function addToCar() {
-	if (!this.noStock) {
-		this.$store.dispatch('addProductToBuyCar', this.data);
-		this.goTo('buy');
+	if (this.token) {
+		if (!this.noStock) {
+			this.$store.dispatch('addProductToBuyCar', this.data);
+			this.goTo('buy');
+		} else {
+			this.showGenericError('Producto sin stock');
+		}
 	} else {
-		this.showGenericError('Producto sin stock');
+		this.showGenericError('Debe iniciar sesión');
 	}
 }
 
