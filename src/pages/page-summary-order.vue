@@ -5,8 +5,11 @@
 			<products-buyed class="products"/>
 			<summary-order class="amounts"/>
 		</section>
-		<section>
+		<section class="summary">
 			<summary-in-payment/>
+		</section>
+		<section class="payment">
+			<payment-methods/>
 		</section>
 	</div>
 </template>
@@ -16,10 +19,12 @@ const productsBuyed = () => import('@/components/order/products-buyed');
 const summaryOrder = () => import('@/components/order/summary-order');
 const thanksMessage = () => import('@/components/order/thanks-message');
 const summaryInPayment = () => import('@/components/order/summary-in-payment');
+const paymentMethods = () => import('@/components/order/payment-method');
 
 export default {
 	name: 'page-summary-order',
 	components: {
+		paymentMethods,
 		productsBuyed,
 		summaryInPayment,
 		summaryOrder,
@@ -46,5 +51,15 @@ export default {
 		flex: 1 1 5%;
 		height: 100%;
 		margin: 0 10px;
+	}
+
+	.summary {
+		border-bottom: 1px solid color(border);
+		border-top: 1px solid color(border);
+		padding: 35px 0;
+	}
+
+	.payment {
+		margin: 0 130px 50px;
 	}
 </style>

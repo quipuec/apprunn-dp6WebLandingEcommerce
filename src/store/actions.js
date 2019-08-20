@@ -40,12 +40,14 @@ function updateProductSelect(context, product) {
 
 function getOrderData({ commit }, order) {
 	const { customerBill } = order;
-	const { address, ruc, rzSocial } = customerBill;
-	commit('SET_ORDER_INFO', order);
+	if (customerBill) {
+		const { address, ruc, rzSocial } = customerBill;
+		commit('SET_BILLING_DATA', { address, ruc, rzSocial });
+	}
+	commit('SET_ORDER_INFO', { ...order });
 	commit('SET_FLAG_PICKUP', order.flagPickUp);
 	commit('SET_RESPONSIBLE', order.responsiblePickUp);
 	commit('SET_DELIVERY_PLACE', order.deliveryAddress);
-	commit('SET_BILLING_DATA', { address, ruc, rzSocial });
 	commit('SET_ORDER_ID', order.id);
 	commit('SET_ORDER_TOTAL', order.total);
 	commit('SET_ORDER_DETAILS', order.details);

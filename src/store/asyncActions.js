@@ -130,6 +130,13 @@ const asyncActions = {
 		const { data: waysPayment } = await context.$httpSales.get('way-payment');
 		commit('SET_WAYS_PAYMENT', waysPayment);
 	},
+	SET_CURRENCY_DEFAULT: async ({ commit }, context) => {
+		const aclCode = process.env.ACL_COMPANY_CODE;
+		const url = `companies/${aclCode}/acl`;
+		const { data: res } = await context.$httpSales.get(url);
+		context.setLocalData(`${process.env.STORAGE_USER_KEY}::currency-default`, res.currencyDefault);
+		commit('SET_CURRENCY_DEFAULT', res.currencyDefault);
+	},
 };
 
 export default asyncActions;
