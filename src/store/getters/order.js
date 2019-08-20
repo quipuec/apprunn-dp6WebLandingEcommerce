@@ -28,7 +28,8 @@ const getters = {
 				twoDecimals((priceDiscount || salePrice) * quantity) + acc, 0);
 	},
 	getTotalQuantityProducts(state) {
-		return state.order.products.length;
+		const { products } = state.order;
+		return products ? products.length : 0;
 	},
 	getFlagPickUp(state) {
 		return state.order.flagPickUp;

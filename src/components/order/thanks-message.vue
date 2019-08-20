@@ -29,11 +29,12 @@ import { mapGetters } from 'vuex';
 import lib from '@/shared/lib';
 
 function created() {
+	this.updateFlags();
+}
+
+function updateFlags() {
 	this.showSuccessVisa = !lib.isEmpty(this.getOrderInfo.gatewayAuthorizationResponse);
 	this.showSuccessDeposit = !lib.isEmpty(this.getOrderInfo.wayPaymentId);
-	console.log(this.showSuccessDeposit);
-	console.log('=======');
-	console.log(this.getOrderInfo.wayPaymentId);
 	this.showFailure = !lib.isEmpty(this.getOrderInfo.gatewayErrorCode);
 }
 
@@ -65,6 +66,10 @@ function closeDeposit() {
 	this.showSuccessDeposit = !this.showSuccessDeposit;
 }
 
+function wayPaymentIdHandler(newWayPayment) {
+	this.showSuccessDeposit = Boolean(newWayPayment);
+}
+
 function data() {
 	return {
 		showSuccessDeposit: true,
@@ -92,6 +97,11 @@ export default {
 		closeDeposit,
 		closeFailure,
 		closeVisa,
+		updateFlags,
+		wayPaymentIdHandler,
+	},
+	watch: {
+		'getOrderInfo.wayPaymentId': wayPaymentIdHandler,
 	},
 };
 </script>

@@ -73,7 +73,6 @@ async function makeOrder(flagFinish) {
 	await this.$store.dispatch(dispatchName, dispatchObj);
 	if (flagFinish) {
 		this.goTo('buy-summary');
-		this.$store.commit('EMPTY_CAR');
 	} else {
 		this.goTo('buy-payment');
 	}

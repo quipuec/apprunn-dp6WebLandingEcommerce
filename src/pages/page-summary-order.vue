@@ -21,8 +21,18 @@ const thanksMessage = () => import('@/components/order/thanks-message');
 const summaryInPayment = () => import('@/components/order/summary-in-payment');
 const paymentMethods = () => import('@/components/order/payment-method');
 
+function mounted() {
+	this.$store.commit('EMPTY_CAR');
+}
+
+function beforeRouteLeave(to, from, next) {
+	this.$store.dispatch('SET_DEFAULT_VALUES');
+	next();
+}
+
 export default {
 	name: 'page-summary-order',
+	beforeRouteLeave,
 	components: {
 		paymentMethods,
 		productsBuyed,
@@ -30,6 +40,7 @@ export default {
 		summaryOrder,
 		thanksMessage,
 	},
+	mounted,
 };
 </script>
 <style lang="scss" scoped>
