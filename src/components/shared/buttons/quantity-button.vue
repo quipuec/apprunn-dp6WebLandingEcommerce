@@ -10,7 +10,7 @@ export default {
 	name: 'quantity-button',
 	props: {
 		number: {
-			default: 1,
+			default: () => 1,
 			type: Number,
 		},
 	},

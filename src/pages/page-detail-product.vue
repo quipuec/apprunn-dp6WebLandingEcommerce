@@ -16,7 +16,7 @@
 				/>
 		</div>
 		<div class="detail-tab-publicity">
-			<product-publicity class="container-publicity desktop"/>
+			<product-publicity class="container-publicity desktop" v-if="false"/>
 			<product-tab 
 				class="container-product-tab"
 				:tabs="tabs"
