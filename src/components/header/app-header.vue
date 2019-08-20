@@ -93,7 +93,6 @@ function closeModal() {
 }
 
 function handleScroll() {
-	console.log(window.scrollY);
 	this.scrolled = window.scrollY > 87;
 }
 
