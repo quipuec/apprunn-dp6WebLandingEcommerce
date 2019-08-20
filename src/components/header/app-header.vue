@@ -20,7 +20,8 @@
 					:class="isSearchMobile ? 'open' : null">
 					<app-search 
 						image="/static/img/search.svg"
-						color="#4a4a4a"/>
+						color="#4a4a4a"
+						@search="searchProduct"/>
 					<button-image 
 						:data="close" 
 						class="icon-close"
@@ -40,7 +41,7 @@
 					if-number
 					:data="imagesButton[2]"
 					:number="totalProducts"
-					@click-image="goTo('buy')"
+					@click-image="goShopping"
 				/>
 			</div>
 		</div>
@@ -96,6 +97,45 @@ function handleScroll() {
 	this.scrolled = window.scrollY > 87;
 }
 
+function getData($event) {
+	this.searchText = $event.target.value;
+}
+
+function searchProduct(value) {
+	const params = {
+		search: value.trim() ? value : null,
+	};
+	const id = value.trim() ? null : this.getFilters[0].id;
+	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
+	this.isSearchMobile = false;
+	this.updateFilter(id);
+	if (this.$route.name !== 'page-home') {
+		this.goTo('page-home');
+		setTimeout(() => {
+			this.scrollTo('transition-product-section', 800, true);
+		}, 1000);
+	} else {
+		this.scrollTo('transition-product-section', 800, true);
+	}
+}
+
+function updateFilter(id) {
+	const filters = this.getFilters.map((f) => {
+		const newFilter = { ...f };
+		newFilter.select = f.id === id;
+		return newFilter;
+	});
+	this.$store.dispatch('updateFilters', filters);
+}
+
+function goShopping() {
+	if (this.token) {
+		this.goTo('buy');
+	} else {
+		this.showGenericError('Debe iniciar sesión');
+	}
+}
+
 function data() {
 	return {
 		baseColor: process.env.COLOR_BASE,
@@ -129,6 +169,7 @@ function data() {
 		isSearchMobile: false,
 		modalLogin: false,
 		scrolled: false,
+		searchText: null,
 	};
 }
 
@@ -144,17 +185,22 @@ export default {
 		...mapGetters([
 			'token',
 			'totalProducts',
+			'getFilters',
 		]),
 	},
 	created,
 	data,
 	destroyed,
 	methods: {
-		toogleSearch,
 		changeMenu,
-		openModalLogin,
 		closeModal,
 		handleScroll,
+		getData,
+		goShopping,
+		openModalLogin,
+		searchProduct,
+		updateFilter,
+		toogleSearch,
 	},
 	mounted,
 	props: {

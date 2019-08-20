@@ -89,7 +89,6 @@ export default {
 <style lang="scss" scoped>
 li {
 	color: color(dark);
-
 }
 
 .title-category {
@@ -104,7 +103,7 @@ li {
 	align-items: center;
 	border-bottom: 3px solid color(primary); 
 	display: flex;
-	padding-bottom: 13px;
+	padding: 15px 20px;
 }
 
 .title-list {

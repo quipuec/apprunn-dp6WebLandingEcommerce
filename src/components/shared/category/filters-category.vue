@@ -1,7 +1,13 @@
 <template>
 	<div class="filters-category">
 		<div class="section-filter-row">
-			<p class="title-section">Filtros</p>
+			<div class="content-filter-title">
+				<button-image
+				:data="iconFilter"
+				></button-image>
+				<p class="title-section">Filtros</p>
+			</div>
+			<div>
 				<button-image
 				:data="arrowUp"
 				@click-image="closeCategory"
@@ -11,8 +17,9 @@
 				@click-image="openFilters"
 				:data="arrowDown"
 				v-if="closeFilters"></button-image>
+			</div>
 		</div>
-		<div v-if="contentFilters">
+		<div class="content-filter" v-if="contentFilters">
 			<p class="text-price">Precio</p>
       	<v-layout row>
       		<v-flex shrink class="input-number-price-min">
@@ -131,6 +138,11 @@ function data() {
 			name: 'down',
 			height: 15,
 		},
+		iconFilter: {
+			image: '/static/img/icons/filter-category-red.svg',
+			name: 'icon-filter',
+			height: 21,
+		},
 		closeFilters: true,
 		contentFilters: true,
 		openUp: false,
@@ -168,7 +180,7 @@ export default {
 	color: color(primary);
 	font-family: font(bold);
 	font-size: size(xlarge);
-	margin-bottom: 0;
+	margin: 0 0 0 11px;
 }
 
 .text-price {
@@ -183,7 +195,7 @@ export default {
 	border-bottom: 3px solid color(primary);
 	display: flex;
 	justify-content: space-between;
-	padding-bottom: 10px;
+	padding: 0 20px 15px 20px;
 	width: 100%;
 }
 
@@ -228,5 +240,17 @@ export default {
 
 .input-number-price-max {
 	width: 20px;
+}
+
+.content-filter {
+	padding: 0 30px;
+}
+
+.icon-filter {
+	height: 21px;
+}
+
+.content-filter-title {
+	display: flex;
 }
 </style>

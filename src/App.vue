@@ -1,7 +1,7 @@
 <template>
 	<v-app class="main-container">
 		<app-banner-top :data="bannerTop"/>
-		<app-header 
+		<app-header
 			:logo="logo" 
 			@change-menu="changeMenu" 
 			:menu="showMenu"
@@ -79,13 +79,29 @@ function created() {
 		this.loadData();
 	}
 	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
+	this.loadFilters();
 }
 
 async function loadData() {
-	const aclCode = process.env.ACL_COMPANY_CODE;
-	const url = `companies/${aclCode}/acl`;
-	const { data: res } = await this.$httpSales.get(url);
-	this.setLocalData(`${process.env.STORAGE_USER_KEY}::currency-default`, res.currencyDefault);
+	this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
+}
+
+async function loadFilters() {
+	try {
+		const { data: response } = await this.$httpProductsPublic.get('filters-public');
+		const filters = response.map((f, index) => {
+			const newFilter = { ...f };
+			newFilter.select = index === 0;
+			return newFilter;
+		});
+		this.$store.dispatch('updateFilters', filters);
+		const params = {
+			filters: filters[0].id,
+		};
+		this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
+	} catch (error) {
+		this.showGenericError();
+	}
 }
 
 function data() {
@@ -128,6 +144,7 @@ export default {
 	methods: {
 		changeMenu,
 		loadData,
+		loadFilters,
 	},
 	watch: {
 		$route: routeHandler,

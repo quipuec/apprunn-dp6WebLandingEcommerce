@@ -4,26 +4,32 @@ const twoDecimals = lib.decimals(2);
 
 const getters = {
 	getProductToBuy(state) {
-		const products = lib.map(
-			lib.setNewProperty(
-				'total',
-				({ salePrice, priceDiscount, quantity }) =>
-					twoDecimals(quantity * (salePrice || priceDiscount)),
-			),
-			state.order.products,
-		);
-		return products;
+		if (state.order.products) {
+			const products = lib.map(
+				lib.setNewProperty(
+					'total',
+					({ salePrice, priceDiscount, quantity }) =>
+						twoDecimals(quantity * (salePrice || priceDiscount)),
+				),
+				state.order.products,
+			);
+			return products;
+		}
+		return [];
 	},
 	getOrderId(state) {
 		return state.order.id;
 	},
 	getTotalToBuy(state) {
-		return state.order.products.reduce(
+		const { products, order } = state.order;
+		const newProducts = order ? order.details : products;
+		return newProducts.reduce(
 			(acc, { priceDiscount, salePrice, quantity }) =>
 				twoDecimals((priceDiscount || salePrice) * quantity) + acc, 0);
 	},
 	getTotalQuantityProducts(state) {
-		return state.order.products.length;
+		const { products } = state.order;
+		return products ? products.length : 0;
 	},
 	getFlagPickUp(state) {
 		return state.order.flagPickUp;
@@ -48,7 +54,9 @@ const getters = {
 		return state.order.status;
 	},
 	getOrderDetails(state) {
-		return state.order.products;
+		const { products, order } = state.order;
+		const newProducts = order ? order.details : products;
+		return newProducts;
 	},
 	getResponsible(state) {
 		return state.order.responsible;
@@ -70,6 +78,15 @@ const getters = {
 	},
 	getWayPayment(state) {
 		return state.order.paymentMethod;
+	},
+	getOrderInfo(state) {
+		return state.order.order;
+	},
+	getFlagStatusOrder(state) {
+		return state.order.flagStatusOrder;
+	},
+	getWaysPayments(state) {
+		return state.order.waysPayments;
 	},
 };
 

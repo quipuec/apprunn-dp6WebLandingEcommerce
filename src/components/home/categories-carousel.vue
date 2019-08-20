@@ -123,6 +123,7 @@ export default {
 		}
 
 		.image {
+			filter: brightness(0) invert(1);
 			height: 67px;
 			position: absolute;
 
