@@ -70,6 +70,10 @@ function genders(state) {
 	return state.genders;
 }
 
+function getFilters(state) {
+	return state.filters;
+}
+
 const methods = {
 	companyLogo,
 	genders,
@@ -90,6 +94,7 @@ const methods = {
 	userName,
 	getCategories,
 	totalProducts,
+	getFilters,
 };
 
 export default methods;

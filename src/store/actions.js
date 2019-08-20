@@ -38,6 +38,10 @@ function updateProductSelect(context, product) {
 	context.commit('UPDATE_PRODUCTS_SELECTED', product);
 }
 
+function updateFilters(context, filters) {
+	this.commit('UPDATE_FILTERS', filters);
+}
+
 function getOrderData({ commit }, order) {
 	const { customerBill } = order;
 	if (customerBill) {
@@ -82,6 +86,7 @@ const methods = {
 	toggleLoading,
 	addProductToBuyCar,
 	updateProductSelect,
+	updateFilters,
 	SET_DEFAULT_VALUES,
 };
 

@@ -90,6 +90,7 @@ export default {
 			border-radius: 5px;
 			height: 330px;
 			margin: 3px;
+			max-width: 202px;
 		}
 
 		&.small {

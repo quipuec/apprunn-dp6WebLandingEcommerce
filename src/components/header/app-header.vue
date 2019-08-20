@@ -20,7 +20,8 @@
 					:class="isSearchMobile ? 'open' : null">
 					<app-search 
 						image="/static/img/search.svg"
-						color="#4a4a4a"/>
+						color="#4a4a4a"
+						@search="searchProduct"/>
 					<button-image 
 						:data="close" 
 						class="icon-close"
@@ -84,6 +85,37 @@ function closeModal() {
 	this.modalLogin = false;
 }
 
+function getData($event) {
+	this.searchText = $event.target.value;
+}
+
+function searchProduct(value) {
+	const params = {
+		search: value.trim() ? value : null,
+	};
+	const id = value.trim() ? null : this.getFilters[0].id;
+	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
+	this.isSearchMobile = false;
+	this.updateFilter(id);
+	if (this.$route.name !== 'page-home') {
+		this.goTo('page-home');
+		setTimeout(() => {
+			this.scrollTo('transition-product-section', 800, true);
+		}, 1000);
+	} else {
+		this.scrollTo('transition-product-section', 800, true);
+	}
+}
+
+function updateFilter(id) {
+	const filters = this.getFilters.map((f) => {
+		const newFilter = { ...f };
+		newFilter.select = f.id === id;
+		return newFilter;
+	});
+	this.$store.dispatch('updateFilters', filters);
+}
+
 function goShopping() {
 	if (this.token) {
 		this.goTo('buy');
@@ -124,6 +156,7 @@ function data() {
 		},
 		isSearchMobile: false,
 		modalLogin: false,
+		searchText: null,
 	};
 }
 
@@ -139,15 +172,19 @@ export default {
 		...mapGetters([
 			'token',
 			'totalProducts',
+			'getFilters',
 		]),
 	},
 	data,
 	methods: {
 		changeMenu,
 		closeModal,
+		getData,
 		goShopping,
-		toogleSearch,
 		openModalLogin,
+		searchProduct,
+		updateFilter,
+		toogleSearch,
 	},
 	mounted,
 	props: {
