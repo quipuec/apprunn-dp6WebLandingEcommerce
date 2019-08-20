@@ -96,6 +96,7 @@ export default {
 	.thanks-content {
 		align-items: center;
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: space-between;
 		margin: 0 58px;
 	}
@@ -104,15 +105,43 @@ export default {
 		font-family: font(bold);
 		font-size: size(sbig);
 		text-transform: uppercase;
+
+		@media (max-width: 600px) {
+			margin-bottom: 50px;
+			text-align: center;
+		}
 	}
 
 	.thanks-order-summary {
 		font-family: font(demi);
 		font-size: size(medium);
+
+		@media (max-width: 600px) {
+			align-items: center;
+			display: flex;
+			flex-direction: column;
+			margin: auto;
+
+			span {
+				border-bottom: 1px solid color(dark);
+				margin-bottom: 10px;
+				padding-bottom: 10px;
+				text-align: center;
+				width: 100%;
+			}
+
+			span:last-child {
+				border-bottom: none;
+			}
+		}
 	}
 
 	.separater {
 		margin: 0 15px;
+
+		@media (max-width: 600px) {
+			display: none;
+		}
 	}
 
 	.thanks-fail,

@@ -120,6 +120,7 @@ export default {
 		justify-content: space-around;
 
 		@media(max-width: 600px) {
+			justify-content: flex-start;
 			margin: 0 50px;
 		}
 	}

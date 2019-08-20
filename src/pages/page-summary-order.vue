@@ -39,6 +39,10 @@ export default {
 		justify-content: flex-start;
 		flex-wrap: wrap;
 		margin: 65px 80px;
+
+		@media (max-width: 600px) {
+			margin: auto;
+		}
 	}
 
 	.products {
@@ -61,5 +65,9 @@ export default {
 
 	.payment {
 		margin: 0 130px 50px;
+
+		@media (max-width: 600px) {
+			margin: auto;
+		}
 	}
 </style>

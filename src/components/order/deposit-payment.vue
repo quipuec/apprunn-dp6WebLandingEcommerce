@@ -104,6 +104,10 @@ export default {
 
 	.deposit-wrapper {
 		width: 345px;
+
+		@media (max-width: 600px) {
+			margin: 0 auto 30px;
+		}
 	}
 
 	.deposit-select-bank {
