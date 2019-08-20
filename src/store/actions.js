@@ -58,6 +58,7 @@ function getOrderData({ commit }, order) {
 }
 
 function SET_DEFAULT_VALUES({ commit }) {
+	localStorage.removeItem('ecommerce-order');
 	commit('SET_BILLING_DATA', null);
 	commit('SET_ORDER_INFO', null);
 	commit('SET_CUSTOMER_ADDRESS', null);
