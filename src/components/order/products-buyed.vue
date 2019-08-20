@@ -5,7 +5,7 @@
 				<div class="grid-product">
 					<span class="product-name">{{product.description}}</span>
 					<span class="product-quantity">Cantidad: {{product.quantity}}</span>
-					<h3 class="product-total">{{getCurrencySymbol}}{{product.total}}</h3>
+					<h3 class="product-total">{{getCurrencySymbol}}. {{product.total}}</h3>
 				</div>
 			</li>
 		</ol>

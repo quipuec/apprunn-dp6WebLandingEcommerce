@@ -1,6 +1,13 @@
 <template>
 	<div class="deposit-container">
-		<div class="deposit-wrapper">
+		<div class="deposit-wrapper" v-if="stepFour">
+			<div class="deposit-select-bank">
+				<img :src="logo.bcp" alt="logo de banco">
+			</div>
+			<h4 class="deposit-title">¡Gracias por comprar en MRC!</h4>
+			<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago, puedes utilizar la Banca por Internet BCP , Agentes del BCP (hasta S/ 800.00) y Oficinas BCP a Nivel nacional con tu número de pedido.</p>
+		</div>
+		<div class="deposit-wrapper" v-else>
 			<v-radio-group  v-model="selectedBank">
 				<div class="deposit-select-bank">
 					<v-radio value="bcp"></v-radio>
@@ -21,6 +28,10 @@
 </template>
 <script>
 
+function stepFour() {
+	return this.$route.meta.step === 4;
+}
+
 function data() {
 	return {
 		logo: {
@@ -33,6 +44,9 @@ function data() {
 
 export default {
 	name: 'deposit-payment',
+	computed: {
+		stepFour,
+	},
 	data,
 };
 </script>
@@ -90,6 +104,10 @@ export default {
 
 	.deposit-wrapper {
 		width: 345px;
+
+		@media (max-width: 600px) {
+			margin: 0 auto 30px;
+		}
 	}
 
 	.deposit-select-bank {

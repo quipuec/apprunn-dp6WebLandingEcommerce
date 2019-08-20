@@ -41,7 +41,7 @@
 					if-number
 					:data="imagesButton[2]"
 					:number="totalProducts"
-					@click-image="goTo('buy')"
+					@click-image="goShopping"
 				/>
 			</div>
 		</div>
@@ -116,6 +116,14 @@ function updateFilter(id) {
 	this.$store.dispatch('updateFilters', filters);
 }
 
+function goShopping() {
+	if (this.token) {
+		this.goTo('buy');
+	} else {
+		this.showGenericError('Debe iniciar sesión');
+	}
+}
+
 function data() {
 	return {
 		baseColor: process.env.COLOR_BASE,
@@ -169,13 +177,14 @@ export default {
 	},
 	data,
 	methods: {
-		toogleSearch,
 		changeMenu,
-		openModalLogin,
 		closeModal,
 		getData,
+		goShopping,
+		openModalLogin,
 		searchProduct,
 		updateFilter,
+		toogleSearch,
 	},
 	mounted,
 	props: {
