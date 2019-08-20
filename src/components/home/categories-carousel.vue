@@ -12,6 +12,7 @@
 						class="container-big-category" 
 						@mouseover="hoverCategory(index)"
 						@mouseleave="leaveCategory(index)"
+						@click="goToCategory(category)"
 					>
 						<div 
 							class="container-category-image"
@@ -45,6 +46,10 @@ function hoverCategory(index) {
 
 function leaveCategory(index) {
 	this.categories[index].hover = false;
+}
+
+function goToCategory(category) {
+	this.goTo('category', { query: { id: category.id, categories: category } });
 }
 
 function data() {
@@ -82,6 +87,7 @@ export default {
 	},
 	methods: {
 		hoverCategory,
+		goToCategory,
 		leaveCategory,
 	},
 	props: {
