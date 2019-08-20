@@ -1,12 +1,14 @@
 <template>
 	<div class="deposit-container">
 		<div class="deposit-wrapper">
-			<div class="deposit-select-bank">
-				<v-radio v-model="selectedBank" value="bcp"></v-radio>
-				<img :src="logo.bcp" alt="logo de banco">
-			</div>
-			<h4 class="deposit-title">Banco de crédito BCP</h4>
-			<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago, puedes utilizar la Banca por Internet BCP , Agentes del BCP (hasta S/ 800.00) y Oficinas BCP a Nivel nacional con tu número de pedido.</p>
+			<v-radio-group  v-model="selectedBank">
+				<div class="deposit-select-bank">
+					<v-radio value="bcp"></v-radio>
+					<img :src="logo.bcp" alt="logo de banco">
+				</div>
+				<h4 class="deposit-title">Banco de crédito BCP</h4>
+				<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago, puedes utilizar la Banca por Internet BCP , Agentes del BCP (hasta S/ 800.00) y Oficinas BCP a Nivel nacional con tu número de pedido.</p>
+			</v-radio-group>
 		</div>
 		<div class="bank-account-container">
 			<h4 class="deposit-bank">Cuenta Bancaria MRC:</h4>
@@ -25,7 +27,7 @@ function data() {
 			bbva: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/logo-bbva.png',
 			bcp: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/logo-bcp.png',
 		},
-		selectedBank: '',
+		selectedBank: 'bcp',
 	};
 }
 

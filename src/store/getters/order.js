@@ -4,8 +4,14 @@ const twoDecimals = lib.decimals(2);
 
 const getters = {
 	getProductToBuy(state) {
-		const products = state.order.products.map(lib.setNewProperty(
-			'total', ({ priceDiscount, quantity }) => twoDecimals(quantity * priceDiscount)));
+		const products = lib.map(
+			lib.setNewProperty(
+				'total',
+				({ salePrice, priceDiscount, quantity }) =>
+					twoDecimals(quantity * (salePrice || priceDiscount)),
+			),
+			state.order.products,
+		);
 		return products;
 	},
 	getOrderId(state) {
@@ -13,7 +19,8 @@ const getters = {
 	},
 	getTotalToBuy(state) {
 		return state.order.products.reduce(
-			(acc, { priceDiscount, quantity }) => twoDecimals(priceDiscount * quantity) + acc, 0);
+			(acc, { priceDiscount, salePrice, quantity }) =>
+				twoDecimals((priceDiscount || salePrice) * quantity) + acc, 0);
 	},
 	getTotalQuantityProducts(state) {
 		return state.order.products.length;
@@ -35,13 +42,34 @@ const getters = {
 		return state.order.flagBill;
 	},
 	getOrders(state) {
-		return state.order.list;
+		return state.order.products;
 	},
 	getStatus(state) {
 		return state.order.status;
 	},
 	getOrderDetails(state) {
-		return state.order.details;
+		return state.order.products;
+	},
+	getResponsible(state) {
+		return state.order.responsible;
+	},
+	getShippingCost(state) {
+		return state.order.shippingCost;
+	},
+	getCustomerAddress(state) {
+		return state.order.customerAddress;
+	},
+	getCustomerAddressId(state) {
+		return state.order.customerAddressId;
+	},
+	getBillingData(state) {
+		return state.order.bill;
+	},
+	getOrderStatus(state) {
+		return state.order.orderStatus;
+	},
+	getWayPayment(state) {
+		return state.order.paymentMethod;
 	},
 };
 

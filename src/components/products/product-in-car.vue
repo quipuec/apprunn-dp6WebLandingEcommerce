@@ -1,19 +1,25 @@
 <template>
 	<div class="product-container">
 		<section class="grid-areas">
-			<img :src="product.urlImage" alt="imagen del producto" class="product-img image">
+			<img :src="product.productImage || product.urlImage" alt="imagen del producto" class="product-img image">
 			<div class="description">
 				<p class="product-title">Producto</p>
 				<p class="product-content">{{product.description}}</p>
-				<p class="product-brand">{{product.warehouseProduct.brand.name}}</p>
+				<p class="product-brand">{{product.brandName || product.warehouseProduct.brand.name}}</p>
 			</div>
 			<div class="price text-xs-center">
 				<p class="product-title">Precio UND</p>
-				<p class="product-price">{{product.priceDiscount}}</p>
+				<p class="product-price">{{product.salePrice || product.priceDiscount}}</p>
 			</div>
 			<div class="quantity text-xs-center">
 				<p class="product-title">Cantidad</p>
-				<p class="product-quantity">{{product.quantity}}</p>
+				<quantityButton
+					v-if="stepOne"
+					class="continer-quantity-button"
+					:number="product.quantity"
+					@click="clickQuantity"
+				/>
+				<p class="product-quantity" v-else>{{product.quantity}}</p>
 			</div>
 			<div class="total text-xs-center">
 				<p class="product-title">Total</p>
@@ -28,18 +34,42 @@
 			</div>
 		</section>
 		<section class="actions">
-			<trash-component class="action"/>
+			<trash-component class="action" @click="deleteProduct"/>
 			<comments-component class="action" @click="showComments"/>
 		</section>
 	</div>
 </template>
 <script>
-const textArea = () => import('@/components/shared/inputs/text-area');
+import lib from '@/shared/lib';
+
 const commentsComponent = () => import('@/components/shared/icons/comments-component');
+const textArea = () => import('@/components/shared/inputs/text-area');
 const trashComponent = () => import('@/components/shared/icons/trash-component');
+const quantityButton = () => import('@/components/shared/buttons/quantity-button');
 
 function showComments() {
 	this.show = !this.show;
+}
+
+function clickQuantity(val) {
+	let { quantity } = this.product;
+	const opt = {
+		more: 1,
+		less: -1,
+	};
+	quantity += opt[val];
+	quantity = quantity < 0 ? 0 : quantity;
+	const { id } = this.product;
+	this.$store.commit('UPDATE_PRODUCTS_TO_BUY', { id, quantity });
+}
+
+function stepOne() {
+	const step = lib.getDeeper('meta.step')(this.$route);
+	return step === 1;
+}
+
+function deleteProduct() {
+	this.$store.commit('DELETE_PRODUCT_BUY_CAR', this.product.id);
 }
 
 function data() {
@@ -55,9 +85,15 @@ export default {
 		commentsComponent,
 		textArea,
 		trashComponent,
+		quantityButton,
+	},
+	computed: {
+		stepOne,
 	},
 	data,
 	methods: {
+		clickQuantity,
+		deleteProduct,
 		showComments,
 	},
 	props: {
@@ -193,5 +229,9 @@ export default {
 
 	.action {
 		margin: 5px 15px;
+	}
+
+	.continer-quantity-button {
+		margin-top: -12px;
 	}
 </style>

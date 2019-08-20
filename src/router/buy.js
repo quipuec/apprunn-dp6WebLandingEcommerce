@@ -1,6 +1,9 @@
 const route = {
 	name: 'buy',
 	path: '/carrito-de-compras',
+	meta: {
+		step: 1,
+	},
 	component: () => import(/* webpackChunkName: "page-buy" */ '@/pages/page-buy'),
 	children: [
 		{
