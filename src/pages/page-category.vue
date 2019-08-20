@@ -244,6 +244,10 @@ export default {
 	grid-template-columns: repeat(auto-fit, minmax(214px, 1fr));
 	margin: 42px auto;
 	max-width: 1070px;
+
+	@media (max-width: 980px) {
+		margin: 19px auto;
+	}
 }
 
 .title-breadcrumbs-category {
