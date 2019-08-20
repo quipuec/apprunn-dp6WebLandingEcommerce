@@ -1,5 +1,5 @@
 <template>
-  	<header class="app-header">
+  <header class="app-header" :class="{ scrolling: scrolled }">
 		<div class="app-wrapper">
 			<div class="flex container-call-menu">
 				<call-menu :color="baseColor" text="Categorías" @change-menu="changeMenu" :menu="menu" />
@@ -59,9 +59,17 @@ const appSearch = () => import('@/components/shared/inputs/app-input-search');
 const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 const modalLogin = () => import('@/components/header/modal-login');
 
+function created() {
+	window.addEventListener('scroll', this.handleScroll);
+}
+
 function mounted() {
 	const ls = this.getLocalStorage(`${process.env.STORAGE_USER_KEY}::product-select`);
 	this.$store.dispatch('updateProductSelect', ls);
+}
+
+function destroyed() {
+	window.removeEventListener('scroll', this.handleScroll);
 }
 
 function toogleSearch() {
@@ -82,6 +90,11 @@ function openModalLogin() {
 
 function closeModal() {
 	this.modalLogin = false;
+}
+
+function handleScroll() {
+	console.log(window.scrollY);
+	this.scrolled = window.scrollY > 87;
 }
 
 function data() {
@@ -116,6 +129,7 @@ function data() {
 		},
 		isSearchMobile: false,
 		modalLogin: false,
+		scrolled: false,
 	};
 }
 
@@ -133,12 +147,15 @@ export default {
 			'totalProducts',
 		]),
 	},
+	created,
 	data,
+	destroyed,
 	methods: {
 		toogleSearch,
 		changeMenu,
 		openModalLogin,
 		closeModal,
+		handleScroll,
 	},
 	mounted,
 	props: {
@@ -165,13 +182,21 @@ export default {
 		height: inherit;
 		overflow: hidden;
 		padding: 0px 6%;
-		position: relative;
-		widows: 100vw;
+		// position: fixed;
+		transition: all .2s linear 0s;
+		// top: 89px;
+		width: 100vw;
+		z-index: 5;
 
 		@media (min-width: 768px) {
 			height: 99px;
 			overflow: inherit;
 			padding: 0px 6%;
+		}
+
+		&.scrolling {
+			// top: 0;
+			position: fixed;
 		}
 	}
 
