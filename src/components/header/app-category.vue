@@ -1,5 +1,5 @@
 <template>
-	<div class="app-category">
+	<div class="app-category" :class="{ scrolling: scrolled }">
 		<div class="app-category-user">
 			<div class="container-user" :style="`border-color: ${globalColors.primary}`">
 				<img :src="imageUser" :alt="imgUser.name" :height="imgUser.height">
@@ -119,7 +119,9 @@ const itemMenu = () => import('@/components/header/item-menu');
 
 function created() {
 	window.addEventListener('resize', this.oneSelectCategory);
+	window.addEventListener('scroll', this.handleScroll);
 	this.oneSelectCategory();
+	this.handleScroll();
 }
 
 function clickCategory(item) {
@@ -159,6 +161,7 @@ function oneSelectCategory() {
 
 function destroyed() {
 	window.removeEventListener('resize', this.oneSelectCategory);
+	window.addEventListener('scroll', this.handleScroll);
 }
 
 function clickSubCategory(item, index) {
@@ -177,6 +180,10 @@ function clickSubCategory(item, index) {
 
 function imageUser() {
 	return this.imgUser.urlImage || this.imgUser.logo || process.env.DEFAULT_AVATAR;
+}
+
+function handleScroll() {
+	this.scrolled = window.scrollY > 87;
 }
 
 function data() {
@@ -198,6 +205,7 @@ function data() {
 			urlImage: '/static/img/app-close.svg',
 			name: 'Cerrar Sesión',
 		},
+		scrolled: false,
 	};
 }
 
@@ -213,6 +221,7 @@ export default {
 		clickCategory,
 		oneSelectCategory,
 		clickSubCategory,
+		handleScroll,
 	},
 	computed: {
 		selectCategory,
@@ -252,9 +261,18 @@ export default {
 			min-height: none;
 			overflow-y: scroll;
 			padding: 22px 8%;
-			position: absolute;
+			position: fixed;
 			top: 0;
 			width: 85%;
+
+			&.scrolling {
+				top: 0 !important;
+			}
+		}
+
+		&.scrolling {
+			position: fixed;
+			top: 99px;
 		}
 	}
 
