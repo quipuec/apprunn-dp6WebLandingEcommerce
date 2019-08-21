@@ -1,6 +1,8 @@
 <template>
 	<div>
-		<h3 class="title-deposit">Datos del depósito</h3>
+		<h3
+			:style="`color: ${globalColors.primary};`"
+			class="title-deposit">Datos del depósito</h3>
 		<div v-if="voucherLoaded" class="voucher-loaded">
 			<div class="voucher-data">
 				<span class="voucher-label">Nro de Depósito: </span>
@@ -95,7 +97,6 @@ export default {
 	}
 
 	.title-deposit {
-		color: color(primary);
 		font-family: font(bold);
 		font-size: size(large);
 		text-transform: uppercase;

@@ -18,7 +18,10 @@
 			</v-radio-group>
 		</div>
 		<div class="bank-account-container">
-			<h4 class="deposit-bank">Cuenta Bancaria MRC:</h4>
+			<h4
+				:style="`color: ${globalColors.primary};`"
+				class="deposit-bank"
+			>Cuenta Bancaria MRC:</h4>
 			<p class="deposit-account-bank">
 				<span>Nombre de Cuenta:  MRC S.A.C.</span>
 				<span>Nro de Cuenta : 193-87656767-0-81</span>
@@ -71,13 +74,8 @@ export default {
 	}
 
 	.deposit-bank {
-		color: color(primary);
 		font-size: size(medium);
 		font-family: font(bold);
-
-		@media (max-width: 600px) {
-			color: color(secondary);
-		}
 	}
 
 	.deposit-account-bank {

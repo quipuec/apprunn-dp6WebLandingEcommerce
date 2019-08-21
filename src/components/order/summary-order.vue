@@ -14,7 +14,11 @@
 				<p class="summary-amount-container separate">
 					<span>Envío</span><span class="summary-amount">{{getCurrencySymbol}}. {{shippingCost}}</span>
 				</p>
-				<p class="summary-amount-container separate shipping" v-if="stepThree">
+				<p
+					v-if="stepThree"
+					:style="`color: ${globalColors.primary} !important;`"
+					class="summary-amount-container separate shipping"
+				>
 					<button
 						type="button"
 						class="shipping-cost"
@@ -275,7 +279,6 @@ export default {
 	}
 
 	.shipping {
-		color: color(primary) !important;
 		padding-bottom: 12px;
 	}
 

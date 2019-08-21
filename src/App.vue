@@ -401,7 +401,7 @@ input.app-input::-webkit-input-placeholder {
 }
 
 .err-message {
-	color: color(primary);
+	color: color(error);
 	font-size: size(xsmall);
 }
 

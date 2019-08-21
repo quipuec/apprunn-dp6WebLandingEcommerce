@@ -1,6 +1,9 @@
 <template>
 	<div class="buy-container">
-		<div v-if="stepThree" class="summary">
+		<div
+			v-if="stepThree"
+			:style="`border-bottom: 3px solid ${globalColors.primary});`">
+			class="summary"
 			<summary-in-payment
 				:delivery="{}"
 				:billing="{}"
@@ -22,9 +25,9 @@
 							:background="globalColors.secondary"
 							@click="goTo('page-home')"
 						/>
-						<div class="total-product">
+						<div class="total-product" :style="`color: ${globalColors.base}`">
 							<span>Total de productos: </span>
-							<div class="amount-total-products">
+							<div class="amount-total-products" :style="`background-color: ${globalColors.base}`">
 								<output>{{getTotalQuantityProducts}}</output>
 							</div>
 						</div>
@@ -149,7 +152,6 @@ export default {
 
 	.total-product {
 		align-items: center;
-		color: color(base);
 		display: flex;
 		flex-wrap: wrap;
 		font-family: font(demi);
@@ -161,7 +163,6 @@ export default {
 
 	.amount-total-products {
 		align-items: center;
-		background-color: color(base);
 		border-radius: 5px;
 		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.18);
 		color: white;
@@ -187,7 +188,6 @@ export default {
 	}
 
 	.summary {
-		border-bottom: 3px solid color(primary);
 		margin-bottom: 30px;
 		padding: 30px 0;
 	}

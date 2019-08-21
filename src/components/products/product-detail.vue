@@ -30,7 +30,10 @@
 		<div class="container-detail-bottom">
 			<div class="d-center mt-25">
 				<span class="text-price-dis" :style="`color: ${globalColors.secondary}`">{{getCurrencySymbol}} {{data.priceDiscount || ''}}</span>
-				<div class="content-discount">- {{getDiscont}}%</div>
+				<div
+					:style="`background: ${globalColors.primary};`"
+					class="content-discount"
+				>- {{getDiscont}}%</div>
 			</div>
 			<span class="text-price">{{getCurrencySymbol}} {{data.price || ''}}</span>
 		</div>
@@ -177,7 +180,6 @@ export default {
 
 	.content-discount {
 		align-items: center;
-		background: color(primary);
 		border-radius: 5px;
 		color: color(white);
 		display: flex;

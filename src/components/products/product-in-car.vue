@@ -3,16 +3,25 @@
 		<section class="grid-areas">
 			<img :src="product.productImage || product.urlImage" alt="imagen del producto" class="product-img image">
 			<div class="description">
-				<p class="product-title">Producto</p>
-				<p class="product-content">{{product.description}}</p>
+				<p
+					:style="`color: ${globalColors.secondary};`"
+					class="product-title"
+				>Producto</p>
+				<p
+					:style="`color: ${globalColors.secondary};`"
+					class="product-content">{{product.description}}</p>
 				<p class="product-brand">{{product.brandName || product.warehouseProduct.brand.name}}</p>
 			</div>
 			<div class="price text-xs-center">
-				<p class="product-title">Precio UND</p>
+				<p
+					:style="`color: ${globalColors.secondary};`"
+					class="product-title">Precio UND</p>
 				<p class="product-price">{{product.salePrice || product.priceDiscount}}</p>
 			</div>
 			<div class="quantity text-xs-center">
-				<p class="product-title">Cantidad</p>
+				<p
+					:style="`color: ${globalColors.secondary};`"
+					class="product-title">Cantidad</p>
 				<quantityButton
 					v-if="stepOne"
 					class="continer-quantity-button"
@@ -22,7 +31,9 @@
 				<p class="product-quantity" v-else>{{product.quantity}}</p>
 			</div>
 			<div class="total text-xs-center">
-				<p class="product-title">Total</p>
+				<p
+					:style="`color: ${globalColors.secondary};`"
+					class="product-title">Total</p>
 				<p class="product-price">{{product.total}}</p>
 			</div>
 			<div class="comments">
@@ -177,7 +188,6 @@ export default {
 	}
 
 	.product-title {
-		color: color(secondary);
 		font-family: font(bold);
 	}
 

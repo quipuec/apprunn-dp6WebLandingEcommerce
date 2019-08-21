@@ -5,7 +5,10 @@
 			<camera-component @click="loadAvatar"/>
 		</section>
 		<section>
-			<h3 class="section-title">Mis datos personales</h3>
+			<h3
+				:style="`color: ${globalColors.primary};`"
+				class="section-title"
+			>Mis datos personales</h3>
 		</section>
 		<router-view></router-view>
 	</div>
@@ -72,7 +75,6 @@ export default {
 	}
 
 	.section-title {
-		color: color(primary);
 		font-family: font(bold);
 		font-size: size(large);
 		margin-bottom: 50px;
@@ -92,12 +94,6 @@ export default {
 		grid-template-columns: 1fr 1fr;
 		margin: 0 auto;
 		width: 280px;
-	}
-
-	.label {
-		color: color(base);
-		display: block;
-		font-size: size(small);
 	}
 
 	.user-content {

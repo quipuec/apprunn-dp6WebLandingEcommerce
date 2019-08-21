@@ -1,7 +1,9 @@
 <template>
 	<div>
 		<section>
-			<h3 class="section-title">Mis favoritos</h3>
+			<h3
+				:style="`color: ${globalColors.primary};`"
+				class="section-title">Mis favoritos</h3>
 		</section>
 		<section class="table">
 			<responsive-table
@@ -181,7 +183,6 @@ export default {
 	}
 
 	.section-title {
-		color: color(primary);
 		font-family: font(bold);
 		font-size: size(large);
 		margin: 30px 0 40px 40px;

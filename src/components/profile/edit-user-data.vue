@@ -1,4 +1,4 @@
-<template>
+	<template>
 	<div>
 		<div class="form-container">
 			<form class="user-form">
@@ -167,19 +167,6 @@ export default {
 	.user-header {
 		margin-bottom: 20px;
 		margin-left: 40px;
-	}
-
-	.section-title {
-		color: color(primary);
-		font-family: font(bold);
-		font-size: size(large);
-		margin-bottom: 50px;
-		margin-left: 40px;
-		text-transform: uppercase;
-
-		@media (max-width: 500px) {
-			margin-bottom: 20px;
-		}
 	}
 
 	.user-form {

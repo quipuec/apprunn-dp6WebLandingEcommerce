@@ -152,7 +152,7 @@
 	}
 
 	.error-message {
-		color: color(primary);
+		color: color(error);
 		display: block;
 		font-size: size(xsmall);
 		line-height: 1;

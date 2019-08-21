@@ -1,11 +1,19 @@
 <template>
 	<div class="buyed-main-container">
 		<ol class="buyed-products-container">
-			<li class="list" v-for="product in getOrderDetails" :key="product.id">
+			<li
+				:style="`color: ${globalColors.secondary};`"
+				class="list"
+				v-for="product in getOrderDetails"
+				:key="product.id"
+			>
 				<div class="grid-product">
 					<span class="product-name">{{product.description}}</span>
 					<span class="product-quantity">Cantidad: {{product.quantity}}</span>
-					<h3 class="product-total">{{getCurrencySymbol}}. {{product.total}}</h3>
+					<h3
+						:style="`color: ${globalColors.secondary};`"
+						class="product-total"
+					>{{getCurrencySymbol}}. {{product.total}}</h3>
 				</div>
 			</li>
 		</ol>
@@ -53,12 +61,10 @@ export default {
 	}
 
 	.product-total {
-		color: color(secondary);
 		font-size: size(large);
 		text-align: center;
 
 		@media (max-width: 600px) {
-			color: color(primary);
 			grid-column: 2/4;
 			grid-row: 2;
 			text-align: right;
@@ -86,7 +92,6 @@ export default {
 
 	.list {
 		border-top: 1px solid color(border);
-		color: color(secondary);
 		padding: 14px 0;
 	}
 

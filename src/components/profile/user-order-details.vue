@@ -2,7 +2,9 @@
 	<div class="details-main-container">
 		<section class="nav">
 			<left-component @click="goTo" class="go-back"/>
-			<p class="order-head">
+			<p
+				:style="`color: ${globalColors.primary};`"
+				class="order-head">
 				<span class="order-state">
 					{{getValue('orderState.name', getOrderDetails)}}
 				</span> - <span>nro orden </span>
@@ -280,7 +282,6 @@ export default {
 	}
 
 	.order-head {
-		color: color(primary);
 		font-family: font(demi);
 		font-size: size(large);
 		margin-bottom: 0;

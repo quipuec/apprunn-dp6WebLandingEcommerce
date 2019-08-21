@@ -1,9 +1,15 @@
 <template>
 	<layout-admin>
 		<section class="profile-layout">
-			<div class="profile-menu">
+			<div
+				:style="`background-color: ${globalColors.dark};`"
+				class="profile-menu"
+			>
 				<div class="user-avatar-container">
-					<div class="user-avatar-wrapper">
+					<div
+						:style="`border: 2px solid ${globalColors.primary};`"
+						class="user-avatar-wrapper"
+					>
 						<div class="user-avatar"></div>
 					</div>
 				</div>
@@ -11,40 +17,44 @@
 				<ul class="user-actions">
 					<li class="user-action">
 						<button
+							:style="`border-bottom: 6px solid ${globalColors.dark};${borderPrimaryUserData}`"
 							:class="[
 								'user-action-btn',
-								{ 'active': $route.name === 'user-data-details' || $route.name === 'edit-user-data'},
 							]"
 							@click="goTo('user-data')"
 						>Mis Datos</button>
 					</li>
 					<li class="user-action">
 						<button
+							:style="`border-bottom: 6px solid ${globalColors.dark};${borderPrimaryUserOrder}`"
 							:class="[
 								'user-action-btn',
-								{ 'active': $route.name === 'user-orders' || $route.name === 'order-detail' },
 							]"
 							@click="goTo('user-orders')"
 						>Mis Órdenes</button>
 					</li>
 					<li class="user-action">
 						<button
+							:style="`border-bottom: 6px solid ${globalColors.dark};${borderPrimaryFavorites}`"
 							:class="[
 								'user-action-btn',
-								{ 'active': $route.name === 'favorites'},
 							]"
 							@click="goTo('favorites')"
 						>Mis Favoritos</button>
 					</li>
 					<li class="user-action">
 						<button
+							:style="`border-bottom: 6px solid ${globalColors.dark};${borderPrimaryAddress}`"
 							:class="[
 								'user-action-btn',
-								{ 'active': $route.name === 'address'},
 							]"
 							@click="goTo('address')"
 						>Direcciones</button></li>
-					<li class="user-action user-logout"><button class="user-action-btn ">Cerrar sesión</button></li>
+					<li class="user-action user-logout">
+						<button
+							:style="`border-bottom: 6px solid ${globalColors.dark};`"
+							class="user-action-btn "
+						>Cerrar sesión</button></li>
 				</ul>
 			</div>
 			<div class="profile-info">
@@ -59,8 +69,38 @@ function goTo(name) {
 	this.$router.push({ name });
 }
 
+function borderPrimaryUserData() {
+	const border = `border-bottom: 6px solid ${this.globalColors.primary};`;
+	const { name } = this.$route;
+	return (name === 'user-data-details' || name === 'edit-user-data') ? border : null;
+}
+
+function borderPrimaryUserOrder() {
+	const border = `border-bottom: 6px solid ${this.globalColors.primary};`;
+	const { name } = this.$route;
+	return (name === 'user-orders' || name === 'order-detail') ? border : null;
+}
+
+function borderPrimaryFavorites() {
+	const border = `border-bottom: 6px solid ${this.globalColors.primary};`;
+	const { name } = this.$route;
+	return name === 'favorites' ? border : null;
+}
+
+function borderPrimaryAddress() {
+	const border = `border-bottom: 6px solid ${this.globalColors.primary};`;
+	const { name } = this.$route;
+	return name === 'address' ? border : null;
+}
+
 export default {
 	name: 'page-profile',
+	computed: {
+		borderPrimaryAddress,
+		borderPrimaryFavorites,
+		borderPrimaryUserData,
+		borderPrimaryUserOrder,
+	},
 	methods: {
 		goTo,
 	},
@@ -88,7 +128,6 @@ export default {
 	}
 
 	.profile-menu {
-		background-color: color(dark);
 		border-radius: 7px;
 		flex: 1 1 30%;
 		height: 100%;
@@ -117,7 +156,6 @@ export default {
 	.user-avatar-wrapper {
 		align-items: center;
 		background-color: transparent;
-		border: 2px solid color(primary);
 		border-radius: 50%;
 		display: flex;
 		height: 148px;
@@ -176,12 +214,7 @@ export default {
 	}
 
 	.user-action-btn {
-		border-bottom: 6px solid color(dark);
 		width: 92px;
-	}
-
-	.active {
-		border-bottom: 6px solid color(primary);
 	}
 
 	.user-name {

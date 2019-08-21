@@ -13,7 +13,10 @@
 			<div class="product-description-wrapper">
 				<p class="product-description">{{product.description}}</p>
 				<small class="product-brand">{{product.warehouseProduct.brand.name}}</small>
-				<h3 class="product-price-discount">{{product.priceDiscount || 0}}</h3>
+				<h3
+					:style="`color: ${globalColors.secondary};`"
+					class="product-price-discount"
+				>{{product.priceDiscount || 0}}</h3>
 				<small class="product-price">{{product.price || 0}}</small>
 				<small class="other-buy">+ 1000 compraron esto</small>
 				<v-rating
@@ -171,7 +174,6 @@ export default {
 	}
 
 	.product-price-discount {
-		color: color(secondary);
 		font-family: font(bold);
 		font-size: size(xlarge);
 	}
