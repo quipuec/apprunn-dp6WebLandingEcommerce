@@ -53,7 +53,8 @@
 					<li class="user-action user-logout">
 						<button
 							:style="`border-bottom: 6px solid ${globalColors.dark};`"
-							class="user-action-btn "
+							class="user-action-btn"
+							@click="logout"
 						>Cerrar sesión</button></li>
 				</ul>
 			</div>
@@ -64,6 +65,7 @@
 	</layout-admin>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 
 function goTo(name) {
 	this.$router.push({ name });
@@ -93,9 +95,25 @@ function borderPrimaryAddress() {
 	return name === 'address' ? border : null;
 }
 
+function logout() {
+	this.goTo('page-home');
+	this.$store.dispatch('clearUser');
+	this.$store.dispatch('DEFAULT_USER');
+	this.$store.dispatch('SET_DEFAULT_VALUES');
+	localStorage.clear();
+	this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
+	const params = {
+		filters: this.getFilters[0].id,
+	};
+	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
+}
+
 export default {
 	name: 'page-profile',
 	computed: {
+		...mapGetters([
+			'getFilters',
+		]),
 		borderPrimaryAddress,
 		borderPrimaryFavorites,
 		borderPrimaryUserData,
@@ -103,6 +121,7 @@ export default {
 	},
 	methods: {
 		goTo,
+		logout,
 	},
 };
 </script>

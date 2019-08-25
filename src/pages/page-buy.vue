@@ -2,8 +2,9 @@
 	<div class="buy-container">
 		<div
 			v-if="stepThree"
-			:style="`border-bottom: 3px solid ${globalColors.primary});`">
+			:style="`border-bottom: 3px solid ${globalColors.primary});`"
 			class="summary"
+		>
 			<summary-in-payment
 				:delivery="{}"
 				:billing="{}"
