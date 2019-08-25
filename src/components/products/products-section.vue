@@ -11,6 +11,13 @@
 <script>
 import { mapGetters } from 'vuex';
 
+function created() {
+	const filterParams = {
+		filters: this.getFilters[0].id,
+	};
+	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params: filterParams });
+}
+
 function data() {
 	return {
 		page: 0,
@@ -25,9 +32,11 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getFilters',
 			'getProducts',
 		]),
 	},
+	created,
 	data,
 };
 </script>

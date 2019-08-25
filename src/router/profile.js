@@ -3,10 +3,11 @@ const route = {
 	name: 'profile',
 	component: () => import(/* webpackChunkName: "profile" */ '@/pages/page-profile'),
 	beforeEnter: (to, from, next) => {
-		if (to.name === 'profile' && localStorage.getItem('ecommerce::token')) {
+		if (to.fullPath.includes('perfil') && localStorage.getItem('ecommerce::token')) {
 			next();
+		} else {
+			next({ name: 'page-home' });
 		}
-		next({ name: 'page-home' });
 	},
 	redirect: '/perfil/mis-datos',
 	children: [

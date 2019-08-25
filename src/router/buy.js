@@ -6,10 +6,11 @@ const route = {
 		step: 1,
 	},
 	beforeEnter: (to, from, next) => {
-		if (to.name === 'buy' && localStorage.getItem('ecommerce::token')) {
+		if (to.fullPath.includes('carrito-de-compras') && localStorage.getItem('ecommerce::token')) {
 			next();
+		} else {
+			next({ name: 'page-home' });
 		}
-		next({ name: 'page-home' });
 	},
 	children: [
 		{

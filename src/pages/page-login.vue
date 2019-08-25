@@ -135,10 +135,6 @@
 				this.getCustomerData();
 				this.cleanForm();
 				this.goTo('page-home');
-				const filterParams = {
-					filters: this.getFilters[0].id,
-				};
-				this.$store.dispatch('LOAD_PRODUCTS', { context: this, params: filterParams });
 			}
 		} catch (err) {
 			if (err.status === 500) {

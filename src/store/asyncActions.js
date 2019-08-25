@@ -136,6 +136,11 @@ const asyncActions = {
 		context.setLocalData(`${process.env.STORAGE_USER_KEY}::currency-default`, res.currencyDefault);
 		commit('SET_CURRENCY_DEFAULT', res.currencyDefault);
 	},
+	LOAD_FILTERS: async ({ commit }, context) => {
+		const { data: filters } = await context.$httpProductsPublic.get('filters-public');
+		const newFilters = lib.map(lib.setNewProperty('select', (filter, index) => index === 0), filters);
+		commit('UPDATE_FILTERS', newFilters);
+	},
 };
 
 export default asyncActions;

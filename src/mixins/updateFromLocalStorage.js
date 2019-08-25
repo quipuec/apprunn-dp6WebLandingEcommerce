@@ -11,10 +11,11 @@ async function loadDataFromLocalStorage() {
 	const currencyDefault = this.getLocalStorage('ecommerce::currency-default');
 	const token = helper.getLocalToken();
 	if (token) {
+		this.$store.dispatch('setToken', token);
 		const { data: response } = await this.$httpSales.get('customers/current');
 		helper.setLocalData('ecommerce-user', response);
 		this.$store.dispatch('setUser', response);
-		this.prototype.$userInfo = this.$store.getters.user;
+		this.$userInfo = this.$store.getters.user;
 	}
 	if (user) {
 		this.$store.dispatch('setUser', user);
@@ -27,6 +28,10 @@ async function loadDataFromLocalStorage() {
 	} else {
 		this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
 	}
+	await Promise.all([
+		this.$store.dispatch('LOAD_CATEGORIES', { context: this }),
+		this.$store.dispatch('LOAD_FILTERS', this),
+	]);
 }
 
 export default {
