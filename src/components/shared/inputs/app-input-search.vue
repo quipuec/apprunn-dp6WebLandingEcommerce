@@ -9,16 +9,34 @@
 			class="app-input"
 			placeholder="¿Qué buscas?"
 			:style="`color: ${color}`"
+			@keydown.enter="$emit('search', searchText)"
+			v-model="searchText"
 		/>
 	</div>
 </template>
 <script>
 
+function changeRoute(newRouteName) {
+	if (newRouteName.name !== 'page-home') {
+		this.searchText = '';
+	}
+}
+
+function data() {
+	return {
+		searchText: null,
+	};
+}
+
 export default {
 	name: 'app-input-search',
+	data,
 	props: {
 		image: String,
 		color: String,
+	},
+	watch: {
+		$route: changeRoute,
 	},
 };
 </script>

@@ -1,9 +1,21 @@
 <template>
 	<div class="buy-container">
-		<div v-if="stepThree">Resumen de orden - Header</div>
+		<div
+			v-if="stepThree"
+			:style="`border-bottom: 3px solid ${globalColors.primary});`">
+			class="summary"
+			<summary-in-payment
+				:delivery="{}"
+				:billing="{}"
+			/>
+		</div>
 		<div class="buy-layout">
 			<section class="big">
-				<div v-if="stepOneAndTwo">
+				<div v-if="stepOneAndTwo" class="mb-5">
+					<div class="section-title" v-if="stepTwo">
+						<img :src="logo.section" alt="logo del método de pago">
+						<h2 class="payment-section-title">PRODUCTOS </h2>
+					</div>
 					<product-in-car v-for="product in getProductToBuy" :key="product.id" :product="product"/>
 					<div class="footter-products-buy">
 						<app-button
@@ -13,9 +25,9 @@
 							:background="globalColors.secondary"
 							@click="goTo('page-home')"
 						/>
-						<div class="total-product">
+						<div class="total-product" :style="`color: ${globalColors.base}`">
 							<span>Total de productos: </span>
-							<div class="amount-total-products">
+							<div class="amount-total-products" :style="`background-color: ${globalColors.base}`">
 								<output>{{getTotalQuantityProducts}}</output>
 							</div>
 						</div>
@@ -36,6 +48,7 @@ import { mapGetters } from 'vuex';
 const appButton = () => import('@/components/shared/buttons/app-button');
 const productInCar = () => import('@/components/products/product-in-car');
 const summaryOrder = () => import('@/components/order/summary-order');
+const summaryInPayment = () => import('@/components/order/summary-in-payment');
 
 function stepOneAndTwo() {
 	const step = lib.getDeeper('meta.step')(this.$route);
@@ -46,12 +59,31 @@ function stepThree() {
 	return lib.getDeeper('meta.step')(this.$route) === 3;
 }
 
+function stepTwo() {
+	return lib.getDeeper('meta.step')(this.$route) === 2;
+}
+
+function getProductToBuyHandler(newProducts) {
+	if (newProducts && newProducts.length === 0) {
+		this.goTo('page-home');
+	}
+}
+
+function data() {
+	return {
+		logo: {
+			section: '/static/icons/shopping-basket.svg',
+		},
+	};
+}
+
 export default {
 	name: 'page-buy',
 	components: {
 		appButton,
 		productInCar,
 		summaryOrder,
+		summaryInPayment,
 	},
 	computed: {
 		...mapGetters([
@@ -60,6 +92,17 @@ export default {
 		]),
 		stepOneAndTwo,
 		stepThree,
+		stepTwo,
+	},
+	data,
+	methods: {
+		getProductToBuyHandler,
+	},
+	watch: {
+		getProductToBuy: {
+			deep: true,
+			handler: getProductToBuyHandler,
+		},
 	},
 };
 </script>
@@ -109,7 +152,6 @@ export default {
 
 	.total-product {
 		align-items: center;
-		color: color(base);
 		display: flex;
 		flex-wrap: wrap;
 		font-family: font(demi);
@@ -121,7 +163,6 @@ export default {
 
 	.amount-total-products {
 		align-items: center;
-		background-color: color(base);
 		border-radius: 5px;
 		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.18);
 		color: white;
@@ -144,5 +185,24 @@ export default {
 		@media (max-width: 600px) {
 			width: 190px !important;
 		}
+	}
+
+	.summary {
+		margin-bottom: 30px;
+		padding: 30px 0;
+	}
+
+	.payment-section-title {
+		font-size: size(large);
+		font-family: font(bold);
+		margin-left: 12px;
+		text-transform: uppercase;
+	}
+
+	.section-title {
+		align-items: baseline;
+		display: flex;
+		justify-content: flex-start;
+		margin-bottom: 40px;
 	}
 </style>

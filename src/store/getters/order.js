@@ -4,19 +4,32 @@ const twoDecimals = lib.decimals(2);
 
 const getters = {
 	getProductToBuy(state) {
-		const products = state.order.products.map(lib.setNewProperty(
-			'total', ({ priceDiscount, quantity }) => twoDecimals(quantity * priceDiscount)));
-		return products;
+		if (state.order.products) {
+			const products = lib.map(
+				lib.setNewProperty(
+					'total',
+					({ salePrice, priceDiscount, quantity }) =>
+						twoDecimals(quantity * (salePrice || priceDiscount)),
+				),
+				state.order.products,
+			);
+			return products;
+		}
+		return [];
 	},
 	getOrderId(state) {
 		return state.order.id;
 	},
 	getTotalToBuy(state) {
-		return state.order.products.reduce(
-			(acc, { priceDiscount, quantity }) => twoDecimals(priceDiscount * quantity) + acc, 0);
+		const { products, order } = state.order;
+		const newProducts = order ? order.details : products;
+		return newProducts.reduce(
+			(acc, { priceDiscount, salePrice, quantity }) =>
+				twoDecimals((priceDiscount || salePrice) * quantity) + acc, 0);
 	},
 	getTotalQuantityProducts(state) {
-		return state.order.products.length;
+		const { products } = state.order;
+		return products ? products.length : 0;
 	},
 	getFlagPickUp(state) {
 		return state.order.flagPickUp;
@@ -35,13 +48,45 @@ const getters = {
 		return state.order.flagBill;
 	},
 	getOrders(state) {
-		return state.order.list;
+		return state.order.products;
 	},
 	getStatus(state) {
 		return state.order.status;
 	},
 	getOrderDetails(state) {
-		return state.order.details;
+		const { products, order } = state.order;
+		const newProducts = order ? order.details : products;
+		return newProducts;
+	},
+	getResponsible(state) {
+		return state.order.responsible;
+	},
+	getShippingCost(state) {
+		return state.order.shippingCost;
+	},
+	getCustomerAddress(state) {
+		return state.order.customerAddress;
+	},
+	getCustomerAddressId(state) {
+		return state.order.customerAddressId;
+	},
+	getBillingData(state) {
+		return state.order.bill;
+	},
+	getOrderStatus(state) {
+		return state.order.orderStatus;
+	},
+	getWayPayment(state) {
+		return state.order.paymentMethod;
+	},
+	getOrderInfo(state) {
+		return state.order.order;
+	},
+	getFlagStatusOrder(state) {
+		return state.order.flagStatusOrder;
+	},
+	getWaysPayments(state) {
+		return state.order.waysPayments;
 	},
 };
 

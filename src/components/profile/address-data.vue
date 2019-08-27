@@ -1,7 +1,10 @@
 <template>
 	<div>
 		<section>
-			<h3 class="section-title">direcciones</h3>
+			<h3
+				:style="`color: ${globalColors.primary};`"
+				class="section-title"
+			>direcciones</h3>
 		</section>
 		<section>
 			<new-address-form/>
@@ -228,7 +231,6 @@ export default {
 	}
 
 	.section-title {
-		color: color(primary);
 		font-family: font(bold);
 		font-size: size(large);
 		margin: 30px 0 40px 40px;

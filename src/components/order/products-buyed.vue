@@ -1,31 +1,34 @@
 <template>
 	<div class="buyed-main-container">
 		<ol class="buyed-products-container">
-			<li class="list">
+			<li
+				:style="`color: ${globalColors.secondary};`"
+				class="list"
+				v-for="product in getOrderDetails"
+				:key="product.id"
+			>
 				<div class="grid-product">
-					<span class="product-name">Hoco. Audífonos con micrófono Original Hoco. Audífonos con micrófono Original </span>
-					<span class="product-quantity">Cantidad: 100</span>
-					<h3 class="product-total">S/. 1.4567</h3>
-				</div>
-			</li>
-			<li class="list">
-				<div class="grid-product">
-					<span class="product-name">Hoco. Audífonos con micrófono Original </span>
-					<span class="product-quantity">Cantidad: 100</span>
-					<h3 class="product-total">S/. 1.4567</h3>
+					<span class="product-name">{{product.description}}</span>
+					<span class="product-quantity">Cantidad: {{product.quantity}}</span>
+					<h3
+						:style="`color: ${globalColors.secondary};`"
+						class="product-total"
+					>{{getCurrencySymbol}}. {{product.total}}</h3>
 				</div>
 			</li>
 		</ol>
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
 	name: 'products-buyed',
-	props: {
-		products: {
-			default: () => [],
-			type: Array,
-		},
+	computed: {
+		...mapGetters([
+			'getCurrencySymbol',
+			'getOrderDetails',
+		]),
 	},
 };
 </script>
@@ -35,7 +38,12 @@ export default {
 		border-radius: 8px;
 		border: solid 1px color(border);
 		font-family: font(bold);
+		margin-bottom: 70px;
 		padding: 27px 92px 27px 55px;
+
+		@media (max-width: 600px) {
+			padding: 27px 20px 26px 21px;
+		}
 	}
 
 	.grid-product {
@@ -44,26 +52,46 @@ export default {
     	grid-column-gap: 40px;
 		grid-template-columns: 1fr 90px 0.5fr;
 		transform: translateX(15px);
+
+		@media (max-width: 600px) {
+			grid-column-gap: 0px;
+			grid-row-gap: 10px;
+			transform: translateX(0px);
+		}
 	}
 
 	.product-total {
-		color: color(secondary);
 		font-size: size(large);
 		text-align: center;
+
+		@media (max-width: 600px) {
+			grid-column: 2/4;
+			grid-row: 2;
+			text-align: right;
+		}
 	}
 
 	.product-name {
 		color: color(dark);
+
+		@media (max-width: 600px) {
+			grid-column: 1/4;
+			grid-row: 1;
+		}
 	}
 
 	.product-quantity {
 		color: color(dark);
 		font-family: font(medium);
+
+		@media (max-width: 600px) {
+			grid-column: 1/2;
+			grid-row: 2;
+		}
 	}
 
 	.list {
 		border-top: 1px solid color(border);
-		color: color(secondary);
 		padding: 14px 0;
 	}
 

@@ -16,6 +16,7 @@
 					:action="titleBtn || title"
 					:background="color"
 					:disabled="disabled"
+					v-if="visibleBtn"
 					type="submit"
 				></app-button>
 			</v-flex>
@@ -63,6 +64,10 @@
 			imgHeight: [Number, String],
 			title: String,
 			titleBtn: String,
+			visibleBtn: {
+				default: true,
+				type: Boolean,
+			},
 		},
 	};
 </script>

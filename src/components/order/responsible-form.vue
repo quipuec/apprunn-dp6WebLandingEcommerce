@@ -37,9 +37,16 @@
 	</form>
 </template>
 <script>
-import { required, email } from 'vuelidate/lib/validators';
+import { required, email, minLength, maxLength } from 'vuelidate/lib/validators';
+import { mapGetters } from 'vuex';
 
 const appInput = () => import('@/components/shared/inputs/app-input');
+
+function mounted() {
+	const { dni, email: mail, name, phone } = this.user;
+	this.responsible = { dni, name, email: mail, phone };
+	this.validateForm();
+}
 
 function validateForm() {
 	this.$store.commit('SET_RESPONSIBLE', null);
@@ -51,7 +58,11 @@ function validateForm() {
 function validations() {
 	return {
 		responsible: {
-			dni: { required },
+			dni: {
+				required,
+				minLength: minLength(8),
+				maxLength: maxLength(9),
+			},
 			email: { email, required },
 			name: { required },
 			phone: { required },
@@ -75,10 +86,16 @@ export default {
 	components: {
 		appInput,
 	},
+	computed: {
+		...mapGetters([
+			'user',
+		]),
+	},
 	data,
 	methods: {
 		validateForm,
 	},
+	mounted,
 	validations,
 };
 </script>

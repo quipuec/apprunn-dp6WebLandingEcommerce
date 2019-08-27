@@ -9,6 +9,7 @@ export default {
 			color: 'primary',
 		},
 	},
+	currencyDefault: null,
 	directions: [
 		{ id: 0, addressLine1: 'Nueva dirección' },
 	],
@@ -23,16 +24,27 @@ export default {
 	},
 	order: {
 		bill: null,
+		customerAddressId: 0,
+		customerAddress: null,
 		delivery: null,
 		details: null,
 		flagBill: false,
 		flagPickUp: 1,
+		flagStatusOrder: null,
 		id: null,
 		list: [],
+		order: null,
+		orderStatus: null,
+		paymentMethod: {
+			bankAccountId: null,
+			wayPayment: null,
+		},
 		products: [],
 		responsible: null,
+		shippingCost: 0,
 		status: [],
 		total: null,
+		waysPayments: null,
 	},
 	pollData: {
 		progress: 0,
@@ -63,4 +75,5 @@ export default {
 	warehouses: [
 		{ id: 0, name: 'Seleccione una tienda' },
 	],
+	filters: [],
 };

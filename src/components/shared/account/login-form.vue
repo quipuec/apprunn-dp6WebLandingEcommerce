@@ -28,7 +28,7 @@
 				</span>
 			</v-flex>
 			<v-flex xs12 text-xs-right>
-				<router-link to="#" class="form-link">¿Olvidaste tu contraseña?</router-link>
+				<router-link to="recuperar-contrasena" class="form-link">¿Olvidaste tu contraseña?</router-link>
 			</v-flex>
 		</v-layout>
 	</div>
@@ -95,7 +95,7 @@
 	}
 
 	.error-message {
-		color: color(primary);
+		color: color(error);
 		display: block;
 		font-size: size(xsmall);
 		line-height: 1;

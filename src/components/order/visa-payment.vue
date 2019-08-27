@@ -1,7 +1,7 @@
 <template>
 	<form
 		id="visa-payment"
-		:action="`${apiSales}/payment-transaction/gateway-response?purchaseNumber=${order.id}`"
+		:action="`${apiSales}/payment-transaction/gateway-response?purchaseNumber=${getOrderId}`"
 		method='post'
 	></form>
 </template>
@@ -9,7 +9,6 @@
 import { mapGetters } from 'vuex';
 
 function created() {
-	this.order = this.$store.state.order;
 	this.getClientIp();
 }
 
@@ -18,9 +17,9 @@ function createScript() {
 		const visaForm = document.createElement('script');
 		const dataSessionToken = this.sessionKey;
 		const dataMerchantId = process.env.VISA_MERCHAN_ID;
-		const dataAmount = this.order.total || 1;
+		const dataAmount = this.orderTotal;
 		const dataCurrency = this.currentCurrency || 'PEN';
-		const purchaseNumber = this.order.id;
+		const purchaseNumber = this.getOrderId;
 		const logo = this.companyLogo;
 		const name = process.env.COMPANY_LOGIN_TITLE;
 		const btnColor = process.env.COLOR_BASE;
@@ -43,11 +42,8 @@ function createScript() {
 
 async function createVisaSession() {
 	this.loading = true;
-	const headers = {
-		Authorization: `Bearer ${this.token}`,
-	};
 	const body = {
-		orderId: this.order.id,
+		orderId: this.getOrderId,
 		commerceCode: process.env.COMMERCE_CODE,
 		channel: 'web',
 		clientIp: this.clientIp,
@@ -55,7 +51,6 @@ async function createVisaSession() {
 	try {
 		const { data: response } = await this.$httpSales.post('payment-transaction/visa/token',
 			body,
-			{ headers },
 		);
 		({ sessionKey: this.sessionKey, expirationTime: this.expirationTime } = response);
 		this.createScript();
@@ -74,6 +69,10 @@ async function getClientIp() {
 	}
 }
 
+function orderTotal() {
+	return this.getTotalToBuy + this.getShippingCost;
+}
+
 function data() {
 	return {
 		apiSales: process.env.SALES_URL,
@@ -82,7 +81,6 @@ function data() {
 		expirationTime: null,
 		loading: false,
 		merchantId: process.env.VISA_MERCHAN_ID,
-		order: {},
 		sessionKey: null,
 		totalAmount: null,
 	};
@@ -92,8 +90,12 @@ export default {
 	name: 'visa-payment',
 	computed: {
 		...mapGetters([
+			'getOrderId',
+			'getShippingCost',
+			'getTotalToBuy',
 			'token',
 		]),
+		orderTotal,
 	},
 	created,
 	data,

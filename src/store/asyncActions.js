@@ -2,8 +2,7 @@ import lib from '@/shared/lib';
 import helper from '@/shared/helper';
 
 const asyncActions = {
-	LOAD_PRODUCTS: async ({ commit, state }, { context }) => {
-		const { params } = state.products;
+	LOAD_PRODUCTS: async ({ commit, state }, { context, params }) => {
 		const request = [];
 		if (state.token) {
 			request.push(context.$httpProducts.get('products/favorites', { params }));
@@ -29,11 +28,21 @@ const asyncActions = {
 			commit('showSnackBar', message);
 		}
 	},
-	CREATE_ORDER: async ({ commit }, { context, body }) => {
+	CREATE_ORDER: async (store, { context, body }) => {
 		const url = 'orders';
 		const { data: order } = await context.$httpSales.post(url, body);
-		commit('SET_ORDER_ID', order.id);
-		commit('SET_ORDER_TOTAL', order.total);
+		asyncActions.GET_ORDER_INFO(store, { context, id: order.id });
+	},
+	UPDATE_ORDER: async (store, { context, id, body }) => {
+		const url = `orders/${id}`;
+		const { data: order } = await context.$httpSales.patch(url, body);
+		asyncActions.GET_ORDER_INFO(store, { context, id: order.id });
+	},
+	GET_ORDER_INFO: async (store, { context, id }) => {
+		const url = `orders/${id}`;
+		const { data: order } = await context.$httpSales.get(url);
+		localStorage.setItem('ecommerce-order', JSON.stringify(order));
+		store.dispatch('getOrderData', order);
 	},
 	LOAD_DEPARTMENTS: async ({ commit }, context) => {
 		const url = 'province';
@@ -115,6 +124,17 @@ const asyncActions = {
 		const url = 'customers/current';
 		const { data: user } = await context.$httpSales.get(url);
 		commit('setUser', user);
+	},
+	LOAD_WAY_PAYMENT: async ({ commit }, context) => {
+		const { data: waysPayment } = await context.$httpSales.get('way-payment');
+		commit('SET_WAYS_PAYMENT', waysPayment);
+	},
+	SET_CURRENCY_DEFAULT: async ({ commit }, context) => {
+		const aclCode = process.env.ACL_COMPANY_CODE;
+		const url = `companies/${aclCode}/acl`;
+		const { data: res } = await context.$httpSales.get(url);
+		context.setLocalData(`${process.env.STORAGE_USER_KEY}::currency-default`, res.currencyDefault);
+		commit('SET_CURRENCY_DEFAULT', res.currencyDefault);
 	},
 };
 

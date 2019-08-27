@@ -4,9 +4,9 @@
 			<p class="title-section-links">{{item.title}}</p>
 			<ul v-for="(link, index) in item.links" :key="index">
 				<li>
-					<a :href="link.link" class="section-link">
-						{{link.name}}
-					</a>
+					<router-link to="/help" class="section-link">
+						{{link}}
+					</router-link>
 				</li>
 			</ul>
 		</div>
@@ -20,101 +20,41 @@ function data() {
 			{
 				title: 'Información',
 				links: [
-					{
-						link: '/',
-						name: 'Ubicación y horas de trabajo',
-					},
-					{
-						link: '/',
-						name: 'Sobre Nosotros',
-					},
-					{
-						link: '/',
-						name: 'Términos y condiciones',
-					},
-					{
-						link: '/',
-						name: 'Politicas de privacidad y confidencialidad',
-					},
-					{
-						link: '/',
-						name: 'No encuentro lo que quiero',
-					},
-					{
-						link: '/',
-						name: 'Buscamos proveedores',
-					},
+					'Ubicación y horas de trabajo',
+					'Sobre Nosotros',
+					'Términos y condiciones',
+					'Politicas de privacidad y confidencialidad',
+					'No encuentro lo que quiero',
+					'Buscamos proveedores',
 				],
 			},
 			{
 				title: 'Pago y envío',
 				links: [
-					{
-						link: '/',
-						name: 'Forma de Pago',
-					},
-					{
-						link: '/',
-						name: 'Forma de entrega',
-					},
-					{
-						link: '/',
-						name: 'Tiempo de Envio',
-					},
+					'Forma de Pago',
+					'Forma de entrega',
+					'Tiempo de Envio',
 				],
 			},
 			{
 				title: 'Políticas de la empresa',
 				links: [
-					{
-						link: '/',
-						name: 'Politica de garantía',
-					},
-					{
-						link: '/',
-						name: 'Politicas de privacidad',
-					},
-					{
-						link: '/',
-						name: 'Politicas de devolución o cambio',
-					},
-					{
-						link: '/',
-						name: 'Garantía',
-					},
+					'Politica de garantía',
+					'Politicas de privacidad',
+					'Politicas de devolución o cambio',
+					'Garantía',
 				],
 			},
 			{
 				title: 'Servicio al cliente',
 				links: [
-					{
-						link: '/',
-						name: 'Contáctenos',
-					},
-					{
-						link: '/',
-						name: '¿Cómo ganar y usar tus Puntos?',
-					},
-					{
-						link: '/',
-						name: '¿Cómo comprar?',
-					},
-					{
-						link: '/',
-						name: 'Preguntas Frecuentes',
-					},
-					{
-						link: '/',
-						name: 'Seguir su pedido',
-					},
-					{
-						link: '/',
-						name: 'Reclamos',
-					},
-					{
-						link: '/',
-						name: '¿Cómo usar tus puntos?',
-					},
+					'Contáctenos',
+					'¿Cómo ganar y usar tus Puntos?',
+					'¿Cómo comprar?',
+					'Preguntas Frecuentes',
+					'Seguir su pedido',
+					'Reclamos',
+					'¿Cómo usar tus puntos?',
 				],
 			},
 		],

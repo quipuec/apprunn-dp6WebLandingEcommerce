@@ -6,7 +6,9 @@
  			:categories="getCategories"
 			:color-base="colorBase"/>
 		<component-filter-product 
-		:filters="filters"></component-filter-product>
+			@click-filter="filterSelect"
+		>
+		</component-filter-product>
 		<div class="page-products">
 			<products-section/>
 		</div>
@@ -30,16 +32,8 @@ const sectionSettlement = () => import('@/components/home/section-settlement');
 
 function created() {
 	this.loadData();
-	this.loadFilters();
 }
-async function loadFilters() {
-	try {
-		const { data: response } = await this.$httpProductsPublic.get('filters-public');
-		this.filters = response;
-	} catch (error) {
-		this.showGenericError();
-	}
-}
+
 
 async function loadData() {
 	try {
@@ -49,6 +43,20 @@ async function loadData() {
 		this.showGenericError();
 	}
 }
+
+function filterSelect(id) {
+	const filters = this.getFilters.map((f) => {
+		const newFilter = { ...f };
+		newFilter.select = f.id === id;
+		return newFilter;
+	});
+	const params = {
+		filters: id,
+	};
+	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
+	this.$store.dispatch('updateFilters', filters);
+}
+
 function data() {
 	return {
 		filters: [],
@@ -118,12 +126,13 @@ export default {
 	computed: {
 		...mapGetters([
 			'getCategories',
+			'getFilters',
 		]),
 	},
 	created,
 	methods: {
-		loadFilters,
 		loadData,
+		filterSelect,
 	},
 };
 </script>

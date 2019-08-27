@@ -6,12 +6,18 @@
 			:disabled="disabled"
 			:heading-image="headingImage"
 			:img-height="width > 768 ? '39.3' : '38'"
+			:visible-btn="!isVisibleMessage"
 			title="¿Olvidaste tu <br> contraseña?"
 			title-btn="Enviar"
 			@on-submit="restorePassword"
 		>
-			<div v-if="isVisibleMessage">
-				<img src="" alt="">
+			<div 
+				v-if="isVisibleMessage"
+				class="container-checked">
+				<img 
+					src="/static/img/check.svg" 
+					alt="checked"
+					class="checked">
 				<span>Se le ha enviado un correo electrónico con instrucciones 
 					para crear una nueva contraseña</span>
 			</div>
@@ -112,3 +118,16 @@
 		validations,
 	};
 </script>
+<style lang="scss" scoped>
+	.checked {
+		height: 16px;
+	}
+
+	.container-checked {
+		background: color(dark);
+		border-radius: 3px;
+		color: color(white);
+		margin: 100px 42px 0;
+		padding: 10px;
+	}
+</style>

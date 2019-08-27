@@ -46,15 +46,15 @@
 </div>
 </template>
 <script>
-import { required } from 'vuelidate/lib/validators';
+import { required, minLength } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 
 const appInput = () => import('@/components/shared/inputs/app-input');
 
 function validateForm() {
-	this.$store.commit('SET_BILLING_INFO', null);
+	this.$store.commit('SET_BILLING_DATA', null);
 	if (!this.$v.$invalid) {
-		this.$store.commit('SET_BILLING_INFO', this.billing);
+		this.$store.commit('SET_BILLING_DATA', this.billing);
 	}
 }
 
@@ -66,7 +66,7 @@ function validations() {
 	return {
 		billing: {
 			address: { required },
-			ruc: { required },
+			ruc: { required, minLength: minLength(11) },
 			rzSocial: { required },
 		},
 	};

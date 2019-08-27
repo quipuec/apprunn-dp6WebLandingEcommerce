@@ -10,6 +10,7 @@
 		<app-button-img
 			v-if="!hideMapButton"
 			class="map-button"
+			:style="`background-color: ${globalColor.primary};border: 1px solid ${globalColor.primary};`"
 			:disabled="disableMap"
 			:data="objImg"
 			@click-image="openModal(true)"
@@ -99,8 +100,6 @@ export default {
 
 	.map-button {
 		align-items: center;
-		background-color: color(primary);
-		border: 1px solid color(primary);
 		display: flex;
 		flex: 1 1 6%;
 		height: 100%;

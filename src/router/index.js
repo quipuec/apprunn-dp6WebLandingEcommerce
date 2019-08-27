@@ -8,6 +8,7 @@ import Help from './help';
 import Category from './category';
 import ProductDetail from './detail-product';
 import restorePassword from './restore-password';
+import SummaryOrder from './summary-order';
 
 export default function (Vue) {
 	Vue.use(Router);
@@ -19,15 +20,17 @@ export default function (Vue) {
 				name: 'page-home',
 				component: () => import('@/pages/page-home'),
 			},
-			Help,
 			Category,
 			Components,
+			Help,
 			login,
 			Order,
+			ProductDetail,
 			Profile,
 			register,
 			ProductDetail,
 			restorePassword,
+			SummaryOrder,
 		],
 		scrollBehavior() {
 			return { x: 0, y: 0 };

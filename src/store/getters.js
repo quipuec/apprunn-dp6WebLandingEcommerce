@@ -45,8 +45,8 @@ function flagAddVoucher(state) {
 	return state.profile.flagAddVoucher;
 }
 
-function getCurrencySymbol() {
-	const currencyDefault = JSON.parse(localStorage.getItem(`${process.env.STORAGE_USER_KEY}::currency-default`));
+function getCurrencySymbol(state) {
+	const { currencyDefault } = state;
 	return getDeeper('symbol')(currencyDefault) || '';
 }
 
@@ -70,6 +70,10 @@ function genders(state) {
 	return state.genders;
 }
 
+function getFilters(state) {
+	return state.filters;
+}
+
 const methods = {
 	companyLogo,
 	genders,
@@ -90,6 +94,7 @@ const methods = {
 	userName,
 	getCategories,
 	totalProducts,
+	getFilters,
 };
 
 export default methods;

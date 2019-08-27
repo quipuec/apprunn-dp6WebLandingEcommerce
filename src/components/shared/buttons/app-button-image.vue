@@ -4,7 +4,9 @@
 		@click="$emit('click-image')"
 		v-bind="$attrs"
 	>
-		<div class="button-number" v-if="ifNumber">{{number}}</div>
+		<div
+			:style="`background: ${globalColors.primary};`"
+			class="button-number" v-if="ifNumber">{{number}}</div>
 		<img :src="imageUser"
 			:alt="data.name"
 			:height="data.height || 20" 
@@ -43,7 +45,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 	.button-number {
-		background: color(primary);
 		border-radius: 50%;
 		color: color(white);
 		height: 14px;

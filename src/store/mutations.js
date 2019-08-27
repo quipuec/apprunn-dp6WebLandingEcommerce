@@ -72,6 +72,14 @@ function SET_DIRECTIONS(state, directions) {
 	Vue.set(state, 'directions', state.directions.concat(directions));
 }
 
+function UPDATE_FILTERS(state, filters) {
+	Vue.set(state, 'filters', filters);
+}
+
+function SET_CURRENCY_DEFAULT(state, currency) {
+	Vue.set(state, 'currencyDefault', currency);
+}
+
 const methods = {
 	clearUser,
 	...geoMutations,
@@ -81,6 +89,7 @@ const methods = {
 	setUser,
 	showSnackBar,
 	toggleLoading,
+	SET_CURRENCY_DEFAULT,
 	SET_DIRECTIONS,
 	SET_ORDER_ID,
 	SET_PRODUCTS,
@@ -91,6 +100,7 @@ const methods = {
 	SET_CATEGORIES,
 	SET_ORDER_TOTAL,
 	UPDATE_PRODUCTS_SELECTED,
+	UPDATE_FILTERS,
 };
 
 export default methods;

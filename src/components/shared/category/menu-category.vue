@@ -1,8 +1,10 @@
 <template>
-	<div class="menu-category" v-if="close">
+	<div class="menu-category">
 		<div>
 			<section-category
 			:categories="categories"
+			@filter="filterCategory"
+			:title-category="titleCategory"
 			></section-category>
 		</div>
 		<filters-category></filters-category>
@@ -13,8 +15,12 @@
 </template>
 
 <script>
-const sectionCategory = () => import('@/components/shared/category/section-category');
 const filtersCategory = () => import('@/components/shared/category/filters-category');
+const sectionCategory = () => import('@/components/shared/category/section-category');
+
+function filterCategory() {
+	this.$emit('filter', this.categories);
+}
 
 function data() {
 	return {
@@ -26,13 +32,20 @@ export default {
 	data,
 	name: 'menu-category',
 	components: {
-		sectionCategory,
 		filtersCategory,
+		sectionCategory,
+	},
+	methods: {
+		filterCategory,
 	},
 	props: {
 		categories: {
 			type: Array,
 			default: () => [],
+		},
+		titleCategory: {
+			type: String,
+			default: '',
 		},
 	},
 };
@@ -44,12 +57,12 @@ export default {
 	border-right: 1px solid color(border);
 	height: 100vh;
 	position: relative;
-	width: 90%;	
+	width: 95%;	
 }
 
 .btn-menu-category {
-	left: 108%;
+	left: 104%;
 	position: absolute;
-	top: 150px;
+	top: 370px;
 }
 </style>

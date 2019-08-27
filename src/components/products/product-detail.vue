@@ -30,7 +30,10 @@
 		<div class="container-detail-bottom">
 			<div class="d-center mt-25">
 				<span class="text-price-dis" :style="`color: ${globalColors.secondary}`">{{getCurrencySymbol}} {{data.priceDiscount || ''}}</span>
-				<div class="content-discount">{{getDiscont}}%</div>
+				<div
+					:style="`background: ${globalColors.primary};`"
+					class="content-discount"
+				>- {{getDiscont}}%</div>
 			</div>
 			<span class="text-price">{{getCurrencySymbol}} {{data.price || ''}}</span>
 		</div>
@@ -63,7 +66,7 @@ async function addToFavorites() {
 }
 
 function getDiscont() {
-	return this.data.percentageDiscount * 100;
+	return Math.round(Number(this.data.percentageDiscount) * 100);
 }
 
 function selecFeature(index, value) {
@@ -81,11 +84,15 @@ function noStock() {
 }
 
 function addToCar() {
-	if (!this.noStock) {
-		this.$store.dispatch('addProductToBuyCar', this.data);
-		this.goTo('buy');
+	if (this.token) {
+		if (!this.noStock) {
+			this.$store.dispatch('addProductToBuyCar', this.data);
+			this.goTo('buy');
+		} else {
+			this.showGenericError('Producto sin stock');
+		}
 	} else {
-		this.showGenericError('Producto sin stock');
+		this.showGenericError('Debe iniciar sesión');
 	}
 }
 
@@ -173,7 +180,6 @@ export default {
 
 	.content-discount {
 		align-items: center;
-		background: color(primary);
 		border-radius: 5px;
 		color: color(white);
 		display: flex;
