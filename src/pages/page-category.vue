@@ -3,11 +3,11 @@
 	<div class="page-category">
 		<div class="menu-category">
 			<menu-category
-			:categories="this.arrayCategory"
-			:title-category="title"
+				:categories="categories"
+				:title-category="title"
 			></menu-category>
 			</div>
-		<div class="content-category">
+		<!-- <div class="content-category">
 			<div class="content-sections fixed">
 				<section class="section-breadcrumbs bread-responsive">
 					<v-breadcrumbs :items="items" divider=">"></v-breadcrumbs>
@@ -46,7 +46,7 @@
 				:product="product"
 				/>
 			</section>
-		</div>
+		</div> -->
 	</div>
 	<div v-if="sliderCategory">
 		<slider-category
@@ -63,6 +63,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const appBannerTop = () => import('@/components/header/app-banner-top');
 const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 const menuCategory = () => import('@/components/shared/category/menu-category');
@@ -71,10 +73,11 @@ const productsSection = () => import('@/components/products/products-section');
 const sliderCategory = () => import('@/components/shared/category/slider-category');
 
 function created() {
-	({ title: this.title, id: this.categoryId } = this.$route.query);
-	this.arrayCategory = this.$route.query.categories.detail;
-	this.subCategories = this.$route.query.categories.detail;
-	this.loadProduct();
+	// ({ title: this.title, id: this.categoryId } = this.$route.query);
+	// this.arrayCategory = this.$route.query.categories.detail;
+	// this.subCategories = this.$route.query.categories.detail;
+	// this.loadProduct();
+	this.selectCategory();
 }
 
 function closeCategory() {
@@ -106,6 +109,27 @@ function updateProductCard(value) {
 
 function filterProducts() {
 	this.sliderCategory = true;
+}
+
+function selectCategory() {
+	this.categories = this.getCategories.map((c) => {
+		const newCategory = { ...c };
+		newCategory.selectFirst = Number(c.id) === Number(this.fisrt);
+		if (this.second) {
+			const indexSearch = newCategory.detail.findIndex(d => Number(d.id) === Number(this.second));
+			newCategory.detail = c.detail.map((d, index) => {
+				const newDetail = { ...d };
+				if (indexSearch > -1) {
+					newDetail.selectSecond = indexSearch === index;
+				} else {
+					newDetail.selectSecond = false;
+				}
+				return newDetail;
+			});
+		}
+		return newCategory;
+	});
+	console.log(this.categories);
 }
 
 function data() {
@@ -144,6 +168,7 @@ function data() {
 		listProducts: [],
 		page: 1,
 		totalPages: 5,
+		categories: [],
 	};
 }
 
@@ -160,14 +185,32 @@ export default {
 	},
 	computed: {
 		pagesVisible,
+		...mapGetters([
+			'getCategories',
+		]),
 	},
 	methods: {
 		closeCategory,
 		filterProducts,
 		loadProduct,
 		updateProductCard,
+		selectCategory,
 	},
 	data,
+	props: {
+		fisrt: {
+			type: [String, Number],
+			default: null,
+		},
+		second: {
+			type: [String, Number],
+			default: null,
+		},
+		third: {
+			type: [String, Number],
+			default: null,
+		},
+	},
 };
 </script>
 

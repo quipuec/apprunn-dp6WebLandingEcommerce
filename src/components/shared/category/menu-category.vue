@@ -1,11 +1,15 @@
 <template>
 	<div class="menu-category">
 		<div>
-			<section-category
+			<!-- <section-category
 			:categories="categories"
 			@filter="filterCategory"
 			:title-category="titleCategory"
-			></section-category>
+			></section-category> -->
+			<list-category 
+				v-for="category in categories"
+				:data="category"
+				:key="category.id"/>
 		</div>
 		<filters-category></filters-category>
 		<button class="btn-menu-category">
@@ -17,6 +21,7 @@
 <script>
 const filtersCategory = () => import('@/components/shared/category/filters-category');
 const sectionCategory = () => import('@/components/shared/category/section-category');
+const listCategory = () => import('@/components/shared/category/list-category');
 
 function filterCategory() {
 	this.$emit('filter', this.categories);
@@ -34,6 +39,7 @@ export default {
 	components: {
 		filtersCategory,
 		sectionCategory,
+		listCategory,
 	},
 	methods: {
 		filterCategory,
