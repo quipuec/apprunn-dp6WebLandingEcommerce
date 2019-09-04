@@ -6,22 +6,38 @@
 			</button>
 			<button 
 				class="title-category mr-5" 
-				:style="data.selectFirst ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`">{{data.title}}</button>
-			<button>abierto</button>
+				:style="data.selectFirst ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`"
+				@click="$emit('change-category', data.id)"	
+			>{{data.title}}</button>
+			<button @click="$emit('open-category', data.id)">
+				<simple-svg
+					filepath="/static/img/arrow-left.svg"
+					:fill="globalColors.primary"
+					width="11"
+					class="icon"
+					:class="{'rotate-icon': data.open}"
+				/>
+			</button>
 		</div>
-		<div v-if="data.detail.length" class="wrapper-subcategory">
-			<div v-for="subCategory in data.detail" :key="subCategory.id">
-				<button 
-					class="text-subcategory"
-					:style="subCategory.selectSecond ? `color: ${globalColors.secondary}` : `color: ${globalColors.base}`">{{subCategory.title}}</button>
-				<div v-if="subCategory.detail.length" class="wrapper-subsubcategory">
+		<transition  name="slide">
+			<div v-if="data.detail.length && data.open" class="wrapper-subcategory">
+				<div v-for="subCategory in data.detail" :key="subCategory.id">
 					<button 
-						v-for="subSubCategory in subCategory.detail" 
-						:key="subSubCategory.id"
-						class="text-subsubcategory">{{subSubCategory.title}}</button>
+						class="text-subcategory mb-1"
+						:style="subCategory.selectSecond ? `color: ${globalColors.secondary}` : `color: ${globalColors.base}`"
+						@click="$emit('change-sub-category', data.id, subCategory.id)"
+					>{{subCategory.title}}</button>
+					<div v-if="subCategory.detail.length" class="wrapper-subsubcategory">
+						<button 
+							v-for="subSubCategory in subCategory.detail" 
+							:key="subSubCategory.id"
+							@click="$emit('change-sub-sub-category', data.id, subCategory.id, subSubCategory.id)"
+							:style="subSubCategory.selectThird ? `color: ${globalColors.secondary}` : `color: ${globalColors.base}`"
+							class="text-subsubcategory">{{subSubCategory.title}}</button>
+					</div>
 				</div>
 			</div>
-		</div>
+		</transition>
 	</div>
 </template>
 <script>
@@ -41,7 +57,7 @@ export default {
 
 		.wrapper-name-category {
 			border-bottom: 2px solid;
-			display: flex;
+			display: inline-flex;
 			margin-bottom: 15px;
 			padding-bottom: 3px;
 		}
@@ -73,11 +89,24 @@ export default {
 
 		.text-subsubcategory {
 			color: color(base);
+			display: block;
 		}
 		
 		.wrapper-subsubcategory {
 			margin: 8px 0;
 			padding-left: 20px;
+		}
+
+		&:first-child {
+			margin-top: 50px;
+		}
+
+		.icon {
+			transform: rotateZ(270deg);
+
+			&.rotate-icon {
+				transform: rotateZ(450deg);
+			}
 		}
 	}
 </style>

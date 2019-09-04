@@ -4,9 +4,21 @@
 		<div class="menu-category">
 			<menu-category
 				:categories="categories"
-				:title-category="title"
+				@change-category="changeCategory"
+				@change-sub-category="changeSubCategory"
+				@change-sub-sub-category="changeSubSubCategory"
+				@open-category="openCategory"
 			></menu-category>
-			</div>
+		</div>
+		<section class="section-product-card" v-if="listProducts.length">
+			<product-card
+				class="product-card"
+				v-for="product in listProducts"
+				:key="product.id"
+				:product="product"
+				/>
+		</section>
+		<p v-else class="not-products">No se encontrarón productos</p>
 		<!-- <div class="content-category">
 			<div class="content-sections fixed">
 				<section class="section-breadcrumbs bread-responsive">
@@ -56,7 +68,7 @@
 		<div>
 			<app-banner-top 
 				:data="bannerTop"
-				:color="colorSecondary"
+				:color="globalColors.secondary"
 				big/>
 		</div>
 	</div>
@@ -73,10 +85,6 @@ const productsSection = () => import('@/components/products/products-section');
 const sliderCategory = () => import('@/components/shared/category/slider-category');
 
 function created() {
-	// ({ title: this.title, id: this.categoryId } = this.$route.query);
-	// this.arrayCategory = this.$route.query.categories.detail;
-	// this.subCategories = this.$route.query.categories.detail;
-	// this.loadProduct();
 	this.selectCategory();
 }
 
@@ -89,7 +97,13 @@ async function loadProduct() {
 		const params = {
 			page: this.page,
 		};
-		const url = `products-public?eCategories=${this.categoryId}`;
+		let idCategory = this.fisrt;
+		if (this.third) {
+			idCategory = this.third;
+		} else if (this.second) {
+			idCategory = this.second;
+		}
+		const url = `products-public?eCategories=${idCategory}`;
 		const { data: products, headers } = await this.$httpProductsPublic.get(url, { params });
 		this.listProducts = products;
 		this.lastPage = Number(headers['x-last-page']);
@@ -112,9 +126,11 @@ function filterProducts() {
 }
 
 function selectCategory() {
+	this.loadProduct();
 	this.categories = this.getCategories.map((c) => {
 		const newCategory = { ...c };
 		newCategory.selectFirst = Number(c.id) === Number(this.fisrt);
+		newCategory.open = Number(c.id) === Number(this.fisrt);
 		if (this.second) {
 			const indexSearch = newCategory.detail.findIndex(d => Number(d.id) === Number(this.second));
 			newCategory.detail = c.detail.map((d, index) => {
@@ -124,12 +140,43 @@ function selectCategory() {
 				} else {
 					newDetail.selectSecond = false;
 				}
+				if (this.third && d.detail.length) {
+					newDetail.detail = d.detail.map((sub, indexSub) => {
+						const indexSearchSub = d.detail.findIndex(s => Number(s.id) === Number(this.third));
+						const newSubDetail = { ...sub };
+						if (indexSearchSub > -1) {
+							newSubDetail.selectThird = indexSearchSub === indexSub;
+						} else {
+							newSubDetail.selectThird = false;
+						}
+						return newSubDetail;
+					});
+				}
 				return newDetail;
 			});
 		}
 		return newCategory;
 	});
-	console.log(this.categories);
+}
+
+function changeCategory(id) {
+	this.goTo('category', { params: { fisrt: id } });
+}
+
+function changeSubCategory(id, idCategory) {
+	this.goTo('category', { params: { fisrt: id, second: idCategory } });
+}
+
+function changeSubSubCategory(id, idCategory, idSubCategory) {
+	this.goTo('category', { params: { fisrt: id, second: idCategory, third: idSubCategory } });
+}
+
+function openCategory(id) {
+	this.categories = this.categories.map((c) => {
+		const newCategory = { ...c };
+		newCategory.open = c.id === id ? !c.open : false;
+		return newCategory;
+	});
 }
 
 function data() {
@@ -145,7 +192,6 @@ function data() {
 			height: 16,
 		},
 		categoryId: null,
-		colorSecondary: process.env.COLOR_SECONDARY,
 		items: [
 			{
 				text: 'Resortes',
@@ -195,6 +241,10 @@ export default {
 		loadProduct,
 		updateProductCard,
 		selectCategory,
+		changeCategory,
+		changeSubCategory,
+		changeSubSubCategory,
+		openCategory,
 	},
 	data,
 	props: {
@@ -211,15 +261,17 @@ export default {
 			default: null,
 		},
 	},
+	watch: {
+		$route: selectCategory,
+	},
 };
 </script>
 
 <style lang="scss" scoped>
 .menu-category {
 	background-color: color(background);
-	padding: 0px 15px;
+	padding: 0 0 0 27px;
 	position: relative;
-	width: 25%;
 
 	@media (max-width: 980px) {
 		display: none;
@@ -281,12 +333,15 @@ export default {
 }
 
 .section-product-card {
-	align-items: center;
+	// align-items: center;
 	display: grid;
-	flex-wrap: wrap;
-	grid-template-columns: repeat(auto-fit, minmax(214px, 1fr));
-	margin: 42px auto;
-	max-width: 1070px;
+	// flex-wrap: wrap;
+	grid-auto-rows: minmax(min-content, max-content);
+	grid-template-columns: repeat(auto-fill, minmax(214px, 1fr));
+	// margin: 15px auto;
+	// max-width: 1070px;
+	margin: 30px 0 0 51px;
+	width: 70%;
 
 	@media (max-width: 980px) {
 		margin: 19px auto;
@@ -374,5 +429,12 @@ export default {
 	@media (min-width: 980px) {
 		display: none;
 	}
+}
+
+.not-products {
+	font-size: 18px;
+	margin: 50px;
+	text-align: center;
+	width: 70%;
 }
 </style>
