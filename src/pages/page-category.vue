@@ -19,46 +19,6 @@
 				/>
 		</section>
 		<p v-else class="not-products">No se encontrarón productos</p>
-		<!-- <div class="content-category">
-			<div class="content-sections fixed">
-				<section class="section-breadcrumbs bread-responsive">
-					<v-breadcrumbs :items="items" divider=">"></v-breadcrumbs>
-				</section>
-				<section class="section-breadcrumbs-responsive">
-					<img :src="$route.query.categories.webImage" alt="" class="image-breadcrumb-category">
-					<span class="text-breadcrumb">{{this.$route.query.categories.title}}</span>
-				</section>
-				<section class="section-filter-responsive">
-					<button-image
-					:data="iconFilter"
-					class="icon-filter"
-					/>
-					<button class="title-filter" @click="filterProducts">Filtrar por</button>
-				</section>
-				<section class="section-pagination-category">
-					<p class="total-products">{{listProducts.length}} productos</p>
-					<v-layout class="text-xs-center" v-show="totalPages">
-						<v-pagination
-						:length="this.lastPage"
-						:total-visible="pagesVisible"
-						v-model="page"
-						@input="updateProductCard"
-						></v-pagination>
-					</v-layout>
-				</section>
-			</div>
-			<section class="section-breadcrumbs border-bottom bread-desktop-none">
-				<v-breadcrumbs :items="items" divider=">"></v-breadcrumbs>
-			</section>
-			<section class="section-product-card">
-				<product-card
-				class="product-card"
-				v-for="product in listProducts"
-				:key="product.id"
-				:product="product"
-				/>
-			</section>
-		</div> -->
 	</div>
 	<div v-if="sliderCategory">
 		<slider-category
