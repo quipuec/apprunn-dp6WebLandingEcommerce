@@ -12,6 +12,8 @@
 			:heading-image="headingImage"
 			:img-height="imgHeight"
 			:title="title"
+			:title-btn="titleBtn"
+			:visible-btn="visibleBtn"
 			@authenticate="$emit('on-authenticate', $event)"
 			@on-submit="$emit('on-submit')"
 		>
@@ -39,6 +41,11 @@
 			headingImage: String,
 			imgHeight: [Number, String],
 			title: String,
+			titleBtn: String,
+			visibleBtn: {
+				default: true,
+				type: Boolean,
+			},
 		},
 	};
 </script>
