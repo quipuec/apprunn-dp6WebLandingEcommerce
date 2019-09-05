@@ -159,12 +159,13 @@ export default {
 		}
 	}
 
+
 	.user-avatar-container {
 		align-items: center;
-		bottom: 85%;
 		display: flex;
 		justify-content: center;
 		position: absolute;
+		top: -77px;
 		width: 100%;
 
 		@media (max-width: 768px) {

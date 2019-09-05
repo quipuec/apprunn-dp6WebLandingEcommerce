@@ -1,3 +1,5 @@
+import lib from '@/shared/lib';
+
 function clearUser(context) {
 	context.commit('clearUser');
 }
@@ -22,15 +24,16 @@ function setUser(context, user) {
 }
 
 function addProductToBuyCar(context, product) {
+	const newProduct = lib.setNewProperty('quantity', 1)(product);
 	const productsSelected = JSON.parse(localStorage.getItem('ecommerce::product-select')) || [];
-	const index = productsSelected.findIndex(p => p.id === product.id);
+	const index = productsSelected.findIndex(p => p.id === newProduct.id);
 	if (index > -1) {
 		const currentProduct = productsSelected[index];
-		const quantity = currentProduct.quantity + product.quantity;
+		const quantity = currentProduct.quantity + newProduct.quantity;
 		productsSelected[index].quantity = quantity;
 		context.commit('UPDATE_PRODUCTS_SELECTED', productsSelected);
 	} else {
-		context.commit('UPDATE_PRODUCTS_SELECTED', productsSelected.concat(product));
+		context.commit('UPDATE_PRODUCTS_SELECTED', productsSelected.concat(newProduct));
 	}
 }
 
