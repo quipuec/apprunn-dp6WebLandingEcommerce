@@ -79,6 +79,10 @@ export default {
 	border-right: 1px solid color(border);
 	display: flex;
 	position: relative;
+
+	@media (max-width: 986px) {
+		border-right: none;
+	}
 }
 
 .btn-menu-category {
@@ -93,6 +97,13 @@ export default {
 	border-right: 1px solid color(border);
 	max-width: 300px;
 	padding-right: 20px;
+
+	@media (max-width: 986px) {
+		border-right: none;
+		max-width: none;
+		padding-right: 0;
+		width: 100%;
+	}
 }
 
 </style>

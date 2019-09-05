@@ -1,7 +1,7 @@
 <template>
 <div>
 	<div class="page-category">
-		<div class="name-select-mobile">
+		<div class="name-select-mobile" v-if="!open">
 			<div class="flex-center flex-60">
 				<img 
 					:src="categorySelected.webImage" 
@@ -22,7 +22,13 @@
 				</button>
 			</div>
 		</div>
-		<div class="menu-category" :class="{open: open}">
+		<div class="menu-category" :class="{open: open}" v-if="open">
+			<button class="btn-close" @click="closeOpen">
+				<img 
+					src="/static/img/icons/close.svg" 
+					alt="cerrar" 
+					height="17">
+			</button>
 			<menu-category
 				:categories="categories"
 				@change-category="changeCategory"
@@ -31,7 +37,10 @@
 				@open-category="openCategory"
 			></menu-category>
 		</div>
-		<section class="section-product-card" v-if="listProducts.length">
+		<section 
+			class="section-product-card" 
+			v-if="listProducts.length"
+			:class="{close: open}">
 			<product-card
 				class="product-card"
 				v-for="product in listProducts"
@@ -67,6 +76,8 @@ const sliderCategory = () => import('@/components/shared/category/slider-categor
 
 function created() {
 	this.selectCategory();
+	this.changeOpen();
+	window.addEventListener('resize', this.changeOpen);
 }
 
 function closeCategory() {
@@ -143,14 +154,23 @@ function selectCategory() {
 
 function changeCategory(id) {
 	this.goTo('category', { params: { fisrt: id } });
+	if (window.innerWidth < 986) {
+		this.open = false;
+	}
 }
 
 function changeSubCategory(id, idCategory) {
 	this.goTo('category', { params: { fisrt: id, second: idCategory } });
+	if (window.innerWidth < 986) {
+		this.open = false;
+	}
 }
 
 function changeSubSubCategory(id, idCategory, idSubCategory) {
 	this.goTo('category', { params: { fisrt: id, second: idCategory, third: idSubCategory } });
+	if (window.innerWidth < 986) {
+		this.open = false;
+	}
 }
 
 function openCategory(id) {
@@ -162,7 +182,15 @@ function openCategory(id) {
 }
 
 function toggleMenu() {
-	console.log('kakak');
+	this.open = true;
+}
+
+function changeOpen() {
+	this.open = window.innerWidth > 986;
+}
+
+function closeOpen() {
+	this.open = false;
 }
 
 function data() {
@@ -234,6 +262,8 @@ export default {
 		changeSubSubCategory,
 		openCategory,
 		toggleMenu,
+		changeOpen,
+		closeOpen,
 	},
 	data,
 	props: {
@@ -261,11 +291,12 @@ export default {
 	background-color: color(background);
 	padding: 0 0 0 27px;
 	position: relative;
+	transition: all .2s linear 0s;
 
 	@media (max-width: 986px) {
 		height: 100%;
 		left: -150%;
-		position: absolute;
+		padding: 0;
 
 		&.open {
 			left: 0 !important;
@@ -334,6 +365,12 @@ export default {
 	@media (max-width: 986px) {
 		margin: 0;
 		width: 100%;
+	}
+
+	&.close {
+		@media (max-width: 986px) {
+			display: none;
+		}
 	}
 }
 
@@ -428,9 +465,12 @@ export default {
 }
 
 .name-select-mobile {
+	background: color(white);
 	box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.05);
 	display: none;
 	height: 59px;
+	position: sticky;
+  top: 75px;
 
 	@media (max-width: 986px) {
 		display: flex;
@@ -455,5 +495,17 @@ export default {
 .text-select {
 	font-family: font(bold);
 	font-size: size(xlarge);
+}
+
+.btn-close {
+	border-bottom: 1px solid color(border);
+	display: none;
+	padding: 15px;
+	text-align: right;
+	width: 100%;
+
+	@media (max-width: 986px) {
+		display: block;
+	}
 }
 </style>
