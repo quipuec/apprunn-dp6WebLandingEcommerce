@@ -1,4 +1,3 @@
-import helper from '@/shared/helper';
 
 export default {
 	appConfig: {
@@ -63,7 +62,7 @@ export default {
 			limit: 20,
 		},
 	},
-	token: helper.getLocalToken(),
+	token: null,
 	user: {
 		email: '',
 		logo: '/static/img/user.svg',

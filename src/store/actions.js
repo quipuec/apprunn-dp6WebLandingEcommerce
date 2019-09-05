@@ -80,8 +80,19 @@ function SET_DEFAULT_VALUES({ commit }) {
 	commit('SET_FLAG_STATUS_ORDER', null);
 }
 
+function DEFAULT_USER({ commit }) {
+	const user = {
+		email: '',
+		logo: '/static/img/user.svg',
+		profileImage: '',
+		username: '',
+	};
+	commit('setUser', user);
+}
+
 const methods = {
 	clearUser,
+	DEFAULT_USER,
 	getOrderData,
 	setUser,
 	setToken,
