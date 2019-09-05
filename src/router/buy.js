@@ -1,10 +1,17 @@
 const route = {
 	name: 'buy',
 	path: '/carrito-de-compras',
+	component: () => import(/* webpackChunkName: "page-buy" */ '@/pages/page-buy'),
 	meta: {
 		step: 1,
 	},
-	component: () => import(/* webpackChunkName: "page-buy" */ '@/pages/page-buy'),
+	beforeEnter: (to, from, next) => {
+		if (to.fullPath.includes('carrito-de-compras') && localStorage.getItem('ecommerce::token')) {
+			next();
+		} else {
+			next({ name: 'page-home' });
+		}
+	},
 	children: [
 		{
 			name: 'buy-delivery',

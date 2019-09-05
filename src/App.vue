@@ -74,29 +74,6 @@ function routeHandler() {
 	this.showMenu = false;
 }
 
-function created() {
-	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
-	this.loadFilters();
-}
-
-async function loadFilters() {
-	try {
-		const { data: response } = await this.$httpProductsPublic.get('filters-public');
-		const filters = response.map((f, index) => {
-			const newFilter = { ...f };
-			newFilter.select = index === 0;
-			return newFilter;
-		});
-		this.$store.dispatch('updateFilters', filters);
-		const params = {
-			filters: this.getFilters[0].id,
-		};
-		this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
-	} catch (error) {
-		this.showGenericError();
-	}
-}
-
 function data() {
 	return {
 		logo: {
@@ -126,7 +103,6 @@ export default {
 		]),
 	},
 	data,
-	created,
 	components: {
 		appFooter,
 		appHeader,
@@ -137,7 +113,6 @@ export default {
 	},
 	methods: {
 		changeMenu,
-		loadFilters,
 	},
 	watch: {
 		$route: routeHandler,
