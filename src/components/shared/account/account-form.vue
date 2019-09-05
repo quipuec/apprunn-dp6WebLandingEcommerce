@@ -5,7 +5,6 @@
 				<img :src="headingImage" :height="imgHeight" alt="">
 				<div class="form-title">
 					<span v-html="title"></span>
-					<!-- <div v-html="title"></div> -->
 				</div>
 			</v-flex>
 			<v-flex xs12 text-xs-center>
