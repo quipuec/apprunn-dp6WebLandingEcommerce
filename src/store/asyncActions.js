@@ -142,7 +142,10 @@ const asyncActions = {
 	LOAD_FAVORITES_PRODUCTS: async ({ commit }, { context, params }) => {
 		const url = 'products/favorites?favorite=true';
 		const { data: favorites, headers } = await context.$httpProducts.get(url, { params });
-		commit('SET_FAVORITES', favorites);
+		const newFavorites = favorites.map(
+			lib.setNewProperty('createdAt', ({ createdAt }) => helper.formatDate(createdAt)),
+		);
+		commit('SET_FAVORITES', newFavorites);
 		return Number(headers['x-last-page']);
 	},
 
