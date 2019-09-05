@@ -159,6 +159,7 @@ export default {
 		}
 	}
 
+
 	.user-avatar-container {
 		align-items: center;
 		display: flex;
