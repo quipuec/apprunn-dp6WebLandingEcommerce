@@ -10,7 +10,8 @@
 				align-left
 				:columns="columns"
 				:rows="getFavorites"
-				:pages="50"
+				:pages="totalPages"
+				@page-changed="pageChange"
 			>
 				<template slot-scope="{ row }">
 					<td class="row-product">
@@ -38,8 +39,11 @@
 <script>
 import { mapGetters } from 'vuex';
 
-function created() {
-	this.$store.dispatch('LOAD_FAVORITES_PRODUCTS', this);
+async function created() {
+	this.totalPages = await this.$store.dispatch(
+		'LOAD_FAVORITES_PRODUCTS',
+		{ context: this, params: this.params },
+	);
 }
 
 function buyThisProduct(product) {
@@ -49,7 +53,12 @@ function buyThisProduct(product) {
 
 async function noMoreFavorite(product) {
 	await this.$store.dispatch('SET_FAVORITE_FLAG', { context: this, product });
-	this.$store.dispatch('LOAD_FAVORITES_PRODUCTS', this);
+	this.$store.dispatch('LOAD_FAVORITES_PRODUCTS', { context: this, params: this.params });
+}
+
+function pageChange(page) {
+	this.params.page = page;
+	this.$store.dispatch('LOAD_FAVORITES_PRODUCTS', { context: this, params: this.params });
 }
 
 function data() {
@@ -60,6 +69,11 @@ function data() {
 			{ value: 'createdAt', title: 'Fecha de Creación', responsive: true },
 			{ value: 'actions', title: 'Acción', responsive: true },
 		],
+		params: {
+			page: 1,
+			limit: 5,
+		},
+		totalPages: 0,
 	};
 }
 
@@ -80,6 +94,7 @@ export default {
 	methods: {
 		buyThisProduct,
 		noMoreFavorite,
+		pageChange,
 	},
 };
 </script>

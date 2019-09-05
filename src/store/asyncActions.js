@@ -139,10 +139,11 @@ const asyncActions = {
 		context.setLocalData(`${process.env.STORAGE_USER_KEY}::currency-default`, res.currencyDefault);
 		commit('SET_CURRENCY_DEFAULT', res.currencyDefault);
 	},
-	LOAD_FAVORITES_PRODUCTS: async ({ commit }, context) => {
+	LOAD_FAVORITES_PRODUCTS: async ({ commit }, { context, params }) => {
 		const url = 'products/favorites?favorite=true';
-		const { data: favorites } = await context.$httpProducts.get(url);
+		const { data: favorites, headers } = await context.$httpProducts.get(url, { params });
 		commit('SET_FAVORITES', favorites);
+		return Number(headers['x-last-page']);
 	},
 
 };
