@@ -140,7 +140,7 @@ export default {
 				margin-top: 30px;
 			}
 		}
-
+		
 		.icon {
 			transform: rotateZ(270deg);
 
