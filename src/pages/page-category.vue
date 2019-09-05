@@ -1,7 +1,28 @@
 <template>
 <div>
 	<div class="page-category">
-		<div class="menu-category">
+		<div class="name-select-mobile">
+			<div class="flex-center flex-60">
+				<img 
+					:src="categorySelected.webImage" 
+					:alt="categorySelected.title" 
+					class="mr-2" 
+					height="21">
+				<span class="text-select" :style="`color: ${globalColors.primary}`">{{categorySelected.title}}</span>
+			</div>
+			<div class="flex-center flex-40">
+				<button @click="toggleMenu">
+					<img 
+						src="/static/img/icons/icon-filter-category.svg" 
+						alt="filtro"
+						class="mr-2"
+						height="16"
+					>
+					<span>Filtrar por</span>
+				</button>
+			</div>
+		</div>
+		<div class="menu-category" :class="{open: open}">
 			<menu-category
 				:categories="categories"
 				@change-category="changeCategory"
@@ -87,6 +108,7 @@ function filterProducts() {
 
 function selectCategory() {
 	this.loadProduct();
+	this.categorySelected = this.getCategories.filter(c => Number(c.id) === Number(this.fisrt))[0];
 	this.categories = this.getCategories.map((c) => {
 		const newCategory = { ...c };
 		newCategory.selectFirst = Number(c.id) === Number(this.fisrt);
@@ -139,6 +161,10 @@ function openCategory(id) {
 	});
 }
 
+function toggleMenu() {
+	console.log('kakak');
+}
+
 function data() {
 	return {
 		sliderCategory: false,
@@ -175,6 +201,8 @@ function data() {
 		page: 1,
 		totalPages: 5,
 		categories: [],
+		categorySelected: {},
+		open: false,
 	};
 }
 
@@ -205,6 +233,7 @@ export default {
 		changeSubCategory,
 		changeSubSubCategory,
 		openCategory,
+		toggleMenu,
 	},
 	data,
 	props: {
@@ -233,23 +262,31 @@ export default {
 	padding: 0 0 0 27px;
 	position: relative;
 
-	@media (max-width: 980px) {
-		display: none;
+	@media (max-width: 986px) {
+		height: 100%;
+		left: -150%;
+		position: absolute;
+
+		&.open {
+			left: 0 !important;
+			width: 100%;
+		}
 	}
 }
 
 .content-category {
 	background-color: color(white);
 	width: 75%;
-
-	@media (max-width: 980px) {
-		width: 100%;
-	}
 }
 
 .page-category {
 	display: flex;
+	position: relative;
 	width: 100%;
+
+	@media (max-width: 986px) {
+		flex-direction: column;
+	}
 }
 
 .space-between {
@@ -285,26 +322,18 @@ export default {
 .section-pagination-category {
 	align-items: center;
 	display: flex;
-
-	@media (max-width: 980px) {
-		display: none;
-		width: 50%;
-	}
 }
 
 .section-product-card {
-	// align-items: center;
 	display: grid;
-	// flex-wrap: wrap;
 	grid-auto-rows: minmax(min-content, max-content);
 	grid-template-columns: repeat(auto-fill, minmax(214px, 1fr));
-	// margin: 15px auto;
-	// max-width: 1070px;
 	margin: 30px 0 0 51px;
 	width: 70%;
 
-	@media (max-width: 980px) {
-		margin: 19px auto;
+	@media (max-width: 986px) {
+		margin: 0;
+		width: 100%;
 	}
 }
 
@@ -396,5 +425,35 @@ export default {
 	margin: 50px;
 	text-align: center;
 	width: 70%;
+}
+
+.name-select-mobile {
+	box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.05);
+	display: none;
+	height: 59px;
+
+	@media (max-width: 986px) {
+		display: flex;
+	}
+}
+
+.flex-center {
+	align-items: center;
+	display: flex;
+	justify-content: center;
+}
+
+.flex-60 {
+	border-right: 1px solid color(border);
+	flex: 1 60%;
+}
+
+.flex-40 {
+	flex: 1 40%;
+}
+
+.text-select {
+	font-family: font(bold);
+	font-size: size(xlarge);
 }
 </style>

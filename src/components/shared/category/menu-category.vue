@@ -83,6 +83,10 @@ export default {
 
 .btn-menu-category {
 	width: 30px;
+
+	@media (max-width: 986px) {
+		display: none;
+	}
 }
 
 .wrapper-list-category {

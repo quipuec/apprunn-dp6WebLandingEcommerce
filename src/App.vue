@@ -614,12 +614,12 @@ input.app-input::-webkit-input-placeholder {
 
 .list-category {
 		.slide-enter-active {
-		transition-duration: 0.4s;
+		transition-duration: 0.9s;
 		transition-timing-function: ease-in;
 	}
 
 	.slide-leave-active {
-		transition-duration: 0.3s;
+		transition-duration: 0.9s;
 		transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 	}
 
