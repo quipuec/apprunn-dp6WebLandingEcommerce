@@ -51,6 +51,7 @@ export default {
 	},
 	profile: {
 		address: [],
+		favorites: [],
 		flagAddVoucher: false,
 		userData: null,
 	},
