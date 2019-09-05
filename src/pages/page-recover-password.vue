@@ -68,7 +68,7 @@
 		};
 		try {
 			await this.$httpAcl.post('password/reset', body, { headers });
-			this.$message.success({ message: 'La contraseña ha sido cambiada exitosamente' });
+			this.showNotification('La contraseña ha sido cambiada exitosamente');
 			this.goTo('login');
 		} catch (err) {
 			if (err.status === 401) {
