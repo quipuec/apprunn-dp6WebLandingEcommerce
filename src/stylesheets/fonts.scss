@@ -2,7 +2,7 @@
     font-family: 'Avenir Next Regular';
     font-style: normal;
     font-weight: normal;
-    src: local('Avenir Next LT Pro Regular'), url('/static/fonts/sAvenirNextLTPro-Regular.woff') format('woff');
+    src: local('Avenir Next LT Pro Regular'), url('/static/fonts/AvenirNextLTPro-Regular.woff') format('woff');
 }
 
 @font-face {
@@ -66,7 +66,7 @@
     font-family: 'Avenir Next Heavy';
     font-style: normal;
     font-weight: normal;
-    src: local('Avenir Next LT Pro Heavy'), url('/static/fonts/AvenirNextLTPro-Heavy.woff') format('woff');
+    src: local('Avenir Next LT Pro Heavy'), url('/static/fonts/avenir-heavy-webfont.woff') format('woff');
 }
 
 @font-face {
@@ -74,4 +74,11 @@
     font-style: normal;
     font-weight: normal;
     src: local('Avenir Next LT Pro Heavy Italic'), url('/static/fonts/AvenirNextLTPro-HeavyIt.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Avenir Next Book';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Avenir Next Book', url('/static/fonts/Avenir-book.woff') format('woff'));
 }

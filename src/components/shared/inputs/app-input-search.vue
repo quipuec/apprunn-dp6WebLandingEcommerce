@@ -1,0 +1,81 @@
+<template>
+  <div class="app-input-search">
+		<img 
+			:src="image" 
+			alt="Buscar"
+			class="icon-search">
+		<input
+			v-bind="$attrs"
+			class="app-input"
+			placeholder="¿Qué buscas?"
+			:style="`color: ${color}`"
+			@keydown.enter="$emit('search', searchText)"
+			v-model="searchText"
+		/>
+	</div>
+</template>
+<script>
+
+function changeRoute(newRouteName) {
+	if (newRouteName.name !== 'page-home') {
+		this.searchText = '';
+	}
+}
+
+function data() {
+	return {
+		searchText: null,
+	};
+}
+
+export default {
+	name: 'app-input-search',
+	data,
+	props: {
+		image: String,
+		color: String,
+	},
+	watch: {
+		$route: changeRoute,
+	},
+};
+</script>
+<style lang="scss" scoped>
+	.app-input-search {
+		align-items: center;
+		border: solid 2px color(border);
+		border-radius: 8px;
+		display: flex;
+		height: 38px;
+		padding: 5px 14px;
+		width: 100%;
+
+		@media (max-width: 764px) {
+			border: solid 1px color(border);
+			border-radius: 3px;
+		}
+	}
+
+	.app-input {
+		background-color: color(white);
+		border-color: transparent;
+		border-radius: 7px;
+		border-style: solid;
+		border-width: 1px;
+		font-family: font(demi);
+		font-size: size(medium);
+		outline: none;
+		padding: 0px 16.2px;
+		width: 100%;
+	}
+
+	.icon-search {
+		height: 22px;
+
+		@media (max-width: 764px) {
+			height: 17px;
+		}
+	}
+</style>
+
+

@@ -1,0 +1,209 @@
+<template>
+	<div class="product-container" :class="{ 'small': small }" @click="goToProduct(product)">
+		<section class="product-header" :class="{ 'small': small }">
+			<div :style="`background-color: ${globalColors.primary}`" class="product-discount">-20%</div>
+			<div class="product-favorite">
+				<heart-component @click="productFavo" :value="product.flagFavorite"/>
+			</div>
+		</section>
+		<section class="product-content" :class="small ? 'small' : null">
+			<div>
+				<img class="product-img" :src="product.urlImage" alt="imagen del product">
+			</div>
+			<div class="product-description-wrapper">
+				<p class="product-description">{{product.description}}</p>
+				<small class="product-brand">{{product.warehouseProduct.brand.name}}</small>
+				<h3
+					:style="`color: ${globalColors.secondary};`"
+					class="product-price-discount"
+				>{{product.priceDiscount || 0}}</h3>
+				<small class="product-price">{{product.price || 0}}</small>
+				<small class="other-buy">+ 1000 compraron esto</small>
+				<v-rating
+					small
+					class="product-rating"
+					background-color="#ffcc03"
+					color="#ffcc03"
+					v-model="product.rating"></v-rating>
+			</div>
+		</section>
+	</div>
+</template>
+<script>
+import { mapGetters } from 'vuex';
+
+function productFavo() {
+	if (this.token) {
+		this.$store.dispatch('SET_FAVORITE_FLAG', { context: this, product: this.product });
+		this.$store.dispatch('LOAD_PRODUCTS', { context: this, params: this.getProductsParams });
+	} else {
+		const text = 'Debe iniciar sesión para seleccionar producto como favorito';
+		this.$store.dispatch('showSnackBar', { text, color: 'error' });
+	}
+}
+
+function buyProduct() {
+	this.$store.commit('SET_PRODUCT_TO_BUY', this.product);
+}
+
+function goToProduct({ id }) {
+	const params = { id };
+	this.goTo('detail-product', { params });
+}
+
+export default {
+	name: 'product-card',
+	components: {
+		heartComponent: () => import('@/components/shared/icons/heart-component'),
+	},
+	computed: {
+		...mapGetters([
+			'getProductsParams',
+		]),
+	},
+	methods: {
+		buyProduct,
+		productFavo,
+		goToProduct,
+	},
+	props: {
+		small: {
+			type: Boolean,
+			default: false,
+		},
+		product: {
+			default: () => {},
+			type: Object,
+		},
+	},
+};
+</script>
+<style lang="scss" scoped>
+	.product-container {
+		background-color: color(white);
+		border: 1px solid color(border);
+		box-shadow: 0 2px 2px 0 rgba(31, 26, 26, 0.07);
+		cursor: pointer;
+		font-family: font(medium);
+		height: auto;
+		padding: 10px;
+
+		@media (min-width: 500px) {
+			border: 3px solid color(border);
+			border-radius: 5px;
+			height: 330px;
+			margin: 3px;
+			max-width: 202px;
+		}
+
+		&.small {
+			min-height: 319px;
+			max-width: 179px;
+		}
+	}
+
+	.product-header {
+		align-items: center;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.product-discount {
+		border-radius: 5px;
+		color: color(white);
+		font-family: font(medium);
+		font-size: size(large);
+		padding: 8px 15px;
+	}
+
+	.product-content {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		margin: 0 5px;
+		padding: 0 15px;
+		text-align: center;
+
+		div {
+			margin: 0 15px;
+		}
+
+		@media (max-width: 500px) {
+			&.small {
+				flex-direction: column;
+			}
+		}
+
+		@media (min-width: 426px) {
+			flex-direction: column;
+		}
+
+		@media (max-width: 975px) {
+			&.small {
+				padding: 0px;
+			}
+		}
+	}
+
+	.product-description-wrapper {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.product-img {
+		height: 130px;
+		object-fit: contain;
+		width: 125px;
+	}
+
+	.product-description {
+		color: color(dark);
+		font-size: size(small);
+		height: 35px;
+		margin: 0 auto;
+		max-width: 150px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-transform: capitalize;
+	}
+
+	.product-brand {
+		color: color(base);
+		font-size: size(xsmall);
+	}
+
+	.product-price-discount {
+		font-family: font(bold);
+		font-size: size(xlarge);
+	}
+
+	.product-price,
+	.other-buy {
+		color: color(base);
+		font-size: size(xsmall);
+	}
+
+	.other-buy {
+		font-family: font(regular);
+		display: none;
+
+		@media (min-width: 500px) {
+			display: block;
+			flex-direction: column;
+		}
+	}
+
+	.product-price {
+		text-decoration: line-through;
+	}
+
+	.product-rating {
+		margin: 0 !important;
+
+		.v-icon {
+			padding: 0.3rem !important;
+		}
+	}
+</style>
+

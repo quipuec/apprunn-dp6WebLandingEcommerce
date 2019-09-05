@@ -13,6 +13,16 @@ function data() {
 	};
 }
 
+Math.easeInOutQuad = (t, b, c, d) => {
+	let time = t;
+	time /= d / 2;
+	if (time < 1) {
+		return (((c / 2) * time) * time) + b;
+	}
+	time -= 1;
+	return ((-c / 2) * ((time * (time - 2)) - 1)) + b;
+};
+
 function goTo(name, options) {
 	this.$router.push({ name, ...options });
 }
@@ -66,21 +76,69 @@ function stopClick() {
 	return false;
 }
 
+function globalColors() {
+	return {
+		background: '',
+		black: '',
+		base: process.env.COLOR_BORDER,
+		border: '',
+		dark: process.env.COLOR_DARK,
+		disabled: '',
+		highLight: process.env.COLOR_HIGHLIGHT,
+		primary: process.env.COLOR_BASE,
+		secondary: process.env.COLOR_SECONDARY,
+		terciary: process.env.COLOR_LINK,
+		white: '',
+	};
+}
+
+function getLocalStorage(key) {
+	const items = JSON.parse(localStorage.getItem(key));
+	return items;
+}
+
+function setLocalData(key, setData) {
+	return localStorage.setItem(key, JSON.stringify(setData));
+}
+
+function scrollTo(element, duration, fit) {
+	const to = document.getElementsByClassName(element)[0].offsetTop;
+	const start = window.scrollY;
+	const change = fit ? to - start : to - start - 100;
+	let currentTime = 0;
+	const increment = 20;
+
+	const animateScroll = () => {
+		currentTime += increment;
+		const val = Math.easeInOutQuad(currentTime, start, change, duration);
+		window.scrollTo(0, val);
+		if (currentTime < duration) {
+			setTimeout(animateScroll, increment);
+		}
+	};
+	animateScroll();
+	this.isVisible = false;
+}
+
 const mixin = {
 	data,
 	computed: {
 		token,
+		globalColors,
 	},
 	methods: {
 		getImageUrl,
+		getLocalStorage,
 		goTo,
 		loadData,
 		onSearch,
 		replaceString,
+		setLocalData,
 		showGenericError,
 		showNotification,
 		showRow,
 		stopClick,
+		scrollTo,
 	},
 };
 

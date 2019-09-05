@@ -1,5 +1,13 @@
 import Router from 'vue-router';
 import login from './login';
+import Components from './components';
+import Profile from './profile';
+import register from './register';
+import Order from './buy';
+import Help from './help';
+import Category from './category';
+import ProductDetail from './detail-product';
+import SummaryOrder from './summary-order';
 
 export default function (Vue) {
 	Vue.use(Router);
@@ -10,20 +18,20 @@ export default function (Vue) {
 				path: '/',
 				name: 'page-home',
 				component: () => import('@/pages/page-home'),
-				children: [],
 			},
+			Category,
+			Components,
+			Help,
 			login,
+			Order,
+			ProductDetail,
+			Profile,
+			register,
+			SummaryOrder,
 		],
-	});
-	config.beforeEach((to, from, next) => {
-		if (to.name !== 'login') {
-			const token = window.localStorage.getItem(`${process.env.STORAGE_USER_KEY}::token`);
-			if (token) {
-				return next();
-			}
-			return next({ name: 'login' });
-		}
-		return next();
+		scrollBehavior() {
+			return { x: 0, y: 0 };
+		},
 	});
 	return config;
 }

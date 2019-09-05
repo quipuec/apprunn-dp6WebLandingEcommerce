@@ -40,6 +40,10 @@ import {
 	VTreeview,
 	VAvatar,
 	VInput,
+	VRating,
+	VRangeSlider,
+	VBreadcrumbs,
+	VPagination,
 } from 'vuetify';
 
 export default function (Vue) {
@@ -47,11 +51,13 @@ export default function (Vue) {
 		Vuetify,
 		{
 			components: {
+				VRangeSlider,
 				VAvatar,
 				VAlert,
 				VApp,
 				VAutocomplete,
 				VBtn,
+				VBreadcrumbs,
 				VBtnToggle,
 				VCheckbox,
 				VChip,
@@ -86,6 +92,8 @@ export default function (Vue) {
 				VStepper,
 				VSwitch,
 				VTreeview,
+				VRating,
+				VPagination,
 			},
 			theme: {
 				primary: '#487fff',
