@@ -25,12 +25,12 @@
 	const formContainer = () => import('@/components/shared/account/form-container');
 	const newPassword = () => import('@/components/shared/account/new-password');
 
-	function mounted() {
-		window.addEventListener('resize', this.setWidth);
-	}
-
 	function created() {
 		this.setWidth();
+	}
+
+	function mounted() {
+		window.addEventListener('resize', this.setWidth);
 	}
 
 	function setWidth() {

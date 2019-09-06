@@ -34,7 +34,7 @@
 
 	const formContainer = () => import('@/components/shared/account/form-container');
 	const restoreForm = () => import('@/components/shared/account/restore-form');
-
+	
 	function created() {
 		this.setWidth();
 	}
