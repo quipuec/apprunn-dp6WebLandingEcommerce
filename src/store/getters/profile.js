@@ -5,4 +5,7 @@ export default {
 	getUserInfo(state) {
 		return state.profile.userData;
 	},
+	getFavorites(state) {
+		return state.profile.favorites;
+	},
 };

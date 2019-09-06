@@ -74,36 +74,6 @@ function routeHandler() {
 	this.showMenu = false;
 }
 
-function created() {
-	if (!this.getLocalStorage(`${process.env.STORAGE_USER_KEY}::currency-default`)) {
-		this.loadData();
-	}
-	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
-	this.loadFilters();
-}
-
-async function loadData() {
-	this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
-}
-
-async function loadFilters() {
-	try {
-		const { data: response } = await this.$httpProductsPublic.get('filters-public');
-		const filters = response.map((f, index) => {
-			const newFilter = { ...f };
-			newFilter.select = index === 0;
-			return newFilter;
-		});
-		this.$store.dispatch('updateFilters', filters);
-		const params = {
-			filters: filters[0].id,
-		};
-		this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
-	} catch (error) {
-		this.showGenericError();
-	}
-}
-
 function data() {
 	return {
 		logo: {
@@ -129,10 +99,10 @@ export default {
 		...mapGetters([
 			'user',
 			'getCategories',
+			'getFilters',
 		]),
 	},
 	data,
-	created,
 	components: {
 		appFooter,
 		appHeader,
@@ -143,8 +113,6 @@ export default {
 	},
 	methods: {
 		changeMenu,
-		loadData,
-		loadFilters,
 	},
 	watch: {
 		$route: routeHandler,

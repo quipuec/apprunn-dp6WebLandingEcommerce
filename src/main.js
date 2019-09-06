@@ -23,7 +23,6 @@ import globalMixin from './mixins/global';
 import registerFilters from './filters/global';
 import './global-components';
 import store from './store';
-import helper from './shared/helper';
 import registerMap from './vue-map';
 
 registerAxios(Vue);
@@ -53,13 +52,11 @@ Vue.use(VueAnalytics, {
 });
 Vue.use(VueAwesomeSwiper);
 
-const userInfo = helper.getLocalData('ecommerce-user');
 const router = vueRouter(Vue);
 registerFilters(Vue);
 registerVuetify(Vue);
 Vue.prototype.$imageUrl = process.env.S3_IMAGES_URL;
 Vue.prototype.$clientId = process.env.CLIENT_ID;
-Vue.prototype.$userInfo = userInfo;
 Vue.config.productionTip = false;
 Vue.mixin(globalMixin);
 
@@ -79,13 +76,6 @@ async function created() {
 		this.httpResponseSuccessInterceptor,
 		this.httpResponseInterceptor,
 	);
-	const token = helper.getLocalToken();
-	if (token) {
-		const { data: response } = await this.$httpSales.get('customers/current');
-		helper.setLocalData('ecommerce-user', response);
-		this.$store.dispatch('setUser', response);
-		Vue.prototype.$userInfo = this.$store.getters.user;
-	}
 }
 
 /* eslint-disable no-new */

@@ -293,13 +293,9 @@ export default {
 }
 
 .section-product-card {
-	// align-items: center;
 	display: grid;
-	// flex-wrap: wrap;
 	grid-auto-rows: minmax(min-content, max-content);
 	grid-template-columns: repeat(auto-fill, minmax(214px, 1fr));
-	// margin: 15px auto;
-	// max-width: 1070px;
 	margin: 30px 0 0 51px;
 	width: 70%;
 

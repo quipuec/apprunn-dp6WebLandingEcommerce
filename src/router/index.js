@@ -7,6 +7,7 @@ import Order from './buy';
 import Help from './help';
 import Category from './category';
 import ProductDetail from './detail-product';
+import restorePassword from './restore-password';
 import SummaryOrder from './summary-order';
 
 export default function (Vue) {
@@ -27,6 +28,8 @@ export default function (Vue) {
 			ProductDetail,
 			Profile,
 			register,
+			ProductDetail,
+			restorePassword,
 			SummaryOrder,
 		],
 		scrollBehavior() {

@@ -35,7 +35,7 @@ import { mapGetters } from 'vuex';
 function productFavo() {
 	if (this.token) {
 		this.$store.dispatch('SET_FAVORITE_FLAG', { context: this, product: this.product });
-		this.$store.dispatch('LOAD_PRODUCTS', { context: this, params: this.getProductsParams });
+		this.$set(this.product, 'flagFavorite', !this.product.flagFavorite);
 	} else {
 		const text = 'Debe iniciar sesión para seleccionar producto como favorito';
 		this.$store.dispatch('showSnackBar', { text, color: 'error' });
