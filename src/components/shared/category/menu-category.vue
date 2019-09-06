@@ -138,11 +138,15 @@ export default {
 
 .wrapper-btns {
 	border-top: 1px solid color(border);
-	display: flex;
+	display: none;
 	justify-content: center;
 
 	.btn-modal {
 		width: 40%;
+	}
+
+	@media (max-width: 986px) {
+		display: flex;
 	}
 }
 
