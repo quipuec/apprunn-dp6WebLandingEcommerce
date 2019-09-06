@@ -236,29 +236,7 @@ function data() {
 			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
 			image: 'descuento',
 		},
-		iconFilter: {
-			image: '/static/img/icons/icon-filter-category.svg',
-			name: 'filtros',
-			height: 16,
-		},
 		categoryId: null,
-		items: [
-			{
-				text: 'Dashboard',
-				disabled: false,
-				href: 'breadcrumbs_dashboard',
-			},
-			{
-				text: 'Link 1',
-				disabled: false,
-				href: 'breadcrumbs_link_1',
-			},
-			{
-				text: 'Link 2',
-				disabled: true,
-				href: 'breadcrumbs_link_2',
-			},
-		],
 		lastPage: 0,
 		listSubCategories: [],
 		listProducts: [],
@@ -343,11 +321,6 @@ export default {
 	}
 }
 
-.content-category {
-	background-color: color(white);
-	width: 75%;
-}
-
 .page-category {
 	display: flex;
 	position: relative;
@@ -356,16 +329,6 @@ export default {
 	@media (max-width: 986px) {
 		flex-direction: column;
 	}
-}
-
-.space-between {
-	display: flex;
-	justify-content: space-between;
-	padding: 10px 25px 0 25px;
-}
-
-.title-category {
-	margin-bottom: 0;
 }
 
 .content-sections {
@@ -407,89 +370,6 @@ export default {
 		@media (max-width: 986px) {
 			display: none;
 		}
-	}
-}
-
-.title-breadcrumbs-category {
-	color: color(base);
-	font-family: font(medium);
-	font-size: size(large);
-}
-
-.text-breadcrumb {
-	color: color(dark);
-	font-family: map-get($fonts, medium);
-	font-size: size(medium);
-
-	@media (max-width: 980px) {
-		color: color(primary);
-		font-family: font(bold);
-		font-size: 18px;
-		margin-left: 10px;
-	}
-}
-
-.image-breadcrumb-category {
-	display: none;
-	
-	@media (max-width: 980px) {
-		display: block;
-	}
-}
-
-.section-breadcrumbs-responsive {
-	@media (min-width: 980px) {
-		display: none;
-	}
-	align-items: center;
-	border-right: 1px solid color(disabled);
-	display: flex;
-	justify-content: center;
-	width: 50%;
-}
-
-.section-breadcrumbs {
-	display: flex;
-	justify-content: flex-start;
-	margin-left: 19px;
-}
-
-.icon-filter {
-	height: 16px;
-	width: 15.6px;
-}
-
-.section-filter-responsive {
-	align-items: center;
-	display: flex;
-	justify-content: center;
-	width: 50%;
-
-	@media (min-width: 980px) {
-		display: none;
-	}
-}
-
-.title-filter {
-	color: color(dark);
-	font-family: font(demi);
-	font-size: size(small);
-	margin: 0 0 0 5px;
-}
-
-.border-bottom {
-	border-bottom: 1px solid color(disabled);
-}
-
-.bread-responsive {
-	@media (max-width: 980px) {
-		display: none;
-	}
-}
-
-.bread-desktop-none {
-	@media (min-width: 980px) {
-		display: none;
 	}
 }
 
