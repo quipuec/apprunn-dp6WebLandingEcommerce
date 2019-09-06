@@ -35,12 +35,12 @@
 	const formContainer = () => import('@/components/shared/account/form-container');
 	const restoreForm = () => import('@/components/shared/account/restore-form');
 
-	function mounted() {
-		window.addEventListener('resize', this.setWidth);
-	}
-
 	function created() {
 		this.setWidth();
+	}
+
+	function mounted() {
+		window.addEventListener('resize', this.setWidth);
 	}
 
 	function setWidth() {

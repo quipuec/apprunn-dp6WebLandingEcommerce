@@ -11,9 +11,9 @@ const methods = {
 			return newItem;
 		};
 	},
-	setNewProperty: (prop, v) => (item) => {
-		const newItem = item;
-		newItem[prop] = typeof v === 'function' ? v(item) : v;
+	setNewProperty: (prop, v) => (...arg) => {
+		const [newItem, index] = arg;
+		newItem[prop] = typeof v === 'function' ? v(newItem, index) : v;
 		return newItem;
 	},
 	decimals: d => n => Number(n.toFixed(d)),
