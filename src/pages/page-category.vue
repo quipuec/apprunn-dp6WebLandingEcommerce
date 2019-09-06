@@ -37,18 +37,28 @@
 				@open-category="openCategory"
 			></menu-category>
 		</div>
-		<section 
-			class="section-product-card" 
-			v-if="listProducts.length"
-			:class="{close: open}">
-			<product-card
-				class="product-card"
-				v-for="product in listProducts"
-				:key="product.id"
-				:product="product"
-				/>
-		</section>
-		<p v-else class="not-products">No se encontrarón productos</p>
+		<div class="wrapper-results">
+			<v-breadcrumbs :items="breadcrumbs" divider=">">
+				<template slot="item" slot-scope="props">
+					<button
+						:style="props.item.disabled ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`"
+						@click="linkCategories(props.item)"
+						>{{ props.item.text }}</button>
+				</template>
+			</v-breadcrumbs>
+			<section 
+				class="section-product-card"
+				v-if="listProducts.length"
+				:class="{close: open}">
+				<product-card
+					class="product-card"
+					v-for="product in listProducts"
+					:key="product.id"
+					:product="product"
+					/>
+			</section>
+			<p v-else class="not-products">No se encontrarón productos</p>
+		</div>
 	</div>
 	<div v-if="sliderCategory">
 		<slider-category
@@ -119,17 +129,25 @@ function filterProducts() {
 
 function selectCategory() {
 	this.loadProduct();
+	this.breadcrumbs = [];
 	this.categorySelected = this.getCategories.filter(c => Number(c.id) === Number(this.fisrt))[0];
 	this.categories = this.getCategories.map((c) => {
 		const newCategory = { ...c };
-		newCategory.selectFirst = Number(c.id) === Number(this.fisrt);
-		newCategory.open = Number(c.id) === Number(this.fisrt);
+		const flagOpen = Number(c.id) === Number(this.fisrt);
+		newCategory.selectFirst = flagOpen;
+		newCategory.open = flagOpen;
+		if (flagOpen) {
+			this.breadcrumbs.push({ text: c.title, links: [c.id], link: 'first' });
+		}
 		if (this.second) {
 			const indexSearch = newCategory.detail.findIndex(d => Number(d.id) === Number(this.second));
 			newCategory.detail = c.detail.map((d, index) => {
 				const newDetail = { ...d };
 				if (indexSearch > -1) {
 					newDetail.selectSecond = indexSearch === index;
+					if (indexSearch === index) {
+						this.breadcrumbs.push({ text: d.title, links: [c.id, d.id], link: 'second' });
+					}
 				} else {
 					newDetail.selectSecond = false;
 				}
@@ -139,6 +157,9 @@ function selectCategory() {
 						const newSubDetail = { ...sub };
 						if (indexSearchSub > -1) {
 							newSubDetail.selectThird = indexSearchSub === indexSub;
+							if (indexSearchSub === indexSub) {
+								this.breadcrumbs.push({ text: sub.title, links: [c.id, d.id, sub.id], link: 'third' });
+							}
 						} else {
 							newSubDetail.selectThird = false;
 						}
@@ -149,6 +170,11 @@ function selectCategory() {
 			});
 		}
 		return newCategory;
+	});
+	this.breadcrumbs = this.breadcrumbs.map((b, index) => {
+		const newBreadcrumb = { ...b };
+		newBreadcrumb.disabled = index === this.breadcrumbs.length - 1;
+		return newBreadcrumb;
 	});
 }
 
@@ -193,6 +219,16 @@ function closeOpen() {
 	this.open = false;
 }
 
+function linkCategories(item) {
+	if (item.link === 'first') {
+		this.goTo('category', { params: { fisrt: item.links[0] } });
+	} else if (item.link === 'second') {
+		this.goTo('category', { params: { fisrt: item.links[0], second: item.links[1] } });
+	} else {
+		this.goTo('category', { params: { fisrt: item.links[0], second: item.links[1], third: item.links[2] } });
+	}
+}
+
 function data() {
 	return {
 		sliderCategory: false,
@@ -208,17 +244,17 @@ function data() {
 		categoryId: null,
 		items: [
 			{
-				text: 'Resortes',
+				text: 'Dashboard',
 				disabled: false,
 				href: 'breadcrumbs_dashboard',
 			},
 			{
-				text: 'Automotríz',
+				text: 'Link 1',
 				disabled: false,
 				href: 'breadcrumbs_link_1',
 			},
 			{
-				text: '4x4',
+				text: 'Link 2',
 				disabled: true,
 				href: 'breadcrumbs_link_2',
 			},
@@ -231,6 +267,7 @@ function data() {
 		categories: [],
 		categorySelected: {},
 		open: false,
+		breadcrumbs: [],
 	};
 }
 
@@ -264,6 +301,7 @@ export default {
 		toggleMenu,
 		changeOpen,
 		closeOpen,
+		linkCategories,
 	},
 	data,
 	props: {
@@ -359,8 +397,6 @@ export default {
 	display: grid;
 	grid-auto-rows: minmax(min-content, max-content);
 	grid-template-columns: repeat(auto-fill, minmax(214px, 1fr));
-	margin: 30px 0 0 51px;
-	width: 70%;
 
 	@media (max-width: 986px) {
 		margin: 0;
@@ -506,6 +542,17 @@ export default {
 
 	@media (max-width: 986px) {
 		display: block;
+	}
+}
+
+.wrapper-results {
+	padding: 28px 50px;
+	width: 70%;
+
+	@media (max-width: 986px) {
+		margin: 0;
+		padding: 0;
+		width: 100%;
 	}
 }
 </style>

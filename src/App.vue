@@ -466,13 +466,13 @@ input.app-input::-webkit-input-placeholder {
 .page-category {
 	.v-breadcrumbs__item {
 		color: color(base);
-		font-family: font(medium);
+		font-family: font(bold);
 		font-size: size(medium);
 	}
 
 	.theme--light.v-breadcrumbs .v-breadcrumbs__divider, .theme--light.v-breadcrumbs .v-breadcrumbs__item--disabled {
 		color: color(primary);
-		font-family: font(medium);
+		font-family: font(bold);
 	}
 }
 
