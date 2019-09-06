@@ -22,7 +22,7 @@
 				</button>
 			</div>
 		</div>
-		<div class="menu-category" :class="{open: open}" v-if="open">
+		<div class="menu-category" :class="{open: open, toggle: toggle}" v-if="open">
 			<button class="btn-close" @click="closeOpen">
 				<img 
 					src="/static/img/icons/close.svg" 
@@ -35,9 +35,11 @@
 				@change-sub-category="changeSubCategory"
 				@change-sub-sub-category="changeSubSubCategory"
 				@open-category="openCategory"
+				@toggle="toggleCategory"
+				@close="closeOpen"
 			></menu-category>
 		</div>
-		<div class="wrapper-results">
+		<div class="wrapper-results" :class="{toggle: toggle, close: open}">
 			<div class="wrapper-results-pagination">
 				<v-breadcrumbs :items="breadcrumbs" divider=">">
 					<template slot="item" slot-scope="props">
@@ -55,6 +57,7 @@
 								:total-visible="totalPages"
 								v-model="page"
 								@input="updateProductCard"
+								:color="globalColors.secondary"
 							></v-pagination>
 						</v-layout>
 				</section>
@@ -62,7 +65,7 @@
 			<section 
 				class="section-product-card"
 				v-if="listProducts.length"
-				:class="{close: open}">
+			>
 				<product-card
 					class="product-card"
 					v-for="product in listProducts"
@@ -225,6 +228,10 @@ function linkCategories(item) {
 	}
 }
 
+function toggleCategory() {
+	this.toggle = !this.toggle;
+}
+
 function data() {
 	return {
 		bannerTop: {
@@ -241,6 +248,7 @@ function data() {
 		categorySelected: {},
 		open: false,
 		breadcrumbs: [],
+		toggle: false,
 	};
 }
 
@@ -271,6 +279,7 @@ export default {
 		changeOpen,
 		closeOpen,
 		linkCategories,
+		toggleCategory,
 	},
 	data,
 	props: {
@@ -297,6 +306,7 @@ export default {
 .menu-category {
 	background-color: color(background);
 	padding: 0 0 0 27px;
+	left: 0;
 	position: relative;
 	transition: all .2s linear 0s;
 
@@ -309,6 +319,11 @@ export default {
 			left: 0 !important;
 			width: 100%;
 		}
+	}
+
+	&.toggle {
+		left: -327px;
+		z-index: 2;
 	}
 }
 
@@ -360,12 +375,6 @@ export default {
 		margin: 0;
 		width: 100%;
 	}
-
-	&.close {
-		@media (max-width: 986px) {
-			display: none;
-		}
-	}
 }
 
 .not-products {
@@ -382,6 +391,7 @@ export default {
 	height: 59px;
 	position: sticky;
   top: 75px;
+	z-index: 3;
 
 	@media (max-width: 986px) {
 		display: flex;
@@ -422,7 +432,19 @@ export default {
 
 .wrapper-results {
 	padding: 28px 50px;
+	position: relative;
 	width: 70%;
+
+	&.toggle {
+		position: absolute;
+		width: 100%;
+	}
+
+	&.close {
+		@media (max-width: 986px) {
+			display: none;
+		}
+	}
 
 	@media (max-width: 986px) {
 		margin: 0;
