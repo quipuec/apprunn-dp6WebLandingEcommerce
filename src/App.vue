@@ -601,4 +601,14 @@ input.app-input::-webkit-input-placeholder {
 		max-height: 0;
 	}
 }
+
+.page-category {
+	.product-container {
+		margin: 10px auto !important;
+
+		@media (max-width: 986px) {
+				margin: 0 !important;
+		}
+	}
+}
 </style>

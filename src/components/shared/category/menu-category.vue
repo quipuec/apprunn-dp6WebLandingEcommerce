@@ -77,6 +77,7 @@ export default {
 <style lang="scss" scoped>
 .wrapper-big-category {
 	display: flex;
+	height: 100%;
 	position: relative;
 
 	@media (max-width: 986px) {
