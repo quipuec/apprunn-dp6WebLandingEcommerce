@@ -6,24 +6,60 @@
 		<div v-if="voucherLoaded" class="voucher-loaded">
 			<div class="voucher-data">
 				<span class="voucher-label">Nro de Depósito: </span>
-				<span>1232134323423</span>
+				<span>{{getValue('number', getOrderInfo)}}</span>
 			</div>
-			<img src="" alt="foto del voucher" class="voucher-img">
+			<img :src="deposit.urlImage" alt="foto del voucher" class="voucher-img">
 			<app-button :background="bgSaveBtn" action="Editar" class="action-button save" @click="editVoucherData"/>
 		</div>
 		<div v-else class="deposit-fields">
-			<app-input placeholder="Nro de depósito" class="deposit"/>
-			<app-input placeholder="Foto de Voucher" class="voucher"/>
+			<div class="deposit-container">
+				<app-input
+					placeholder="Nro de depósito"
+					class="deposit"
+					v-model="deposit.number"
+				/>
+				<small v-if="!$v.deposit.number.required" class="err-message">El número de depósito es requerido</small>
+			</div>
+			<div class="voucher-container">
+				<UploadImage
+					placeholder="Foto de Voucher"
+					class="voucher"
+					@url-image="getUrlImage"
+					v-model="deposit.urlImage"
+				/>
+				<small v-if="!$v.deposit.urlImage.required" class="err-message">La imagen del comprobante es requerida</small>
+			</div>
 		</div>
 		<div class="btn-section" v-if="!voucherLoaded">
-			<app-button :background="bgSaveBtn" action="Guardar" class="action-button save" @click="loadVoucher"/>
 			<app-button :background="bgCancelBtn" action="Cancelar" class="action-button cancel" @click="goBack"/>
+			<app-button
+				class="action-button save"
+				action="Guardar"
+				:disabled="$v.$invalid"
+				:background="bgSaveBtn"
+				@click="loadVoucher"
+			/>
 		</div>
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+import { required } from 'vuelidate/lib/validators';
 import appButton from '@/components/shared/buttons/app-button';
 import appInput from '@/components/shared/inputs/app-input';
+import lib from '@/shared/lib';
+
+const UploadImage = () => import('@/components/shared/upload-image');
+
+function created() {
+	if (this.getOrderInfo) {
+		const { depositNumber, urlVoucher } = this.getOrderInfo.additionalInfo;
+		this.deposit = {
+			number: depositNumber,
+			urlImage: urlVoucher,
+		};
+	}
+}
 
 function bgSaveBtn() {
 	return process.env.COLOR_SECONDARY;
@@ -37,16 +73,62 @@ function goBack() {
 	this.$store.commit('UPDATE_FLAG_ADD_VOUCHER', false);
 }
 
-function loadVoucher() {
-	this.voucherLoaded = true;
+async function loadVoucher() {
+	if (!this.$v.$invalid) {
+		await this.updateOrderWithVoucher(this.deposit);
+		this.voucherLoaded = true;
+	}
+}
+
+async function updateOrderWithVoucher(deposit) {
+	const body = {
+		depositNumber: deposit.number,
+		urlVoucher: deposit.urlImage,
+	};
+	const id = this.$route.params.id;
+	try {
+		await this.$httpSales.patch(`orders/${id}/voucher`, body);
+		this.showNotification('Comprobante agregado exitosamente', 'success');
+	} catch (error) {
+		this.showNotification(`${error}`, 'error');
+	}
 }
 
 function editVoucherData() {
 	this.voucherLoaded = false;
 }
 
+function getUrlImage(urlImage) {
+	this.deposit.urlImage = urlImage;
+}
+
+function getValue(route, order) {
+	return lib.getDeeper(route)(order);
+}
+
+function handlerOrderUpdate(newVal) {
+	const { depositNumber, urlVoucher } = newVal;
+	this.deposit = {
+		number: depositNumber,
+		urlImage: urlVoucher,
+	};
+}
+
+function validations() {
+	return {
+		deposit: {
+			number: { required },
+			urlImage: { required },
+		},
+	};
+}
+
 function data() {
 	return {
+		deposit: {
+			number: '',
+			urlImage: '',
+		},
 		voucherLoaded: false,
 	};
 }
@@ -56,16 +138,28 @@ export default {
 	components: {
 		appButton,
 		appInput,
+		UploadImage,
 	},
 	computed: {
+		...mapGetters([
+			'getOrderInfo',
+		]),
 		bgCancelBtn,
 		bgSaveBtn,
 	},
+	created,
 	data,
 	methods: {
 		editVoucherData,
+		getUrlImage,
+		getValue,
 		goBack,
 		loadVoucher,
+		updateOrderWithVoucher,
+	},
+	validations,
+	watch: {
+		'getOrderInfo.additionalInfo': handlerOrderUpdate,
 	},
 };
 </script>
@@ -90,15 +184,21 @@ export default {
 		justify-content: center;
 	}
 
+	.voucher-container,
+	.deposit-container {
+		flex: 1 1 40%;
+		height: 80px;
+	}
+
 	.voucher,
 	.deposit {
-		margin: 10px;
 		width: 287px;
 	}
 
 	.title-deposit {
 		font-family: font(bold);
 		font-size: size(large);
+		margin-bottom: 20px;
 		text-transform: uppercase;
 	}
 
@@ -106,6 +206,7 @@ export default {
 		align-items: center;
 		display: flex;
 		flex-wrap: wrap;
+		justify-content: space-evenly;
 	}
 
 	.voucher-data {
@@ -118,9 +219,15 @@ export default {
 	}
 
 	.voucher-img {
-		height: 80px;
-		margin: 20px;
-		width: 140px;
+		height: 140px;
+		margin: 0 20px;
+		object-fit: contain;
+		width: 80px;
+	}
+
+	.err-message {
+		color: color(error);
+		margin-left: 10px;
 	}
 </style>
 
