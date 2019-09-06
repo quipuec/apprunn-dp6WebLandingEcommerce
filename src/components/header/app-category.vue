@@ -73,12 +73,15 @@
 					v-for="(item, index) in selectCategory.detail" 
 					:key="index"
 					class="list-item">
-					<span class="list-item-name bold">{{item.title}}</span>
+					<button 
+						class="list-item-name bold"
+						@click="goToCategories(selectCategory, item)">{{item.title}}</button>
 					<div v-if="item.detail">
-						<span 
+						<button 
 							v-for="(itemList, indexItem) in item.detail" 
 							:key="indexItem"
-							class="list-item-sub">{{itemList.title}}</span>
+							@click="goToSubCategories(selectCategory, item, itemList)"
+							class="list-item-sub">{{itemList.title}}</button>
 					</div>
 				</div>
 			</div>
@@ -125,7 +128,6 @@ function created() {
 }
 
 function clickCategory(item) {
-	this.goTo('category', { query: { id: item.id, categories: item }, params: { categories: item } });
 	const windowWidth = window.innerWidth;
 	this.categories = this.categories.map((c) => {
 		const newCategory = { ...c };
@@ -186,6 +188,14 @@ function handleScroll() {
 	this.scrolled = window.scrollY > 87;
 }
 
+function goToCategories(category, subCategory) {
+	this.goTo('category', { params: { fisrt: category.id, second: subCategory.id } });
+}
+
+function goToSubCategories(category, subCategory, subSubCategory) {
+	this.goTo('category', { params: { fisrt: category.id, second: subCategory.id, third: subSubCategory.id } });
+}
+
 function logout() {
 	this.goTo('page-home');
 	this.$store.dispatch('clearUser');
@@ -244,6 +254,8 @@ export default {
 		oneSelectCategory,
 		clickSubCategory,
 		handleScroll,
+		goToCategories,
+		goToSubCategories,
 		logout,
 	},
 	props: {
@@ -414,6 +426,7 @@ export default {
 
 	.list-item-sub {
 		color: color(base);
+		display: block;
 
 		@media (max-width: 764px) {
 			font-size: size(small);
