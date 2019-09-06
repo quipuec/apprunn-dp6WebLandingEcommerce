@@ -579,4 +579,26 @@ input.app-input::-webkit-input-placeholder {
 	.go-left-leave-active {
 		transition: all 0.2s cubic-bezier(.32,1.09,.62,.98);
 }
+
+.list-category {
+		.slide-enter-active {
+		transition-duration: 0.4s;
+		transition-timing-function: ease-in;
+	}
+
+	.slide-leave-active {
+		transition-duration: 0.3s;
+		transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+	}
+
+	.slide-enter-to, .slide-leave {
+		max-height: 100px;
+		overflow: hidden;
+	}
+
+	.slide-enter, .slide-leave-to {
+		overflow: hidden;
+		max-height: 0;
+	}
+}
 </style>

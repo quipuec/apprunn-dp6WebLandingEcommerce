@@ -1,13 +1,16 @@
 <template>
-	<div class="menu-category">
-		<div>
-			<section-category
-			:categories="categories"
-			@filter="filterCategory"
-			:title-category="titleCategory"
-			></section-category>
+	<div class="wrapper-big-category">
+		<div class="wrapper-list-category">
+			<list-category 
+				v-for="category in categories"
+				:data="category"
+				:key="category.id"
+        @change-category="changeCategory"
+				@change-sub-category="changeSubCategory"
+				@change-sub-sub-category="changeSubSubCategory"
+				@open-category="openCategory"/>
+			<filters-category></filters-category>
 		</div>
-		<filters-category></filters-category>
 		<button class="btn-menu-category">
 			<img src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-point-to-right-(1).svg" alt="" width="15px" height="15px">
 		</button>
@@ -16,10 +19,26 @@
 
 <script>
 const filtersCategory = () => import('@/components/shared/category/filters-category');
-const sectionCategory = () => import('@/components/shared/category/section-category');
+const listCategory = () => import('@/components/shared/category/list-category');
 
 function filterCategory() {
 	this.$emit('filter', this.categories);
+}
+
+function changeCategory(id) {
+	this.$emit('change-category', id);
+}
+
+function changeSubCategory(id, idCategory) {
+	this.$emit('change-sub-category', id, idCategory);
+}
+
+function changeSubSubCategory(id, idCategory, idSubCategory) {
+	this.$emit('change-sub-sub-category', id, idCategory, idSubCategory);
+}
+
+function openCategory(id) {
+	this.$emit('open-category', id);
 }
 
 function data() {
@@ -33,10 +52,14 @@ export default {
 	name: 'menu-category',
 	components: {
 		filtersCategory,
-		sectionCategory,
+		listCategory,
 	},
 	methods: {
+		changeCategory,
+		changeSubCategory,
+		changeSubSubCategory,
 		filterCategory,
+		openCategory,
 	},
 	props: {
 		categories: {
@@ -52,17 +75,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.menu-category {
-	background-color: color(background);
+.wrapper-big-category {
 	border-right: 1px solid color(border);
-	height: 100vh;
+	display: flex;
 	position: relative;
-	width: 95%;	
 }
 
 .btn-menu-category {
-	left: 104%;
-	position: absolute;
-	top: 370px;
+	width: 30px;
 }
+
+.wrapper-list-category {
+	border-right: 1px solid color(border);
+	max-width: 300px;
+	padding-right: 20px;
+}
+
 </style>
