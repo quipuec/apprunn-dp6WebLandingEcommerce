@@ -1,8 +1,15 @@
 const route = {
 	path: '/perfil',
 	name: 'profile',
-	redirect: '/perfil/mis-datos',
 	component: () => import(/* webpackChunkName: "profile" */ '@/pages/page-profile'),
+	beforeEnter: (to, from, next) => {
+		if (to.fullPath.includes('perfil') && localStorage.getItem('ecommerce::token')) {
+			next();
+		} else {
+			next({ name: 'page-home' });
+		}
+	},
+	redirect: '/perfil/mis-datos',
 	children: [
 		{
 			path: 'mis-datos',

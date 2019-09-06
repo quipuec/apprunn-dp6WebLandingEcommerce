@@ -10,7 +10,10 @@ const asyncActions = {
 			request.push(context.$httpProducts.get('products-public', { params }));
 		}
 		const [{ data: products }] = await Promise.all(request);
-		commit('SET_PRODUCTS', products);
+		const setUpDateInProducts = products.map(
+			lib.setNewProperty('createdAt', ({ createdAt }) => helper.formatDate(createdAt)),
+		);
+		commit('SET_PRODUCTS', setUpDateInProducts);
 	},
 	SET_FAVORITE_FLAG: async ({ commit, state }, { context, product }) => {
 		const url = `products/favorite/${product.id}`;
@@ -136,6 +139,21 @@ const asyncActions = {
 		context.setLocalData(`${process.env.STORAGE_USER_KEY}::currency-default`, res.currencyDefault);
 		commit('SET_CURRENCY_DEFAULT', res.currencyDefault);
 	},
+	LOAD_FILTERS: async ({ commit }, context) => {
+		const { data: filters } = await context.$httpProductsPublic.get('filters-public');
+		const newFilters = lib.map(lib.setNewProperty('select', (filter, index) => index === 0), filters);
+		commit('UPDATE_FILTERS', newFilters);
+	},
+	LOAD_FAVORITES_PRODUCTS: async ({ commit }, { context, params }) => {
+		const url = 'products/favorites?favorite=true';
+		const { data: favorites, headers } = await context.$httpProducts.get(url, { params });
+		const newFavorites = favorites.map(
+			lib.setNewProperty('createdAt', ({ createdAt }) => helper.formatDate(createdAt)),
+		);
+		commit('SET_FAVORITES', newFavorites);
+		return Number(headers['x-last-page']);
+	},
+
 };
 
 export default asyncActions;

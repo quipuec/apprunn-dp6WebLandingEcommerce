@@ -105,12 +105,12 @@
 				</button>
 			</div>
 			<div class="option-close">
-				<button class="option" v-if="token">
+				<button class="option" v-if="token" @click="logout">
 					<img 
 						:src="imageClose.urlImage" 
 						:alt="imageClose.name"
 						class="mr-8">
-					<span class="text-gray">Cerrar Sesión </span>
+					<span class="text-gray">Cerrar Sesión</span>
 				</button>
 			</div>
 		</div>
@@ -197,6 +197,19 @@ function goToSubCategories(category, subCategory, subSubCategory) {
 	this.goTo('category', { params: { fisrt: category.id, second: subCategory.id, third: subSubCategory.id } });
 }
 
+function logout() {
+	this.goTo('page-home');
+	this.$store.dispatch('clearUser');
+	this.$store.dispatch('DEFAULT_USER');
+	this.$store.dispatch('SET_DEFAULT_VALUES');
+	localStorage.clear();
+	this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
+	const params = {
+		filters: this.getFilters[0].id,
+	};
+	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
+}
+
 function data() {
 	return {
 		colorBorder: process.env.COLOR_DARK,
@@ -223,10 +236,19 @@ function data() {
 export default {
 	name: 'app-category',
 	data,
-	created,
 	components: {
 		itemMenu,
 	},
+	computed: {
+		selectCategory,
+		isMoreTwo,
+		...mapGetters([
+			'getFilters',
+			'token',
+		]),
+		imageUser,
+	},
+	created,
 	destroyed,
 	methods: {
 		clickCategory,
@@ -235,14 +257,7 @@ export default {
 		handleScroll,
 		goToCategories,
 		goToSubCategories,
-	},
-	computed: {
-		selectCategory,
-		isMoreTwo,
-		...mapGetters([
-			'token',
-		]),
-		imageUser,
+		logout,
 	},
 	props: {
 		imgUser: {
@@ -295,7 +310,6 @@ export default {
 		max-height: 312.6px;
 
 		@media (max-width: 764px) {
-			height: calc(100vh - 240px);
 			max-height: none;
 		}
 	}
