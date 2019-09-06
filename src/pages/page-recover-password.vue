@@ -7,34 +7,24 @@
 			:heading-image="headingImage"
 			:img-height="width > 768 ? '39.3' : '38'"
 			:visible-btn="!isVisibleMessage"
-			title="¿Olvidaste tu <br> contraseña?"
-			title-btn="Enviar"
+			title="Nueva <br> contraseña"
+			title-btn="Crear nueva contraseña"
 			@on-submit="restorePassword"
 		>
-			<div 
-				v-if="isVisibleMessage"
-				class="container-checked">
-				<img 
-					src="/static/img/check.svg" 
-					alt="checked"
-					class="checked">
-				<span>Se le ha enviado un correo electrónico con instrucciones 
-					para crear una nueva contraseña</span>
-			</div>
-			<restore-form
-				v-else
+			<new-password 
 				:model="model"
 				:validatons="$v"
-				@set-model="setModel"/>
+				@set-model="setModel"
+			/>
 		</form-container>
 	</div>
 </template>
 <script>
-	import { email, required } from 'vuelidate/lib/validators';
+	import { required, sameAs } from 'vuelidate/lib/validators';
 
 	const formContainer = () => import('@/components/shared/account/form-container');
-	const restoreForm = () => import('@/components/shared/account/restore-form');
-	
+	const newPassword = () => import('@/components/shared/account/new-password');
+
 	function created() {
 		this.setWidth();
 	}
@@ -54,9 +44,11 @@
 	function validations() {
 		return {
 			model: {
-				email: {
+				password: {
 					required,
-					email,
+				},
+				repeatPassword: {
+					sameAsPassword: sameAs('password'),
 				},
 			},
 		};
@@ -67,20 +59,27 @@
 	}
 
 	async function restorePassword() {
+		const token = this.$route.params.token;
 		const body = {
-			email: this.model.email,
-			codeApp: process.env.APP_CODE,
+			password: this.model.password,
+		};
+		const headers = {
+			Authorization: `Bearer ${token}`,
 		};
 		try {
-			await this.$httpAcl.post('password/email', body);
-			this.isVisibleMessage = true;
+			await this.$httpAcl.post('password/reset', body, { headers });
+			this.showNotification('La contraseña ha sido cambiada exitosamente');
+			this.goTo('login');
 		} catch (err) {
-			if (err.status === 400) {
-				if (err.data.message === 'CUSTOMER_NOT_FOUND') {
-					this.showGenericError('El usuario no existe');
+			if (err.status === 401) {
+				if (err.data.message === 'TOKEN_NOT_FOUND') {
+					this.showGenericError('Token no encontrado');
+				}
+				if (err.data.message === 'TOKEN_INVALITED') {
+					this.showGenericError('Token invalido');
 				}
 			} else {
-				this.showGenericError();
+				this.$message.error({ message: err, showClose: true });
 			}
 		}
 	}
@@ -91,7 +90,8 @@
 			headingImage: '/static/img/sign-in.svg',
 			width: 0,
 			model: {
-				email: null,
+				password: null,
+				repeatPassword: null,
 			},
 			loading: false,
 			isVisibleMessage: false,
@@ -102,7 +102,7 @@
 		name: 'page-restore-password',
 		components: {
 			formContainer,
-			restoreForm,
+			newPassword,
 		},
 		computed: {
 			disabled,
