@@ -76,7 +76,6 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper-big-category {
-	border-right: 1px solid color(border);
 	display: flex;
 	position: relative;
 
