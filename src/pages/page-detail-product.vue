@@ -54,7 +54,7 @@ const warehousesModal = () => import('@/components/products/warehouses-modal');
 const productPublicity = () => import('@/components/products/product-publicity');
 
 function created() {
-	this.loadData();
+	this.loadProduct();
 	this.loadOpinions();
 }
 
@@ -65,16 +65,24 @@ function isLoggedUser() {
 	return this.$httpProductsPublic.get(`products-public/${this.id}`);
 }
 
-async function loadData() {
+async function loadProduct() {
+	try {
+		const { data: response } = await this.isLoggedUser();
+		this.product = response;
+		this.loadData(this.product.id);
+	} catch (error) {
+		this.showGenericError();
+	}
+}
+
+async function loadData(id) {
 	const requests = [
-		this.$httpProductsPublic.get(`products-public/${this.id}/related`),
-		this.$httpProductsPublic.get(`products-public/${this.id}/children`),
+		this.$httpProductsPublic.get(`products-public/${id}/related`),
+		this.$httpProductsPublic.get(`products-public/${id}/children`),
 	];
-	requests.push(this.isLoggedUser());
 	([
 		{ data: this.relateds },
 		{ data: this.childrens },
-		{ data: this.product },
 	] = await Promise.all(requests));
 	this.product.images = this.product.images.map((i, index) => {
 		const newImage = { ...i };
@@ -310,6 +318,7 @@ export default {
 		isLoggedUser,
 		loadData,
 		loadOpinions,
+		loadProduct,
 		newRoute,
 		possibleFeature,
 		clickQuantity,

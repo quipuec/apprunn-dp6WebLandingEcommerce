@@ -23,8 +23,8 @@ import { mapGetters } from 'vuex';
 
 const mediaFilterProduct = () => import('@/components/shared/products/media-filter-product');
 
-function filterSelect({ id }) {
-	this.$emit('click-filter', id);
+function filterSelect(filter) {
+	this.$emit('click-filter', filter);
 }
 
 function data() {

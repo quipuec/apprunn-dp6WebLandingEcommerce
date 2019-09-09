@@ -46,8 +46,8 @@ function buyProduct() {
 	this.$store.commit('SET_PRODUCT_TO_BUY', this.product);
 }
 
-function goToProduct({ id }) {
-	const params = { id };
+function goToProduct({ slug, id }) {
+	const params = { id: slug || id };
 	this.goTo('detail-product', { params });
 }
 

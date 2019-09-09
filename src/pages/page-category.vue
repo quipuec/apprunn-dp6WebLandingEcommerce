@@ -152,22 +152,27 @@ function selectCategory() {
 	});
 }
 
-function changeCategory(id) {
-	this.goTo('category', { params: { fisrt: id } });
+function changeCategory({ slug, id }) {
+	this.goTo('category', { params: { fisrt: slug || id } });
 	if (window.innerWidth < 986) {
 		this.open = false;
 	}
 }
 
-function changeSubCategory(id, idCategory) {
-	this.goTo('category', { params: { fisrt: id, second: idCategory } });
+function changeSubCategory(dataFirst, dataSecond) {
+	const urlFirst = dataFirst.slug || dataFirst.id;
+	const urlSecond = dataSecond.slug || dataSecond.id;
+	this.goTo('category', { params: { fisrt: urlFirst, second: urlSecond } });
 	if (window.innerWidth < 986) {
 		this.open = false;
 	}
 }
 
-function changeSubSubCategory(id, idCategory, idSubCategory) {
-	this.goTo('category', { params: { fisrt: id, second: idCategory, third: idSubCategory } });
+function changeSubSubCategory(dataFirst, dataSecond, dataThird) {
+	const urlFirst = dataFirst.slug || dataFirst.id;
+	const urlSecond = dataSecond.slug || dataSecond.id;
+	const urlThird = dataThird.slug || dataThird.id;
+	this.goTo('category', { params: { fisrt: urlFirst, second: urlSecond, third: urlThird } });
 	if (window.innerWidth < 986) {
 		this.open = false;
 	}

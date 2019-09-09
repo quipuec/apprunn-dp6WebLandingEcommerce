@@ -43,17 +43,19 @@ async function loadData() {
 	}
 }
 
-function filterSelect(id) {
-	const filters = this.getFilters.map((f) => {
-		const newFilter = { ...f };
-		newFilter.select = f.id === id;
-		return newFilter;
-	});
-	const params = {
-		filters: id,
-	};
-	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
-	this.$store.dispatch('updateFilters', filters);
+function filterSelect(filter) {
+	if (filter.link) {
+		window.open(filter.link, '_blank');
+	} else {
+		const filters = this.getFilters.map((f) => {
+			const newFilter = { ...f };
+			newFilter.select = f.id === filter.id;
+			return newFilter;
+		});
+		const params = { filters: filter.id };
+		this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
+		this.$store.dispatch('updateFilters', filters);
+	}
 }
 
 function data() {
