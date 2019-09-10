@@ -178,10 +178,43 @@ function handlerDirectionsChange(newDirections) {
 		this.favoriteDirection = newDirections.find(f => f.isFavorite);
 		const directionDelivery = this.getDeliveryAddress || this.favoriteDirection;
 		this.$store.commit('SET_DELIVERY_PLACE', directionDelivery);
+		this.calculateShippingCost(directionDelivery);
 	} else {
 		const warehouseDirection = this.getDeliveryAddress || this.selectedWarehouse;
 		this.$store.commit('SET_DELIVERY_PLACE', warehouseDirection);
 	}
+}
+
+async function calculateShippingCost(location) {
+	const { provinceId } = location;
+	const url = '/weight/price';
+	const body = this.buildBody(provinceId);
+	try {
+		const { data: amount } = await this.$httpProducts.post(url, body);
+		this.$store.commit('SET_SHIPPING_COST', amount || 0);
+	} catch (error) {
+		if (error.response.data.message === 'PRICE_NOT_CONFIGURATION') {
+			this.$store.commit('SET_SHIPPING_COST', 0);
+			this.showNotification('No es posible hacer envios a ese destino.', 'error');
+		}
+	}
+}
+
+function buildBody(provinceId) {
+	const details = this.getProductToBuy.map((p) => {
+		const newP = {};
+		newP.weight = p.weigth || 0;
+		newP.quantity = p.quantity;
+		return newP;
+	});
+	return {
+		details,
+		provinceId,
+	};
+}
+
+function beforeDestroy() {
+	this.$store.commit('SET_DELIVERY_PLACE', null);
 }
 
 function data() {
@@ -205,6 +238,7 @@ function data() {
 
 export default {
 	name: 'delivery',
+	beforeDestroy,
 	components: {
 		addressComponent,
 		appButtonOrder,
@@ -217,8 +251,9 @@ export default {
 	computed: {
 		...mapGetters([
 			'getDeliveryAddress',
-			'getFlagPickUp',
 			'getDirections',
+			'getFlagPickUp',
+			'getProductToBuy',
 			'getWarehouses',
 		]),
 		disableMapButtonByWarehouse,
@@ -230,6 +265,8 @@ export default {
 	created,
 	data,
 	methods: {
+		buildBody,
+		calculateShippingCost,
 		clearSelectedDirection,
 		clearSelectedWarehouse,
 		directionSelected,
