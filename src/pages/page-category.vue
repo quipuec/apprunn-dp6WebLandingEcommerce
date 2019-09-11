@@ -74,6 +74,18 @@
 					/>
 			</section>
 			<p v-else class="not-products">No se encontrarón productos</p>
+			<section class="section-pagination-category container-end">
+				<p class="total-products">{{listProducts.length}} productos</p>
+				<div class="text-xs-center" v-show="totalPages" v-if="lastPage > 1">
+					<v-pagination
+						:length="lastPage"
+						:total-visible="totalPages"
+						v-model="page"
+						@input="updateProductCard"
+						:color="globalColors.secondary"
+					></v-pagination>
+				</div>
+		</section>
 		</div>
 	</div>
 	<app-banner-top 
@@ -323,6 +335,7 @@ export default {
 
 	&.toggle {
 		left: -327px;
+		position: absolute;
 		z-index: 2;
 	}
 }
@@ -436,7 +449,6 @@ export default {
 	width: 70%;
 
 	&.toggle {
-		position: absolute;
 		width: 100%;
 	}
 
@@ -456,5 +468,13 @@ export default {
 .wrapper-results-pagination {
 	display: flex;
 	justify-content: space-between;
+}
+
+.container-end {
+	justify-content: flex-end;
+
+	@media (max-width: 986px) {
+		display: none !important;
+	}
 }
 </style>
