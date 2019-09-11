@@ -80,9 +80,13 @@ import loadPayment from '@/components/profile/load-payment';
 import responsiveTable from '@/components/shared/table/respondive-table';
 import lib from '@/shared/lib';
 
-function created() {
+async function created() {
 	({ id: this.orderId } = this.$route.params);
-	this.$store.dispatch('LOAD_ORDER_DETAILS', { context: this, orderId: this.orderId });
+	await this.$store.dispatch('LOAD_ORDER_DETAILS', { context: this, orderId: this.orderId });
+	if (!lib.isEmpty(this.getOrderInfo)) {
+		const { additionalInfo } = this.getOrderInfo;
+		this.$store.commit('UPDATE_FLAG_ADD_VOUCHER', !lib.isEmpty(additionalInfo));
+	}
 }
 
 function goTo() {

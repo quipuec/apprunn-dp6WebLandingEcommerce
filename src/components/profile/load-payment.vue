@@ -52,8 +52,9 @@ import lib from '@/shared/lib';
 const UploadImage = () => import('@/components/shared/upload-image');
 
 function created() {
-	if (this.getOrderInfo) {
+	if (this.getOrderInfo && this.getOrderInfo.additionalInfo) {
 		const { depositNumber, urlVoucher } = this.getOrderInfo.additionalInfo;
+		this.voucherLoaded = true;
 		this.deposit = {
 			number: depositNumber,
 			urlImage: urlVoucher,
@@ -87,6 +88,7 @@ async function updateOrderWithVoucher(deposit) {
 	};
 	const id = this.$route.params.id;
 	try {
+		this.$store.commit('SET_ORDER_INFO', lib.merge(this.getOrderInfo, { additionalInfo: body }));
 		await this.$httpSales.patch(`orders/${id}/voucher`, body);
 		this.showNotification('Comprobante agregado exitosamente', 'success');
 	} catch (error) {
@@ -107,11 +109,13 @@ function getValue(route, order) {
 }
 
 function handlerOrderUpdate(newVal) {
-	const { depositNumber, urlVoucher } = newVal;
-	this.deposit = {
-		number: depositNumber,
-		urlImage: urlVoucher,
-	};
+	if (newVal) {
+		const { depositNumber, urlVoucher } = newVal;
+		this.deposit = {
+			number: depositNumber,
+			urlImage: urlVoucher,
+		};
+	}
 }
 
 function validations() {
