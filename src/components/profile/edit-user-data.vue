@@ -165,6 +165,7 @@ export default {
 	}
 
 	.user-header {
+		display: flex;
 		margin-bottom: 20px;
 		margin-left: 40px;
 	}

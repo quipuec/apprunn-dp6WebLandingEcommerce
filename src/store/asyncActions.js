@@ -116,7 +116,7 @@ const asyncActions = {
 		const url = `orders/${orderId}`;
 		const { data: orderDetails } = await context.$httpSales.get(url);
 		orderDetails.createdAt = helper.formatDate(orderDetails.createdAt);
-		commit('SET_ORDER_DETAILS', orderDetails);
+		commit('SET_ORDER_INFO', orderDetails);
 	},
 	UPDATE_USER_DATA: async (state, { context, body }) => {
 		const url = 'customers-public';
