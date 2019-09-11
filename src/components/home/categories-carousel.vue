@@ -49,7 +49,7 @@ function leaveCategory(index) {
 }
 
 function goToCategory(category) {
-	this.goTo('category', { query: { id: category.id, categories: category } });
+	this.goTo('category', { params: { fisrt: category.id } });
 }
 
 function data() {

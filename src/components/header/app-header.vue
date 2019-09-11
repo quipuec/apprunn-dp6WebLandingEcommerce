@@ -1,5 +1,5 @@
 <template>
-  <header class="app-header" :class="{ scrolling: scrolled }">
+  <header class="app-header">
 		<div class="app-wrapper">
 			<div class="flex container-call-menu">
 				<call-menu :color="baseColor" text="Categorías" @change-menu="changeMenu" :menu="menu" />
@@ -60,10 +60,6 @@ const appSearch = () => import('@/components/shared/inputs/app-input-search');
 const buttonImage = () => import('@/components/shared/buttons/app-button-image');
 const modalLogin = () => import('@/components/header/modal-login');
 
-function created() {
-	window.addEventListener('scroll', this.handleScroll);
-}
-
 function mounted() {
 	const ls = this.getLocalStorage(`${process.env.STORAGE_USER_KEY}::product-select`);
 	this.$store.dispatch('updateProductSelect', ls);
@@ -91,10 +87,6 @@ function openModalLogin() {
 
 function closeModal() {
 	this.modalLogin = false;
-}
-
-function handleScroll() {
-	this.scrolled = window.scrollY > 87;
 }
 
 function getData($event) {
@@ -188,13 +180,11 @@ export default {
 			'getFilters',
 		]),
 	},
-	created,
 	data,
 	destroyed,
 	methods: {
 		changeMenu,
 		closeModal,
-		handleScroll,
 		getData,
 		goShopping,
 		openModalLogin,
@@ -227,9 +217,9 @@ export default {
 		height: inherit;
 		overflow: hidden;
 		padding: 0px 6%;
-		// position: fixed;
+		position: sticky;
+		top: 0;
 		transition: all .2s linear 0s;
-		// top: 89px;
 		width: 100vw;
 		z-index: 5;
 
@@ -237,11 +227,6 @@ export default {
 			height: 99px;
 			overflow: inherit;
 			padding: 0px 6%;
-		}
-
-		&.scrolling {
-			// top: 0;
-			position: fixed;
 		}
 	}
 

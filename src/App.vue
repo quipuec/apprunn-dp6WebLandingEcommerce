@@ -434,13 +434,13 @@ input.app-input::-webkit-input-placeholder {
 .page-category {
 	.v-breadcrumbs__item {
 		color: color(base);
-		font-family: font(medium);
+		font-family: font(bold);
 		font-size: size(medium);
 	}
 
 	.theme--light.v-breadcrumbs .v-breadcrumbs__divider, .theme--light.v-breadcrumbs .v-breadcrumbs__item--disabled {
 		color: color(primary);
-		font-family: font(medium);
+		font-family: font(bold);
 	}
 }
 
@@ -582,17 +582,17 @@ input.app-input::-webkit-input-placeholder {
 
 .list-category {
 		.slide-enter-active {
-		transition-duration: 0.4s;
+		transition-duration: 0.5s;
 		transition-timing-function: ease-in;
 	}
 
 	.slide-leave-active {
-		transition-duration: 0.3s;
+		transition-duration: 0.5s;
 		transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
 	}
 
 	.slide-enter-to, .slide-leave {
-		max-height: 100px;
+		max-height: 1000px;
 		overflow: hidden;
 	}
 

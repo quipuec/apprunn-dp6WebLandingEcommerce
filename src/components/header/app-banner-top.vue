@@ -1,7 +1,7 @@
 <template>
   <div 
 		class="app-banner-top"
-		:class="[big ? 'big' : null, small ? 'small' : null, scrolled ? 'scrolled' : null]">
+		:class="[big ? 'big' : null, small ? 'small' : null]">
 		<div 
 			:style="`background-image: url(${data.urlImage})`"
 			:class="[big ? 'big' : null, small ? 'small' : null]"
@@ -20,18 +20,6 @@
 <script>
 const appButton = () => import('@/components/shared/buttons/app-button');
 
-function created() {
-	window.addEventListener('scroll', this.handleScroll);
-}
-
-function destroyed() {
-	window.removeEventListener('scroll', this.handleScroll);
-}
-
-function handleScroll() {
-	this.scrolled = window.scrollY > 87;
-}
-
 function data() {
 	return {
 		scrolled: false,
@@ -43,12 +31,7 @@ export default {
 	components: {
 		appButton,
 	},
-	created,
 	data,
-	destroyed,
-	methods: {
-		handleScroll,
-	},
 	props: {
 		data: {
 			type: Object,
