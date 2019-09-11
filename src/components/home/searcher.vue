@@ -1,12 +1,21 @@
 <template>
 	<div class="searcher-container">
 		<section class="tab">
-			<div class="wrapper-btn">
-				<button type="button" class="tab-button tab-button-active">Auto</button>
-				<div class="active-btn" :style="`background-color: ${globalColors.primary}`"></div>
-			</div>
-			<div>
-				<button type="button" class="tab-button">Puerta Levadiza</button>
+			<div
+				class="wrapper-btn"
+				v-for="(cat, indexCat) in categories"
+				:key="indexCat"
+			>
+				<button
+					type="button"
+					class="tab-button tab-button-active"
+					@click="active(cat)"
+				>{{cat.title}}</button>
+				<div
+					v-show="selectedCategory.id === cat.id"
+					class="active-btn"
+					:style="`background-color: ${globalColors.primary}`"
+				></div>
 			</div>
 		</section>
 		<section class="form-wrapper">
@@ -27,11 +36,34 @@
 </template>
 
 <script>
+	function created() {
+		this.selectedCategory = this.categories[0];
+	}
+
+	function active(cat) {
+		this.selectedCategory = cat;
+	}
+
+	function data() {
+		return {
+			categories: [
+				{ id: 0, title: 'Auto' },
+				{ id: 1, title: 'Puerta Levadiza' },
+			],
+			selectedCategory: {},
+		};
+	}
+
 	export default {
 		name: 'searcher',
+		data,
 		components: {
 			AppButton: () => import('@/components/shared/buttons/app-button'),
 			SelectInput: () => import('@/components/shared/inputs/app-select'),
+		},
+		created,
+		methods: {
+			active,
 		},
 	};
 </script>
