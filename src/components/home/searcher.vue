@@ -3,9 +3,9 @@
 		<section class="tab"></section>
 		<section class="form-wrapper">
 			<form class="form">
-				<SelectInput placeholder="Seleccione un año" class="search-select"/>
-				<SelectInput placeholder="Seleccione un marca" class="search-select"/>
-				<SelectInput placeholder="Seleccione un modelo" class="search-select"/>
+				<SelectInput transparent placeholder="Seleccione un año" class="search-select"/>
+				<SelectInput transparent placeholder="Seleccione un marca" class="search-select"/>
+				<SelectInput transparent placeholder="Seleccione un modelo" class="search-select"/>
 				<AppButton
 					class="search-btn"
 					action="Buscar"
@@ -48,7 +48,6 @@
 	}
 
 	.search-select {
-		border: 1px solid white;
 		border-radius: 8px;
 		height: 30px;
 		margin-bottom: 15px;

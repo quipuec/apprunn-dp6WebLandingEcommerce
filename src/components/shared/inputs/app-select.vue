@@ -5,7 +5,9 @@
 			hide-details
 			menu-props="auto"
 			append-icon="expand_more"
-			class="ecommerce-select"
+			:class="[
+				transparent ? 'transparent-select' : 'ecommerce-select',
+			]"
 			:items="items"
 			v-bind="$attrs"
 			:value="value"
@@ -38,6 +40,10 @@ export default {
 		items: {
 			default: () => [],
 			type: Array,
+		},
+		transparent: {
+			default: false,
+			type: Boolean,
 		},
 		value: null,
 	},
