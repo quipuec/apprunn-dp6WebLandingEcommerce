@@ -31,7 +31,23 @@
 				/>
 			</form>
 		</section>
-		<section class="result"></section>
+		<section class="result">
+			<div class="product-card">
+				<h5 class="product-result">Resultado de la búsqueda</h5>
+				<div class="product-data">
+					<img
+						:src="productData.image"
+						alt="imagen del producto"
+						class="product-image"
+					>
+					<div class="product-content">
+						<h5>{{productData.description}}</h5>
+						<h5>{{productData.brand}}</h5>
+					</div>
+					<h3 class="product-price">${{productData.price}}</h3>
+				</div>
+			</div>
+		</section>
 	</div>
 </template>
 
@@ -51,6 +67,12 @@
 				{ id: 1, title: 'Puerta Levadiza' },
 			],
 			selectedCategory: {},
+			productData: {
+				image: '/static/img/resorte.jpg',
+				description: 'Resortes para ferrocarriles y vagones',
+				brand: 'Marca',
+				price: 47.99,
+			},
 		};
 	}
 
@@ -80,7 +102,7 @@
 		display: flex;
 		justify-content: center;
 		flex-direction: column;
-		padding: 37px 20px 0;
+		padding: 37px 20px 20px;
 	}
 
 	.search-btn {
@@ -123,6 +145,41 @@
 	}
 
 	.tab-button-active {
+		font-family: font(bold);
+	}
+
+	.result {
+		border-top: 1px solid white;
+		color: white;
+	}
+
+	.product-card {
+		padding: 10px 20px 30px;
+	}
+
+	.product-data {
+		align-items: center;
+		display: grid;
+		grid-gap: 10px;
+		grid-template-columns: 0.5fr 0.75fr 0.5fr;
+		margin-top: 15px;
+	}
+
+	.product-content {
+		text-align: center;
+	}
+
+	.product-image {
+		height: 55px;
+		object-fit: contain;
+		width: auto;
+	}
+
+	.product-price {
+		text-align: center;
+	}
+
+	.product-result {
 		font-family: font(bold);
 	}
 </style>
