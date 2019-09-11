@@ -69,8 +69,8 @@ function SET_WAREHOUSES(state, warehouses) {
 }
 
 function SET_DIRECTIONS(state, directions) {
-	debugger;
-	Vue.set(state, 'directions', state.directions.concat(directions));
+	const addressDefault = { id: 0, addressLine1: 'Nueva dirección' };
+	Vue.set(state, 'directions', [].concat(addressDefault, directions));
 }
 
 function UPDATE_FILTERS(state, filters) {

@@ -75,6 +75,7 @@ const asyncActions = {
 	LOAD_USER_ADDRESS: async ({ commit }, { context, params }) => {
 		const { data: address, headers } = await context.$httpSales.get('customers-address', { params });
 		commit('SET_USER_ADDRESS', address);
+		commit('SET_DIRECTIONS', address);
 		return Number(headers['x-last-page']);
 	},
 	LOAD_DIRECTIONS: async ({ commit }, context) => {

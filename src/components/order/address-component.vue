@@ -10,7 +10,7 @@
 		<app-button-img
 			v-if="!hideMapButton"
 			class="map-button"
-			:style="`background-color: ${globalColor.primary};border: 1px solid ${globalColor.primary};`"
+			:style="`background-color: ${globalColors.primary};border: 1px solid ${globalColors.primary};`"
 			:disabled="disableMap"
 			:data="objImg"
 			@click-image="openModal(true)"

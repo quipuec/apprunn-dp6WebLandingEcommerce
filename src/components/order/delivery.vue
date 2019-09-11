@@ -69,10 +69,17 @@ const responsibleForm = () => import('@/components/order/responsible-form');
 function created() {
 	this.$store.dispatch('LOAD_DIRECTIONS', this);
 	this.$store.dispatch('LOAD_WAREHOUSES', this);
+	this.$store.commit('SET_DELIVERY_PLACE', null);
 }
 
 function selected(val) {
-	const delivery = val === 1 ? this.favoriteDirection : null;
+	let delivery = null;
+	if (val === 1) {
+		delivery = this.favoriteDirection;
+		this.calculateShippingCost(delivery);
+	} else {
+		this.$store.commit('SET_SHIPPING_COST', 0);
+	}
 	this.$store.commit('SET_DELIVERY_PLACE', delivery);
 	this.$store.commit('SET_FLAG_PICKUP', val);
 }
@@ -176,7 +183,6 @@ function clearSelectedWarehouse() {
 
 function handlerDirectionsChange(newDirections) {
 	if (this.getFlagPickUp === 1) {
-		debugger;
 		this.favoriteDirection = newDirections.find(f => f.isFavorite);
 		const directionDelivery = this.getDeliveryAddress || this.favoriteDirection;
 		this.$store.commit('SET_DELIVERY_PLACE', directionDelivery);
@@ -195,7 +201,7 @@ async function calculateShippingCost(location) {
 		const { data: amount } = await this.$httpProducts.post(url, body);
 		this.$store.commit('SET_SHIPPING_COST', amount || 0);
 	} catch (error) {
-		if (error.response.data.message === 'PRICE_NOT_CONFIGURATION') {
+		if (error.data.message === 'PRICE_NOT_CONFIGURATION') {
 			this.$store.commit('SET_SHIPPING_COST', 0);
 			this.showNotification('No es posible hacer envios a ese destino.', 'error');
 		}
