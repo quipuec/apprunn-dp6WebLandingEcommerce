@@ -22,7 +22,7 @@
 				</button>
 			</div>
 		</div>
-		<div class="menu-category" :class="{open: open}" v-if="open">
+		<div class="menu-category" :class="{open: open, toggle: toggle}" v-if="open">
 			<button class="btn-close" @click="closeOpen">
 				<img 
 					src="/static/img/icons/close.svg" 
@@ -35,32 +35,63 @@
 				@change-sub-category="changeSubCategory"
 				@change-sub-sub-category="changeSubSubCategory"
 				@open-category="openCategory"
+				@toggle="toggleCategory"
+				@close="closeOpen"
 			></menu-category>
 		</div>
-		<section 
-			class="section-product-card" 
-			v-if="listProducts.length"
-			:class="{close: open}">
-			<product-card
-				class="product-card"
-				v-for="product in listProducts"
-				:key="product.id"
-				:product="product"
-				/>
+		<div class="wrapper-results" :class="{toggle: toggle, close: open}">
+			<div class="wrapper-results-pagination">
+				<v-breadcrumbs :items="breadcrumbs" divider=">">
+					<template slot="item" slot-scope="props">
+						<button
+							:style="props.item.disabled ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`"
+							@click="linkCategories(props.item)"
+							>{{ props.item.text }}</button>
+					</template>
+				</v-breadcrumbs>
+				 <section class="section-pagination-category">
+						<p class="total-products">{{listProducts.length}} productos</p>
+						<v-layout class="text-xs-center" v-show="totalPages" v-if="lastPage > 1">
+							<v-pagination
+								:length="lastPage"
+								:total-visible="totalPages"
+								v-model="page"
+								@input="updateProductCard"
+								:color="globalColors.secondary"
+							></v-pagination>
+						</v-layout>
+				</section>
+			</div>
+			<section 
+				class="section-product-card"
+				v-if="listProducts.length"
+			>
+				<product-card
+					class="product-card"
+					v-for="product in listProducts"
+					:key="product.id"
+					:product="product"
+					/>
+			</section>
+			<p v-else class="not-products">No se encontrarón productos</p>
+			<section class="section-pagination-category container-end">
+				<p class="total-products">{{listProducts.length}} productos</p>
+				<div class="text-xs-center" v-show="totalPages" v-if="lastPage > 1">
+					<v-pagination
+						:length="lastPage"
+						:total-visible="totalPages"
+						v-model="page"
+						@input="updateProductCard"
+						:color="globalColors.secondary"
+					></v-pagination>
+				</div>
 		</section>
-		<p v-else class="not-products">No se encontrarón productos</p>
-	</div>
-	<div v-if="sliderCategory">
-		<slider-category
-		@close="closeCategory"
-		></slider-category>
-	</div>
-		<div>
-			<app-banner-top 
-				:data="bannerTop"
-				:color="globalColors.secondary"
-				big/>
 		</div>
+	</div>
+	<app-banner-top 
+		:data="bannerTop"
+		:color="globalColors.secondary"
+		big/>
 	</div>
 </template>
 
@@ -72,16 +103,11 @@ const buttonImage = () => import('@/components/shared/buttons/app-button-image')
 const menuCategory = () => import('@/components/shared/category/menu-category');
 const productCard = () => import('@/components/products/product-card');
 const productsSection = () => import('@/components/products/products-section');
-const sliderCategory = () => import('@/components/shared/category/slider-category');
 
 function created() {
 	this.selectCategory();
 	this.changeOpen();
 	window.addEventListener('resize', this.changeOpen);
-}
-
-function closeCategory() {
-	this.sliderCategory = false;
 }
 
 async function loadProduct() {
@@ -104,32 +130,32 @@ async function loadProduct() {
 	}
 }
 
-function pagesVisible() {
-	return this.totalPages < 5 ? this.totalPages : 5;
-}
-
 function updateProductCard(value) {
 	this.page = value;
 	this.loadProduct();
 }
 
-function filterProducts() {
-	this.sliderCategory = true;
-}
-
 function selectCategory() {
 	this.loadProduct();
+	this.breadcrumbs = [];
 	this.categorySelected = this.getCategories.filter(c => Number(c.id) === Number(this.fisrt))[0];
 	this.categories = this.getCategories.map((c) => {
 		const newCategory = { ...c };
-		newCategory.selectFirst = Number(c.id) === Number(this.fisrt);
-		newCategory.open = Number(c.id) === Number(this.fisrt);
+		const flagOpen = Number(c.id) === Number(this.fisrt);
+		newCategory.selectFirst = flagOpen;
+		newCategory.open = flagOpen;
+		if (flagOpen) {
+			this.breadcrumbs.push({ text: c.title, links: [c.id], link: 'first' });
+		}
 		if (this.second) {
 			const indexSearch = newCategory.detail.findIndex(d => Number(d.id) === Number(this.second));
 			newCategory.detail = c.detail.map((d, index) => {
 				const newDetail = { ...d };
 				if (indexSearch > -1) {
 					newDetail.selectSecond = indexSearch === index;
+					if (indexSearch === index) {
+						this.breadcrumbs.push({ text: d.title, links: [c.id, d.id], link: 'second' });
+					}
 				} else {
 					newDetail.selectSecond = false;
 				}
@@ -139,6 +165,9 @@ function selectCategory() {
 						const newSubDetail = { ...sub };
 						if (indexSearchSub > -1) {
 							newSubDetail.selectThird = indexSearchSub === indexSub;
+							if (indexSearchSub === indexSub) {
+								this.breadcrumbs.push({ text: sub.title, links: [c.id, d.id, sub.id], link: 'third' });
+							}
 						} else {
 							newSubDetail.selectThird = false;
 						}
@@ -149,6 +178,11 @@ function selectCategory() {
 			});
 		}
 		return newCategory;
+	});
+	this.breadcrumbs = this.breadcrumbs.map((b, index) => {
+		const newBreadcrumb = { ...b };
+		newBreadcrumb.disabled = index === this.breadcrumbs.length - 1;
+		return newBreadcrumb;
 	});
 }
 
@@ -198,44 +232,37 @@ function closeOpen() {
 	this.open = false;
 }
 
+function linkCategories(item) {
+	if (item.link === 'first') {
+		this.goTo('category', { params: { fisrt: item.links[0] } });
+	} else if (item.link === 'second') {
+		this.goTo('category', { params: { fisrt: item.links[0], second: item.links[1] } });
+	} else {
+		this.goTo('category', { params: { fisrt: item.links[0], second: item.links[1], third: item.links[2] } });
+	}
+}
+
+function toggleCategory() {
+	this.toggle = !this.toggle;
+}
+
 function data() {
 	return {
-		sliderCategory: false,
 		bannerTop: {
 			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
 			image: 'descuento',
 		},
-		iconFilter: {
-			image: '/static/img/icons/icon-filter-category.svg',
-			name: 'filtros',
-			height: 16,
-		},
 		categoryId: null,
-		items: [
-			{
-				text: 'Resortes',
-				disabled: false,
-				href: 'breadcrumbs_dashboard',
-			},
-			{
-				text: 'Automotríz',
-				disabled: false,
-				href: 'breadcrumbs_link_1',
-			},
-			{
-				text: '4x4',
-				disabled: true,
-				href: 'breadcrumbs_link_2',
-			},
-		],
 		lastPage: 0,
 		listSubCategories: [],
 		listProducts: [],
 		page: 1,
-		totalPages: 5,
+		totalPages: 7,
 		categories: [],
 		categorySelected: {},
 		open: false,
+		breadcrumbs: [],
+		toggle: false,
 	};
 }
 
@@ -246,19 +273,15 @@ export default {
 		appBannerTop,
 		buttonImage,
 		menuCategory,
-		sliderCategory,
 		productCard,
 		productsSection,
 	},
 	computed: {
-		pagesVisible,
 		...mapGetters([
 			'getCategories',
 		]),
 	},
 	methods: {
-		closeCategory,
-		filterProducts,
 		loadProduct,
 		updateProductCard,
 		selectCategory,
@@ -269,6 +292,8 @@ export default {
 		toggleMenu,
 		changeOpen,
 		closeOpen,
+		linkCategories,
+		toggleCategory,
 	},
 	data,
 	props: {
@@ -295,6 +320,7 @@ export default {
 .menu-category {
 	background-color: color(background);
 	padding: 0 0 0 27px;
+	left: 0;
 	position: relative;
 	transition: all .2s linear 0s;
 
@@ -308,11 +334,12 @@ export default {
 			width: 100%;
 		}
 	}
-}
 
-.content-category {
-	background-color: color(white);
-	width: 75%;
+	&.toggle {
+		left: -327px;
+		position: absolute;
+		z-index: 2;
+	}
 }
 
 .page-category {
@@ -323,16 +350,6 @@ export default {
 	@media (max-width: 986px) {
 		flex-direction: column;
 	}
-}
-
-.space-between {
-	display: flex;
-	justify-content: space-between;
-	padding: 10px 25px 0 25px;
-}
-
-.title-category {
-	margin-bottom: 0;
 }
 
 .content-sections {
@@ -358,107 +375,20 @@ export default {
 .section-pagination-category {
 	align-items: center;
 	display: flex;
+
+	@media (max-width: 986px) {
+		display: none;
+	}
 }
 
 .section-product-card {
 	display: grid;
 	grid-auto-rows: minmax(min-content, max-content);
 	grid-template-columns: repeat(auto-fill, minmax(214px, 1fr));
-	margin: 30px 0 0 51px;
-	width: 70%;
 
 	@media (max-width: 986px) {
 		margin: 0;
 		width: 100%;
-	}
-
-	&.close {
-		@media (max-width: 986px) {
-			display: none;
-		}
-	}
-}
-
-.title-breadcrumbs-category {
-	color: color(base);
-	font-family: font(medium);
-	font-size: size(large);
-}
-
-.text-breadcrumb {
-	color: color(dark);
-	font-family: map-get($fonts, medium);
-	font-size: size(medium);
-
-	@media (max-width: 980px) {
-		color: color(primary);
-		font-family: font(bold);
-		font-size: 18px;
-		margin-left: 10px;
-	}
-}
-
-.image-breadcrumb-category {
-	display: none;
-	
-	@media (max-width: 980px) {
-		display: block;
-	}
-}
-
-.section-breadcrumbs-responsive {
-	@media (min-width: 980px) {
-		display: none;
-	}
-	align-items: center;
-	border-right: 1px solid color(disabled);
-	display: flex;
-	justify-content: center;
-	width: 50%;
-}
-
-.section-breadcrumbs {
-	display: flex;
-	justify-content: flex-start;
-	margin-left: 19px;
-}
-
-.icon-filter {
-	height: 16px;
-	width: 15.6px;
-}
-
-.section-filter-responsive {
-	align-items: center;
-	display: flex;
-	justify-content: center;
-	width: 50%;
-
-	@media (min-width: 980px) {
-		display: none;
-	}
-}
-
-.title-filter {
-	color: color(dark);
-	font-family: font(demi);
-	font-size: size(small);
-	margin: 0 0 0 5px;
-}
-
-.border-bottom {
-	border-bottom: 1px solid color(disabled);
-}
-
-.bread-responsive {
-	@media (max-width: 980px) {
-		display: none;
-	}
-}
-
-.bread-desktop-none {
-	@media (min-width: 980px) {
-		display: none;
 	}
 }
 
@@ -476,6 +406,7 @@ export default {
 	height: 59px;
 	position: sticky;
   top: 75px;
+	z-index: 3;
 
 	@media (max-width: 986px) {
 		display: flex;
@@ -511,6 +442,41 @@ export default {
 
 	@media (max-width: 986px) {
 		display: block;
+	}
+}
+
+.wrapper-results {
+	padding: 28px 50px;
+	position: relative;
+	width: 70%;
+
+	&.toggle {
+		width: 100%;
+	}
+
+	&.close {
+		@media (max-width: 986px) {
+			display: none;
+		}
+	}
+
+	@media (max-width: 986px) {
+		margin: 0;
+		padding: 0;
+		width: 100%;
+	}
+}
+
+.wrapper-results-pagination {
+	display: flex;
+	justify-content: space-between;
+}
+
+.container-end {
+	justify-content: flex-end;
+
+	@media (max-width: 986px) {
+		display: none !important;
 	}
 }
 </style>

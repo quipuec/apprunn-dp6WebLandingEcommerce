@@ -18,12 +18,14 @@
 				</swiper-slide>
 				<div class="pagination-carousel swiper-pagination" slot="pagination"></div>
 			</swiper>
+			<div class="searcher-wrapper">
+				<Searcher class="searcher" />
+			</div>
 		</div>
 		<company-data class="banner-data"/>
 	</div>
 </template>
 <script>
-const companyData = () => import('@/components/shared/company/container-company-data');
 
 function getBackground(value) {
 	return `background-image: url(${value.webImage})`;
@@ -48,7 +50,8 @@ export default {
 	name: 'banner-carousel',
 	data,
 	components: {
-		companyData,
+		companyData: () => import('@/components/shared/company/container-company-data'),
+		Searcher: () => import('@/components/home/searcher'),
 	},
 	methods: {
 		getBackground,
@@ -93,6 +96,27 @@ export default {
 	.banner-link {
 		display: block;
 		height: 100%;
+	}
+
+	.container-banner-carousel {
+		position: relative;
+	}
+
+	.searcher-wrapper {
+		align-items: center;
+		display: flex;
+		height: 100%;
+		justify-content: flex-start;
+		padding-left: 60px;
+		position: absolute;
+		top: 0;
+		width: 100%;
+		z-index: 2;
+	}
+
+	.searcher {
+		height: 414px;
+		width: 353px;
 	}
 </style>
 
