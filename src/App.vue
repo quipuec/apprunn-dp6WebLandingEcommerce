@@ -1,6 +1,6 @@
 <template>
 	<v-app class="main-container">
-		<app-banner-top :data="bannerTop"/>
+		<!-- <app-banner-top :data="bannerTop"/> -->
 		<app-header
 			:logo="logo" 
 			@change-menu="changeMenu" 
