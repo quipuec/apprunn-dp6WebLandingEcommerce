@@ -55,7 +55,6 @@ const productPublicity = () => import('@/components/products/product-publicity')
 
 function created() {
 	this.loadProduct();
-	this.loadOpinions();
 }
 
 function isLoggedUser() {
@@ -70,6 +69,7 @@ async function loadProduct() {
 		const { data: response } = await this.isLoggedUser();
 		this.product = response;
 		this.loadData(this.product.id);
+		this.loadOpinions(this.product.id);
 	} catch (error) {
 		this.showGenericError();
 	}
@@ -208,10 +208,10 @@ function assignProduct(product) {
 	this.product.quantity = 1;
 }
 
-async function loadOpinions() {
+async function loadOpinions(id) {
 	const params = {
 		typeQuestionAnswer: 3,
-		productId: this.id,
+		productId: id,
 	};
 	const { data: response } = await this.$httpProducts.get('question-answer', { params });
 	this.opinions = response;
