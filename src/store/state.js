@@ -10,7 +10,7 @@ export default {
 	},
 	currencyDefault: null,
 	directions: [
-		{ id: 0, addressLine1: 'Nueva dirección' },
+		{ id: 0, addressLine1: 'Nueva dirección', name: 'Nueva dirección' },
 	],
 	genders: [
 		{ id: 1, title: 'Femenino' },

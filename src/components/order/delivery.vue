@@ -42,7 +42,7 @@
 			<address-component
 				hide-map-button
 				placeholder="Seleccione una dirección"
-				item-text="addressLine1"
+				item-text="name"
 				item-value="id"
 				:options="getDirections"
 				:value="selectedDirection.id"
@@ -108,6 +108,7 @@ function handlerDeliveryAddress(newDelivery) {
 		this.selectedDirection.id = id;
 		this.selectedDirection.addressLine1 = addressLine1;
 		this.selectedDirection.location = location;
+		this.selectedDirection.name = name;
 	} else {
 		this.clearSelectedDirection();
 		this.selectedWarehouse.id = id;

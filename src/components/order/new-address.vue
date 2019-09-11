@@ -24,7 +24,7 @@
 			placeholder="Provincia"
 			class="mx-2 my-1 province-field field"
 			:items="provinces"
-			:disabled="!newAddress.district"
+			:disabled="!newAddress.department"
 			@input="selectDistrict"
 			v-model="newAddress.province"
 		>
@@ -78,21 +78,21 @@ function created() {
 
 function selectDepartment(id) {
 	this.clearGeoFields();
-	this.$store.dispatch('LOAD_DISTRICTS', { context: this, departmentId: id });
+	this.$store.dispatch('LOAD_PROVINCES', { context: this, departmentId: id });
 }
 
 function selectDistrict(id) {
 	this.clearProvinceField();
-	this.$store.dispatch('LOAD_PROVINCES', { context: this, districtId: id });
+	this.$store.dispatch('LOAD_DISTRICTS', { context: this, provinceId: id });
 }
 
 function clearGeoFields() {
-	this.newAddress.district = '';
+	this.newAddress.district = null;
 	this.clearProvinceField();
 }
 
 function clearProvinceField() {
-	this.newAddress.province = '';
+	this.newAddress.province = null;
 }
 
 function validations() {
@@ -113,11 +113,11 @@ function data() {
 	return {
 		newAddress: {
 			address: '',
-			department: '',
-			district: '',
+			department: null,
+			district: null,
 			name: '',
 			number: '',
-			province: '',
+			province: null,
 			reference: '',
 		},
 	};

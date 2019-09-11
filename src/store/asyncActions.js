@@ -57,8 +57,8 @@ const asyncActions = {
 		const { data: districts } = await context.$httpSales.get(url);
 		commit('SET_PROVINCES', districts);
 	},
-	LOAD_DISTRICTS: async ({ commit }, { context, districtId }) => {
-		const url = `parish/${districtId}`;
+	LOAD_DISTRICTS: async ({ commit }, { context, provinceId }) => {
+		const url = `parish/${provinceId}`;
 		const { data: parish } = await context.$httpSales.get(url);
 		commit('SET_DISTRICTS', parish);
 	},
