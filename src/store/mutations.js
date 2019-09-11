@@ -69,6 +69,7 @@ function SET_WAREHOUSES(state, warehouses) {
 }
 
 function SET_DIRECTIONS(state, directions) {
+	debugger;
 	Vue.set(state, 'directions', state.directions.concat(directions));
 }
 

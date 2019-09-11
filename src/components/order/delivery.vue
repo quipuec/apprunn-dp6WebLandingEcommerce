@@ -155,6 +155,7 @@ function warehouseSelected(id) {
 function directionSelected(id) {
 	const w = this.getDirections.find(war => war.id === id);
 	this.$store.commit('SET_DELIVERY_PLACE', w);
+	this.calculateShippingCost(w);
 }
 
 function clearSelectedDirection() {
@@ -175,6 +176,7 @@ function clearSelectedWarehouse() {
 
 function handlerDirectionsChange(newDirections) {
 	if (this.getFlagPickUp === 1) {
+		debugger;
 		this.favoriteDirection = newDirections.find(f => f.isFavorite);
 		const directionDelivery = this.getDeliveryAddress || this.favoriteDirection;
 		this.$store.commit('SET_DELIVERY_PLACE', directionDelivery);
@@ -215,6 +217,7 @@ function buildBody(provinceId) {
 
 function beforeDestroy() {
 	this.$store.commit('SET_DELIVERY_PLACE', null);
+	this.$store.commit('SET_SHIPPING_COST', 0);
 }
 
 function data() {
