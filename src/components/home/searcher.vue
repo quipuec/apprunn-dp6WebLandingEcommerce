@@ -38,7 +38,7 @@
 
 <style lang="scss" scoped>
 	.searcher-container {
-		background-color: color(black);
+		background-color: rgba(0, 0, 0, 0.5);
 		border: 1px solid white;
 		border-radius: 7px;
 	}
