@@ -2,7 +2,7 @@
 	<div class="login-form">
 		<v-layout wrap align-start justify-center>
 			<v-flex xs12 pb-4 text-xs-left>
-				<p class="caption ma-0">Si tienes una cuenta</p>
+				<p class="caption ma-0">Ingresa tu correo electrónico para restaurar tu contraseña.</p>
 				<app-input
 					type="email"
 					placeholder="E-mail"
@@ -15,20 +15,6 @@
 				<span class="error-message" v-if="!validatons.model.email.email">
 					Ingrese un email válido
 				</span>
-			</v-flex>
-			<v-flex xs12 pb-4 text-xs-left>
-				<app-input
-					type="password"
-					placeholder="Contraseña"
-					:value="model.password"
-					@input="$emit('set-model', { model: 'password', value: $event })"
-				></app-input>
-				<span class="error-message" v-if="validatons.model.password.$invalid">
-					La contraseña es requerida
-				</span>
-			</v-flex>
-			<v-flex xs12 text-xs-right>
-				<router-link to="recuperar-contrasena" class="form-link">¿Olvidaste tu contraseña?</router-link>
 			</v-flex>
 		</v-layout>
 	</div>
@@ -54,7 +40,6 @@
 					return {
 						model: {
 							email: {},
-							password: {},
 						},
 					};
 				},
@@ -95,7 +80,7 @@
 	}
 
 	.error-message {
-		color: color(error);
+		color: color(primary);
 		display: block;
 		font-size: size(xsmall);
 		line-height: 1;

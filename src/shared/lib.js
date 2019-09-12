@@ -11,9 +11,9 @@ const methods = {
 			return newItem;
 		};
 	},
-	setNewProperty: (prop, v) => (item) => {
-		const newItem = item;
-		newItem[prop] = typeof v === 'function' ? v(item) : v;
+	setNewProperty: (prop, v) => (...arg) => {
+		const [newItem, index] = arg;
+		newItem[prop] = typeof v === 'function' ? v(newItem, index) : v;
 		return newItem;
 	},
 	decimals: d => n => Number(n.toFixed(d)),
@@ -40,6 +40,7 @@ const methods = {
 			return typeof item === 'object' ? item[prop1] === prop2 : item === prop1;
 		};
 	},
+	merge: (obj1, obj2) => Object.assign({}, obj1, obj2),
 
 };
 export default methods;

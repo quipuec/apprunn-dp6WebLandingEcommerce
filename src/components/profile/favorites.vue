@@ -9,25 +9,26 @@
 			<responsive-table
 				align-left
 				:columns="columns"
-				:rows="rows"
-				:pages="50"
+				:rows="getFavorites"
+				:pages="totalPages"
+				@page-changed="pageChange"
 			>
 				<template slot-scope="{ row }">
 					<td class="row-product">
 						<div class="product-info-container">
-							<img :src="row.product.img" alt="imagen del producto" class="product-img"/>
+							<img :src="row.urlImage" alt="imagen del producto" class="product-img"/>
 							<div class="text-xs-left">
-								<h4 class="product-name">{{row.product.name}}</h4>
-								<span class="product-description">{{row.product.description}}</span>
+								<h4 class="product-name">{{row.name}}</h4>
+								<span class="product-description">{{row.description}}</span>
 							</div>
 						</div>
 					</td>
-					<td class="product-unit-price">{{row.unitPrice}}</td>
+					<td class="product-unit-price">{{row.priceDiscount}}</td>
 					<td class="product-date">{{row.createdAt}}</td>
 					<td class="product-actions">
 						<div class="product-actions-wrapper">
-							<car-component class="action-btn"/>
-							<delete-component class="action-btn"/>
+							<car-component class="action-btn" @click="buyThisProduct(row)"/>
+							<delete-component class="action-btn" @click="noMoreFavorite(row)"/>
 						</div>
 					</td>
 				</template>
@@ -36,6 +37,29 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
+async function created() {
+	this.totalPages = await this.$store.dispatch(
+		'LOAD_FAVORITES_PRODUCTS',
+		{ context: this, params: this.params },
+	);
+}
+
+function buyThisProduct(product) {
+	this.$store.dispatch('addProductToBuyCar', product);
+	this.goTo('buy');
+}
+
+async function noMoreFavorite(product) {
+	await this.$store.dispatch('SET_FAVORITE_FLAG', { context: this, product });
+	this.$store.dispatch('LOAD_FAVORITES_PRODUCTS', { context: this, params: this.params });
+}
+
+function pageChange(page) {
+	this.params.page = page;
+	this.$store.dispatch('LOAD_FAVORITES_PRODUCTS', { context: this, params: this.params });
+}
 
 function data() {
 	return {
@@ -45,26 +69,11 @@ function data() {
 			{ value: 'createdAt', title: 'Fecha de Creación', responsive: true },
 			{ value: 'actions', title: 'Acción', responsive: true },
 		],
-		rows: [
-			{
-				product: {
-					img: '/static/img/resorte.jpg',
-					description: 'Descripcion',
-					name: 'nombre',
-				},
-				unitPrice: 320,
-				createdAt: '29/07/2019',
-			},
-			{
-				product: {
-					img: '/static/img/resorte.jpg',
-					description: 'Descripcion',
-					name: 'nombre',
-				},
-				unitPrice: 320,
-				createdAt: '29/07/2019',
-			},
-		],
+		params: {
+			page: 1,
+			limit: 5,
+		},
+		totalPages: 0,
 	};
 }
 
@@ -75,7 +84,18 @@ export default {
 		deleteComponent: () => import('@/components/shared/icons/delete-component'),
 		responsiveTable: () => import('@/components/shared/table/respondive-table'),
 	},
+	computed: {
+		...mapGetters([
+			'getFavorites',
+		]),
+	},
+	created,
 	data,
+	methods: {
+		buyThisProduct,
+		noMoreFavorite,
+		pageChange,
+	},
 };
 </script>
 <style lang="scss" scoped>
@@ -143,6 +163,7 @@ export default {
 	.product-date {
 		grid-column: 2/4;
 		grid-row: 2;
+		white-space: nowrap;
 
 		@media (max-width: 600px) {
 			font-size: size(small);

@@ -2,33 +2,26 @@
 	<div class="login-form">
 		<v-layout wrap align-start justify-center>
 			<v-flex xs12 pb-4 text-xs-left>
-				<p class="caption ma-0">Si tienes una cuenta</p>
 				<app-input
-					type="email"
-					placeholder="E-mail"
-					:value="model.email"
-					@input="$emit('set-model', { model: 'email', value: $event })"
+					type="password"
+					placeholder="Nueva contraseña"
+					:value="model.password"
+					@input="$emit('set-model', { model: 'password', value: $event })"
 				></app-input>
-				<span class="error-message" v-if="!validatons.model.email.required">
-					El email es requerido
-				</span>
-				<span class="error-message" v-if="!validatons.model.email.email">
-					Ingrese un email válido
+				<span class="error-message" v-if="!validatons.model.password.required">
+					La contraseña es requerida
 				</span>
 			</v-flex>
 			<v-flex xs12 pb-4 text-xs-left>
 				<app-input
 					type="password"
-					placeholder="Contraseña"
-					:value="model.password"
-					@input="$emit('set-model', { model: 'password', value: $event })"
+					placeholder="Confirmar contraseña"
+					:value="model.repeatPassword"
+					@input="$emit('set-model', { model: 'repeatPassword', value: $event })"
 				></app-input>
-				<span class="error-message" v-if="validatons.model.password.$invalid">
-					La contraseña es requerida
+				<span class="error-message" v-if="!validatons.model.repeatPassword.sameAsPassword">
+					Las contraseñas deben ser idénticas.
 				</span>
-			</v-flex>
-			<v-flex xs12 text-xs-right>
-				<router-link to="recuperar-contrasena" class="form-link">¿Olvidaste tu contraseña?</router-link>
 			</v-flex>
 		</v-layout>
 	</div>
@@ -54,7 +47,7 @@
 					return {
 						model: {
 							email: {},
-							password: {},
+							repeatPassword: {},
 						},
 					};
 				},
@@ -95,7 +88,7 @@
 	}
 
 	.error-message {
-		color: color(error);
+		color: color(primary);
 		display: block;
 		font-size: size(xsmall);
 		line-height: 1;

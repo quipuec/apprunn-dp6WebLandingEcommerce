@@ -4,7 +4,7 @@
 			<v-flex xs12 text-xs-center>
 				<img :src="headingImage" :height="imgHeight" alt="">
 				<div class="form-title">
-					<span>{{ title }}</span>
+					<span v-html="title"></span>
 				</div>
 			</v-flex>
 			<v-flex xs12 text-xs-center>
@@ -12,9 +12,10 @@
 			</v-flex>
 			<v-flex xs12 text-xs-center>
 				<app-button
-					:action="title"
+					:action="titleBtn || title"
 					:background="color"
 					:disabled="disabled"
+					v-if="visibleBtn"
 					type="submit"
 				></app-button>
 			</v-flex>
@@ -61,6 +62,11 @@
 			headingImage: String,
 			imgHeight: [Number, String],
 			title: String,
+			titleBtn: String,
+			visibleBtn: {
+				default: true,
+				type: Boolean,
+			},
 		},
 	};
 </script>

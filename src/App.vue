@@ -1,6 +1,6 @@
 <template>
 	<v-app class="main-container">
-		<app-banner-top :data="bannerTop"/>
+		<!-- <app-banner-top :data="bannerTop"/> -->
 		<app-header
 			:logo="logo" 
 			@change-menu="changeMenu" 
@@ -74,36 +74,6 @@ function routeHandler() {
 	this.showMenu = false;
 }
 
-function created() {
-	if (!this.getLocalStorage(`${process.env.STORAGE_USER_KEY}::currency-default`)) {
-		this.loadData();
-	}
-	this.$store.dispatch('LOAD_CATEGORIES', { context: this });
-	this.loadFilters();
-}
-
-async function loadData() {
-	this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
-}
-
-async function loadFilters() {
-	try {
-		const { data: response } = await this.$httpProductsPublic.get('filters-public');
-		const filters = response.map((f, index) => {
-			const newFilter = { ...f };
-			newFilter.select = index === 0;
-			return newFilter;
-		});
-		this.$store.dispatch('updateFilters', filters);
-		const params = {
-			filters: filters[0].id,
-		};
-		this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
-	} catch (error) {
-		this.showGenericError();
-	}
-}
-
 function data() {
 	return {
 		logo: {
@@ -129,10 +99,10 @@ export default {
 		...mapGetters([
 			'user',
 			'getCategories',
+			'getFilters',
 		]),
 	},
 	data,
-	created,
 	components: {
 		appFooter,
 		appHeader,
@@ -143,8 +113,6 @@ export default {
 	},
 	methods: {
 		changeMenu,
-		loadData,
-		loadFilters,
 	},
 	watch: {
 		$route: routeHandler,
@@ -196,6 +164,41 @@ input.app-input::-webkit-input-placeholder {
   	transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 
+.transparent-select {
+	background-color: transparent !important;
+	font-family: font(medium) !important;
+	height: 30px !important;
+
+	.v-input__control {
+		
+		.v-input__slot {
+			border: 1px solid color(border) !important;
+			border-radius: 7px !important;
+			height: -webkit-fill-available !important;
+			min-height: inherit !important;
+
+			.v-select__selections {
+				color: color(white);
+				padding-top: 0 !important;
+
+				input::placeholder {
+					color: color(white);
+					font-family: font(demi) !important;
+					font-size: size(minmedium) !important;
+					font-weight: normal !important;
+				}
+			}
+
+			.v-input__append-inner {
+				margin-top: 10px !important;
+
+				.theme--light.v-icon {
+					color: white;
+				}
+			}
+		}
+	}
+}
 .ecommerce-select {
 	background-color: color(background) !important;
 	font-family: font(medium) !important;
@@ -466,13 +469,13 @@ input.app-input::-webkit-input-placeholder {
 .page-category {
 	.v-breadcrumbs__item {
 		color: color(base);
-		font-family: font(medium);
+		font-family: font(bold);
 		font-size: size(medium);
 	}
 
 	.theme--light.v-breadcrumbs .v-breadcrumbs__divider, .theme--light.v-breadcrumbs .v-breadcrumbs__item--disabled {
 		color: color(primary);
-		font-family: font(medium);
+		font-family: font(bold);
 	}
 }
 
@@ -610,5 +613,37 @@ input.app-input::-webkit-input-placeholder {
 	.go-left-enter-active,
 	.go-left-leave-active {
 		transition: all 0.2s cubic-bezier(.32,1.09,.62,.98);
+}
+
+.list-category {
+		.slide-enter-active {
+		transition-duration: 0.5s;
+		transition-timing-function: ease-in;
+	}
+
+	.slide-leave-active {
+		transition-duration: 0.5s;
+		transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+	}
+
+	.slide-enter-to, .slide-leave {
+		max-height: 1000px;
+		overflow: hidden;
+	}
+
+	.slide-enter, .slide-leave-to {
+		overflow: hidden;
+		max-height: 0;
+	}
+}
+
+.page-category {
+	.product-container {
+		margin: 10px auto !important;
+
+		@media (max-width: 986px) {
+				margin: 0 !important;
+		}
+	}
 }
 </style>

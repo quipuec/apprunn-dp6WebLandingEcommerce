@@ -1,15 +1,17 @@
 <template>
 	<div>
 		<v-select
-      outline
-		  hide-details
-		  menu-props="auto"
-		  append-icon="expand_more"
-		  class="ecommerce-select"
-      :items="items"
-      v-bind="$attrs"
-		  :value="value"
-		  @input="sendValue"
+      		outline
+			hide-details
+			menu-props="auto"
+			append-icon="expand_more"
+			:class="[
+				transparent ? 'transparent-select' : 'ecommerce-select',
+			]"
+			:items="items"
+			v-bind="$attrs"
+			:value="value"
+			@input="sendValue"
 			@click:append-outer="clear"
     ></v-select>
 		<span class="err-message">
@@ -38,6 +40,10 @@ export default {
 		items: {
 			default: () => [],
 			type: Array,
+		},
+		transparent: {
+			default: false,
+			type: Boolean,
 		},
 		value: null,
 	},

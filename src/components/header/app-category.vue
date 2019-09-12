@@ -46,7 +46,7 @@
 					<div v-if="list.detail && list.select" class="menu-mobile">
 						<div v-for="(listTwo, indexTwo) in list.detail" :key="indexTwo" class="content-list-subcategory">
 							<div class="list-name-category list-subcategory">
-								<span class="list-item-name bold">{{listTwo.title}}</span>
+								<span class="list-item-name bold" @click="goToCategories(list, listTwo)">{{listTwo.title}}</span>
 								<button @click="clickSubCategory(listTwo,index)">
 									<simple-svg
 										v-if="listTwo.detail.length"
@@ -62,7 +62,8 @@
 								<span 
 									v-for="(listThree, indexThree) in listTwo.detail" 
 									:key="indexThree"
-									class="list-item-sub list-subcategory">{{listThree.title}}</span>
+									class="list-item-sub list-subcategory"
+									@click="goToSubCategories(list, listTwo, listThree)">{{listThree.title}}</span>
 							</div>
 						</div>
 					</div>
@@ -73,12 +74,15 @@
 					v-for="(item, index) in selectCategory.detail" 
 					:key="index"
 					class="list-item">
-					<span class="list-item-name bold">{{item.title}}</span>
+					<button 
+						class="list-item-name bold"
+						@click="goToCategories(selectCategory, item)">{{item.title}}</button>
 					<div v-if="item.detail">
-						<span 
+						<button 
 							v-for="(itemList, indexItem) in item.detail" 
 							:key="indexItem"
-							class="list-item-sub">{{itemList.title}}</span>
+							@click="goToSubCategories(selectCategory, item, itemList)"
+							class="list-item-sub">{{itemList.title}}</button>
 					</div>
 				</div>
 			</div>
@@ -101,12 +105,12 @@
 				</button>
 			</div>
 			<div class="option-close">
-				<button class="option" v-if="token">
+				<button class="option" v-if="token" @click="logout">
 					<img 
 						:src="imageClose.urlImage" 
 						:alt="imageClose.name"
 						class="mr-8">
-					<span class="text-gray">Cerrar Sesión </span>
+					<span class="text-gray">Cerrar Sesión</span>
 				</button>
 			</div>
 		</div>
@@ -125,7 +129,6 @@ function created() {
 }
 
 function clickCategory(item) {
-	this.goTo('category', { query: { id: item.id, categories: item }, params: { categories: item } });
 	const windowWidth = window.innerWidth;
 	this.categories = this.categories.map((c) => {
 		const newCategory = { ...c };
@@ -186,6 +189,27 @@ function handleScroll() {
 	this.scrolled = window.scrollY > 87;
 }
 
+function goToCategories(category, subCategory) {
+	this.goTo('category', { params: { fisrt: category.id, second: subCategory.id } });
+}
+
+function goToSubCategories(category, subCategory, subSubCategory) {
+	this.goTo('category', { params: { fisrt: category.id, second: subCategory.id, third: subSubCategory.id } });
+}
+
+function logout() {
+	this.goTo('page-home');
+	this.$store.dispatch('clearUser');
+	this.$store.dispatch('DEFAULT_USER');
+	this.$store.dispatch('SET_DEFAULT_VALUES');
+	localStorage.clear();
+	this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
+	const params = {
+		filters: this.getFilters[0].id,
+	};
+	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
+}
+
 function data() {
 	return {
 		colorBorder: process.env.COLOR_DARK,
@@ -212,24 +236,28 @@ function data() {
 export default {
 	name: 'app-category',
 	data,
-	created,
 	components: {
 		itemMenu,
 	},
+	computed: {
+		selectCategory,
+		isMoreTwo,
+		...mapGetters([
+			'getFilters',
+			'token',
+		]),
+		imageUser,
+	},
+	created,
 	destroyed,
 	methods: {
 		clickCategory,
 		oneSelectCategory,
 		clickSubCategory,
 		handleScroll,
-	},
-	computed: {
-		selectCategory,
-		isMoreTwo,
-		...mapGetters([
-			'token',
-		]),
-		imageUser,
+		goToCategories,
+		goToSubCategories,
+		logout,
 	},
 	props: {
 		imgUser: {
@@ -282,7 +310,6 @@ export default {
 		max-height: 312.6px;
 
 		@media (max-width: 764px) {
-			height: calc(100vh - 240px);
 			max-height: none;
 		}
 	}
@@ -400,6 +427,7 @@ export default {
 
 	.list-item-sub {
 		color: color(base);
+		display: block;
 
 		@media (max-width: 764px) {
 			font-size: size(small);

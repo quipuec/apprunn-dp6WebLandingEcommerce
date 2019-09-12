@@ -1,25 +1,64 @@
 <template>
-	<div class="menu-category">
-		<div>
-			<section-category
-			:categories="categories"
-			@filter="filterCategory"
-			:title-category="titleCategory"
-			></section-category>
+	<div class="wrapper-big-category">
+		<div class="wrapper-list-category">
+			<list-category 
+				v-for="category in categories"
+				:data="category"
+				:key="category.id"
+        @change-category="changeCategory"
+				@change-sub-category="changeSubCategory"
+				@change-sub-sub-category="changeSubSubCategory"
+				@open-category="openCategory"/>
+			<filters-category></filters-category>
+			<div class="wrapper-btns py-3">
+				<app-button 
+					action="Cerrar"
+					class="btn-modal mr-2"
+					:active="false"
+					:border="globalColors.primary"
+					@click="$emit('close')"
+				/>
+				<app-button 
+					action="Filtrar"
+					class="btn-modal"
+					:background="globalColors.secondary"
+					/>
+			</div>
 		</div>
-		<filters-category></filters-category>
-		<button class="btn-menu-category">
-			<img src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-point-to-right-(1).svg" alt="" width="15px" height="15px">
+		<button class="btn-menu-category" @click="$emit('toggle')">
+			<img 
+				src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-point-to-right-(1).svg" 
+				alt="abrir" 
+				width="15px" 
+				height="15px"
+				class="toggle">
 		</button>
 	</div>
 </template>
 
 <script>
 const filtersCategory = () => import('@/components/shared/category/filters-category');
-const sectionCategory = () => import('@/components/shared/category/section-category');
+const listCategory = () => import('@/components/shared/category/list-category');
+const appButton = () => import('@/components/shared/buttons/app-button');
 
 function filterCategory() {
 	this.$emit('filter', this.categories);
+}
+
+function changeCategory(id) {
+	this.$emit('change-category', id);
+}
+
+function changeSubCategory(id, idCategory) {
+	this.$emit('change-sub-category', id, idCategory);
+}
+
+function changeSubSubCategory(id, idCategory, idSubCategory) {
+	this.$emit('change-sub-sub-category', id, idCategory, idSubCategory);
+}
+
+function openCategory(id) {
+	this.$emit('open-category', id);
 }
 
 function data() {
@@ -32,11 +71,16 @@ export default {
 	data,
 	name: 'menu-category',
 	components: {
+		appButton,
 		filtersCategory,
-		sectionCategory,
+		listCategory,
 	},
 	methods: {
+		changeCategory,
+		changeSubCategory,
+		changeSubSubCategory,
 		filterCategory,
+		openCategory,
 	},
 	props: {
 		categories: {
@@ -52,17 +96,58 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.menu-category {
-	background-color: color(background);
-	border-right: 1px solid color(border);
-	height: 100vh;
+.wrapper-big-category {
+	display: flex;
+	height: 100%;
 	position: relative;
-	width: 95%;	
+
+	@media (max-width: 986px) {
+		border-right: none;
+	}
 }
 
 .btn-menu-category {
-	left: 104%;
-	position: absolute;
-	top: 370px;
+	position: relative;
+	width: 30px;
+
+	.toggle {
+		position: absolute;
+		left: 8px;
+		top: 30%;
+		transform: rotate(180deg);
+	}
+
+	@media (max-width: 986px) {
+		display: none;
+	}
 }
+
+.wrapper-list-category {
+	border-right: 1px solid color(border);
+	overflow-x: scroll;
+	padding-right: 20px;
+	width: 300px;
+
+	@media (max-width: 986px) {
+		border-right: none;
+		max-width: none;
+		padding-right: 0;
+		width: 100%;
+	}
+}
+
+.wrapper-btns {
+	border-top: 1px solid color(border);
+	display: none;
+	justify-content: center;
+
+	.btn-modal {
+		width: 40%;
+	}
+
+	@media (max-width: 986px) {
+		display: flex;
+	}
+}
+
 </style>

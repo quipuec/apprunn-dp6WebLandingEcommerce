@@ -213,7 +213,6 @@ export default {
 }
 
 .input-filter {
-	height: 26px;
 	width: 100%;
 }
 
