@@ -163,7 +163,11 @@ function warehouseSelected(id) {
 function directionSelected(id) {
 	const w = this.getDirections.find(war => war.id === id);
 	this.$store.commit('SET_DELIVERY_PLACE', w);
-	this.calculateShippingCost(w);
+	if (id === 0) {
+		this.$store.commit('SET_SHIPPING_COST', 0);
+	} else {
+		this.calculateShippingCost(w);
+	}
 }
 
 function clearSelectedDirection() {

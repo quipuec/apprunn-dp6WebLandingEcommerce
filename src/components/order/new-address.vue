@@ -13,8 +13,8 @@
 			placeholder="Departamento"
 			class="mx-2 my-1 department-field field"
 			:items="departments"
-			@input="selectDepartment"
 			v-model="newAddress.department"
+			@input="selectDepartment"
 		>
 			<span v-if="$v.newAddress.department.$invalid">El departamento es requerido</span>
 		</app-select>
@@ -25,7 +25,7 @@
 			class="mx-2 my-1 province-field field"
 			:items="provinces"
 			:disabled="!newAddress.department"
-			@input="selectDistrict"
+			@input="selectProvince"
 			v-model="newAddress.province"
 		>
 			<span v-if="$v.newAddress.province.$invalid">La provincia es requerida</span>
@@ -77,22 +77,45 @@ function created() {
 }
 
 function selectDepartment(id) {
-	this.clearGeoFields();
-	this.$store.dispatch('LOAD_PROVINCES', { context: this, departmentId: id });
+	this.newAddress.provinces = null;
+	this.newAddress.districts = null;
+	this.$store.commit('SET_PROVINCES', []);
+	this.$store.commit('SET_DISTRICTS', []);
+	this.calculateShippingCost(id);
+	this.$store.dispatch('LOAD_PROVINCES', { context: this, provinceId: id });
 }
 
-function selectDistrict(id) {
-	this.clearProvinceField();
-	this.$store.dispatch('LOAD_DISTRICTS', { context: this, provinceId: id });
+function selectProvince(id) {
+	this.newAddress.districts = null;
+	this.$store.commit('SET_DISTRICTS', []);
+	this.$store.dispatch('LOAD_DISTRICTS', { context: this, cityId: id });
 }
 
-function clearGeoFields() {
-	this.newAddress.district = null;
-	this.clearProvinceField();
+async function calculateShippingCost(provinceId) {
+	const url = '/weight/price';
+	const body = this.buildBody(provinceId);
+	try {
+		const { data: amount } = await this.$httpProducts.post(url, body);
+		this.$store.commit('SET_SHIPPING_COST', amount || 0);
+	} catch (error) {
+		if (error.data.message === 'PRICE_NOT_CONFIGURATION') {
+			this.$store.commit('SET_SHIPPING_COST', 0);
+			this.showNotification('No es posible hacer envios a ese destino.', 'error');
+		}
+	}
 }
 
-function clearProvinceField() {
-	this.newAddress.province = null;
+function buildBody(provinceId) {
+	const details = this.getProductToBuy.map((p) => {
+		const newP = {};
+		newP.weight = p.weigth || 0;
+		newP.quantity = p.quantity;
+		return newP;
+	});
+	return {
+		details,
+		provinceId,
+	};
 }
 
 function validations() {
@@ -133,16 +156,17 @@ export default {
 		...mapGetters([
 			'departments',
 			'districts',
+			'getProductToBuy',
 			'provinces',
 		]),
 	},
 	created,
 	data,
 	methods: {
-		clearGeoFields,
-		clearProvinceField,
+		buildBody,
+		calculateShippingCost,
 		selectDepartment,
-		selectDistrict,
+		selectProvince,
 	},
 	validations,
 };
