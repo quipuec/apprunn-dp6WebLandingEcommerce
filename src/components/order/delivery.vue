@@ -71,9 +71,9 @@ function created() {
 	this.$store.dispatch('LOAD_DIRECTIONS', this);
 	this.$store.dispatch('LOAD_WAREHOUSES', this);
 	this.$store.commit('SET_DELIVERY_PLACE', null);
-	if (this.getOrderInfo.id) {
-		this.$store.commit('SET_DELIVERY_PLACE', this.getOrderInfo.deliveryAddress);
-		this.selectedDirection = this.getOrderInfo.deliveryAddress;
+	if (!lib.isEmpty(this.getOrderInfo)) {
+		this.$store.commit('SET_DELIVERY_PLACE', this.getOrderInfo.customerAddress);
+		this.selectedDirection = this.getOrderInfo.customerAddress || this.selectedDirection;
 	}
 }
 
