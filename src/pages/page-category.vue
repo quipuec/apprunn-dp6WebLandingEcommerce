@@ -22,7 +22,7 @@
 				</button>
 			</div>
 		</div>
-		<div class="menu-category" :class="{open: open}" v-if="open">
+		<div class="menu-category" :class="{open: open, toggle: toggle}" v-if="open">
 			<button class="btn-close" @click="closeOpen">
 				<img 
 					src="/static/img/icons/close.svg" 
@@ -35,21 +35,37 @@
 				@change-sub-category="changeSubCategory"
 				@change-sub-sub-category="changeSubSubCategory"
 				@open-category="openCategory"
+				@toggle="toggleCategory"
+				@close="closeOpen"
 			></menu-category>
 		</div>
-		<div class="wrapper-results">
-			<v-breadcrumbs :items="breadcrumbs" divider=">">
-				<template slot="item" slot-scope="props">
-					<button
-						:style="props.item.disabled ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`"
-						@click="linkCategories(props.item)"
-						>{{ props.item.text }}</button>
-				</template>
-			</v-breadcrumbs>
+		<div class="wrapper-results" :class="{toggle: toggle, close: open}">
+			<div class="wrapper-results-pagination">
+				<v-breadcrumbs :items="breadcrumbs" divider=">">
+					<template slot="item" slot-scope="props">
+						<button
+							:style="props.item.disabled ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`"
+							@click="linkCategories(props.item)"
+							>{{ props.item.text }}</button>
+					</template>
+				</v-breadcrumbs>
+				 <section class="section-pagination-category">
+						<p class="total-products">{{listProducts.length}} productos</p>
+						<v-layout class="text-xs-center" v-show="totalPages" v-if="lastPage > 1">
+							<v-pagination
+								:length="lastPage"
+								:total-visible="totalPages"
+								v-model="page"
+								@input="updateProductCard"
+								:color="globalColors.secondary"
+							></v-pagination>
+						</v-layout>
+				</section>
+			</div>
 			<section 
 				class="section-product-card"
 				v-if="listProducts.length"
-				:class="{close: open}">
+			>
 				<product-card
 					class="product-card"
 					v-for="product in listProducts"
@@ -58,19 +74,24 @@
 					/>
 			</section>
 			<p v-else class="not-products">No se encontrarón productos</p>
+			<section class="section-pagination-category container-end">
+				<p class="total-products">{{listProducts.length}} productos</p>
+				<div class="text-xs-center" v-show="totalPages" v-if="lastPage > 1">
+					<v-pagination
+						:length="lastPage"
+						:total-visible="totalPages"
+						v-model="page"
+						@input="updateProductCard"
+						:color="globalColors.secondary"
+					></v-pagination>
+				</div>
+		</section>
 		</div>
 	</div>
-	<div v-if="sliderCategory">
-		<slider-category
-		@close="closeCategory"
-		></slider-category>
-	</div>
-		<div>
-			<app-banner-top 
-				:data="bannerTop"
-				:color="globalColors.secondary"
-				big/>
-		</div>
+	<app-banner-top 
+		:data="bannerTop"
+		:color="globalColors.secondary"
+		big/>
 	</div>
 </template>
 
@@ -82,16 +103,11 @@ const buttonImage = () => import('@/components/shared/buttons/app-button-image')
 const menuCategory = () => import('@/components/shared/category/menu-category');
 const productCard = () => import('@/components/products/product-card');
 const productsSection = () => import('@/components/products/products-section');
-const sliderCategory = () => import('@/components/shared/category/slider-category');
 
 function created() {
 	this.selectCategory();
 	this.changeOpen();
 	window.addEventListener('resize', this.changeOpen);
-}
-
-function closeCategory() {
-	this.sliderCategory = false;
 }
 
 async function loadProduct() {
@@ -114,17 +130,9 @@ async function loadProduct() {
 	}
 }
 
-function pagesVisible() {
-	return this.totalPages < 5 ? this.totalPages : 5;
-}
-
 function updateProductCard(value) {
 	this.page = value;
 	this.loadProduct();
-}
-
-function filterProducts() {
-	this.sliderCategory = true;
 }
 
 function selectCategory() {
@@ -180,6 +188,7 @@ function selectCategory() {
 
 function changeCategory(id) {
 	this.goTo('category', { params: { fisrt: id } });
+	this.page = 1;
 	if (window.innerWidth < 986) {
 		this.open = false;
 	}
@@ -187,6 +196,7 @@ function changeCategory(id) {
 
 function changeSubCategory(id, idCategory) {
 	this.goTo('category', { params: { fisrt: id, second: idCategory } });
+	this.page = 1;
 	if (window.innerWidth < 986) {
 		this.open = false;
 	}
@@ -194,6 +204,7 @@ function changeSubCategory(id, idCategory) {
 
 function changeSubSubCategory(id, idCategory, idSubCategory) {
 	this.goTo('category', { params: { fisrt: id, second: idCategory, third: idSubCategory } });
+	this.page = 1;
 	if (window.innerWidth < 986) {
 		this.open = false;
 	}
@@ -229,9 +240,12 @@ function linkCategories(item) {
 	}
 }
 
+function toggleCategory() {
+	this.toggle = !this.toggle;
+}
+
 function data() {
 	return {
-		sliderCategory: false,
 		bannerTop: {
 			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
 			image: 'descuento',
@@ -241,11 +255,12 @@ function data() {
 		listSubCategories: [],
 		listProducts: [],
 		page: 1,
-		totalPages: 5,
+		totalPages: 7,
 		categories: [],
 		categorySelected: {},
 		open: false,
 		breadcrumbs: [],
+		toggle: false,
 	};
 }
 
@@ -256,19 +271,15 @@ export default {
 		appBannerTop,
 		buttonImage,
 		menuCategory,
-		sliderCategory,
 		productCard,
 		productsSection,
 	},
 	computed: {
-		pagesVisible,
 		...mapGetters([
 			'getCategories',
 		]),
 	},
 	methods: {
-		closeCategory,
-		filterProducts,
 		loadProduct,
 		updateProductCard,
 		selectCategory,
@@ -280,6 +291,7 @@ export default {
 		changeOpen,
 		closeOpen,
 		linkCategories,
+		toggleCategory,
 	},
 	data,
 	props: {
@@ -306,6 +318,7 @@ export default {
 .menu-category {
 	background-color: color(background);
 	padding: 0 0 0 27px;
+	left: 0;
 	position: relative;
 	transition: all .2s linear 0s;
 
@@ -318,6 +331,12 @@ export default {
 			left: 0 !important;
 			width: 100%;
 		}
+	}
+
+	&.toggle {
+		left: -327px;
+		position: absolute;
+		z-index: 2;
 	}
 }
 
@@ -354,6 +373,10 @@ export default {
 .section-pagination-category {
 	align-items: center;
 	display: flex;
+
+	@media (max-width: 986px) {
+		display: none;
+	}
 }
 
 .section-product-card {
@@ -364,12 +387,6 @@ export default {
 	@media (max-width: 986px) {
 		margin: 0;
 		width: 100%;
-	}
-
-	&.close {
-		@media (max-width: 986px) {
-			display: none;
-		}
 	}
 }
 
@@ -387,6 +404,7 @@ export default {
 	height: 59px;
 	position: sticky;
   top: 75px;
+	z-index: 3;
 
 	@media (max-width: 986px) {
 		display: flex;
@@ -427,12 +445,36 @@ export default {
 
 .wrapper-results {
 	padding: 28px 50px;
+	position: relative;
 	width: 70%;
+
+	&.toggle {
+		width: 100%;
+	}
+
+	&.close {
+		@media (max-width: 986px) {
+			display: none;
+		}
+	}
 
 	@media (max-width: 986px) {
 		margin: 0;
 		padding: 0;
 		width: 100%;
+	}
+}
+
+.wrapper-results-pagination {
+	display: flex;
+	justify-content: space-between;
+}
+
+.container-end {
+	justify-content: flex-end;
+
+	@media (max-width: 986px) {
+		display: none !important;
 	}
 }
 </style>

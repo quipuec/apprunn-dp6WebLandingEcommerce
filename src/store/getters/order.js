@@ -54,10 +54,10 @@ const getters = {
 		return state.order.flagBill;
 	},
 	getOrders(state) {
-		return state.order.products;
+		return state.order.list;
 	},
 	getStatus(state) {
-		return state.order.status;
+		return state.order.orderStatus;
 	},
 	getOrderDetails(state) {
 		const { products, order } = state.order;

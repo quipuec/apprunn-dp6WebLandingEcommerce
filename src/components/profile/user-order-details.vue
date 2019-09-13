@@ -6,21 +6,21 @@
 				:style="`color: ${globalColors.primary};`"
 				class="order-head">
 				<span class="order-state">
-					{{getValue('orderState.name', getOrderDetails)}}
+					{{getValue('orderState.name', getOrderInfo)}}
 				</span> - <span>nro orden </span>
-				<span>{{getValue('number', getOrderDetails)}}</span>
+				<span>{{getValue('number', getOrderInfo)}}</span>
 			</p>
 		</section>
 		<section class="header">
 			<div class="order-info">
 				<div>
-					<span class="label">Precio Total: </span><span class="order-info-data">{{getValue('total', getOrderDetails)}}</span>
+					<span class="label">Precio Total: </span><span class="order-info-data">{{getValue('total', getOrderInfo)}}</span>
 				</div>
 				<div>
-					<span class="label">Fecha de la Orden: </span><span class="order-info-data">{{getValue('createdAt', getOrderDetails)}}</span>
+					<span class="label">Fecha de la Orden: </span><span class="order-info-data">{{getValue('createdAt', getOrderInfo)}}</span>
 				</div>
 				<div>
-					<span class="label">Estado: </span><span class="order-info-data">{{getValue('orderState.name', getOrderDetails)}}</span>
+					<span class="label">Estado: </span><span class="order-info-data">{{getValue('orderState.name', getOrderInfo)}}</span>
 				</div>
 			</div>
 			<div class="order-payment">
@@ -28,11 +28,11 @@
 					<div class="my-2 delivery-address">
 						<span v-if="flagPickUp === 1" class="label">
 							Direccion de envio: 
-							<span class="order-info-data">{{getValue('customerAddress.addressLine1', getOrderDetails)}}</span>
+							<span class="order-info-data">{{getValue('customerAddress.addressLine1', getOrderInfo)}}</span>
 						</span>
 						<span v-else class="label">
 							Direccion de recojo: 
-							<span class="order-info-data">{{getValue('warehouseName', getOrderDetails)}}</span>
+							<span class="order-info-data">{{getValue('warehouseName', getOrderInfo)}}</span>
 						</span>
 					</div>
 					<app-button
@@ -80,9 +80,13 @@ import loadPayment from '@/components/profile/load-payment';
 import responsiveTable from '@/components/shared/table/respondive-table';
 import lib from '@/shared/lib';
 
-function created() {
+async function created() {
 	({ id: this.orderId } = this.$route.params);
-	this.$store.dispatch('LOAD_ORDER_DETAILS', { context: this, orderId: this.orderId });
+	await this.$store.dispatch('LOAD_ORDER_DETAILS', { context: this, orderId: this.orderId });
+	if (!lib.isEmpty(this.getOrderInfo)) {
+		const { additionalInfo } = this.getOrderInfo;
+		this.$store.commit('UPDATE_FLAG_ADD_VOUCHER', !lib.isEmpty(additionalInfo));
+	}
 }
 
 function goTo() {
@@ -102,11 +106,11 @@ function getValue(route, order) {
 }
 
 function flagPickUp() {
-	return lib.getDeeper('flagPickUp')(this.getOrderDetails);
+	return lib.getDeeper('flagPickUp')(this.getOrderInfo);
 }
 
 function details() {
-	return lib.getDeeper('details')(this.getOrderDetails);
+	return lib.getDeeper('details')(this.getOrderInfo);
 }
 
 function data() {
@@ -132,7 +136,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'flagAddVoucher',
-			'getOrderDetails',
+			'getOrderInfo',
 		]),
 		backgroundColor,
 		details,

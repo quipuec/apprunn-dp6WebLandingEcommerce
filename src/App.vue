@@ -1,6 +1,6 @@
 <template>
 	<v-app class="main-container">
-		<app-banner-top :data="bannerTop"/>
+		<!-- <app-banner-top :data="bannerTop"/> -->
 		<app-header
 			:logo="logo" 
 			@change-menu="changeMenu" 
@@ -164,6 +164,41 @@ input.app-input::-webkit-input-placeholder {
   	transition: all .3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 
+.transparent-select {
+	background-color: transparent !important;
+	font-family: font(medium) !important;
+	height: 30px !important;
+
+	.v-input__control {
+		
+		.v-input__slot {
+			border: 1px solid color(border) !important;
+			border-radius: 7px !important;
+			height: -webkit-fill-available !important;
+			min-height: inherit !important;
+
+			.v-select__selections {
+				color: color(white);
+				padding-top: 0 !important;
+
+				input::placeholder {
+					color: color(white);
+					font-family: font(demi) !important;
+					font-size: size(minmedium) !important;
+					font-weight: normal !important;
+				}
+			}
+
+			.v-input__append-inner {
+				margin-top: 10px !important;
+
+				.theme--light.v-icon {
+					color: white;
+				}
+			}
+		}
+	}
+}
 .ecommerce-select {
 	background-color: color(background) !important;
 	font-family: font(medium) !important;
@@ -599,6 +634,16 @@ input.app-input::-webkit-input-placeholder {
 	.slide-enter, .slide-leave-to {
 		overflow: hidden;
 		max-height: 0;
+	}
+}
+
+.page-category {
+	.product-container {
+		margin: 10px auto !important;
+
+		@media (max-width: 986px) {
+				margin: 0 !important;
+		}
 	}
 }
 </style>

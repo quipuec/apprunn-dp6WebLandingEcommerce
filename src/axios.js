@@ -19,10 +19,15 @@ const salesInstance = axios.create({
 	baseURL: process.env.SALES_URL,
 });
 
+const uploadInstance = axios.create({
+	baseURL: process.env.UPLOAD_URL,
+});
+
 export default function (Vue) {
 	/* eslint-disable no-param-reassign */
 	Vue.prototype.$httpProducts = productsInstance;
 	Vue.prototype.$httpAcl = aclInstance;
 	Vue.prototype.$httpSales = salesInstance;
 	Vue.prototype.$httpProductsPublic = productsPublicInstance;
+	Vue.prototype.$httpUpLoad = uploadInstance;
 }
