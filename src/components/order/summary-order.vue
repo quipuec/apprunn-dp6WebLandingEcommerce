@@ -88,7 +88,8 @@ function buildBody(flagFinish) {
 		customerAddressId: this.getCustomerAddressId,
 		customerAddress: this.getCustomerAddressId ? null : this.getCustomerAddress,
 		customerBill: this.getBillingData,
-		deliveryAddress: this.getDeliveryAddress,
+		deliveryAddress: this.getCustomerAddressId
+			? this.getDeliveryAddress : null,
 		details: this.getDetails(this.getOrderDetails),
 		flagPickUp: this.getFlagPickUp,
 		responsiblePickUp: this.getResponsible,

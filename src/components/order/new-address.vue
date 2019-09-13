@@ -1,5 +1,5 @@
 <template>
-	<form class="new-address-form">
+	<form class="new-address-form" @input="setCustomerAddress">
 		<app-input
 			placeholder="Alias"
 			class="mx-2 my-1 name-field field"
@@ -44,9 +44,9 @@
 		<app-input
 			placeholder="Dirección"
 			class="mx-2 my-1 address-field field"
-			v-model="newAddress.address"
+			v-model="newAddress.addressLine1"
 		>
-			<span v-if="$v.newAddress.address.$invalid">La dirección es requerida</span>
+			<span v-if="$v.newAddress.addressLine1.$invalid">La dirección es requerida</span>
 		</app-input>
 		<app-input
 			placeholder="Nro"
@@ -121,7 +121,7 @@ function buildBody(provinceId) {
 function validations() {
 	return {
 		newAddress: {
-			address: { required },
+			addressLine1: { required },
 			department: { required },
 			district: { required },
 			name: { required },
@@ -132,10 +132,18 @@ function validations() {
 	};
 }
 
+function setCustomerAddress() {
+	if (this.$v.$invalid) {
+		this.$store.commit('SET_CUSTOMER_ADDRESS', null);
+	} else {
+		this.$store.commit('SET_CUSTOMER_ADDRESS', this.newAddress);
+	}
+}
+
 function data() {
 	return {
 		newAddress: {
-			address: '',
+			addressLine1: '',
 			department: null,
 			district: null,
 			name: '',
@@ -167,6 +175,7 @@ export default {
 		calculateShippingCost,
 		selectDepartment,
 		selectProvince,
+		setCustomerAddress,
 	},
 	validations,
 };

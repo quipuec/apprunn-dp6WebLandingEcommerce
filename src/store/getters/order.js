@@ -38,10 +38,19 @@ const getters = {
 		return state.order.delivery;
 	},
 	invalidOrder(state) {
-		const { responsible, delivery, flagBill, bill, shippingCost, flagPickUp } = state.order;
+		const {
+			responsible,
+			delivery,
+			flagBill,
+			bill,
+			shippingCost,
+			flagPickUp,
+			customerAddress,
+		} = state.order;
 		const invalidResponsible = lib.isEmpty(responsible);
 		const invalidDelivery = lib.isEmpty(delivery);
-		// const invalidNewDelvery =  delivery.id === 0 ?  : false; guardar data de new-address (delivery)
+		const invalidNewDelvery = lib.getDeeper('id')(delivery) === 0
+			? lib.isEmpty(customerAddress) : false;
 		const invalidBill = flagBill ? lib.isEmpty(bill) : false;
 		const invalidShippingCost = flagPickUp === 1 ? lib.isEmpty(shippingCost) : false;
 		return lib.atLeastOneTrue(
@@ -49,6 +58,7 @@ const getters = {
 			invalidDelivery,
 			invalidBill,
 			invalidShippingCost,
+			invalidNewDelvery,
 		);
 	},
 	getFlagBill(state) {
