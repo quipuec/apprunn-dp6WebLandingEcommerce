@@ -55,7 +55,7 @@ import { mapGetters } from 'vuex';
 import lib from '@/shared/lib';
 
 function getGenderName(id) {
-	const { title } = lib.find(lib.equality('id', id), this.genders);
+	const { title } = lib.find(lib.equality('id', id), this.genders) || {};
 	return title;
 }
 

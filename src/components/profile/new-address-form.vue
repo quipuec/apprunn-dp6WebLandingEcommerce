@@ -72,11 +72,11 @@ async function addNewAddress() {
 }
 
 function selectDepartment(id) {
-	this.$store.dispatch('LOAD_PROVINCES', { context: this, departmentId: id });
+	this.$store.dispatch('LOAD_PROVINCES', { context: this, provinceId: id });
 }
 
 function selectProvince(id) {
-	this.$store.dispatch('LOAD_DISTRICTS', { context: this, districtId: id });
+	this.$store.dispatch('LOAD_DISTRICTS', { context: this, cityId: id });
 }
 
 function validations() {
