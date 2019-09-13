@@ -33,8 +33,6 @@
 				:categories="categories"
 				:breadcrumbs="breadcrumbs"
 				@change-category="changeCategory"
-				@change-sub-category="changeSubCategory"
-				@change-sub-sub-category="changeSubSubCategory"
 				@open-category="openCategory"
 				@toggle="toggleCategory"
 				@close="closeOpen"
@@ -51,7 +49,7 @@
 					</template>
 				</v-breadcrumbs>
 				 <section class="section-pagination-category">
-						<p class="total-products">{{listProducts.length}} productos</p>
+						<p class="total-products" v-if="listProducts.length">{{listProducts.length}} productos</p>
 						<v-layout class="text-xs-center" v-show="totalPages" v-if="lastPage > 1">
 							<v-pagination
 								:length="lastPage"
@@ -76,7 +74,7 @@
 			</section>
 			<p v-else class="not-products">No se encontrarón productos</p>
 			<section class="section-pagination-category container-end">
-				<p class="total-products">{{listProducts.length}} productos</p>
+				<p class="total-products" v-if="listProducts.length">{{listProducts.length}} productos</p>
 				<div class="text-xs-center" v-show="totalPages" v-if="lastPage > 1">
 					<v-pagination
 						:length="lastPage"
@@ -136,6 +134,9 @@ function selectCategory() {
 	this.categories = this.getCategories;
 	this.currentSelect = this.getCurrentcategory(this.categories, this.id);
 	this.breadcrumbs = this.breadcrumbs.reverse();
+	if (this.breadcrumbs.length) {
+		this.categorySelected = this.breadcrumbs[0];
+	}
 }
 
 function getCurrentcategory(categories, id) {
@@ -157,23 +158,7 @@ function getCurrentcategory(categories, id) {
 }
 
 function changeCategory(id) {
-	this.goTo('category', { params: { fisrt: id } });
-	this.page = 1;
-	if (window.innerWidth < 986) {
-		this.open = false;
-	}
-}
-
-function changeSubCategory(id, idCategory) {
-	this.goTo('category', { params: { fisrt: id, second: idCategory } });
-	this.page = 1;
-	if (window.innerWidth < 986) {
-		this.open = false;
-	}
-}
-
-function changeSubSubCategory(id, idCategory, idSubCategory) {
-	this.goTo('category', { params: { fisrt: id, second: idCategory, third: idSubCategory } });
+	this.goTo('category', { params: { id } });
 	this.page = 1;
 	if (window.innerWidth < 986) {
 		this.open = false;
@@ -250,8 +235,6 @@ export default {
 		updateProductCard,
 		selectCategory,
 		changeCategory,
-		changeSubCategory,
-		changeSubSubCategory,
 		openCategory,
 		toggleMenu,
 		changeOpen,

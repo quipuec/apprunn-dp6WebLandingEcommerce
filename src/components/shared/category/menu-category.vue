@@ -7,8 +7,6 @@
 				:key="category.id"
 				:breadcrumbs="breadcrumbs"
         @change-category="changeCategory"
-				@change-sub-category="changeSubCategory"
-				@change-sub-sub-category="changeSubSubCategory"
 				@open-category="openCategory"/>
 			<filters-category></filters-category>
 			<div class="wrapper-btns py-3">
@@ -50,14 +48,6 @@ function changeCategory(id) {
 	this.$emit('change-category', id);
 }
 
-function changeSubCategory(id, idCategory) {
-	this.$emit('change-sub-category', id, idCategory);
-}
-
-function changeSubSubCategory(id, idCategory, idSubCategory) {
-	this.$emit('change-sub-sub-category', id, idCategory, idSubCategory);
-}
-
 function openCategory(id) {
 	this.$emit('open-category', id);
 }
@@ -78,8 +68,6 @@ export default {
 	},
 	methods: {
 		changeCategory,
-		changeSubCategory,
-		changeSubSubCategory,
 		filterCategory,
 		openCategory,
 	},

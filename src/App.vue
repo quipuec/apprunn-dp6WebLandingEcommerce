@@ -18,7 +18,7 @@
 			:img-user="user"
 			:color-base="colorBase"
 			:color-border="colorBorder"
-			:categories="getCategories"/>
+		/>
   	</transition>
 	<router-view></router-view>
 	<section-visa></section-visa>
@@ -754,6 +754,10 @@ input.app-input::-webkit-input-placeholder {
 
 	.v-treeview-node__label {
 		font-size: size(medium);
+	}
+
+	.v-treeview-node--active {
+		background: transparent !important;
 	}
 }
 

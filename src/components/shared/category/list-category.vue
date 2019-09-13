@@ -3,7 +3,7 @@
 		<div class="wrapper-name-category" :style="`border-color: ${globalColors.primary}`">
 			<button 
 				class="title-category mr-5" 
-				:style="data.selectFirst ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`"
+				:style="idSelect(data.id) ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`"
 				@click="$emit('change-category', data.id)"	
 			>
 				<img :src="data.webImage" :alt="data.title" class="mr-3">
@@ -20,22 +20,7 @@
 			</button>
 		</div>
 		<transition  name="slide">
-			<div v-if="data.detail.length && data.open" class="wrapper-subcategory">
-				<!-- <div v-for="subCategory in data.detail" :key="subCategory.id">
-					<button 
-						class="text-subcategory mb-1"
-						:style="subCategory.selectSecond ? `color: ${globalColors.secondary}` : `color: ${globalColors.base}`"
-						@click="$emit('change-sub-category', data.id, subCategory.id)"
-					>{{subCategory.title}}</button>
-					<div v-if="subCategory.detail.length" class="wrapper-subsubcategory">
-						<button 
-							v-for="subSubCategory in subCategory.detail" 
-							:key="subSubCategory.id"
-							@click="$emit('change-sub-sub-category', data.id, subCategory.id, subSubCategory.id)"
-							:style="subSubCategory.selectThird ? `color: ${globalColors.secondary}` : `color: ${globalColors.base}`"
-							class="text-subsubcategory">{{subSubCategory.title}}</button>
-					</div>
-				</div> -->
+			<div v-if="data.detail.length && (idSelect(data.id) || data.open)" class="wrapper-subcategory">
 				<v-treeview
 					:items="data.detail"
 					item-children="detail"
@@ -44,6 +29,8 @@
 					expand-icon="fiber_manual_record"
 					item-key="id"
 					activatable
+					@update:active="goToCategories"
+					return-object
 				>
 					<template slot="label" slot-scope="{ item }">
 						<button :style="idSelect(item.id) ? `color: ${globalColors.secondary}` : `color: ${globalColors.base}`">{{item.title}}</button>
@@ -59,10 +46,18 @@ function idSelect(id) {
 	return this.breadcrumbs.find(b => b.id === id);
 }
 
+function goToCategories(item) {
+	if (item.length) {
+		const id = item[0].slug || item[0].id;
+		this.$emit('change-category', id);
+	}
+}
+
 export default {
 	name: 'list-category',
 	methods: {
 		idSelect,
+		goToCategories,
 	},
 	props: {
 		data: {
@@ -109,57 +104,7 @@ export default {
 				padding-left: 0px;
 			}
 		}
-
-		.text-subcategory {
-			color: color(base);
-			position: relative;
-
-			&::before {
-				content: '';
-				background: color(black);
-				border-radius: 50%;
-				height: 5px;
-				left: -12px;
-				position: absolute;
-				top: 7px;
-				width: 5px;
-
-				@media (max-width: 986px) {
-					left: 22px;
-					top: 30px;
-				}	
-			}
-
-			@media (max-width: 986px) {
-				border-bottom: 1px solid color(secondary);
-				display: block;
-				padding: 22px 22px 22px 40px;
-				text-align: left;
-				width: 100%;
-			}
-		}
-
-		.text-subsubcategory {
-			color: color(base);
-			display: block;
-
-			@media (max-width: 986px) {
-				border-bottom: 1px solid color(border);
-				padding: 14px 0 14px 15%;
-				text-align: left;
-				width: 100%;
-			}
-		}
 		
-		.wrapper-subsubcategory {
-			margin: 8px 0;
-			padding-left: 20px;
-
-			@media (max-width: 986px) {
-				padding-left: 0px;
-			}
-		}
-
 		&:first-child {
 			margin-top: 50px;
 

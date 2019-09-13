@@ -103,6 +103,7 @@ import { mapGetters } from 'vuex';
 const itemMenu = () => import('@/components/header/item-menu');
 
 function created() {
+	this.categories = this.getCategories;
 	window.addEventListener('resize', this.oneSelectCategory);
 	window.addEventListener('scroll', this.handleScroll);
 	this.oneSelectCategory();
@@ -215,6 +216,7 @@ function data() {
 		},
 		scrolled: false,
 		load: true,
+		categories: {},
 	};
 }
 
@@ -230,6 +232,7 @@ export default {
 		...mapGetters([
 			'getFilters',
 			'token',
+			'getCategories',
 		]),
 		imageUser,
 	},
@@ -241,17 +244,12 @@ export default {
 		clickSubCategory,
 		handleScroll,
 		goToCategories,
-		// goToSubCategories,
 		logout,
 	},
 	props: {
 		imgUser: {
 			type: Object,
 			default: () => {},
-		},
-		categories: {
-			type: Array,
-			default: () => [],
 		},
 	},
 };
