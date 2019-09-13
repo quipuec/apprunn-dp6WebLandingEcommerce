@@ -1,5 +1,5 @@
 <template>
-	<div class="component-filter">
+	<div class="component-filter" :style="`background: ${globalColors.primary}`">
 		<div class="swiper-filter">
 			<swiper :options="swiperOption">
 			<swiper-slide
@@ -67,28 +67,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.component-filter-product {
-	background-color: color(primary);
-	display: grid;
-	height: 67px;
-	padding: 8px 130px;
-	width: 100%;
-
-	@media (max-width: 950px) {
-		grid-template-columns: auto auto;
-		height: 102px;
-		padding: 8px 80px;
-		width: 100%;
-	}
-
-	@media (max-width: 450px) {
-		padding: 8px 15px;
-	}
-}
-
 .component-filter {
 	align-items: center;
-	background: color(primary);
 	display: flex;
 	height: 67px;
 	justify-content: center;

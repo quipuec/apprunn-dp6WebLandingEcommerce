@@ -11,7 +11,6 @@
 		<div class="page-products">
 			<products-section/>
 		</div>
-		<section-settlement/>
 		<app-banner-top 
 			:data="bannerTop"
 			:color="colorSecondary"
