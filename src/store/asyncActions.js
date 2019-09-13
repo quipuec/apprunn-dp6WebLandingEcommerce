@@ -52,13 +52,13 @@ const asyncActions = {
 		const { data: departments } = await context.$httpSales.get(url);
 		commit('SET_DEPARTMENTS', departments);
 	},
-	LOAD_PROVINCES: async ({ commit }, { context, departmentId }) => {
-		const url = `cities/${departmentId}`;
-		const { data: districts } = await context.$httpSales.get(url);
-		commit('SET_PROVINCES', districts);
+	LOAD_PROVINCES: async ({ commit }, { context, provinceId }) => {
+		const url = `cities/${provinceId}`;
+		const { data: cities } = await context.$httpSales.get(url);
+		commit('SET_PROVINCES', cities);
 	},
-	LOAD_DISTRICTS: async ({ commit }, { context, provinceId }) => {
-		const url = `parish/${provinceId}`;
+	LOAD_DISTRICTS: async ({ commit }, { context, cityId }) => {
+		const url = `parish/${cityId}`;
 		const { data: parish } = await context.$httpSales.get(url);
 		commit('SET_DISTRICTS', parish);
 	},
