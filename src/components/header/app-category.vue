@@ -190,11 +190,11 @@ function handleScroll() {
 }
 
 function goToCategories(category, subCategory) {
-	this.goTo('category', { params: { fisrt: category.id, second: subCategory.id } });
+	this.goTo('category', { params: { fisrt: category.slug || category.id, second: subCategory.slug || subCategory.id } });
 }
 
 function goToSubCategories(category, subCategory, subSubCategory) {
-	this.goTo('category', { params: { fisrt: category.id, second: subCategory.id, third: subSubCategory.id } });
+	this.goTo('category', { params: { fisrt: category.slug || category.id, second: subCategory.slug || subCategory.id, third: subSubCategory.slug || subSubCategory.id } });
 }
 
 function logout() {
@@ -410,6 +410,7 @@ export default {
 
 	.list-item-name {
 		color: color(base);
+		text-align: left;
 
 		&.bold {
 			color: color(black);
