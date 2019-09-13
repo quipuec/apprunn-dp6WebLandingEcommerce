@@ -22,6 +22,7 @@
 					item-value="id"
 					:items="departments"
 					v-model="userData.provinceId"
+					@input="selectDepartment"
 				/>
 				<app-input class="user-phone" placeholder="Teléfono" v-model="userData.phone"/>
 				<app-select
@@ -39,6 +40,7 @@
 					item-value="id"
 					:items="provinces"
 					v-model="userData.cityId"
+					@input="selectProvince"
 				/>
 			</form>
 			<section class="btn-section mb-2">
@@ -107,6 +109,20 @@ function buildBody(userData) {
 	)({});
 }
 
+function selectDepartment(id) {
+	this.userData.cityId = null;
+	this.userData.parishId = null;
+	this.$store.commit('SET_PROVINCES', []);
+	this.$store.commit('SET_DISTRICTS', []);
+	this.$store.dispatch('LOAD_PROVINCES', { context: this, provinceId: id });
+}
+
+function selectProvince(id) {
+	this.userData.parishId = null;
+	this.$store.commit('SET_DISTRICTS', []);
+	this.$store.dispatch('LOAD_DISTRICTS', { context: this, cityId: id });
+}
+
 function data() {
 	return {
 		colorBase: process.env.COLOR_BASE,
@@ -151,6 +167,8 @@ export default {
 		goBack,
 		loadAvatar,
 		saveUserInfo,
+		selectDepartment,
+		selectProvince,
 	},
 };
 </script>

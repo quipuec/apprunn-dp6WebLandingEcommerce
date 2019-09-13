@@ -23,9 +23,14 @@ function created() {
 }
 
 async function loadGeoData() {
+	const { provinceId, cityId } = this.user;
 	this.$store.dispatch('LOAD_DEPARTMENTS', this);
-	this.$store.dispatch('LOAD_PROVINCES', { context: this, departmentId: this.user.provinceId });
-	this.$store.dispatch('LOAD_DISTRICTS', { context: this, districtId: this.user.cityId });
+	if (provinceId) {
+		this.$store.dispatch('LOAD_PROVINCES', { context: this, provinceId });
+	}
+	if (cityId) {
+		this.$store.dispatch('LOAD_DISTRICTS', { context: this, cityId });
+	}
 }
 
 function editing() {

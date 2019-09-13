@@ -9,7 +9,7 @@ export default {
 	},
 	SET_DELIVERY_PLACE(state, address) {
 		Vue.set(state.order, 'delivery', address);
-		if (address && address.addressLine1 && address.id) {
+		if (address && address.addressLine1) {
 			Vue.set(state.order, 'customerAddressId', address.id);
 		}
 	},
