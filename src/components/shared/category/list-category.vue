@@ -4,7 +4,7 @@
 			<button 
 				class="title-category mr-5" 
 				:style="data.selectFirst ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`"
-				@click="$emit('change-category', data.id)"	
+				@click="$emit('change-category', data)"	
 			>
 				<img :src="data.webImage" :alt="data.title" class="mr-3">
 				{{data.title}}
@@ -25,13 +25,13 @@
 					<button 
 						class="text-subcategory mb-1"
 						:style="subCategory.selectSecond ? `color: ${globalColors.secondary}` : `color: ${globalColors.base}`"
-						@click="$emit('change-sub-category', data.id, subCategory.id)"
+						@click="$emit('change-sub-category', data, subCategory)"
 					>{{subCategory.title}}</button>
 					<div v-if="subCategory.detail.length" class="wrapper-subsubcategory">
 						<button 
 							v-for="subSubCategory in subCategory.detail" 
 							:key="subSubCategory.id"
-							@click="$emit('change-sub-sub-category', data.id, subCategory.id, subSubCategory.id)"
+							@click="$emit('change-sub-sub-category', data, subCategory, subSubCategory)"
 							:style="subSubCategory.selectThird ? `color: ${globalColors.secondary}` : `color: ${globalColors.base}`"
 							class="text-subsubcategory">{{subSubCategory.title}}</button>
 					</div>

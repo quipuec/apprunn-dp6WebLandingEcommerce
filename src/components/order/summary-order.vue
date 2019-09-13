@@ -12,7 +12,7 @@
 					<span>Descuento</span><span class="summary-amount">{{getCurrencySymbol}}. {{discount}}</span>
 				</p>
 				<p class="summary-amount-container separate">
-					<span>Envío</span><span class="summary-amount">{{getCurrencySymbol}}. {{shippingCost}}</span>
+					<span>Envío</span><span class="summary-amount">{{getCurrencySymbol}}. {{getShippingCost}}</span>
 				</p>
 				<p
 					v-if="stepThree"
@@ -64,7 +64,7 @@ import appButton from '@/components/shared/buttons/app-button';
 import lib from '@/shared/lib';
 
 function total() {
-	return (this.getTotalToBuy - this.discount) + this.shippingCost;
+	return (this.getTotalToBuy - this.discount) + this.getShippingCost;
 }
 
 async function makeOrder(flagFinish) {
@@ -88,7 +88,8 @@ function buildBody(flagFinish) {
 		customerAddressId: this.getCustomerAddressId,
 		customerAddress: this.getCustomerAddressId ? null : this.getCustomerAddress,
 		customerBill: this.getBillingData,
-		deliveryAddress: this.getDeliveryAddress,
+		deliveryAddress: this.getCustomerAddressId
+			? this.getDeliveryAddress : null,
 		details: this.getDetails(this.getOrderDetails),
 		flagPickUp: this.getFlagPickUp,
 		responsiblePickUp: this.getResponsible,
@@ -185,7 +186,6 @@ function stepTwo() {
 function data() {
 	return {
 		discount: 0,
-		shippingCost: 0,
 	};
 }
 
@@ -232,7 +232,7 @@ export default {
 <style lang="scss" scoped>
 	.summary-container {
 		position: sticky;
-		top: 65px;
+		top: 115px;
 	}
 
 	.summary-order {

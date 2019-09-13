@@ -8,9 +8,16 @@ export default {
 			color: 'primary',
 		},
 	},
+	banners: [],
+	bannerTypes: {
+		Category: 1,
+		Product: 2,
+		Home: 3,
+		Top: 4,
+	},
 	currencyDefault: null,
 	directions: [
-		{ id: 0, addressLine1: 'Nueva dirección' },
+		{ id: 0, addressLine1: 'Nueva dirección', name: 'Nueva dirección' },
 	],
 	genders: [
 		{ id: 1, title: 'Femenino' },

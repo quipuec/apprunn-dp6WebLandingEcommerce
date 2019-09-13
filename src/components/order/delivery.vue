@@ -42,7 +42,7 @@
 			<address-component
 				hide-map-button
 				placeholder="Seleccione una dirección"
-				item-text="addressLine1"
+				item-text="name"
 				item-value="id"
 				:options="getDirections"
 				:value="selectedDirection.id"
@@ -57,6 +57,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import lib from '@/shared/lib';
 
 const addressComponent = () => import('@/components/order/address-component');
 const appButtonOrder = () => import('@/components/shared/buttons/app-button-order');
@@ -69,10 +70,21 @@ const responsibleForm = () => import('@/components/order/responsible-form');
 function created() {
 	this.$store.dispatch('LOAD_DIRECTIONS', this);
 	this.$store.dispatch('LOAD_WAREHOUSES', this);
+	this.$store.commit('SET_DELIVERY_PLACE', null);
+	if (this.getOrderInfo.id) {
+		this.$store.commit('SET_DELIVERY_PLACE', this.getOrderInfo.deliveryAddress);
+		this.selectedDirection = this.getOrderInfo.deliveryAddress;
+	}
 }
 
 function selected(val) {
-	const delivery = val === 1 ? this.favoriteDirection : null;
+	let delivery = null;
+	if (val === 1) {
+		delivery = this.favoriteDirection;
+		this.calculateShippingCost(delivery);
+	} else {
+		this.$store.commit('SET_SHIPPING_COST', 0);
+	}
 	this.$store.commit('SET_DELIVERY_PLACE', delivery);
 	this.$store.commit('SET_FLAG_PICKUP', val);
 }
@@ -101,6 +113,7 @@ function handlerDeliveryAddress(newDelivery) {
 		this.selectedDirection.id = id;
 		this.selectedDirection.addressLine1 = addressLine1;
 		this.selectedDirection.location = location;
+		this.selectedDirection.name = name;
 	} else {
 		this.clearSelectedDirection();
 		this.selectedWarehouse.id = id;
@@ -155,6 +168,14 @@ function warehouseSelected(id) {
 function directionSelected(id) {
 	const w = this.getDirections.find(war => war.id === id);
 	this.$store.commit('SET_DELIVERY_PLACE', w);
+	if (id === 0) {
+		this.$store.commit('SET_SHIPPING_COST', 0);
+	} else {
+		this.calculateShippingCost(w);
+		if (!lib.isEmpty(this.getCustomerAddress)) {
+			this.$store.commit('SET_CUSTOMER_ADDRESS', null);
+		}
+	}
 }
 
 function clearSelectedDirection() {
@@ -178,10 +199,44 @@ function handlerDirectionsChange(newDirections) {
 		this.favoriteDirection = newDirections.find(f => f.isFavorite);
 		const directionDelivery = this.getDeliveryAddress || this.favoriteDirection;
 		this.$store.commit('SET_DELIVERY_PLACE', directionDelivery);
+		this.calculateShippingCost(directionDelivery);
 	} else {
 		const warehouseDirection = this.getDeliveryAddress || this.selectedWarehouse;
 		this.$store.commit('SET_DELIVERY_PLACE', warehouseDirection);
 	}
+}
+
+async function calculateShippingCost(location) {
+	const { provinceId } = location;
+	const url = '/weight/price';
+	const body = this.buildBody(provinceId);
+	try {
+		const { data: amount } = await this.$httpProducts.post(url, body);
+		this.$store.commit('SET_SHIPPING_COST', amount || 0);
+	} catch (error) {
+		if (error.data.message === 'PRICE_NOT_CONFIGURATION') {
+			this.$store.commit('SET_SHIPPING_COST', 0);
+			this.showNotification('No es posible hacer envios a ese destino.', 'error');
+		}
+	}
+}
+
+function buildBody(provinceId) {
+	const details = this.getProductToBuy.map((p) => {
+		const newP = {};
+		newP.weight = p.weigth || 0;
+		newP.quantity = p.quantity;
+		return newP;
+	});
+	return {
+		details,
+		provinceId,
+	};
+}
+
+function beforeDestroy() {
+	this.$store.commit('SET_DELIVERY_PLACE', null);
+	this.$store.commit('SET_SHIPPING_COST', 0);
 }
 
 function data() {
@@ -205,6 +260,7 @@ function data() {
 
 export default {
 	name: 'delivery',
+	beforeDestroy,
 	components: {
 		addressComponent,
 		appButtonOrder,
@@ -216,9 +272,12 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getCustomerAddress',
 			'getDeliveryAddress',
-			'getFlagPickUp',
 			'getDirections',
+			'getFlagPickUp',
+			'getOrderInfo',
+			'getProductToBuy',
 			'getWarehouses',
 		]),
 		disableMapButtonByWarehouse,
@@ -230,6 +289,8 @@ export default {
 	created,
 	data,
 	methods: {
+		buildBody,
+		calculateShippingCost,
 		clearSelectedDirection,
 		clearSelectedWarehouse,
 		directionSelected,
