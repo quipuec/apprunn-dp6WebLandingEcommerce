@@ -40,7 +40,8 @@ const getters = {
 	invalidOrder(state) {
 		const { responsible, delivery, flagBill, bill, shippingCost, flagPickUp } = state.order;
 		const invalidResponsible = lib.isEmpty(responsible);
-		const invalidDelivery = lib.isEmpty(delivery) || !delivery.id;
+		const invalidDelivery = lib.isEmpty(delivery);
+		// const invalidNewDelvery =  delivery.id === 0 ?  : false; guardar data de new-address (delivery)
 		const invalidBill = flagBill ? lib.isEmpty(bill) : false;
 		const invalidShippingCost = flagPickUp === 1 ? lib.isEmpty(shippingCost) : false;
 		return lib.atLeastOneTrue(
