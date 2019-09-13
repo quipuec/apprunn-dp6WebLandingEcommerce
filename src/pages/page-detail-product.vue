@@ -237,8 +237,7 @@ function clearFeatures() {
 }
 
 function newRoute() {
-	this.loadData();
-	this.loadOpinions();
+	this.loadProduct();
 }
 
 function clickQuantity(value) {
