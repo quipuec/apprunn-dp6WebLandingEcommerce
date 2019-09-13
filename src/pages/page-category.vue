@@ -31,6 +31,7 @@
 			</button>
 			<menu-category
 				:categories="categories"
+				:breadcrumbs="breadcrumbs"
 				@change-category="changeCategory"
 				@change-sub-category="changeSubCategory"
 				@change-sub-sub-category="changeSubSubCategory"
@@ -46,7 +47,7 @@
 						<button
 							:style="props.item.disabled ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`"
 							@click="linkCategories(props.item)"
-							>{{ props.item.text }}</button>
+							>{{ props.item.title }}</button>
 					</template>
 				</v-breadcrumbs>
 				 <section class="section-pagination-category">
@@ -115,13 +116,7 @@ async function loadProduct() {
 		const params = {
 			page: this.page,
 		};
-		let idCategory = this.fisrt;
-		if (this.third) {
-			idCategory = this.third;
-		} else if (this.second) {
-			idCategory = this.second;
-		}
-		const url = `products-public?eCategories=${idCategory}`;
+		const url = `products-public?eCategories=${this.id}`;
 		const { data: products, headers } = await this.$httpProductsPublic.get(url, { params });
 		this.listProducts = products;
 		this.lastPage = Number(headers['x-last-page']);
@@ -137,53 +132,26 @@ function updateProductCard(value) {
 
 function selectCategory() {
 	this.loadProduct();
-	this.breadcrumbs = [];
-	this.categorySelected = this.getCategories.filter(c => Number(c.id) === Number(this.fisrt))[0];
-	this.categories = this.getCategories.map((c) => {
-		const newCategory = { ...c };
-		const flagOpen = Number(c.id) === Number(this.fisrt);
-		newCategory.selectFirst = flagOpen;
-		newCategory.open = flagOpen;
-		if (flagOpen) {
-			this.breadcrumbs.push({ text: c.title, links: [c.id], link: 'first' });
+	this.categories = this.getCategories;
+	this.currentSelect = this.getCurrentcategory(this.categories, this.id);
+}
+
+function getCurrentcategory(categories, id) {
+	let current = categories.find(c => c.id === Number(id) || c.slug === id);
+	if (current) {
+		this.breadcrumbs.push(current);
+		return current;
+	}
+	const len = categories.length;
+	for (let i = 0; i < len; i += 1) {
+		const detail = categories[i].detail;
+		current = this.getCurrentcategory(detail, id);
+		if (current) {
+			this.breadcrumbs.push(categories[i]);
+			return current;
 		}
-		if (this.second) {
-			const indexSearch = newCategory.detail.findIndex(d => Number(d.id) === Number(this.second));
-			newCategory.detail = c.detail.map((d, index) => {
-				const newDetail = { ...d };
-				if (indexSearch > -1) {
-					newDetail.selectSecond = indexSearch === index;
-					if (indexSearch === index) {
-						this.breadcrumbs.push({ text: d.title, links: [c.id, d.id], link: 'second' });
-					}
-				} else {
-					newDetail.selectSecond = false;
-				}
-				if (this.third && d.detail.length) {
-					newDetail.detail = d.detail.map((sub, indexSub) => {
-						const indexSearchSub = d.detail.findIndex(s => Number(s.id) === Number(this.third));
-						const newSubDetail = { ...sub };
-						if (indexSearchSub > -1) {
-							newSubDetail.selectThird = indexSearchSub === indexSub;
-							if (indexSearchSub === indexSub) {
-								this.breadcrumbs.push({ text: sub.title, links: [c.id, d.id, sub.id], link: 'third' });
-							}
-						} else {
-							newSubDetail.selectThird = false;
-						}
-						return newSubDetail;
-					});
-				}
-				return newDetail;
-			});
-		}
-		return newCategory;
-	});
-	this.breadcrumbs = this.breadcrumbs.map((b, index) => {
-		const newBreadcrumb = { ...b };
-		newBreadcrumb.disabled = index === this.breadcrumbs.length - 1;
-		return newBreadcrumb;
-	});
+	}
+	return current;
 }
 
 function changeCategory(id) {
@@ -261,6 +229,7 @@ function data() {
 		open: false,
 		breadcrumbs: [],
 		toggle: false,
+		currentSelect: {},
 	};
 }
 
@@ -292,6 +261,7 @@ export default {
 		closeOpen,
 		linkCategories,
 		toggleCategory,
+		getCurrentcategory,
 	},
 	data,
 	props: {
@@ -304,6 +274,10 @@ export default {
 			default: null,
 		},
 		third: {
+			type: [String, Number],
+			default: null,
+		},
+		id: {
 			type: [String, Number],
 			default: null,
 		},

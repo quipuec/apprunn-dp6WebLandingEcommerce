@@ -5,6 +5,7 @@
 				v-for="category in categories"
 				:data="category"
 				:key="category.id"
+				:breadcrumbs="breadcrumbs"
         @change-category="changeCategory"
 				@change-sub-category="changeSubCategory"
 				@change-sub-sub-category="changeSubSubCategory"
@@ -90,6 +91,12 @@ export default {
 		titleCategory: {
 			type: String,
 			default: '',
+		},
+		breadcrumbs: {
+			data: {
+				type: Array,
+				default: () => [],
+			},
 		},
 	},
 };

@@ -21,7 +21,7 @@
 		</div>
 		<transition  name="slide">
 			<div v-if="data.detail.length && data.open" class="wrapper-subcategory">
-				<div v-for="subCategory in data.detail" :key="subCategory.id">
+				<!-- <div v-for="subCategory in data.detail" :key="subCategory.id">
 					<button 
 						class="text-subcategory mb-1"
 						:style="subCategory.selectSecond ? `color: ${globalColors.secondary}` : `color: ${globalColors.base}`"
@@ -35,18 +35,45 @@
 							:style="subSubCategory.selectThird ? `color: ${globalColors.secondary}` : `color: ${globalColors.base}`"
 							class="text-subsubcategory">{{subSubCategory.title}}</button>
 					</div>
-				</div>
+				</div> -->
+				<v-treeview
+					:items="data.detail"
+					item-children="detail"
+					open-all
+					item-text="title"
+					expand-icon="fiber_manual_record"
+					item-key="id"
+					activatable
+				>
+					<template slot="label" slot-scope="{ item }">
+						<button :style="idSelect(item.id) ? `color: ${globalColors.secondary}` : `color: ${globalColors.base}`">{{item.title}}</button>
+					</template>
+				</v-treeview>
 			</div>
 		</transition>
 	</div>
 </template>
 <script>
+
+function idSelect(id) {
+	return this.breadcrumbs.find(b => b.id === id);
+}
+
 export default {
 	name: 'list-category',
+	methods: {
+		idSelect,
+	},
 	props: {
 		data: {
 			type: Object,
 			default: () => {},
+		},
+		breadcrumbs: {
+			data: {
+				type: Array,
+				default: () => [],
+			},
 		},
 	},
 };

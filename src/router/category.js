@@ -1,6 +1,6 @@
 const route = {
 	name: 'category',
-	path: '/categoria/:fisrt/:second?/:third?',
+	path: '/categoria/:id',
 	component: () => import('@/pages/page-category'),
 	props: true,
 };
