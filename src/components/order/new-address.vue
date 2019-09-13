@@ -118,6 +118,23 @@ function buildBody(provinceId) {
 	};
 }
 
+function setCustomerAddress() {
+	if (this.$v.$invalid) {
+		this.$store.commit('SET_CUSTOMER_ADDRESS', null);
+	} else {
+		const newAddress = {
+			addressLine1: this.newAddress.addressLine1,
+			cityId: this.newAddress.province,
+			name: this.newAddress.name,
+			number: this.newAddress.number,
+			parishId: this.newAddress.district,
+			provinceId: this.newAddress.department,
+			reference: this.newAddress.reference,
+		};
+		this.$store.commit('SET_CUSTOMER_ADDRESS', newAddress);
+	}
+}
+
 function validations() {
 	return {
 		newAddress: {
@@ -132,13 +149,6 @@ function validations() {
 	};
 }
 
-function setCustomerAddress() {
-	if (this.$v.$invalid) {
-		this.$store.commit('SET_CUSTOMER_ADDRESS', null);
-	} else {
-		this.$store.commit('SET_CUSTOMER_ADDRESS', this.newAddress);
-	}
-}
 
 function data() {
 	return {
