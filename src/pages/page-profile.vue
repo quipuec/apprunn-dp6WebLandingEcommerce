@@ -10,7 +10,9 @@
 						:style="`border: 2px solid ${globalColors.primary};`"
 						class="user-avatar-wrapper"
 					>
-						<div class="user-avatar"></div>
+						<div class="user-avatar">
+							<img :src="getUserAvatar" alt="user-avatar" class="avatar-img">
+						</div>
 					</div>
 				</div>
 				<h3 class="user-name">Manuel Amado</h3>
@@ -108,16 +110,22 @@ function logout() {
 	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
 }
 
+function getUserAvatar() {
+	return this.user.image || this.user.logo || this.user.urlImage || process.env.DEFAULT_AVATAR;
+}
+
 export default {
 	name: 'page-profile',
 	computed: {
 		...mapGetters([
 			'getFilters',
+			'user',
 		]),
 		borderPrimaryAddress,
 		borderPrimaryFavorites,
 		borderPrimaryUserData,
 		borderPrimaryUserOrder,
+		getUserAvatar,
 	},
 	methods: {
 		goTo,
@@ -184,13 +192,9 @@ export default {
 	}
 
 	.user-avatar {
-		background-image: url('/static/img/user-avatar.jpg');
-		background-position: center;
-		background-repeat: no-repeat;
-		background-size: contain;
+		background-color: white;
 		border-radius: 50%;
 		height: 128px;
-		object-fit: contain;
 		width: 128px;
 	}
 
@@ -252,6 +256,12 @@ export default {
 		@media (max-width: 768px) {
 			grid-column: 2;
 		}
+	}
+
+	.avatar-img {
+		height: 100%;
+		object-fit: contain;
+		width: 100%;
 	}
 </style>
 

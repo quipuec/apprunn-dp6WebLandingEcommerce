@@ -2,7 +2,11 @@
 	<div>
 		<section class="user-header">
 			<edit-component @click="editing" class="mr-3" :active="editActive"/>
-			<camera-component @click="loadAvatar"/>
+			<UploadImage
+				no-input
+				transparent
+				@url-image="updateUserAvatar"
+			/>
 		</section>
 		<section>
 			<h3
@@ -17,6 +21,8 @@
 import cameraComponent from '@/components/shared/icons/camera-component';
 import editComponent from '@/components/shared/icons/edit-component';
 import { mapGetters } from 'vuex';
+
+const UploadImage = () => import('@/components/shared/upload-image');
 
 function created() {
 	this.loadGeoData();
@@ -37,7 +43,24 @@ function editing() {
 	this.$router.push({ name: 'edit-user-data' });
 }
 
-function loadAvatar() {}
+async function updateUserAvatar(urlImage) {
+	const url = 'customers-public';
+	const body = { urlImage };
+	try {
+		await this.$httpSales.patch(url, body);
+		this.getCustomerData();
+		this.showNotification('Imagen de usuario actualizada', 'success');
+	} catch (err) {
+		this.showNotification('No fue posible actualizar la imagen de usuario', 'error');
+	}
+}
+
+async function getCustomerData() {
+	const { data: userInfo } = await this.$httpSales.get('customers/current');
+	this.setLocalData('ecommerce-user', userInfo);
+	this.$store.dispatch('setUser', userInfo);
+	this.$userInfo = this.$store.getters.user;
+}
 
 function routeHandler(newRoute) {
 	this.editActive = newRoute === 'edit-user-data';
@@ -54,6 +77,7 @@ export default {
 	components: {
 		cameraComponent,
 		editComponent,
+		UploadImage,
 	},
 	computed: {
 		...mapGetters([
@@ -63,9 +87,10 @@ export default {
 	created,
 	data,
 	methods: {
+		getCustomerData,
 		editing,
+		updateUserAvatar,
 		loadGeoData,
-		loadAvatar,
 		routeHandler,
 	},
 	watch: {
