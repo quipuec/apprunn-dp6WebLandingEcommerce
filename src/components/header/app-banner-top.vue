@@ -7,11 +7,11 @@
 			:class="[big ? 'big' : null, small ? 'small' : null]"
 			class="image-banner">
 			<app-button
-				action="ENCUÉNTRALO AQUÍ"
-				:background="color"
 				v-if="big"
 				type="button"
 				class="btn-find"
+				action="ENCUÉNTRALO AQUÍ"
+				:background="color"
 			></app-button>
 			<button v-if="small" class="btn-more">Ver más</button>
 		</div>

@@ -45,16 +45,16 @@ function filterCategory() {
 	this.$emit('filter', this.categories);
 }
 
-function changeCategory(id) {
-	this.$emit('change-category', id);
+function changeCategory(dataFirst) {
+	this.$emit('change-category', dataFirst);
 }
 
-function changeSubCategory(id, idCategory) {
-	this.$emit('change-sub-category', id, idCategory);
+function changeSubCategory(dataFirst, dataSecond) {
+	this.$emit('change-sub-category', dataFirst, dataSecond);
 }
 
-function changeSubSubCategory(id, idCategory, idSubCategory) {
-	this.$emit('change-sub-sub-category', id, idCategory, idSubCategory);
+function changeSubSubCategory(dataFirst, dataSecond, dataThird) {
+	this.$emit('change-sub-sub-category', dataFirst, dataSecond, dataThird);
 }
 
 function openCategory(id) {
