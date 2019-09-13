@@ -1,5 +1,5 @@
 <template>
-  <div class="container-company-data padding-container">
+  <div class="container-company-data padding-container" :style="`background: ${globalColors.primary}`">
 		<media-company-data
 			image="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/customer-service.png"
 			image-height="30"
@@ -38,7 +38,6 @@ export default {
 
 <style lang="scss" scoped>
 	.padding-container {
-		background: color(primary);
 		border-radius: 5px;
 		padding: 9px 0;
 

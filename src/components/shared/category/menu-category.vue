@@ -44,8 +44,8 @@ function filterCategory() {
 	this.$emit('filter', this.categories);
 }
 
-function changeCategory(id) {
-	this.$emit('change-category', id);
+function changeCategory(dataFirst) {
+	this.$emit('change-category', dataFirst);
 }
 
 function openCategory(id) {

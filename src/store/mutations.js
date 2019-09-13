@@ -69,7 +69,8 @@ function SET_WAREHOUSES(state, warehouses) {
 }
 
 function SET_DIRECTIONS(state, directions) {
-	Vue.set(state, 'directions', state.directions.concat(directions));
+	const addressDefault = { id: 0, addressLine1: 'Nueva dirección', name: 'Nueva dirección' };
+	Vue.set(state, 'directions', [].concat(addressDefault, directions));
 }
 
 function UPDATE_FILTERS(state, filters) {
@@ -78,6 +79,10 @@ function UPDATE_FILTERS(state, filters) {
 
 function SET_CURRENCY_DEFAULT(state, currency) {
 	Vue.set(state, 'currencyDefault', currency);
+}
+
+function SET_BANNERS(state, banners) {
+	Vue.set(state, 'banners', banners);
 }
 
 const methods = {
@@ -89,6 +94,7 @@ const methods = {
 	setUser,
 	showSnackBar,
 	toggleLoading,
+	SET_BANNERS,
 	SET_CURRENCY_DEFAULT,
 	SET_DIRECTIONS,
 	SET_ORDER_ID,

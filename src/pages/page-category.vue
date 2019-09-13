@@ -157,7 +157,8 @@ function getCurrentcategory(categories, id) {
 	return current;
 }
 
-function changeCategory(id) {
+function changeCategory(dataCategory) {
+	const id = dataCategory.slug || dataCategory.id;
 	this.goTo('category', { params: { id } });
 	this.page = 1;
 	if (window.innerWidth < 986) {

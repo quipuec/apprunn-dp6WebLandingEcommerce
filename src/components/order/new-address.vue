@@ -1,5 +1,5 @@
 <template>
-	<form class="new-address-form">
+	<form class="new-address-form" @input="setCustomerAddress">
 		<app-input
 			placeholder="Alias"
 			class="mx-2 my-1 name-field field"
@@ -13,8 +13,8 @@
 			placeholder="Departamento"
 			class="mx-2 my-1 department-field field"
 			:items="departments"
-			@input="selectDepartment"
 			v-model="newAddress.department"
+			@input="selectDepartment"
 		>
 			<span v-if="$v.newAddress.department.$invalid">El departamento es requerido</span>
 		</app-select>
@@ -24,8 +24,8 @@
 			placeholder="Provincia"
 			class="mx-2 my-1 province-field field"
 			:items="provinces"
-			:disabled="!newAddress.district"
-			@input="selectDistrict"
+			:disabled="!newAddress.department"
+			@input="selectProvince"
 			v-model="newAddress.province"
 		>
 			<span v-if="$v.newAddress.province.$invalid">La provincia es requerida</span>
@@ -44,9 +44,9 @@
 		<app-input
 			placeholder="Dirección"
 			class="mx-2 my-1 address-field field"
-			v-model="newAddress.address"
+			v-model="newAddress.addressLine1"
 		>
-			<span v-if="$v.newAddress.address.$invalid">La dirección es requerida</span>
+			<span v-if="$v.newAddress.addressLine1.$invalid">La dirección es requerida</span>
 		</app-input>
 		<app-input
 			placeholder="Nro"
@@ -77,28 +77,68 @@ function created() {
 }
 
 function selectDepartment(id) {
-	this.clearGeoFields();
-	this.$store.dispatch('LOAD_DISTRICTS', { context: this, departmentId: id });
+	this.newAddress.provinces = null;
+	this.newAddress.districts = null;
+	this.$store.commit('SET_PROVINCES', []);
+	this.$store.commit('SET_DISTRICTS', []);
+	this.calculateShippingCost(id);
+	this.$store.dispatch('LOAD_PROVINCES', { context: this, provinceId: id });
 }
 
-function selectDistrict(id) {
-	this.clearProvinceField();
-	this.$store.dispatch('LOAD_PROVINCES', { context: this, districtId: id });
+function selectProvince(id) {
+	this.newAddress.districts = null;
+	this.$store.commit('SET_DISTRICTS', []);
+	this.$store.dispatch('LOAD_DISTRICTS', { context: this, cityId: id });
 }
 
-function clearGeoFields() {
-	this.newAddress.district = '';
-	this.clearProvinceField();
+async function calculateShippingCost(provinceId) {
+	const url = '/weight/price';
+	const body = this.buildBody(provinceId);
+	try {
+		const { data: amount } = await this.$httpProducts.post(url, body);
+		this.$store.commit('SET_SHIPPING_COST', amount || 0);
+	} catch (error) {
+		if (error.data.message === 'PRICE_NOT_CONFIGURATION') {
+			this.$store.commit('SET_SHIPPING_COST', 0);
+			this.showNotification('No es posible hacer envios a ese destino.', 'error');
+		}
+	}
 }
 
-function clearProvinceField() {
-	this.newAddress.province = '';
+function buildBody(provinceId) {
+	const details = this.getProductToBuy.map((p) => {
+		const newP = {};
+		newP.weight = p.weigth || 0;
+		newP.quantity = p.quantity;
+		return newP;
+	});
+	return {
+		details,
+		provinceId,
+	};
+}
+
+function setCustomerAddress() {
+	if (this.$v.$invalid) {
+		this.$store.commit('SET_CUSTOMER_ADDRESS', null);
+	} else {
+		const newAddress = {
+			addressLine1: this.newAddress.addressLine1,
+			cityId: this.newAddress.province,
+			name: this.newAddress.name,
+			number: this.newAddress.number,
+			parishId: this.newAddress.district,
+			provinceId: this.newAddress.department,
+			reference: this.newAddress.reference,
+		};
+		this.$store.commit('SET_CUSTOMER_ADDRESS', newAddress);
+	}
 }
 
 function validations() {
 	return {
 		newAddress: {
-			address: { required },
+			addressLine1: { required },
 			department: { required },
 			district: { required },
 			name: { required },
@@ -109,15 +149,16 @@ function validations() {
 	};
 }
 
+
 function data() {
 	return {
 		newAddress: {
-			address: '',
-			department: '',
-			district: '',
+			addressLine1: '',
+			department: null,
+			district: null,
 			name: '',
 			number: '',
-			province: '',
+			province: null,
 			reference: '',
 		},
 	};
@@ -133,16 +174,18 @@ export default {
 		...mapGetters([
 			'departments',
 			'districts',
+			'getProductToBuy',
 			'provinces',
 		]),
 	},
 	created,
 	data,
 	methods: {
-		clearGeoFields,
-		clearProvinceField,
+		buildBody,
+		calculateShippingCost,
 		selectDepartment,
-		selectDistrict,
+		selectProvince,
+		setCustomerAddress,
 	},
 	validations,
 };

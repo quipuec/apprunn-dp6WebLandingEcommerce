@@ -11,7 +11,6 @@
 		<div class="page-products">
 			<products-section/>
 		</div>
-		<section-settlement/>
 		<app-banner-top 
 			:data="bannerTop"
 			:color="colorSecondary"
@@ -38,22 +37,25 @@ async function loadData() {
 	try {
 		const { data: response } = await this.$httpProductsPublic.get('banners-public');
 		this.banners = response;
+		this.$store.commit('SET_BANNERS', this.banners);
 	} catch (error) {
 		this.showGenericError();
 	}
 }
 
-function filterSelect(id) {
-	const filters = this.getFilters.map((f) => {
-		const newFilter = { ...f };
-		newFilter.select = f.id === id;
-		return newFilter;
-	});
-	const params = {
-		filters: id,
-	};
-	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
-	this.$store.dispatch('updateFilters', filters);
+function filterSelect(filter) {
+	if (filter.link) {
+		window.open(filter.link, '_blank');
+	} else {
+		const filters = this.getFilters.map((f) => {
+			const newFilter = { ...f };
+			newFilter.select = f.id === filter.id;
+			return newFilter;
+		});
+		const params = { filters: filter.id };
+		this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
+		this.$store.dispatch('updateFilters', filters);
+	}
 }
 
 function data() {

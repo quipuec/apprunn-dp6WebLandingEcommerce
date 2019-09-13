@@ -4,7 +4,7 @@
 			<button 
 				class="title-category mr-5" 
 				:style="idSelect(data.id) ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`"
-				@click="$emit('change-category', data.id)"	
+				@click="$emit('change-category', data)"	
 			>
 				<img :src="data.webImage" :alt="data.title" class="mr-3">
 				{{data.title}}
@@ -104,7 +104,7 @@ export default {
 				padding-left: 0px;
 			}
 		}
-		
+
 		&:first-child {
 			margin-top: 50px;
 

@@ -52,13 +52,13 @@ const asyncActions = {
 		const { data: departments } = await context.$httpSales.get(url);
 		commit('SET_DEPARTMENTS', departments);
 	},
-	LOAD_PROVINCES: async ({ commit }, { context, departmentId }) => {
-		const url = `cities/${departmentId}`;
-		const { data: districts } = await context.$httpSales.get(url);
-		commit('SET_PROVINCES', districts);
+	LOAD_PROVINCES: async ({ commit }, { context, provinceId }) => {
+		const url = `cities/${provinceId}`;
+		const { data: cities } = await context.$httpSales.get(url);
+		commit('SET_PROVINCES', cities);
 	},
-	LOAD_DISTRICTS: async ({ commit }, { context, districtId }) => {
-		const url = `parish/${districtId}`;
+	LOAD_DISTRICTS: async ({ commit }, { context, cityId }) => {
+		const url = `parish/${cityId}`;
 		const { data: parish } = await context.$httpSales.get(url);
 		commit('SET_DISTRICTS', parish);
 	},
@@ -75,6 +75,7 @@ const asyncActions = {
 	LOAD_USER_ADDRESS: async ({ commit }, { context, params }) => {
 		const { data: address, headers } = await context.$httpSales.get('customers-address', { params });
 		commit('SET_USER_ADDRESS', address);
+		commit('SET_DIRECTIONS', address);
 		return Number(headers['x-last-page']);
 	},
 	LOAD_DIRECTIONS: async ({ commit }, context) => {

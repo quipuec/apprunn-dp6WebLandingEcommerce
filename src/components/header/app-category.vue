@@ -1,5 +1,9 @@
 <template>
-	<div class="app-category" :class="{ scrolling: scrolled }">
+	<div
+		class="app-category"
+		:class="{ scrolling: scrolled }"
+		:style="bannerTopExist ? 'top:188px' : 'top:99px'"
+	>
 		<div class="app-category-user">
 			<div class="container-user" :style="`border-color: ${globalColors.primary}`">
 				<img :src="imageUser" :alt="imgUser.name" :height="imgUser.height">
@@ -195,6 +199,10 @@ function goToCategories(item) {
 	}
 }
 
+function bannerTopExist() {
+	return Boolean(this.getBanners.find(r => r.typeId === this.bannersTypes.Top));
+}
+
 function data() {
 	return {
 		colorBorder: process.env.COLOR_DARK,
@@ -227,13 +235,16 @@ export default {
 		itemMenu,
 	},
 	computed: {
-		selectCategory,
-		isMoreTwo,
 		...mapGetters([
+			'bannersTypes',
+			'getBanners',
 			'getFilters',
 			'token',
 			'getCategories',
 		]),
+		bannerTopExist,
+		selectCategory,
+		isMoreTwo,
 		imageUser,
 	},
 	created,
@@ -262,7 +273,6 @@ export default {
 		max-height: 369.6px;
 		min-height: 226px;
 		position: absolute;
-		top: 188px;
 		z-index: 5;
 		width: 100%;
 
@@ -367,6 +377,7 @@ export default {
 
 	.list-item-name {
 		color: color(base);
+		text-align: left;
 
 		&.bold {
 			color: color(black);
