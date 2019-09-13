@@ -80,6 +80,10 @@ function SET_CURRENCY_DEFAULT(state, currency) {
 	Vue.set(state, 'currencyDefault', currency);
 }
 
+function SET_BANNERS(state, banners) {
+	Vue.set(state, 'banners', banners);
+}
+
 const methods = {
 	clearUser,
 	...geoMutations,
@@ -89,6 +93,7 @@ const methods = {
 	setUser,
 	showSnackBar,
 	toggleLoading,
+	SET_BANNERS,
 	SET_CURRENCY_DEFAULT,
 	SET_DIRECTIONS,
 	SET_ORDER_ID,

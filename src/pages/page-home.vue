@@ -38,6 +38,7 @@ async function loadData() {
 	try {
 		const { data: response } = await this.$httpProductsPublic.get('banners-public');
 		this.banners = response;
+		this.$store.commit('SET_BANNERS', this.banners);
 	} catch (error) {
 		this.showGenericError();
 	}

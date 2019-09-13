@@ -1,6 +1,6 @@
 <template>
 	<v-app class="main-container">
-		<app-banner-top :data="bannerTop"/>
+		<app-banner-top v-if="bannerTop.urlImage" :data="bannerTop"/>
 		<app-header
 			:logo="logo" 
 			@change-menu="changeMenu" 
@@ -10,8 +10,9 @@
 			<div 
 				class="v-overlay v-overlay--absolute v-overlay--active mobile-overlay" 
 				@click="changeMenu"
-				v-show="showMenu"></div>
-  	</transition>
+				v-show="showMenu">
+			</div>
+  		</transition>
 	<transition name="slide-fade">
 		<app-menu-category 
 			v-if="showMenu" 
@@ -49,6 +50,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import lib from '@/shared/lib';
 
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
@@ -74,6 +76,11 @@ function routeHandler() {
 	this.showMenu = false;
 }
 
+function getBanners(newBanners) {
+	const bannerItem = newBanners.find(r => r.typeId === this.bannersTypes.Top);
+	this.bannerTop.urlImage = lib.getDeeper('webImage')(bannerItem);
+}
+
 function data() {
 	return {
 		logo: {
@@ -85,7 +92,7 @@ function data() {
 		colorBase: process.env.COLOR_BASE,
 		colorBorder: process.env.COLOR_BORDER,
 		bannerTop: {
-			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/banner-top.png',
+			urlImage: '',
 			image: 'descuento',
 		},
 	};
@@ -97,9 +104,11 @@ export default {
 		indeterminate,
 		snackbar,
 		...mapGetters([
-			'user',
+			'bannersTypes',
+			'getBanners',
 			'getCategories',
 			'getFilters',
+			'user',
 		]),
 	},
 	data,
@@ -116,6 +125,7 @@ export default {
 	},
 	watch: {
 		$route: routeHandler,
+		getBanners,
 	},
 };
 </script>

@@ -74,9 +74,19 @@ function getFilters(state) {
 	return state.filters;
 }
 
+function bannersTypes(state) {
+	return state.bannerTypes;
+}
+
+function getBanners(state) {
+	return state.banners;
+}
+
 const methods = {
+	bannersTypes,
 	companyLogo,
 	genders,
+	getBanners,
 	getDirections,
 	getCurrencySymbol,
 	getProducts,
