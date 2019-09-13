@@ -85,6 +85,7 @@ export default {
 		height: 65px;
 		position: relative;
 		width: 100%;
+		z-index: 4;
 
 		&.big {
 			height: 283px;

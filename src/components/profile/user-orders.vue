@@ -112,7 +112,10 @@ export default {
 		statusChanged,
 	},
 	watch: {
-		getStatus: getStatusHandler,
+		getStatus: {
+			deep: true,
+			handler: getStatusHandler,
+		},
 	},
 };
 </script>

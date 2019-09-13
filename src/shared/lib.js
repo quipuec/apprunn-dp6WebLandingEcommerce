@@ -40,6 +40,7 @@ const methods = {
 			return typeof item === 'object' ? item[prop1] === prop2 : item === prop1;
 		};
 	},
+	merge: (obj1, obj2) => Object.assign({}, obj1, obj2),
 
 };
 export default methods;
