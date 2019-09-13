@@ -23,9 +23,16 @@ function created() {
 }
 
 async function loadGeoData() {
-	this.$store.dispatch('LOAD_DEPARTMENTS', this);
-	this.$store.dispatch('LOAD_PROVINCES', { context: this, departmentId: this.user.provinceId });
-	this.$store.dispatch('LOAD_DISTRICTS', { context: this, districtId: this.user.cityId });
+	const { provinceId, cityId, parishId } = this.user;
+	if (parishId) {
+		this.$store.dispatch('LOAD_DEPARTMENTS', this);
+	}
+	if (provinceId) {
+		this.$store.dispatch('LOAD_PROVINCES', { context: this, departmentId: provinceId });
+	}
+	if (cityId) {
+		this.$store.dispatch('LOAD_DISTRICTS', { context: this, districtId: cityId });
+	}
 }
 
 function editing() {
