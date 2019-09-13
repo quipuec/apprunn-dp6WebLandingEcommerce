@@ -131,9 +131,11 @@ function updateProductCard(value) {
 }
 
 function selectCategory() {
+	this.breadcrumbs = [];
 	this.loadProduct();
 	this.categories = this.getCategories;
 	this.currentSelect = this.getCurrentcategory(this.categories, this.id);
+	this.breadcrumbs = this.breadcrumbs.reverse();
 }
 
 function getCurrentcategory(categories, id) {
@@ -199,13 +201,8 @@ function closeOpen() {
 }
 
 function linkCategories(item) {
-	if (item.link === 'first') {
-		this.goTo('category', { params: { fisrt: item.links[0] } });
-	} else if (item.link === 'second') {
-		this.goTo('category', { params: { fisrt: item.links[0], second: item.links[1] } });
-	} else {
-		this.goTo('category', { params: { fisrt: item.links[0], second: item.links[1], third: item.links[2] } });
-	}
+	const id = item.slug || item.id;
+	this.goTo('category', { params: { id } });
 }
 
 function toggleCategory() {
@@ -265,18 +262,6 @@ export default {
 	},
 	data,
 	props: {
-		fisrt: {
-			type: [String, Number],
-			default: null,
-		},
-		second: {
-			type: [String, Number],
-			default: null,
-		},
-		third: {
-			type: [String, Number],
-			default: null,
-		},
 		id: {
 			type: [String, Number],
 			default: null,
