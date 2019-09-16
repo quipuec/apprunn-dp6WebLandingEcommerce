@@ -37,58 +37,39 @@
 						color-select="#ed0000"
 						@click-item="clickCategory"/>
 						<button class="btn-collapse" @click="clickCategory(list)">
-							<simple-svg
-								v-if="list.detail.length"
-								:filepath="imageArrow.urlImage"
-								:fill="globalColors.base"
-								width="11"
-								class="icon"
+							<v-icon 
 								:class="{'rotate-icon': list.select}"
-							/>
+								class="icon"
+								v-if="list.detail.length">keyboard_arrow_down</v-icon>
 						</button>
 					</div>
 					<div v-if="list.detail && list.select" class="menu-mobile">
-						<div v-for="(listTwo, indexTwo) in list.detail" :key="indexTwo" class="content-list-subcategory">
-							<div class="list-name-category list-subcategory">
-								<span class="list-item-name bold" @click="goToCategories(list, listTwo)">{{listTwo.title}}</span>
-								<button @click="clickSubCategory(listTwo,index)">
-									<simple-svg
-										v-if="listTwo.detail.length"
-										:filepath="imageArrow.urlImage"
-										:fill="colorBorder"
-										width="11"
-										class="icon"
-										:class="{'rotate-icon': listTwo.select}"
-									/>
-								</button>
-							</div>
-							<div v-if="listTwo.detail && listTwo.select" class="content-sub-subcategory">
-								<span 
-									v-for="(listThree, indexThree) in listTwo.detail" 
-									:key="indexThree"
-									class="list-item-sub list-subcategory"
-									@click="goToSubCategories(list, listTwo, listThree)">{{listThree.title}}</span>
-							</div>
-						</div>
+						<v-treeview 
+							:items="list.detail"
+							item-children="detail"
+							item-text="title"
+							item-key="id"
+							expand-icon="keyboard_arrow_down"
+							activatable
+							@update:active="goToCategories"
+							return-object
+						>
+						</v-treeview>
 					</div>
 				</div>
 			</div>
 			<div class="menu-list-item desktop" :class="isMoreTwo ? 'isMultiple' : 'isTwo'" v-if="selectCategory">
-				<div 
-					v-for="(item, index) in selectCategory.detail" 
-					:key="index"
-					class="list-item">
-					<button 
-						class="list-item-name bold"
-						@click="goToCategories(selectCategory, item)">{{item.title}}</button>
-					<div v-if="item.detail">
-						<button 
-							v-for="(itemList, indexItem) in item.detail" 
-							:key="indexItem"
-							@click="goToSubCategories(selectCategory, item, itemList)"
-							class="list-item-sub">{{itemList.title}}</button>
-					</div>
-				</div>
+				<v-treeview 
+					:items="selectCategory.detail"
+					item-children="detail"
+					open-all
+					item-text="title"
+					item-key="id"
+					activatable
+					@update:active="goToCategories"
+					return-object
+					v-if="load">
+				</v-treeview>
 			</div>
 		</div>
 		<div class="container-option">
@@ -126,6 +107,7 @@ import { mapGetters } from 'vuex';
 const itemMenu = () => import('@/components/header/item-menu');
 
 function created() {
+	this.categories = this.getCategories;
 	window.addEventListener('resize', this.oneSelectCategory);
 	window.addEventListener('scroll', this.handleScroll);
 	this.oneSelectCategory();
@@ -133,6 +115,7 @@ function created() {
 }
 
 function clickCategory(item) {
+	this.load = false;
 	const windowWidth = window.innerWidth;
 	this.categories = this.categories.map((c) => {
 		const newCategory = { ...c };
@@ -148,6 +131,9 @@ function clickCategory(item) {
 		}
 		return newCategory;
 	});
+	setTimeout(() => {
+		this.load = true;
+	}, 10);
 }
 
 function selectCategory() {
@@ -193,14 +179,6 @@ function handleScroll() {
 	this.scrolled = window.scrollY > 87;
 }
 
-function goToCategories(category, subCategory) {
-	this.goTo('category', { params: { fisrt: category.slug || category.id, second: subCategory.slug || subCategory.id } });
-}
-
-function goToSubCategories(category, subCategory, subSubCategory) {
-	this.goTo('category', { params: { fisrt: category.slug || category.id, second: subCategory.slug || subCategory.id, third: subSubCategory.slug || subSubCategory.id } });
-}
-
 function logout() {
 	this.goTo('page-home');
 	this.$store.dispatch('clearUser');
@@ -212,6 +190,13 @@ function logout() {
 		filters: this.getFilters[0].id,
 	};
 	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
+}
+
+function goToCategories(item) {
+	if (item.length) {
+		const id = item[0].slug || item[0].id;
+		this.goTo('category', { params: { id } });
+	}
 }
 
 function bannerTopExist() {
@@ -238,6 +223,8 @@ function data() {
 			name: 'Cerrar Sesión',
 		},
 		scrolled: false,
+		load: true,
+		categories: {},
 	};
 }
 
@@ -253,6 +240,7 @@ export default {
 			'getBanners',
 			'getFilters',
 			'token',
+			'getCategories',
 		]),
 		bannerTopExist,
 		selectCategory,
@@ -267,17 +255,12 @@ export default {
 		clickSubCategory,
 		handleScroll,
 		goToCategories,
-		goToSubCategories,
 		logout,
 	},
 	props: {
 		imgUser: {
 			type: Object,
 			default: () => {},
-		},
-		categories: {
-			type: Array,
-			default: () => [],
 		},
 	},
 };
@@ -340,34 +323,8 @@ export default {
 
 	.menu-list-item {
 		cursor: pointer;
-		display: grid;
 		flex: 1 1 80%;
 		height: fit-content;
-
-		.list-item {
-			border-right: 1px solid color(dark);
-			padding: 10px 10%;
-		}
-
-		&.isMultiple {
-			grid-template-columns: 33% 33% 33%;
-
-			.list-item {
-				&:nth-child(3n) {
-					border-right: none;
-				}
-			}
-		}
-
-		&.isTwo {
-			grid-template-columns: 50% 50%;
-			
-			.list-item {
-				&:nth-child(2n) {
-					border-right: none;
-				}
-			}
-		}
 	}
 
 	.desktop {
@@ -451,6 +408,7 @@ export default {
 
 	.icon {
 		transform: rotateZ(0deg);
+		transition: none;
 
 		&.rotate-icon {
 			transform: rotateZ(180deg);

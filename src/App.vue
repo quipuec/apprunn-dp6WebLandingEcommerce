@@ -19,7 +19,7 @@
 			:img-user="user"
 			:color-base="colorBase"
 			:color-border="colorBorder"
-			:categories="getCategories"/>
+		/>
   	</transition>
 	<router-view></router-view>
 	<section-visa></section-visa>
@@ -656,4 +656,119 @@ input.app-input::-webkit-input-placeholder {
 		}
 	}
 }
+
+.app-category {
+	.menu-list-item {
+		.v-treeview {
+			display: grid;
+
+			& > .v-treeview-node {
+				border-right: 1px solid color(dark);
+				margin-left: 0 !important;
+				padding: 10px 10%;
+
+				& > .v-treeview-node__root {
+					font-family: font(bold);
+				}
+			}
+		}
+
+		&.isTwo {
+			.v-treeview {
+				grid-template-columns: 50% 50%;
+				& > .v-treeview-node {
+						&:nth-child(2n) {
+						border-right: none;
+					}
+				}
+			}
+		}
+
+		&.isMultiple {
+			.v-treeview {
+				grid-template-columns: 33% 33% 33%;
+				& > .v-treeview-node {
+						&:nth-child(3n) {
+						border-right: none;
+					}
+				}
+			}
+		}
+
+		.v-treeview-node__label {
+			font-size: size(medium);
+		}
+
+		.v-treeview-node {
+			margin-left: 13px !important;
+		}
+
+		.v-treeview-node__root {
+			height: auto !important;
+		}
+
+		.v-icon {
+			display: none;
+			@media (max-width: 764px) {
+				display: block;
+			}
+		}
+
+		.v-treeview-node--active {
+			background: none;
+		}
+	}
+
+	.menu-mobile {
+		.v-icon {
+			position: absolute;
+			right: 0;
+		}
+
+		.v-treeview-node {
+			margin-left: 13px !important;
+			position: relative;
+		}
+
+		.v-treeview-node__label {
+			font-size: size(small);
+		}
+
+		.v-treeview-node__root {
+			height: 26px !important;
+		}
+
+		.v-treeview-node__toggle {
+			transform: rotate(0deg);
+			transition: none !important;
+		}
+
+		.v-treeview-node__toggle--open {
+			transform: rotate(-180deg);
+		}
+	}
+}
+
+.list-category {
+	.material-icons {
+		font-size: 9px !important;
+	}
+
+	.v-treeview-node {
+		margin-left: 13px !important;
+	}
+
+	.v-treeview-node__root {
+		height: 25px;
+	}
+
+	.v-treeview-node__label {
+		font-size: size(medium);
+	}
+
+	.v-treeview-node--active {
+		background: transparent !important;
+	}
+}
+
 </style>

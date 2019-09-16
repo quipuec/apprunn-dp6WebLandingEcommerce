@@ -31,9 +31,8 @@
 			</button>
 			<menu-category
 				:categories="categories"
+				:breadcrumbs="breadcrumbs"
 				@change-category="changeCategory"
-				@change-sub-category="changeSubCategory"
-				@change-sub-sub-category="changeSubSubCategory"
 				@open-category="openCategory"
 				@toggle="toggleCategory"
 				@close="closeOpen"
@@ -46,11 +45,11 @@
 						<button
 							:style="props.item.disabled ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`"
 							@click="linkCategories(props.item)"
-							>{{ props.item.text }}</button>
+							>{{ props.item.title }}</button>
 					</template>
 				</v-breadcrumbs>
 				 <section class="section-pagination-category">
-						<p class="total-products">{{listProducts.length}} productos</p>
+						<p class="total-products" v-if="listProducts.length">{{listProducts.length}} productos</p>
 						<v-layout class="text-xs-center" v-show="totalPages" v-if="lastPage > 1">
 							<v-pagination
 								:length="lastPage"
@@ -75,7 +74,7 @@
 			</section>
 			<p v-else class="not-products">No se encontrarón productos</p>
 			<section class="section-pagination-category container-end">
-				<p class="total-products">{{listProducts.length}} productos</p>
+				<p class="total-products" v-if="listProducts.length">{{listProducts.length}} productos</p>
 				<div class="text-xs-center" v-show="totalPages" v-if="lastPage > 1">
 					<v-pagination
 						:length="lastPage"
@@ -115,13 +114,7 @@ async function loadProduct() {
 		const params = {
 			page: this.page,
 		};
-		let idCategory = this.fisrt;
-		if (this.third) {
-			idCategory = this.third;
-		} else if (this.second) {
-			idCategory = this.second;
-		}
-		const url = `products-public?eCategories=${idCategory}`;
+		const url = `products-public?eCategories=${this.id}`;
 		const { data: products, headers } = await this.$httpProductsPublic.get(url, { params });
 		this.listProducts = products;
 		this.lastPage = Number(headers['x-last-page']);
@@ -136,77 +129,38 @@ function updateProductCard(value) {
 }
 
 function selectCategory() {
-	this.loadProduct();
 	this.breadcrumbs = [];
-	this.categorySelected = this.getCategories.filter(c => Number(c.id) === Number(this.fisrt))[0];
-	this.categories = this.getCategories.map((c) => {
-		const newCategory = { ...c };
-		const flagOpen = Number(c.id) === Number(this.fisrt);
-		newCategory.selectFirst = flagOpen;
-		newCategory.open = flagOpen;
-		if (flagOpen) {
-			this.breadcrumbs.push({ text: c.title, links: [c.id], link: 'first' });
-		}
-		if (this.second) {
-			const indexSearch = newCategory.detail.findIndex(d => Number(d.id) === Number(this.second));
-			newCategory.detail = c.detail.map((d, index) => {
-				const newDetail = { ...d };
-				if (indexSearch > -1) {
-					newDetail.selectSecond = indexSearch === index;
-					if (indexSearch === index) {
-						this.breadcrumbs.push({ text: d.title, links: [c.id, d.id], link: 'second' });
-					}
-				} else {
-					newDetail.selectSecond = false;
-				}
-				if (this.third && d.detail.length) {
-					newDetail.detail = d.detail.map((sub, indexSub) => {
-						const indexSearchSub = d.detail.findIndex(s => Number(s.id) === Number(this.third));
-						const newSubDetail = { ...sub };
-						if (indexSearchSub > -1) {
-							newSubDetail.selectThird = indexSearchSub === indexSub;
-							if (indexSearchSub === indexSub) {
-								this.breadcrumbs.push({ text: sub.title, links: [c.id, d.id, sub.id], link: 'third' });
-							}
-						} else {
-							newSubDetail.selectThird = false;
-						}
-						return newSubDetail;
-					});
-				}
-				return newDetail;
-			});
-		}
-		return newCategory;
-	});
-	this.breadcrumbs = this.breadcrumbs.map((b, index) => {
-		const newBreadcrumb = { ...b };
-		newBreadcrumb.disabled = index === this.breadcrumbs.length - 1;
-		return newBreadcrumb;
-	});
-}
-
-function changeCategory({ slug, id }) {
-	this.goTo('category', { params: { fisrt: slug || id } });
-	if (window.innerWidth < 986) {
-		this.open = false;
+	this.loadProduct();
+	this.categories = this.getCategories;
+	this.currentSelect = this.getCurrentcategory(this.categories, this.id);
+	this.breadcrumbs = this.breadcrumbs.reverse();
+	if (this.breadcrumbs.length) {
+		this.categorySelected = this.breadcrumbs[0];
 	}
 }
 
-function changeSubCategory(dataFirst, dataSecond) {
-	const urlFirst = dataFirst.slug || dataFirst.id;
-	const urlSecond = dataSecond.slug || dataSecond.id;
-	this.goTo('category', { params: { fisrt: urlFirst, second: urlSecond } });
-	if (window.innerWidth < 986) {
-		this.open = false;
+function getCurrentcategory(categories, id) {
+	let current = categories.find(c => c.id === Number(id) || c.slug === id);
+	if (current) {
+		this.breadcrumbs.push(current);
+		return current;
 	}
+	const len = categories.length;
+	for (let i = 0; i < len; i += 1) {
+		const detail = categories[i].detail;
+		current = this.getCurrentcategory(detail, id);
+		if (current) {
+			this.breadcrumbs.push(categories[i]);
+			return current;
+		}
+	}
+	return current;
 }
 
-function changeSubSubCategory(dataFirst, dataSecond, dataThird) {
-	const urlFirst = dataFirst.slug || dataFirst.id;
-	const urlSecond = dataSecond.slug || dataSecond.id;
-	const urlThird = dataThird.slug || dataThird.id;
-	this.goTo('category', { params: { fisrt: urlFirst, second: urlSecond, third: urlThird } });
+function changeCategory(dataCategory) {
+	const id = dataCategory.slug || dataCategory.id;
+	this.goTo('category', { params: { id } });
+	this.page = 1;
 	if (window.innerWidth < 986) {
 		this.open = false;
 	}
@@ -233,13 +187,8 @@ function closeOpen() {
 }
 
 function linkCategories(item) {
-	if (item.link === 'first') {
-		this.goTo('category', { params: { fisrt: item.links[0] } });
-	} else if (item.link === 'second') {
-		this.goTo('category', { params: { fisrt: item.links[0], second: item.links[1] } });
-	} else {
-		this.goTo('category', { params: { fisrt: item.links[0], second: item.links[1], third: item.links[2] } });
-	}
+	const id = item.slug || item.id;
+	this.goTo('category', { params: { id } });
 }
 
 function toggleCategory() {
@@ -263,6 +212,7 @@ function data() {
 		open: false,
 		breadcrumbs: [],
 		toggle: false,
+		currentSelect: {},
 	};
 }
 
@@ -286,26 +236,17 @@ export default {
 		updateProductCard,
 		selectCategory,
 		changeCategory,
-		changeSubCategory,
-		changeSubSubCategory,
 		openCategory,
 		toggleMenu,
 		changeOpen,
 		closeOpen,
 		linkCategories,
 		toggleCategory,
+		getCurrentcategory,
 	},
 	data,
 	props: {
-		fisrt: {
-			type: [String, Number],
-			default: null,
-		},
-		second: {
-			type: [String, Number],
-			default: null,
-		},
-		third: {
+		id: {
 			type: [String, Number],
 			default: null,
 		},
