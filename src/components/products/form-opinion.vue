@@ -19,6 +19,7 @@
 				:background="globalColors.primary"
 				action="Enviar"
 				class="form-btn"
+				type="button"
 				:class="{'disabled': disabledBtn}"
 				:disabled="disabledBtn"
 				@click="sendOpinion"

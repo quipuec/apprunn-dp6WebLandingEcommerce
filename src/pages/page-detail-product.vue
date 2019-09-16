@@ -69,7 +69,7 @@ async function loadProduct() {
 		const { data: response } = await this.isLoggedUser();
 		this.product = response;
 		this.loadData(this.product.id);
-		this.loadOpinions(this.product.id);
+		this.loadOpinions();
 	} catch (error) {
 		this.showGenericError();
 	}
@@ -208,12 +208,12 @@ function assignProduct(product) {
 	this.product.quantity = 1;
 }
 
-async function loadOpinions(id) {
+async function loadOpinions() {
 	const params = {
 		typeQuestionAnswer: 3,
-		productId: id,
+		productId: this.product.id,
 	};
-	const { data: response } = await this.$httpProducts.get('question-answer', { params });
+	const { data: response } = await this.$httpProductsPublic.get('question-answer/public', { params });
 	this.opinions = response;
 }
 
@@ -237,8 +237,7 @@ function clearFeatures() {
 }
 
 function newRoute() {
-	this.loadData();
-	this.loadOpinions();
+	this.loadProduct();
 }
 
 function clickQuantity(value) {
