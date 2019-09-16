@@ -48,7 +48,7 @@ function idSelect(id) {
 
 function goToCategories(item) {
 	if (item.length) {
-		const id = item[0].slug || item[0].id;
+		const id = item[0];
 		this.$emit('change-category', id);
 	}
 }
