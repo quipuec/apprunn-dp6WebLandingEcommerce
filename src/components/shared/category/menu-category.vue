@@ -5,9 +5,8 @@
 				v-for="category in categories"
 				:data="category"
 				:key="category.id"
+				:breadcrumbs="breadcrumbs"
         @change-category="changeCategory"
-				@change-sub-category="changeSubCategory"
-				@change-sub-sub-category="changeSubSubCategory"
 				@open-category="openCategory"/>
 			<filters-category></filters-category>
 			<div class="wrapper-btns py-3">
@@ -45,16 +44,8 @@ function filterCategory() {
 	this.$emit('filter', this.categories);
 }
 
-function changeCategory(dataFirst) {
-	this.$emit('change-category', dataFirst);
-}
-
-function changeSubCategory(dataFirst, dataSecond) {
-	this.$emit('change-sub-category', dataFirst, dataSecond);
-}
-
-function changeSubSubCategory(dataFirst, dataSecond, dataThird) {
-	this.$emit('change-sub-sub-category', dataFirst, dataSecond, dataThird);
+function changeCategory(dataCategory) {
+	this.$emit('change-category', dataCategory);
 }
 
 function openCategory(id) {
@@ -77,8 +68,6 @@ export default {
 	},
 	methods: {
 		changeCategory,
-		changeSubCategory,
-		changeSubSubCategory,
 		filterCategory,
 		openCategory,
 	},
@@ -90,6 +79,12 @@ export default {
 		titleCategory: {
 			type: String,
 			default: '',
+		},
+		breadcrumbs: {
+			data: {
+				type: Array,
+				default: () => [],
+			},
 		},
 	},
 };

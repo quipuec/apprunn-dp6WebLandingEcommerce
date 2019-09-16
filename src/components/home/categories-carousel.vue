@@ -49,7 +49,8 @@ function leaveCategory(index) {
 }
 
 function goToCategory(category) {
-	this.goTo('category', { params: { fisrt: category.id || category.slug } });
+	const id = category.slug || category.id;
+	this.goTo('category', { params: { id } });
 }
 
 function data() {

@@ -8,9 +8,22 @@
 			accept=".png,.jpg,.jpeg"
 			@input="loadImage"
 		>
-		<app-input readonly placeholder="Constancia de pago" class="voucher" :value="value" @input="sendValue"/>
-		<div class="camera-container">
-			<CameraSvg @click="upload" white/>
+		<app-input
+			v-if="!noInput"
+			readonly
+			placeholder="Constancia de pago"
+			class="voucher"
+			:value="value"
+			@input="sendValue"
+		/>
+		<div
+			class="camera-container"
+			:style="transparent ? 'background-color: transparent' : `background-color:${globalColors.primary}`"
+		>
+			<CameraSvg
+				:white="!transparent"
+				@click="upload"
+			/>
 		</div>
 	</div>
 </template>
@@ -76,6 +89,14 @@
 			upload,
 		},
 		props: {
+			noInput: {
+				default: false,
+				type: Boolean,
+			},
+			transparent: {
+				default: false,
+				type: Boolean,
+			},
 			value: null,
 		},
 	};
@@ -94,7 +115,6 @@
 
 	.camera-container {
 		align-items: center;
-		background-color: color(primary);
 		border-top-right-radius: 4px;
 		border-bottom-right-radius: 4px;
 		cursor: pointer;
