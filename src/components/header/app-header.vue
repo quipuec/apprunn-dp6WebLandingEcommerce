@@ -40,6 +40,7 @@
 				<button-image
 					if-number
 					:data="imagesButton[2]"
+					:disabled="getTotalQuantityProducts === 0"
 					:number="totalProducts"
 					@click-image="goShopping"
 				/>
@@ -178,6 +179,7 @@ export default {
 			'token',
 			'totalProducts',
 			'getFilters',
+			'getTotalQuantityProducts',
 		]),
 	},
 	data,
