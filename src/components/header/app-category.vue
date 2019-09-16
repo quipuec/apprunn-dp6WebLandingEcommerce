@@ -34,7 +34,8 @@
 						<item-menu 
 						:data="list" 
 						color-select="#ed0000"
-						@click-item="clickCategory"/>
+						@click-item="goToCategory(list)"
+						@hover-item="hoverCategory"/>
 						<button class="btn-collapse" @click="clickCategory(list)">
 							<v-icon 
 								:class="{'rotate-icon': list.select}"
@@ -202,6 +203,17 @@ function bannerTopExist() {
 	return Boolean(this.getBanners.find(r => r.typeId === this.bannersTypes.Top));
 }
 
+function hoverCategory(item) {
+	if (window.innerWidth > 764) {
+		this.clickCategory(item);
+	}
+}
+
+function goToCategory(item) {
+	const id = item.slug || item.id;
+	this.goTo('category', { params: { id } });
+}
+
 function data() {
 	return {
 		colorBorder: process.env.COLOR_DARK,
@@ -255,6 +267,8 @@ export default {
 		handleScroll,
 		goToCategories,
 		logout,
+		hoverCategory,
+		goToCategory,
 	},
 	props: {
 		imgUser: {

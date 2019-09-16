@@ -1,5 +1,8 @@
 <template>
-	<div class="item-menu" @click="$emit('click-item', data)">
+	<div 
+		class="item-menu" 
+		@click="$emit('click-item', data)"
+		@mouseenter="$emit('hover-item', data)">
 		<img :src="data.webImage" class="img-menu">
 		<span class="item-text" :style="data.select ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`">{{data.title}}</span>
 	</div>

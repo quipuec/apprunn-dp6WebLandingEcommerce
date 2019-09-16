@@ -9,7 +9,7 @@
 				<img :src="data.webImage" :alt="data.title" class="mr-3">
 				{{data.title}}
 			</button>
-			<button @click="$emit('open-category', data.id)">
+			<button @click="$emit('open-category', data.id)" v-if="data.detail.length">
 				<simple-svg
 					filepath="/static/img/arrow-left.svg"
 					:fill="globalColors.primary"
