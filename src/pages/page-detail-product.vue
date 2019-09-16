@@ -213,7 +213,7 @@ async function loadOpinions() {
 		typeQuestionAnswer: 3,
 		productId: this.product.id,
 	};
-	const { data: response } = await this.$httpProducts.get('question-answer', { params });
+	const { data: response } = await this.$httpProductsPublic.get('question-answer/public', { params });
 	this.opinions = response;
 }
 
