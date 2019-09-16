@@ -1,12 +1,11 @@
 <template>
 	<div
 		class="app-category"
-		:class="{ scrolling: scrolled }"
-		:style="bannerTopExist ? 'top:188px' : 'top:99px'"
+		:class="{ scrolling: scrolled, isBanner : bannerTopExist}"
 	>
 		<div class="app-category-user">
 			<div class="container-user" :style="`border-color: ${globalColors.primary}`">
-				<img :src="imageUser" :alt="imgUser.name" :height="imgUser.height">
+				<img :src="imageUser" :alt="imgUser.name" height="53">
 			</div>
 			<div v-if="token">
 				<p class="user-name">{{imgUser.name}} {{imgUser.lastname}}</p>
@@ -290,6 +289,7 @@ export default {
 		max-height: 369.6px;
 		min-height: 226px;
 		position: absolute;
+		top: 99px;
 		z-index: 5;
 		width: 100%;
 
@@ -306,11 +306,19 @@ export default {
 			&.scrolling {
 				top: 0 !important;
 			}
+
+			&.isBanner {
+				top: 0 !important;
+			}
 		}
 
 		&.scrolling {
 			position: fixed;
 			top: 99px;
+		}
+
+		&.isBanner {
+			top: 188px;
 		}
 	}
 

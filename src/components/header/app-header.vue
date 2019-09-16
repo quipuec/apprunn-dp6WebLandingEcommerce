@@ -36,7 +36,10 @@
 					class="icon-mobile"
 					@click-image="toogleSearch"/>
 				<button-image :data="user" class="icon-desktop" @click-image="openModalLogin"/>
-				<button-image :data="imagesButton[1]" class="icon-medium icon-desktop"/>
+				<button-image 
+					:data="imagesButton[1]" 
+					class="icon-medium icon-desktop"
+					@click-image="goToFavorites"/>
 				<button-image
 					if-number
 					:data="imagesButton[2]"
@@ -128,6 +131,14 @@ function goShopping() {
 	}
 }
 
+function goToFavorites() {
+	if (this.token) {
+		this.goTo('favorites');
+	} else {
+		this.goTo('login');
+	}
+}
+
 function data() {
 	return {
 		baseColor: process.env.COLOR_BASE,
@@ -191,6 +202,7 @@ export default {
 		searchProduct,
 		updateFilter,
 		toogleSearch,
+		goToFavorites,
 	},
 	mounted,
 	props: {
