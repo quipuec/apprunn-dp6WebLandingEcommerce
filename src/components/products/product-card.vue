@@ -1,7 +1,7 @@
 <template>
 	<div class="product-container" :class="{ 'small': small }" @click="goToProduct(product)">
 		<section class="product-header" :class="{ 'small': small }">
-			<div :style="`background-color: ${globalColors.primary}`" class="product-discount">-20%</div>
+			<div :style="`background-color: ${globalColors.primary}`" class="product-discount">{{discountPercentage}}%</div>
 			<div class="product-favorite">
 				<heart-component @click="productFavo" :value="product.flagFavorite"/>
 			</div>
@@ -51,6 +51,11 @@ function goToProduct({ slug, id }) {
 	this.goTo('detail-product', { params });
 }
 
+function discountPercentage() {
+	const { price, priceDiscount } = this.product;
+	return Number((((price - priceDiscount) / price) * 100).toFixed(2)) || 0;
+}
+
 export default {
 	name: 'product-card',
 	components: {
@@ -60,6 +65,7 @@ export default {
 		...mapGetters([
 			'getProductsParams',
 		]),
+		discountPercentage,
 	},
 	methods: {
 		buyProduct,
