@@ -1,7 +1,7 @@
 <template>
 	<div class="product-container" :class="{ 'small': small }" @click="goToProduct(product)">
 		<section class="product-header" :class="{ 'small': small }">
-			<div :style="`background-color: ${globalColors.primary}`" class="product-discount">{{discountPercentage}}%</div>
+			<div :style="`background-color: ${globalColors.primary}`" class="product-discount">- {{discountPercentage}}%</div>
 			<div class="product-favorite">
 				<heart-component @click="productFavo" :value="product.flagFavorite"/>
 			</div>
