@@ -512,6 +512,16 @@ input.app-input::-webkit-input-placeholder {
 		.swiper-button-next, .swiper-button-prev {
 			display: none;
 		}
+
+		.product-container {
+			.product-discount {
+				display: none;
+			}
+
+			.product-favorite{
+				margin: auto;
+			}
+		}
 	}
 }
 
