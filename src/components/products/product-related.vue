@@ -13,15 +13,6 @@
 					:product="product"
 					small/>
 			</div>
-			<div 
-				v-for="product in relateds"
-				:key="product.id">
-				<product-card 
-					:base-color="globalColors.primary" 
-					class="product-card"
-					:product="product"
-					small/>
-			</div>
 		</div>	
 		<div v-else class="container-slider-related">
 			<swiper :options="getOptions" ref="mySwiper">
