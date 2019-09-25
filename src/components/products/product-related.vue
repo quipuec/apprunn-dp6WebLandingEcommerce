@@ -3,7 +3,18 @@
 		<title-section 
 			title="Productos relacionados" 
 			:color="globalColors.dark"/>
-		<div class="container-slider-related">
+		<div v-if="relateds.length < 3" class="container-related">
+			<div 
+				v-for="product in relateds"
+				:key="product.id">
+				<product-card 
+					:base-color="globalColors.primary" 
+					class="product-card"
+					:product="product"
+					small/>
+			</div>
+		</div>	
+		<div v-else class="container-slider-related">
 			<swiper :options="getOptions" ref="mySwiper">
 				<swiper-slide 
 					v-for="product in relateds" 
@@ -185,6 +196,12 @@ export default {
 		@media screen and (max-width: 1000px) {
 			display: none;
 		}
+	}
+
+	.container-related {
+		display: flex;
+    justify-content: space-around;
+		margin-top: 22px;
 	}
 </style>
 
