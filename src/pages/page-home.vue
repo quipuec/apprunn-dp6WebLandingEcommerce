@@ -34,10 +34,18 @@ function created() {
 
 
 async function loadData() {
+	const requests = [
+		this.$httpProductsPublic.get('banners-public'),
+		this.$httpSales.get(`com-ecommerce-companies/${process.env.COMMERCE_CODE}`),
+	];
 	try {
-		const { data: response } = await this.$httpProductsPublic.get('banners-public');
-		this.banners = response;
+		const [
+			{ data: banners },
+			{ data: commerceData },
+		] = await Promise.all(requests);
+		this.banners = banners;
 		this.$store.commit('SET_BANNERS', this.banners);
+		this.$store.commit('SET_COMMERCE_DATA', commerceData);
 	} catch (error) {
 		this.showGenericError();
 	}

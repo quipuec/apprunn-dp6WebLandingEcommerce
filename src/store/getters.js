@@ -82,11 +82,16 @@ function getBanners(state) {
 	return state.banners;
 }
 
+function getCommerceData(state) {
+	return state.commerce;
+}
+
 const methods = {
 	bannersTypes,
 	companyLogo,
 	genders,
 	getBanners,
+	getCommerceData,
 	getDirections,
 	getCurrencySymbol,
 	getProducts,
