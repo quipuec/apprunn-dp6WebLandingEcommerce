@@ -6,7 +6,7 @@
 				<p class="item-date-company">{{getCommerceData.phone}}</p>
 			</div>
 			<div class="content-date-company">
-				<img src="/static/img/icons/mail.svg" alt="">
+				<img src="/static/icons/email.svg" alt="">
 				<p class="item-date-direction email">Correo: {{getCommerceData.email}}</p>
 			</div>
 			<div class="content-date-company">
