@@ -1,17 +1,14 @@
 <template>
 	<div class="form-bulletin">
-		<div class="content-description">
-			<p class="text-subscription">Suscríbete a Boletín</p>
-			<div class="content-email">
-				<input type="text" placeholder="Ingresa tu correo Electrónico" class="input-form">
-				<button class="button-form">Suscríbete</button>
-			</div>
-		</div>
 		<div class="form-bulletin-description-company">
 			<div class="content-date-company">
 				<img src="/static/img/icons/telephone-1.svg" alt="">
 				<p class="item-date-company">[511] 326-0933 
 				[511] 326-8056</p>
+			</div>
+			<div class="content-date-company">
+				<img src="/static/img/icons/mail.svg" alt="">
+				<p class="item-date-direction">Correo: correo@mail.com</p>
 			</div>
 			<div class="content-date-company">
 				<img src="/static/img/icons/mail.svg" alt="">
@@ -97,7 +94,7 @@ export default {
 	padding: 40px 0;
 	width: 100%;
 
-	@media (max-width: 850px) {
+	@media (max-width: 768px) {
 		flex-direction: column;
 		height: 411px;
 		padding: 15px 0;
@@ -159,10 +156,15 @@ export default {
 }
 
 .form-bulletin-description-company {
-	@media (max-width: 850px) {
-		display: flex;
-    flex-direction: column-reverse;
-		margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	justify-content: space-around;
+	width: 100%;
+
+	@media (min-width: 768px) {
+		align-items: center;
+		flex-direction: row;
 	}
 }
 
