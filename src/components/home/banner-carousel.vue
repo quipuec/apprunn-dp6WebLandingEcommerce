@@ -32,7 +32,7 @@ function getBackground(value) {
 }
 
 function showSearcher() {
-	return process.env.BANNER_SEARCHER_SHOW;
+	return !!(process.env.BANNER_SEARCHER_SHOW);
 }
 
 function data() {
