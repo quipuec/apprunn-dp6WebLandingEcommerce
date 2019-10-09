@@ -152,6 +152,7 @@
 
 	function validations() {
 		return {
+			flagTyc: { required },
 			model: {
 				email: {
 					required,
@@ -179,7 +180,7 @@
 			backgroundImage: process.env.FORM_BACKGROUND,
 			baseColor: process.env.COLOR_BASE,
 			emailDisabled: false,
-			flagTyc: false,
+			flagTyc: null,
 			headingImage: '/static/img/sign-up.svg',
 			loading: false,
 			model: {
