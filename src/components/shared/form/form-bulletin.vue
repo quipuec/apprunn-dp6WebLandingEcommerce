@@ -3,25 +3,30 @@
 		<div class="form-bulletin-description-company">
 			<div class="content-date-company">
 				<img src="/static/img/icons/telephone-1.svg" alt="">
-				<p class="item-date-company">[511] 326-0933 
-				[511] 326-8056</p>
+				<p class="item-date-company">{{getCommerceData.phone}}</p>
 			</div>
 			<div class="content-date-company">
 				<img src="/static/img/icons/mail.svg" alt="">
-				<p class="item-date-direction">Correo: correo@mail.com</p>
+				<p class="item-date-direction email">Correo: {{getCommerceData.email}}</p>
 			</div>
 			<div class="content-date-company">
 				<img src="/static/img/icons/mail.svg" alt="">
-				<p class="item-date-direction">Av. Circunvalación #1857, 
-				Urb. El Pino - San Luis</p>
+				<p class="item-date-direction">{{getCommerceData.address}}</p>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
 	name: 'form-bulletin',
+	computed: {
+		...mapGetters([
+			'getCommerceData',
+		]),
+	},
 };
 </script>
 
@@ -175,5 +180,9 @@ export default {
 .content-email {
 	align-items: center;
 	display: flex;
+}
+
+.email {
+	white-space: nowrap;
 }
 </style>
