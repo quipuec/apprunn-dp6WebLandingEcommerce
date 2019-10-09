@@ -18,7 +18,7 @@
 				</swiper-slide>
 				<div class="pagination-carousel swiper-pagination" slot="pagination"></div>
 			</swiper>
-			<div class="searcher-wrapper">
+			<div class="searcher-wrapper" v-if="showSearcher">
 				<Searcher class="searcher" />
 			</div>
 		</div>
@@ -29,6 +29,10 @@
 
 function getBackground(value) {
 	return `background-image: url(${value.webImage})`;
+}
+
+function showSearcher() {
+	return process.env.BANNER_SEARCHER_SHOW;
 }
 
 function data() {
@@ -53,6 +57,9 @@ export default {
 		companyData: () => import('@/components/shared/company/container-company-data'),
 		Searcher: () => import('@/components/home/searcher'),
 	},
+	computed: {
+		showSearcher,
+	},
 	methods: {
 		getBackground,
 	},
@@ -70,10 +77,10 @@ export default {
 		background-repeat: no-repeat;
 		background-size: cover;
 		height: 616px;
-    width: 100%;
+    	width: 100%;
 		
 		@media (max-width: 764px) {
-			height: 478px;
+			height: 505px;
 		}
 	}
 
@@ -103,9 +110,9 @@ export default {
 	}
 
 	.searcher-wrapper {
-		align-items: center;
+		align-items: flex-end;
 		display: flex;
-		height: 100%;
+		height: 84%;
 		justify-content: flex-start;
 		padding-left: 60px;
 		position: absolute;
