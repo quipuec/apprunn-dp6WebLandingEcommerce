@@ -3,9 +3,12 @@
 		class="app-banner-top"
 		:class="[big ? 'big' : null, small ? 'small' : null]">
 		<div 
-			:style="`background-image: url(${data.urlImage})`"
 			:class="[big ? 'big' : null, small ? 'small' : null]"
-			class="image-banner">
+		>
+			<picture>
+				<source :srcset="data.webImage" media="(min-width: 600px)">
+				<img :src="data.mobileImage" alt="">
+			</picture>
 			<app-button
 				v-if="big"
 				type="button"
@@ -76,29 +79,17 @@ export default {
 			margin-bottom: 99px;
 		}
 	}
-	
-	.image-banner {
-		background-position-x: left;
-		background-position-y: center;
-		background-repeat: no-repeat;
-		background-size: cover;
-		height: 65px;
-		position: relative;
-		width: 100%;
-		z-index: 4;
 
-		&.big {
-			height: 283px;
+	.big {
+		height: 283px;
 
-			@media (max-width: 764px) {
-				height: 287px;
-			}
+		@media (max-width: 764px) {
+			height: 287px;
 		}
-
-		&.small {
-			height: 413px;
-			max-width: 337px;
-		}
+	}
+	.small {
+		height: 413px;
+		max-width: 337px;
 	}
 
 	.btn-find {
@@ -129,6 +120,12 @@ export default {
 		position: absolute;
 		transform: translateX(-50%);
 		width: 80%; 
+	}
+
+	img {
+		height: 100%;
+		object-fit: fill;
+		width: 100%
 	}
 </style>
 

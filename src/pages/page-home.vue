@@ -12,7 +12,7 @@
 			<products-section/>
 		</div>
 		<app-banner-top 
-			:data="bannerTop"
+			:data="bannerPromotions"
 			:color="colorSecondary"
 			big/>
 	</layout-admin>
@@ -37,6 +37,7 @@ async function loadData() {
 	try {
 		const { data: response } = await this.$httpProductsPublic.get('banners-public');
 		this.banners = response;
+		this.bannerPromotions = response.find(b => b.typeName === 'Promotions') || this.bannerPromotions;
 		this.$store.commit('SET_BANNERS', this.banners);
 	} catch (error) {
 		this.showGenericError();
@@ -107,8 +108,9 @@ function data() {
 		colorDark: process.env.COLOR_DARK,
 		colorBase: process.env.COLOR_BASE,
 		colorSecondary: process.env.COLOR_SECONDARY,
-		bannerTop: {
-			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
+		bannerPromotions: {
+			webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
+			mobileImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
 			image: 'descuento',
 		},
 	};
