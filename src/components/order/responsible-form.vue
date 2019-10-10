@@ -43,8 +43,12 @@ import { mapGetters } from 'vuex';
 const appInput = () => import('@/components/shared/inputs/app-input');
 
 function mounted() {
-	const { dni, email: mail, name, phone } = this.user;
-	this.responsible = { dni, name, email: mail, phone };
+	if (this.getOrderInfo.responsiblePickUp) {
+		this.responsible = { ...this.getOrderInfo.responsiblePickUp };
+	} else {
+		const { dni, email: mail, name, phone } = this.user;
+		this.responsible = { dni, name, email: mail, phone };
+	}
 	this.validateForm();
 }
 
@@ -89,6 +93,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'user',
+			'getOrderInfo',
 		]),
 	},
 	data,

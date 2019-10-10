@@ -87,7 +87,7 @@ function buildBody(flagFinish) {
 		costShipping: this.getShippingCost,
 		customerAddressId: this.getCustomerAddressId,
 		customerAddress: this.getCustomerAddressId ? null : this.getCustomerAddress,
-		customerBill: this.getBillingData,
+		customerBill: this.getFlagBill ? this.getBillingData : null,
 		deliveryAddress: this.getCustomerAddressId
 			? this.getDeliveryAddress : null,
 		details: this.getDetails(this.getOrderDetails),
@@ -201,6 +201,7 @@ export default {
 			'getCustomerAddress',
 			'getCustomerAddressId',
 			'getDeliveryAddress',
+			'getFlagBill',
 			'getFlagPickUp',
 			'getFlagStatusOrder',
 			'getOrderDetails',
