@@ -11,7 +11,8 @@
 		<div class="page-products">
 			<products-section/>
 		</div>
-		<app-banner-top 
+		<app-banner-top
+			v-if="bannerPromotions"
 			:data="bannerPromotions"
 			:color="colorSecondary"
 			big/>
@@ -36,8 +37,8 @@ function created() {
 async function loadData() {
 	try {
 		const { data: response } = await this.$httpProductsPublic.get('banners-public');
-		this.banners = response;
-		this.bannerPromotions = response.find(b => b.typeName === 'Promotions') || this.bannerPromotions;
+		this.banners = response.filter(banner => banner.typeName === 'Home');
+		this.bannerPromotions = response.find(b => b.typeName === 'Promoción');
 		this.$store.commit('SET_BANNERS', this.banners);
 	} catch (error) {
 		this.showGenericError();
@@ -108,11 +109,7 @@ function data() {
 		colorDark: process.env.COLOR_DARK,
 		colorBase: process.env.COLOR_BASE,
 		colorSecondary: process.env.COLOR_SECONDARY,
-		bannerPromotions: {
-			webImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
-			mobileImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
-			image: 'descuento',
-		},
+		bannerPromotions: {},
 	};
 }
 export default {
