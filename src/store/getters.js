@@ -82,14 +82,29 @@ function getBanners(state) {
 	return state.banners;
 }
 
+function getBannersHome(state) {
+	return state.banners.filter(banner => banner.typeName === 'Home');
+}
+
+function getPromotionalBanner(state) {
+	return state.banners.find(banner => banner.typeName === 'Promoción');
+}
+
+function getPromotionalDetailsBanner(state) {
+	return state.banners.find(banner => banner.typeName === 'Promoción en detalle');
+}
+
 const methods = {
 	bannersTypes,
 	companyLogo,
 	genders,
 	getBanners,
+	getBannersHome,
 	getDirections,
 	getCurrencySymbol,
 	getProducts,
+	getPromotionalDetailsBanner,
+	getPromotionalBanner,
 	getWarehouses,
 	flagAddVoucher,
 	indeterminate,

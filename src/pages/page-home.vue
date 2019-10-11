@@ -1,6 +1,6 @@
 <template>
 	<layout-admin>
-		<banner-carousel :banners="banners"/>
+		<banner-carousel :banners="getBannersHome"/>
 		<categories-carousel
  			:categories="getCategories"
 			:color-base="colorBase"/>
@@ -12,8 +12,8 @@
 			<products-section/>
 		</div>
 		<app-banner-top
-			v-if="bannerPromotions"
-			:data="bannerPromotions"
+			v-if="getPromotionalBanner"
+			:data="getPromotionalBanner"
 			:color="colorSecondary"
 			big/>
 	</layout-admin>
@@ -28,22 +28,6 @@ const categoriesCarousel = () => import('@/components/home/categories-carousel')
 const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
 const productsSection = () => import('@/components/products/products-section');
 const sectionSettlement = () => import('@/components/home/section-settlement');
-
-function created() {
-	this.loadData();
-}
-
-
-async function loadData() {
-	try {
-		const { data: response } = await this.$httpProductsPublic.get('banners-public');
-		this.banners = response.filter(banner => banner.typeName === 'Home');
-		this.bannerPromotions = response.find(b => b.typeName === 'Promoción');
-		this.$store.commit('SET_BANNERS', this.banners);
-	} catch (error) {
-		this.showGenericError();
-	}
-}
 
 function filterSelect(filter) {
 	if (filter.link) {
@@ -125,13 +109,13 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getBannersHome',
+			'getPromotionalBanner',
 			'getCategories',
 			'getFilters',
 		]),
 	},
-	created,
 	methods: {
-		loadData,
 		filterSelect,
 	},
 };
