@@ -36,7 +36,7 @@ function created() {
 async function loadData() {
 	const requests = [
 		this.$httpProductsPublic.get('banners-public'),
-		this.$httpSales.get(`com-ecommerce-companies/${process.env.COMMERCE_CODE}/public`),
+		this.$httpSalesPublic.get(`com-ecommerce-companies/${process.env.COMMERCE_CODE}/public`),
 	];
 	try {
 		const [
