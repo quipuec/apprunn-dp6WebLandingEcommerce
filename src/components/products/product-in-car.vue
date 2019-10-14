@@ -22,12 +22,13 @@
 				<p
 					:style="`color: ${globalColors.secondary};`"
 					class="product-title">Cantidad</p>
-				<quantityButton
-					v-if="stepOne"
-					class="continer-quantity-button"
-					:number="product.quantity"
-					@click="clickQuantity"
-				/>
+				<div v-if="stepOne">
+					<quantityButton
+						class="continer-quantity-button"
+						:number="product.quantity"
+						@click="clickQuantity"
+					/>
+				</div>
 				<p class="product-quantity" v-else>{{product.quantity}}</p>
 			</div>
 			<div class="total text-xs-center">
@@ -69,8 +70,9 @@ function clickQuantity(val) {
 	};
 	quantity += opt[val];
 	quantity = quantity < 0 ? 0 : quantity;
-	const { id } = this.product;
-	this.$store.commit('UPDATE_PRODUCTS_TO_BUY', { id, quantity });
+	this.$set(this.product, 'quantity', quantity);
+	this.$forceUpdate();
+	this.$store.commit('UPDATE_PRODUCTS_TO_BUY', this.product);
 }
 
 function stepOne() {
