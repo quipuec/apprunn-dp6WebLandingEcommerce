@@ -1,6 +1,9 @@
 <template>
 	<div class="list-category">
-		<div class="wrapper-name-category" :style="`border-color: ${globalColors.primary}`">
+		<div
+			class="wrapper-name-category"
+			:style="idSelect(data.id) ? `border-color: ${globalColors.primary}` : `border-color: ${globalColors.base}`"
+		>
 			<button 
 				class="title-category mr-5" 
 				:style="idSelect(data.id) ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`"
@@ -78,14 +81,13 @@ export default {
 		margin-bottom: 30px;
 
 		.wrapper-name-category {
-			border-bottom: 2px solid;
-			display: inline-flex;
+			border-bottom: 1px solid;
+			display: flex;
+			justify-content: space-between;
 			margin-bottom: 15px;
-			padding-bottom: 3px;
+			padding-bottom: 10px;
 
 			@media (max-width: 986px) {
-				display: flex;
-				justify-content: space-between;
 				padding: 7px 25px;
 			}
 		}
@@ -94,7 +96,8 @@ export default {
 			align-items: center;
 			display: flex;
 			font-family: font(bold);
-			font-size: size(xlarge);
+			font-size: size(medium
+			);
 		}
 
 		.wrapper-subcategory {

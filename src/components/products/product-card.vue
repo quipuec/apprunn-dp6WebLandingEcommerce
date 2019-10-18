@@ -21,6 +21,7 @@
 				<small class="other-buy">+ 1000 compraron esto</small>
 				<v-rating
 					small
+					readonly
 					class="product-rating"
 					background-color="#ffcc03"
 					color="#ffcc03"
