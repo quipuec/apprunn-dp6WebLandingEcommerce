@@ -9,13 +9,6 @@
 				<source :srcset="data.webImage" media="(min-width: 600px)">
 				<img :src="data.mobileImage" alt="">
 			</picture>
-			<app-button
-				v-if="big"
-				type="button"
-				class="btn-find"
-				action="ENCUÉNTRALO AQUÍ"
-				:background="color"
-			></app-button>
 			<button v-if="small" class="btn-more">Ver más</button>
 		</div>
 	</div>
