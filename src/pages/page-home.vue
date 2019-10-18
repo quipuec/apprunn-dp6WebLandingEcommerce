@@ -1,6 +1,6 @@
 <template>
 	<layout-admin>
-		<banner-carousel :banners="banners"/>
+		<banner-carousel :banners="getHomeBanners"/>
 		<categories-carousel
  			:categories="getCategories"
 			:color-base="colorBase"/>
@@ -11,15 +11,16 @@
 		<div class="page-products">
 			<products-section/>
 		</div>
-		<app-banner-top 
-			:data="bannerTop"
+		<app-banner-top
+			v-if="getPromotionalBanner"
+			:data="getPromotionalBanner"
 			:color="colorSecondary"
 			big/>
 	</layout-admin>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 const appBannerTop = () => import('@/components/header/app-banner-top');
 const bannerCarousel = () => import('@/components/home/banner-carousel');
@@ -29,18 +30,7 @@ const productsSection = () => import('@/components/products/products-section');
 const sectionSettlement = () => import('@/components/home/section-settlement');
 
 function created() {
-	this.loadData();
-}
-
-
-async function loadData() {
-	try {
-		const { data: response } = await this.$httpProductsPublic.get('banners-public');
-		this.banners = response;
-		this.$store.commit('SET_BANNERS', this.banners);
-	} catch (error) {
-		this.showGenericError();
-	}
+	this.$loadBanners(this);
 }
 
 function filterSelect(filter) {
@@ -61,7 +51,6 @@ function filterSelect(filter) {
 function data() {
 	return {
 		filters: [],
-		banners: [],
 		categories: [
 			{
 				id: 1,
@@ -107,10 +96,6 @@ function data() {
 		colorDark: process.env.COLOR_DARK,
 		colorBase: process.env.COLOR_BASE,
 		colorSecondary: process.env.COLOR_SECONDARY,
-		bannerTop: {
-			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
-			image: 'descuento',
-		},
 	};
 }
 export default {
@@ -128,11 +113,15 @@ export default {
 		...mapGetters([
 			'getCategories',
 			'getFilters',
+			'getPromotionalBanner',
+			'getHomeBanners',
 		]),
 	},
 	created,
 	methods: {
-		loadData,
+		...mapActions({
+			$loadBanners: 'LOAD_BANNERS',
+		}),
 		filterSelect,
 	},
 };
