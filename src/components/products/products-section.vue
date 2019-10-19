@@ -13,7 +13,7 @@ import { mapGetters } from 'vuex';
 
 function created() {
 	const filterParams = {
-		filters: this.getFilters[0] ? this.getFilters[0].id : null,
+		filters: this.getFilters.length > 0 ? this.getFilters[0].id : null,
 	};
 	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params: filterParams });
 }

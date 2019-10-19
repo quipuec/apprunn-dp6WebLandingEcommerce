@@ -1,6 +1,6 @@
 <template>
 	<layout-admin>
-		<banner-carousel :banners="getHomeBanners"/>
+		<banner-carousel :banners="getBannersHome"/>
 		<categories-carousel
  			:categories="getCategories"
 			:color-base="colorBase"/>
@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters } from 'vuex';
 
 const appBannerTop = () => import('@/components/header/app-banner-top');
 const bannerCarousel = () => import('@/components/home/banner-carousel');
@@ -28,10 +28,6 @@ const categoriesCarousel = () => import('@/components/home/categories-carousel')
 const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
 const productsSection = () => import('@/components/products/products-section');
 const sectionSettlement = () => import('@/components/home/section-settlement');
-
-function created() {
-	this.$loadBanners(this);
-}
 
 function filterSelect(filter) {
 	if (filter.link) {
@@ -111,17 +107,13 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getBannersHome',
+			'getPromotionalBanner',
 			'getCategories',
 			'getFilters',
-			'getPromotionalBanner',
-			'getHomeBanners',
 		]),
 	},
-	created,
 	methods: {
-		...mapActions({
-			$loadBanners: 'LOAD_BANNERS',
-		}),
 		filterSelect,
 	},
 };

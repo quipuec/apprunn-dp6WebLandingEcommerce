@@ -32,7 +32,7 @@
 			/>
 		</div>
 		<product-publicity class="container-publicity mobile"/>
-		<app-banner-top 
+		<app-banner-top
 			:data="getPromotionalBanner"
 			:color="globalColors.secondary"
 			big/>

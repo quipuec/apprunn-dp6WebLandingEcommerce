@@ -74,6 +74,10 @@ function getFilters(state) {
 	return state.filters;
 }
 
+function getCommerceData(state) {
+	return state.commerce;
+}
+
 function bannersTypes(state) {
 	return state.bannerTypes;
 }
@@ -82,16 +86,16 @@ function getBanners(state) {
 	return state.banners;
 }
 
-function getCommerceData(state) {
-	return state.commerce;
+function getBannersHome(state) {
+	return state.banners.filter(banner => banner.typeName === 'Home');
 }
 
 function getPromotionalBanner(state) {
-	return state.banners.find(b => b.typeName === 'Promoción');
+	return state.banners.find(banner => banner.typeName === 'Promoción');
 }
 
-function getHomeBanners(state) {
-	return state.banners.filter(b => b.typeName === 'Home');
+function getPromotionalDetailsBanner(state) {
+	return state.banners.find(banner => banner.typeName === 'Promoción en detalle');
 }
 
 const methods = {
@@ -99,12 +103,13 @@ const methods = {
 	companyLogo,
 	genders,
 	getBanners,
+	getBannersHome,
 	getCommerceData,
 	getDirections,
 	getCurrencySymbol,
-	getHomeBanners,
 	getPromotionalBanner,
 	getProducts,
+	getPromotionalDetailsBanner,
 	getWarehouses,
 	flagAddVoucher,
 	indeterminate,
