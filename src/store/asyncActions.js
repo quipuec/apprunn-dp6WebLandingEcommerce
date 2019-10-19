@@ -154,7 +154,10 @@ const asyncActions = {
 		commit('SET_FAVORITES', newFavorites);
 		return Number(headers['x-last-page']);
 	},
-
+	LOAD_BANNERS: async ({ commit }, context) => {
+		const { data: banners } = await context.$httpProductsPublic.get('banners-public');
+		commit('SET_BANNERS', banners);
+	},
 };
 
 export default asyncActions;

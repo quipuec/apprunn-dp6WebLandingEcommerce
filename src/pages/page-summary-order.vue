@@ -25,14 +25,8 @@ function mounted() {
 	this.$store.commit('EMPTY_CAR');
 }
 
-function beforeRouteLeave(to, from, next) {
-	this.$store.dispatch('SET_DEFAULT_VALUES');
-	next();
-}
-
 export default {
 	name: 'page-summary-order',
-	beforeRouteLeave,
 	components: {
 		paymentMethods,
 		productsBuyed,

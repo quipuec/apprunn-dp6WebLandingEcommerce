@@ -86,6 +86,14 @@ function getCommerceData(state) {
 	return state.commerce;
 }
 
+function getPromotionalBanner(state) {
+	return state.banners.find(b => b.typeName === 'Promoción');
+}
+
+function getHomeBanners(state) {
+	return state.banners.filter(b => b.typeName === 'Home');
+}
+
 const methods = {
 	bannersTypes,
 	companyLogo,
@@ -94,6 +102,8 @@ const methods = {
 	getCommerceData,
 	getDirections,
 	getCurrencySymbol,
+	getHomeBanners,
+	getPromotionalBanner,
 	getProducts,
 	getWarehouses,
 	flagAddVoucher,

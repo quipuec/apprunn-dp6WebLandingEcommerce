@@ -1,12 +1,12 @@
 <template>
 	<div class="wrapper-big-category">
 		<div class="wrapper-list-category">
-			<list-category 
+			<list-category
 				v-for="category in categories"
 				:data="category"
 				:key="category.id"
 				:breadcrumbs="breadcrumbs"
-        @change-category="changeCategory"
+        		@change-category="changeCategory"
 				@open-category="openCategory"/>
 			<filters-category></filters-category>
 			<div class="wrapper-btns py-3">
