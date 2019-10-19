@@ -47,7 +47,6 @@ function filterSelect(filter) {
 function data() {
 	return {
 		filters: [],
-		banners: [],
 		categories: [
 			{
 				id: 1,
@@ -93,7 +92,6 @@ function data() {
 		colorDark: process.env.COLOR_DARK,
 		colorBase: process.env.COLOR_BASE,
 		colorSecondary: process.env.COLOR_SECONDARY,
-		bannerPromotions: {},
 	};
 }
 export default {

@@ -74,6 +74,10 @@ function getFilters(state) {
 	return state.filters;
 }
 
+function getCommerceData(state) {
+	return state.commerce;
+}
+
 function bannersTypes(state) {
 	return state.bannerTypes;
 }
@@ -100,11 +104,12 @@ const methods = {
 	genders,
 	getBanners,
 	getBannersHome,
+	getCommerceData,
 	getDirections,
 	getCurrencySymbol,
+	getPromotionalBanner,
 	getProducts,
 	getPromotionalDetailsBanner,
-	getPromotionalBanner,
 	getWarehouses,
 	flagAddVoucher,
 	indeterminate,

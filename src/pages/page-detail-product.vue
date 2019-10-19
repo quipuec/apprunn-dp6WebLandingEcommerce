@@ -32,8 +32,8 @@
 			/>
 		</div>
 		<product-publicity class="container-publicity mobile"/>
-		<app-banner-top 
-			:data="bannerTop"
+		<app-banner-top
+			:data="getPromotionalBanner"
 			:color="globalColors.secondary"
 			big/>
 		<warehouses-modal 
@@ -306,6 +306,7 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getPromotionalBanner',
 			'token',
 		]),
 	},

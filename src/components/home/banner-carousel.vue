@@ -26,6 +26,7 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 
 function getBackground(value) {
 	return `background-image: url(${value.webImage})`;
@@ -58,6 +59,9 @@ export default {
 		Searcher: () => import('@/components/home/searcher'),
 	},
 	computed: {
+		...mapGetters([
+			'getCommerceData',
+		]),
 		showSearcher,
 	},
 	methods: {

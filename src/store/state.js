@@ -15,6 +15,7 @@ export default {
 		Home: 3,
 		Top: 4,
 	},
+	commerce: {},
 	currencyDefault: null,
 	directions: [
 		{ id: 0, addressLine1: 'Nueva dirección', name: 'Nueva dirección' },

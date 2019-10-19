@@ -1,27 +1,31 @@
 <template>
-  <div 
+  <div
+		v-if="webImage || mobileImage"
 		class="app-banner-top"
 		:class="[big ? 'big' : null, small ? 'small' : null]">
 		<div 
 			:class="[big ? 'big' : null, small ? 'small' : null]"
 		>
 			<picture>
-				<source :srcset="data.webImage" media="(min-width: 600px)">
-				<img :src="data.mobileImage" alt="">
+				<source :srcset="webImage" media="(min-width: 600px)">
+				<img :src="mobileImage" alt="">
 			</picture>
-			<app-button
-				v-if="big"
-				type="button"
-				class="btn-find"
-				action="ENCUÉNTRALO AQUÍ"
-				:background="color"
-			></app-button>
 			<button v-if="small" class="btn-more">Ver más</button>
 		</div>
 	</div>
 </template>
 <script>
+import lib from '@/shared/lib';
+
 const appButton = () => import('@/components/shared/buttons/app-button');
+
+function webImage() {
+	return lib.getDeeper('webImage')(this.data);
+}
+
+function mobileImage() {
+	return lib.getDeeper('mobileImage')(this.data);
+}
 
 function data() {
 	return {
@@ -33,6 +37,10 @@ export default {
 	name: 'banner-top',
 	components: {
 		appButton,
+	},
+	computed: {
+		mobileImage,
+		webImage,
 	},
 	data,
 	props: {
