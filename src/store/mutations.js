@@ -85,6 +85,10 @@ function SET_BANNERS(state, banners) {
 	Vue.set(state, 'banners', banners);
 }
 
+function SET_COMMERCE_DATA(state, data) {
+	Vue.set(state, 'commerce', data);
+}
+
 const methods = {
 	clearUser,
 	...geoMutations,
@@ -95,6 +99,7 @@ const methods = {
 	showSnackBar,
 	toggleLoading,
 	SET_BANNERS,
+	SET_COMMERCE_DATA,
 	SET_CURRENCY_DEFAULT,
 	SET_DIRECTIONS,
 	SET_ORDER_ID,

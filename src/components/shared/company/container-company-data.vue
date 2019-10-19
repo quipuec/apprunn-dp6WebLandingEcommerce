@@ -5,33 +5,39 @@
 			image-height="30"
 			border-right="#ffffff"
 			family="medium"
-			description="(511) 326-0933 
-			(511) 326-8056"
+			:description="getCommerceData.phone"
 		></media-company-data>
 		<media-company-data
 			image="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/address.svg"
 			image-height="32"
 			border-right="#ffffff"
 			family="medium"
-			description="Av. Circunvalación #1857, Urb. El Pino San Luis"
+			:description="getCommerceData.address"
 		></media-company-data>
 		<media-company-data
 			image="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/open-email.svg"
 			image-height="29"
 			family="medium"
-			description="info@mrc.com.pe"
+			:description="getCommerceData.email"
 		></media-company-data>
 	</div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
 
 export default {
+	name: 'container-company-data',
 	components: {
 		mediaCompanyData,
 	},
-	name: 'container-company-data',
+	computed: {
+		...mapGetters([
+			'getCommerceData',
+		]),
+	},
 };
 </script>
 
@@ -55,7 +61,7 @@ export default {
 		
 		@media screen and (max-width: 860px) {
 			height: 52px;
-			width: 80%;
+			width: 95%;
 		}
 	}
 </style>

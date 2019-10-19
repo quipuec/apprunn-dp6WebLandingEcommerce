@@ -82,6 +82,10 @@ function getBanners(state) {
 	return state.banners;
 }
 
+function getCommerceData(state) {
+	return state.commerce;
+}
+
 function getPromotionalBanner(state) {
 	return state.banners.find(b => b.typeName === 'Promoción');
 }
@@ -95,6 +99,7 @@ const methods = {
 	companyLogo,
 	genders,
 	getBanners,
+	getCommerceData,
 	getDirections,
 	getCurrencySymbol,
 	getHomeBanners,

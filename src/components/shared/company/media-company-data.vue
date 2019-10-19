@@ -34,7 +34,7 @@ export default {
 	display: flex;
 	flex: 1 1 33.3%;
 	justify-content: center;
-	padding: 0 45px;
+	padding: 0 30px;
 
 	@media (max-width: 860px) {
 		padding: 0 9px;
