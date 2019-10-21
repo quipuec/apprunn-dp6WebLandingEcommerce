@@ -49,6 +49,7 @@ function mounted() {
 		const { dni, email: mail, name, phone } = this.user;
 		this.responsible = { dni, name, email: mail, phone };
 	}
+	console.log(this.getOrderInfo.responsiblePickUp);
 	this.validateForm();
 }
 
