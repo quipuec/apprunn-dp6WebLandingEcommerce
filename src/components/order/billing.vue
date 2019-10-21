@@ -57,6 +57,7 @@ function mounted() {
 		const { address, ruc, rzSocial } = this.getOrderInfo.dataBill;
 		this.billing = { address, ruc, rzSocial };
 		this.changeBillSelection(true);
+		this.validateForm();
 	}
 }
 
