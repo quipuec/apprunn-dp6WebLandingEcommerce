@@ -19,6 +19,13 @@ const salesInstance = axios.create({
 	baseURL: process.env.SALES_URL,
 });
 
+const salesPublicInstance = axios.create({
+	baseURL: process.env.SALES_URL,
+	headers: {
+		Authorization: `Bearer ${process.env.TOKEN}`,
+	},
+});
+
 const uploadInstance = axios.create({
 	baseURL: process.env.UPLOAD_URL,
 });
@@ -28,6 +35,7 @@ export default function (Vue) {
 	Vue.prototype.$httpProducts = productsInstance;
 	Vue.prototype.$httpAcl = aclInstance;
 	Vue.prototype.$httpSales = salesInstance;
+	Vue.prototype.$httpSalesPublic = salesPublicInstance;
 	Vue.prototype.$httpProductsPublic = productsPublicInstance;
 	Vue.prototype.$httpUpLoad = uploadInstance;
 }
