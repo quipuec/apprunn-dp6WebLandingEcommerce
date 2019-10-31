@@ -72,8 +72,8 @@ function created() {
 	this.$store.dispatch('LOAD_WAREHOUSES', this);
 	this.$store.commit('SET_DELIVERY_PLACE', null);
 	if (!lib.isEmpty(this.getOrderInfo)) {
-		this.$store.commit('SET_DELIVERY_PLACE', this.getOrderInfo.customerAddress);
-		this.selectedDirection = this.getOrderInfo.customerAddress || this.selectedDirection;
+		this.$store.commit('SET_DELIVERY_PLACE', this.getOrderInfo.deliveryAddress);
+		this.selectedDirection = this.getOrderInfo.deliveryAddress || this.selectedDirection;
 	}
 }
 
@@ -194,9 +194,8 @@ function clearSelectedWarehouse() {
 	};
 }
 
-function handlerDirectionsChange(newDirections) {
+function handlerDirectionsChange() {
 	if (this.getFlagPickUp === 1) {
-		this.favoriteDirection = newDirections.find(f => f.isFavorite);
 		const directionDelivery = this.getDeliveryAddress || this.favoriteDirection;
 		this.$store.commit('SET_DELIVERY_PLACE', directionDelivery);
 		this.calculateShippingCost(directionDelivery);
@@ -204,6 +203,10 @@ function handlerDirectionsChange(newDirections) {
 		const warehouseDirection = this.getDeliveryAddress || this.selectedWarehouse;
 		this.$store.commit('SET_DELIVERY_PLACE', warehouseDirection);
 	}
+}
+
+function favoriteDirection() {
+	return this.getDirections.find(f => f.isFavorite);
 }
 
 async function calculateShippingCost(location) {
@@ -241,7 +244,6 @@ function beforeDestroy() {
 
 function data() {
 	return {
-		favoriteDirection: {},
 		logo: {
 			section: '/static/icons/delivery-truck.svg',
 		},
@@ -281,6 +283,7 @@ export default {
 			'getWarehouses',
 		]),
 		disableMapButtonByWarehouse,
+		favoriteDirection,
 		singleOrMultiMarkersOnWarehouses,
 		warehouesesCenter,
 		warehousesMarkers,

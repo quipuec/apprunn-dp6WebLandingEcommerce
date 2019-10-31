@@ -68,6 +68,7 @@ async function loadProduct() {
 	try {
 		const { data: response } = await this.isLoggedUser();
 		this.product = response;
+		document.title = this.product.name.toUpperCase();
 		this.loadData(this.product.id);
 		this.loadOpinions();
 	} catch (error) {
