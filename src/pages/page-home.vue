@@ -1,6 +1,6 @@
 <template>
 	<layout-admin>
-		<banner-carousel :banners="banners"/>
+		<banner-carousel :banners="getBannersHome"/>
 		<categories-carousel
  			:categories="getCategories"
 			:color-base="colorBase"/>
@@ -11,8 +11,9 @@
 		<div class="page-products">
 			<products-section/>
 		</div>
-		<app-banner-top 
-			:data="bannerTop"
+		<app-banner-top
+			v-if="getPromotionalBanner"
+			:data="getPromotionalBanner"
 			:color="colorSecondary"
 			big/>
 	</layout-admin>
@@ -27,21 +28,6 @@ const categoriesCarousel = () => import('@/components/home/categories-carousel')
 const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
 const productsSection = () => import('@/components/products/products-section');
 const sectionSettlement = () => import('@/components/home/section-settlement');
-
-function created() {
-	this.loadData();
-}
-
-
-async function loadData() {
-	try {
-		const { data: response } = await this.$httpProductsPublic.get('banners-public');
-		this.banners = response;
-		this.$store.commit('SET_BANNERS', this.banners);
-	} catch (error) {
-		this.showGenericError();
-	}
-}
 
 function filterSelect(filter) {
 	if (filter.link) {
@@ -61,7 +47,6 @@ function filterSelect(filter) {
 function data() {
 	return {
 		filters: [],
-		banners: [],
 		categories: [
 			{
 				id: 1,
@@ -107,10 +92,6 @@ function data() {
 		colorDark: process.env.COLOR_DARK,
 		colorBase: process.env.COLOR_BASE,
 		colorSecondary: process.env.COLOR_SECONDARY,
-		bannerTop: {
-			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
-			image: 'descuento',
-		},
 	};
 }
 export default {
@@ -126,13 +107,13 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getBannersHome',
+			'getPromotionalBanner',
 			'getCategories',
 			'getFilters',
 		]),
 	},
-	created,
 	methods: {
-		loadData,
 		filterSelect,
 	},
 };

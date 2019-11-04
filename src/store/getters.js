@@ -74,6 +74,10 @@ function getFilters(state) {
 	return state.filters;
 }
 
+function getCommerceData(state) {
+	return state.commerce;
+}
+
 function bannersTypes(state) {
 	return state.bannerTypes;
 }
@@ -82,14 +86,30 @@ function getBanners(state) {
 	return state.banners;
 }
 
+function getBannersHome(state) {
+	return state.banners.filter(banner => banner.typeName === 'Home');
+}
+
+function getPromotionalBanner(state) {
+	return state.banners.find(banner => banner.typeName === 'Promoción');
+}
+
+function getPromotionalDetailsBanner(state) {
+	return state.banners.find(banner => banner.typeName === 'Promoción en detalle');
+}
+
 const methods = {
 	bannersTypes,
 	companyLogo,
 	genders,
 	getBanners,
+	getBannersHome,
+	getCommerceData,
 	getDirections,
 	getCurrencySymbol,
+	getPromotionalBanner,
 	getProducts,
+	getPromotionalDetailsBanner,
 	getWarehouses,
 	flagAddVoucher,
 	indeterminate,

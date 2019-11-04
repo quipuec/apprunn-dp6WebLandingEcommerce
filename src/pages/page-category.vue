@@ -88,7 +88,7 @@
 		</div>
 	</div>
 	<app-banner-top 
-		:data="bannerTop"
+		:data="getPromotionalBanner"
 		:color="globalColors.secondary"
 		big/>
 	</div>
@@ -229,6 +229,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getCategories',
+			'getPromotionalBanner',
 		]),
 	},
 	methods: {

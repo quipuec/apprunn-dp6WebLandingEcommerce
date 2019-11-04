@@ -154,7 +154,15 @@ const asyncActions = {
 		commit('SET_FAVORITES', newFavorites);
 		return Number(headers['x-last-page']);
 	},
-
+	LOAD_BANNERS: async ({ commit }, context) => {
+		const { data: banners } = await context.$httpProductsPublic.get('banners-public');
+		commit('SET_BANNERS', banners);
+	},
+	LOAD_COMMERCE_INFO: async ({ commit }, context) => {
+		const url = `com-ecommerce-companies/${process.env.COMMERCE_CODE}/public`;
+		const { data: commerceData } = await context.$httpSalesPublic.get(url);
+		commit('SET_COMMERCE_DATA', commerceData);
+	},
 };
 
 export default asyncActions;

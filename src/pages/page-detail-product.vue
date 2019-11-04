@@ -32,8 +32,8 @@
 			/>
 		</div>
 		<product-publicity class="container-publicity mobile"/>
-		<app-banner-top 
-			:data="bannerTop"
+		<app-banner-top
+			:data="getPromotionalBanner"
 			:color="globalColors.secondary"
 			big/>
 		<warehouses-modal 
@@ -68,6 +68,7 @@ async function loadProduct() {
 	try {
 		const { data: response } = await this.isLoggedUser();
 		this.product = response;
+		document.title = this.product.name.toUpperCase();
 		this.loadData(this.product.id);
 		this.loadOpinions();
 	} catch (error) {
@@ -306,6 +307,7 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getPromotionalBanner',
 			'token',
 		]),
 	},

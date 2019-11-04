@@ -14,6 +14,7 @@
 			label="Solicitar Factura"
 			class="billing-style"
 			:value="getFlagBill"
+			:input-value="getFlagBill"
 			@change="changeBillSelection"
 		></v-switch>
 	</div>	
@@ -50,6 +51,15 @@ import { required, minLength } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 
 const appInput = () => import('@/components/shared/inputs/app-input');
+
+function mounted() {
+	if (this.getOrderInfo && this.getOrderInfo.dataBill) {
+		const { address, ruc, rzSocial } = this.getOrderInfo.dataBill;
+		this.billing = { address, ruc, rzSocial };
+		this.changeBillSelection(true);
+		this.validateForm();
+	}
+}
 
 function validateForm() {
 	this.$store.commit('SET_BILLING_DATA', null);
@@ -90,6 +100,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getFlagBill',
+			'getOrderInfo',
 		]),
 	},
 	data,
@@ -97,6 +108,7 @@ export default {
 		changeBillSelection,
 		validateForm,
 	},
+	mounted,
 	validations,
 };
 </script>

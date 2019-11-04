@@ -10,6 +10,7 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import 'normalize.css';
 import updateFromLocalStorage from '@/mixins/updateFromLocalStorage';
+import loadResources from '@/mixins/loadResources';
 import App from './App';
 import registerVuetify from './vuetify';
 import {
@@ -87,7 +88,7 @@ new Vue({
 		httpResponseInterceptor,
 		httpResponseSuccessInterceptor,
 	},
-	mixins: [updateFromLocalStorage],
+	mixins: [updateFromLocalStorage, loadResources],
 	router,
 	render: h => h(App),
 	store,

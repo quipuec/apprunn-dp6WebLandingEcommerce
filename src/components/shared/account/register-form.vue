@@ -63,10 +63,10 @@
 			</v-flex>
 			<v-flex xs12 mt-2 text-xs-left>
 				<v-checkbox
+					hide-details
 					class="form-check"
 					:value="flagTyc"
 					:color="checkColor"
-					hide-details
 					@change="$emit('set-model', { model: 'flagTyc', value: $event })"
 				>
 					<label slot="label" class="form-label">
@@ -96,7 +96,7 @@
 				type: Boolean,
 			},
 			flagTyc: {
-				default: false,
+				default: null,
 				type: Boolean,
 			},
 			model: {
@@ -108,6 +108,7 @@
 			validatons: {
 				default: () => {
 					return {
+						flagTyc: {},
 						model: {
 							email: {},
 							lastname: {},

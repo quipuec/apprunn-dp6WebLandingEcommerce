@@ -39,12 +39,17 @@
 <script>
 import { required, email, minLength, maxLength } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
+import lib from '@/shared/lib';
 
 const appInput = () => import('@/components/shared/inputs/app-input');
 
 function mounted() {
-	const { dni, email: mail, name, phone } = this.user;
-	this.responsible = { dni, name, email: mail, phone };
+	if (lib.getDeeper('responsiblePickUp')(this.getOrderInfo)) {
+		this.responsible = { ...this.getOrderInfo.responsiblePickUp };
+	} else {
+		const { dni, email: mail, name, phone } = this.user;
+		this.responsible = { dni, name, email: mail, phone };
+	}
 	this.validateForm();
 }
 
@@ -89,6 +94,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'user',
+			'getOrderInfo',
 		]),
 	},
 	data,
