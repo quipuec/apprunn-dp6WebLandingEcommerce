@@ -210,16 +210,18 @@ function favoriteDirection() {
 }
 
 async function calculateShippingCost(location) {
-	const { provinceId } = location;
-	const url = '/weight/price';
-	const body = this.buildBody(provinceId);
-	try {
-		const { data: amount } = await this.$httpProducts.post(url, body);
-		this.$store.commit('SET_SHIPPING_COST', amount || 0);
-	} catch (error) {
-		if (error.data.message === 'PRICE_NOT_CONFIGURATION') {
-			this.$store.commit('SET_SHIPPING_COST', 0);
-			this.showNotification('No es posible hacer envios a ese destino.', 'error');
+	if (location) {
+		const { provinceId } = location;
+		const url = '/weight/price';
+		const body = this.buildBody(provinceId);
+		try {
+			const { data: amount } = await this.$httpProducts.post(url, body);
+			this.$store.commit('SET_SHIPPING_COST', amount || 0);
+		} catch (error) {
+			if (error.data.message === 'PRICE_NOT_CONFIGURATION') {
+				this.$store.commit('SET_SHIPPING_COST', 0);
+				this.showNotification('No es posible hacer envios a ese destino.', 'error');
+			}
 		}
 	}
 }

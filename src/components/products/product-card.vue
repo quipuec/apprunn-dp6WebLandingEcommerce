@@ -12,7 +12,9 @@
 			</div>
 			<div class="product-description-wrapper">
 				<p class="product-description">{{product.description}}</p>
-				<small class="product-brand">{{product.warehouseProduct.brand.name}}</small>
+				<small
+					v-if="product.warehouseProduct && product.warehouseProduct.brand"
+					class="product-brand">{{product.warehouseProduct.brand.name}}</small>
 				<h3
 					:style="`color: ${globalColors.secondary};`"
 					class="product-price-discount"
