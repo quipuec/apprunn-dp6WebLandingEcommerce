@@ -6,7 +6,7 @@
 				<h4 class="summary-title">{{pickUpName}}</h4>
 				<span class="">
 					<span>{{getResponsibleName}}</span>
-					<span class="mx-3">DNI: {{getDni}}</span>
+					<span class="mx-3">{{labelCountry}}: {{getDni}}</span>
 					<span>Teléfono: {{getPhone}}</span>
 				</span>
 				<span>Dirección: {{getDirection}}</span>
@@ -81,6 +81,10 @@ function getAddress() {
 	return lib.getDeeper('dataBill.address')(this.getOrderInfo);
 }
 
+function labelCountry() {
+	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Número de Documento' : 'DNI';
+}
+
 function data() {
 	return {
 		iconSvg: {
@@ -96,6 +100,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getOrderInfo',
+			'user',
 		]),
 		getAddress,
 		getDirection,
@@ -108,6 +113,7 @@ export default {
 		isNotEmptyBilling,
 		pickUpName,
 		stepFour,
+		labelCountry,
 	},
 	data,
 };
