@@ -14,7 +14,7 @@
 			v-model="responsible.dni"
 			@input="validateForm"
 		>
-			<span v-if="$v.responsible.dni.$invalid">El DNI es requerido</span>
+			<span v-if="$v.responsible.dni.$invalid">{{labelError}}</span>
 		</app-input>
 		<app-input
 			placeholder="Celular"
@@ -64,6 +64,10 @@ function labelCountry() {
 	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Cédula' : 'DNI';
 }
 
+function labelError() {
+	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'El número de documento es requerido' : 'El DNI es requerido';
+}
+
 function validations() {
 	return {
 		responsible: {
@@ -99,6 +103,7 @@ export default {
 			'getOrderInfo',
 		]),
 		labelCountry,
+		labelError,
 	},
 	data,
 	methods: {
