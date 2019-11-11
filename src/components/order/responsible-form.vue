@@ -9,7 +9,7 @@
 			<span v-if="$v.responsible.name.$invalid">El nombre es requerido</span>
 		</app-input>
 		<app-input
-			placeholder="DNI"
+			:placeholder="labelCountry"
 			class="mx-2 my-1 responsible-field"
 			v-model="responsible.dni"
 			@input="validateForm"
@@ -37,7 +37,7 @@
 	</form>
 </template>
 <script>
-import { required, email, minLength, maxLength } from 'vuelidate/lib/validators';
+import { required, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import lib from '@/shared/lib';
 
@@ -60,13 +60,15 @@ function validateForm() {
 	}
 }
 
+function labelCountry() {
+	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Cédula' : 'DNI';
+}
+
 function validations() {
 	return {
 		responsible: {
 			dni: {
 				required,
-				minLength: minLength(8),
-				maxLength: maxLength(9),
 			},
 			email: { email, required },
 			name: { required },
@@ -96,6 +98,7 @@ export default {
 			'user',
 			'getOrderInfo',
 		]),
+		labelCountry,
 	},
 	data,
 	methods: {
