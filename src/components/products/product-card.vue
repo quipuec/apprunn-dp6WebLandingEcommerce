@@ -1,48 +1,55 @@
 <template>
 	<div class="product-container" :class="{ 'small': small }" @click="goToProduct(product)">
-		<section class="product-header" :class="{ 'small': small }">
-			<div
-				v-if="product.priceDiscount"
-				:style="`background-color: ${globalColors.primary}`" class="product-discount">
-				- {{discountPercentage}}%
+		<div :class="{ 'opacity': !product.stockWarehouse }">
+			<div v-if="!product.stockWarehouse" class="without-stock-tag">
+				Agotado
 			</div>
-			<div class="product-favorite">
-				<heart-component @click="productFavo" :value="product.flagFavorite"/>
+			<div class="pd-10">
+				<section class="product-header" :class="{ 'small': small }">
+					<div
+						v-if="product.priceDiscount"
+						:style="`background-color: ${globalColors.primary}`" class="product-discount">
+						- {{discountPercentage}}%
+					</div>
+					<div class="product-favorite">
+						<heart-component @click="productFavo" :value="product.flagFavorite"/>
+					</div>
+				</section>
+				<section class="product-content" :class="small ? 'small' : null">
+					<div>
+						<img class="product-img" :src="product.urlImage" alt="imagen del product">
+					</div>
+					<div class="product-description-wrapper">
+						<p class="product-description">{{product.description}}</p>
+						<small
+							v-if="product.warehouseProduct && product.warehouseProduct.brand"
+							class="product-brand">{{product.warehouseProduct.brand.name}}</small>
+						<h3
+							v-if="product.priceDiscount"
+							:style="`color: ${globalColors.secondary};`"
+							class="product-price-discount"
+						>
+							{{ product.priceDiscount }}
+						</h3>
+						<small
+							:class="product.priceDiscount ? 'product-price' : 'product-price-discount'"
+							:style="`color: ${globalColors.secondary};`"
+						>
+							{{ product.price }}
+						</small>
+						<small class="other-buy">+ 1000 compraron esto</small>
+						<v-rating
+							small
+							readonly
+							class="product-rating"
+							background-color="#ffcc03"
+							color="#ffcc03"
+							v-model="product.rating"
+						></v-rating>
+					</div>
+				</section>
 			</div>
-		</section>
-		<section class="product-content" :class="small ? 'small' : null">
-			<div>
-				<img class="product-img" :src="product.urlImage" alt="imagen del product">
-			</div>
-			<div class="product-description-wrapper">
-				<p class="product-description">{{product.description}}</p>
-				<small
-					v-if="product.warehouseProduct && product.warehouseProduct.brand"
-					class="product-brand">{{product.warehouseProduct.brand.name}}</small>
-				<h3
-					v-if="product.priceDiscount"
-					:style="`color: ${globalColors.secondary};`"
-					class="product-price-discount"
-				>
-					{{ product.priceDiscount }}
-				</h3>
-				<small
-					:class="product.priceDiscount ? 'product-price' : 'product-price-discount'"
-					:style="`color: ${globalColors.secondary};`"
-				>
-					{{ product.price }}
-				</small>
-				<small class="other-buy">+ 1000 compraron esto</small>
-				<v-rating
-					small
-					readonly
-					class="product-rating"
-					background-color="#ffcc03"
-					color="#ffcc03"
-					v-model="product.rating"
-				></v-rating>
-			</div>
-		</section>
+		</div>
 	</div>
 </template>
 <script>
@@ -108,7 +115,6 @@ export default {
 		cursor: pointer;
 		font-family: font(medium);
 		height: auto;
-		padding: 10px;
 
 		@media (min-width: 500px) {
 			border: 3px solid color(border);
@@ -226,6 +232,34 @@ export default {
 		.v-icon {
 			padding: 0.3rem !important;
 		}
+	}
+
+	.opacity {
+		height: 100%;
+		opacity: 0.43;
+		position: relative;
+
+		.without-stock-tag {
+			background-color: color(dark);
+			bottom: 0;
+			color: color(white);
+			font-family: font(bold);
+			font-size: size(xlarge);
+			height: 48px;
+			left: 0;
+			line-height: 48px;
+			margin: auto;
+			position: absolute;
+			right: 0;
+			text-align: center;
+			text-transform: uppercase;
+			top: 0;
+			width: 100%;
+		}
+	}
+
+	.pd-10 {
+		padding: 10px;
 	}
 </style>
 
