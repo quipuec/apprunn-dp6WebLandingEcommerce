@@ -1,7 +1,11 @@
 <template>
 	<div class="product-container" :class="{ 'small': small }" @click="goToProduct(product)">
 		<section class="product-header" :class="{ 'small': small }">
-			<div :style="`background-color: ${globalColors.primary}`" class="product-discount">- {{discountPercentage}}%</div>
+			<div
+				v-if="product.priceDiscount"
+				:style="`background-color: ${globalColors.primary}`" class="product-discount">
+				- {{discountPercentage}}%
+			</div>
 			<div class="product-favorite">
 				<heart-component @click="productFavo" :value="product.flagFavorite"/>
 			</div>
@@ -12,12 +16,22 @@
 			</div>
 			<div class="product-description-wrapper">
 				<p class="product-description">{{product.description}}</p>
-				<small class="product-brand">{{product.warehouseProduct.brand.name}}</small>
+				<small
+					v-if="product.warehouseProduct && product.warehouseProduct.brand"
+					class="product-brand">{{product.warehouseProduct.brand.name}}</small>
 				<h3
+					v-if="product.priceDiscount"
 					:style="`color: ${globalColors.secondary};`"
 					class="product-price-discount"
-				>{{product.priceDiscount || 0}}</h3>
-				<small class="product-price">{{product.price || 0}}</small>
+				>
+					{{ product.priceDiscount }}
+				</h3>
+				<small
+					:class="product.priceDiscount ? 'product-price' : 'product-price-discount'"
+					:style="`color: ${globalColors.secondary};`"
+				>
+					{{ product.price }}
+				</small>
 				<small class="other-buy">+ 1000 compraron esto</small>
 				<v-rating
 					small
@@ -25,7 +39,8 @@
 					class="product-rating"
 					background-color="#ffcc03"
 					color="#ffcc03"
-					v-model="product.rating"></v-rating>
+					v-model="product.rating"
+				></v-rating>
 			</div>
 		</section>
 	</div>
@@ -187,7 +202,7 @@ export default {
 
 	.product-price,
 	.other-buy {
-		color: color(base);
+		color: color(base) !important;
 		font-size: size(xsmall);
 	}
 

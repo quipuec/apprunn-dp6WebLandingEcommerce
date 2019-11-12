@@ -21,8 +21,8 @@ function selectedMarker(args) {
 	this.$store.commit('SET_DELIVERY_PLACE', args);
 }
 
-function setCoords(args) {
-	console.log(args.latLng.lat());
+function setCoords() {
+	// console.log(args.latLng.lat());
 }
 
 export default {

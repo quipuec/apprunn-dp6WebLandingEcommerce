@@ -5,15 +5,16 @@
 				v-model="data.flagFavorite"
 				class="container-like"
 				@click="addToFavorites"
-				:value="data.flagFavorite"/>
+				:value="data.flagFavorite"
+			/>
 		</div>
 		<div class="container-detail-information">
 			<div class="container-detail-name">
-				<p class="product-detail-name">{{data.name}}</p>
-				<p class="product-detail-brand">{{getBrandName(data) || '--'}}</p>
+				<p class="product-detail-name">{{ data.name }}</p>
+				<p class="product-detail-brand">{{ getBrandName(data) || '--' }}</p>
 			</div>
 			<div class="d-center container-code-rating">
-				<span class="product-detail-code">#{{data.code}}</span>
+				<span class="product-detail-code">#{{ data.code }}</span>
 				<div class="container-rating d-center">
 					<v-rating
 						small
@@ -21,21 +22,33 @@
 						background-color="#ffcc03"
 						:color="globalColors.highLight"
 						v-model="data.rating"
-						readonly>
-					</v-rating>
+						readonly
+					></v-rating>
 					<span class="text-rating">{{ data.rating }} / 5</span>
 				</div>
 			</div>
 		</div>
 		<div class="container-detail-bottom">
-			<div class="d-center mt-25">
-				<span class="text-price-dis" :style="`color: ${globalColors.secondary}`">{{getCurrencySymbol}} {{data.priceDiscount || ''}}</span>
+			<div v-if="data.priceDiscount" class="d-center mt-25">
+				<span
+					class="text-price-dis"
+					:style="`color: ${globalColors.secondary}`"
+				>
+					{{ getCurrencySymbol }} {{ data.priceDiscount }}
+				</span>
 				<div
 					:style="`background: ${globalColors.primary};`"
 					class="content-discount"
-				>- {{getDiscont}}%</div>
+				>
+					- {{ getDiscont }}%
+				</div>
 			</div>
-			<span class="text-price">{{getCurrencySymbol}} {{data.price || ''}}</span>
+			<span
+				:class="data.priceDiscount ? 'text-price' : 'text-price-dis'"
+				:style="`color: ${globalColors.secondary}`"
+			>
+				{{ getCurrencySymbol }} {{ data.price }}
+			</span>
 		</div>
 		<product-childrens 
 			:features="features"
@@ -191,7 +204,7 @@ export default {
 	}
 
 	.text-price {
-		color: color(border);
+		color: color(border) !important;
 		font-family: font(bold);
 		font-size: size(large);
 		position: relative;
