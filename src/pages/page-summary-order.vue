@@ -14,6 +14,7 @@
 	</div>
 </template>
 <script>
+import { mapActions } from 'vuex';
 
 const productsBuyed = () => import('@/components/order/products-buyed');
 const summaryOrder = () => import('@/components/order/summary-order');
@@ -21,18 +22,28 @@ const thanksMessage = () => import('@/components/order/thanks-message');
 const summaryInPayment = () => import('@/components/order/summary-in-payment');
 const paymentMethods = () => import('@/components/order/payment-method');
 
+function beforeDestroy() {
+	this.SET_DEFAULT_VALUES();
+}
+
 function mounted() {
 	this.$store.commit('EMPTY_CAR');
 }
 
 export default {
 	name: 'page-summary-order',
+	beforeDestroy,
 	components: {
 		paymentMethods,
 		productsBuyed,
 		summaryInPayment,
 		summaryOrder,
 		thanksMessage,
+	},
+	methods: {
+		...mapActions([
+			'SET_DEFAULT_VALUES',
+		]),
 	},
 	mounted,
 };
