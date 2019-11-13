@@ -20,7 +20,7 @@
 				<app-button
 					action="Iniciar Sesión"
 					background="red"
-					img="http://www.sclance.com/pngs/facebook-logo-white-png/facebook_logo_white_png_466292.png"
+					img="/static/img/icons/icon-facebook.svg"
 					img-border-color="#324988"
 					img-height="25"
 				></app-button>
