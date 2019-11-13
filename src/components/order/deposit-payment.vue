@@ -2,19 +2,19 @@
 	<div class="deposit-container">
 		<div class="deposit-wrapper" v-if="stepFour">
 			<div class="deposit-select-bank">
-				<img :src="logo.bcp" alt="logo de banco">
+				<img :src="logo.pichincha" alt="logo de banco" class="icon-bank-ecuador">
 			</div>
 			<h4 class="deposit-title">¡Gracias por comprar en MRC!</h4>
-			<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago, puedes utilizar la Banca por Internet BCP , Agentes del BCP (hasta S/ 800.00) y Oficinas BCP a Nivel nacional con tu número de pedido.</p>
+			<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago, puedes utilizar la Banca por Internet Pichincha , Agentes del Pichincha y Oficinas Pichincha a Nivel nacional con tu número de pedido.</p>
 		</div>
 		<div class="deposit-wrapper" v-else>
-			<v-radio-group  v-model="selectedBank">
+			<v-radio-group  v-model="selectedBankEcu">
 				<div class="deposit-select-bank">
-					<v-radio value="bcp"></v-radio>
-					<img :src="logo.bcp" alt="logo de banco">
+					<v-radio value="pichincha"></v-radio>
+					<img :src="logo.pichincha" alt="logo de banco" class="icon-bank-ecuador">
 				</div>
-				<h4 class="deposit-title">Banco de crédito BCP</h4>
-				<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago, puedes utilizar la Banca por Internet BCP , Agentes del BCP (hasta S/ 800.00) y Oficinas BCP a Nivel nacional con tu número de pedido.</p>
+				<h4 class="deposit-title">Banco Pichincha</h4>
+				<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago, puedes utilizar la Banca por Internet Pichincha , Agentes del Pichincha y Oficinas Pichincha a Nivel nacional con tu número de pedido.</p>
 			</v-radio-group>
 		</div>
 		<div class="bank-account-container">
@@ -40,8 +40,10 @@ function data() {
 		logo: {
 			bbva: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/logo-bbva.png',
 			bcp: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/logo-bcp.png',
+			pichincha: 'https://japi-static.s3.amazonaws.com/japi-sales-error/banco-pichincha.jpg',
 		},
 		selectedBank: 'bcp',
+		selectedBankEcu: 'pichincha',
 	};
 }
 
@@ -109,8 +111,13 @@ export default {
 	}
 
 	.deposit-select-bank {
-		align-items: flex-start;
+		align-items: center;
 		display: flex;
 		justify-content: flex-start;
+	}
+
+	.icon-bank-ecuador {
+		height: 70px;
+		width: 105px;
 	}
 </style>
