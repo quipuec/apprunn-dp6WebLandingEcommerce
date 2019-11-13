@@ -19,7 +19,7 @@
 			<v-flex xs12>
 				<app-button
 					action="Iniciar Sesión"
-					background="red"
+					background="yellow"
 					img="/static/img/icons/icon-facebook.svg"
 					img-border-color="#324988"
 					img-height="25"
