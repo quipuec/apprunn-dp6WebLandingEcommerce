@@ -211,7 +211,11 @@ function hoverCategory(item) {
 
 function goToCategory(item) {
 	const id = item.slug || item.id;
-	this.goTo('category', { params: { id } });
+	if (item.slug !== '') {
+		this.goTo('category', { params: { slug: item.slug, id: item.id } });
+	} else {
+		this.goTo('category', { params: { id } });
+	}
 }
 
 function data() {
