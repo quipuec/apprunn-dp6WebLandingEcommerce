@@ -14,7 +14,7 @@
 					<img :src="logo.pichincha" alt="logo de banco" class="icon-bank-ecuador">
 				</div>
 				<h4 class="deposit-title">Banco Pichincha</h4>
-				<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago, puedes utilizar la Banca por Internet Pichincha , Agentes del Pichincha (hasta S/ 800.00) y Oficinas Pichincha a Nivel nacional con tu número de pedido.</p>
+				<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago, puedes utilizar la Banca por Internet Pichincha , Agentes del Pichincha y Oficinas Pichincha a Nivel nacional con tu número de pedido.</p>
 			</v-radio-group>
 		</div>
 		<div class="bank-account-container">
