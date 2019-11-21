@@ -16,7 +16,7 @@
 				<p
 					:style="`color: ${globalColors.secondary};`"
 					class="product-title">Precio UND</p>
-				<p class="product-price">{{product.salePrice || product.priceDiscount}}</p>
+				<p class="product-price">{{ product.salePrice || product.priceDiscount || product.price }}</p>
 			</div>
 			<div class="quantity text-xs-center">
 				<p
