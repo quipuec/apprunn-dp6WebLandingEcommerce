@@ -194,8 +194,8 @@ function logout() {
 
 function goToCategories(item) {
 	if (item.length) {
-		const id = item[0].slug || item[0].id;
-		this.goTo('category', { params: { id } });
+		const { slug, id } = item[0];
+		this.goTo('category', { params: { slug: slug || id, id } });
 	}
 }
 
@@ -209,13 +209,8 @@ function hoverCategory(item) {
 	}
 }
 
-function goToCategory(item) {
-	const id = item.slug || item.id;
-	if (item.slug !== '') {
-		this.goTo('category', { params: { slug: item.slug, id: item.id } });
-	} else {
-		this.goTo('category', { params: { id } });
-	}
+function goToCategory({ slug, id }) {
+	this.goTo('category', { params: { slug: slug || id, id } });
 }
 
 function data() {
