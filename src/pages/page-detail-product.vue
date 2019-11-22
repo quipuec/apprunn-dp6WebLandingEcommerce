@@ -3,7 +3,8 @@
 		<div class="detail-product-top">
 			<product-view 
 				:data="product"
-				class="container-product-view"/>
+				class="container-product-view"
+			/>
 			<productDetail 
 				:data="product"
 				:features="features"
@@ -13,7 +14,7 @@
 				@clear="clearFeatures"
 				@click-quantity="clickQuantity"
 				@open-dialog="openDialog"
-				/>
+			/>
 		</div>
 		<div class="detail-tab-publicity">
 			<product-publicity class="container-publicity desktop"/>
@@ -35,11 +36,13 @@
 		<app-banner-top
 			:data="getPromotionalBanner"
 			:color="globalColors.secondary"
-			big/>
+			big
+		/>
 		<warehouses-modal 
 			:dialog="dialogWarehouses"
 			:rows="warehouses"
-			@change-modal="closeModal"/>
+			@change-modal="closeModal"
+		/>
 	</div>
 </template>
 <script>

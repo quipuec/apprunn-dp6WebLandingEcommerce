@@ -132,7 +132,7 @@ function getDetails(products) {
 			productImage: p.urlImage || p.productImage,
 			productName: p.name || p.productName,
 			quantity: p.quantity,
-			salePrice: p.priceDiscount || p.salePrice,
+			salePrice: p.priceDiscount || p.salePrice || p.price,
 			stockQuantity: p.stock,
 			taxes: newTaxes,
 			unit: p.unit,

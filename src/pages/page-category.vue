@@ -157,9 +157,8 @@ function getCurrentcategory(categories, id) {
 	return current;
 }
 
-function changeCategory(dataCategory) {
-	const id = dataCategory.slug || dataCategory.id;
-	this.goTo('category', { params: { id } });
+function changeCategory({ slug, id }) {
+	this.goTo('category', { params: { slug: slug || id, id } });
 	this.page = 1;
 	if (window.innerWidth < 986) {
 		this.open = false;
@@ -186,9 +185,8 @@ function closeOpen() {
 	this.open = false;
 }
 
-function linkCategories(item) {
-	const id = item.slug || item.id;
-	this.goTo('category', { params: { id } });
+function linkCategories({ slug, id }) {
+	this.goTo('category', { params: { slug: slug || id, id } });
 }
 
 function toggleCategory() {

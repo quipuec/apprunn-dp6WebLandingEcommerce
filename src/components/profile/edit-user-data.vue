@@ -3,7 +3,7 @@
 		<div class="form-container">
 			<form class="user-form">
 				<app-input class="user-name" placeholder="Nombre" v-model="userData.name"/>
-				<app-input class="user-dni" placeholder="DNI" v-model="userData.dni"/>
+				<app-input class="user-dni" :placeholder="labelCountry" v-model="userData.dni"/>
 				<app-input class="user-lastname" placeholder="Apellido" v-model="userData.lastname"/>
 				<app-input class="user-ruc" placeholder="RUC" v-model="userData.ruc"/>
 				<app-select
@@ -123,6 +123,10 @@ function selectProvince(id) {
 	this.$store.dispatch('LOAD_DISTRICTS', { context: this, cityId: id });
 }
 
+function labelCountry() {
+	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Cédula' : 'DNI';
+}
+
 function data() {
 	return {
 		colorBase: process.env.COLOR_BASE,
@@ -159,6 +163,7 @@ export default {
 			'provinces',
 			'user',
 		]),
+		labelCountry,
 	},
 	created,
 	data,
