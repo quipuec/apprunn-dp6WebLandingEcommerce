@@ -48,9 +48,8 @@ function leaveCategory(index) {
 	this.categories[index].hover = false;
 }
 
-function goToCategory(category) {
-	const id = category.slug || category.id;
-	this.goTo('category', { params: { id } });
+function goToCategory({ slug, id }) {
+	this.goTo('category', { params: { slug: slug || id, id } });
 }
 
 function data() {
