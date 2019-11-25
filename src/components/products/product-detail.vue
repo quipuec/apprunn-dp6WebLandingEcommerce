@@ -39,7 +39,7 @@
 		</div>
 		<product-childrens 
 			:features="features"
-			@select="selecFeature"
+			@selected="selecFeature"
 			@clear="$emit('clear')"/>
 		<product-buy 
 			@click="clickQuantity"
@@ -69,8 +69,8 @@ function getDiscont() {
 	return Math.round(Number(this.data.percentageDiscount) * 100);
 }
 
-function selecFeature(index, value) {
-	this.$emit('select', index, value);
+function selecFeature(value) {
+	this.$emit('selected', value);
 }
 
 function clickQuantity(value) {
@@ -125,12 +125,12 @@ export default {
 	},
 	props: {
 		data: {
-			type: Object,
 			default: () => {},
+			type: Object,
 		},
 		features: {
-			type: Array,
 			default: () => [],
+			type: Array,
 		},
 	},
 };

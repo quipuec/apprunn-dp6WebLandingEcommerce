@@ -2,18 +2,19 @@
 	<div class="page-detail-product">
 		<div class="detail-product-top">
 			<product-view 
+				:data="productDetails"
+				class="container-product-view"
+			/>
+			<product-detail 
 				:data="product"
-				class="container-product-view"/>
-			<productDetail 
-				:data="product"
-				:features="features"
+				:features="globalFeatures"
 				class="container-product-detail"
 				@update="loadData"
-				@select="selectFeature"
+				@selected="selectFeature"
 				@clear="clearFeatures"
 				@click-quantity="clickQuantity"
 				@open-dialog="openDialog"
-				/>
+			/>
 		</div>
 		<div class="detail-tab-publicity">
 			<product-publicity class="container-publicity desktop"/>
@@ -44,6 +45,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import ProductDetails from '@/class/productDetails';
 
 const appBannerTop = () => import('@/components/header/app-banner-top');
 const productView = () => import('@/components/products/product-view');
@@ -94,6 +96,10 @@ async function loadData(id) {
 	this.tabs = this.product.sections.map(p => p.name);
 	this.tabs.push('Comentarios');
 	this.lastIndex = this.product.sections.length;
+	this.productInstance = new ProductDetails(this.childrens);
+	this.productInstance.firstProductSelected(this.product);
+	this.globalFeatures = [...this.productInstance.getFeatures()];
+	this.productDetails = { ...this.productInstance.geProductDetails() };
 	this.allFeatures = this.childrens.reduce((acum, children) => acum.concat(children.features), []);
 	this.features = this.allFeatures.reduce((acum, feature) => {
 		const index = acum.findIndex(a => a.name === feature.name);
@@ -110,23 +116,25 @@ async function loadData(id) {
 				acum[index].values.push(value);
 			}
 		} else {
-			acum.push({ name: feature.name,
-				value: 'PADRE',
-				values: [
-					{ name: feature.name,
-						active: false,
-						possible: false,
-						disabled: true,
-						code: 'PADRE',
-					},
-					{ name: feature.value,
-						active: false,
-						possible: false,
-						disabled: false,
-						code: feature.code,
-					},
-				],
-			});
+			acum.push(
+				{
+					name: feature.name,
+					value: 'PADRE',
+					values: [
+						{ name: feature.name,
+							active: false,
+							possible: false,
+							disabled: true,
+							code: 'PADRE',
+						},
+						{ name: feature.value,
+							active: false,
+							possible: false,
+							disabled: false,
+							code: feature.code,
+						},
+					],
+				});
 		}
 		return acum;
 	}, []);
@@ -135,40 +143,43 @@ async function loadData(id) {
 	}
 }
 
-function selectFeature(index, value) {
-	this.featureSelect.push({ name: this.features[index].name, code: value });
-	this.filterProduct(this.featureSelect);
+function selectFeature(value) {
+	this.productInstance.featureSelected(value);
+	this.globalFeatures = [...this.productInstance.getFeatures()];
+	this.productDetails = { ...this.productInstance.geProductDetails() };
+	// this.featureSelect.push({ name: this.features[index].name, code: value });
+	// this.filterProduct(this.featureSelect);
 }
 
-function filterProduct(filters) {
-	const numFilter = filters.length;
-	this.arrayPossible = [];
-	this.productsFilter = this.childrens.reduce((acum, children) => {
-		const flagFilter = [];
-		filters.forEach((filter) => {
-			if (children.features.filter(f => f.name === filter.name &&
-				f.code === filter.code).length) {
-				flagFilter.push(filter);
-			}
-		});
-		if (flagFilter.length === numFilter) {
-			acum.push(children);
-			children.features.forEach((element) => {
-				if (this.arrayPossible.length) {
-					const index = this.arrayPossible.findIndex(a => a.name === element.name
-						&& a.value === element.value);
-					if (index === -1) {
-						this.arrayPossible.push({ name: element.name, value: element.code });
-					}
-				} else {
-					this.arrayPossible.push({ name: element.name, value: element.code });
-				}
-			});
-		}
-		return acum;
-	}, []);
-	this.possibleFeature(this.arrayPossible);
-}
+// function filterProduct(filters) {
+// 	const numFilter = filters.length;
+// 	this.arrayPossible = [];
+// 	this.productsFilter = this.childrens.reduce((acum, children) => {
+// 		const flagFilter = [];
+// 		filters.forEach((filter) => {
+// 			if (children.features.filter(f => f.name === filter.name &&
+// 				f.code === filter.code).length) {
+// 				flagFilter.push(filter);
+// 			}
+// 		});
+// 		if (flagFilter.length === numFilter) {
+// 			acum.push(children);
+// 			children.features.forEach((element) => {
+// 				if (this.arrayPossible.length) {
+// 					const index = this.arrayPossible.findIndex(a => a.name === element.name
+// 						&& a.value === element.value);
+// 					if (index === -1) {
+// 						this.arrayPossible.push({ name: element.name, value: element.code });
+// 					}
+// 				} else {
+// 					this.arrayPossible.push({ name: element.name, value: element.code });
+// 				}
+// 			});
+// 		}
+// 		return acum;
+// 	}, []);
+// 	this.possibleFeature(this.arrayPossible);
+// }
 
 function possibleFeature(possibles) {
 	this.features = this.features.map((element, index) => {
@@ -268,27 +279,30 @@ function closeModal(value) {
 
 function data() {
 	return {
-		lastIndex: 0,
-		opinions: [],
-		product: {},
-		relateds: [],
-		childrens: [],
 		allFeatures: [],
-		features: [],
-		featureSelect: [],
 		arrayPossible: [],
-		productsFilter: [],
-		productFather: {},
-		disabledBtn: false,
-		dialogWarehouses: false,
-		cities: [],
-		warehouses: [],
 		bannerTop: {
 			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
 			image: 'descuento',
 		},
+		childrens: [],
+		cities: [],
+		disabledBtn: false,
+		dialogWarehouses: false,
+		features: [],
+		featureSelect: [],
 		featuresFather: [],
+		globalFeatures: [],
+		lastIndex: 0,
+		opinions: [],
+		product: {},
+		productDetails: {},
+		productInstance: {},
+		productsFilter: [],
+		productFather: {},
+		relateds: [],
 		tabs: [],
+		warehouses: [],
 	};
 }
 
@@ -314,7 +328,7 @@ export default {
 	methods: {
 		assignProduct,
 		clearFeatures,
-		filterProduct,
+		// filterProduct,
 		isLoggedUser,
 		loadData,
 		loadOpinions,
