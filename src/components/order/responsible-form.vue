@@ -9,12 +9,12 @@
 			<span v-if="$v.responsible.name.$invalid">El nombre es requerido</span>
 		</app-input>
 		<app-input
-			placeholder="DNI"
+			:placeholder="labelCountry"
 			class="mx-2 my-1 responsible-field"
 			v-model="responsible.dni"
 			@input="validateForm"
 		>
-			<span v-if="$v.responsible.dni.$invalid">El DNI es requerido</span>
+			<span v-if="$v.responsible.dni.$invalid">{{labelError}}</span>
 		</app-input>
 		<app-input
 			placeholder="Celular"
@@ -37,14 +37,19 @@
 	</form>
 </template>
 <script>
-import { required, email, minLength, maxLength } from 'vuelidate/lib/validators';
+import { required, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
+import lib from '@/shared/lib';
 
 const appInput = () => import('@/components/shared/inputs/app-input');
 
 function mounted() {
-	const { dni, email: mail, name, phone } = this.user;
-	this.responsible = { dni, name, email: mail, phone };
+	if (lib.getDeeper('responsiblePickUp')(this.getOrderInfo)) {
+		this.responsible = { ...this.getOrderInfo.responsiblePickUp };
+	} else {
+		const { dni, email: mail, name, phone } = this.user;
+		this.responsible = { dni, name, email: mail, phone };
+	}
 	this.validateForm();
 }
 
@@ -55,13 +60,19 @@ function validateForm() {
 	}
 }
 
+function labelCountry() {
+	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Cédula' : 'DNI';
+}
+
+function labelError() {
+	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'El número de documento es requerido' : 'El DNI es requerido';
+}
+
 function validations() {
 	return {
 		responsible: {
 			dni: {
 				required,
-				minLength: minLength(8),
-				maxLength: maxLength(9),
 			},
 			email: { email, required },
 			name: { required },
@@ -89,7 +100,10 @@ export default {
 	computed: {
 		...mapGetters([
 			'user',
+			'getOrderInfo',
 		]),
+		labelCountry,
+		labelError,
 	},
 	data,
 	methods: {

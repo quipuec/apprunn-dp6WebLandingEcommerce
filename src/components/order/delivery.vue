@@ -72,8 +72,8 @@ function created() {
 	this.$store.dispatch('LOAD_WAREHOUSES', this);
 	this.$store.commit('SET_DELIVERY_PLACE', null);
 	if (!lib.isEmpty(this.getOrderInfo)) {
-		this.$store.commit('SET_DELIVERY_PLACE', this.getOrderInfo.customerAddress);
-		this.selectedDirection = this.getOrderInfo.customerAddress || this.selectedDirection;
+		this.$store.commit('SET_DELIVERY_PLACE', this.getOrderInfo.deliveryAddress);
+		this.selectedDirection = this.getOrderInfo.deliveryAddress || this.selectedDirection;
 	}
 }
 
@@ -194,9 +194,8 @@ function clearSelectedWarehouse() {
 	};
 }
 
-function handlerDirectionsChange(newDirections) {
+function handlerDirectionsChange() {
 	if (this.getFlagPickUp === 1) {
-		this.favoriteDirection = newDirections.find(f => f.isFavorite);
 		const directionDelivery = this.getDeliveryAddress || this.favoriteDirection;
 		this.$store.commit('SET_DELIVERY_PLACE', directionDelivery);
 		this.calculateShippingCost(directionDelivery);
@@ -206,17 +205,23 @@ function handlerDirectionsChange(newDirections) {
 	}
 }
 
+function favoriteDirection() {
+	return this.getDirections.find(f => f.isFavorite);
+}
+
 async function calculateShippingCost(location) {
-	const { provinceId } = location;
-	const url = '/weight/price';
-	const body = this.buildBody(provinceId);
-	try {
-		const { data: amount } = await this.$httpProducts.post(url, body);
-		this.$store.commit('SET_SHIPPING_COST', amount || 0);
-	} catch (error) {
-		if (error.data.message === 'PRICE_NOT_CONFIGURATION') {
-			this.$store.commit('SET_SHIPPING_COST', 0);
-			this.showNotification('No es posible hacer envios a ese destino.', 'error');
+	if (location) {
+		const { provinceId } = location;
+		const url = '/weight/price';
+		const body = this.buildBody(provinceId);
+		try {
+			const { data: amount } = await this.$httpProducts.post(url, body);
+			this.$store.commit('SET_SHIPPING_COST', amount || 0);
+		} catch (error) {
+			if (error.data.message === 'PRICE_NOT_CONFIGURATION') {
+				this.$store.commit('SET_SHIPPING_COST', 0);
+				this.showNotification('No es posible hacer envios a ese destino.', 'error');
+			}
 		}
 	}
 }
@@ -241,7 +246,6 @@ function beforeDestroy() {
 
 function data() {
 	return {
-		favoriteDirection: {},
 		logo: {
 			section: '/static/icons/delivery-truck.svg',
 		},
@@ -281,6 +285,7 @@ export default {
 			'getWarehouses',
 		]),
 		disableMapButtonByWarehouse,
+		favoriteDirection,
 		singleOrMultiMarkersOnWarehouses,
 		warehouesesCenter,
 		warehousesMarkers,

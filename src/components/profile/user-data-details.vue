@@ -28,7 +28,7 @@
 		</div>
 		<div class="col">
 			<p>
-				<span class="label">DNI:</span>
+				<span class="label">{{labelCountry}}:</span>
 				<span class="user-content">{{getValue('typePerson.documentNumber', user)}}</span>
 			</p>
 			<p>
@@ -87,6 +87,10 @@ function provinceHandler() {
 	return name;
 }
 
+function labelCountry() {
+	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Cédula' : 'DNI';
+}
+
 export default {
 	name: 'user-data-details',
 	computed: {
@@ -97,6 +101,7 @@ export default {
 			'provinces',
 			'user',
 		]),
+		labelCountry,
 	},
 	methods: {
 		departmentsHandler,

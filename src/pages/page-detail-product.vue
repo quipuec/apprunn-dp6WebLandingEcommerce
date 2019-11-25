@@ -36,11 +36,13 @@
 		<app-banner-top
 			:data="getPromotionalBanner"
 			:color="globalColors.secondary"
-			big/>
+			big
+		/>
 		<warehouses-modal 
 			:dialog="dialogWarehouses"
 			:rows="warehouses"
-			@change-modal="closeModal"/>
+			@change-modal="closeModal"
+		/>
 	</div>
 </template>
 <script>
@@ -70,6 +72,7 @@ async function loadProduct() {
 	try {
 		const { data: response } = await this.isLoggedUser();
 		this.product = response;
+		document.title = this.product.name.toUpperCase();
 		this.loadData(this.product.id);
 		this.loadOpinions();
 	} catch (error) {
@@ -147,39 +150,7 @@ function selectFeature(value) {
 	this.productInstance.featureSelected(value);
 	this.globalFeatures = [...this.productInstance.getFeatures()];
 	this.productDetails = { ...this.productInstance.geProductDetails() };
-	// this.featureSelect.push({ name: this.features[index].name, code: value });
-	// this.filterProduct(this.featureSelect);
 }
-
-// function filterProduct(filters) {
-// 	const numFilter = filters.length;
-// 	this.arrayPossible = [];
-// 	this.productsFilter = this.childrens.reduce((acum, children) => {
-// 		const flagFilter = [];
-// 		filters.forEach((filter) => {
-// 			if (children.features.filter(f => f.name === filter.name &&
-// 				f.code === filter.code).length) {
-// 				flagFilter.push(filter);
-// 			}
-// 		});
-// 		if (flagFilter.length === numFilter) {
-// 			acum.push(children);
-// 			children.features.forEach((element) => {
-// 				if (this.arrayPossible.length) {
-// 					const index = this.arrayPossible.findIndex(a => a.name === element.name
-// 						&& a.value === element.value);
-// 					if (index === -1) {
-// 						this.arrayPossible.push({ name: element.name, value: element.code });
-// 					}
-// 				} else {
-// 					this.arrayPossible.push({ name: element.name, value: element.code });
-// 				}
-// 			});
-// 		}
-// 		return acum;
-// 	}, []);
-// 	this.possibleFeature(this.arrayPossible);
-// }
 
 function possibleFeature(possibles) {
 	this.features = this.features.map((element, index) => {
@@ -328,7 +299,6 @@ export default {
 	methods: {
 		assignProduct,
 		clearFeatures,
-		// filterProduct,
 		isLoggedUser,
 		loadData,
 		loadOpinions,

@@ -6,7 +6,7 @@
 				<h4 class="summary-title">{{pickUpName}}</h4>
 				<span class="">
 					<span>{{getResponsibleName}}</span>
-					<span class="mx-3">DNI: {{getDni}}</span>
+					<span class="mx-3">{{labelCountry}}: {{getDni}}</span>
 					<span>Teléfono: {{getPhone}}</span>
 				</span>
 				<span>Dirección: {{getDirection}}</span>
@@ -37,7 +37,7 @@ import lib from '@/shared/lib';
 import { mapGetters } from 'vuex';
 
 function isNotEmptyBilling() {
-	const customerBill = lib.getDeeper('customerBill')(this.getOrderInfo);
+	const customerBill = lib.getDeeper('dataBill')(this.getOrderInfo);
 	return !(lib.isEmpty(customerBill));
 }
 
@@ -70,15 +70,19 @@ function getWayPayment() {
 }
 
 function getRuc() {
-	return lib.getDeeper('customerBill.ruc')(this.getOrderInfo);
+	return lib.getDeeper('dataBill.ruc')(this.getOrderInfo);
 }
 
 function getRzSocial() {
-	return lib.getDeeper('customerBill.rzSocial')(this.getOrderInfo);
+	return lib.getDeeper('dataBill.rzSocial')(this.getOrderInfo);
 }
 
 function getAddress() {
-	return lib.getDeeper('customerBill.address')(this.getOrderInfo);
+	return lib.getDeeper('dataBill.address')(this.getOrderInfo);
+}
+
+function labelCountry() {
+	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Número de Documento' : 'DNI';
 }
 
 function data() {
@@ -96,6 +100,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getOrderInfo',
+			'user',
 		]),
 		getAddress,
 		getDirection,
@@ -108,6 +113,7 @@ export default {
 		isNotEmptyBilling,
 		pickUpName,
 		stepFour,
+		labelCountry,
 	},
 	data,
 };

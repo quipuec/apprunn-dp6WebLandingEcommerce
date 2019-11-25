@@ -8,8 +8,8 @@ const getters = {
 			const products = lib.map(
 				lib.setNewProperty(
 					'total',
-					({ salePrice, priceDiscount, quantity }) =>
-						twoDecimals(quantity * (salePrice || priceDiscount)),
+					({ price, salePrice, priceDiscount, quantity }) =>
+						twoDecimals(quantity * (salePrice || priceDiscount || price)),
 				),
 				state.order.products,
 			);
@@ -24,8 +24,8 @@ const getters = {
 		const { products, order } = state.order;
 		const newProducts = order ? order.details : products;
 		return newProducts.reduce(
-			(acc, { priceDiscount, salePrice, quantity }) =>
-				twoDecimals((priceDiscount || salePrice) * quantity) + acc, 0);
+			(acc, { price, priceDiscount, salePrice, quantity }) =>
+				twoDecimals((priceDiscount || salePrice || price) * quantity) + acc, 0);
 	},
 	getTotalQuantityProducts(state) {
 		const { products } = state.order;

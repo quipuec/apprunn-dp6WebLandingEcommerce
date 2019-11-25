@@ -28,11 +28,10 @@ export default function (Vue) {
 			Order,
 			ProductDetail,
 			Profile,
+			RecoverPassword,
 			register,
-			ProductDetail,
 			restorePassword,
 			SummaryOrder,
-			RecoverPassword,
 		],
 		scrollBehavior() {
 			return { x: 0, y: 0 };
