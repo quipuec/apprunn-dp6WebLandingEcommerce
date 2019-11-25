@@ -46,7 +46,7 @@
 	</div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import ProductDetails from '@/class/productDetails';
 
 const appBannerTop = () => import('@/components/header/app-banner-top');
@@ -57,8 +57,9 @@ const productRelated = () => import('@/components/products/product-related');
 const warehousesModal = () => import('@/components/products/warehouses-modal');
 const productPublicity = () => import('@/components/products/product-publicity');
 
-function created() {
-	this.loadProduct();
+async function created() {
+	this.$loading(true);
+	await this.loadProduct();
 }
 
 function isLoggedUser() {
@@ -197,6 +198,7 @@ async function loadOpinions() {
 	};
 	const { data: response } = await this.$httpProductsPublic.get('question-answer/public', { params });
 	this.opinions = response;
+	this.$loading(false);
 }
 
 function clearFeatures() {
@@ -294,9 +296,15 @@ export default {
 			'getPromotionalBanner',
 			'token',
 		]),
+		...mapGetters('loading', [
+			'isLoading',
+		]),
 	},
 	data,
 	methods: {
+		...mapActions('loading', {
+			$loading: 'SET_LOADING_FLAG',
+		}),
 		assignProduct,
 		clearFeatures,
 		isLoggedUser,
@@ -394,5 +402,6 @@ export default {
 			padding: 0 5%;
 		}
 	}
+
 </style>
 

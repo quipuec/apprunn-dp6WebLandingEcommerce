@@ -10,11 +10,17 @@
 		</div>
 		<div class="container-detail-information">
 			<div class="container-detail-name">
-				<p class="product-detail-name">{{ data.name }}</p>
-				<p class="product-detail-brand">{{ getBrandName(data) || '--' }}</p>
+				<p
+					:class="[isLoading ? 'loading' : 'product-detail-name']"
+				>{{ data.name }}</p>
+				<p
+					:class="[isLoading ? 'loading' : 'product-detail-brand']"
+				>{{ getBrandName(data) || '--' }}</p>
 			</div>
 			<div class="d-center container-code-rating">
-				<span class="product-detail-code">#{{ data.code }}</span>
+				<span
+					:class="[isLoading ? 'loading' : 'product-detail-code']"
+				>#{{ data.code }}</span>
 				<div class="container-rating d-center">
 					<v-rating
 						small
@@ -31,20 +37,22 @@
 		<div class="container-detail-bottom">
 			<div v-if="data.priceDiscount" class="d-center mt-25">
 				<span
-					class="text-price-dis"
+					:class="[isLoading ? 'loading' : 'text-price-dis']"
 					:style="`color: ${globalColors.secondary}`"
 				>
 					{{ getCurrencySymbol }} {{ data.priceDiscount }}
 				</span>
 				<div
 					:style="`background: ${globalColors.primary};`"
-					class="content-discount"
+					:class="[isLoading ? 'loading' : 'content-discount']"
 				>
 					- {{ getDiscont }}%
 				</div>
 			</div>
 			<span
-				:class="data.priceDiscount ? 'text-price' : 'text-price-dis'"
+				:class="[
+					isLoading ? 'loading' : data.priceDiscount ? 'text-price' : 'text-price-dis',
+				]"
 				:style="`color: ${globalColors.secondary}`"
 			>
 				{{ getCurrencySymbol }} {{ data.price }}
@@ -124,6 +132,9 @@ export default {
 		...mapGetters([
 			'getCurrencySymbol',
 			'token',
+		]),
+		...mapGetters('loading', [
+			'isLoading',
 		]),
 		getDiscont,
 		noStock,
