@@ -6,7 +6,7 @@
 				class="container-product-view"
 			/>
 			<product-detail 
-				:data="product"
+				:data="productDetails"
 				:features="globalFeatures"
 				class="container-product-detail"
 				@update="loadData"
