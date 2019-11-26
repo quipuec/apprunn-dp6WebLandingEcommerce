@@ -65,6 +65,9 @@ class ProductDetails {
 		const globalIndex = this.globalFeatures.findIndex(item => item.id === feature.id);
 		this.globalFeatures[globalIndex].values.map(l.setNewProperty('isSelected', i => i.value === feature.value));
 	}
+	updateQuantity(q) {
+		this.selectedProduct.quantity = q;
+	}
 }
 
 export default ProductDetails;

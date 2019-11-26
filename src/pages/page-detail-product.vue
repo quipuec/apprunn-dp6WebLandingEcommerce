@@ -21,7 +21,7 @@
 			<product-tab 
 				class="container-product-tab"
 				:tabs="tabs"
-				:sections="product.sections"
+				:sections="productDetails.sections"
 				:lastIndex="lastIndex"
 				:opinions="opinions"
 				@update-opinion="loadOpinions"/>
@@ -234,6 +234,8 @@ function clickQuantity(value) {
 	}
 	this.$set(newProductdetail, 'quantity', num);
 	this.product = { ...newProductdetail };
+	this.productInstance.updateQuantity(num);
+	this.productDetails = { ...this.productInstance.geProductDetails() };
 }
 
 async function openDialog() {
