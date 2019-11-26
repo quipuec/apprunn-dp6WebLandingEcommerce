@@ -21,8 +21,13 @@
 				<span
 					:class="[isLoading ? 'loading' : 'product-detail-code']"
 				>#{{ data.code }}</span>
-				<div class="container-rating d-center">
+				<div
+					:class="[
+						isLoading ? 'loading rating-loading' : 'container-rating d-center',
+					]"
+				>
 					<v-rating
+						v-show="!isLoading"
 						small
 						class="product-rating"
 						background-color="#ffcc03"
@@ -30,7 +35,10 @@
 						v-model="data.rating"
 						readonly
 					></v-rating>
-					<span class="text-rating">{{ data.rating }} / 5</span>
+					<span
+						v-show="!isLoading"
+						class="text-rating"
+					>{{ data.rating }} / 5</span>
 				</div>
 			</div>
 		</div>
@@ -249,6 +257,7 @@ export default {
 	}
 
 	.container-like {
+		margin-bottom: 5px;
 		@media screen and (max-width: 996px) {
 			margin: auto;
 		}
@@ -287,6 +296,12 @@ export default {
 			padding: 0 5%;
 			margin-bottom: 50px;
 		}
+	}
+
+	.rating-loading {
+		height: 21px;
+		margin-left: 10px;
+		width: 100%;
 	}
 </style>
 

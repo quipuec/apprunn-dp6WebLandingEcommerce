@@ -783,6 +783,7 @@ input.app-input::-webkit-input-placeholder {
 
 .loading {
 	background-color: color(border) !important;
+	border-color: color(border) !important;
 	border-radius: 3px;
 	color: color(border) !important;
 	fill: color(border) !important;

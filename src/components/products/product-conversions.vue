@@ -3,11 +3,16 @@
 		class="conversions-container"
 	>
 		<h3
-			class="conversions-title"
+			:class="[
+				isLoading ? 'loading' : 'conversions-title',
+			]"
 			:style="`color:${globalColors.base}`"
 		>Presentaciones:</h3>
-		<div>
+		<div
+			:class="{ 'loading conversions-select-container': isLoading }"
+		>
 			<AppSelect
+				v-show="!isLoading"
 				class="conversions-select"
 				placeholder="presentaciones..."
 				:items="conversions"
@@ -17,6 +22,7 @@
 </template>
 <script>
 import AppSelect from '@/components/shared/inputs/app-select';
+import { mapGetters } from 'vuex';
 
 function data() {
 	return {
@@ -28,6 +34,11 @@ export default {
 	name: 'product-conversions',
 	components: {
 		AppSelect,
+	},
+	computed: {
+		...mapGetters('loading', [
+			'isLoading',
+		]),
 	},
 	data,
 };
@@ -45,5 +56,11 @@ export default {
 
 	.conversions-title {
 		margin-right: 10px;
+	}
+
+	.conversions-select-container {
+		height: 24px;
+		margin-left: 10px;
+		width: 100%;
 	}
 </style>

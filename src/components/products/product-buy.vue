@@ -1,16 +1,26 @@
 <template>
   <div class="product-buy">
 		<div class="container-btn-open">
-			<button class="btn-stores" @click="$emit('open-dialog')">Ver tiendas disponibles</button>
+			<button
+				:class="[
+					isLoading ? 'loading stores' : 'btn-stores',
+				]"
+				@click="$emit('open-dialog')"
+			>Ver tiendas disponibles</button>
 		</div>
 		<div class="container-buttons">
-			<quantityButton 
-				class="continer-quantity-button"
+			<quantityButton
+				:class="[
+					'continer-quantity-button',
+					{ 'loading': isLoading },
+				]"
 				@click="clickQuantity"
 				:number="number"/>
 			<app-button-order
 				button-title="¡LO QUIERO!"
-				class="btn"
+				:class="[
+					isLoading ? 'loading' : 'btn',
+				]"
 				@click="$emit('add-to-car')"
 			>
 				<div slot="after">
@@ -21,6 +31,8 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 const quantityButton = () => import('@/components/shared/buttons/quantity-button');
 const appButtonOrder = () => import('@/components/shared/buttons/app-button-order');
 const imageCheck = () => import('@/components/shared/icons/check-component');
@@ -35,6 +47,11 @@ export default {
 		quantityButton,
 		appButtonOrder,
 		imageCheck,
+	},
+	computed: {
+		...mapGetters('loading', [
+			'isLoading',
+		]),
 	},
 	methods: {
 		clickQuantity,
@@ -85,5 +102,9 @@ export default {
 			margin-bottom: 33px;
 			text-align: center;
 		}
+	}
+
+	.stores {
+		margin-bottom: 10px;
 	}
 </style>

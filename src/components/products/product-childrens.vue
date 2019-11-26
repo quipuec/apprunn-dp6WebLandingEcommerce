@@ -3,9 +3,12 @@
 	  <div
 	  	v-for="(feature, index) in features"
 		:key="index"
-		 class="product-childrens"
+		:class="[
+			isLoading ? 'loading features' : 'product-childrens',
+		]"
 	  >
 	  	<h3
+		  	:class="{ 'loading': isLoading }"
 			:style="`color:${globalColors.base}`"  
 		>{{feature.name}}:</h3>
 		<div class="wrap-buttons">
@@ -15,6 +18,7 @@
 			>
 				<AppFeatureButton
 					class="ml-2 feature-button"
+					v-show="!isLoading"
 					:feature="v"
 					:is-selected="v.isSelected"
 					@click="selectFeature(v)"
@@ -25,6 +29,7 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 
 function selectFeature(value) {
 	this.$emit('selected', value);
@@ -33,6 +38,11 @@ export default {
 	name: 'product-childrens',
 	components: {
 		AppFeatureButton: () => import('@/components/shared/buttons/app-feature-button'),
+	},
+	computed: {
+		...mapGetters('loading', [
+			'isLoading',
+		]),
 	},
 	methods: {
 		selectFeature,
@@ -65,5 +75,9 @@ export default {
 
 	.feature-button {
 		min-width: 80px;
+	}
+
+	.features {
+		margin-bottom: 10px;
 	}
 </style>
