@@ -56,7 +56,6 @@ function data() {
 	return {
 		swiperOption: {
 			allowTouchMove: false,
-			loop: true,
 			breakpoints: {
 				996: {
 					slidesPerView: 2,
@@ -67,6 +66,8 @@ function data() {
 					spaceBetween: 30,
 				},
 			},
+			loop: true,
+			width: 408,
 		},
 	};
 }
@@ -122,7 +123,6 @@ export default {
 		background: color(white);
 		border-radius: 7px;
 		box-shadow: 0 2px 4px 0 rgba(213, 213, 213, 0.5);
-		height: 487px;
 		padding: 0 19px;
 		width: 80%;
 

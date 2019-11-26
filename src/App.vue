@@ -788,4 +788,11 @@ input.app-input::-webkit-input-placeholder {
 	fill: color(border) !important;
 }
 
+.conversions-select {
+
+	.ecommerce-select {
+		background-color: white !important;
+	}
+}
+
 </style>

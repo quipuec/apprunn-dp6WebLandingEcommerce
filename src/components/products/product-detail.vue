@@ -58,6 +58,7 @@
 				{{ getCurrencySymbol }} {{ data.price }}
 			</span>
 		</div>
+		<ProductConversions/>
 		<product-childrens 
 			:features="features"
 			@selected="selecFeature"
@@ -126,6 +127,7 @@ export default {
 	components: {
 		heartComponent,
 		productChildrens,
+		ProductConversions: () => import('@/components/products/product-conversions'),
 		productBuy,
 	},
 	computed: {
