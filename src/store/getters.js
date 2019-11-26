@@ -18,7 +18,7 @@ function user(state) {
 }
 
 function userName(state) {
-	return state.user ? `${state.user.name} ${state.user.lastName}` : '';
+	return state.user ? `${state.user.name || ''} ${state.user.lastname || ''}` : '';
 }
 
 function token(state) {
