@@ -274,7 +274,11 @@ export default {
 
 	.container-button-image {
 		flex: 1 1 20%;
-		justify-content: space-evenly;
+		justify-content: flex-end;
+
+		& > button, div {
+			margin-left: 20px;
+		}
 
 		@media (max-width: 764px) {
 			justify-content: space-between;
