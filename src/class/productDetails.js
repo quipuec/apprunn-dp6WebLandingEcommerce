@@ -8,7 +8,7 @@ class ProductDetails {
 		this.globalFeatures = [];
 	}
 	buildGlobalFeatures() {
-		this.globalFeatures = this.childrens[0].category.features;
+		this.globalFeatures = l.getDeeper('category.features')(this.childrens[0]) || [];
 		this.childrens.forEach(this.setFeaturesValuesToGlobalFeatures.bind(this));
 	}
 	getFeatures() {
@@ -24,7 +24,11 @@ class ProductDetails {
 	}
 	firstProductSelected(product) {
 		this.buildGlobalFeatures();
-		product.features.forEach(this.featureSelected.bind(this));
+		if (product.features.length > 0) {
+			product.features.forEach(this.featureSelected.bind(this));
+		} else {
+			this.updateSelectedProducts([product]);
+		}
 	}
 	productsFiltered() {
 		let localCache = this.childrens;
