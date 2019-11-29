@@ -17,6 +17,7 @@
 					class="ml-2 feature-button"
 					:feature="v"
 					:is-selected="v.isSelected"
+					:disabled="v.disabled"
 					@click="selectFeature(v)"
 				/>
 			</span>
@@ -49,7 +50,7 @@ export default {
 	.product-childrens {
 		align-items: center;
 		display: grid;
-		grid-template-columns: 1fr 3fr;
+		grid-template-columns: 120px 3fr;
 		margin-bottom: 10px;
 	}
 
