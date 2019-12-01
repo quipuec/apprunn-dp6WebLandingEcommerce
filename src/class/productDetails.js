@@ -11,12 +11,23 @@ class ProductDetails {
 		this.globalFeatures = new GlobalFeatures(childrens);
 	}
 	checkAllFeaturesAreSelected() {
-		const globalLen = this.globalFeatures.get().length;
-		const selectedLen = Object.keys(this.selectedFeatures).length;
-		if (globalLen === selectedLen) {
+		if (this.selectedProductsArray.length === 1) {
+			const selectedFeaturesLen = Object.values(this.selectedFeatures).length;
+			const productFeaturesLen = this.selectedProductsArray[0].features.length;
+			if (selectedFeaturesLen !== productFeaturesLen) {
+				const features = l.map(
+					l.setNewProperty('isSelected', true),
+					this.selectedProductsArray[0].features,
+				);
+				this.globalFeatures.update(features);
+			}
 			this.globalFeatures.allAvailable();
+			this.clearFilteredFeatures();
 			this.clearSelectedFeatures();
 		}
+	}
+	clearFilteredFeatures() {
+		this.filteredFeatures = [];
 	}
 	clearSelectedFeatures() {
 		this.selectedFeatures = {};
@@ -25,7 +36,7 @@ class ProductDetails {
 		return this.globalFeatures.get();
 	}
 	geProductDetails() {
-		return this.selectedProduct;
+		return this.selectedProductsArray[0];
 	}
 	featureSelected(feature) {
 		if (l.isEmpty(this.selectedFeatures)) {
@@ -38,6 +49,9 @@ class ProductDetails {
 	}
 	firstProductSelected(product) {
 		this.globalFeatures.init();
+		this.productSelected(product);
+	}
+	productSelected(product) {
 		if (product.features.length > 0) {
 			product.features.forEach(this.featureSelected.bind(this));
 		} else {
@@ -67,7 +81,7 @@ class ProductDetails {
 		this.updateSelectedProducts(localCache);
 	}
 	updateSelectedFeatures(feature) {
-		this.selectedFeatures[feature.id] = l.setNewProperty('isSelected', true)(feature);
+		this.selectedFeatures[feature.id] = feature;
 	}
 	updateSelectedProducts(productsCollection) {
 		[this.selectedProduct] = productsCollection;
