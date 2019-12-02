@@ -1,9 +1,6 @@
 <template>
-  <div class="app-input-search">
-		<img 
-			:src="image" 
-			alt="Buscar"
-			class="icon-search">
+  	<div class="app-input-search">
+		<SearchIcon/>
 		<input
 			v-bind="$attrs"
 			class="app-input"
@@ -30,6 +27,9 @@ function data() {
 
 export default {
 	name: 'app-input-search',
+	components: {
+		SearchIcon: () => import('@/components/shared/icons/search-component'),
+	},
 	data,
 	props: {
 		image: String,

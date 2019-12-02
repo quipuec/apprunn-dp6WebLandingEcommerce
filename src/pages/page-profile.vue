@@ -15,7 +15,7 @@
 						</div>
 					</div>
 				</div>
-				<h3 class="user-name">Manuel Amado</h3>
+				<h3 class="user-name">{{userName}}</h3>
 				<ul class="user-actions">
 					<li class="user-action">
 						<button
@@ -120,6 +120,7 @@ export default {
 		...mapGetters([
 			'getFilters',
 			'user',
+			'userName',
 		]),
 		borderPrimaryAddress,
 		borderPrimaryFavorites,
