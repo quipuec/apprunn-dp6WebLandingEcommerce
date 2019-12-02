@@ -38,8 +38,10 @@ function filterSelect(filter) {
 			newFilter.select = f.id === filter.id;
 			return newFilter;
 		});
-		const params = { filters: filter.id };
-		this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
+		this.$store.dispatch('START_PAGINATION');
+		this.$store.dispatch('UPDATE_PRODUCT_FILTER', filter.id);
+		this.$store.dispatch('CLEAN_PRODUCTS_ARRAY');
+		this.$store.dispatch('LOAD_PRODUCTS', { context: this });
 		this.$store.dispatch('updateFilters', filters);
 	}
 }

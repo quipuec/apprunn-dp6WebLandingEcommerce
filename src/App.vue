@@ -781,4 +781,10 @@ input.app-input::-webkit-input-placeholder {
 	}
 }
 
+.loading {
+	background-color: color(border);
+	border: 1px solid color(border);
+	border-radius: 4px;
+	color: color(border);
+}
 </style>

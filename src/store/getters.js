@@ -98,15 +98,29 @@ function getPromotionalDetailsBanner(state) {
 	return state.banners.find(banner => banner.typeName === 'Promoción en detalle');
 }
 
+function productParams(state) {
+	return state.products.params;
+}
+
+function getLastPage(state) {
+	return state.products.lastPage;
+}
+
+function currentPage(state) {
+	return state.products.params.page;
+}
+
 const methods = {
 	bannersTypes,
 	companyLogo,
+	currentPage,
 	genders,
 	getBanners,
 	getBannersHome,
 	getCommerceData,
 	getDirections,
 	getCurrencySymbol,
+	getLastPage,
 	getPromotionalBanner,
 	getProducts,
 	getPromotionalDetailsBanner,
@@ -117,6 +131,7 @@ const methods = {
 	...orderGetters,
 	...profileGetters,
 	pollData,
+	productParams,
 	snackbar,
 	themeColors,
 	token,
