@@ -2,15 +2,15 @@
 	<div class="form-bulletin">
 		<div class="form-bulletin-description-company">
 			<div class="content-date-company">
-				<img src="/static/img/icons/telephone-1.svg" alt="">
+				<PhoneIcon/>
 				<p class="item-date-company">{{getCommerceData.phone}}</p>
 			</div>
 			<div class="content-date-company">
-				<img src="/static/icons/email.svg" alt="">
+				<EmailIcon/>
 				<p class="item-date-direction email">Correo: {{getCommerceData.email}}</p>
 			</div>
 			<div class="content-date-company">
-				<img src="/static/img/icons/mail.svg" alt="">
+				<LocationIcon/>
 				<p class="item-date-direction">{{getCommerceData.address}}</p>
 			</div>
 		</div>
@@ -22,6 +22,11 @@ import { mapGetters } from 'vuex';
 
 export default {
 	name: 'form-bulletin',
+	components: {
+		EmailIcon: () => import('@/components/shared/icons/email-component'),
+		LocationIcon: () => import('@/components/shared/icons/location'),
+		PhoneIcon: () => import('@/components/shared/icons/phone-component'),
+	},
 	computed: {
 		...mapGetters([
 			'getCommerceData',

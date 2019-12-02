@@ -17,7 +17,10 @@
 			/>
 		</div>
 		<div class="detail-tab-publicity">
-			<product-publicity class="container-publicity desktop"/>
+			<product-publicity
+				class="container-publicity desktop"
+				:products-publicity="[]"
+			/>
 			<product-tab 
 				class="container-product-tab"
 				:tabs="tabs"
