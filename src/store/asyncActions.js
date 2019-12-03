@@ -162,6 +162,12 @@ const asyncActions = {
 		const url = `com-ecommerce-companies/${process.env.COMMERCE_CODE}/public`;
 		const { data: commerceData } = await context.$httpSalesPublic.get(url);
 		commit('SET_COMMERCE_DATA', commerceData);
+		const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+		link.type = 'image/x-icon';
+		link.rel = 'shortcut icon';
+		link.href = commerceData.urlDomain;
+		link.sizes = '16x16';
+		document.getElementsByTagName('head')[0].appendChild(link);
 	},
 };
 
