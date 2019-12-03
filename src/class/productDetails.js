@@ -5,10 +5,11 @@ class ProductDetails {
 	constructor(childrens) {
 		this.childrens = childrens;
 		this.filteredFeatures = [];
+		this.globalFeatures = new GlobalFeatures(childrens);
 		this.selectedFeatures = {};
 		this.selectedProduct = {};
 		this.selectedProductsArray = [];
-		this.globalFeatures = new GlobalFeatures(childrens);
+		this.unitId = 0;
 	}
 	checkAllFeaturesAreSelected() {
 		if (this.selectedProductsArray.length === 1) {
@@ -35,7 +36,15 @@ class ProductDetails {
 	getFeatures() {
 		return this.globalFeatures.get();
 	}
-	geProductDetails() {
+	getImages() {
+		const imgArray = this.getProductDetails().images;
+		const imagesFiltered = imgArray.filter(img => img.unitId === this.unitId);
+		if (l.isEmpty(imagesFiltered)) {
+			return imgArray.filter(img => !img.unitId);
+		}
+		return imagesFiltered;
+	}
+	getProductDetails() {
 		return this.selectedProductsArray[0];
 	}
 	featureSelected(feature) {
@@ -48,6 +57,8 @@ class ProductDetails {
 		this.checkAllFeaturesAreSelected.call(this);
 	}
 	firstProductSelected(product) {
+		const { unitId } = product;
+		this.updateUnitId.call(this, unitId);
 		this.globalFeatures.init();
 		this.productSelected(product);
 	}
@@ -97,6 +108,9 @@ class ProductDetails {
 	}
 	updateQuantity(q) {
 		this.selectedProduct.quantity = q;
+	}
+	updateUnitId(unitId) {
+		this.unitId = unitId;
 	}
 }
 

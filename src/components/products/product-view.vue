@@ -2,7 +2,7 @@
   <div class="product-view">
 		<div class="btns-product-view">
 			<button 
-				v-for="(image, index) in data.images" 
+				v-for="(image, index) in images" 
 				:key="image.id"
 				class="btn-product-view"
 				:class="{'select' : image.select, 'not-select' : !image.select}"
@@ -15,10 +15,10 @@
 					class="image-slider">
 			</button>
 		</div>
-		<div class="slider-product-view" v-if="data.images && data.images.length">
+		<div class="slider-product-view" v-if="images && images.length">
 			<swiper ref="mySwiper" :options="swiperOption">
 				<swiper-slide 
-					v-for="image in data.images" 
+					v-for="image in images" 
 					:key="image.id">
 					<div class="wrapper-image">
 						<img 
@@ -84,6 +84,10 @@ export default {
 		data: {
 			type: Object,
 			default: () => {},
+		},
+		images: {
+			default: () => [],
+			type: Array,
 		},
 	},
 };

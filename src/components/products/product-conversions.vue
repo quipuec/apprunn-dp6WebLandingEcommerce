@@ -4,18 +4,22 @@
 	>
 		<h3
 			:class="[
-				isLoading ? 'loading' : 'conversions-title',
+				indeterminate ? 'loading' : 'conversions-title',
 			]"
 			:style="`color:${globalColors.base}`"
 		>Presentaciones:</h3>
 		<div
-			:class="{ 'loading conversions-select-container': isLoading }"
+			:class="{ 'loading conversions-select-container': indeterminate }"
 		>
 			<AppSelect
-				v-show="!isLoading"
+				v-show="!indeterminate"
+				return-object
 				class="conversions-select"
 				placeholder="presentaciones..."
-				:items="conversions"
+				item-text="code"
+				:items="conversionsComputed"
+				:value="defaultUnit"
+				@input="$emit('unit-selection', $event)"
 			/>
 		</div>
 	</div>
@@ -23,11 +27,14 @@
 <script>
 import AppSelect from '@/components/shared/inputs/app-select';
 import { mapGetters } from 'vuex';
+import l from '@/shared/lib';
 
-function data() {
-	return {
-		conversions: [],
-	};
+function conversionsComputed() {
+	const conversionsFormatted = l.map(
+		k => l.setNewProperty('id', Number(k))(this.conversions[k]),
+		Object.keys(this.conversions),
+	);
+	return [].concat(this.defaultUnit, conversionsFormatted);
 }
 
 export default {
@@ -36,11 +43,21 @@ export default {
 		AppSelect,
 	},
 	computed: {
-		...mapGetters('loading', [
-			'isLoading',
+		...mapGetters([
+			'indeterminate',
 		]),
+		conversionsComputed,
 	},
-	data,
+	props: {
+		conversions: {
+			default: () => {},
+			type: Object,
+		},
+		defaultUnit: {
+			default: () => {},
+			type: Object,
+		},
+	},
 };
 </script>
 <style lang="scss" scoped>

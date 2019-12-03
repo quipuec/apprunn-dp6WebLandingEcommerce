@@ -3,6 +3,7 @@
 		<div class="detail-product-top">
 			<product-view 
 				:data="productDetails"
+				:images="productImages"
 				class="container-product-view"
 			/>
 			<product-detail 
@@ -14,6 +15,7 @@
 				@clear="clearFeatures"
 				@click-quantity="clickQuantity"
 				@open-dialog="openDialog"
+				@unit-selection="selectedUnit"
 			/>
 		</div>
 		<div class="detail-tab-publicity">
@@ -106,7 +108,8 @@ async function loadData(id) {
 	this.productInstance = new ProductDetails(this.childrens);
 	this.productInstance.firstProductSelected(this.product);
 	this.globalFeatures = [...this.productInstance.getFeatures()];
-	this.productDetails = { ...this.productInstance.geProductDetails() };
+	this.productDetails = { ...this.productInstance.getProductDetails() };
+	this.productImages = [...this.productInstance.getImages()];
 	this.allFeatures = this.childrens.reduce((acum, children) => acum.concat(children.features), []);
 	this.features = this.allFeatures.reduce((acum, feature) => {
 		const index = acum.findIndex(a => a.name === feature.name);
@@ -153,7 +156,8 @@ async function loadData(id) {
 function selectFeature(value) {
 	this.productInstance.featureSelected(value);
 	this.globalFeatures = [...this.productInstance.getFeatures()];
-	this.productDetails = { ...this.productInstance.geProductDetails() };
+	this.productDetails = { ...this.productInstance.getProductDetails() };
+	this.productImages = [...this.productInstance.getImages()];
 }
 
 function possibleFeature(possibles) {
@@ -238,7 +242,7 @@ function clickQuantity(value) {
 	this.$set(newProductdetail, 'quantity', num);
 	this.product = { ...newProductdetail };
 	this.productInstance.updateQuantity(num);
-	this.productDetails = { ...this.productInstance.geProductDetails() };
+	this.productDetails = { ...this.productInstance.getProductDetails() };
 }
 
 async function openDialog() {
@@ -253,6 +257,11 @@ async function openDialog() {
 
 function closeModal(value) {
 	this.dialogWarehouses = value;
+}
+
+function selectedUnit(unit) {
+	this.productInstance.updateUnitId(unit.id);
+	this.productImages = [...this.productInstance.getImages()];
 }
 
 function data() {
@@ -274,9 +283,12 @@ function data() {
 		lastIndex: 0,
 		opinions: [],
 		product: {},
-		productDetails: {},
+		productDetails: {
+			conversions: {},
+		},
 		productInstance: {},
 		productsFilter: [],
+		productImages: [],
 		productFather: {},
 		relateds: [],
 		tabs: [],
@@ -312,16 +324,17 @@ export default {
 		}),
 		assignProduct,
 		clearFeatures,
+		clickQuantity,
+		closeModal,
 		isLoggedUser,
 		loadData,
 		loadOpinions,
 		loadProduct,
 		newRoute,
-		possibleFeature,
-		clickQuantity,
 		openDialog,
-		closeModal,
+		possibleFeature,
 		selectFeature,
+		selectedUnit,
 	},
 	props: {
 		id: {

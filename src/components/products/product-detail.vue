@@ -66,7 +66,11 @@
 				{{ getCurrencySymbol }} {{ data.price }}
 			</span>
 		</div>
-		<ProductConversions/>
+		<ProductConversions
+			:default-unit="data.unit"
+			:conversions="data.conversions"
+			@unit-selection="$emit('unit-selection', $event)"
+		/>
 		<product-childrens 
 			:features="features"
 			@selected="selecFeature"
