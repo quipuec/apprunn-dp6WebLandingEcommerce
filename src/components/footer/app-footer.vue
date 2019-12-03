@@ -3,17 +3,33 @@
 		<section-links></section-links>
 		<div class="content-company-footer">
 			<p class="company-footer">© 2019   www.mrc.com  Todos los Derechos reservados.</p>
+			<div>
+				<a
+					v-for="social in getCommerceData.socialNetworks" :key="social.id"
+					:href="social.link"
+					target="_blank"
+				>
+					<img :src="social.logo" alt="logo-redes-sociales" class="social-logo">
+				</a>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 const sectionLinks = () => import('@/components/footer/section-links.vue');
 
 export default {
 	name: 'app-footer',
 	components: {
 		sectionLinks,
+	},
+	computed: {
+		...mapGetters([
+			'getCommerceData',
+		]),
 	},
 };
 </script>
@@ -24,7 +40,6 @@ export default {
 	font-family: font(regular);
 	font-size: size(small);
 	margin-bottom: 0;
-	padding: 17px 0 0 35px;
 
 	@media (max-width: 750px) {
 		padding-left: 0;
@@ -33,12 +48,22 @@ export default {
 }
 
 .content-company-footer {
+	align-items: center;
 	border-top: 1px solid color(base);
-	margin-top: 17px;
-	padding-bottom: 17px;
+	display: flex;
+	justify-content: space-between;
+	padding: 17px 35px;
 }
 
 .app-footer {
 	width: 100%;
+}
+
+.social-logo {
+	border-radius: 50%;
+	height: 35px;
+	margin-left: 10px;
+	object-fit: cover;
+	width: 35px;
 }
 </style>

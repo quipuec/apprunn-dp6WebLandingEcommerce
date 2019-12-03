@@ -6,8 +6,11 @@
 			class="mb-5 container-banner-top"
 			/>
 		<div>
-			<card-offer :data="product"/>
-			<card-offer :data="product"/>
+			<card-offer
+				v-for="product in productsPublicity"
+				:key="product.id"
+				:data="product"
+			/>
 		</div>
 	</div>
 </template>
@@ -16,16 +19,6 @@ import { mapGetters } from 'vuex';
 
 const bannerTop = () => import('@/components/header/app-banner-top');
 const cardOffer = () => import('@/components/products/card-offer');
-
-function data() {
-	return {
-		product: {
-			urlImage: 'https://japi-static.s3.amazonaws.com/taurus/mola-compressa%CC%83o-copy-2.jpg',
-			name: 'Resortes',
-			priceDiscount: 20,
-		},
-	};
-}
 
 export default {
 	name: 'product-publicity',
@@ -38,7 +31,12 @@ export default {
 			'getPromotionalDetailsBanner',
 		]),
 	},
-	data,
+	props: {
+		productsPublicity: {
+			default: () => [],
+			type: Array,
+		},
+	},
 };
 </script>
 <style lang="scss" scoped>

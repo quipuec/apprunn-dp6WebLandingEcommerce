@@ -36,17 +36,8 @@
 					class="icon-mobile"
 					@click-image="toogleSearch"/>
 				<button-image :data="user" class="icon-desktop" @click-image="openModalLogin"/>
-				<button-image 
-					:data="imagesButton[1]" 
-					class="icon-medium icon-desktop"
-					@click-image="goToFavorites"/>
-				<button-image
-					if-number
-					:data="imagesButton[2]"
-					:disabled="getTotalQuantityProducts === 0"
-					:number="totalProducts"
-					@click-image="goShopping"
-				/>
+				<HeartComponent @click="goToFavorites"/>
+				<CarComponent @click="goShopping" :count="totalProducts"/>
 			</div>
 		</div>
 		<modal-login 
@@ -180,9 +171,11 @@ function data() {
 export default {
 	name: 'app-header',
 	components: {
-		callMenu,
 		appSearch,
 		buttonImage,
+		callMenu,
+		CarComponent: () => import('@/components/shared/icons/car-component'),
+		HeartComponent: () => import('@/components/shared/icons/heart-component'),
 		modalLogin,
 	},
 	computed: {
@@ -282,6 +275,10 @@ export default {
 	.container-button-image {
 		flex: 1 1 20%;
 		justify-content: flex-end;
+
+		& > button, div {
+			margin-left: 20px;
+		}
 
 		@media (max-width: 764px) {
 			justify-content: space-between;

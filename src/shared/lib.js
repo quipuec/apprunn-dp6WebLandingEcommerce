@@ -31,6 +31,7 @@ const methods = {
 	},
 	atLeastOneTrue: (...args) => args.some(a => a),
 	find: (fn, arr) => arr.find(fn),
+	findIndex: (fn, arr) => arr.findIndex(fn),
 	map: (fn, arr) => arr.map(fn),
 	/* eslint-disable prefer-const */
 	equality: (...args) => {

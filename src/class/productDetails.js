@@ -1,69 +1,102 @@
 import l from '@/shared/lib';
+import GlobalFeatures from '@/class/globalFeatures';
 
 class ProductDetails {
 	constructor(childrens) {
 		this.childrens = childrens;
-		this.featuresSelected = {};
+		this.filteredFeatures = [];
+		this.selectedFeatures = {};
 		this.selectedProduct = {};
-		this.globalFeatures = [];
+		this.selectedProductsArray = [];
+		this.globalFeatures = new GlobalFeatures(childrens);
 	}
-	buildGlobalFeatures() {
-		this.globalFeatures = this.childrens[0].category.features;
-		this.childrens.forEach(this.setFeaturesValuesToGlobalFeatures.bind(this));
+	checkAllFeaturesAreSelected() {
+		if (this.selectedProductsArray.length === 1) {
+			const selectedFeaturesLen = Object.values(this.selectedFeatures).length;
+			const productFeaturesLen = this.selectedProductsArray[0].features.length;
+			if (selectedFeaturesLen !== productFeaturesLen) {
+				const features = l.map(
+					l.setNewProperty('isSelected', true),
+					this.selectedProductsArray[0].features,
+				);
+				this.globalFeatures.update(features);
+			}
+			this.globalFeatures.allAvailable();
+			this.clearFilteredFeatures();
+			this.clearSelectedFeatures();
+		}
+	}
+	clearFilteredFeatures() {
+		this.filteredFeatures = [];
+	}
+	clearSelectedFeatures() {
+		this.selectedFeatures = {};
 	}
 	getFeatures() {
-		return this.globalFeatures;
+		return this.globalFeatures.get();
 	}
 	geProductDetails() {
-		return this.selectedProduct;
+		return this.selectedProductsArray[0];
 	}
 	featureSelected(feature) {
-		this.updateGlobalFeatures.call(this, feature);
-		this.updateFeaturesSelected.call(this, feature);
-		this.productsFiltered.call(this);
+		if (l.isEmpty(this.selectedFeatures)) {
+			this.globalFeatures.allUnSelected();
+		}
+		this.updateSelectedFeatures.call(this, feature);
+		this.setFilteredProducts.call(this);
+		this.globalFeatures.update(this.filteredFeatures);
+		this.checkAllFeaturesAreSelected.call(this);
 	}
 	firstProductSelected(product) {
-		this.buildGlobalFeatures();
-		product.features.forEach(this.featureSelected.bind(this));
+		this.globalFeatures.init();
+		this.productSelected(product);
 	}
-	productsFiltered() {
+	productSelected(product) {
+		if (product.features.length > 0) {
+			product.features.forEach(this.featureSelected.bind(this));
+		} else {
+			this.updateSelectedProducts([product]);
+		}
+	}
+	setFilteredProducts() {
 		let localCache = this.childrens;
-		Object.values(this.featuresSelected).forEach((f) => {
+		const features = [];
+		Object.values(this.selectedFeatures).forEach((f) => {
 			const products = [];
 			localCache.forEach((c) => {
 				const index = c.features.findIndex(fea => fea.value === f.value);
 				if (index > -1) {
 					products.push(c);
+					c.features.forEach((eleFea) => {
+						const indexFeatures = features.findIndex(el => el.value === eleFea.value);
+						if (indexFeatures === -1) {
+							features.push(eleFea);
+						}
+					});
 				}
 			});
 			localCache = [...products];
 		});
+		this.updateFilteredFeatures(features);
 		this.updateSelectedProducts(localCache);
 	}
-	setFeaturesValuesToGlobalFeatures({ features }) {
-		features.forEach((feature) => {
-			const { id, value } = feature;
-			const index = this.globalFeatures.findIndex(fea => fea.id === id);
-			const currentFeature = this.globalFeatures[index];
-			if (currentFeature.values) {
-				const indexValue = currentFeature.values.findIndex(item => item.value === value);
-				if (indexValue === -1) {
-					currentFeature.values.push(feature);
-				}
-			} else {
-				currentFeature.values = [{ ...feature }];
-			}
-		});
-	}
-	updateFeaturesSelected(feature) {
-		this.featuresSelected[feature.id] = feature;
+	updateSelectedFeatures(feature) {
+		this.selectedFeatures[feature.id] = feature;
 	}
 	updateSelectedProducts(productsCollection) {
 		[this.selectedProduct] = productsCollection;
+		this.selectedProductsArray = productsCollection;
 	}
-	updateGlobalFeatures(feature) {
-		const globalIndex = this.globalFeatures.findIndex(item => item.id === feature.id);
-		this.globalFeatures[globalIndex].values.map(l.setNewProperty('isSelected', i => i.value === feature.value));
+	updateFilteredFeatures(features) {
+		const newFeatures = features.map((feature) => {
+			const selectedFeatures = Object.values(this.selectedFeatures);
+			const isSelected = selectedFeatures.some(f => f.value === feature.value);
+			return l.setNewProperty('isSelected', isSelected)(feature);
+		});
+		this.filteredFeatures = [...newFeatures];
+	}
+	updateQuantity(q) {
+		this.selectedProduct.quantity = q;
 	}
 }
 
