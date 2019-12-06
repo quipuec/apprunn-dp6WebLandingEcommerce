@@ -21,7 +21,7 @@
 					v-show="!isLoading"
 					:feature="v"
 					:is-selected="v.isSelected"
-					:disabled="v.disabled"
+					:not-allowed="v.notAllowed"
 					@click="selectFeature(v)"
 				/>
 			</span>

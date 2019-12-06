@@ -43,7 +43,7 @@
 			</div>
 		</div>
 		<div class="container-detail-bottom">
-			<div v-if="data.priceDiscount" class="d-center mt-25">
+			<div v-show="data.priceDiscount" class="d-center">
 				<span
 					:class="[isLoading ? 'loading' : 'text-price-dis']"
 					:style="`color: ${globalColors.secondary}`"
@@ -296,6 +296,7 @@ export default {
 	}
 
 	.container-detail-bottom {
+		height: 60px;
 		@media screen and (max-width: 996px) {
 			padding: 0 5%;
 			margin-bottom: 50px;

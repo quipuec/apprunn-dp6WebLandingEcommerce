@@ -29,6 +29,7 @@ const methods = {
 		}
 		return !arg;
 	},
+	isNotEmpty: arg => !methods.isEmpty(arg),
 	atLeastOneTrue: (...args) => args.some(a => a),
 	find: (fn, arr) => arr.find(fn),
 	findIndex: (fn, arr) => arr.findIndex(fn),

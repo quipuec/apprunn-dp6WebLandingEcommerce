@@ -155,6 +155,7 @@ async function loadData(id) {
 
 function selectFeature(value) {
 	this.productInstance.featureSelected(value);
+	this.product.quantity = 1;
 	this.globalFeatures = [...this.productInstance.getFeatures()];
 	this.productDetails = { ...this.productInstance.getProductDetails() };
 	this.productImages = [...this.productInstance.getImages()];
@@ -262,6 +263,7 @@ function closeModal(value) {
 function selectedUnit(unit) {
 	this.productInstance.updateUnitId(unit.id);
 	this.productImages = [...this.productInstance.getImages()];
+	this.productDetails = { ...this.productInstance.getProductDetails() };
 }
 
 function data() {

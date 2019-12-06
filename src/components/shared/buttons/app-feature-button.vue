@@ -10,9 +10,12 @@
 <script>
 
 function btnStyle() {
-	const bg = `background-color: ${this.isSelected ? this.globalColors.primary : 'white'}`;
-	const color = `color:${this.isSelected ? 'white' : this.globalColors.primary}`;
-	const border = `border:1px solid ${this.globalColors.primary}`;
+	const bgSelected = this.globalColors.secondary;
+	const notAllowedColor = this.globalColors.base;
+	const notAllowedStatus = this.notAllowed ? notAllowedColor : bgSelected;
+	const bg = `background-color:${this.isSelected ? bgSelected : 'white'}`;
+	const color = `color:${this.isSelected ? 'white' : notAllowedStatus}`;
+	const border = `border:1px solid ${notAllowedStatus}`;
 	return `${bg};${color};${border};`;
 }
 
@@ -31,6 +34,10 @@ export default {
 			default: false,
 			type: Boolean,
 		},
+		notAllowed: {
+			default: false,
+			type: Boolean,
+		},
 	},
 };
 </script>
@@ -38,9 +45,5 @@ export default {
 	button {
 		border-radius: 5px;
 		font-family: font(bold);
-	}
-	[disabled] {
-		background-color: color(disabled) !important;
-		cursor: not-allowed;
 	}
 </style>

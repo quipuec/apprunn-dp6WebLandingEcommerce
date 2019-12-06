@@ -15,16 +15,23 @@
 					{ 'loading': isLoading },
 				]"
 				@click="clickQuantity"
-				:number="number"/>
+				:number="number"
+			/>
 			<app-button-order
+				active
 				button-title="¡LO QUIERO!"
 				:class="[
 					isLoading ? 'loading' : 'btn',
 				]"
 				@click="$emit('add-to-car')"
 			>
-				<div slot="after">
-					<image-check class="image-btn"/>
+				<div>
+					<image-check
+						active
+						active-color="white"
+						class="image-btn"
+						:inactive-color="globalColors.primary"
+					/>
 				</div>
 			</app-button-order>
 		</div>
@@ -68,7 +75,7 @@ export default {
 		}
 
 		.image-btn {
-			margin-left: 4px;
+			margin-right: 12px;
 		}
 
 		.btn-stores {

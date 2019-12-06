@@ -11,21 +11,8 @@ class ProductDetails {
 		this.selectedProductsArray = [];
 		this.unitId = 0;
 	}
-	checkAllFeaturesAreSelected() {
-		if (this.selectedProductsArray.length === 1) {
-			const selectedFeaturesLen = Object.values(this.selectedFeatures).length;
-			const productFeaturesLen = this.selectedProductsArray[0].features.length;
-			if (selectedFeaturesLen !== productFeaturesLen) {
-				const features = l.map(
-					l.setNewProperty('isSelected', true),
-					this.selectedProductsArray[0].features,
-				);
-				this.globalFeatures.update(features);
-			}
-			this.globalFeatures.allAvailable();
-			this.clearFilteredFeatures();
-			this.clearSelectedFeatures();
-		}
+	buyingProduct() {
+		return { ...this.selectedProduct };
 	}
 	clearFilteredFeatures() {
 		this.filteredFeatures = [];
@@ -45,7 +32,7 @@ class ProductDetails {
 		return imagesFiltered;
 	}
 	getProductDetails() {
-		return this.selectedProductsArray[0];
+		return { ...this.selectedProduct };
 	}
 	featureSelected(feature) {
 		if (l.isEmpty(this.selectedFeatures)) {
@@ -53,14 +40,23 @@ class ProductDetails {
 		}
 		this.updateSelectedFeatures.call(this, feature);
 		this.setFilteredProducts.call(this);
-		this.globalFeatures.update(this.filteredFeatures);
-		this.checkAllFeaturesAreSelected.call(this);
+		if (this.selectedProductsArray.length === 0) {
+			this.globalFeatures.allUnSelected();
+			this.clearFilteredFeatures.call(this);
+			this.clearSelectedFeatures.call(this);
+			this.updateSelectedFeatures.call(this, feature);
+			this.setFilteredProducts.call(this);
+			this.productSelected.call(this, this.selectedProductsArray[0]);
+		} else {
+			this.globalFeatures.update(this.filteredFeatures);
+		}
 	}
 	firstProductSelected(product) {
 		const { unitId } = product;
-		this.updateUnitId.call(this, unitId);
 		this.globalFeatures.init();
 		this.productSelected(product);
+		this.updateUnitId.call(this, unitId);
+		this.updateQuantity.call(this, 1);
 	}
 	productSelected(product) {
 		if (product.features.length > 0) {
@@ -96,6 +92,10 @@ class ProductDetails {
 	}
 	updateSelectedProducts(productsCollection) {
 		[this.selectedProduct] = productsCollection;
+		if (l.isNotEmpty(this.selectedProduct)) {
+			this.updateQuantity(1);
+			this.updateUnitId(this.selectedProduct.unitId);
+		}
 		this.selectedProductsArray = productsCollection;
 	}
 	updateFilteredFeatures(features) {
@@ -106,11 +106,15 @@ class ProductDetails {
 		});
 		this.filteredFeatures = [...newFeatures];
 	}
+	updateProductSelected(prop, val) {
+		this.selectedProduct[prop] = val;
+	}
 	updateQuantity(q) {
-		this.selectedProduct.quantity = q;
+		this.updateProductSelected.call(this, 'quantity', q);
 	}
 	updateUnitId(unitId) {
 		this.unitId = unitId;
+		this.updateProductSelected.call(this, 'unitSelected', unitId);
 	}
 }
 

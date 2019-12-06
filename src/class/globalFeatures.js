@@ -12,7 +12,7 @@ class GlobalFeatures {
 				item => l.map(
 					l.compose(
 						l.setNewProperty('isSelected', el => !!el.isSelected),
-						l.setNewProperty('disabled', false),
+						l.setNewProperty('notAllowed', false),
 					), l.getDeeper('values')(item)),
 			), this.features);
 	}
@@ -23,6 +23,7 @@ class GlobalFeatures {
 				item => l.map(
 					l.compose(
 						l.setNewProperty('isSelected', false),
+						l.setNewProperty('notAllowed', false),
 					), l.getDeeper('values')(item)),
 			), this.features);
 	}
@@ -55,14 +56,17 @@ class GlobalFeatures {
 			const newValues = feature.values.map((v) => {
 				const current = l.find(l.equality('value', v.value), incomingFeatures);
 				if (l.isEmpty(current)) {
-					return l.setNewProperty('disabled', true)(v);
+					return l.compose(
+						l.setNewProperty('isSelected', false),
+						l.setNewProperty('notAllowed', true),
+					)(v);
 				}
 				if (current.isSelected) {
 					return l.setNewProperty('isSelected', current.isSelected)(v);
 				}
 				return l.compose(
 					l.setNewProperty('isSelected', false),
-					l.setNewProperty('disabled', false),
+					l.setNewProperty('notAllowed', false),
 				)(v);
 			});
 			return l.setNewProperty('values', newValues)(feature);
