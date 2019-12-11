@@ -90,6 +90,16 @@ function DEFAULT_USER({ commit }) {
 	commit('setUser', user);
 }
 
+function SET_WAY_PAYMENT({ commit }, context) {
+	const waysPayment = context.getLocalStorage('ecommerce::ecommerce-data').wayPayment;
+	commit('SET_WAYS_PAYMENT', waysPayment);
+}
+
+function SET_BANK_ACCOUNTS({ commit }, context) {
+	const bankAccounts = context.getLocalStorage('ecommerce::ecommerce-data').bankAccountsRelated;
+	commit('SET_BANK_ACCOUNT_RELA', bankAccounts);
+}
+
 const methods = {
 	clearUser,
 	DEFAULT_USER,
@@ -102,6 +112,8 @@ const methods = {
 	updateProductSelect,
 	updateFilters,
 	SET_DEFAULT_VALUES,
+	SET_WAY_PAYMENT,
+	SET_BANK_ACCOUNTS,
 };
 
 export default methods;

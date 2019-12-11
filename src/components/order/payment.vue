@@ -37,7 +37,8 @@ const visaPayment = () => import('@/components/order/visa-payment');
 
 function created() {
 	if (lib.isEmpty(this.getWaysPayments)) {
-		this.$store.dispatch('LOAD_WAY_PAYMENT', this);
+		this.$store.dispatch('SET_WAY_PAYMENT', this);
+		this.$store.dispatch('SET_BANK_ACCOUNTS', this);
 	} else {
 		this.onSelect(this.getWaysPayments[2]);
 	}
@@ -47,7 +48,8 @@ function onSelect(method) {
 	this.$store.commit('SET_WAY_PAYMENT', { wayPayment: null, bankAccountId: null });
 	this.paymentMethodSelected = method.code;
 	if (method.code === 'IBD') {
-		this.$store.commit('SET_WAY_PAYMENT', { wayPayment: method.id, bankAccountId: 1 });
+		const firstBank = this.getBankAccounts[0].bankId;
+		this.$store.commit('SET_WAY_PAYMENT', { wayPayment: method.id, bankAccountId: firstBank });
 	}
 }
 
@@ -85,6 +87,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getWaysPayments',
+			'getBankAccounts',
 		]),
 		paymentMethodSelectedComponent,
 	},
