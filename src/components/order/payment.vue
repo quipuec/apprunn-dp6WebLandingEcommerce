@@ -37,6 +37,7 @@ const visaPayment = () => import('@/components/order/visa-payment');
 
 function created() {
 	if (lib.isEmpty(this.getWaysPayments)) {
+		debugger;
 		this.$store.dispatch('SET_WAY_PAYMENT', this);
 		this.$store.dispatch('SET_BANK_ACCOUNTS', this);
 	} else {

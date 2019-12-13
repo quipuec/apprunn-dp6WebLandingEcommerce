@@ -96,6 +96,7 @@ function SET_WAY_PAYMENT({ commit }, context) {
 }
 
 function SET_BANK_ACCOUNTS({ commit }, context) {
+	debugger;
 	const bankAccounts = context.getLocalStorage('ecommerce::ecommerce-data').bankAccountsRelated;
 	commit('SET_BANK_ACCOUNT_RELA', bankAccounts);
 }

@@ -104,6 +104,7 @@ function logout() {
 	this.$store.dispatch('SET_DEFAULT_VALUES');
 	localStorage.clear();
 	this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
+	this.$store.dispatch('LOAD_COMMERCE_INFO', this);
 	const params = {
 		filters: this.getFilters[0].id,
 	};
