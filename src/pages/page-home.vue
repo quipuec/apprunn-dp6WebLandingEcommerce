@@ -6,6 +6,7 @@
 			:color-base="colorBase"/>
 		<component-filter-product 
 			@click-filter="filterSelect"
+			v-if="getFilters.length"
 		>
 		</component-filter-product>
 		<div class="page-products">
