@@ -31,6 +31,7 @@ async function loadDataFromLocalStorage() {
 	await Promise.all([
 		this.$store.dispatch('LOAD_CATEGORIES', { context: this }),
 		this.$store.dispatch('LOAD_FILTERS', this),
+		this.$store.dispatch('LOAD_PRODUCTS', { context: this }),
 	]);
 }
 

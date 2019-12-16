@@ -10,7 +10,7 @@
 		</section>
 		<div class="see-more-btn">
 			<button
-				v-if="getLastPage !== currentPage"
+				v-if="getProducts && getLastPage !== currentPage"
 				type="button"
 				:style="`border:1px solid ${globalColors.primary};color:${globalColors.primary};`"
 				@click="addMoreProduct"
@@ -20,6 +20,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import { isEmpty } from '@/shared/lib';
 
 function addMoreProduct() {
 	this.$store.dispatch('MORE_PRODUCTS');
@@ -27,20 +28,12 @@ function addMoreProduct() {
 }
 
 function products() {
-	return this.indeterminate ? this.defaultProducts : this.getProducts;
-}
-
-function handlerFilters() {
-	this.$store.dispatch('UPDATE_PRODUCT_FILTER', this.getFilters[0].id);
-	this.$store.dispatch('LOAD_PRODUCTS', { context: this });
+	return isEmpty(this.getProducts) ? this.defaultProducts : this.getProducts;
 }
 
 function data() {
 	return {
-		defaultProducts: [
-			{}, {}, {}, {}, {},
-			{}, {}, {}, {}, {},
-		],
+		defaultProducts: Array(10).fill({}),
 		search: '',
 	};
 }
@@ -63,10 +56,6 @@ export default {
 	data,
 	methods: {
 		addMoreProduct,
-		handlerFilters,
-	},
-	watch: {
-		getFilters: handlerFilters,
 	},
 };
 </script>

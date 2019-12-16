@@ -160,6 +160,7 @@ export default {
 	.product-header {
 		align-items: center;
 		display: flex;
+		height: 3rem;
 		justify-content: space-between;
 	}
 
@@ -180,7 +181,7 @@ export default {
 		text-align: center;
 
 		div {
-			margin: 0 15px;
+			margin: 0 10px;
 		}
 
 		@media (max-width: 500px) {

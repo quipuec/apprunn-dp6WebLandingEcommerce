@@ -6,7 +6,7 @@
 			:color-base="colorBase"/>
 		<component-filter-product 
 			@click-filter="filterSelect"
-			v-if="getFilters.length"
+			v-if="filtersExist"
 		>
 		</component-filter-product>
 		<div class="page-products">
@@ -45,6 +45,10 @@ function filterSelect(filter) {
 		this.$store.dispatch('LOAD_PRODUCTS', { context: this });
 		this.$store.dispatch('updateFilters', filters);
 	}
+}
+
+function filtersExist() {
+	return this.getFilters && this.getFilters.length;
 }
 
 function data() {
@@ -115,6 +119,7 @@ export default {
 			'getCategories',
 			'getFilters',
 		]),
+		filtersExist,
 	},
 	methods: {
 		filterSelect,

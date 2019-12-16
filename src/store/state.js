@@ -66,7 +66,7 @@ export default {
 		lastPage: 0,
 		list: [],
 		params: {
-			filters: 0,
+			filters: null,
 			limit: 20,
 			page: 1,
 		},
