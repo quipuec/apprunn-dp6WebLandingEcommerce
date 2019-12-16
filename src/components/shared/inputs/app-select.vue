@@ -13,7 +13,7 @@
 			:value="value"
 			@input="sendValue"
 			@click:append-outer="clear"
-    ></v-select>
+		></v-select>
 		<span class="err-message">
 			<slot></slot>
 		</span>

@@ -2,22 +2,31 @@
 	<button
 		type="button"
 		v-on="$listeners"
-		:class="[
-			'btn-svg',
-			active ? 'active' : 'non-active',
-		]"
+		:style="activeStyle"
+		class="btn-svg"
 	>
 		<span class="svg">
 			<slot></slot>
 		</span>
-		<span>{{buttonTitle}}</span>
+		<span class="btn-title">{{buttonTitle}}</span>
 		<slot name="after"></slot>
 	</button>
 </template>
 <script>
+
+function activeStyle() {
+	const bgColor = `background-color:${this.active ? this.globalColors.primary : 'white'};`;
+	const borderColor = `border:1px solid ${this.globalColors.primary};`;
+	const color = `color:${this.active ? 'white' : this.globalColors.primary};`;
+	return `${bgColor}${borderColor}${color}`;
+}
+
 export default {
 	name: 'app-button-order',
 	inheritAttrs: false,
+	computed: {
+		activeStyle,
+	},
 	props: {
 		active: {
 			default: false,
@@ -39,20 +48,12 @@ export default {
 		padding: 5px 0;
 	}
 
-	.active {
-		background-color: color(secondary);
-		border: 1px solid color(secondary);
-		color: white;
-	}
-
-	.non-active {
-		background-color: white;
-		border: 1px solid color(secondary);
-		color: color(secondary);
-	}
-
 	.svg {
 		margin: 0 5px;
+	}
+
+	.btn-title {
+		font-family: font(heavy);
 	}
 </style>
 

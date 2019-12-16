@@ -2,18 +2,20 @@
 	<div class="page-detail-product">
 		<div class="detail-product-top">
 			<product-view 
-				:data="product"
+				:data="productDetails"
+				:images="productImages"
 				class="container-product-view"
 			/>
-			<productDetail 
-				:data="product"
-				:features="features"
+			<product-detail 
+				:data="productDetails"
+				:features="globalFeatures"
 				class="container-product-detail"
 				@update="loadData"
-				@select="selectFeature"
+				@selected="selectFeature"
 				@clear="clearFeatures"
 				@click-quantity="clickQuantity"
 				@open-dialog="openDialog"
+				@unit-selection="selectedUnit"
 			/>
 		</div>
 		<div class="detail-tab-publicity">
@@ -24,7 +26,7 @@
 			<product-tab 
 				class="container-product-tab"
 				:tabs="tabs"
-				:sections="product.sections"
+				:sections="productDetails.sections"
 				:lastIndex="lastIndex"
 				:opinions="opinions"
 				@update-opinion="loadOpinions"/>
@@ -49,7 +51,8 @@
 	</div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
+import ProductDetails from '@/class/productDetails';
 
 const appBannerTop = () => import('@/components/header/app-banner-top');
 const productView = () => import('@/components/products/product-view');
@@ -59,8 +62,9 @@ const productRelated = () => import('@/components/products/product-related');
 const warehousesModal = () => import('@/components/products/warehouses-modal');
 const productPublicity = () => import('@/components/products/product-publicity');
 
-function created() {
-	this.loadProduct();
+async function created() {
+	this.$loading(true);
+	await this.loadProduct();
 }
 
 function isLoggedUser() {
@@ -101,6 +105,11 @@ async function loadData(id) {
 	this.tabs = this.product.sections.map(p => p.name);
 	this.tabs.push('Comentarios');
 	this.lastIndex = this.product.sections.length;
+	this.productInstance = new ProductDetails(this.childrens);
+	this.productInstance.firstProductSelected(this.product);
+	this.globalFeatures = [...this.productInstance.getFeatures()];
+	this.productDetails = { ...this.productInstance.getProductDetails() };
+	this.productImages = [...this.productInstance.getImages()];
 	this.allFeatures = this.childrens.reduce((acum, children) => acum.concat(children.features), []);
 	this.features = this.allFeatures.reduce((acum, feature) => {
 		const index = acum.findIndex(a => a.name === feature.name);
@@ -117,23 +126,25 @@ async function loadData(id) {
 				acum[index].values.push(value);
 			}
 		} else {
-			acum.push({ name: feature.name,
-				value: 'PADRE',
-				values: [
-					{ name: feature.name,
-						active: false,
-						possible: false,
-						disabled: true,
-						code: 'PADRE',
-					},
-					{ name: feature.value,
-						active: false,
-						possible: false,
-						disabled: false,
-						code: feature.code,
-					},
-				],
-			});
+			acum.push(
+				{
+					name: feature.name,
+					value: 'PADRE',
+					values: [
+						{ name: feature.name,
+							active: false,
+							possible: false,
+							disabled: true,
+							code: 'PADRE',
+						},
+						{ name: feature.value,
+							active: false,
+							possible: false,
+							disabled: false,
+							code: feature.code,
+						},
+					],
+				});
 		}
 		return acum;
 	}, []);
@@ -142,39 +153,12 @@ async function loadData(id) {
 	}
 }
 
-function selectFeature(index, value) {
-	this.featureSelect.push({ name: this.features[index].name, code: value });
-	this.filterProduct(this.featureSelect);
-}
-
-function filterProduct(filters) {
-	const numFilter = filters.length;
-	this.arrayPossible = [];
-	this.productsFilter = this.childrens.reduce((acum, children) => {
-		const flagFilter = [];
-		filters.forEach((filter) => {
-			if (children.features.filter(f => f.name === filter.name &&
-				f.code === filter.code).length) {
-				flagFilter.push(filter);
-			}
-		});
-		if (flagFilter.length === numFilter) {
-			acum.push(children);
-			children.features.forEach((element) => {
-				if (this.arrayPossible.length) {
-					const index = this.arrayPossible.findIndex(a => a.name === element.name
-						&& a.value === element.value);
-					if (index === -1) {
-						this.arrayPossible.push({ name: element.name, value: element.code });
-					}
-				} else {
-					this.arrayPossible.push({ name: element.name, value: element.code });
-				}
-			});
-		}
-		return acum;
-	}, []);
-	this.possibleFeature(this.arrayPossible);
+function selectFeature(value) {
+	this.productInstance.featureSelected(value);
+	this.product.quantity = 1;
+	this.globalFeatures = [...this.productInstance.getFeatures()];
+	this.productDetails = { ...this.productInstance.getProductDetails() };
+	this.productImages = [...this.productInstance.getImages()];
 }
 
 function possibleFeature(possibles) {
@@ -222,6 +206,7 @@ async function loadOpinions() {
 	};
 	const { data: response } = await this.$httpProductsPublic.get('question-answer/public', { params });
 	this.opinions = response;
+	this.$loading(false);
 }
 
 function clearFeatures() {
@@ -257,6 +242,8 @@ function clickQuantity(value) {
 	}
 	this.$set(newProductdetail, 'quantity', num);
 	this.product = { ...newProductdetail };
+	this.productInstance.updateQuantity(num);
+	this.productDetails = { ...this.productInstance.getProductDetails() };
 }
 
 async function openDialog() {
@@ -273,29 +260,41 @@ function closeModal(value) {
 	this.dialogWarehouses = value;
 }
 
+function selectedUnit(unit) {
+	this.productInstance.updateUnitId(unit.id);
+	this.productImages = [...this.productInstance.getImages()];
+	this.productDetails = { ...this.productInstance.getProductDetails() };
+}
+
 function data() {
 	return {
-		lastIndex: 0,
-		opinions: [],
-		product: {},
-		relateds: [],
-		childrens: [],
 		allFeatures: [],
-		features: [],
-		featureSelect: [],
 		arrayPossible: [],
-		productsFilter: [],
-		productFather: {},
-		disabledBtn: false,
-		dialogWarehouses: false,
-		cities: [],
-		warehouses: [],
 		bannerTop: {
 			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
 			image: 'descuento',
 		},
+		childrens: [],
+		cities: [],
+		disabledBtn: false,
+		dialogWarehouses: false,
+		features: [],
+		featureSelect: [],
 		featuresFather: [],
+		globalFeatures: [],
+		lastIndex: 0,
+		opinions: [],
+		product: {},
+		productDetails: {
+			conversions: {},
+		},
+		productInstance: {},
+		productsFilter: [],
+		productImages: [],
+		productFather: {},
+		relateds: [],
 		tabs: [],
+		warehouses: [],
 	};
 }
 
@@ -316,22 +315,28 @@ export default {
 			'getPromotionalBanner',
 			'token',
 		]),
+		...mapGetters('loading', [
+			'isLoading',
+		]),
 	},
 	data,
 	methods: {
+		...mapActions('loading', {
+			$loading: 'SET_LOADING_FLAG',
+		}),
 		assignProduct,
 		clearFeatures,
-		filterProduct,
+		clickQuantity,
+		closeModal,
 		isLoggedUser,
 		loadData,
 		loadOpinions,
 		loadProduct,
 		newRoute,
-		possibleFeature,
-		clickQuantity,
 		openDialog,
-		closeModal,
+		possibleFeature,
 		selectFeature,
+		selectedUnit,
 	},
 	props: {
 		id: {
@@ -417,5 +422,6 @@ export default {
 			padding: 0 5%;
 		}
 	}
+
 </style>
 

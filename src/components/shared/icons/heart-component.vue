@@ -1,5 +1,10 @@
 <template>
-	<button class="heart-btn" @click="clicked">
+	<button
+		:class="[
+			isLoading ? 'loading' : 'heart-btn',
+		]"
+		@click="clicked"
+	>
 		<svg xmlns="http://www.w3.org/2000/svg" width="26px" height="22px" viewBox="-2 0 30 22">
 			<g id="DETALLE-DE-PRODUCTO" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 				<g
@@ -14,6 +19,7 @@
 	</button>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 
 function clicked($event) {
 	$event.stopPropagation();
@@ -22,6 +28,11 @@ function clicked($event) {
 
 export default {
 	name: 'heart-component',
+	computed: {
+		...mapGetters('loading', [
+			'isLoading',
+		]),
+	},
 	methods: {
 		clicked,
 	},
