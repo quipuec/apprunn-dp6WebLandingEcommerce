@@ -37,11 +37,10 @@ const visaPayment = () => import('@/components/order/visa-payment');
 
 function created() {
 	if (lib.isEmpty(this.getWaysPayments)) {
-		debugger;
 		this.$store.dispatch('SET_WAY_PAYMENT', this);
 		this.$store.dispatch('SET_BANK_ACCOUNTS', this);
 	} else {
-		this.onSelect(this.getWaysPayments[2]);
+		this.onSelect(this.getWaysPayments[0]);
 	}
 }
 
@@ -64,7 +63,7 @@ function paymentMethodSelectedComponent() {
 }
 
 function getWaysPayments() {
-	this.onSelect(this.getWaysPayments[2]);
+	this.onSelect(this.getWaysPayments[0]);
 }
 
 function data() {

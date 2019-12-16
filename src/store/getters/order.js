@@ -106,7 +106,6 @@ const getters = {
 		return state.order.waysPayments;
 	},
 	getBankAccounts(state) {
-		debugger;
 		const bankAccounts = state.order.bankAccountsRelated;
 		return bankAccounts.reduce((acum, bank) => {
 			const newAcum = [...acum];
