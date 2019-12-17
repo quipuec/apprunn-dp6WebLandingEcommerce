@@ -168,6 +168,8 @@ const asyncActions = {
 		link.href = commerceData.urlDomain;
 		link.sizes = '16x16';
 		document.getElementsByTagName('head')[0].appendChild(link);
+		const pageTitle = document.getElementsByTagName('title');
+		pageTitle[0].innerHTML = commerceData.name || 'AppRunn SAC';
 	},
 };
 
