@@ -104,10 +104,8 @@ function logout() {
 	this.$store.dispatch('SET_DEFAULT_VALUES');
 	localStorage.clear();
 	this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
-	const params = {
-		filters: this.getFilters[0].id,
-	};
-	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
+	this.$store.dispatch('UPDATE_PRODUCT_FILTER', this.getFilters[0].id);
+	this.$store.dispatch('LOAD_PRODUCTS', { context: this });
 }
 
 function getUserAvatar() {

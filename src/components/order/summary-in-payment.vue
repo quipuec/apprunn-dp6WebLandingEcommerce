@@ -33,12 +33,12 @@
 	</div>
 </template>
 <script>
-import lib from '@/shared/lib';
+import lib, { isEmpty } from '@/shared/lib';
 import { mapGetters } from 'vuex';
 
 function isNotEmptyBilling() {
 	const customerBill = lib.getDeeper('dataBill')(this.getOrderInfo);
-	return !(lib.isEmpty(customerBill));
+	return !(isEmpty(customerBill));
 }
 
 function pickUpName() {

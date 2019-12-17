@@ -1,4 +1,4 @@
-import l from '@/shared/lib';
+import l, { isEmpty } from '@/shared/lib';
 import GlobalFeatures from '@/class/globalFeatures';
 
 class ProductDetails {
@@ -26,7 +26,7 @@ class ProductDetails {
 	getImages() {
 		const imgArray = this.getProductDetails().images;
 		const imagesFiltered = imgArray.filter(img => img.unitId === this.unitId);
-		if (l.isEmpty(imagesFiltered)) {
+		if (isEmpty(imagesFiltered)) {
 			return imgArray.filter(img => !img.unitId);
 		}
 		return imagesFiltered;
@@ -35,7 +35,7 @@ class ProductDetails {
 		return { ...this.selectedProduct };
 	}
 	featureSelected(feature) {
-		if (l.isEmpty(this.selectedFeatures)) {
+		if (isEmpty(this.selectedFeatures)) {
 			this.globalFeatures.allUnSelected();
 		}
 		this.updateSelectedFeatures.call(this, feature);

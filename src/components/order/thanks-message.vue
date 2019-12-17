@@ -26,16 +26,16 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import lib from '@/shared/lib';
+import lib, { isEmpty } from '@/shared/lib';
 
 function created() {
 	this.updateFlags();
 }
 
 function updateFlags() {
-	this.showSuccessVisa = !lib.isEmpty(this.getOrderInfo.gatewayAuthorizationResponse);
-	this.showSuccessDeposit = !lib.isEmpty(this.getOrderInfo.wayPaymentId);
-	this.showFailure = !lib.isEmpty(this.getOrderInfo.gatewayErrorCode);
+	this.showSuccessVisa = !isEmpty(this.getOrderInfo.gatewayAuthorizationResponse);
+	this.showSuccessDeposit = !isEmpty(this.getOrderInfo.wayPaymentId);
+	this.showFailure = !isEmpty(this.getOrderInfo.gatewayErrorCode);
 }
 
 function getFullName() {

@@ -56,10 +56,8 @@
 				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, response.data.token);
 				this.$store.dispatch('setToken', response.data.token);
 				this.getCustomerData();
-				const filterParams = {
-					filters: this.getFilters[0].id,
-				};
-				this.$store.dispatch('LOAD_PRODUCTS', { context: this, params: filterParams });
+				this.$store.dispatch('UPDATE_PRODUCT_FILTER', this.getFilters[0].id);
+				this.$store.dispatch('LOAD_PRODUCTS', { context: this });
 				this.goTo('page-home');
 			}
 		} catch (err) {

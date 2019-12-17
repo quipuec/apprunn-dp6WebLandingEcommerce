@@ -93,6 +93,8 @@ function searchProduct(value) {
 		search: value.trim() ? value : null,
 	};
 	const id = value.trim() ? null : this.getFilters[0].id;
+	this.$store.dispatch('CLEAN_PRODUCTS_ARRAY');
+	this.$store.dispatch('UPDATE_PRODUCT_FILTER', null);
 	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
 	this.isSearchMobile = false;
 	this.updateFilter(id);

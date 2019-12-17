@@ -1,4 +1,4 @@
-import l from '@/shared/lib';
+import l, { isEmpty } from '@/shared/lib';
 
 class GlobalFeatures {
 	constructor(products) {
@@ -55,7 +55,7 @@ class GlobalFeatures {
 		this.features = this.features.map((feature) => {
 			const newValues = feature.values.map((v) => {
 				const current = l.find(l.equality('value', v.value), incomingFeatures);
-				if (l.isEmpty(current)) {
+				if (isEmpty(current)) {
 					return l.compose(
 						l.setNewProperty('isSelected', false),
 						l.setNewProperty('notAllowed', true),

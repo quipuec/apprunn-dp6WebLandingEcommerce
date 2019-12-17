@@ -28,7 +28,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import appButton from '@/components/shared/buttons/app-button';
-import lib from '@/shared/lib';
+import { isEmpty } from '@/shared/lib';
 
 const depositPayment = () => import('@/components/order/deposit-payment');
 const productsBuyed = () => import('@/components/order/products-buyed');
@@ -36,7 +36,7 @@ const recievedPayment = () => import('@/components/order/recieved-payment');
 const visaPayment = () => import('@/components/order/visa-payment');
 
 function created() {
-	if (lib.isEmpty(this.getWaysPayments)) {
+	if (isEmpty(this.getWaysPayments)) {
 		this.$store.dispatch('LOAD_WAY_PAYMENT', this);
 	} else {
 		this.onSelect(this.getWaysPayments[2]);
