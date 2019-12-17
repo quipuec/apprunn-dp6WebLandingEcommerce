@@ -8,7 +8,7 @@
 				<h1 class="app-header-logo">
 					<router-link to="/" class="link-logo" :style="`height: ${logo.height}px`">
 						<img
-							:src="logo.image"
+							:src="logo.urlImage"
 							:alt="logo.name"
 							:height="logo.height"
 							class="logo-image"
@@ -265,6 +265,7 @@ export default {
 	.container-header-logo {
 		align-items: center;
 		flex: 1 1 70%;
+		height: 30px;
 
 		@media (max-width: 764px) {
 			flex: 1 1 60%;
@@ -291,6 +292,7 @@ export default {
 
 	.link-logo {
 		display: block;
+		height: inherit;
 
 		@media (max-width: 768px) {
 			height: 20px !important;
@@ -299,6 +301,7 @@ export default {
 	}
 
 	.app-header-logo {
+		height: inherit;
 		margin: 0 40px 0 22px;
 	}
 
@@ -349,6 +352,7 @@ export default {
 	}
 
 	.logo-image {
+		height: inherit;
 		@media (max-width: 768px) {
 			height: 20px;
 		}
