@@ -61,7 +61,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import appButton from '@/components/shared/buttons/app-button';
-import lib from '@/shared/lib';
+import lib, { isEmpty } from '@/shared/lib';
 
 function total() {
 	return (this.getTotalToBuy - this.discount) + this.getShippingCost;
@@ -69,7 +69,7 @@ function total() {
 
 async function makeOrder(flagFinish) {
 	const body = this.buildBody(flagFinish);
-	const orderExist = !lib.isEmpty(this.getOrderInfo);
+	const orderExist = !isEmpty(this.getOrderInfo);
 	const dispatchName = orderExist ? 'UPDATE_ORDER' : 'CREATE_ORDER';
 	const dispatchObj = orderExist
 		? { context: this, id: this.getOrderInfo.id, body }
