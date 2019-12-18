@@ -2,7 +2,7 @@
   <div class="product-view">
 		<div class="btns-product-view">
 			<button 
-				v-for="(image, index) in data.images" 
+				v-for="(image, index) in images" 
 				:key="image.id"
 				class="btn-product-view"
 				:class="{'select' : image.select, 'not-select' : !image.select}"
@@ -15,10 +15,10 @@
 					class="image-slider">
 			</button>
 		</div>
-		<div class="slider-product-view" v-if="data.images && data.images.length">
+		<div class="slider-product-view" v-if="images && images.length">
 			<swiper ref="mySwiper" :options="swiperOption">
 				<swiper-slide 
-					v-for="image in data.images" 
+					v-for="image in images" 
 					:key="image.id">
 					<div class="wrapper-image">
 						<img 
@@ -56,7 +56,6 @@ function data() {
 	return {
 		swiperOption: {
 			allowTouchMove: false,
-			loop: true,
 			breakpoints: {
 				996: {
 					slidesPerView: 2,
@@ -67,6 +66,8 @@ function data() {
 					spaceBetween: 30,
 				},
 			},
+			loop: true,
+			width: 408,
 		},
 	};
 }
@@ -83,6 +84,10 @@ export default {
 		data: {
 			type: Object,
 			default: () => {},
+		},
+		images: {
+			default: () => [],
+			type: Array,
 		},
 	},
 };
@@ -122,7 +127,6 @@ export default {
 		background: color(white);
 		border-radius: 7px;
 		box-shadow: 0 2px 4px 0 rgba(213, 213, 213, 0.5);
-		height: 487px;
 		padding: 0 19px;
 		width: 80%;
 

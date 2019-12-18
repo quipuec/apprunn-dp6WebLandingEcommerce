@@ -52,7 +52,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import lib from '@/shared/lib';
+import lib, { isEmpty } from '@/shared/lib';
 
 function getGenderName(id) {
 	const { title } = lib.find(lib.equality('id', id), this.genders) || {};
@@ -64,7 +64,7 @@ function getValue(route, user) {
 }
 
 function departmentsHandler() {
-	if (lib.isEmpty(this.departments)) {
+	if (isEmpty(this.departments)) {
 		return '--';
 	}
 	const { name } = lib.find(lib.equality('id', this.user.provinceId), this.departments) || {};
@@ -72,7 +72,7 @@ function departmentsHandler() {
 }
 
 function districtsHandler() {
-	if (lib.isEmpty(this.districts)) {
+	if (isEmpty(this.districts)) {
 		return '--';
 	}
 	const { name } = lib.find(lib.equality('id', this.user.parishId), this.districts) || {};
@@ -80,7 +80,7 @@ function districtsHandler() {
 }
 
 function provinceHandler() {
-	if (lib.isEmpty(this.provinces)) {
+	if (isEmpty(this.provinces)) {
 		return '--';
 	}
 	const { name } = lib.find(lib.equality('id', this.user.cityId), this.provinces) || {};

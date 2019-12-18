@@ -77,6 +77,11 @@ async function created() {
 		this.httpResponseSuccessInterceptor,
 		this.httpResponseInterceptor,
 	);
+	this.$httpProductsPublic.interceptors.request.use(this.httpRequestInterceptor);
+	this.$httpProductsPublic.interceptors.response.use(
+		this.httpResponseSuccessInterceptor,
+		this.httpResponseInterceptor,
+	);
 }
 
 /* eslint-disable no-new */

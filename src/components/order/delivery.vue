@@ -57,7 +57,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import lib from '@/shared/lib';
+import { isEmpty } from '@/shared/lib';
 
 const addressComponent = () => import('@/components/order/address-component');
 const appButtonOrder = () => import('@/components/shared/buttons/app-button-order');
@@ -71,7 +71,7 @@ function created() {
 	this.$store.dispatch('LOAD_DIRECTIONS', this);
 	this.$store.dispatch('LOAD_WAREHOUSES', this);
 	this.$store.commit('SET_DELIVERY_PLACE', null);
-	if (!lib.isEmpty(this.getOrderInfo)) {
+	if (!isEmpty(this.getOrderInfo)) {
 		this.$store.commit('SET_DELIVERY_PLACE', this.getOrderInfo.deliveryAddress);
 		this.selectedDirection = this.getOrderInfo.deliveryAddress || this.selectedDirection;
 	}
@@ -172,7 +172,7 @@ function directionSelected(id) {
 		this.$store.commit('SET_SHIPPING_COST', 0);
 	} else {
 		this.calculateShippingCost(w);
-		if (!lib.isEmpty(this.getCustomerAddress)) {
+		if (!isEmpty(this.getCustomerAddress)) {
 			this.$store.commit('SET_CUSTOMER_ADDRESS', null);
 		}
 	}

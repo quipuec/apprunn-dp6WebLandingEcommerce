@@ -10,13 +10,24 @@
 		</div>
 		<div class="container-detail-information">
 			<div class="container-detail-name">
-				<p class="product-detail-name">{{ data.name }}</p>
-				<p class="product-detail-brand">{{ getBrandName(data) || '--' }}</p>
+				<p
+					:class="[isLoading ? 'loading' : 'product-detail-name']"
+				>{{ data.name }}</p>
+				<p
+					:class="[isLoading ? 'loading' : 'product-detail-brand']"
+				>{{ getBrandName(data) || '--' }}</p>
 			</div>
 			<div class="d-center container-code-rating">
-				<span class="product-detail-code">#{{ data.code }}</span>
-				<div class="container-rating d-center">
+				<span
+					:class="[isLoading ? 'loading' : 'product-detail-code']"
+				>#{{ data.code }}</span>
+				<div
+					:class="[
+						isLoading ? 'loading rating-loading' : 'container-rating d-center',
+					]"
+				>
 					<v-rating
+						v-show="!isLoading"
 						small
 						class="product-rating"
 						background-color="#ffcc03"
@@ -24,35 +35,45 @@
 						v-model="data.rating"
 						readonly
 					></v-rating>
-					<span class="text-rating">{{ data.rating }} / 5</span>
+					<span
+						v-show="!isLoading"
+						class="text-rating"
+					>{{ data.rating }} / 5</span>
 				</div>
 			</div>
 		</div>
 		<div class="container-detail-bottom">
-			<div v-if="data.priceDiscount" class="d-center mt-25">
+			<div v-show="data.priceDiscount" class="d-center">
 				<span
-					class="text-price-dis"
+					:class="[isLoading ? 'loading' : 'text-price-dis']"
 					:style="`color: ${globalColors.secondary}`"
 				>
 					{{ getCurrencySymbol }} {{ data.priceDiscount }}
 				</span>
 				<div
 					:style="`background: ${globalColors.primary};`"
-					class="content-discount"
+					:class="[isLoading ? 'loading' : 'content-discount']"
 				>
 					- {{ getDiscont }}%
 				</div>
 			</div>
 			<span
-				:class="data.priceDiscount ? 'text-price' : 'text-price-dis'"
+				:class="[
+					isLoading ? 'loading' : data.priceDiscount ? 'text-price' : 'text-price-dis',
+				]"
 				:style="`color: ${globalColors.secondary}`"
 			>
 				{{ getCurrencySymbol }} {{ data.price }}
 			</span>
 		</div>
+		<ProductConversions
+			:default-unit="data.unit"
+			:conversions="data.conversions"
+			@unit-selection="$emit('unit-selection', $event)"
+		/>
 		<product-childrens 
 			:features="features"
-			@select="selecFeature"
+			@selected="selecFeature"
 			@clear="$emit('clear')"/>
 		<product-buy 
 			@click="clickQuantity"
@@ -82,8 +103,8 @@ function getDiscont() {
 	return Math.round(Number(this.data.percentageDiscount) * 100);
 }
 
-function selecFeature(index, value) {
-	this.$emit('select', index, value);
+function selecFeature(value) {
+	this.$emit('selected', value);
 }
 
 function clickQuantity(value) {
@@ -118,12 +139,16 @@ export default {
 	components: {
 		heartComponent,
 		productChildrens,
+		ProductConversions: () => import('@/components/products/product-conversions'),
 		productBuy,
 	},
 	computed: {
 		...mapGetters([
 			'getCurrencySymbol',
 			'token',
+		]),
+		...mapGetters('loading', [
+			'isLoading',
 		]),
 		getDiscont,
 		noStock,
@@ -138,12 +163,12 @@ export default {
 	},
 	props: {
 		data: {
-			type: Object,
 			default: () => {},
+			type: Object,
 		},
 		features: {
-			type: Array,
 			default: () => [],
+			type: Array,
 		},
 	},
 };
@@ -236,6 +261,7 @@ export default {
 	}
 
 	.container-like {
+		margin-bottom: 5px;
 		@media screen and (max-width: 996px) {
 			margin: auto;
 		}
@@ -270,10 +296,17 @@ export default {
 	}
 
 	.container-detail-bottom {
+		height: 60px;
 		@media screen and (max-width: 996px) {
 			padding: 0 5%;
 			margin-bottom: 50px;
 		}
+	}
+
+	.rating-loading {
+		height: 21px;
+		margin-left: 10px;
+		width: 100%;
 	}
 </style>
 
