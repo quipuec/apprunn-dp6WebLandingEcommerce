@@ -102,7 +102,7 @@ export default {
 <style lang="scss" scoped>
 	.categories-carousel {
 		background: color(white);
-		padding: 115px 15% 108px;
+		padding: 80px 15% 60px;
 
 		@media (max-width: 860px) {
 			padding: 35px 10%;

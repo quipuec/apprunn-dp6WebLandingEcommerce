@@ -303,7 +303,7 @@ export default {
 
 	.app-header-logo {
 		flex-basis: 24%;
-		margin: 0;
+		margin: 0 1rem;
 	}
 
 	.icon-medium {
@@ -354,8 +354,9 @@ export default {
 	}
 
 	.logo-image {
-		height: -webkit-fill-available;
-		margin-left: 1rem;
+		height: 100%;
+		object-fit: contain;
+		width: 100%;
 		@media (max-width: 768px) {
 			height: 20px;
 		}
