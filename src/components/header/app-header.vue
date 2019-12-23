@@ -267,7 +267,7 @@ export default {
 		align-items: center;
 		flex: 1 1 70%;
 		height: inherit;
-		padding: 1rem 0;
+		padding: 1.5rem 0;
 
 		@media (max-width: 764px) {
 			flex: 1 1 60%;
@@ -294,6 +294,7 @@ export default {
 
 	.link-logo {
 		display: block;
+		height: 100%;
 
 		@media (max-width: 768px) {
 			height: 20px !important;
@@ -303,6 +304,7 @@ export default {
 
 	.app-header-logo {
 		flex-basis: 24%;
+		height: 100%;
 		margin: 0 1rem;
 	}
 
