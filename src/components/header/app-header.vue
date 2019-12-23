@@ -6,11 +6,10 @@
 			</div>
 			<div class="flex container-header-logo">
 				<h1 class="app-header-logo">
-					<router-link to="/" class="link-logo" :style="`height: ${logo.height}px`">
+					<router-link to="/" class="link-logo">
 						<img
 							:src="logo.urlImage"
 							:alt="logo.name"
-							:height="logo.height"
 							class="logo-image"
 						/>
 					</router-link>
@@ -265,7 +264,8 @@ export default {
 	.container-header-logo {
 		align-items: center;
 		flex: 1 1 70%;
-		height: 30px;
+		height: inherit;
+		padding: 1rem 0;
 
 		@media (max-width: 764px) {
 			flex: 1 1 60%;
@@ -292,7 +292,6 @@ export default {
 
 	.link-logo {
 		display: block;
-		height: inherit;
 
 		@media (max-width: 768px) {
 			height: 20px !important;
@@ -301,8 +300,8 @@ export default {
 	}
 
 	.app-header-logo {
-		height: inherit;
-		margin: 0 40px 0 22px;
+		flex-basis: 24%;
+		margin: 0;
 	}
 
 	.icon-medium {
@@ -312,6 +311,7 @@ export default {
 	.container-search {
 		align-items: center;
 		background: color(white);
+		flex-basis: 70%;
 		transition: .3s ease-in-out;
 		width: 100%;
 		z-index: 1;
@@ -352,7 +352,8 @@ export default {
 	}
 
 	.logo-image {
-		height: inherit;
+		height: -webkit-fill-available;
+		margin-left: 1rem;
 		@media (max-width: 768px) {
 			height: 20px;
 		}
