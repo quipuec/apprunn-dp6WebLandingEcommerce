@@ -9,7 +9,7 @@
 					<router-link to="/" class="link-logo">
 						<img
 							:src="logo.urlImage"
-							:alt="logo.name"
+							alt="Logo de compañía"
 							class="logo-image"
 						/>
 					</router-link>

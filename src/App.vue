@@ -88,7 +88,7 @@ function getCommerceData(newData) {
 function data() {
 	return {
 		logo: {
-			urlImage: process.env.COMPANY_LOGO,
+			urlImage: 'Cargando imagen',
 			name: process.env.COMPANY_LOGIN_TITLE,
 			height: 30,
 		},
