@@ -1,38 +1,50 @@
 <template>
-  <div class="product-childrens">
-		<app-select
-			v-for="(feature, index) in features"
-			:key="index"
-			:items="feature.values" 
-			item-text="name" 
-			item-value="code"
-			class="select-feature"
-			:value="feature.value"
-			@input="selectFeature(index, $event)"
-			@clear="$emit('clear')"
-			v-model="feature.value"
-			append-outer-icon="clear"
-		/>
+  <div class="my-4">
+	  <div
+	  	v-for="(feature, index) in features"
+		:key="index"
+		:class="[
+			isLoading ? 'loading features' : 'product-childrens',
+		]"
+	  >
+	  	<h3
+		  	:class="{ 'loading': isLoading }"
+			:style="`color:${globalColors.base}`"  
+		>{{feature.name}}:</h3>
+		<div class="wrap-buttons">
+			<span
+				v-for="v in feature.values"
+				:key="v.value"
+			>
+				<AppFeatureButton
+					class="ml-2 feature-button"
+					v-show="!isLoading"
+					:feature="v"
+					:is-selected="v.isSelected"
+					:not-allowed="v.notAllowed"
+					@click="selectFeature(v)"
+				/>
+			</span>
+		</div>
+	  </div>
 	</div>
 </template>
 <script>
-const appSelect = () => import('@/components/shared/inputs/app-select');
+import { mapGetters } from 'vuex';
 
-function selectFeature(index, value) {
-	this.$emit('select', index, value);
-}
-
-function data() {
-	return {
-		items: [],
-	};
+function selectFeature(value) {
+	this.$emit('selected', value);
 }
 export default {
 	name: 'product-childrens',
 	components: {
-		appSelect,
+		AppFeatureButton: () => import('@/components/shared/buttons/app-feature-button'),
 	},
-	data,
+	computed: {
+		...mapGetters('loading', [
+			'isLoading',
+		]),
+	},
 	methods: {
 		selectFeature,
 	},
@@ -46,18 +58,27 @@ export default {
 </script>
 <style lang="scss" scoped>
 	.product-childrens {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-
-		@media screen and (max-width: 996px) {
-			margin-bottom: 50px;
-			padding: 0 5%;
-		}
+		align-items: center;
+		display: grid;
+		grid-template-columns: 120px 3fr;
+		margin-bottom: 10px;
 	}
 
 	.select-feature {
 		margin-bottom: 22px;
 		width: 45%;
+	}
+
+	.wrap-buttons {
+		display: flex;
+		justify-content: flex-start;
+	}
+
+	.feature-button {
+		min-width: 80px;
+	}
+
+	.features {
+		margin-bottom: 10px;
 	}
 </style>

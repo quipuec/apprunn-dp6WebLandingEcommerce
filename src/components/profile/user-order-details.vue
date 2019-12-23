@@ -78,14 +78,14 @@ import appButton from '@/components/shared/buttons/app-button';
 import leftComponent from '@/components/shared/icons/left-component';
 import loadPayment from '@/components/profile/load-payment';
 import responsiveTable from '@/components/shared/table/respondive-table';
-import lib from '@/shared/lib';
+import lib, { isEmpty } from '@/shared/lib';
 
 async function created() {
 	({ id: this.orderId } = this.$route.params);
 	await this.$store.dispatch('LOAD_ORDER_DETAILS', { context: this, orderId: this.orderId });
-	if (!lib.isEmpty(this.getOrderInfo)) {
+	if (!isEmpty(this.getOrderInfo)) {
 		const { additionalInfo } = this.getOrderInfo;
-		this.$store.commit('UPDATE_FLAG_ADD_VOUCHER', !lib.isEmpty(additionalInfo));
+		this.$store.commit('UPDATE_FLAG_ADD_VOUCHER', !isEmpty(additionalInfo));
 	}
 }
 

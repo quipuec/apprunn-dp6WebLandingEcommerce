@@ -63,11 +63,12 @@ export default {
 		userData: null,
 	},
 	products: {
+		lastPage: 0,
 		list: [],
 		params: {
-			search: null,
-			page: 1,
+			filters: null,
 			limit: 20,
+			page: 1,
 		},
 	},
 	token: null,
@@ -83,5 +84,5 @@ export default {
 	warehouses: [
 		{ id: 0, name: 'Seleccione una tienda' },
 	],
-	filters: [],
+	filters: null,
 };

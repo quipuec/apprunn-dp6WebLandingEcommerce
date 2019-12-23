@@ -1,26 +1,39 @@
 <template>
+	<div>
 		<section class="product-section transition-product-section">
 			<product-card
 				class="product-card"
-				v-for="product in getProducts"
+				v-for="product in products"
 				:key="product.id"
 				:product="product"
 			/>
 		</section>
+		<div class="see-more-btn">
+			<button
+				v-if="getProducts && getLastPage !== currentPage"
+				type="button"
+				:style="`border:1px solid ${globalColors.primary};color:${globalColors.primary};`"
+				@click="addMoreProduct"
+			>Seguir Viendo</button>
+		</div>
+	</div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import { isEmpty } from '@/shared/lib';
 
-function created() {
-	const filterParams = {
-		filters: this.getFilters.length > 0 ? this.getFilters[0].id : null,
-	};
-	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params: filterParams });
+function addMoreProduct() {
+	this.$store.dispatch('MORE_PRODUCTS');
+	this.$store.dispatch('LOAD_PRODUCTS', { context: this });
+}
+
+function products() {
+	return isEmpty(this.getProducts) ? this.defaultProducts : this.getProducts;
 }
 
 function data() {
 	return {
-		page: 0,
+		defaultProducts: Array(10).fill({}),
 		search: '',
 	};
 }
@@ -32,12 +45,18 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'currentPage',
 			'getFilters',
+			'getLastPage',
 			'getProducts',
+			'indeterminate',
 		]),
+		products,
 	},
-	created,
 	data,
+	methods: {
+		addMoreProduct,
+	},
 };
 </script>
 <style lang="scss" scoped>
@@ -48,5 +67,23 @@ export default {
 		grid-template-columns: repeat(auto-fill, minmax(214px, 1fr));
 		margin: 42px auto;
 		max-width: 1070px;
+	}
+
+	.see-more-btn {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		margin: 0 30px;
+
+		button {
+			background-color: white;
+			border-radius: 3px;
+			flex: 1 1 auto;
+			font-family: font(heavy);
+			font-size: size(large);
+			padding: 7px 30px;
+			max-width: 630px;
+			min-width: 255px;
+		}
 	}
 </style>
