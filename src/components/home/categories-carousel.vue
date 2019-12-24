@@ -7,7 +7,7 @@
 		</div>
 		<div class="categories-carousel-slider">
 			<swiper :options="swiperOption">
-        <swiper-slide v-for="(category, index) in categories" :key="category.id">
+        		<swiper-slide v-for="(category, index) in categories" :key="category.id">
 					<div 
 						class="container-big-category" 
 						@mouseover="hoverCategory(index)"
@@ -55,7 +55,7 @@ function goToCategory({ slug, id }) {
 function data() {
 	return {
 		swiperOption: {
-			slidesPerView: 3,
+			slidesPerView: this.len,
 			spaceBetween: 0,
 			slidesPerGroup: 3,
 			allowTouchMove: false,
@@ -96,13 +96,14 @@ export default {
 			default: () => [],
 		},
 		colorBase: String,
+		len: Number,
 	},
 };
 </script>
 <style lang="scss" scoped>
 	.categories-carousel {
 		background: color(white);
-		padding: 115px 15% 108px;
+		padding: 80px 15% 60px;
 
 		@media (max-width: 860px) {
 			padding: 35px 10%;
@@ -113,10 +114,10 @@ export default {
 		align-items: center;
 		background-size: cover;
 		display: flex;
-		height: 163px;
+		height: 100%;
 		justify-content: center;
 		position: relative;
-		width: 205px;
+		width: 100%;
 
 		&::before {
 			background-image: linear-gradient(to bottom, rgba(60, 60, 60, 0.89), rgba(60, 60, 60, 0.50));
@@ -150,11 +151,12 @@ export default {
 		border-radius: 16px;
 		cursor: pointer;
 		display: flex;
-		height: 179px;
+		height: 115px;
 		justify-content: center;
 		margin: auto;
+		padding: 0.5rem;
 		transition: all .3s;
-		width: 220px;
+		width: 140px;
 
 		@media (max-width: 860px) {
 			height: 122px;
@@ -183,7 +185,7 @@ export default {
 		color: color(base);
 		font-family: font(bold);
 		font-size: size(large);
-		margin-top: 26px;
+		margin-top: 16px;
 		text-align: center;
 	}
 </style>

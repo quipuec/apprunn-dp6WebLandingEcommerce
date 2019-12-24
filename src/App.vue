@@ -81,10 +81,14 @@ function getBanners(newBanners) {
 	this.bannerTop.urlImage = lib.getDeeper('webImage')(bannerItem);
 }
 
+function getCommerceData(newData) {
+	this.logo = newData;
+}
+
 function data() {
 	return {
 		logo: {
-			image: process.env.COMPANY_LOGO,
+			urlImage: 'Cargando imagen',
 			name: process.env.COMPANY_LOGIN_TITLE,
 			height: 30,
 		},
@@ -107,6 +111,7 @@ export default {
 			'bannersTypes',
 			'getBanners',
 			'getCategories',
+			'getCommerceData',
 			'getFilters',
 			'user',
 		]),
@@ -126,6 +131,7 @@ export default {
 	watch: {
 		$route: routeHandler,
 		getBanners,
+		getCommerceData,
 	},
 };
 </script>
