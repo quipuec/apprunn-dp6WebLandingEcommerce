@@ -111,7 +111,18 @@ function SET_PRODUCT_FILTER(state, filters) {
 	Vue.set(state.products.params, 'filters', filters);
 }
 
+function ADD_ONE_IN_SERVICE_COUNTER(state, service) {
+	state.appConfig.loadingCounter.push(service);
+}
+
+function MINUS_ONE_IN_SERVICE_COUNTER(state, index) {
+	const current = state.appConfig.loadingCounter;
+	current.splice(index, 1);
+	Vue.set(state.appConfig, 'loadingCounter', current);
+}
+
 const methods = {
+	ADD_ONE_IN_SERVICE_COUNTER,
 	clearUser,
 	...geoMutations,
 	...orderMutations,
@@ -123,6 +134,7 @@ const methods = {
 	toggleLoading,
 	RESET_PRODUCTS_ARRAY,
 	LAST_PAGE,
+	MINUS_ONE_IN_SERVICE_COUNTER,
 	SET_BANNERS,
 	SET_COMMERCE_DATA,
 	SET_CURRENCY_DEFAULT,

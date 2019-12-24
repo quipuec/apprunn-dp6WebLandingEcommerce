@@ -110,6 +110,10 @@ function currentPage(state) {
 	return state.products.params.page;
 }
 
+function loadingCounter(state) {
+	return state.appConfig.loadingCounter.length;
+}
+
 const methods = {
 	bannersTypes,
 	companyLogo,
@@ -127,6 +131,7 @@ const methods = {
 	getWarehouses,
 	flagAddVoucher,
 	indeterminate,
+	loadingCounter,
 	...geoGetters,
 	...orderGetters,
 	...profileGetters,

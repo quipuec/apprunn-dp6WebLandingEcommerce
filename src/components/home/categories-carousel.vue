@@ -1,9 +1,10 @@
 <template>
 	<div class="categories-carousel">
 		<div>
-			<title-section 
+			<title-section
 				title="Categorías" 
-				:color="colorBorder"/>
+				:color="colorBorder"
+			/>
 		</div>
 		<div class="categories-carousel-slider">
 			<swiper :options="swiperOption">
@@ -38,6 +39,7 @@
 	</div>
 </template>
 <script>
+
 const titleSection = () => import('@/components/home/title-section');
 
 function hoverCategory(index) {
@@ -64,14 +66,14 @@ function data() {
 				prevEl: '.swiper-button-prev',
 			},
 			breakpoints: {
-				860: {
-					slidesPerView: 1,
-					slidesPerGroup: 1,
-					allowTouchMove: true,
-				},
-				1261: {
+				930: {
 					slidesPerView: 2,
 					slidesPerGroup: 2,
+					allowTouchMove: true,
+				},
+				600: {
+					slidesPerView: 1,
+					slidesPerGroup: 1,
 					allowTouchMove: true,
 				},
 			},
@@ -185,7 +187,9 @@ export default {
 		font-family: font(bold);
 		font-size: size(large);
 		margin-top: 16px;
+		overflow: hidden;
 		text-align: center;
+		text-overflow: ellipsis;
 	}
 </style>
 

@@ -1,6 +1,7 @@
 
 export default {
 	appConfig: {
+		loadingCounter: [],
 		isLoading: false,
 		snackbar: {
 			text: '',

@@ -106,17 +106,29 @@ function START_PAGINATION({ commit }) {
 	commit('PAGE_ONE');
 }
 
+function addService({ commit }, service) {
+	commit('ADD_ONE_IN_SERVICE_COUNTER', service);
+}
+
+function minusService({ commit, state }, service) {
+	const { config: { url } } = service;
+	const index = state.appConfig.loadingCounter.findIndex(l => l.url === url);
+	commit('MINUS_ONE_IN_SERVICE_COUNTER', index);
+}
+
 const methods = {
+	addProductToBuyCar,
+	addService,
 	CLEAN_PRODUCTS_ARRAY,
 	clearUser,
 	DEFAULT_USER,
 	getOrderData,
+	minusService,
 	MORE_PRODUCTS,
 	setUser,
 	setToken,
 	showSnackBar,
 	toggleLoading,
-	addProductToBuyCar,
 	updateProductSelect,
 	UPDATE_PRODUCT_FILTER,
 	updateFilters,

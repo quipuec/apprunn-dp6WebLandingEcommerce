@@ -1,7 +1,6 @@
 <template>
 	<layout-admin>
-		<div class="loading-banner-container loading" v-if="getBannersHome.length === 0 || indeterminate"></div>
-		<banner-carousel v-else :banners="getBannersHome"/>
+		<banner-carousel :banners="getBannersHome"/>
 		<div
 			class="loading-categories-container"
 			v-if="getCategories.length === 0 && indeterminate"

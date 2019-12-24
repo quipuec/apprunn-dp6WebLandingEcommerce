@@ -1,7 +1,7 @@
 <template>
 	<div
 		class="app-category"
-		:class="{ scrolling: scrolled, isBanner : bannerTopExist}"
+		:class="{ scrolling: scrolled, isBanner: bannerTopExist}"
 	>
 		<div class="app-category-user">
 			<div class="container-user" :style="`border-color: ${globalColors.primary}`">

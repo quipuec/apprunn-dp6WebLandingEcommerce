@@ -1,19 +1,36 @@
 <template>
-  <div class="title-section">
+	<div
+  		:class="[
+			'title-section',
+			{ 'loading': indeterminate },
+		]"
+	>
 		<div class="container-decoration">
-			<div class="line" :style="`background-color: ${color}`"></div>
-			<div class="circle m-l-1" :style="`background-color: ${color}`"></div>
+			<div class="line" :style="`background-color: ${indeterminate ? 'tranparent' : color}`"></div>
+			<div class="circle m-l-1" :style="`background-color: ${indeterminate ? 'transparent' : color}`"></div>
 		</div>
-		<div class="name-section" :style="`color: ${color}`">{{title}}</div>
+		<div
+			:class="[
+				'name-section',
+				{ 'loading': indeterminate },
+			]"
+			:style="`color: ${color}`">{{title}}</div>
 		<div class="container-decoration">
-			<div class="circle m-r-1" :style="`background-color: ${color}`"></div>
-			<div class="line" :style="`background-color: ${color}`"></div>
+			<div class="circle m-r-1" :style="`background-color: ${indeterminate ? 'transparent' : color}`"></div>
+			<div class="line" :style="`background-color: ${indeterminate ? 'transparent' : color}`"></div>
 		</div>
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
 	name: 'title-section',
+	computed: {
+		...mapGetters([
+			'indeterminate',
+		]),
+	},
 	props: {
 		title: String,
 		color: String,

@@ -1,6 +1,6 @@
 <template>
 	<v-app class="main-container">
-		<app-banner-top v-if="bannerTop.urlImage" :data="bannerTop"/>
+		<app-banner-top :data="bannerTop"/>
 		<app-header
 			:logo="logo" 
 			@change-menu="changeMenu" 
@@ -78,7 +78,7 @@ function routeHandler() {
 
 function getBanners(newBanners) {
 	const bannerItem = newBanners.find(r => r.typeId === this.bannersTypes.Top);
-	this.bannerTop.urlImage = lib.getDeeper('webImage')(bannerItem);
+	this.bannerTop = Object.assign({}, this.bannerTop, bannerItem);
 }
 
 function getCommerceData(newData) {
