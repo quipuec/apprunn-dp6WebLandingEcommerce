@@ -12,6 +12,9 @@
 			<button
 				v-if="getProducts && getLastPage !== currentPage"
 				type="button"
+				:class="[
+					{ 'loading': indeterminate },
+				]"
 				:style="`border:1px solid ${globalColors.primary};color:${globalColors.primary};`"
 				@click="addMoreProduct"
 			>Seguir Viendo</button>

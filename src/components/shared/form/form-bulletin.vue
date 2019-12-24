@@ -3,15 +3,30 @@
 		<div class="form-bulletin-description-company">
 			<div class="content-date-company">
 				<PhoneIcon/>
-				<p class="item-date-company">{{getCommerceData.phone}}</p>
+				<p
+					:class="[
+						'item-date-company',
+						{ 'loading': indeterminate },
+					]"
+				>{{getCommerceData.phone}}</p>
 			</div>
 			<div class="content-date-company">
 				<EmailIcon/>
-				<p class="item-date-direction email">Correo: {{getCommerceData.email}}</p>
+				<p
+					:class="[
+						'item-date-direction email',
+						{ 'loading': indeterminate },
+					]"
+				>Correo: {{getCommerceData.email}}</p>
 			</div>
 			<div class="content-date-company">
 				<LocationIcon/>
-				<p class="item-date-direction">{{getCommerceData.address}}</p>
+				<p
+					:class="[
+						'item-date-direction',
+						{ 'loading': indeterminate },
+					]"
+				>{{getCommerceData.address}}</p>
 			</div>
 		</div>
 	</div>
@@ -30,6 +45,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getCommerceData',
+			'indeterminate',
 		]),
 	},
 };

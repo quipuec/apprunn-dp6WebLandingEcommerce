@@ -1,11 +1,25 @@
 <template>
   <div class="section-visa">
-		<img :src="iconVisa" alt="" class="icon-visanet">
-		<p class="description-section-visa">{{description}}</p>
+		<img
+			:src="indeterminate ? null : iconVisa"
+			alt="logo_visa"
+			:class="[
+				'icon-visanet',
+				{ 'loading': indeterminate },
+			]"
+		>
+		<p
+			:class="[
+				'description-section-visa',
+				{ 'loading': indeterminate },
+			]"
+		>{{description}}</p>
 	</div>  
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 function data() {
 	return {
 		description: 'Esta tienda está autorizada por Visa para realizar transacciones electrónicas.',
@@ -14,8 +28,13 @@ function data() {
 }
 
 export default {
-	data,
 	name: 'section-visa',
+	computed: {
+		...mapGetters([
+			'indeterminate',
+		]),
+	},
+	data,
 };
 </script>
 

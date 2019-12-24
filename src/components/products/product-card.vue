@@ -7,9 +7,14 @@
 			<div class="pd-10">
 				<section class="product-header" :class="{ 'small': small }">
 					<div
-						v-if="product.priceDiscount"
-						:style="`background-color: ${globalColors.primary}`" class="product-discount">
-						- {{discountPercentage}}%
+						v-if="product.priceDiscount || !indetermiante"
+						:style="`background-color:${indeterminate ? 'transparent' : globalColors.primary}`"
+						:class="[
+							'product-discount',
+							{ 'loading loading-dark': indeterminate },
+						]"
+					>
+						<span v-if="!indeterminate">- {{discountPercentage}}%</span>
 					</div>
 					<div class="product-favorite">
 						<heart-component @click="productFavo" :value="product.flagFavorite"/>

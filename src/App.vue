@@ -50,7 +50,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import lib from '@/shared/lib';
 
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
@@ -793,6 +792,10 @@ input.app-input::-webkit-input-placeholder {
 	border-radius: 3px;
 	color: color(border) !important;
 	fill: color(border) !important;
+}
+
+.loading-dark {
+	filter: brightness(0.9);
 }
 
 .conversions-select {

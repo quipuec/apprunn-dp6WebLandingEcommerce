@@ -2,10 +2,10 @@
 	<div class="banner-carousel">
 		<div
 			:class="[
-				indetermiante ? 'loading banner-height' : 'container-banner-carousel',
+				indeterminate ? 'loading banner-height' : 'container-banner-carousel',
 			]"
 		>
-			<swiper :options="swiperOption">
+			<swiper :options="swiperOption" v-if="!indeterminate">
 				<swiper-slide 
 					v-for="banner in banners" 
 					:key="banner.id">
@@ -139,7 +139,7 @@ export default {
 	}
 
 	.banner-height {
-		height: 61.6rem;
+		height: 616px;
 	}
 </style>
 

@@ -18,7 +18,7 @@ export function httpResponseSuccessInterceptor(response) {
 	store.dispatch('minusService', response);
 	const counter = store.getters.loadingCounter;
 	if (counter === 0) {
-		// store.dispatch('toggleLoading', false);
+		store.dispatch('toggleLoading', false);
 	}
 	return response;
 }

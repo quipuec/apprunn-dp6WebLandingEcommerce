@@ -6,8 +6,12 @@
 				:color="colorBorder"
 			/>
 		</div>
-		<div class="categories-carousel-slider">
-			<swiper :options="swiperOption">
+		<div
+			:class="[
+				indeterminate ? 'loading loading-categories' : 'categories-carousel-slider',
+			]"
+		>
+			<swiper v-if="!indeterminate" :options="swiperOption">
         		<swiper-slide v-for="(category, index) in categories" :key="category.id">
 					<div 
 						class="container-big-category" 
@@ -39,6 +43,7 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 
 const titleSection = () => import('@/components/home/title-section');
 
@@ -86,6 +91,11 @@ export default {
 	data,
 	components: {
 		titleSection,
+	},
+	computed: {
+		...mapGetters([
+			'indeterminate',
+		]),
 	},
 	methods: {
 		hoverCategory,
@@ -190,6 +200,11 @@ export default {
 		overflow: hidden;
 		text-align: center;
 		text-overflow: ellipsis;
+	}
+
+	.loading-categories {
+		height: 190px;
+		margin-top: 25px;
 	}
 </style>
 
