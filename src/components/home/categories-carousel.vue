@@ -103,7 +103,7 @@ export default {
 <style lang="scss" scoped>
 	.categories-carousel {
 		background: color(white);
-		padding: 80px 15% 60px;
+		padding: 80px 10% 60px;
 
 		@media (max-width: 860px) {
 			padding: 35px 10%;
@@ -168,7 +168,6 @@ export default {
 		cursor: pointer;
 		margin: auto;
 		padding: 6px;
-		width: 229px;
 
 		&:hover {
 			.container-category-image {
