@@ -7,7 +7,7 @@
 			<div class="pd-10">
 				<section class="product-header" :class="{ 'small': small }">
 					<div
-						v-if="product.priceDiscount || !indetermiante"
+						v-if="product.priceDiscount || !indeterminate"
 						:style="`background-color:${indeterminate ? 'transparent' : globalColors.primary}`"
 						:class="[
 							'product-discount',

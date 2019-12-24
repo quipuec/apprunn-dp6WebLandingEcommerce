@@ -4,7 +4,10 @@
 		class="app-banner-top"
 		:class="[big ? 'big' : null, small ? 'small' : null]">
 		<div 
-			:class="[big ? 'big' : null, small ? 'small' : null]"
+			:class="[
+				'banner-top-height',
+				big ? 'big' : null, small ? 'small' : null,
+			]"
 		>
 			<picture>
 				<source :srcset="webImage" media="(min-width: 600px)">
@@ -63,6 +66,7 @@ export default {
 <style lang="scss" scoped>
 	.app-banner-top {
 		background: color(white);
+		height: 89px;
 		padding: 12px 7%;
 		
 		@media (max-width: 764px) {
@@ -134,6 +138,10 @@ export default {
 		height: 100%;
 		object-fit: fill;
 		width: 100%
+	}
+
+	.banner-top-height {
+		height: 100%;
 	}
 </style>
 
