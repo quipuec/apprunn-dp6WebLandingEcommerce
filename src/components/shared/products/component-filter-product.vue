@@ -47,6 +47,9 @@ function data() {
 				950: {
 					slidesPerView: 2,
 				},
+				450: {
+					slidesPerView: 1,
+				},
 			},
 			navigation: {
 				nextEl: '.swiper-button-next',
