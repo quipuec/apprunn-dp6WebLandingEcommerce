@@ -89,29 +89,68 @@ function SET_COMMERCE_DATA(state, data) {
 	Vue.set(state, 'commerce', data);
 }
 
+function UPDATE_PRODUCT_PAGE(state) {
+	const newPage = state.products.params.page + 1;
+	Vue.set(state.products.params, 'page', newPage);
+}
+
+function PAGE_ONE(state) {
+	Vue.set(state.products.params, 'page', 1);
+}
+
+function LAST_PAGE(state, headers) {
+	const totalPage = headers['x-last-page'];
+	Vue.set(state.products, 'lastPage', Number(totalPage));
+}
+
+function RESET_PRODUCTS_ARRAY(state) {
+	Vue.set(state.products, 'list', []);
+}
+
+function SET_PRODUCT_FILTER(state, filters) {
+	Vue.set(state.products.params, 'filters', filters);
+}
+
+function ADD_ONE_IN_SERVICE_COUNTER(state, service) {
+	state.appConfig.loadingCounter.push(service);
+}
+
+function MINUS_ONE_IN_SERVICE_COUNTER(state, index) {
+	const current = state.appConfig.loadingCounter;
+	current.splice(index, 1);
+	Vue.set(state.appConfig, 'loadingCounter', current);
+}
+
 const methods = {
+	ADD_ONE_IN_SERVICE_COUNTER,
 	clearUser,
 	...geoMutations,
 	...orderMutations,
 	...profileMutations,
+	PAGE_ONE,
 	setToken,
 	setUser,
 	showSnackBar,
 	toggleLoading,
+	RESET_PRODUCTS_ARRAY,
+	LAST_PAGE,
+	MINUS_ONE_IN_SERVICE_COUNTER,
 	SET_BANNERS,
 	SET_COMMERCE_DATA,
 	SET_CURRENCY_DEFAULT,
 	SET_DIRECTIONS,
 	SET_ORDER_ID,
 	SET_PRODUCTS,
+	SET_PRODUCT_FILTER,
 	SET_PRODUCT_TO_BUY,
 	SET_WAREHOUSES,
 	UPDATE_FLAG_ADD_VOUCHER,
 	UPDATE_POLL_PROGRESS,
 	SET_CATEGORIES,
 	SET_ORDER_TOTAL,
-	UPDATE_PRODUCTS_SELECTED,
 	UPDATE_FILTERS,
+	UPDATE_PRODUCT_PAGE,
+	UPDATE_PRODUCTS_SELECTED,
 };
 
 export default methods;

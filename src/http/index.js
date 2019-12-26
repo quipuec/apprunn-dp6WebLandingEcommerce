@@ -3,6 +3,7 @@ import errors from './errors';
 
 
 export function httpRequestInterceptor(config) {
+	store.dispatch('addService', config);
 	const headers = config.headers;
 	if (store.state.token) {
 		headers.common.Authorization = `Bearer ${store.state.token}`;
@@ -14,7 +15,11 @@ export function httpRequestInterceptor(config) {
 }
 
 export function httpResponseSuccessInterceptor(response) {
-	store.dispatch('toggleLoading', false);
+	store.dispatch('minusService', response);
+	const counter = store.getters.loadingCounter;
+	if (counter === 0) {
+		store.dispatch('toggleLoading', false);
+	}
 	return response;
 }
 

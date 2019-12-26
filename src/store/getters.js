@@ -18,7 +18,7 @@ function user(state) {
 }
 
 function userName(state) {
-	return state.user ? `${state.user.name} ${state.user.lastName}` : '';
+	return state.user ? `${state.user.name || ''} ${state.user.lastname || ''}` : '';
 }
 
 function token(state) {
@@ -98,25 +98,45 @@ function getPromotionalDetailsBanner(state) {
 	return state.banners.find(banner => banner.typeName === 'Promoción en detalle');
 }
 
+function productParams(state) {
+	return state.products.params;
+}
+
+function getLastPage(state) {
+	return state.products.lastPage;
+}
+
+function currentPage(state) {
+	return state.products.params.page;
+}
+
+function loadingCounter(state) {
+	return state.appConfig.loadingCounter.length;
+}
+
 const methods = {
 	bannersTypes,
 	companyLogo,
+	currentPage,
 	genders,
 	getBanners,
 	getBannersHome,
 	getCommerceData,
 	getDirections,
 	getCurrencySymbol,
+	getLastPage,
 	getPromotionalBanner,
 	getProducts,
 	getPromotionalDetailsBanner,
 	getWarehouses,
 	flagAddVoucher,
 	indeterminate,
+	loadingCounter,
 	...geoGetters,
 	...orderGetters,
 	...profileGetters,
 	pollData,
+	productParams,
 	snackbar,
 	themeColors,
 	token,

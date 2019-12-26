@@ -1,6 +1,6 @@
 <template>
 	<v-app class="main-container">
-		<app-banner-top v-if="bannerTop.urlImage" :data="bannerTop"/>
+		<app-banner-top :data="bannerTop"/>
 		<app-header
 			:logo="logo" 
 			@change-menu="changeMenu" 
@@ -50,7 +50,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import lib from '@/shared/lib';
 
 const appHeader = () => import('@/components/header/app-header');
 const appMenuCategory = () => import('@/components/header/app-category');
@@ -78,7 +77,7 @@ function routeHandler() {
 
 function getBanners(newBanners) {
 	const bannerItem = newBanners.find(r => r.typeId === this.bannersTypes.Top);
-	this.bannerTop.urlImage = lib.getDeeper('webImage')(bannerItem);
+	this.bannerTop = Object.assign({}, this.bannerTop, bannerItem);
 }
 
 function getCommerceData(newData) {
@@ -88,7 +87,7 @@ function getCommerceData(newData) {
 function data() {
 	return {
 		logo: {
-			urlImage: process.env.COMPANY_LOGO,
+			urlImage: 'Cargando imagen',
 			name: process.env.COMPANY_LOGIN_TITLE,
 			height: 30,
 		},
@@ -784,6 +783,25 @@ input.app-input::-webkit-input-placeholder {
 
 	.v-treeview-node--active {
 		background: transparent !important;
+	}
+}
+
+.loading {
+	background-color: color(border) !important;
+	border-color: color(border) !important;
+	border-radius: 3px;
+	color: color(border) !important;
+	fill: color(border) !important;
+}
+
+.loading-dark {
+	filter: brightness(0.9);
+}
+
+.conversions-select {
+
+	.ecommerce-select {
+		background-color: white !important;
 	}
 }
 

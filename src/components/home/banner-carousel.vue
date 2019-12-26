@@ -1,13 +1,15 @@
 <template>
 	<div class="banner-carousel">
-		<div class="container-banner-carousel">
-			<swiper :options="swiperOption">
+		<div
+			:class="[
+				indeterminate ? 'loading banner-height' : 'container-banner-carousel',
+			]"
+		>
+			<swiper :options="swiperOption" v-if="!indeterminate">
 				<swiper-slide 
 					v-for="banner in banners" 
 					:key="banner.id">
-					<div 
-						:style="getBackground(banner)"
-						class="img-carousel">
+					<div :style="getBackground(banner)" class="img-carousel">
 						<a 
 							v-if="banner.webLink"
 							:href="banner.webLink"
@@ -61,6 +63,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getCommerceData',
+			'indeterminate',
 		]),
 		showSearcher,
 	},
@@ -133,6 +136,10 @@ export default {
 	.searcher {
 		height: 414px;
 		width: 353px;
+	}
+
+	.banner-height {
+		height: 616px;
 	}
 </style>
 

@@ -2,18 +2,25 @@ import lib from '@/shared/lib';
 import helper from '@/shared/helper';
 
 const asyncActions = {
-	LOAD_PRODUCTS: async ({ commit, state }, { context, params }) => {
+	LOAD_PRODUCTS: async ({ commit, state, getters }, { context, params = {} }) => {
 		const request = [];
+		const completeParams = Object.assign({}, params, getters.productParams);
 		if (state.token) {
-			request.push(context.$httpProducts.get('products/favorites', { params }));
+			request.push(
+				context.$httpProducts.get('products/favorites', { params: completeParams }),
+			);
 		} else {
-			request.push(context.$httpProducts.get('products-public', { params }));
+			request.push(
+				context.$httpProducts.get('products-public', { params: completeParams }),
+			);
 		}
-		const [{ data: products }] = await Promise.all(request);
+		const [{ data: products, headers }] = await Promise.all(request);
 		const setUpDateInProducts = products.map(
 			lib.setNewProperty('createdAt', ({ createdAt }) => helper.formatDate(createdAt)),
 		);
-		commit('SET_PRODUCTS', setUpDateInProducts);
+		const newProducts = [].concat(state.products.list, setUpDateInProducts);
+		commit('SET_PRODUCTS', newProducts);
+		commit('LAST_PAGE', headers);
 	},
 	SET_FAVORITE_FLAG: async ({ commit, state }, { context, product }) => {
 		const url = `products/favorite/${product.id}`;
@@ -168,6 +175,8 @@ const asyncActions = {
 		link.href = commerceData.urlDomain;
 		link.sizes = '16x16';
 		document.getElementsByTagName('head')[0].appendChild(link);
+		const pageTitle = document.getElementsByTagName('title');
+		pageTitle[0].innerHTML = commerceData.name || 'AppRunn SAC';
 	},
 };
 

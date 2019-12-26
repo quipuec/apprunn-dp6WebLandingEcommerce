@@ -1,51 +1,82 @@
 <template>
 	<div class="product-container" :class="{ 'small': small }" @click="goToProduct(product)">
 		<div :class="{ 'opacity': !product.stockWarehouse }">
-			<div v-if="!product.stockWarehouse" class="without-stock-tag">
+			<div v-if="!product.stockWarehouse && !indeterminate" class="without-stock-tag">
 				Agotado
 			</div>
 			<div class="pd-10">
 				<section class="product-header" :class="{ 'small': small }">
 					<div
-						v-if="product.priceDiscount"
-						:style="`background-color: ${globalColors.primary}`" class="product-discount">
-						- {{discountPercentage}}%
+						v-if="product.priceDiscount || !indeterminate"
+						:style="`background-color:${indeterminate ? 'transparent' : globalColors.primary}`"
+						:class="[
+							'product-discount',
+							{ 'loading loading-dark': indeterminate },
+						]"
+					>
+						<span v-if="!indeterminate">- {{discountPercentage}}%</span>
 					</div>
 					<div class="product-favorite">
 						<heart-component @click="productFavo" :value="product.flagFavorite"/>
 					</div>
 				</section>
 				<section class="product-content" :class="small ? 'small' : null">
-					<div>
-						<img class="product-img" :src="product.urlImage" alt="imagen del product">
+					<div
+						:class="[
+							{ 'loading img-space': indeterminate },
+						]"
+					>
+						<img
+							v-if="!indeterminate"
+							:class="[
+							'product-img',
+							]"
+							:src="product.urlImage"
+							alt="imagen del product"
+						>
 					</div>
 					<div class="product-description-wrapper">
-						<p class="product-description">{{product.description}}</p>
+						<p
+							:class="[
+								indeterminate ? 'loading text-field' : 'product-description'
+							]"
+						>{{product.description}}</p>
 						<small
 							v-if="product.warehouseProduct && product.warehouseProduct.brand"
 							class="product-brand">{{product.warehouseProduct.brand.name}}</small>
 						<h3
 							v-if="product.priceDiscount"
-							:style="`color: ${globalColors.secondary};`"
-							class="product-price-discount"
+							:style="`color: ${indeterminate ? 'transparent' : globalColors.secondary};`"
+							:class="[
+								indeterminate ? 'loading text-field' : 'product-price-discount'
+							]"
 						>
 							{{ product.priceDiscount }}
 						</h3>
 						<small
-							:class="product.priceDiscount ? 'product-price' : 'product-price-discount'"
-							:style="`color: ${globalColors.secondary};`"
+							:class="[
+								indeterminate ? 'loading text-field' : product.priceDiscount ? 'product-price' : 'product-price-discount',
+							]"
+							:style="`color: ${indeterminate ? 'transparent' : globalColors.secondary};`"
 						>
 							{{ product.price }}
 						</small>
-						<small class="other-buy">+ 1000 compraron esto</small>
-						<v-rating
-							small
-							readonly
-							class="product-rating"
-							background-color="#ffcc03"
-							color="#ffcc03"
-							v-model="product.rating"
-						></v-rating>
+						<small
+							:class="[
+								indeterminate ? 'loading text-field' : 'other-buy',
+							]"
+						>+ 1000 compraron esto</small>
+						<div :class="{ 'loading rating': indeterminate }">
+							<v-rating
+								v-if="!indeterminate"
+								small
+								readonly
+								class="product-rating"
+								background-color="#ffcc03"
+								color="#ffcc03"
+								v-model="product.rating"
+							></v-rating>
+						</div>
 					</div>
 				</section>
 			</div>
@@ -87,6 +118,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getProductsParams',
+			'indeterminate',
 		]),
 		discountPercentage,
 	},
@@ -133,6 +165,7 @@ export default {
 	.product-header {
 		align-items: center;
 		display: flex;
+		height: 3rem;
 		justify-content: space-between;
 	}
 
@@ -153,7 +186,7 @@ export default {
 		text-align: center;
 
 		div {
-			margin: 0 15px;
+			margin: 0 10px;
 		}
 
 		@media (max-width: 500px) {
@@ -260,6 +293,22 @@ export default {
 
 	.pd-10 {
 		padding: 10px;
+	}
+
+	.img-space {
+		height: 130px;
+		margin: 5px 0 !important;
+		width: 125px;
+	}
+
+	.text-field {
+		height: 18px;
+		margin: 3px 0;
+	}
+
+	.rating {
+		height: 12px;
+		margin: 13px 0 0 !important;
 	}
 </style>
 

@@ -1,10 +1,20 @@
 <template>
 	<div class="section-links">
 		<div v-for="(item, index) in sections" :key="index" class="mb-2">
-			<p class="title-section-links">{{item.title}}</p>
+			<p
+				:class="[
+					'title-section-links',
+					{ 'loading loading-dark': indeterminate },
+				]">{{item.title}}</p>
 			<ul v-for="(link, index) in item.links" :key="index">
 				<li>
-					<router-link to="/help" class="section-link">
+					<router-link
+						to="/help"
+						:class="[
+							'section-link',
+							{ 'loading': indeterminate },
+						]"
+					>
 						{{link}}
 					</router-link>
 				</li>
@@ -14,6 +24,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 function data() {
 	return {
 		sections: [
@@ -63,6 +75,11 @@ function data() {
 
 export default {
 	name: 'section-links',
+	computed: {
+		...mapGetters([
+			'indeterminate',
+		]),
+	},
 	data,
 };
 </script>

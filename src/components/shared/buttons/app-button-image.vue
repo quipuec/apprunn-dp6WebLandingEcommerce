@@ -6,7 +6,8 @@
 	>
 		<div
 			:style="`background: ${globalColors.primary};`"
-			class="button-number" v-if="ifNumber">{{number}}</div>
+			class="button-number" v-if="ifNumber"
+		>{{number}}</div>
 		<img :src="imageUser"
 			:alt="data.name"
 			:height="data.height || 20" 

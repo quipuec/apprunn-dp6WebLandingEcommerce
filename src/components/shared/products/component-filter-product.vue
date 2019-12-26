@@ -1,6 +1,13 @@
 <template>
-	<div class="component-filter" :style="`background: ${globalColors.primary}`">
-		<div class="swiper-filter">
+	<div
+		:class="[
+			'component-filter',
+			{ 'loading loading-filter': indeterminate },
+		]"
+		:style="`background:${indeterminate ? 'transparent' : globalColors.primary}`">
+		<div
+			v-if="!indeterminate"
+			class="swiper-filter">
 			<swiper :options="swiperOption">
 			<swiper-slide
 			v-for="filter in getFilters"
@@ -40,6 +47,9 @@ function data() {
 				950: {
 					slidesPerView: 2,
 				},
+				450: {
+					slidesPerView: 1,
+				},
 			},
 			navigation: {
 				nextEl: '.swiper-button-next',
@@ -58,6 +68,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getFilters',
+			'indeterminate',
 		]),
 	},
 	methods: {
@@ -72,7 +83,7 @@ export default {
 	display: flex;
 	height: 67px;
 	justify-content: center;
-  width: 100% !important;
+  	width: 100% !important;
 }
 
 .swiper-filter {
@@ -82,6 +93,10 @@ export default {
 	@media (max-width: 950px) {
 		width: 90%;
 	}
+}
+
+.loading-filter {
+	filter: brightness(0.9);
 }
 </style>
 

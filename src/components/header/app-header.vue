@@ -6,11 +6,10 @@
 			</div>
 			<div class="flex container-header-logo">
 				<h1 class="app-header-logo">
-					<router-link to="/" class="link-logo" :style="`height: ${logo.height}px`">
+					<router-link to="/" class="link-logo">
 						<img
 							:src="logo.urlImage"
-							:alt="logo.name"
-							:height="logo.height"
+							alt="Logo de compañía"
 							class="logo-image"
 						/>
 					</router-link>
@@ -36,17 +35,8 @@
 					class="icon-mobile"
 					@click-image="toogleSearch"/>
 				<button-image :data="user" class="icon-desktop" @click-image="openModalLogin"/>
-				<button-image 
-					:data="imagesButton[1]" 
-					class="icon-medium icon-desktop"
-					@click-image="goToFavorites"/>
-				<button-image
-					if-number
-					:data="imagesButton[2]"
-					:disabled="getTotalQuantityProducts === 0"
-					:number="totalProducts"
-					@click-image="goShopping"
-				/>
+				<HeartComponent @click="goToFavorites"/>
+				<CarComponent @click="goShopping" :count="totalProducts"/>
 			</div>
 		</div>
 		<modal-login 
@@ -102,6 +92,8 @@ function searchProduct(value) {
 		search: value.trim() ? value : null,
 	};
 	const id = value.trim() ? null : this.getFilters[0].id;
+	this.$store.dispatch('CLEAN_PRODUCTS_ARRAY');
+	this.$store.dispatch('UPDATE_PRODUCT_FILTER', null);
 	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
 	this.isSearchMobile = false;
 	this.updateFilter(id);
@@ -180,9 +172,11 @@ function data() {
 export default {
 	name: 'app-header',
 	components: {
-		callMenu,
 		appSearch,
 		buttonImage,
+		callMenu,
+		CarComponent: () => import('@/components/shared/icons/car-component'),
+		HeartComponent: () => import('@/components/shared/icons/heart-component'),
 		modalLogin,
 	},
 	computed: {
@@ -272,17 +266,22 @@ export default {
 	.container-header-logo {
 		align-items: center;
 		flex: 1 1 70%;
-		height: 30px;
+		height: inherit;
+		padding: 1.5rem 0;
 
 		@media (max-width: 764px) {
-			flex: 1 1 60%;
 			justify-content: center;
+			padding: 1rem 0;
 		}
 	}
 
 	.container-button-image {
 		flex: 1 1 20%;
 		justify-content: flex-end;
+
+		& > button, div {
+			margin-left: 20px;
+		}
 
 		@media (max-width: 764px) {
 			justify-content: space-between;
@@ -295,17 +294,16 @@ export default {
 
 	.link-logo {
 		display: block;
-		height: inherit;
-
-		@media (max-width: 768px) {
-			height: 20px !important;
-			line-height: 0.5 !important;
-		}
+		height: 100%;
 	}
 
 	.app-header-logo {
-		height: inherit;
-		margin: 0 40px 0 22px;
+		flex-basis: 24%;
+		height: 100%;
+		margin: 0 1rem;
+		@media (max-width: 768px) {
+			flex-basis: 100%;
+		}
 	}
 
 	.icon-medium {
@@ -315,6 +313,7 @@ export default {
 	.container-search {
 		align-items: center;
 		background: color(white);
+		flex-basis: 70%;
 		transition: .3s ease-in-out;
 		width: 100%;
 		z-index: 1;
@@ -355,10 +354,9 @@ export default {
 	}
 
 	.logo-image {
-		height: inherit;
-		@media (max-width: 768px) {
-			height: 20px;
-		}
+		height: 100%;
+		object-fit: contain;
+		width: 100%;
 	}
 
 	.app-modal-login {

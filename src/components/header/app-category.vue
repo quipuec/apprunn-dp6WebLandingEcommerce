@@ -1,11 +1,11 @@
 <template>
 	<div
 		class="app-category"
-		:class="{ scrolling: scrolled, isBanner : bannerTopExist}"
+		:class="{ scrolling: scrolled, isBanner: bannerTopExist}"
 	>
 		<div class="app-category-user">
 			<div class="container-user" :style="`border-color: ${globalColors.primary}`">
-				<img :src="imageUser" :alt="imgUser.name" height="53">
+				<img :src="imageUser" :alt="imgUser.name" class="user-avatar">
 			</div>
 			<div v-if="token">
 				<p class="user-name">{{imgUser.name}} {{imgUser.lastname}}</p>
@@ -186,10 +186,8 @@ function logout() {
 	this.$store.dispatch('SET_DEFAULT_VALUES');
 	localStorage.clear();
 	this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
-	const params = {
-		filters: this.getFilters[0].id,
-	};
-	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
+	this.$store.dispatch('UPDATE_PRODUCT_FILTER', this.getFilters[0].id);
+	this.$store.dispatch('LOAD_PRODUCTS', { context: this });
 }
 
 function goToCategories(item) {
@@ -364,6 +362,7 @@ export default {
 		height: 53px;
 		justify-content: center;
 		margin: 0 auto;
+		padding: 7px;
 		width: 53px;
 	}
 
@@ -501,6 +500,12 @@ export default {
 
 	.text-gray {
 		color: color(base);
+	}
+
+	.user-avatar {
+		height: 100%;
+		object-fit: cover;
+		width: 100%;
 	}
 </style>
 

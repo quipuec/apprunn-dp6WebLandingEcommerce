@@ -15,7 +15,7 @@
 						</div>
 					</div>
 				</div>
-				<h3 class="user-name">Manuel Amado</h3>
+				<h3 class="user-name">{{userName}}</h3>
 				<ul class="user-actions">
 					<li class="user-action">
 						<button
@@ -104,10 +104,8 @@ function logout() {
 	this.$store.dispatch('SET_DEFAULT_VALUES');
 	localStorage.clear();
 	this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
-	const params = {
-		filters: this.getFilters[0].id,
-	};
-	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
+	this.$store.dispatch('UPDATE_PRODUCT_FILTER', this.getFilters[0].id);
+	this.$store.dispatch('LOAD_PRODUCTS', { context: this });
 }
 
 function getUserAvatar() {
@@ -120,6 +118,7 @@ export default {
 		...mapGetters([
 			'getFilters',
 			'user',
+			'userName',
 		]),
 		borderPrimaryAddress,
 		borderPrimaryFavorites,

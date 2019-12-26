@@ -1,6 +1,14 @@
 <template>
-  <div class="container-company-data padding-container" :style="`background: ${globalColors.primary}`">
+  <div
+  	:class="[
+		'container-company-data',
+		'padding-container',
+		{ 'loading loading-company': indeterminate },
+	]"
+	:style="`background: ${indeterminate ? 'transparent' : globalColors.primary}`"
+>
 		<media-company-data
+			v-if="!indeterminate"
 			image="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/customer-service.png"
 			image-height="30"
 			border-right="#ffffff"
@@ -8,6 +16,7 @@
 			:description="getCommerceData.phone"
 		></media-company-data>
 		<media-company-data
+			v-if="!indeterminate"
 			image="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/address.svg"
 			image-height="32"
 			border-right="#ffffff"
@@ -15,6 +24,7 @@
 			:description="getCommerceData.address"
 		></media-company-data>
 		<media-company-data
+			v-if="!indeterminate"
 			image="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/open-email.svg"
 			image-height="29"
 			family="medium"
@@ -36,6 +46,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getCommerceData',
+			'indeterminate',
 		]),
 	},
 };
@@ -63,5 +74,9 @@ export default {
 			height: 52px;
 			width: 95%;
 		}
+	}
+
+	.loading-company {
+		filter:brightness(0.9);
 	}
 </style>

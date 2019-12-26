@@ -1,13 +1,18 @@
 <template>
 	<div class="categories-carousel">
 		<div>
-			<title-section 
+			<title-section
 				title="Categorías" 
-				:color="colorBorder"/>
+				:color="colorBorder"
+			/>
 		</div>
-		<div class="categories-carousel-slider">
-			<swiper :options="swiperOption">
-        <swiper-slide v-for="(category, index) in categories" :key="category.id">
+		<div
+			:class="[
+				indeterminate ? 'loading loading-categories' : 'categories-carousel-slider',
+			]"
+		>
+			<swiper v-if="!indeterminate" :options="swiperOption">
+        		<swiper-slide v-for="(category, index) in categories" :key="category.id">
 					<div 
 						class="container-big-category" 
 						@mouseover="hoverCategory(index)"
@@ -38,6 +43,8 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 const titleSection = () => import('@/components/home/title-section');
 
 function hoverCategory(index) {
@@ -55,7 +62,7 @@ function goToCategory({ slug, id }) {
 function data() {
 	return {
 		swiperOption: {
-			slidesPerView: 3,
+			slidesPerView: this.len,
 			spaceBetween: 0,
 			slidesPerGroup: 3,
 			allowTouchMove: false,
@@ -64,14 +71,19 @@ function data() {
 				prevEl: '.swiper-button-prev',
 			},
 			breakpoints: {
-				860: {
-					slidesPerView: 1,
-					slidesPerGroup: 1,
+				1280: {
+					slidesPerView: 4,
+					slidesPerGroup: 4,
 					allowTouchMove: true,
 				},
-				1261: {
+				930: {
 					slidesPerView: 2,
 					slidesPerGroup: 2,
+					allowTouchMove: true,
+				},
+				600: {
+					slidesPerView: 1,
+					slidesPerGroup: 1,
 					allowTouchMove: true,
 				},
 			},
@@ -85,6 +97,11 @@ export default {
 	components: {
 		titleSection,
 	},
+	computed: {
+		...mapGetters([
+			'indeterminate',
+		]),
+	},
 	methods: {
 		hoverCategory,
 		goToCategory,
@@ -96,13 +113,14 @@ export default {
 			default: () => [],
 		},
 		colorBase: String,
+		len: Number,
 	},
 };
 </script>
 <style lang="scss" scoped>
 	.categories-carousel {
 		background: color(white);
-		padding: 115px 15% 108px;
+		padding: 80px 10% 60px;
 
 		@media (max-width: 860px) {
 			padding: 35px 10%;
@@ -113,10 +131,10 @@ export default {
 		align-items: center;
 		background-size: cover;
 		display: flex;
-		height: 163px;
+		height: 100%;
 		justify-content: center;
 		position: relative;
-		width: 205px;
+		width: 100%;
 
 		&::before {
 			background-image: linear-gradient(to bottom, rgba(60, 60, 60, 0.89), rgba(60, 60, 60, 0.50));
@@ -150,11 +168,12 @@ export default {
 		border-radius: 16px;
 		cursor: pointer;
 		display: flex;
-		height: 179px;
+		height: 115px;
 		justify-content: center;
 		margin: auto;
+		padding: 0.5rem;
 		transition: all .3s;
-		width: 220px;
+		width: 140px;
 
 		@media (max-width: 860px) {
 			height: 122px;
@@ -166,7 +185,6 @@ export default {
 		cursor: pointer;
 		margin: auto;
 		padding: 6px;
-		width: 229px;
 
 		&:hover {
 			.container-category-image {
@@ -183,8 +201,15 @@ export default {
 		color: color(base);
 		font-family: font(bold);
 		font-size: size(large);
-		margin-top: 26px;
+		margin-top: 16px;
+		overflow: hidden;
 		text-align: center;
+		text-overflow: ellipsis;
+	}
+
+	.loading-categories {
+		height: 190px;
+		margin-top: 25px;
 	}
 </style>
 

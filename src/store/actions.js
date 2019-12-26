@@ -90,18 +90,50 @@ function DEFAULT_USER({ commit }) {
 	commit('setUser', user);
 }
 
+function MORE_PRODUCTS({ commit }) {
+	commit('UPDATE_PRODUCT_PAGE');
+}
+
+function CLEAN_PRODUCTS_ARRAY({ commit }) {
+	commit('RESET_PRODUCTS_ARRAY');
+}
+
+function UPDATE_PRODUCT_FILTER({ commit }, filter) {
+	commit('SET_PRODUCT_FILTER', filter);
+}
+
+function START_PAGINATION({ commit }) {
+	commit('PAGE_ONE');
+}
+
+function addService({ commit }, service) {
+	commit('ADD_ONE_IN_SERVICE_COUNTER', service);
+}
+
+function minusService({ commit, state }, service) {
+	const { config: { url } } = service;
+	const index = state.appConfig.loadingCounter.findIndex(l => l.url === url);
+	commit('MINUS_ONE_IN_SERVICE_COUNTER', index);
+}
+
 const methods = {
+	addProductToBuyCar,
+	addService,
+	CLEAN_PRODUCTS_ARRAY,
 	clearUser,
 	DEFAULT_USER,
 	getOrderData,
+	minusService,
+	MORE_PRODUCTS,
 	setUser,
 	setToken,
 	showSnackBar,
 	toggleLoading,
-	addProductToBuyCar,
 	updateProductSelect,
+	UPDATE_PRODUCT_FILTER,
 	updateFilters,
 	SET_DEFAULT_VALUES,
+	START_PAGINATION,
 };
 
 export default methods;

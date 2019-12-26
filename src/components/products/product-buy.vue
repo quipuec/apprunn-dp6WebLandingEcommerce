@@ -1,26 +1,45 @@
 <template>
   <div class="product-buy">
 		<div class="container-btn-open">
-			<button class="btn-stores" @click="$emit('open-dialog')">Ver tiendas disponibles</button>
+			<button
+				:class="[
+					isLoading ? 'loading stores' : 'btn-stores',
+				]"
+				@click="$emit('open-dialog')"
+			>Ver tiendas disponibles</button>
 		</div>
 		<div class="container-buttons">
-			<quantityButton 
-				class="continer-quantity-button"
+			<quantityButton
+				:class="[
+					'continer-quantity-button',
+					{ 'loading': isLoading },
+				]"
 				@click="clickQuantity"
-				:number="number"/>
+				:number="number"
+			/>
 			<app-button-order
+				active
 				button-title="¡LO QUIERO!"
-				class="btn"
+				:class="[
+					isLoading ? 'loading' : 'btn',
+				]"
 				@click="$emit('add-to-car')"
 			>
-				<div slot="after">
-					<image-check class="image-btn"/>
+				<div>
+					<image-check
+						active
+						active-color="white"
+						class="image-btn"
+						:inactive-color="globalColors.primary"
+					/>
 				</div>
 			</app-button-order>
 		</div>
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 const quantityButton = () => import('@/components/shared/buttons/quantity-button');
 const appButtonOrder = () => import('@/components/shared/buttons/app-button-order');
 const imageCheck = () => import('@/components/shared/icons/check-component');
@@ -35,6 +54,11 @@ export default {
 		quantityButton,
 		appButtonOrder,
 		imageCheck,
+	},
+	computed: {
+		...mapGetters('loading', [
+			'isLoading',
+		]),
 	},
 	methods: {
 		clickQuantity,
@@ -51,7 +75,7 @@ export default {
 		}
 
 		.image-btn {
-			margin-left: 4px;
+			margin-right: 12px;
 		}
 
 		.btn-stores {
@@ -85,5 +109,9 @@ export default {
 			margin-bottom: 33px;
 			text-align: center;
 		}
+	}
+
+	.stores {
+		margin-bottom: 10px;
 	}
 </style>
