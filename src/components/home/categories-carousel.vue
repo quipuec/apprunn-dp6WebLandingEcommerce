@@ -71,6 +71,11 @@ function data() {
 				prevEl: '.swiper-button-prev',
 			},
 			breakpoints: {
+				1280: {
+					slidesPerView: 4,
+					slidesPerGroup: 4,
+					allowTouchMove: true,
+				},
 				930: {
 					slidesPerView: 2,
 					slidesPerGroup: 2,

@@ -10,7 +10,7 @@
 		<categories-carousel
 			v-else
  			:categories="getCategories"
-			 :len="getCategoriesLength"
+			:len="getCategoriesLength"
 			:color-base="colorBase"/>
 		<component-filter-product 
 			@click-filter="filterSelect"
@@ -31,12 +31,12 @@
 <script>
 import { mapGetters } from 'vuex';
 
-const appBannerTop = () => import('@/components/header/app-banner-top');
-const bannerCarousel = () => import('@/components/home/banner-carousel');
-const categoriesCarousel = () => import('@/components/home/categories-carousel');
-const componentFilterProduct = () => import('@/components/shared/products/component-filter-product');
-const productsSection = () => import('@/components/products/products-section');
-const sectionSettlement = () => import('@/components/home/section-settlement');
+import appBannerTop from '@/components/header/app-banner-top';
+import bannerCarousel from '@/components/home/banner-carousel';
+import categoriesCarousel from '@/components/home/categories-carousel';
+import componentFilterProduct from '@/components/shared/products/component-filter-product';
+import productsSection from '@/components/products/products-section';
+import sectionSettlement from '@/components/home/section-settlement';
 
 function filterSelect(filter) {
 	if (filter.link) {
