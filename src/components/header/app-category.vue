@@ -5,7 +5,7 @@
 	>
 		<div class="app-category-user">
 			<div class="container-user" :style="`border-color: ${globalColors.primary}`">
-				<img :src="imageUser" :alt="imgUser.name" height="53">
+				<img :src="imageUser" :alt="imgUser.name" class="user-avatar">
 			</div>
 			<div v-if="token">
 				<p class="user-name">{{imgUser.name}} {{imgUser.lastname}}</p>
@@ -362,6 +362,7 @@ export default {
 		height: 53px;
 		justify-content: center;
 		margin: 0 auto;
+		padding: 7px;
 		width: 53px;
 	}
 
@@ -499,6 +500,12 @@ export default {
 
 	.text-gray {
 		color: color(base);
+	}
+
+	.user-avatar {
+		height: 100%;
+		object-fit: cover;
+		width: 100%;
 	}
 </style>
 
