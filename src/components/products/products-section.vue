@@ -76,7 +76,7 @@ export default {
 		align-items: center;
 		display: flex;
 		justify-content: center;
-		margin: 0 30px;
+		margin: 0 30px 2rem;
 
 		button {
 			background-color: white;
