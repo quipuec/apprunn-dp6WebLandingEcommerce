@@ -270,8 +270,8 @@ export default {
 		padding: 1.5rem 0;
 
 		@media (max-width: 764px) {
-			flex: 1 1 60%;
 			justify-content: center;
+			padding: 1rem 0;
 		}
 	}
 
@@ -295,17 +295,15 @@ export default {
 	.link-logo {
 		display: block;
 		height: 100%;
-
-		@media (max-width: 768px) {
-			height: 20px !important;
-			line-height: 0.5 !important;
-		}
 	}
 
 	.app-header-logo {
 		flex-basis: 24%;
 		height: 100%;
 		margin: 0 1rem;
+		@media (max-width: 768px) {
+			flex-basis: 100%;
+		}
 	}
 
 	.icon-medium {
@@ -359,9 +357,6 @@ export default {
 		height: 100%;
 		object-fit: contain;
 		width: 100%;
-		@media (max-width: 768px) {
-			height: 20px;
-		}
 	}
 
 	.app-modal-login {
