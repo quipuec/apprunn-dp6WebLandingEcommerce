@@ -306,13 +306,13 @@ export default {
 			}
 		}
 
+		&.isBanner {
+			top: 188px;
+		}
+		
 		&.scrolling {
 			position: fixed;
 			top: 99px;
-		}
-
-		&.isBanner {
-			top: 188px;
 		}
 	}
 
