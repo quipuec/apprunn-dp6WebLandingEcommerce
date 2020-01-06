@@ -82,12 +82,10 @@ function globalColors() {
 		black: '',
 		base: process.env.COLOR_BORDER,
 		border: '',
-		dark: process.env.COLOR_DARK,
+		dark: process.env.COLOR_TITLE,
 		disabled: '',
-		highLight: process.env.COLOR_HIGHLIGHT,
-		primary: process.env.COLOR_BASE,
+		primary: process.env.COLOR_PRIMARY,
 		secondary: process.env.COLOR_SECONDARY,
-		terciary: process.env.COLOR_LINK,
 		white: '',
 	};
 }

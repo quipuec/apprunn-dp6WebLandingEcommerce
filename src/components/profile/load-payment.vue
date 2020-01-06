@@ -67,7 +67,7 @@ function bgSaveBtn() {
 }
 
 function bgCancelBtn() {
-	return process.env.COLOR_BASE;
+	return process.env.COLOR_PRIMARY;
 }
 
 function goBack() {

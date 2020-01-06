@@ -104,7 +104,7 @@
 
 	function data() {
 		return {
-			baseColor: process.env.COLOR_BASE,
+			baseColor: process.env.COLOR_PRIMARY,
 			imagesButton: [
 				{
 					image: '/static/img/heart.svg',

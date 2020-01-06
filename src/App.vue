@@ -92,7 +92,7 @@ function data() {
 			height: 30,
 		},
 		showMenu: false,
-		colorBase: process.env.COLOR_BASE,
+		colorBase: process.env.COLOR_PRIMARY,
 		colorBorder: process.env.COLOR_BORDER,
 		bannerTop: {
 			urlImage: '',

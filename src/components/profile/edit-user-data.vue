@@ -129,7 +129,7 @@ function labelCountry() {
 
 function data() {
 	return {
-		colorBase: process.env.COLOR_BASE,
+		colorBase: process.env.COLOR_PRIMARY,
 		colorSecondary: process.env.COLOR_SECONDARY,
 		userData: {
 			cityId: null,

@@ -186,7 +186,7 @@
 	function data() {
 		return {
 			backgroundImage: process.env.FORM_BACKGROUND,
-			baseColor: process.env.COLOR_BASE,
+			baseColor: process.env.COLOR_PRIMARY,
 			headingImage: '/static/img/sign-in.svg',
 			loading: false,
 			model: {

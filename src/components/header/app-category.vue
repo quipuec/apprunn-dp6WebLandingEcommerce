@@ -213,7 +213,7 @@ function goToCategory({ slug, id }) {
 
 function data() {
 	return {
-		colorBorder: process.env.COLOR_DARK,
+		colorBorder: process.env.COLOR_TITLE,
 		imageArrow: {
 			urlImage: '/static/img/arrow-down.svg',
 			name: 'Desplegar',

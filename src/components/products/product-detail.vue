@@ -31,7 +31,7 @@
 						small
 						class="product-rating"
 						background-color="#ffcc03"
-						:color="globalColors.highLight"
+						color="#f8e71c"
 						v-model="data.rating"
 						readonly
 					></v-rating>
