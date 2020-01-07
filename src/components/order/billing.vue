@@ -49,8 +49,7 @@
 <script>
 import { required, minLength } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-
-const appInput = () => import('@/components/shared/inputs/app-input');
+import appInput from '@/components/shared/inputs/app-input';
 
 function mounted() {
 	if (this.getOrderInfo && this.getOrderInfo.dataBill) {

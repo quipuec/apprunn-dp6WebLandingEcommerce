@@ -49,8 +49,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-
-const titleSection = () => import('@/components/home/title-section');
+import titleSection from '@/components/home/title-section';
 
 function hoverCategory(index) {
 	this.categories[index].hover = true;

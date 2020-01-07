@@ -50,8 +50,8 @@
 	</div>
 </template>
 <script>
-const responsiveTable = () => import('@/components/shared/table/respondive-table');
-const mapComponent = () => import('@/components/shared/map/map-component');
+import responsiveTable from '@/components/shared/table/respondive-table';
+import mapComponent from '@/components/shared/map/map-component';
 
 function warehouseLatLon(row) {
 	const { warehouse: { location } } = row;

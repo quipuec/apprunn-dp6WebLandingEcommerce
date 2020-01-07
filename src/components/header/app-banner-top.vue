@@ -19,8 +19,7 @@
 </template>
 <script>
 import lib from '@/shared/lib';
-
-const appButton = () => import('@/components/shared/buttons/app-button');
+import appButton from '@/components/shared/buttons/app-button';
 
 function webImage() {
 	return lib.getDeeper('webImage')(this.data);
