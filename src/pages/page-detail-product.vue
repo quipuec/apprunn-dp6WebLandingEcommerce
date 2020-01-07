@@ -6,7 +6,8 @@
 				:images="productImages"
 				class="container-product-view"
 			/>
-			<product-detail 
+			<product-detail
+				:open-warehouse="stockWarehouse"
 				:data="productDetails"
 				:features="globalFeatures"
 				class="container-product-detail"
@@ -65,6 +66,9 @@ const productPublicity = () => import('@/components/products/product-publicity')
 async function created() {
 	this.$loading(true);
 	await this.loadProduct();
+	if (this.product.warehouses.length <= 1) {
+		this.stockWarehouse = true;
+	}
 }
 
 function isLoggedUser() {
@@ -293,6 +297,7 @@ function data() {
 		productImages: [],
 		productFather: {},
 		relateds: [],
+		stockWarehouse: false,
 		tabs: [],
 		warehouses: [],
 	};

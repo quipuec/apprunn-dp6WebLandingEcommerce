@@ -50,12 +50,6 @@
 				>
 					{{ getCurrencySymbol }} {{ data.priceDiscount }}
 				</span>
-				<div
-					:style="`background: ${globalColors.primary};`"
-					:class="[isLoading ? 'loading' : 'content-discount']"
-				>
-					- {{ getDiscont }}%
-				</div>
 			</div>
 			<span
 				:class="[
@@ -75,7 +69,8 @@
 			:features="features"
 			@selected="selecFeature"
 			@clear="$emit('clear')"/>
-		<product-buy 
+		<product-buy
+			:open-warehouse="openWarehouse"
 			@click="clickQuantity"
 			@add-to-car="addToCar"
 			@open-dialog="$emit('open-dialog')"
@@ -97,10 +92,6 @@ function stopClick() {
 async function addToFavorites() {
 	this.$store.dispatch('SET_FAVORITE_FLAG', { context: this, product: this.data });
 	this.$set(this.data, 'flagFavorite', !this.data.flagFavorite);
-}
-
-function getDiscont() {
-	return Math.round(Number(this.data.percentageDiscount) * 100);
 }
 
 function selecFeature(value) {
@@ -150,7 +141,6 @@ export default {
 		...mapGetters('loading', [
 			'isLoading',
 		]),
-		getDiscont,
 		noStock,
 	},
 	methods: {
@@ -170,13 +160,14 @@ export default {
 			default: () => [],
 			type: Array,
 		},
+		openWarehouse: false,
 	},
 };
 </script>
 <style lang="scss" scoped>
 	.product-detail-name {
-		color: color(dark);
-		font-family: font(bold);
+		color: color(black);
+		font-family: font(demi);
 		font-size: size(xlarge);
 		margin: 20px 0 5px 0;
 	}
@@ -184,6 +175,7 @@ export default {
 	.product-detail-code {
 		color: color(base);
 		flex: 1 1 30%;
+		font-family: font(medium);
 		font-size: size(medium);
 
 		@media screen and (max-width: 996px) {
@@ -213,7 +205,7 @@ export default {
 
 	.text-price-dis {
 		font-family: font(bold);
-		font-size: 23px;
+		font-size: 26px;
 	}
 
 	.content-discount {
@@ -287,6 +279,8 @@ export default {
 	}
 
 	.product-detail-brand {
+		color: color(dark);
+		font-family: font(bold);
 		font-size: size(small);
 		text-transform: uppercase;
 

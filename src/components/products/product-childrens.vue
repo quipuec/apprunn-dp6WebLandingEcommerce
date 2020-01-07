@@ -1,5 +1,5 @@
 <template>
-  <div class="my-4">
+  <div class="my-4 border-bottom">
 	  <div
 	  	v-for="(feature, index) in features"
 		:key="index"
@@ -80,5 +80,10 @@ export default {
 
 	.features {
 		margin-bottom: 10px;
+	}
+
+	.border-bottom {
+		border-bottom: 1px solid color(border);
+		padding-bottom: 29px;
 	}
 </style>

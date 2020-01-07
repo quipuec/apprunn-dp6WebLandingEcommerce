@@ -1,7 +1,9 @@
 <template>
   <div class="product-buy">
 		<div class="container-btn-open">
+			<p class="warehouse-null" v-if="openWarehouse">No hay tiendas disponibles</p>
 			<button
+				v-else
 				:class="[
 					isLoading ? 'loading stores' : 'btn-stores',
 				]"
@@ -65,6 +67,7 @@ export default {
 	},
 	props: {
 		number: Number,
+		openWarehouse: false,
 	},
 };
 </script>
@@ -113,5 +116,11 @@ export default {
 
 	.stores {
 		margin-bottom: 10px;
+	}
+
+	.warehouse-null {
+		color: #acaaaa;
+		font-family: font(regular);
+		font-size: 12px;	
 	}
 </style>
