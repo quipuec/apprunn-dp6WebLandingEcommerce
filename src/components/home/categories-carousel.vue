@@ -173,7 +173,7 @@ export default {
 		height: 168px;
 		justify-content: center;
 		margin: auto;
-		padding: 0.5rem;
+		padding: 0.7rem;
 		transition: all .3s;
 		width: 209px;
 
