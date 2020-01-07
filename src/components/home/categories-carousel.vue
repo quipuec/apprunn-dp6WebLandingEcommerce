@@ -120,7 +120,7 @@ export default {
 <style lang="scss" scoped>
 	.categories-carousel {
 		background: color(white);
-		padding: 80px 10% 60px;
+		padding: 80px 9% 60px;
 
 		@media (max-width: 860px) {
 			padding: 35px 10%;
@@ -130,6 +130,7 @@ export default {
 	.category-image {
 		align-items: center;
 		background-size: cover;
+		border-radius: 5px;
 		display: flex;
 		height: 100%;
 		justify-content: center;
@@ -138,6 +139,7 @@ export default {
 
 		&::before {
 			background-image: linear-gradient(to bottom, rgba(60, 60, 60, 0.89), rgba(60, 60, 60, 0.50));
+			border-radius: 5px;
 			bottom: 0;
 			content: '';
 			left: 0;
@@ -168,12 +170,12 @@ export default {
 		border-radius: 16px;
 		cursor: pointer;
 		display: flex;
-		height: 115px;
+		height: 168px;
 		justify-content: center;
 		margin: auto;
 		padding: 0.5rem;
 		transition: all .3s;
-		width: 140px;
+		width: 209px;
 
 		@media (max-width: 860px) {
 			height: 122px;

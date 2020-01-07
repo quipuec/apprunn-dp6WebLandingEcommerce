@@ -66,7 +66,7 @@
 								indeterminate ? 'loading text-field' : 'other-buy',
 							]"
 						>+ 1000 compraron esto</small>
-						<div :class="{ 'loading rating': indeterminate }">
+						<!-- <div :class="{ 'loading rating': indeterminate }">
 							<v-rating
 								v-if="!indeterminate"
 								small
@@ -76,7 +76,7 @@
 								color="#ffcc03"
 								v-model="product.rating"
 							></v-rating>
-						</div>
+						</div> -->
 					</div>
 				</section>
 			</div>
@@ -151,7 +151,7 @@ export default {
 		@media (min-width: 500px) {
 			border: 3px solid color(border);
 			border-radius: 5px;
-			height: 330px;
+			height: 328px;
 			margin: 3px;
 			max-width: 202px;
 		}
