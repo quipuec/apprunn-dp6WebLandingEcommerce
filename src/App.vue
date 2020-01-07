@@ -52,7 +52,7 @@
 import { mapGetters } from 'vuex';
 import appHeader from '@/components/header/app-header';
 
-const appMenuCategory = () => import(/* webpackChunkName: "app-	Menu-Category" */'@/components/header/app-category');
+const appMenuCategory = () => import(/* webpackChunkName: "app-Menu-Category" */'@/components/header/app-category');
 const formBulletin = () => import(/* webpackChunkName: "form-Bulletin" */'@/components/shared/form/form-bulletin');
 const sectionVisa = () => import(/* webpackChunkName: "section-Visa" */'@/components/footer/section-visa');
 const appFooter = () => import(/* webpackChunkName: "app-Footer" */'@/components/footer/app-footer');

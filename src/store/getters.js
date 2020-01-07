@@ -114,6 +114,10 @@ function loadingCounter(state) {
 	return state.appConfig.loadingCounter.length;
 }
 
+function windowLoaded(state) {
+	return state.windowLoaded;
+}
+
 const methods = {
 	bannersTypes,
 	companyLogo,
@@ -145,6 +149,7 @@ const methods = {
 	getCategories,
 	totalProducts,
 	getFilters,
+	windowLoaded,
 };
 
 export default methods;
