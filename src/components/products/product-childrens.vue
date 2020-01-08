@@ -5,8 +5,7 @@
 		:key="index"
 		:class="[
 			isLoading ? 'loading features' : 'product-childrens',
-		]"
-	  >
+		]">
 	  	<h3
 		  	:class="{ 'loading': isLoading }"
 			:style="`color:${globalColors.base}`"  
@@ -24,8 +23,8 @@
 					:not-allowed="v.notAllowed"
 					@click="selectFeature(v)"
 				/>
-			</span>
-		</div>
+				</span>
+			</div>
 	  </div>
 	</div>
 </template>

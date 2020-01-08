@@ -8,6 +8,15 @@
 			]"
 			:style="`color:${globalColors.base}`"
 		>Presentaciones:</h3>
+		<v-flex xs12>
+			<v-btn
+			v-for="(item, index) in conversionsComputed"
+			:key="index"
+			:style="btnStyleConversions"
+			type="button">
+			{{ item.name }}
+			</v-btn>
+		</v-flex>
 		<div
 			:class="{ 'loading conversions-select-container': indeterminate }"
 		>
@@ -16,7 +25,7 @@
 				return-object
 				class="conversions-select"
 				placeholder="presentaciones..."
-				item-text="code"
+				item-text="name"
 				:items="conversionsComputed"
 				:value="defaultUnit"
 				@input="$emit('unit-selection', $event)"
@@ -37,6 +46,14 @@ function conversionsComputed() {
 	return [].concat(this.defaultUnit, conversionsFormatted);
 }
 
+function btnStyleConversions() {
+	const itemSelected = this.globalColors.primary;
+	const notAllowedColor = this.globalColors.base;
+	const bg = `background-color:${this.isSelected ? itemSelected : 'white'}`;
+	const border = `border:${this.isSelected ? 'red' : notAllowedColor}`;
+	return `${bg};${border}`;
+}
+
 export default {
 	name: 'product-conversions',
 	components: {
@@ -47,6 +64,7 @@ export default {
 			'indeterminate',
 		]),
 		conversionsComputed,
+		btnStyleConversions,
 	},
 	props: {
 		conversions: {
