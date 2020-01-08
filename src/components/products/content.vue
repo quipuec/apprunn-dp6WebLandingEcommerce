@@ -1,6 +1,10 @@
 <template>
 	<div class="wrapper-content">
-		<div class="content-description" v-if="content.description">{{content.description}}</div>
+		<div
+			v-if="content.description"
+			class="content-description"
+			v-html="content.description"
+		></div>
 		<div v-if="content.urlImages">
 				<div v-for="(item, index) in content.urlImage" :key="index">
 					<img 
