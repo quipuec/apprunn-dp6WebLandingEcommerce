@@ -16,7 +16,7 @@
 				return-object
 				class="conversions-select"
 				placeholder="presentaciones..."
-				item-text="code"
+				item-text="name"
 				:items="conversionsComputed"
 				:value="defaultUnit"
 				@input="$emit('unit-selection', $event)"
