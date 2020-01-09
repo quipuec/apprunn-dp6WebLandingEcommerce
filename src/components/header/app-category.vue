@@ -336,6 +336,7 @@ export default {
 		padding: 33px 5%;
 
 		@media (max-width: 764px) {
+			height: fit-content;
 			padding: 0px;
 		}
 	}
