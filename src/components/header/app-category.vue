@@ -71,7 +71,9 @@
 					v-if="load">
 				</v-treeview>
 			</div>
-			<div class="menu-list-banner"></div>
+			<div class="menu-list-banner">
+				<img :src="selectCategory.urlImage" alt="imagen de la categoria">
+			</div>
 		</div>
 		<div class="container-option">
 			<div class="option-user" v-if="token">
@@ -512,6 +514,12 @@ export default {
 
 	.menu-list-banner {
 		flex: 0 0 20%;
+
+		img {
+			height: 100%;
+			object-fit: cover;
+			width: 202px;
+		}
 	}
 </style>
 
