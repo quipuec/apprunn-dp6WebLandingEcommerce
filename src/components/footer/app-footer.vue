@@ -9,7 +9,12 @@
 					:href="social.link"
 					target="_blank"
 				>
-					<img :src="social.logo" alt="logo-redes-sociales" class="social-logo">
+					<img
+						v-if="social.logo"
+						:src="social.logo"
+						alt="logo-redes-sociales"
+						class="social-logo"
+					>
 				</a>
 			</div>
 		</div>

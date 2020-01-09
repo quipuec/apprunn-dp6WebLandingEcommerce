@@ -8,6 +8,7 @@
 				<h1 class="app-header-logo">
 					<router-link to="/" class="link-logo">
 						<img
+							v-if="logo.urlImage"
 							:src="logo.urlImage"
 							alt="Logo de compañía"
 							class="logo-image"
