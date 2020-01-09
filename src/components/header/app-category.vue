@@ -58,7 +58,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="menu-list-item" v-if="selectCategory">
+			<div class="menu-list-item desktop" v-if="selectCategory">
 				<v-treeview 
 					:items="selectCategory.detail"
 					item-children="detail"
@@ -350,9 +350,7 @@ export default {
 	}
 
 	.desktop {
-		display: flex;
-		flex-wrap: wrap;
-
+	
 		@media (max-width: 764px) {
 			display: none;
 		}
@@ -519,6 +517,10 @@ export default {
 			height: 100%;
 			object-fit: cover;
 			width: 202px;
+		}
+		
+		@media (max-width: 764px) {
+			display: none;
 		}
 	}
 </style>
