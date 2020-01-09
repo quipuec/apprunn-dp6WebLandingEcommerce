@@ -324,6 +324,8 @@ export default {
 		overflow-y: scroll;
 
 		@media (max-width: 764px) {
+			border: none;
+			flex: 1 1 17%;
 			max-height: none;
 		}
 	}
