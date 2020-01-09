@@ -683,7 +683,7 @@ input.app-input::-webkit-input-placeholder {
 				border-right: 1px solid color(border);
 				flex: 0 0 33%;
 				margin-left: 0 !important;
-				padding: 10px 1%;
+				padding: 10px 1.5%;
 
 				& > .v-treeview-node__root {
 					font-family: font(bold);

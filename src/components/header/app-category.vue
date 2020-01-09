@@ -333,7 +333,7 @@ export default {
 	.menu-app-category {
 		display: flex;
 		height: 100%;
-		padding: 33px 5%;
+		padding: 33px 3% 5% 33px;
 
 		@media (max-width: 764px) {
 			height: fit-content;
@@ -515,6 +515,7 @@ export default {
 
 	.menu-list-banner {
 		flex: 0 0 20%;
+		text-align: end;
 
 		img {
 			height: 100%;
