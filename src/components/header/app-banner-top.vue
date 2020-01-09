@@ -7,8 +7,7 @@
 			:class="[
 				'banner-top-height',
 				big ? 'big' : null, small ? 'small' : null,
-			]"
-		>
+			]">
 			<picture>
 				<source :srcset="webImage" media="(min-width: 600px)">
 				<img :src="mobileImage" alt="">

@@ -98,6 +98,10 @@ function getPromotionalDetailsBanner(state) {
 	return state.banners.find(banner => banner.typeName === 'Promoción en detalle');
 }
 
+function getPlansBanner(state) {
+	return state.banners.find(banner => banner.typeName === 'Promoción en creditos');
+}
+
 function productParams(state) {
 	return state.products.params;
 }
@@ -125,6 +129,7 @@ const methods = {
 	getDirections,
 	getCurrencySymbol,
 	getLastPage,
+	getPlansBanner,
 	getPromotionalBanner,
 	getProducts,
 	getPromotionalDetailsBanner,
