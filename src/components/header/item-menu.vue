@@ -36,12 +36,8 @@ export default {
 	}
 
 	.img-menu {
-		height: 32px;
-		width: 31px;
-
-		@media (max-width: 764px) {
-			width: 24px;
-		}
+		height: 27px;
+		width: 27px;
 	}
 </style>
 

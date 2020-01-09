@@ -58,7 +58,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="menu-list-item desktop" :class="isMoreTwo ? 'isMultiple' : 'isTwo'" v-if="selectCategory">
+			<div class="menu-list-item" v-if="selectCategory">
 				<v-treeview 
 					:items="selectCategory.detail"
 					item-children="detail"
@@ -71,6 +71,7 @@
 					v-if="load">
 				</v-treeview>
 			</div>
+			<div class="menu-list-banner"></div>
 		</div>
 		<div class="container-option">
 			<div class="option-user" v-if="token">
@@ -280,8 +281,7 @@ export default {
 		background: color(white);
 		border-top: solid 1px color(border);
 		box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.07);
-		max-height: 369.6px;
-		min-height: 226px;
+		height: 460px;
 		position: absolute;
 		top: 99px;
 		z-index: 5;
@@ -317,9 +317,9 @@ export default {
 	}
 
 	.menu-list-name-category {
-		flex: 1 1 20%;
+		border-right: 3px solid color(border);
+		flex: 0 0 17%;
 		overflow-y: scroll;
-		max-height: 312.6px;
 
 		@media (max-width: 764px) {
 			max-height: none;
@@ -328,7 +328,8 @@ export default {
 
 	.menu-app-category {
 		display: flex;
-		padding: 33px 10%;
+		height: 100%;
+		padding: 33px 5%;
 
 		@media (max-width: 764px) {
 			padding: 0px;
@@ -337,17 +338,18 @@ export default {
 
 	.name-category {
 		cursor: pointer;
-		margin-bottom: 31px;
+		margin-bottom: 20px;
 	}
 
 	.menu-list-item {
 		cursor: pointer;
-		flex: 1 1 80%;
-		height: fit-content;
+		flex: 1 1 auto;
+		height: 100%;
 	}
 
 	.desktop {
-		display: grid;
+		display: flex;
+		flex-wrap: wrap;
 
 		@media (max-width: 764px) {
 			display: none;
@@ -506,6 +508,10 @@ export default {
 		height: 100%;
 		object-fit: cover;
 		width: 100%;
+	}
+
+	.menu-list-banner {
+		flex: 0 0 20%;
 	}
 </style>
 
