@@ -694,7 +694,7 @@ input.app-input::-webkit-input-placeholder {
 				}
 				& > .v-treeview-node__children {
 					color: color(base);
-					
+
 					.v-treeview-node__content {
 						max-width: 100%;
 					}
@@ -704,28 +704,6 @@ input.app-input::-webkit-input-placeholder {
 				border-right: none;
 			}
 		}
-
-		// &.isTwo {
-		// 	.v-treeview {
-		// 		// grid-template-columns: 50% 50%;
-		// 		& > .v-treeview-node {
-		// 				&:nth-child(2n) {
-		// 				border-right: none;
-		// 			}
-		// 		}
-		// 	}
-		// }
-
-		// &.isMultiple {
-		// 	.v-treeview {
-		// 		// grid-template-columns: 33% 33% 33%;
-		// 		& > .v-treeview-node {
-		// 				&:nth-child(3n) {
-		// 				border-right: none;
-		// 			}
-		// 		}
-		// 	}
-		// }
 
 		.v-treeview-node__label {
 			font-size: size(medium);
