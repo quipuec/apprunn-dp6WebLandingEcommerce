@@ -106,6 +106,10 @@ function getCreditBanner(state) {
 	return state.banners.find(banner => banner.typeName === 'Promoción en creditos');
 }
 
+function getCouponsBanner(state) {
+	return state.banners.find(banner => banner.typeName === 'Promoción en cupones');
+}
+
 function productParams(state) {
 	return state.products.params;
 }
@@ -129,6 +133,7 @@ const methods = {
 	genders,
 	getBanners,
 	getBannersHome,
+	getCouponsBanner,
 	getCreditBanner,
 	getCommerceData,
 	getCurrencySymbol,
