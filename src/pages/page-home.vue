@@ -29,13 +29,17 @@
 			v-if="getPlansBanner"
 			:data="getPlansBanner"
 			big
-		/>	
+		/>
+		<app-banner-credit
+			v-if="getCreditBanner"
+			:data="getCreditBanner"
+		/>
 	</layout-admin>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-
+import appBannerCredit from '@/components/home/app-banner-credit';
 import appBannerTop from '@/components/header/app-banner-top';
 import appBannerPlans from '@/components/header/app-banner-plans';
 import bannerCarousel from '@/components/home/banner-carousel';
@@ -124,6 +128,7 @@ export default {
 	name: 'page-home',
 	data,
 	components: {
+		appBannerCredit,
 		appBannerTop,
 		appBannerPlans,
 		bannerCarousel,
@@ -135,6 +140,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getBannersHome',
+			'getCreditBanner',
 			'getPromotionalBanner',
 			'getPlansBanner',
 			'getCategories',
