@@ -5,7 +5,12 @@
 				<call-menu :color="baseColor" text="Categorías" @change-menu="changeMenu" :menu="menu" />
 			</div>
 			<div class="flex container-header-logo">
-				<h1 class="app-header-logo">
+				<h1
+					:class="[
+						'app-header-logo',
+						{ 'hide-logo': isSearchMobile },
+					]"
+				>
 					<router-link to="/" class="link-logo">
 						<img
 							:src="logo.urlImage"
@@ -303,6 +308,15 @@ export default {
 		margin: 0 1rem;
 		@media (max-width: 768px) {
 			flex-basis: 100%;
+			transform: translateX(0);
+			transition: transform 220ms ease-out;
+		}
+	}
+
+	.hide-logo {
+
+		@media (max-width: 768px) {
+			transform: translateX(-100%);
 		}
 	}
 
