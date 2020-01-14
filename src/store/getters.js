@@ -82,6 +82,10 @@ function bannersTypes(state) {
 	return state.bannerTypes;
 }
 
+function bannersCoupons(state) {
+	return state.bannersCoupons;
+}
+
 function getBanners(state) {
 	return state.banners;
 }
@@ -127,6 +131,7 @@ function loadingCounter(state) {
 }
 
 const methods = {
+	bannersCoupons,
 	bannersTypes,
 	companyLogo,
 	currentPage,

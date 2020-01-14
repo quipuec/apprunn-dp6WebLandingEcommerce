@@ -805,4 +805,17 @@ input.app-input::-webkit-input-placeholder {
 	}
 }
 
+.app-banner-cupons {
+	.swiper-button-next {
+		background-image: url('/static/img/icons/right-arrow-slider-coupons.svg');
+		right: -10px;
+		width: 35px;
+	}
+
+	.swiper-button-prev {
+		background-image: url('/static/img/icons/image-slider-left-coupons.svg');
+		left: -10px;
+		width: 35px;
+	}
+}
 </style>

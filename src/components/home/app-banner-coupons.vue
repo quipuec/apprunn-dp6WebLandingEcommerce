@@ -5,81 +5,80 @@
 		<p class="title-banner">CUPONES</p>
 		<swiper :options="swiperOption">
 			<swiper-slide
-			v-for="(item, index) in imageCoupons"
+			v-for="(item, index) in imageCou"
 			:key="index">
 				<div class="content-coupons">
 					<div class="box-coupons">
 						<a href="#"
 						target="_blank"
 						>
-							<img :src="item.image" class="img-coupons" alt="">
+							<img :src="item.webImage" class="img-coupons" alt="">
 						</a>
 					</div>
 				</div>
 			</swiper-slide>
+				<div class="swiper-button-prev" slot="button-prev" v-if="lengthImageCoupons"></div>
+				<div class="swiper-button-next" slot="button-next" v-if="lengthImageCoupons"></div>
 		</swiper>
 	</div>	
 </template>
 
 <script>
 import lib from '@/shared/lib';
+import { mapGetters } from 'vuex';
 
-function data() {
-	return {
-		swiperOption: {
-			slidesPerView: 3,
-			spaceBetween: 30,
-			slidesPerGroup: 3,
-			breakpoints: {
-				930: {
-					slidesPerView: 2,
-					slidesPerGroup: 2,
-					allowTouchMove: true,
-				},
-				600: {
-					slidesPerView: 1,
-					slidesPerGroup: 1,
-					allowTouchMove: true,
-				},
-			},
-			autoplay: {
-				delay: 5500,
-				disableOnInteraction: false,
-			},
-			pagination: {
-				el: '.pagination-carousel',
-				clickable: true,
-			},
-		},
-		imageCoupons: [
-			{
-				id: 1,
-				image: 'https://japi-static.s3.amazonaws.com/japi-sales-error/cupones-lunes.png',
-				name: 'image-coupons-1',
-			},
-			{
-				id: 2,
-				image: 'https://japi-static.s3.amazonaws.com/japi-sales-error/cupones-lunes-2.jpeg',
-				name: 'image-coupons-2',
-			},
-			{
-				id: 3,
-				image: 'https://japi-static.s3.amazonaws.com/japi-sales-error/cuponess.png',
-				name: 'image-coupons-3',
-			},
-		],
-	};
+function created() {
+	this.imageCou = this.getBanners.filter(c => c.typeId === 8);
+	this.imageCou.splice(0, 1);
+	if (this.imageCou.length <= 3) {
+		this.lengthImageCoupons = false;
+	}
 }
 
 function webImage() {
 	return lib.getDeeper('webImage')(this.data);
 }
 
+function data() {
+	return {
+		lengthImageCoupons: true,
+		images: [],
+		swiperOption: {
+			slidesPerView: 3,
+			slidesPerGroup: 1,
+			spaceBetween: 0,
+			navigation: {
+				nextEl: '.swiper-button-next',
+				prevEl: '.swiper-button-prev',
+			},
+			breakpoints: {
+				1250: {
+					slidesPerView: 2,
+					allowTouchMove: true,
+				},
+				950: {
+					slidesPerView: 1,
+					allowTouchMove: true,
+				},
+			},
+			pagination: {
+				el: '.pagination-carousel',
+				clickable: true,
+			},
+		},
+		imageCou: [],
+	};
+}
+
 export default {
 	name: 'app-banner-cupons',
+	created,
 	data,
 	computed: {
 		webImage,
+		...mapGetters([
+			'getBanners',
+		]),
 	},
 	props: {
 		data: {
@@ -98,6 +97,10 @@ export default {
 	height: 435px;
 	padding: 44px 85px;
 	width: 100%;
+
+	@media (max-width: 764px) {
+		padding: 25px 65px;
+	}
 }
 
 .title-banner {
@@ -108,7 +111,6 @@ export default {
 }
 
 .box-coupons {
-	border: 1px solid color(base);
 	background-color: color(white);
 	min-height: 248px;
 	width: 363px;
