@@ -103,8 +103,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-
-const itemMenu = () => import('@/components/header/item-menu');
+import itemMenu from '@/components/header/item-menu';
 
 function created() {
 	this.categories = this.getCategories;

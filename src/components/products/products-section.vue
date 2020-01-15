@@ -24,6 +24,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { isEmpty } from '@/shared/lib';
+import productCard from '@/components/products/product-card';
 
 function addMoreProduct() {
 	this.$store.dispatch('MORE_PRODUCTS');
@@ -44,7 +45,7 @@ function data() {
 export default {
 	name: 'page-products',
 	components: {
-		productCard: () => import('@/components/products/product-card'),
+		productCard,
 	},
 	computed: {
 		...mapGetters([

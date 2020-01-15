@@ -49,8 +49,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-
-const titleSection = () => import('@/components/home/title-section');
+import titleSection from '@/components/home/title-section';
 
 function hoverCategory(index) {
 	this.categories[index].hover = true;
@@ -69,7 +68,7 @@ function data() {
 		swiperOption: {
 			slidesPerView: this.len,
 			spaceBetween: 0,
-			slidesPerGroup: 3,
+			slidesPerGroup: 1,
 			allowTouchMove: false,
 			navigation: {
 				nextEl: '.swiper-button-next',
@@ -77,13 +76,13 @@ function data() {
 			},
 			breakpoints: {
 				1280: {
-					slidesPerView: 4,
-					slidesPerGroup: 4,
+					slidesPerView: this.len >= 4 ? 4 : this.len,
+					slidesPerGroup: 1,
 					allowTouchMove: true,
 				},
 				930: {
-					slidesPerView: 2,
-					slidesPerGroup: 2,
+					slidesPerView: this.len >= 2 ? 2 : this.len,
+					slidesPerGroup: 1,
 					allowTouchMove: true,
 				},
 				600: {

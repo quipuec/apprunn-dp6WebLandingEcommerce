@@ -23,7 +23,7 @@
 </template>
 
 <script>
-	const accountForm = () => import('@/components/shared/account/account-form');
+	import accountForm from '@/components/shared/account/account-form';
 
 	export default {
 		name: 'form-container',

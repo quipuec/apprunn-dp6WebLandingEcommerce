@@ -1,6 +1,9 @@
 <template>
 	<button
-		class="app-button"
+		:class="[
+			{ 'loading': indeterminate },
+			'app-button',
+		]"
 		@click="$emit('click-image')"
 		v-bind="$attrs"
 	>
@@ -8,7 +11,8 @@
 			:style="`background: ${globalColors.primary};`"
 			class="button-number" v-if="ifNumber"
 		>{{number}}</div>
-		<img :src="imageUser"
+		<img 
+			:src="indeterminate ? '' : imageUser"
 			:alt="data.name"
 			:height="data.height || 20" 
 		>
@@ -16,6 +20,8 @@
 	</button>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 function imageUser() {
 	return this.data.image || this.data.logo || this.data.urlImage || process.env.DEFAULT_AVATAR;
 }
@@ -23,6 +29,9 @@ function imageUser() {
 export default {
 	name: 'app-button-image',
 	computed: {
+		...mapGetters([
+			'indeterminate',
+		]),
 		imageUser,
 	},
 	inheritAttrs: false,

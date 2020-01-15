@@ -1,10 +1,17 @@
 <template>
-  	<div class="app-input-search">
-		<SearchIcon/>
+  	<div
+	  :class="[
+	  	{ 'loading': indeterminate },
+	  	'app-input-search',
+	]">
+		<SearchIcon v-if="!indeterminate"/>
 		<input
 			v-bind="$attrs"
-			class="app-input"
 			placeholder="¿Qué buscas?"
+			:class="[
+				{ 'loading': indeterminate },
+				'app-input',
+			]"
 			:style="`color: ${color}`"
 			@keydown.enter="$emit('search', searchText)"
 			v-model="searchText"
@@ -12,6 +19,8 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+import SearchIcon from '@/components/shared/icons/search-component';
 
 function changeRoute(newRouteName) {
 	if (newRouteName.name !== 'page-home') {
@@ -28,7 +37,12 @@ function data() {
 export default {
 	name: 'app-input-search',
 	components: {
-		SearchIcon: () => import('@/components/shared/icons/search-component'),
+		SearchIcon,
+	},
+	computed: {
+		...mapGetters([
+			'indeterminate',
+		]),
 	},
 	data,
 	props: {

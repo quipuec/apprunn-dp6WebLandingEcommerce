@@ -116,6 +116,10 @@ function minusService({ commit, state }, service) {
 	commit('MINUS_ONE_IN_SERVICE_COUNTER', index);
 }
 
+function SET_WINDOW_LOADED_TO_TRUE({ commit }) {
+	commit('UPDATE_WINDOW_LOADED', true);
+}
+
 const methods = {
 	addProductToBuyCar,
 	addService,
@@ -134,6 +138,7 @@ const methods = {
 	updateFilters,
 	SET_DEFAULT_VALUES,
 	START_PAGINATION,
+	SET_WINDOW_LOADED_TO_TRUE,
 };
 
 export default methods;

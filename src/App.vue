@@ -1,6 +1,6 @@
 <template>
 	<v-app class="main-container">
-		<app-banner-top :data="bannerTop"/>
+		<app-banner-top v-if="!indeterminate" :data="bannerTop"/>
 		<app-header
 			:logo="logo" 
 			@change-menu="changeMenu" 
@@ -50,13 +50,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import appHeader from '@/components/header/app-header';
 
-const appHeader = () => import('@/components/header/app-header');
-const appMenuCategory = () => import('@/components/header/app-category');
-const appBannerTop = () => import('@/components/header/app-banner-top');
-const formBulletin = () => import('@/components/shared/form/form-bulletin');
-const sectionVisa = () => import('@/components/footer/section-visa');
-const appFooter = () => import('@/components/footer/app-footer');
+const appMenuCategory = () => import(/* webpackChunkName: "app-Menu-Category" */'@/components/header/app-category');
+const formBulletin = () => import(/* webpackChunkName: "form-Bulletin" */'@/components/shared/form/form-bulletin');
+const sectionVisa = () => import(/* webpackChunkName: "section-Visa" */'@/components/footer/section-visa');
+const appFooter = () => import(/* webpackChunkName: "app-Footer" */'@/components/footer/app-footer');
+const appBannerTop = () => import(/* webpackChunkName: "app-Banner-Top" */ '@/components/header/app-banner-top');
 
 function indeterminate() {
 	return this.$store.getters.indeterminate;

@@ -14,6 +14,7 @@ module.exports = {
     app: './src/main.js'
   },
   output: {
+    chunkFilename: '[name].bundle.js',
     path: config.build.assetsRoot,
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production'

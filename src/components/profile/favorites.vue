@@ -38,6 +38,9 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import carComponent from '@/components/shared/icons/car-component';
+import deleteComponent from '@/components/shared/icons/delete-component';
+import responsiveTable from '@/components/shared/table/respondive-table';
 
 async function created() {
 	this.totalPages = await this.$store.dispatch(
@@ -80,9 +83,9 @@ function data() {
 export default {
 	name: 'favorites',
 	components: {
-		carComponent: () => import('@/components/shared/icons/car-component'),
-		deleteComponent: () => import('@/components/shared/icons/delete-component'),
-		responsiveTable: () => import('@/components/shared/table/respondive-table'),
+		carComponent,
+		deleteComponent,
+		responsiveTable,
 	},
 	computed: {
 		...mapGetters([
