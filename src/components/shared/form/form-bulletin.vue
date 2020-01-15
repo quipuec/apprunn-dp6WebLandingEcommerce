@@ -34,13 +34,16 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import EmailIcon from '@/components/shared/icons/email-component';
+import LocationIcon from '@/components/shared/icons/location';
+import PhoneIcon from '@/components/shared/icons/phone-component';
 
 export default {
 	name: 'form-bulletin',
 	components: {
-		EmailIcon: () => import('@/components/shared/icons/email-component'),
-		LocationIcon: () => import('@/components/shared/icons/location'),
-		PhoneIcon: () => import('@/components/shared/icons/phone-component'),
+		EmailIcon,
+		LocationIcon,
+		PhoneIcon,
 	},
 	computed: {
 		...mapGetters([

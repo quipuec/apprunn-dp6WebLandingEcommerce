@@ -18,8 +18,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-
-const sectionLinks = () => import('@/components/footer/section-links.vue');
+import sectionLinks from '@/components/footer/section-links';
 
 export default {
 	name: 'app-footer',

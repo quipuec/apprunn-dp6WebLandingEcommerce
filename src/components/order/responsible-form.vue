@@ -40,8 +40,7 @@
 import { required, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import lib from '@/shared/lib';
-
-const appInput = () => import('@/components/shared/inputs/app-input');
+import appInput from '@/components/shared/inputs/app-input';
 
 function mounted() {
 	if (lib.getDeeper('responsiblePickUp')(this.getOrderInfo)) {

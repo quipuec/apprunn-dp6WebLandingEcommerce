@@ -27,8 +27,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-
-const mediaFilterProduct = () => import('@/components/shared/products/media-filter-product');
+import mediaFilterProduct from '@/components/shared/products/media-filter-product';
 
 function filterSelect(filter) {
 	this.$emit('click-filter', filter);

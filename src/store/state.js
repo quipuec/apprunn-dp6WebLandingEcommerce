@@ -86,4 +86,5 @@ export default {
 		{ id: 0, name: 'Seleccione una tienda' },
 	],
 	filters: null,
+	windowLoaded: false,
 };
