@@ -14,6 +14,7 @@
 				>
 					<router-link to="/" class="link-logo" v-if="!indeterminate">
 						<img
+							v-if="logo.urlImage"
 							:src="logo.urlImage"
 							alt="Logo de compañía"
 							class="logo-image"
