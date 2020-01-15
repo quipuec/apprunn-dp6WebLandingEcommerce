@@ -15,13 +15,14 @@
         		<swiper-slide v-for="(category, index) in categories" :key="category.id">
 					<div 
 						class="container-big-category" 
-						@mouseover="hoverCategory(index)"
-						@mouseleave="leaveCategory(index)"
-						@click="goToCategory(category)"
 					>
 						<div 
 							class="container-category-image"
-							:style="category.hover ? `border-color: ${colorBase}` : null">
+							:style="category.hover ? `border-color: ${colorBase}` : null"
+							@click="goToCategory(category)"
+							@mouseover="hoverCategory(index)"
+							@mouseleave="leaveCategory(index)"
+						>
 							<div 
 								:style="`background-image: url(${category.urlImage})`"
 								class="category-image">
@@ -33,12 +34,16 @@
 						</div>
 						<div 
 							class="category-title"
-							:style="category.hover ? `color: ${colorBase}` : null">{{category.title}}</div>
-					</div>
-				</swiper-slide>
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
-      </swiper>
+							:style="category.hover ? `color: ${colorBase}` : null"
+							@click="goToCategory(category)"
+							@mouseover="hoverCategory(index)"
+							@mouseleave="leaveCategory(index)"
+						>{{category.title}}</div>
+						</div>
+					</swiper-slide>
+					<div class="swiper-button-prev" slot="button-prev"></div>
+					<div class="swiper-button-next" slot="button-next"></div>
+			</swiper>
 		</div>
 	</div>
 </template>

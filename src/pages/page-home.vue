@@ -13,8 +13,8 @@
 			:len="getCategoriesLength"
 			:color-base="colorBase"/>
 		<component-filter-product 
-			@click-filter="filterSelect"
 			v-if="filtersExist"
+			@click-filter="filterSelect"
 		>
 		</component-filter-product>
 		<div class="page-products">
