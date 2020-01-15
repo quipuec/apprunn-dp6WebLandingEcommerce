@@ -7,7 +7,9 @@
 				{ 'open': menuIsVisible },
 				{ 'loading': indeterminate },
 				'call-menu-btn',
-			]">
+			]"
+			:style="`border: 1px solid ${menuIsVisible ? globalColors.primary : '#e6e6e6'}`"
+			>
 			<span v-if="!indeterminate" :style="`background: ${color}`" class="call-menu-line"></span>
 			<span v-if="!indeterminate" :style="`background: ${color}`" class="call-menu-line"></span>
 			<span v-if="!indeterminate" :style="`background: ${color}`" class="call-menu-line"></span>
