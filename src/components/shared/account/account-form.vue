@@ -35,7 +35,7 @@
 </template>
 
 <script>
-	const appButton = () => import('@/components/shared/buttons/app-button');
+	import appButton from '@/components/shared/buttons/app-button';
 
 	function data() {
 		return {

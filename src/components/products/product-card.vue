@@ -85,6 +85,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import heartComponent from '@/components/shared/icons/heart-component';
 
 function productFavo() {
 	if (this.token) {
@@ -113,7 +114,7 @@ function discountPercentage() {
 export default {
 	name: 'product-card',
 	components: {
-		heartComponent: () => import('@/components/shared/icons/heart-component'),
+		heartComponent,
 	},
 	computed: {
 		...mapGetters([

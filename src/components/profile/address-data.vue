@@ -37,8 +37,10 @@
 <script>
 import { mapGetters } from 'vuex';
 import lib from '@/shared/lib';
-
-const newAddressForm = () => import('@/components/profile/new-address-form');
+import newAddressForm from '@/components/profile/new-address-form';
+import deleteComponent from '@/components/shared/icons/delete-component';
+import responsiveTable from '@/components/shared/table/respondive-table';
+import starComponent from '@/components/shared/icons/star-component';
 
 function created() {
 	this.loadAddress();
@@ -104,10 +106,10 @@ function data() {
 export default {
 	name: 'address',
 	components: {
-		deleteComponent: () => import('@/components/shared/icons/delete-component'),
+		deleteComponent,
 		newAddressForm,
-		responsiveTable: () => import('@/components/shared/table/respondive-table'),
-		starComponent: () => import('@/components/shared/icons/star-component'),
+		responsiveTable,
+		starComponent,
 	},
 	computed: {
 		...mapGetters([

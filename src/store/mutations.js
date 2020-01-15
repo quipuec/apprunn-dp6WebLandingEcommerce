@@ -121,6 +121,10 @@ function MINUS_ONE_IN_SERVICE_COUNTER(state, index) {
 	Vue.set(state.appConfig, 'loadingCounter', current);
 }
 
+function UPDATE_WINDOW_LOADED(state, flag) {
+	Vue.set(state, 'windowLoaded', flag);
+}
+
 const methods = {
 	ADD_ONE_IN_SERVICE_COUNTER,
 	clearUser,
@@ -151,6 +155,7 @@ const methods = {
 	UPDATE_FILTERS,
 	UPDATE_PRODUCT_PAGE,
 	UPDATE_PRODUCTS_SELECTED,
+	UPDATE_WINDOW_LOADED,
 };
 
 export default methods;

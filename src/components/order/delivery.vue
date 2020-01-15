@@ -58,14 +58,13 @@
 <script>
 import { mapGetters } from 'vuex';
 import { isEmpty } from '@/shared/lib';
-
-const addressComponent = () => import('@/components/order/address-component');
-const appButtonOrder = () => import('@/components/shared/buttons/app-button-order');
-const billing = () => import('@/components/order/billing');
-const coffeeSvg = () => import('@/components/shared/icons/coffee-shop');
-const locationSvg = () => import('@/components/shared/icons/location');
-const newAddress = () => import('@/components/order/new-address');
-const responsibleForm = () => import('@/components/order/responsible-form');
+import addressComponent from '@/components/order/address-component';
+import appButtonOrder from '@/components/shared/buttons/app-button-order';
+import billing from '@/components/order/billing';
+import coffeeSvg from '@/components/shared/icons/coffee-shop';
+import locationSvg from '@/components/shared/icons/location';
+import newAddress from '@/components/order/new-address';
+import responsibleForm from '@/components/order/responsible-form';
 
 function created() {
 	this.$store.dispatch('LOAD_DIRECTIONS', this);

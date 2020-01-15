@@ -15,12 +15,11 @@
 </template>
 <script>
 import { mapActions } from 'vuex';
-
-const productsBuyed = () => import('@/components/order/products-buyed');
-const summaryOrder = () => import('@/components/order/summary-order');
-const thanksMessage = () => import('@/components/order/thanks-message');
-const summaryInPayment = () => import('@/components/order/summary-in-payment');
-const paymentMethods = () => import('@/components/order/payment-method');
+import productsBuyed from '@/components/order/products-buyed';
+import summaryOrder from '@/components/order/summary-order';
+import thanksMessage from '@/components/order/thanks-message';
+import summaryInPayment from '@/components/order/summary-in-payment';
+import paymentMethods from '@/components/order/payment-method';
 
 function beforeDestroy() {
 	this.SET_DEFAULT_VALUES();

@@ -50,8 +50,8 @@
 	</div>
 </template>
 <script>
-const productCard = () => import('@/components/products/product-card');
-const titleSection = () => import('@/components/home/title-section');
+import productCard from '@/components/products/product-card';
+import titleSection from '@/components/home/title-section';
 
 function data() {
 	return {

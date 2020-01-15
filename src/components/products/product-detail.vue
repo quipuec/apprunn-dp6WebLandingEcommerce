@@ -85,10 +85,10 @@
 <script>
 import { mapGetters } from 'vuex';
 import lib from '@/shared/lib';
-
-const heartComponent = () => import('@/components/shared/icons/heart-component');
-const productChildrens = () => import('@/components/products/product-childrens');
-const productBuy = () => import('@/components/products/product-buy');
+import heartComponent from '@/components/shared/icons/heart-component';
+import productChildrens from '@/components/products/product-childrens';
+import productBuy from '@/components/products/product-buy';
+import ProductConversions from '@/components/products/product-conversions';
 
 function stopClick() {
 	return false;
@@ -139,7 +139,7 @@ export default {
 	components: {
 		heartComponent,
 		productChildrens,
-		ProductConversions: () => import('@/components/products/product-conversions'),
+		ProductConversions,
 		productBuy,
 	},
 	computed: {

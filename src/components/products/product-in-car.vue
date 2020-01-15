@@ -52,11 +52,10 @@
 	</div>
 </template>
 <script>
-
-const commentsComponent = () => import('@/components/shared/icons/comments-component');
-const textArea = () => import('@/components/shared/inputs/text-area');
-const trashComponent = () => import('@/components/shared/icons/trash-component');
-const quantityButton = () => import('@/components/shared/buttons/quantity-button');
+import commentsComponent from '@/components/shared/icons/comments-component';
+import textArea from '@/components/shared/inputs/text-area';
+import trashComponent from '@/components/shared/icons/trash-component';
+import quantityButton from '@/components/shared/buttons/quantity-button';
 
 function showComments() {
 	this.show = !this.show;
