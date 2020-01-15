@@ -686,7 +686,10 @@ input.app-input::-webkit-input-placeholder {
 				padding: 10px 1.5%;
 
 				& > .v-treeview-node__root {
-					font-family: font(bold);
+					
+					.v-treeview-node__label {
+						font-family: font(demi);
+					}
 
 					.v-treeview-node__content {
 						max-width: 100%;
@@ -706,6 +709,7 @@ input.app-input::-webkit-input-placeholder {
 		}
 
 		.v-treeview-node__label {
+			font-family: font(regular);
 			font-size: size(medium);
 			max-width: 100%;
 		}
