@@ -31,6 +31,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import AppFeatureButton from '@/components/shared/buttons/app-feature-button';
 
 function selectFeature(value) {
 	this.$emit('selected', value);
@@ -38,7 +39,7 @@ function selectFeature(value) {
 export default {
 	name: 'product-childrens',
 	components: {
-		AppFeatureButton: () => import('@/components/shared/buttons/app-feature-button'),
+		AppFeatureButton,
 	},
 	computed: {
 		...mapGetters('loading', [

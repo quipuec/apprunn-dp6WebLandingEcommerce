@@ -103,8 +103,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-
-const itemMenu = () => import('@/components/header/item-menu');
+import itemMenu from '@/components/header/item-menu';
 
 function created() {
 	this.categories = this.getCategories;
@@ -306,13 +305,13 @@ export default {
 			}
 		}
 
+		&.isBanner {
+			top: 188px;
+		}
+		
 		&.scrolling {
 			position: fixed;
 			top: 99px;
-		}
-
-		&.isBanner {
-			top: 188px;
 		}
 	}
 

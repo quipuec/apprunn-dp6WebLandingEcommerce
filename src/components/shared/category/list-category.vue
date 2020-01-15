@@ -4,13 +4,14 @@
 			class="wrapper-name-category"
 			:style="idSelect(data.id) ? `border-color: ${globalColors.primary}` : `border-color: ${globalColors.base}`"
 		>
-			<button 
+			<button
+				:title="data.title"
 				class="title-category mr-5" 
 				:style="idSelect(data.id) ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`"
 				@click="$emit('change-category', data)"	
 			>
 				<img :src="data.webImage" :alt="data.title" class="mr-3">
-				{{data.title}}
+				<span>{{data.title}}</span>
 			</button>
 			<button @click="$emit('open-category', data.id)" v-if="data.detail.length">
 				<simple-svg
@@ -96,8 +97,13 @@ export default {
 			align-items: center;
 			display: flex;
 			font-family: font(bold);
-			font-size: size(medium
-			);
+			font-size: size(medium);
+
+			span {
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
 		}
 
 		.wrapper-subcategory {

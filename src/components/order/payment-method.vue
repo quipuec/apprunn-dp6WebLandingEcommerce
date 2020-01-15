@@ -4,8 +4,7 @@
 	</div>
 </template>
 <script>
-
-const depositMethods = () => import('@/components/order/deposit-payment');
+import depositMethods from '@/components/order/deposit-payment';
 
 export default {
 	name: 'payment-method',

@@ -96,12 +96,11 @@
 
 <script>
 import { mapGetters } from 'vuex';
-
-const appBannerTop = () => import('@/components/header/app-banner-top');
-const buttonImage = () => import('@/components/shared/buttons/app-button-image');
-const menuCategory = () => import('@/components/shared/category/menu-category');
-const productCard = () => import('@/components/products/product-card');
-const productsSection = () => import('@/components/products/products-section');
+import appBannerTop from '@/components/header/app-banner-top';
+import buttonImage from '@/components/shared/buttons/app-button-image';
+import menuCategory from '@/components/shared/category/menu-category';
+import productCard from '@/components/products/product-card';
+import productsSection from '@/components/products/products-section';
 
 function created() {
 	this.selectCategory();

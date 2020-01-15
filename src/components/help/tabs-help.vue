@@ -57,9 +57,9 @@
 </template>
 
 <script>
-const warranty = () => import('@/components/help/warranty');
-const appSlider = () => import('@/components/help/app-slider');
-const buttonImage = () => import('@/components/shared/buttons/app-button-image');
+import warranty from '@/components/help/warranty';
+import appSlider from '@/components/help/app-slider';
+import buttonImage from '@/components/shared/buttons/app-button-image';
 
 function seeThisHelp(help) {
 	const opts = {

@@ -9,9 +9,10 @@
 					:class="[
 						'app-header-logo',
 						{ 'hide-logo': isSearchMobile },
+						{ 'loading': indeterminate },
 					]"
 				>
-					<router-link to="/" class="link-logo">
+					<router-link to="/" class="link-logo" v-if="!indeterminate">
 						<img
 							:src="logo.urlImage"
 							alt="Logo de compañía"
@@ -53,11 +54,12 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-
-const callMenu = () => import('@/components/header/call-menu');
-const appSearch = () => import('@/components/shared/inputs/app-input-search');
-const buttonImage = () => import('@/components/shared/buttons/app-button-image');
-const modalLogin = () => import('@/components/header/modal-login');
+import callMenu from '@/components/header/call-menu';
+import appSearch from '@/components/shared/inputs/app-input-search';
+import buttonImage from '@/components/shared/buttons/app-button-image';
+import modalLogin from '@/components/header/modal-login';
+import CarComponent from '@/components/shared/icons/car-component';
+import HeartComponent from '@/components/shared/icons/heart-component';
 
 function mounted() {
 	const ls = this.getLocalStorage(`${process.env.STORAGE_USER_KEY}::product-select`);
@@ -180,8 +182,8 @@ export default {
 		appSearch,
 		buttonImage,
 		callMenu,
-		CarComponent: () => import('@/components/shared/icons/car-component'),
-		HeartComponent: () => import('@/components/shared/icons/heart-component'),
+		CarComponent,
+		HeartComponent,
 		modalLogin,
 	},
 	computed: {
@@ -190,6 +192,7 @@ export default {
 			'totalProducts',
 			'getFilters',
 			'getTotalQuantityProducts',
+			'indeterminate',
 		]),
 	},
 	data,

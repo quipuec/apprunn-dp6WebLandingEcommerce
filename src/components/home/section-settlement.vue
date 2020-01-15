@@ -6,7 +6,7 @@
 	</div>
 </template>
 <script>
-const settlementCarousel = () => import('@/components/home/settlement-carousel');
+import settlementCarousel from '@/components/home/settlement-carousel';
 
 export default {
 	name: 'section-settlement',
