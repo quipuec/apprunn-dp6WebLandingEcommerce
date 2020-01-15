@@ -675,43 +675,39 @@ input.app-input::-webkit-input-placeholder {
 .app-category {
 	.menu-list-item {
 		.v-treeview {
-			display: grid;
+			display: flex;
+			flex-wrap: wrap;
+			height: 100%;
 
 			& > .v-treeview-node {
-				border-right: 1px solid color(dark);
+				border-right: 1px solid color(border);
+				flex: 0 0 33%;
 				margin-left: 0 !important;
-				padding: 10px 10%;
+				padding: 10px 1.5%;
 
 				& > .v-treeview-node__root {
 					font-family: font(bold);
-				}
-			}
-		}
 
-		&.isTwo {
-			.v-treeview {
-				grid-template-columns: 50% 50%;
-				& > .v-treeview-node {
-						&:nth-child(2n) {
-						border-right: none;
+					.v-treeview-node__content {
+						max-width: 100%;
+					}
+				}
+				& > .v-treeview-node__children {
+					color: color(base);
+
+					.v-treeview-node__content {
+						max-width: 100%;
 					}
 				}
 			}
-		}
-
-		&.isMultiple {
-			.v-treeview {
-				grid-template-columns: 33% 33% 33%;
-				& > .v-treeview-node {
-						&:nth-child(3n) {
-						border-right: none;
-					}
-				}
+			& > .v-treeview-node:nth-child(3n) {
+				border-right: none;
 			}
 		}
 
 		.v-treeview-node__label {
 			font-size: size(medium);
+			max-width: 100%;
 		}
 
 		.v-treeview-node {
