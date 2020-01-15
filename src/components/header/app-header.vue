@@ -8,6 +8,7 @@
 				<h1
 					:class="[
 						'app-header-logo',
+						{ 'hide-logo': isSearchMobile },
 						{ 'loading': indeterminate },
 					]"
 				>
@@ -310,6 +311,15 @@ export default {
 		margin: 0 1rem;
 		@media (max-width: 768px) {
 			flex-basis: 100%;
+			transform: translateX(0);
+			transition: transform 220ms ease-out;
+		}
+	}
+
+	.hide-logo {
+
+		@media (max-width: 768px) {
+			transform: translateX(-100%);
 		}
 	}
 
