@@ -43,8 +43,8 @@ export default {
 
 	.img-menu {
 		filter: brightness(0) invert(0.28);
-		height: 32px;
-		width: 31px;
+		height: 27px;
+		width: 27px;
 
 		@media (max-width: 764px) {
 			width: 24px;

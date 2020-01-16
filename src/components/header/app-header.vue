@@ -8,11 +8,13 @@
 				<h1
 					:class="[
 						'app-header-logo',
+						{ 'hide-logo': isSearchMobile },
 						{ 'loading': indeterminate },
 					]"
 				>
 					<router-link to="/" class="link-logo" v-if="!indeterminate">
 						<img
+							v-if="logo.urlImage"
 							:src="logo.urlImage"
 							alt="Logo de compañía"
 							class="logo-image"
@@ -310,6 +312,15 @@ export default {
 		margin: 0 1rem;
 		@media (max-width: 768px) {
 			flex-basis: 100%;
+			transform: translateX(0);
+			transition: transform 220ms ease-out;
+		}
+	}
+
+	.hide-logo {
+
+		@media (max-width: 768px) {
+			transform: translateX(-100%);
 		}
 	}
 
