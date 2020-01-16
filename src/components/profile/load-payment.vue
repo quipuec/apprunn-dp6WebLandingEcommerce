@@ -48,8 +48,7 @@ import { required } from 'vuelidate/lib/validators';
 import appButton from '@/components/shared/buttons/app-button';
 import appInput from '@/components/shared/inputs/app-input';
 import lib from '@/shared/lib';
-
-const UploadImage = () => import('@/components/shared/upload-image');
+import UploadImage from '@/components/shared/upload-image';
 
 function created() {
 	if (this.getOrderInfo && this.getOrderInfo.additionalInfo) {

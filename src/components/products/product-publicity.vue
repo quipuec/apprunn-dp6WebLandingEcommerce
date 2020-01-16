@@ -16,9 +16,8 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-
-const bannerTop = () => import('@/components/header/app-banner-top');
-const cardOffer = () => import('@/components/products/card-offer');
+import bannerTop from '@/components/header/app-banner-top';
+import cardOffer from '@/components/products/card-offer';
 
 export default {
 	name: 'product-publicity',

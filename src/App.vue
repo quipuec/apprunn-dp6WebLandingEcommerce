@@ -1,6 +1,6 @@
 <template>
 	<v-app class="main-container">
-		<app-banner-top :data="bannerTop"/>
+		<app-banner-top v-if="!indeterminate" :data="bannerTop"/>
 		<app-header
 			:logo="logo" 
 			@change-menu="changeMenu" 
@@ -50,13 +50,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import appHeader from '@/components/header/app-header';
 
-const appHeader = () => import('@/components/header/app-header');
-const appMenuCategory = () => import('@/components/header/app-category');
-const appBannerTop = () => import('@/components/header/app-banner-top');
-const formBulletin = () => import('@/components/shared/form/form-bulletin');
-const sectionVisa = () => import('@/components/footer/section-visa');
-const appFooter = () => import('@/components/footer/app-footer');
+const appMenuCategory = () => import(/* webpackChunkName: "app-Menu-Category" */'@/components/header/app-category');
+const formBulletin = () => import(/* webpackChunkName: "form-Bulletin" */'@/components/shared/form/form-bulletin');
+const sectionVisa = () => import(/* webpackChunkName: "section-Visa" */'@/components/footer/section-visa');
+const appFooter = () => import(/* webpackChunkName: "app-Footer" */'@/components/footer/app-footer');
+const appBannerTop = () => import(/* webpackChunkName: "app-Banner-Top" */ '@/components/header/app-banner-top');
 
 function indeterminate() {
 	return this.$store.getters.indeterminate;
@@ -675,43 +675,43 @@ input.app-input::-webkit-input-placeholder {
 .app-category {
 	.menu-list-item {
 		.v-treeview {
-			display: grid;
+			display: flex;
+			flex-wrap: wrap;
+			height: 100%;
 
 			& > .v-treeview-node {
-				border-right: 1px solid color(dark);
+				border-right: 1px solid color(border);
+				flex: 0 0 33%;
 				margin-left: 0 !important;
-				padding: 10px 10%;
+				padding: 10px 1.5%;
 
 				& > .v-treeview-node__root {
-					font-family: font(bold);
-				}
-			}
-		}
+					
+					.v-treeview-node__label {
+						font-family: font(demi);
+					}
 
-		&.isTwo {
-			.v-treeview {
-				grid-template-columns: 50% 50%;
-				& > .v-treeview-node {
-						&:nth-child(2n) {
-						border-right: none;
+					.v-treeview-node__content {
+						max-width: 100%;
+					}
+				}
+				& > .v-treeview-node__children {
+					color: color(base);
+
+					.v-treeview-node__content {
+						max-width: 100%;
 					}
 				}
 			}
-		}
-
-		&.isMultiple {
-			.v-treeview {
-				grid-template-columns: 33% 33% 33%;
-				& > .v-treeview-node {
-						&:nth-child(3n) {
-						border-right: none;
-					}
-				}
+			& > .v-treeview-node:nth-child(3n) {
+				border-right: none;
 			}
 		}
 
 		.v-treeview-node__label {
+			font-family: font(regular);
 			font-size: size(medium);
+			max-width: 100%;
 		}
 
 		.v-treeview-node {

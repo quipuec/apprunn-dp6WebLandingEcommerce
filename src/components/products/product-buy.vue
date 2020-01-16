@@ -39,10 +39,9 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-
-const quantityButton = () => import('@/components/shared/buttons/quantity-button');
-const appButtonOrder = () => import('@/components/shared/buttons/app-button-order');
-const imageCheck = () => import('@/components/shared/icons/check-component');
+import quantityButton from '@/components/shared/buttons/quantity-button';
+import appButtonOrder from '@/components/shared/buttons/app-button-order';
+import imageCheck from '@/components/shared/icons/check-component';
 
 function clickQuantity(value) {
 	this.$emit('click', value);

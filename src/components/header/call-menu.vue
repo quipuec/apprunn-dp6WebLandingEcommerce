@@ -2,15 +2,29 @@
 	<button 
 		class="call-menu"
 		@click="toggleMenu">
-		<div class="call-menu-btn" :class="{ 'open': menuIsVisible }">
-			<span :style="`background: ${color}`" class="call-menu-line"></span>
-			<span :style="`background: ${color}`" class="call-menu-line"></span>
-			<span :style="`background: ${color}`" class="call-menu-line"></span>
+		<div
+			:class="[
+				{ 'open': menuIsVisible },
+				{ 'loading': indeterminate },
+				'call-menu-btn',
+			]"
+			:style="`border: 1px solid ${menuIsVisible ? globalColors.primary : '#e6e6e6'}`"
+			>
+			<span v-if="!indeterminate" :style="`background: ${color}`" class="call-menu-line"></span>
+			<span v-if="!indeterminate" :style="`background: ${color}`" class="call-menu-line"></span>
+			<span v-if="!indeterminate" :style="`background: ${color}`" class="call-menu-line"></span>
 		</div>
-		<p :style="`color: ${color}`" class="call-menu-text mt-2">{{text}}</p>
+		<p
+			:style="`color: ${color}`"
+			:class="[
+				indeterminate ? 'loading' : 'call-menu-text mt-2',
+			]"
+		>{{text}}</p>
 	</button>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
 function toggleMenu() {
 	this.menuIsVisible = !this.menuIsVisible;
 	this.$emit('change-menu');
@@ -28,6 +42,11 @@ function data() {
 
 export default {
 	name: 'call-menu',
+	computed: {
+		...mapGetters([
+			'indeterminate',
+		]),
+	},
 	data,
 	methods: {
 		toggleMenu,

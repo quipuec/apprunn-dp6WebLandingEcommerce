@@ -128,14 +128,14 @@ export default {
 		border-radius: 7px;
 		box-shadow: 0 2px 4px 0 rgba(213, 213, 213, 0.5);
 		padding: 0 19px;
-		width: 80%;
+		width: 440px;
 
 		@media screen and (max-width: 996px) {
 			background: transparent;
 			box-shadow: none;
 			height: 217px;
 			padding: 0;
-			width: 100%;
+			width: 70%;
 		}
 	}
 

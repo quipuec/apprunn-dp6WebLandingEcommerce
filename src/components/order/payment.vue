@@ -29,11 +29,10 @@
 import { mapGetters } from 'vuex';
 import appButton from '@/components/shared/buttons/app-button';
 import { isEmpty } from '@/shared/lib';
-
-const depositPayment = () => import('@/components/order/deposit-payment');
-const productsBuyed = () => import('@/components/order/products-buyed');
-const recievedPayment = () => import('@/components/order/recieved-payment');
-const visaPayment = () => import('@/components/order/visa-payment');
+import depositPayment from '@/components/order/deposit-payment';
+import productsBuyed from '@/components/order/products-buyed';
+import recievedPayment from '@/components/order/recieved-payment';
+import visaPayment from '@/components/order/visa-payment';
 
 function created() {
 	if (isEmpty(this.getWaysPayments)) {

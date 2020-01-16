@@ -68,9 +68,8 @@
 <script>
 import { required } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-
-const appInput = () => import('@/components/shared/inputs/app-input');
-const appSelect = () => import('@/components/shared/inputs/app-select');
+import appInput from '@/components/shared/inputs/app-input';
+import appSelect from '@/components/shared/inputs/app-select';
 
 function created() {
 	this.$store.dispatch('LOAD_DEPARTMENTS', this);
