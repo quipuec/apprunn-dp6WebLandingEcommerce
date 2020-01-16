@@ -287,21 +287,22 @@ input.app-input::-webkit-input-placeholder {
 
 .categories-carousel-slider, .section-settlement  {
 	.swiper-button-next {
-		background-image: url('/static/img/slider-arrow-rigth.svg');
+		background-image: none;
+		right: 0;
 	}
 
 	.swiper-button-prev {
-		background-image: url('/static/img/slider-arrow-left.svg');
+		background-image: none;
+		left: 0;
 	}
 
 	.swiper-button-next, .swiper-button-prev {
 		background-size: auto;
 		cursor: pointer;
-		height: 19px;
+		height: 40px;
 		outline: none;
-		top: calc(50% - 26px);
-		transform: translateY(50%);
-		width: 13px;
+		top: 40%;
+		width: 40px;
 	}
 }
 
@@ -436,9 +437,11 @@ input.app-input::-webkit-input-placeholder {
 	}
 	
 	.swiper-button-next {
-		background-image: url('/static/img/icons/arrow-button-next-white.svg');
+		background-image: none;
+		height: 40px;
 		position: absolute;
 		right: 0;
+		width: 40px;
 
 		@media (max-width: 650px) {
 			outline: none;
@@ -447,9 +450,11 @@ input.app-input::-webkit-input-placeholder {
 	}
 
 	.swiper-button-prev {
-		background-image: url('/static/img/icons/arrow-button-prev-white.svg');
+		background-image: none;
+		height: 40px;
 		left: 0;
 		position: absolute;
+		width: 40px;
 		
 		@media (max-width: 650px) {
 			left: -6px;

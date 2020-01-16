@@ -41,8 +41,18 @@
 						>{{category.title}}</div>
 						</div>
 					</swiper-slide>
-					<div class="swiper-button-prev" slot="button-prev"></div>
-					<div class="swiper-button-next" slot="button-next"></div>
+					<div class="swiper-button-prev" slot="button-prev">
+						<ArrowLeft
+							:color="globalColors.primary"
+							class="arrow"
+						/>
+					</div>
+					<div class="swiper-button-next" slot="button-next">
+						<ArrowRight
+							:color="globalColors.primary"
+							class="arrow"
+						/>
+					</div>
 			</swiper>
 		</div>
 	</div>
@@ -50,6 +60,8 @@
 <script>
 import { mapGetters } from 'vuex';
 import titleSection from '@/components/home/title-section';
+import ArrowLeft from '@/components/svg/ArrowLeft';
+import ArrowRight from '@/components/svg/ArrowRight';
 
 function hoverCategory(index) {
 	this.categories[index].hover = true;
@@ -99,6 +111,8 @@ export default {
 	name: 'categories-carousel',
 	data,
 	components: {
+		ArrowLeft,
+		ArrowRight,
 		titleSection,
 	},
 	computed: {
@@ -216,6 +230,11 @@ export default {
 	.loading-categories {
 		height: 190px;
 		margin-top: 25px;
+	}
+
+	.arrow {
+		height: 100%;
+		width: 100%;
 	}
 </style>
 
