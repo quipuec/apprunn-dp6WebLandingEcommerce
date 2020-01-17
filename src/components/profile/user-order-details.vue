@@ -94,7 +94,7 @@ function goTo() {
 }
 
 function backgroundColor() {
-	return `${process.env.COLOR_BASE}`;
+	return `${process.env.COLOR_PRIMARY}`;
 }
 
 function addPaymentInfo() {

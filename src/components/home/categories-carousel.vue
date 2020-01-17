@@ -92,7 +92,7 @@ function data() {
 				},
 			},
 		},
-		colorBorder: process.env.COLOR_DARK,
+		colorBorder: process.env.COLOR_TITLE,
 	};
 }
 export default {
