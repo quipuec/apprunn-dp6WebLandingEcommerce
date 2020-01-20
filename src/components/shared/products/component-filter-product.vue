@@ -18,8 +18,19 @@
 					@click="filterSelect"
 				></media-filter-product>
 			</swiper-slide>
-			<div class="swiper-button-prev" slot="button-prev"></div>
-      		<div class="swiper-button-next" slot="button-next"></div>
+			<div class="swiper-button-prev" slot="button-prev">
+				<ArrowLeft
+					color="white"
+					class="arrow"
+				/>
+			</div>
+      		<div class="swiper-button-next" slot="button-next">
+				<ArrowRight
+					:secondary-color="globalColors.primary"
+					color="#FFF"
+				  	class="arrow"
+				/>
+			</div>
 		</swiper>
 		</div>
 	</div>
@@ -28,6 +39,8 @@
 <script>
 import { mapGetters } from 'vuex';
 import mediaFilterProduct from '@/components/shared/products/media-filter-product';
+import ArrowLeft from '@/components/svg/ArrowLeft';
+import ArrowRight from '@/components/svg/ArrowRight';
 
 function filterSelect(filter) {
 	this.$emit('click-filter', filter);
@@ -62,6 +75,8 @@ export default {
 	data,
 	name: 'component-filter-product',
 	components: {
+		ArrowLeft,
+		ArrowRight,
 		mediaFilterProduct,
 	},
 	computed: {
@@ -96,6 +111,11 @@ export default {
 
 .loading-filter {
 	filter: brightness(0.9);
+}
+
+.arrow {
+	height: 100%;
+	width: 100%;
 }
 </style>
 
