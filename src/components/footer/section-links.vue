@@ -7,7 +7,7 @@
 						'title-section-links',
 						{ 'loading loading-dark': indeterminate },
 					]">{{item.title}}</p>
-				<ul v-for="(link, index) in item.links" :key="index">
+				<ul v-for="(link, indexLink) in item.links" :key="indexLink">
 					<li>
 						<router-link
 							to="/help"
@@ -24,8 +24,8 @@
 		</div>
 		<div class="credit-cards">
 			<img
-				v-for="card in creditCards"
-				:key="card"
+				v-for="(card, cardIndex) in creditCards"
+				:key="cardIndex"
 				:src="card.url"
 				:alt="card.alt"
 			>

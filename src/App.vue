@@ -804,5 +804,4 @@ input.app-input::-webkit-input-placeholder {
 		background-color: white !important;
 	}
 }
-
 </style>
