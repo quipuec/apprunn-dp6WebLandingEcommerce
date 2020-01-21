@@ -120,6 +120,10 @@ function SET_WINDOW_LOADED_TO_TRUE({ commit }) {
 	commit('UPDATE_WINDOW_LOADED', true);
 }
 
+function SET_ECOMMERCE_THEME({ commit }, theme) {
+	commit('SET_ECOMMERCE_COLORS', theme);
+}
+
 const methods = {
 	addProductToBuyCar,
 	addService,
@@ -136,6 +140,7 @@ const methods = {
 	updateProductSelect,
 	UPDATE_PRODUCT_FILTER,
 	updateFilters,
+	SET_ECOMMERCE_THEME,
 	SET_DEFAULT_VALUES,
 	START_PAGINATION,
 	SET_WINDOW_LOADED_TO_TRUE,

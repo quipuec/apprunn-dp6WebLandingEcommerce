@@ -2,7 +2,12 @@
   <header class="app-header">
 		<div class="app-wrapper">
 			<div class="flex container-call-menu">
-				<call-menu :color="baseColor" text="Categorías" @change-menu="changeMenu" :menu="menu" />
+				<call-menu
+					text="Categorías"
+					:color="globalColors.primary"
+					:menu="menu"
+					@change-menu="changeMenu"
+				/>
 			</div>
 			<div class="flex container-header-logo">
 				<h1
@@ -41,7 +46,8 @@
 					:data="search" 
 					class="icon-mobile"
 					@click-image="toogleSearch"/>
-				<button-image :data="user" class="icon-desktop" @click-image="openModalLogin"/>
+				<!-- <button-image :data="user" class="icon-desktop" @click-image="openModalLogin"/> -->
+				<UserSvg @click="openModalLogin" class="icon-desktop"/>
 				<HeartComponent @click="goToFavorites"/>
 				<CarComponent @click="goShopping" :count="totalProducts"/>
 			</div>
@@ -61,6 +67,7 @@ import buttonImage from '@/components/shared/buttons/app-button-image';
 import modalLogin from '@/components/header/modal-login';
 import CarComponent from '@/components/shared/icons/car-component';
 import HeartComponent from '@/components/shared/icons/heart-component';
+import UserSvg from '@/components/shared/icons/user-svg';
 
 function mounted() {
 	const ls = this.getLocalStorage(`${process.env.STORAGE_USER_KEY}::product-select`);
@@ -142,7 +149,6 @@ function goToFavorites() {
 
 function data() {
 	return {
-		baseColor: process.env.COLOR_BASE,
 		imagesButton: [
 			{
 				image: '/static/img/user.svg',
@@ -186,6 +192,7 @@ export default {
 		CarComponent,
 		HeartComponent,
 		modalLogin,
+		UserSvg,
 	},
 	computed: {
 		...mapGetters([

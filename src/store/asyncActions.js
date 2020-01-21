@@ -165,10 +165,11 @@ const asyncActions = {
 		const { data: banners } = await context.$httpProductsPublic.get('banners-public');
 		commit('SET_BANNERS', banners);
 	},
-	LOAD_COMMERCE_INFO: async ({ commit }, context) => {
+	LOAD_COMMERCE_INFO: async ({ commit, dispatch }, context) => {
 		const url = `com-ecommerce-companies/${process.env.COMMERCE_CODE}/public`;
 		const { data: commerceData } = await context.$httpSalesPublic.get(url);
 		commit('SET_COMMERCE_DATA', commerceData);
+		dispatch('SET_ECOMMERCE_THEME', commerceData.settings.theme);
 		const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
 		link.type = 'image/x-icon';
 		link.rel = 'shortcut icon';

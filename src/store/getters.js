@@ -118,6 +118,10 @@ function windowLoaded(state) {
 	return state.windowLoaded;
 }
 
+function templateColors(state) {
+	return state.colors;
+}
+
 const methods = {
 	bannersTypes,
 	companyLogo,
@@ -142,6 +146,7 @@ const methods = {
 	pollData,
 	productParams,
 	snackbar,
+	templateColors,
 	themeColors,
 	token,
 	user,
