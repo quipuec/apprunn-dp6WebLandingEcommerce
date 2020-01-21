@@ -16,6 +16,7 @@ export default {
 		Home: 3,
 		Top: 4,
 	},
+	colors: {},
 	commerce: {},
 	currencyDefault: null,
 	directions: [

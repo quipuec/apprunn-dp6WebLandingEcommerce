@@ -125,6 +125,12 @@ function UPDATE_WINDOW_LOADED(state, flag) {
 	Vue.set(state, 'windowLoaded', flag);
 }
 
+function SET_ECOMMERCE_COLORS(state, theme) {
+	const { primary, secondary, border, title, subtitle } = theme;
+	const colors = { primary, secondary, border, title, subtitle };
+	Vue.set(state, 'colors', colors);
+}
+
 const methods = {
 	ADD_ONE_IN_SERVICE_COUNTER,
 	clearUser,
@@ -143,6 +149,7 @@ const methods = {
 	SET_COMMERCE_DATA,
 	SET_CURRENCY_DEFAULT,
 	SET_DIRECTIONS,
+	SET_ECOMMERCE_COLORS,
 	SET_ORDER_ID,
 	SET_PRODUCTS,
 	SET_PRODUCT_FILTER,
