@@ -46,7 +46,6 @@
 					:data="search" 
 					class="icon-mobile"
 					@click-image="toogleSearch"/>
-				<!-- <button-image :data="user" class="icon-desktop" @click-image="openModalLogin"/> -->
 				<UserSvg @click="openModalLogin" class="icon-desktop"/>
 				<HeartComponent @click="goToFavorites"/>
 				<CarComponent @click="goShopping" :count="totalProducts"/>
