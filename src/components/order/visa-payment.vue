@@ -22,7 +22,7 @@ function createScript() {
 		const purchaseNumber = this.getOrderId;
 		const logo = this.companyLogo;
 		const name = process.env.COMPANY_LOGIN_TITLE;
-		const btnColor = process.env.COLOR_BASE;
+		const btnColor = process.env.COLOR_PRIMARY;
 		visaForm.setAttribute('src', 'https://static-content-qas.vnforapps.com/v2/js/checkout.js?qa=true');
 		visaForm.setAttribute('data-sessiontoken', dataSessionToken);
 		visaForm.setAttribute('data-channel', 'web');

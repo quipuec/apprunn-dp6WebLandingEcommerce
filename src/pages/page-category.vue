@@ -101,6 +101,9 @@ import buttonImage from '@/components/shared/buttons/app-button-image';
 import menuCategory from '@/components/shared/category/menu-category';
 import productCard from '@/components/products/product-card';
 import productsSection from '@/components/products/products-section';
+import lib from '@/shared/lib';
+
+const { setNewProperty } = lib;
 
 function created() {
 	this.selectCategory();
@@ -132,8 +135,9 @@ function selectCategory() {
 	this.loadProduct();
 	this.categories = this.getCategories;
 	this.currentSelect = this.getCurrentcategory(this.categories, this.id);
-	this.breadcrumbs = this.breadcrumbs.reverse();
 	if (this.breadcrumbs.length) {
+		this.breadcrumbs[0].disabled = true;
+		this.breadcrumbs = this.breadcrumbs.reverse();
 		this.categorySelected = this.breadcrumbs[0];
 	}
 }
@@ -141,6 +145,7 @@ function selectCategory() {
 function getCurrentcategory(categories, id) {
 	let current = categories.find(c => c.id === Number(id) || c.slug === id);
 	if (current) {
+		current = setNewProperty('disabled', false)(current);
 		this.breadcrumbs.push(current);
 		return current;
 	}
@@ -149,7 +154,7 @@ function getCurrentcategory(categories, id) {
 		const detail = categories[i].detail;
 		current = this.getCurrentcategory(detail, id);
 		if (current) {
-			this.breadcrumbs.push(categories[i]);
+			this.breadcrumbs.push(setNewProperty('disabled', false)(categories[i]));
 			return current;
 		}
 	}
@@ -408,6 +413,7 @@ export default {
 
 .wrapper-results-pagination {
 	display: flex;
+	font-family: font(demi);
 	justify-content: space-between;
 }
 

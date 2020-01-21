@@ -177,7 +177,7 @@
 	function data() {
 		return {
 			backgroundImage: process.env.FORM_BACKGROUND,
-			baseColor: process.env.COLOR_BASE,
+			baseColor: process.env.COLOR_PRIMARY,
 			emailDisabled: false,
 			flagTyc: null,
 			headingImage: '/static/img/sign-up.svg',

@@ -9,8 +9,8 @@
 		<div class="container-message">
 			<div class="container-rating">
 				<v-rating
-					:background-color="globalColors.highLight"
-					:color="globalColors.highLight"
+					background-color="#f8e71c"
+					color="#f8e71c"
 					v-model="opinion.rating"
 				>
 				</v-rating>
