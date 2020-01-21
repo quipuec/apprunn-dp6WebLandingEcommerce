@@ -65,9 +65,6 @@ import productPublicity from '@/components/products/product-publicity';
 async function created() {
 	this.$loading(true);
 	await this.loadProduct();
-	if (this.product.warehouses.length <= 1) {
-		this.stockWarehouse = true;
-	}
 }
 
 function isLoggedUser() {

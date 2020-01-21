@@ -63,7 +63,7 @@
 		<ProductConversions
 			:default-unit="data.unit"
 			:conversions="data.conversions"
-			@unit-selection="$emit('unit-selection', $event)"
+			@unit-selection="unitSelection"
 		/>
 		<product-childrens 
 			:features="features"
@@ -125,6 +125,10 @@ function getBrandName(data) {
 	return lib.getDeeper('warehouseProduct.brand.name')(data);
 }
 
+function unitSelection(item) {
+	this.$emit('unit-selection', item);
+}
+
 export default {
 	name: 'product-detail',
 	components: {
@@ -150,6 +154,7 @@ export default {
 		getBrandName,
 		stopClick,
 		selecFeature,
+		unitSelection,
 	},
 	props: {
 		data: {

@@ -8,20 +8,24 @@
 			]"
 			:style="`color:${globalColors.base}`"
 		>Presentaciones:</h3>
-		<div
-			:class="{ 'loading conversions-select-container': indeterminate }"
-		>
-			<AppSelect
-				v-show="!indeterminate"
-				return-object
-				class="conversions-select"
-				placeholder="presentaciones..."
-				item-text="code"
-				:items="conversionsComputed"
+		<v-flex xs12>
+			<div
+				:class="{ 'loading conversions-select-container': indeterminate }"
+			>
+				<v-btn
+				v-for="(item, index) in conversionsComputed"
+				class="btn-conversions pa-2"
+				:style="`border: 1px solid ${globalColors.primary}; color: ${item.isSelected ? 'white' : globalColors.primary};background-color: ${item.isSelected ? globalColors.primary : 'white'}`"
+				:key="index"
+				type="button"
+				v-model="conversionSelected"
 				:value="defaultUnit"
-				@input="$emit('unit-selection', $event)"
-			/>
-		</div>
+				@click="selectedConversion(item)"
+				>
+					{{ item.name }}
+				</v-btn>
+			</div>
+		</v-flex>
 	</div>
 </template>
 <script>
@@ -29,16 +33,39 @@ import AppSelect from '@/components/shared/inputs/app-select';
 import { mapGetters } from 'vuex';
 import l from '@/shared/lib';
 
-function conversionsComputed() {
+function selectedConversion(item)	{
+	this.conversionsComputed = this.conversionsComputed.map((o) => {
+		const newData = { ...o };
+		newData.isSelected = item.id === o.id;
+		return newData;
+	});
+	this.$emit('unit-selection', item);
+}
+
+function data() {
+	return {
+		conversionSelected: null,
+		conversionsComputed: [],
+	};
+}
+
+function created() {
 	const conversionsFormatted = l.map(
 		k => l.setNewProperty('id', Number(k))(this.conversions[k]),
 		Object.keys(this.conversions),
 	);
-	return [].concat(this.defaultUnit, conversionsFormatted);
+	this.conversionsComputed = [].concat(this.defaultUnit, conversionsFormatted);
+	this.conversionsComputed = this.conversionsComputed.map((p, index) => {
+		const newP = { ...p };
+		newP.isSelected = index === 0;
+		return newP;
+	});
 }
 
 export default {
 	name: 'product-conversions',
+	data,
+	created,
 	components: {
 		AppSelect,
 	},
@@ -46,7 +73,9 @@ export default {
 		...mapGetters([
 			'indeterminate',
 		]),
-		conversionsComputed,
+	},
+	methods: {
+		selectedConversion,
 	},
 	props: {
 		conversions: {
@@ -79,5 +108,15 @@ export default {
 		height: 24px;
 		margin-left: 10px;
 		width: 100%;
+	}
+
+	.btn-conversions {
+		border-radius: 7px;
+		font-family: font(bold);
+
+		&.active {
+			background-color: red;
+			color: white;
+		}
 	}
 </style>
