@@ -1,3 +1,5 @@
+import store from '@/store';
+
 function data() {
 	return {
 		params: {
@@ -77,16 +79,15 @@ function stopClick() {
 }
 
 function globalColors() {
+	const { primary, secondary, border, title, subtitle } = store.getters.templateColors;
 	return {
-		background: '',
-		black: '',
-		base: process.env.COLOR_BORDER,
-		border: '',
-		dark: process.env.COLOR_TITLE,
-		disabled: '',
-		primary: process.env.COLOR_PRIMARY,
-		secondary: process.env.COLOR_SECONDARY,
-		white: '',
+		base: border,
+		dark: process.env.COLOR_DARK,
+		highLight: process.env.COLOR_HIGHLIGHT,
+		primary,
+		secondary,
+		title,
+		subtitle,
 	};
 }
 
