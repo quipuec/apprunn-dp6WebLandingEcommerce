@@ -25,7 +25,13 @@
 							<map-component :location="warehouseLocation"/>
 					</v-card-text>
 					<v-card-text v-else key="warehouse-table">
+						<h1
+							v-if="rows.length === 0"
+							class="no-stock-message"
+							:style="`color:${globalColors.base}`"
+						>Sin disponibilidad :(</h1>
 						<responsive-table
+							v-else
 							:columns="columns"
 							:rows="rows"
 							auto
@@ -158,5 +164,10 @@ export default {
 
 	.text-left {
 		text-align: left;
+	}
+
+	.no-stock-message {
+		margin: 0;
+		text-align: center;
 	}
 </style>
