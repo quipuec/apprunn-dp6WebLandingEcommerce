@@ -88,11 +88,6 @@ function globalColors() {
 		secondary,
 		title,
 		subtitle,
-		// base: process.env.COLOR_BORDER,
-		// dark: process.env.COLOR_DARK,
-		// highLight: process.env.COLOR_HIGHLIGHT,
-		// primary: process.env.COLOR_BASE,
-		// secondary: process.env.COLOR_SECONDARY,
 	};
 }
 
