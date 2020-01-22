@@ -3,8 +3,8 @@
 		<div>
 			<div class="form-title">CALIFICANOS</div>
 			<v-rating
-				:background-color="globalColors.highLight"
-				:color="globalColors.highLight"
+				background-color="#f8e71c"
+				color="#f8e71c"
 				v-model="value"
 			>
 			</v-rating>
@@ -29,8 +29,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-
-const appButton = () => import('@/components/shared/buttons/app-button');
+import appButton from '@/components/shared/buttons/app-button';
 
 function data() {
 	return {

@@ -52,42 +52,45 @@
 </template>
 
 <script>
-	function created() {
-		this.selectedCategory = this.categories[0];
-	}
+import AppButton from '@/components/shared/buttons/app-button';
+import SelectInput from '@/components/shared/inputs/app-select';
 
-	function active(cat) {
-		this.selectedCategory = cat;
-	}
+function created() {
+	this.selectedCategory = this.categories[0];
+}
 
-	function data() {
-		return {
-			categories: [
-				{ id: 0, title: 'Auto' },
-				{ id: 1, title: 'Puerta Levadiza' },
-			],
-			selectedCategory: {},
-			productData: {
-				image: '/static/img/resorte.jpg',
-				description: 'Resortes para ferrocarriles y vagones',
-				brand: 'Marca',
-				price: 47.99,
-			},
-		};
-	}
+function active(cat) {
+	this.selectedCategory = cat;
+}
 
-	export default {
-		name: 'searcher',
-		data,
-		components: {
-			AppButton: () => import('@/components/shared/buttons/app-button'),
-			SelectInput: () => import('@/components/shared/inputs/app-select'),
-		},
-		created,
-		methods: {
-			active,
+function data() {
+	return {
+		categories: [
+			{ id: 0, title: 'Auto' },
+			{ id: 1, title: 'Puerta Levadiza' },
+		],
+		selectedCategory: {},
+		productData: {
+			image: '/static/img/resorte.jpg',
+			description: 'Resortes para ferrocarriles y vagones',
+			brand: 'Marca',
+			price: 47.99,
 		},
 	};
+}
+
+export default {
+	name: 'searcher',
+	data,
+	components: {
+		AppButton,
+		SelectInput,
+	},
+	created,
+	methods: {
+		active,
+	},
+};
 </script>
 
 <style lang="scss" scoped>

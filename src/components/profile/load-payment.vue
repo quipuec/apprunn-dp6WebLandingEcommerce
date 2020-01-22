@@ -9,7 +9,12 @@
 				<span>{{getValue('number', getOrderInfo)}}</span>
 			</div>
 			<img :src="deposit.urlImage" alt="foto del voucher" class="voucher-img">
-			<app-button :background="bgSaveBtn" action="Editar" class="action-button save" @click="editVoucherData"/>
+			<app-button
+				:background="globalColors.primary"
+				action="Editar"
+				class="action-button save"
+				@click="editVoucherData"
+			/>
 		</div>
 		<div v-else class="deposit-fields">
 			<div class="deposit-container">
@@ -36,7 +41,7 @@
 				class="action-button save"
 				action="Guardar"
 				:disabled="$v.$invalid"
-				:background="bgSaveBtn"
+				:background="globalColors.primary"
 				@click="loadVoucher"
 			/>
 		</div>
@@ -48,8 +53,7 @@ import { required } from 'vuelidate/lib/validators';
 import appButton from '@/components/shared/buttons/app-button';
 import appInput from '@/components/shared/inputs/app-input';
 import lib from '@/shared/lib';
-
-const UploadImage = () => import('@/components/shared/upload-image');
+import UploadImage from '@/components/shared/upload-image';
 
 function created() {
 	if (this.getOrderInfo && this.getOrderInfo.additionalInfo) {
@@ -62,12 +66,8 @@ function created() {
 	}
 }
 
-function bgSaveBtn() {
-	return process.env.COLOR_SECONDARY;
-}
-
 function bgCancelBtn() {
-	return process.env.COLOR_BASE;
+	return process.env.COLOR_PRIMARY;
 }
 
 function goBack() {
@@ -149,7 +149,6 @@ export default {
 			'getOrderInfo',
 		]),
 		bgCancelBtn,
-		bgSaveBtn,
 	},
 	created,
 	data,

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-const tabsHelp = () => import('@/components/help/tabs-help');
+import tabsHelp from '@/components/help/tabs-help';
 
 export default {
 	name: 'page-help-center',

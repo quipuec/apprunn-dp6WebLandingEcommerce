@@ -22,9 +22,8 @@
 
 <script>
 	import { email, required } from 'vuelidate/lib/validators';
-
-	const formContainer = () => import('@/components/shared/account/form-container');
-	const loginForm = () => import('@/components/shared/account/login-form');
+	import formContainer from '@/components/shared/account/form-container';
+	import loginForm from '@/components/shared/account/login-form';
 
 	function created() {
 		this.setWidth();
@@ -186,7 +185,7 @@
 	function data() {
 		return {
 			backgroundImage: process.env.FORM_BACKGROUND,
-			baseColor: process.env.COLOR_BASE,
+			baseColor: process.env.COLOR_PRIMARY,
 			headingImage: '/static/img/sign-in.svg',
 			loading: false,
 			model: {

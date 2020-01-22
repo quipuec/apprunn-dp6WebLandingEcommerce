@@ -30,7 +30,7 @@
 </template>
 
 <script>
-const buttonImage = () => import('@/components/shared/buttons/app-button-image');
+import buttonImage from '@/components/shared/buttons/app-button-image';
 
 function filterSubCategory() {
 	this.$emit('filter');

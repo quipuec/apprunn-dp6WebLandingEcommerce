@@ -58,7 +58,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="menu-list-item desktop" :class="isMoreTwo ? 'isMultiple' : 'isTwo'" v-if="selectCategory">
+			<div class="menu-list-item desktop" v-if="selectCategory">
 				<v-treeview 
 					:items="selectCategory.detail"
 					item-children="detail"
@@ -70,6 +70,9 @@
 					return-object
 					v-if="load">
 				</v-treeview>
+			</div>
+			<div class="menu-list-banner">
+				<img :src="selectCategory.urlImage" alt="imagen de la categoria">
 			</div>
 		</div>
 		<div class="container-option">
@@ -103,8 +106,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-
-const itemMenu = () => import('@/components/header/item-menu');
+import itemMenu from '@/components/header/item-menu';
 
 function created() {
 	this.categories = this.getCategories;
@@ -213,7 +215,7 @@ function goToCategory({ slug, id }) {
 
 function data() {
 	return {
-		colorBorder: process.env.COLOR_DARK,
+		colorBorder: process.env.COLOR_TITLE,
 		imageArrow: {
 			urlImage: '/static/img/arrow-down.svg',
 			name: 'Desplegar',
@@ -280,8 +282,7 @@ export default {
 		background: color(white);
 		border-top: solid 1px color(border);
 		box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.07);
-		max-height: 369.6px;
-		min-height: 226px;
+		height: 460px;
 		position: absolute;
 		top: 99px;
 		z-index: 5;
@@ -306,49 +307,52 @@ export default {
 			}
 		}
 
+		&.isBanner {
+			top: 188px;
+		}
+		
 		&.scrolling {
 			position: fixed;
 			top: 99px;
 		}
-
-		&.isBanner {
-			top: 188px;
-		}
 	}
 
 	.menu-list-name-category {
-		flex: 1 1 20%;
+		border-right: 3px solid color(border);
+		flex: 0 0 17%;
 		overflow-y: scroll;
-		max-height: 312.6px;
 
 		@media (max-width: 764px) {
+			border: none;
+			flex: 1 1 17%;
 			max-height: none;
 		}
 	}
 
 	.menu-app-category {
 		display: flex;
-		padding: 33px 10%;
+		height: 100%;
+		padding: 33px 3% 5% 33px;
 
 		@media (max-width: 764px) {
+			height: fit-content;
 			padding: 0px;
 		}
 	}
 
 	.name-category {
 		cursor: pointer;
-		margin-bottom: 31px;
+		margin-bottom: 20px;
 	}
 
 	.menu-list-item {
 		cursor: pointer;
-		flex: 1 1 80%;
-		height: fit-content;
+		flex: 1 1 auto;
+		height: 100%;
 	}
 
 	.desktop {
-		display: grid;
-
+	
 		@media (max-width: 764px) {
 			display: none;
 		}
@@ -506,6 +510,21 @@ export default {
 		height: 100%;
 		object-fit: cover;
 		width: 100%;
+	}
+
+	.menu-list-banner {
+		flex: 0 0 20%;
+		text-align: end;
+
+		img {
+			height: 100%;
+			object-fit: cover;
+			width: 202px;
+		}
+		
+		@media (max-width: 764px) {
+			display: none;
+		}
 	}
 </style>
 

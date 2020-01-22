@@ -1,12 +1,11 @@
 <template>
-  <div class="my-4">
+  <div class="my-4 border-bottom">
 	  <div
 	  	v-for="(feature, index) in features"
 		:key="index"
 		:class="[
 			isLoading ? 'loading features' : 'product-childrens',
-		]"
-	  >
+		]">
 	  	<h3
 		  	:class="{ 'loading': isLoading }"
 			:style="`color:${globalColors.base}`"  
@@ -24,13 +23,14 @@
 					:not-allowed="v.notAllowed"
 					@click="selectFeature(v)"
 				/>
-			</span>
-		</div>
+				</span>
+			</div>
 	  </div>
 	</div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import AppFeatureButton from '@/components/shared/buttons/app-feature-button';
 
 function selectFeature(value) {
 	this.$emit('selected', value);
@@ -38,7 +38,7 @@ function selectFeature(value) {
 export default {
 	name: 'product-childrens',
 	components: {
-		AppFeatureButton: () => import('@/components/shared/buttons/app-feature-button'),
+		AppFeatureButton,
 	},
 	computed: {
 		...mapGetters('loading', [
@@ -80,5 +80,10 @@ export default {
 
 	.features {
 		margin-bottom: 10px;
+	}
+
+	.border-bottom {
+		border-bottom: 1px solid color(border);
+		padding-bottom: 29px;
 	}
 </style>

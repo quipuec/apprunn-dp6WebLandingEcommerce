@@ -29,8 +29,8 @@
 	</div>
 </template>
 <script>
-const contentText = () => import('@/components/products/content');
-const productOpinion = () => import('@/components/products/product-opinion');
+import contentText from '@/components/products/content';
+import productOpinion from '@/components/products/product-opinion';
 
 function data() {
 	return {

@@ -30,6 +30,10 @@
 <script>
 import { mapGetters } from 'vuex';
 import lib from '@/shared/lib';
+import deleteComponent from '@/components/shared/icons/delete-component';
+import detailsComponent from '@/components/shared/icons/details-component';
+import profileTab from '@/components/shared/tabs/profile-tab';
+import responsiveTable from '@/components/shared/table/respondive-table';
 
 function created() {
 	this.$store.dispatch('LOAD_ORDERS_STATUS', this);
@@ -90,10 +94,10 @@ function data() {
 export default {
 	name: 'user-orders',
 	components: {
-		deleteComponent: () => import('@/components/shared/icons/delete-component'),
-		detailsComponent: () => import('@/components/shared/icons/details-component'),
-		profileTab: () => import('@/components/shared/tabs/profile-tab'),
-		responsiveTable: () => import('@/components/shared/table/respondive-table'),
+		deleteComponent,
+		detailsComponent,
+		profileTab,
+		responsiveTable,
 	},
 	computed: {
 		...mapGetters([
