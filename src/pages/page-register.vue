@@ -24,9 +24,8 @@
 
 <script>
 	import { email, required, sameAs } from 'vuelidate/lib/validators';
-
-	const formContainer = () => import('@/components/shared/account/form-container');
-	const registerForm = () => import('@/components/shared/account/register-form');
+	import formContainer from '@/components/shared/account/form-container';
+	import registerForm from '@/components/shared/account/register-form';
 
 	function created() {
 		this.setWidth();

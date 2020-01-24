@@ -9,7 +9,12 @@
 					:href="social.link"
 					target="_blank"
 				>
-					<img :src="social.logo" alt="logo-redes-sociales" class="social-logo">
+					<img
+						v-if="social.logo"
+						:src="social.logo"
+						alt="logo-redes-sociales"
+						class="social-logo"
+					>
 				</a>
 			</div>
 		</div>
@@ -18,8 +23,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-
-const sectionLinks = () => import('@/components/footer/section-links.vue');
+import sectionLinks from '@/components/footer/section-links';
 
 export default {
 	name: 'app-footer',

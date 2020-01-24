@@ -15,13 +15,14 @@
         		<swiper-slide v-for="(category, index) in categories" :key="category.id">
 					<div 
 						class="container-big-category" 
-						@mouseover="hoverCategory(index)"
-						@mouseleave="leaveCategory(index)"
-						@click="goToCategory(category)"
 					>
 						<div 
 							class="container-category-image"
-							:style="category.hover ? `border-color: ${colorBase}` : null">
+							:style="category.hover ? `border-color: ${colorBase}` : null"
+							@click="goToCategory(category)"
+							@mouseover="hoverCategory(index)"
+							@mouseleave="leaveCategory(index)"
+						>
 							<div 
 								:style="`background-image: url(${category.urlImage})`"
 								class="category-image">
@@ -33,19 +34,34 @@
 						</div>
 						<div 
 							class="category-title"
-							:style="category.hover ? `color: ${colorBase}` : null">{{category.title}}</div>
+							:style="category.hover ? `color: ${colorBase}` : null"
+							@click="goToCategory(category)"
+							@mouseover="hoverCategory(index)"
+							@mouseleave="leaveCategory(index)"
+						>{{category.title}}</div>
+						</div>
+					</swiper-slide>
+					<div class="swiper-button-prev" slot="button-prev">
+						<ArrowLeft
+							:color="globalColors.primary"
+							class="arrow"
+						/>
 					</div>
-				</swiper-slide>
-        <div class="swiper-button-prev" slot="button-prev"></div>
-        <div class="swiper-button-next" slot="button-next"></div>
-      </swiper>
+					<div class="swiper-button-next" slot="button-next">
+						<ArrowRight
+							:color="globalColors.primary"
+							class="arrow"
+						/>
+					</div>
+			</swiper>
 		</div>
 	</div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
-
-const titleSection = () => import('@/components/home/title-section');
+import titleSection from '@/components/home/title-section';
+import ArrowLeft from '@/components/svg/ArrowLeft';
+import ArrowRight from '@/components/svg/ArrowRight';
 
 function hoverCategory(index) {
 	this.categories[index].hover = true;
@@ -64,7 +80,7 @@ function data() {
 		swiperOption: {
 			slidesPerView: this.len,
 			spaceBetween: 0,
-			slidesPerGroup: 3,
+			slidesPerGroup: 1,
 			allowTouchMove: false,
 			navigation: {
 				nextEl: '.swiper-button-next',
@@ -72,13 +88,13 @@ function data() {
 			},
 			breakpoints: {
 				1280: {
-					slidesPerView: 4,
-					slidesPerGroup: 4,
+					slidesPerView: this.len >= 4 ? 4 : this.len,
+					slidesPerGroup: 1,
 					allowTouchMove: true,
 				},
 				930: {
-					slidesPerView: 2,
-					slidesPerGroup: 2,
+					slidesPerView: this.len >= 2 ? 2 : this.len,
+					slidesPerGroup: 1,
 					allowTouchMove: true,
 				},
 				600: {
@@ -95,6 +111,8 @@ export default {
 	name: 'categories-carousel',
 	data,
 	components: {
+		ArrowLeft,
+		ArrowRight,
 		titleSection,
 	},
 	computed: {
@@ -130,6 +148,7 @@ export default {
 	.category-image {
 		align-items: center;
 		background-size: cover;
+		border-radius: 9px;
 		display: flex;
 		height: 100%;
 		justify-content: center;
@@ -138,6 +157,7 @@ export default {
 
 		&::before {
 			background-image: linear-gradient(to bottom, rgba(60, 60, 60, 0.89), rgba(60, 60, 60, 0.50));
+			border-radius: 9px;
 			bottom: 0;
 			content: '';
 			left: 0;
@@ -210,6 +230,11 @@ export default {
 	.loading-categories {
 		height: 190px;
 		margin-top: 25px;
+	}
+
+	.arrow {
+		height: 100%;
+		width: 100%;
 	}
 </style>
 

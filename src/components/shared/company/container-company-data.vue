@@ -35,8 +35,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-
-const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
+import mediaCompanyData from '@/components/shared/company/media-company-data';
 
 export default {
 	name: 'container-company-data',

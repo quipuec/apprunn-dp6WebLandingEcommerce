@@ -31,9 +31,8 @@
 </template>
 <script>
 	import { email, required } from 'vuelidate/lib/validators';
-
-	const formContainer = () => import('@/components/shared/account/form-container');
-	const restoreForm = () => import('@/components/shared/account/restore-form');
+	import formContainer from '@/components/shared/account/form-container';
+	import restoreForm from '@/components/shared/account/restore-form';
 	
 	function created() {
 		this.setWidth();

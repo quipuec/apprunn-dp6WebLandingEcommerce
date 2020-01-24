@@ -18,8 +18,7 @@
 </template>
 <script>
 import lib from '@/shared/lib';
-
-const appButton = () => import('@/components/shared/buttons/app-button');
+import appButton from '@/components/shared/buttons/app-button';
 
 function webImage() {
 	return lib.getDeeper('webImage')(this.data);
@@ -135,7 +134,7 @@ export default {
 
 	img {
 		height: 100%;
-		object-fit: fill;
+		object-fit: cover;
 		width: 100%
 	}
 
