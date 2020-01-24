@@ -2,7 +2,7 @@ import l, { isEmpty } from '@/shared/lib';
 import GlobalFeatures from '@/class/globalFeatures';
 
 class ProductDetails {
-	constructor(childrens) {
+	constructor(childrens, priceListSelectedId) {
 		this.childrens = childrens;
 		this.filteredFeatures = [];
 		this.globalFeatures = new GlobalFeatures(childrens);
@@ -10,6 +10,7 @@ class ProductDetails {
 		this.selectedProduct = {};
 		this.selectedProductsArray = [];
 		this.unitId = 0;
+		this.priceListId = priceListSelectedId;
 	}
 	buyingProduct() {
 		return { ...this.selectedProduct };
@@ -106,8 +107,22 @@ class ProductDetails {
 		});
 		this.filteredFeatures = [...newFeatures];
 	}
+	updateProductPrices() {
+		const priceList = this.selectedProduct.warehouseProduct.priceList[this.priceListId];
+		const { units, price, discount } = priceList;
+		const rightConversion = units[this.selectedProduct.unitSelected];
+		this.selectedProduct.price = rightConversion ? rightConversion.price : price;
+		if (discount) {
+			const priceDiscount = discount * this.selectedProduct.price;
+			this.selectedProduct.priceDiscount = Number(priceDiscount.toFixed(2));
+		} else {
+			this.selectedProduct.priceDiscount = this.selectedProduct.price;
+			this.selectedProduct.price = null;
+		}
+	}
 	updateProductSelected(prop, val) {
 		this.selectedProduct[prop] = val;
+		this.updateProductPrices.call(this);
 	}
 	updateQuantity(q) {
 		this.updateProductSelected.call(this, 'quantity', q);
