@@ -47,7 +47,7 @@
 				<app-button
 					action="Guardar"
 					class="action-button save"
-					:background="colorSecondary"
+					:background="globalColors.primary"
 					@click="saveUserInfo"
 				/>
 				<app-button
@@ -129,8 +129,7 @@ function labelCountry() {
 
 function data() {
 	return {
-		colorBase: process.env.COLOR_PRIMARY,
-		colorSecondary: process.env.COLOR_SECONDARY,
+		colorBase: process.env.COLOR_BASE,
 		userData: {
 			cityId: null,
 			dni: '',

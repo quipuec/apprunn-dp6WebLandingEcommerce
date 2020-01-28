@@ -8,8 +8,8 @@
 	</div>
 </template>
 <script>
-const opinion = () => import('@/components/products/opinion');
-const formOpinion = () => import('@/components/products/form-opinion');
+import opinion from '@/components/products/opinion';
+import formOpinion from '@/components/products/form-opinion';
 
 export default {
 	name: 'wrapper-opinions',

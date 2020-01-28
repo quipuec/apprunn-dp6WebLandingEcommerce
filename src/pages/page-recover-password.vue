@@ -21,9 +21,8 @@
 </template>
 <script>
 	import { required, sameAs } from 'vuelidate/lib/validators';
-
-	const formContainer = () => import('@/components/shared/account/form-container');
-	const newPassword = () => import('@/components/shared/account/new-password');
+	import formContainer from '@/components/shared/account/form-container';
+	import newPassword from '@/components/shared/account/new-password';
 
 	function created() {
 		this.setWidth();

@@ -6,7 +6,8 @@
 				:images="productImages"
 				class="container-product-view"
 			/>
-			<product-detail 
+			<product-detail
+				:open-warehouse="stockWarehouse"
 				:data="productDetails"
 				:features="globalFeatures"
 				class="container-product-detail"
@@ -53,14 +54,13 @@
 <script>
 import { mapGetters, mapActions } from 'vuex';
 import ProductDetails from '@/class/productDetails';
-
-const appBannerTop = () => import('@/components/header/app-banner-top');
-const productView = () => import('@/components/products/product-view');
-const productDetail = () => import('@/components/products/product-detail');
-const productTab = () => import('@/components/products/product-tab');
-const productRelated = () => import('@/components/products/product-related');
-const warehousesModal = () => import('@/components/products/warehouses-modal');
-const productPublicity = () => import('@/components/products/product-publicity');
+import appBannerTop from '@/components/header/app-banner-top';
+import productView from '@/components/products/product-view';
+import productDetail from '@/components/products/product-detail';
+import productTab from '@/components/products/product-tab';
+import productRelated from '@/components/products/product-related';
+import warehousesModal from '@/components/products/warehouses-modal';
+import productPublicity from '@/components/products/product-publicity';
 
 async function created() {
 	this.$loading(true);
@@ -293,6 +293,7 @@ function data() {
 		productImages: [],
 		productFather: {},
 		relateds: [],
+		stockWarehouse: false,
 		tabs: [],
 		warehouses: [],
 	};

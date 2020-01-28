@@ -36,9 +36,9 @@
 </template>
 
 <script>
-const filtersCategory = () => import('@/components/shared/category/filters-category');
-const listCategory = () => import('@/components/shared/category/list-category');
-const appButton = () => import('@/components/shared/buttons/app-button');
+import filtersCategory from '@/components/shared/category/filters-category';
+import listCategory from '@/components/shared/category/list-category';
+import appButton from '@/components/shared/buttons/app-button';
 
 function filterCategory() {
 	this.$emit('filter', this.categories);

@@ -1,7 +1,9 @@
 <template>
   <div class="product-buy">
 		<div class="container-btn-open">
+			<p class="warehouse-null" v-if="openWarehouse">No hay tiendas disponibles</p>
 			<button
+				v-else
 				:class="[
 					isLoading ? 'loading stores' : 'btn-stores',
 				]"
@@ -39,10 +41,9 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-
-const quantityButton = () => import('@/components/shared/buttons/quantity-button');
-const appButtonOrder = () => import('@/components/shared/buttons/app-button-order');
-const imageCheck = () => import('@/components/shared/icons/check-component');
+import quantityButton from '@/components/shared/buttons/quantity-button';
+import appButtonOrder from '@/components/shared/buttons/app-button-order';
+import imageCheck from '@/components/shared/icons/check-component';
 
 function clickQuantity(value) {
 	this.$emit('click', value);
@@ -65,6 +66,7 @@ export default {
 	},
 	props: {
 		number: Number,
+		openWarehouse: false,
 	},
 };
 </script>
@@ -113,5 +115,11 @@ export default {
 
 	.stores {
 		margin-bottom: 10px;
+	}
+
+	.warehouse-null {
+		color: #acaaaa;
+		font-family: font(regular);
+		font-size: 12px;	
 	}
 </style>

@@ -194,6 +194,7 @@ export default {
 		background-color: white;
 		border-radius: 50%;
 		height: 128px;
+		overflow: hidden;
 		width: 128px;
 	}
 

@@ -40,7 +40,7 @@
 						class="payment-btn mx-2"
 						action="Añadir datos del deposito"
 						max-width="276px"
-						:background="backgroundColor"
+						:background="globalColors.primary"
 						:img="'/static/icons/hand.svg'"
 						@click="addPaymentInfo"
 					/>
@@ -93,10 +93,6 @@ function goTo() {
 	this.$router.back();
 }
 
-function backgroundColor() {
-	return `${process.env.COLOR_PRIMARY}`;
-}
-
 function addPaymentInfo() {
 	this.$store.commit('UPDATE_FLAG_ADD_VOUCHER', true);
 }
@@ -138,7 +134,6 @@ export default {
 			'flagAddVoucher',
 			'getOrderInfo',
 		]),
-		backgroundColor,
 		details,
 		flagPickUp,
 	},

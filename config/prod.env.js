@@ -9,6 +9,7 @@ module.exports = {
 	COLOR_PRIMARY: `'${process.env.COLOR_PRIMARY}'`,
 	COLOR_BORDER: `'${process.env.COLOR_BORDER}'`,
 	COLOR_TITLE: `'${process.env.COLOR_TITLE}'`,
+	COLOR_SUBTITLE: `'${process.env.COLOR_SUBTITLE}'`,
 	COLOR_SECONDARY: `'${process.env.COLOR_SECONDARY}'`,
 	COMMERCE_CODE: `'${process.env.COMMERCE_CODE}'`,
 	COMPANY_LOGIN_TITLE: `'${process.env.COMPANY_LOGIN_TITLE}'`,
