@@ -13,8 +13,8 @@
 			:len="getCategoriesLength"
 			:color-base="colorBase"/>
 		<component-filter-product 
-			@click-filter="filterSelect"
 			v-if="filtersExist"
+			@click-filter="filterSelect"
 		>
 		</component-filter-product>
 		<div class="page-products">
@@ -40,13 +40,13 @@
 <script>
 import { mapGetters } from 'vuex';
 import appBannerCredit from '@/components/home/app-banner-credit';
-import appBannerTop from '@/components/header/app-banner-top';
 import appBannerPlans from '@/components/header/app-banner-plans';
-import bannerCarousel from '@/components/home/banner-carousel';
-import categoriesCarousel from '@/components/home/categories-carousel';
 import componentFilterProduct from '@/components/shared/products/component-filter-product';
 import productsSection from '@/components/products/products-section';
 import sectionSettlement from '@/components/home/section-settlement';
+import appBannerTop from '@/components/header/app-banner-top';
+import bannerCarousel from '@/components/home/banner-carousel';
+import categoriesCarousel from '@/components/home/categories-carousel';
 
 function filterSelect(filter) {
 	if (filter.link) {

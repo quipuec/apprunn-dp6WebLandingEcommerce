@@ -16,6 +16,7 @@ export default {
 		Home: 3,
 		Top: 4,
 	},
+	colors: {},
 	commerce: {},
 	currencyDefault: null,
 	directions: [
@@ -86,4 +87,5 @@ export default {
 		{ id: 0, name: 'Seleccione una tienda' },
 	],
 	filters: null,
+	windowLoaded: false,
 };

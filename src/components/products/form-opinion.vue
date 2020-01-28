@@ -29,8 +29,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-
-const appButton = () => import('@/components/shared/buttons/app-button');
+import appButton from '@/components/shared/buttons/app-button';
 
 function data() {
 	return {

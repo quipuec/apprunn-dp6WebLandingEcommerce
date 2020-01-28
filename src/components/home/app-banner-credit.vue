@@ -6,9 +6,7 @@
 	:style="`background-image: url(${webImage})`"
 	>
 		<div class="section-banner">
-			<span class="title-banner">CRÉDITO DIRECTO</span>
 			<div>
-				<span class="description-banner">HAZ TU SOLICITUD DE CRÉDITO</span>
 				<button class="btn-submit"
 				:style="`background-color: ${globalColors.primary}`"
 				>SOLICITA AQUÍ</button>
@@ -49,7 +47,10 @@ export default {
 	font-family: font(bold);
 	font-size: size(large);
 	height: 47px;
+	left: 155px;
 	margin-left: 10px;
+	position: relative;
+	top: 81px;
 	width: 165px;
 }
 
@@ -88,7 +89,6 @@ export default {
 
 .section-banner {
 	align-items: center;
-	border: 1px solid color(white);
 	display: flex;
 	justify-content: center;
 	flex-direction: column;
