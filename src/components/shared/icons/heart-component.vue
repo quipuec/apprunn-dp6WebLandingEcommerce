@@ -1,12 +1,12 @@
 <template>
 	<button
 		:class="[
-			isLoading ? 'loading' : 'heart-btn',
+			indeterminate ? 'loading' : 'heart-btn',
 		]"
 		@click="clicked"
 	>
 		<svg xmlns="http://www.w3.org/2000/svg" width="26px" height="22px" viewBox="-2 0 30 22">
-			<g id="DETALLE-DE-PRODUCTO" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+			<g v-if="!indeterminate" id="DETALLE-DE-PRODUCTO" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 				<g
 					:style="`fill:${value ? globalColors.primary : 'transparent'};stroke:${globalColors.primary};stroke-width: 1px;`"
 				>
@@ -29,8 +29,8 @@ function clicked($event) {
 export default {
 	name: 'heart-component',
 	computed: {
-		...mapGetters('loading', [
-			'isLoading',
+		...mapGetters([
+			'indeterminate',
 		]),
 	},
 	methods: {

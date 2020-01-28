@@ -19,7 +19,7 @@ export default function (Vue) {
 			{
 				path: '/',
 				name: 'page-home',
-				component: () => import('@/pages/page-home'),
+				component: () => import(/* webpackChunkName: "home" */ '@/pages/page-home'),
 			},
 			Category,
 			Components,

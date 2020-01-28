@@ -21,7 +21,7 @@
 </template>
 
 <script>
-	const appInput = () => import('@/components/shared/inputs/app-input');
+	import appInput from '@/components/shared/inputs/app-input';
 
 	/* eslint-disable arrow-body-style */
 

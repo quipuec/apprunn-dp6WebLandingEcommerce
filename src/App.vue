@@ -1,6 +1,6 @@
 <template>
 	<v-app class="main-container">
-		<app-banner-top :data="bannerTop"/>
+		<app-banner-top v-if="!indeterminate" :data="bannerTop"/>
 		<app-header
 			:logo="logo" 
 			@change-menu="changeMenu" 
@@ -50,13 +50,13 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import appHeader from '@/components/header/app-header';
 
-const appHeader = () => import('@/components/header/app-header');
-const appMenuCategory = () => import('@/components/header/app-category');
-const appBannerTop = () => import('@/components/header/app-banner-top');
-const formBulletin = () => import('@/components/shared/form/form-bulletin');
-const sectionVisa = () => import('@/components/footer/section-visa');
-const appFooter = () => import('@/components/footer/app-footer');
+const appMenuCategory = () => import(/* webpackChunkName: "app-Menu-Category" */'@/components/header/app-category');
+const formBulletin = () => import(/* webpackChunkName: "form-Bulletin" */'@/components/shared/form/form-bulletin');
+const sectionVisa = () => import(/* webpackChunkName: "section-Visa" */'@/components/footer/section-visa');
+const appFooter = () => import(/* webpackChunkName: "app-Footer" */'@/components/footer/app-footer');
+const appBannerTop = () => import(/* webpackChunkName: "app-Banner-Top" */ '@/components/header/app-banner-top');
 
 function indeterminate() {
 	return this.$store.getters.indeterminate;
@@ -287,21 +287,22 @@ input.app-input::-webkit-input-placeholder {
 
 .categories-carousel-slider, .section-settlement  {
 	.swiper-button-next {
-		background-image: url('/static/img/slider-arrow-rigth.svg');
+		background-image: none;
+		right: 0;
 	}
 
 	.swiper-button-prev {
-		background-image: url('/static/img/slider-arrow-left.svg');
+		background-image: none;
+		left: 0;
 	}
 
 	.swiper-button-next, .swiper-button-prev {
 		background-size: auto;
 		cursor: pointer;
-		height: 19px;
+		height: 40px;
 		outline: none;
-		top: calc(50% - 26px);
-		transform: translateY(50%);
-		width: 13px;
+		top: 40%;
+		width: 40px;
 	}
 }
 
@@ -436,9 +437,11 @@ input.app-input::-webkit-input-placeholder {
 	}
 	
 	.swiper-button-next {
-		background-image: url('/static/img/icons/arrow-button-next-white.svg');
+		background-image: none;
+		height: 40px;
 		position: absolute;
 		right: 0;
+		width: 40px;
 
 		@media (max-width: 650px) {
 			outline: none;
@@ -447,9 +450,11 @@ input.app-input::-webkit-input-placeholder {
 	}
 
 	.swiper-button-prev {
-		background-image: url('/static/img/icons/arrow-button-prev-white.svg');
+		background-image: none;
+		height: 40px;
 		left: 0;
 		position: absolute;
+		width: 40px;
 		
 		@media (max-width: 650px) {
 			left: -6px;
@@ -675,43 +680,43 @@ input.app-input::-webkit-input-placeholder {
 .app-category {
 	.menu-list-item {
 		.v-treeview {
-			display: grid;
+			display: flex;
+			flex-wrap: wrap;
+			height: 100%;
 
 			& > .v-treeview-node {
-				border-right: 1px solid color(dark);
+				border-right: 1px solid color(border);
+				flex: 0 0 33%;
 				margin-left: 0 !important;
-				padding: 10px 10%;
+				padding: 10px 1.5%;
 
 				& > .v-treeview-node__root {
-					font-family: font(bold);
-				}
-			}
-		}
+					
+					.v-treeview-node__label {
+						font-family: font(demi);
+					}
 
-		&.isTwo {
-			.v-treeview {
-				grid-template-columns: 50% 50%;
-				& > .v-treeview-node {
-						&:nth-child(2n) {
-						border-right: none;
+					.v-treeview-node__content {
+						max-width: 100%;
+					}
+				}
+				& > .v-treeview-node__children {
+					color: color(base);
+
+					.v-treeview-node__content {
+						max-width: 100%;
 					}
 				}
 			}
-		}
-
-		&.isMultiple {
-			.v-treeview {
-				grid-template-columns: 33% 33% 33%;
-				& > .v-treeview-node {
-						&:nth-child(3n) {
-						border-right: none;
-					}
-				}
+			& > .v-treeview-node:nth-child(3n) {
+				border-right: none;
 			}
 		}
 
 		.v-treeview-node__label {
+			font-family: font(regular);
 			font-size: size(medium);
+			max-width: 100%;
 		}
 
 		.v-treeview-node {

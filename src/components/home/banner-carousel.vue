@@ -29,6 +29,8 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import companyData from '@/components/shared/company/container-company-data';
+import Searcher from '@/components/home/searcher';
 
 function getBackground(value) {
 	return `background-image: url(${value.webImage})`;
@@ -57,8 +59,8 @@ export default {
 	name: 'banner-carousel',
 	data,
 	components: {
-		companyData: () => import('@/components/shared/company/container-company-data'),
-		Searcher: () => import('@/components/home/searcher'),
+		companyData,
+		Searcher,
 	},
 	computed: {
 		...mapGetters([

@@ -24,10 +24,10 @@
 	</div>
 </template>
 <script>
-const appButtonImg = () => import('@/components/shared/buttons/app-button-image');
-const appSelect = () => import('@/components/shared/inputs/app-select');
-const mapComponent = () => import(/* webpackChunkName: mapComponent */ '@/components/shared/map/map-component');
-const modalComponent = () => import('@/components/shared/modal/modal-component');
+import appButtonImg from '@/components/shared/buttons/app-button-image';
+import appSelect from '@/components/shared/inputs/app-select';
+import mapComponent from '@/components/shared/map/map-component';
+import modalComponent from '@/components/shared/modal/modal-component';
 
 function sendValue(val) {
 	this.$emit('input', val);

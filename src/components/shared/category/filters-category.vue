@@ -98,10 +98,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
-
-const appInput = () => import('@/components/shared/inputs/app-input');
-const appSelect = () => import('@/components/shared/inputs/app-select');
-const buttonImage = () => import('@/components/shared/buttons/app-button-image');
+import appInput from '@/components/shared/inputs/app-input';
+import appSelect from '@/components/shared/inputs/app-select';
+import buttonImage from '@/components/shared/buttons/app-button-image';
 
 
 function closeCategory() {

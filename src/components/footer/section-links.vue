@@ -1,24 +1,34 @@
 <template>
-	<div class="section-links">
-		<div v-for="(item, index) in sections" :key="index" class="mb-2">
-			<p
-				:class="[
-					'title-section-links',
-					{ 'loading loading-dark': indeterminate },
-				]">{{item.title}}</p>
-			<ul v-for="(link, index) in item.links" :key="index">
-				<li>
-					<router-link
-						to="/help"
-						:class="[
-							'section-link',
-							{ 'loading': indeterminate },
-						]"
-					>
-						{{link}}
-					</router-link>
-				</li>
-			</ul>
+	<div class="footer-main-container">
+		<div class="section-links">
+			<div v-for="(item, index) in sections" :key="index" class="mb-2">
+				<p
+					:class="[
+						'title-section-links',
+						{ 'loading loading-dark': indeterminate },
+					]">{{item.title}}</p>
+				<ul v-for="(link, indexLink) in item.links" :key="indexLink">
+					<li>
+						<router-link
+							to="/help"
+							:class="[
+								'section-link',
+								{ 'loading': indeterminate },
+							]"
+						>
+							{{link}}
+						</router-link>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="credit-cards">
+			<img
+				v-for="(card, cardIndex) in creditCards"
+				:key="cardIndex"
+				:src="card.url"
+				:alt="card.alt"
+			>
 		</div>
 	</div>
 </template>
@@ -70,6 +80,12 @@ function data() {
 				],
 			},
 		],
+		creditCards: [
+			{ url: 'static/img/creditCards/visa.png', alt: 'visa' },
+			{ url: 'static/img/creditCards/mastercard.png', alt: 'mastercard' },
+			{ url: 'static/img/creditCards/american.png', alt: 'american express' },
+			{ url: 'static/img/creditCards/diners.png', alt: 'diners' },
+		],
 	};
 }
 
@@ -85,6 +101,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.footer-main-container {
+	padding: 44px 101px 20px 101px;
+	
+	@media (max-width: 925px) {
+		padding: 0 5px;
+	}
+}
+
 ul, ol {
 	list-style: none;
 	padding-left: 0;
@@ -115,16 +139,25 @@ ul, ol {
 .section-links {
 	display: flex;
 	justify-content: space-between;
-	padding: 44px 101px 0 101px;
 
 	@media (max-width: 925px) {
 		align-items: center;
 		flex-direction: column;
-		padding: 0 5px;
 	}
 }
 
 .mb-2 {
 	margin-bottom: 24px !important;
+}
+
+.credit-cards {
+	align-items: center;
+	display: flex;
+	justify-content: flex-start;
+
+	img {
+		height: 27px;
+		margin-right: 30px;
+	}
 }
 </style>

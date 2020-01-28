@@ -35,10 +35,10 @@
 </template>
 
 <script>
-const appButton = () => import('@/components/shared/buttons/app-button');
-const buttonImage = () => import('@/components/shared/buttons/app-button-image');
-const filtersCategory = () => import('@/components/shared/category/filters-category');
-const sectionCategory = () => import('@/components/shared/category/section-category');
+import appButton from '@/components/shared/buttons/app-button';
+import buttonImage from '@/components/shared/buttons/app-button-image';
+import filtersCategory from '@/components/shared/category/filters-category';
+import sectionCategory from '@/components/shared/category/section-category';
 
 function closeSlider() {
 	this.$emit('close', false);

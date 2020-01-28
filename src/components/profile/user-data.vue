@@ -21,8 +21,7 @@
 import cameraComponent from '@/components/shared/icons/camera-component';
 import editComponent from '@/components/shared/icons/edit-component';
 import { mapGetters } from 'vuex';
-
-const UploadImage = () => import('@/components/shared/upload-image');
+import UploadImage from '@/components/shared/upload-image';
 
 function created() {
 	this.loadGeoData();

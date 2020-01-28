@@ -130,6 +130,14 @@ function loadingCounter(state) {
 	return state.appConfig.loadingCounter.length;
 }
 
+function windowLoaded(state) {
+	return state.windowLoaded;
+}
+
+function templateColors(state) {
+	return state.colors;
+}
+
 const methods = {
 	bannersCoupons,
 	bannersTypes,
@@ -158,6 +166,7 @@ const methods = {
 	pollData,
 	productParams,
 	snackbar,
+	templateColors,
 	themeColors,
 	token,
 	user,
@@ -165,6 +174,7 @@ const methods = {
 	getCategories,
 	totalProducts,
 	getFilters,
+	windowLoaded,
 };
 
 export default methods;
