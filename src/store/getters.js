@@ -99,7 +99,7 @@ function getPromotionalDetailsBanner(state) {
 }
 
 function getPlansBanner(state) {
-	return state.banners.find(banner => banner.typeName === 'Promoción en creditos');
+	return state.banners.find(banner => banner.typeName === 'Promoción en planes');
 }
 
 function productParams(state) {
