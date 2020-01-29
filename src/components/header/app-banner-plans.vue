@@ -3,24 +3,32 @@
 v-if="webImage || mobileImage"
 class="app-banner-plans"
 :class="[big ? 'big' : null, small ? 'small' : null]">
-		<a href="#">
 			<div
 			:class="[
 			'banner-plans-height',
 			big ? 'big' : null, small ? 'small' : null,]">
-			<div class="opacity">
-				<picture>
-					<source :srcset="webImage" media="(min-width: 600px)">
-					<img :src="mobileImage">
-				</picture>
-			</div>
+			<a 
+			v-if="webLink"
+			:href="webLink"
+			target="_blank"
+			>
+				<div class="opacity">
+					<picture>
+						<source :srcset="webImage" media="(min-width: 600px)">
+						<img :src="mobileImage">
+					</picture>
+				</div>
+			</a>
 		</div>
-	</a>
 </div>
 </template>
 
 <script>
 import lib from '@/shared/lib';
+
+function webLink() {
+	return lib.getDeeper('webLink')(this.data);
+}
 
 function webImage() {
 	return lib.getDeeper('webImage')(this.data);
@@ -34,6 +42,7 @@ export default {
 	name: 'app-banner-plans',
 	computed: {
 		webImage,
+		webLink,
 		mobileImage,
 	},
 	props: {
