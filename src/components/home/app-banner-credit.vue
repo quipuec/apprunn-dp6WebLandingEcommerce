@@ -4,7 +4,6 @@
 	<div
 	class="app-banner-credit"
 	:style="`background-image: url(${webImage})`"
-	:class="[big ? 'big' : null, small ? 'small' : null]"
 	>
 		<div class="section-banner">
 			<div>
@@ -48,14 +47,6 @@ export default {
 		data: {
 			type: Object,
 			default: () => {},
-		},
-		big: {
-			type: Boolean,
-			default: false,
-		},
-		small: {
-			type: Boolean,
-			default: false,
 		},
 	},
 };

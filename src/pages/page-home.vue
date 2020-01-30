@@ -28,7 +28,6 @@
 		<app-banner-credit
 			v-if="getCreditBanner"
 			:data="getCreditBanner"
-			big
 		/>
 		<app-banner-plans
 			v-if="getPlansBanner"
