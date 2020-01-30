@@ -10,12 +10,13 @@
 				<div class="content-coupons">
 					<div class="box-coupons">
 						<a
-						v-if="webLink"
-						:href="webLink"
+						v-if="item.webLink"
+						:href="item.webLink"
 						target="_blank"
+						class="link-coupons"
 						>
-							<img :src="item.webImage" class="img-coupons" alt="image-coupons">
 						</a>
+						<img :src="item.webImage" class="img-coupons" alt="image-coupons">
 					</div>
 				</div>
 			</swiper-slide>
@@ -132,5 +133,15 @@ export default {
 .img-coupons {
 	height: 100%;
 	width: 100%;
+}
+
+.link-coupons {
+	bottom: 0;
+	display: block;
+	left: 56px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	widows: 365px;
 }
 </style>
