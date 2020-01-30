@@ -7,18 +7,19 @@ class="app-banner-plans"
 			:class="[
 			'banner-plans-height',
 			big ? 'big' : null, small ? 'small' : null,]">
-			<a 
-			v-if="webLink"
-			:href="webLink"
-			target="_blank"
-			>
 				<div class="opacity">
 					<picture>
 						<source :srcset="webImage" media="(min-width: 600px)">
+						<a 
+					v-if="webLink"
+					:href="webLink"
+					target="_blank"
+					class="link-plans"
+					>
+					</a>
 						<img :src="mobileImage">
 					</picture>
 				</div>
-			</a>
 		</div>
 </div>
 </template>
@@ -112,5 +113,16 @@ img {
 	right: 0;
 	left: 0;
 	bottom: 0;
+}
+
+.link-plans {
+	bottom: 0;
+	display: block;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 100%;
 }
 </style>
