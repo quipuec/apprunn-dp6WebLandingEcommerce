@@ -5,20 +5,16 @@
 	class="app-banner-credit"
 	:style="`background-image: url(${webImage})`"
 	>
-		<div class="section-banner">
-			<div>
-				<button class="btn-submit"
-				:style="`background-color: ${globalColors.primary}`">
-					<a 
-					v-if="webLink"
-					:href="webLink"
-					target="_blank"
-					class="link-credit">
+			<button class="btn-submit"
+			:style="`background-color: ${globalColors.primary}`">
+				<a
+				v-if="webLink"
+				:href="webLink"
+				target="_blank"
+				class="link-credit">
 					SOLICITA AQUÍ
-					</a>	
-				</button>
-			</div>
-		</div>
+				</a>		
+			</button>
 	</div>
 </template>
 
@@ -59,10 +55,10 @@ export default {
 	font-family: font(bold);
 	font-size: size(large);
 	height: 47px;
-	left: 155px;
+	left: 790px;
 	margin-left: 10px;
 	position: relative;
-	top: 81px;
+	top: 170px;
 	width: 165px;
 }
 
@@ -70,8 +66,7 @@ export default {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	height: 283px;
-	padding: 16px 26px;
+	height: 310px;
 	width: 100%;
 
 	@media (max-width: 764px) {
@@ -99,16 +94,19 @@ export default {
 	font-size: size(sbig);
 }
 
-.section-banner {
-	align-items: center;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	padding: 60px;
-}
-
 .link-credit {
 	color: color(white);
 	text-decoration: none;
+}
+
+.link-credit {
+	bottom: 0;
+	display: block;
+	height: 47px;
+	left: 0;
+	position: absolute;
+	top: 13px;
+	right: 0;
+	width: 165px;
 }
 </style>
