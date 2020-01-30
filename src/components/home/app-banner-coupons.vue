@@ -2,17 +2,19 @@
 	<div class="app-banner-cupons"
 	:style="`background-image: url(${webImage})`"
 	>
-		<p class="title-banner">CUPONES</p>
+		<p class="title-banner">{{ titleBanner }}</p>
 		<swiper :options="swiperOption">
 			<swiper-slide
 			v-for="(item, index) in imageCou"
 			:key="index">
 				<div class="content-coupons">
 					<div class="box-coupons">
-						<a href="#"
+						<a
+						v-if="webLink"
+						:href="webLink"
 						target="_blank"
 						>
-							<img :src="item.webImage" class="img-coupons" alt="">
+							<img :src="item.webImage" class="img-coupons" alt="image-coupons">
 						</a>
 					</div>
 				</div>
@@ -33,6 +35,10 @@ function created() {
 	if (this.imageCou.length <= 3) {
 		this.lengthImageCoupons = false;
 	}
+}
+
+function webLink() {
+	return lib.getDeeper('webLink')(this.data);
 }
 
 function webImage() {
@@ -67,6 +73,7 @@ function data() {
 			},
 		},
 		imageCou: [],
+		titleBanner: 'CUPONES',
 	};
 }
 
@@ -76,6 +83,7 @@ export default {
 	data,
 	computed: {
 		webImage,
+		webLink,
 		...mapGetters([
 			'getBanners',
 		]),
