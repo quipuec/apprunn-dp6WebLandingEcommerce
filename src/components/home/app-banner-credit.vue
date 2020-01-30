@@ -4,12 +4,20 @@
 	<div
 	class="app-banner-credit"
 	:style="`background-image: url(${webImage})`"
+	:class="[big ? 'big' : null, small ? 'small' : null]"
 	>
 		<div class="section-banner">
 			<div>
 				<button class="btn-submit"
-				:style="`background-color: ${globalColors.primary}`"
-				>SOLICITA AQUÍ</button>
+				:style="`background-color: ${globalColors.primary}`">
+					<a 
+					v-if="webLink"
+					:href="webLink"
+					target="_blank"
+					class="link-credit">
+					SOLICITA AQUÍ
+					</a>	
+				</button>
 			</div>
 		</div>
 	</div>
@@ -23,10 +31,15 @@ function webImage() {
 	return lib.getDeeper('webImage')(this.data);
 }
 
+function webLink() {
+	return lib.getDeeper('webLink')(this.data);
+}
+
 export default {
 	name: 'app-banner-credit',
 	computed: {
 		webImage,
+		webLink,
 		...mapGetters([
 			'getCreditBanner',
 		]),
@@ -35,6 +48,14 @@ export default {
 		data: {
 			type: Object,
 			default: () => {},
+		},
+		big: {
+			type: Boolean,
+			default: false,
+		},
+		small: {
+			type: Boolean,
+			default: false,
 		},
 	},
 };
@@ -93,5 +114,10 @@ export default {
 	justify-content: center;
 	flex-direction: column;
 	padding: 60px;
+}
+
+.link-credit {
+	color: color(white);
+	text-decoration: none;
 }
 </style>

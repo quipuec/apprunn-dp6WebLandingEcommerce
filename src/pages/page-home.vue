@@ -25,14 +25,15 @@
 			:data="getPromotionalBanner"
 			:color="colorSecondary"
 			big/>
+		<app-banner-credit
+			v-if="getCreditBanner"
+			:data="getCreditBanner"
+			big
+		/>
 		<app-banner-plans
 			v-if="getPlansBanner"
 			:data="getPlansBanner"
 			big
-		/>
-		<app-banner-credit
-			v-if="getCreditBanner"
-			:data="getCreditBanner"
 		/>
 	</layout-admin>
 </template>
