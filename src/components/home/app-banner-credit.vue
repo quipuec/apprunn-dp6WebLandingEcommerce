@@ -5,6 +5,7 @@
 	class="app-banner-credit"
 	:style="`background-image: url(${webImage})`"
 	>
+		<div class="content-btn">
 			<button class="btn-submit"
 			:style="`background-color: ${globalColors.primary}`">
 				<a
@@ -12,9 +13,10 @@
 				:href="webLink"
 				target="_blank"
 				class="link-credit">
+				</a>
 					SOLICITA AQUÍ
-				</a>		
 			</button>
+		</div>
 	</div>
 </template>
 
@@ -55,10 +57,6 @@ export default {
 	font-family: font(bold);
 	font-size: size(large);
 	height: 47px;
-	left: 790px;
-	margin-left: 10px;
-	position: relative;
-	top: 170px;
 	width: 165px;
 }
 
@@ -66,7 +64,8 @@ export default {
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	height: 310px;
+	height: 283px;
+	position: relative;
 	width: 100%;
 
 	@media (max-width: 764px) {
@@ -104,9 +103,19 @@ export default {
 	display: block;
 	height: 47px;
 	left: 0;
-	position: absolute;
-	top: 13px;
+	position: relative;
 	right: 0;
+	top: -35px;
 	width: 165px;
+}
+
+.content-btn {
+	display: flex;
+	justify-content: center;
+	transform: translate(12%, 176px);
+
+	@media (max-width: 1000px) {
+		transform: translate(21%, 160px);
+	}
 }
 </style>
