@@ -111,9 +111,9 @@ class ProductDetails {
 		const priceList = this.selectedProduct.warehouseProduct.priceList[this.priceListId];
 		const { units, price, discount } = priceList;
 		const rightConversion = units[this.selectedProduct.unitSelected];
-		this.selectedProduct.price = rightConversion ? rightConversion.price : price;
+		this.selectedProduct.price = rightConversion ? rightConversion.salePrice : price;
 		if (discount) {
-			const priceDiscount = discount * this.selectedProduct.price;
+			const priceDiscount = (1 - (discount / 100)) * this.selectedProduct.price;
 			this.selectedProduct.priceDiscount = Number(priceDiscount.toFixed(2));
 		} else {
 			this.selectedProduct.priceDiscount = this.selectedProduct.price;
