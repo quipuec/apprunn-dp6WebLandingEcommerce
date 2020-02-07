@@ -54,7 +54,7 @@
 			<span
 				v-if="data.price"
 				:class="[
-					isLoading ? 'loading' : data.priceDiscount ? 'text-price' : 'text-price-dis',
+					isLoading ? 'loading' : data.priceDiscount >= 0 ? 'text-price' : 'text-price-dis',
 				]"
 				:style="`color: ${globalColors.secondary}`"
 			>
