@@ -12,8 +12,8 @@
 			isLoading ? 'loading features' : 'product-childrens',
 		]">
 	  	<h3
-			:style="`color:${globalColors.base}`"  
 		  	:class="{ 'loading': isLoading }"
+			:style="`color:${globalColors.base}`"  
 		>{{feature.name}}:</h3>
 		<div class="wrap-buttons">
 			<span
