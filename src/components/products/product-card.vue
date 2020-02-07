@@ -51,7 +51,7 @@
 								indeterminate ? 'loading text-field' : 'product-price-discount'
 							]"
 						>
-							{{ product.priceDiscount }}
+							{{ product.priceDiscount | currencyFormat }}
 						</h3>
 						<small
 							:class="[
@@ -59,7 +59,7 @@
 							]"
 							:style="`color: ${indeterminate ? 'transparent' : globalColors.secondary};`"
 						>
-							{{ product.price }}
+							{{ product.price | currencyFormat }}
 						</small>
 						<small
 							:class="[

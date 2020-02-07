@@ -28,9 +28,22 @@ function exactDate(date, formatter = 'DD-MM-YYYY', splitBy = 'T') {
 	return '';
 }
 
+function currencyFormat(val) {
+	if (!val) {
+		return 0;
+	}
+	const [integer, decimals] = String(val).split('.');
+	if (!decimals) {
+		return val;
+	}
+	const newDecimals = decimals > 9 ? decimals : `${decimals}0`;
+	return `${integer}.${newDecimals}`;
+}
+
 export default function (Vue) {
 	Vue.filter('round', round);
 	Vue.filter('limitTo', limitTo);
 	Vue.filter('exactDate', exactDate);
 	Vue.filter('formatDate', formatDate);
+	Vue.filter('currencyFormat', currencyFormat);
 }

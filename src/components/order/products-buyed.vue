@@ -13,7 +13,7 @@
 					<h3
 						:style="`color: ${globalColors.secondary};`"
 						class="product-total"
-					>{{getCurrencySymbol}}. {{product.total}}</h3>
+					>{{getCurrencySymbol}}. {{product.total | currencyFormat}}</h3>
 				</div>
 			</li>
 		</ol>
