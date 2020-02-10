@@ -43,7 +43,7 @@
 			</div>
 		</div>
 		<div class="container-detail-bottom">
-			<div v-show="data.priceDiscount" class="d-center">
+			<div class="d-center">
 				<span
 					:class="[isLoading ? 'loading' : 'text-price-dis']"
 					:style="`color: ${globalColors.secondary}`"
@@ -52,8 +52,9 @@
 				</span>
 			</div>
 			<span
+				v-if="data.price"
 				:class="[
-					isLoading ? 'loading' : data.priceDiscount ? 'text-price' : 'text-price-dis',
+					isLoading ? 'loading' : data.priceDiscount >= 0 ? 'text-price' : 'text-price-dis',
 				]"
 				:style="`color: ${globalColors.secondary}`"
 			>

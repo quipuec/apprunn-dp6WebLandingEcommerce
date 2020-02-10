@@ -32,7 +32,7 @@
 			</swiper>
 		</div>
 		<div v-else class="slider-product-view-one">
-			<img :src="data.urlImage" :alt="data.name" class="image-slider">
+			<img :src="data.urlImage" :alt="data.name" class="image-product-slider">
 		</div>
 	</div>
 </template>

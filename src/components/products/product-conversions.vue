@@ -12,18 +12,20 @@
 			<div
 				:class="{ 'loading conversions-select-container': indeterminate }"
 			>
-				<v-btn
-				v-for="(item, index) in conversionsComputed"
-				class="btn-conversions pa-2"
-				:style="`border: 1px solid ${globalColors.primary}; color: ${item.isSelected ? 'white' : globalColors.primary};background-color: ${item.isSelected ? globalColors.primary : 'white'}`"
-				:key="index"
-				type="button"
-				v-model="conversionSelected"
-				:value="defaultUnit"
-				@click="selectedConversion(item)"
-				>
-					{{ item.name }}
-				</v-btn>
+				<div v-if="!indeterminate">
+					<v-btn
+						v-for="(item, index) in conversionsComputed"
+						class="btn-conversions pa-2"
+						:style="`border:1px solid ${globalColors.primary};color: ${item.isSelected ? 'white' : globalColors.primary};background-color: ${item.isSelected ? globalColors.primary : 'white'}`"
+						:key="index"
+						type="button"
+						v-model="conversionSelected"
+						:value="defaultUnit"
+						@click="selectedConversion(item)"
+					>
+						{{ item.name }}
+					</v-btn>
+				</div>
 			</div>
 		</v-flex>
 	</div>
@@ -32,6 +34,20 @@
 import AppSelect from '@/components/shared/inputs/app-select';
 import { mapGetters } from 'vuex';
 import l from '@/shared/lib';
+
+
+function conversionsChanges(conversions) {
+	const conversionsFormatted = l.map(
+		k => l.setNewProperty('id', Number(k))(conversions[k]),
+		Object.keys(conversions),
+	);
+	this.conversionsComputed = [].concat(this.defaultUnit, conversionsFormatted);
+	this.conversionsComputed = this.conversionsComputed.map((p, index) => {
+		const newP = { ...p };
+		newP.isSelected = index === 0;
+		return newP;
+	});
+}
 
 function selectedConversion(item)	{
 	this.conversionsComputed = this.conversionsComputed.map((o) => {
@@ -49,23 +65,8 @@ function data() {
 	};
 }
 
-function created() {
-	const conversionsFormatted = l.map(
-		k => l.setNewProperty('id', Number(k))(this.conversions[k]),
-		Object.keys(this.conversions),
-	);
-	this.conversionsComputed = [].concat(this.defaultUnit, conversionsFormatted);
-	this.conversionsComputed = this.conversionsComputed.map((p, index) => {
-		const newP = { ...p };
-		newP.isSelected = index === 0;
-		return newP;
-	});
-}
-
 export default {
 	name: 'product-conversions',
-	data,
-	created,
 	components: {
 		AppSelect,
 	},
@@ -74,7 +75,9 @@ export default {
 			'indeterminate',
 		]),
 	},
+	data,
 	methods: {
+		conversionsChanges,
 		selectedConversion,
 	},
 	props: {
@@ -85,6 +88,12 @@ export default {
 		defaultUnit: {
 			default: () => {},
 			type: Object,
+		},
+	},
+	watch: {
+		conversions: {
+			deep: true,
+			handler: conversionsChanges,
 		},
 	},
 };
