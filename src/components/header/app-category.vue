@@ -29,12 +29,16 @@
 					v-for="(list, index) in categories" 
 					:key="index"
 					class="name-category"
-					:class="{'select': list.select}">
-					<div class="list-name-category">
+					:class="{'select': list.select}"
+				>
+					<div
+						class="list-name-category"
+						@click-item="goToCategory(list)"
+						:style="`background-color:${list.select ? globalColors.secondary : 'white'};transition:all 200ms ease-in;`"
+					>
 						<item-menu 
 						:data="list" 
 						color-select="#ed0000"
-						@click-item="goToCategory(list)"
 						@hover-item="hoverCategory"/>
 						<button class="btn-collapse" @click="clickCategory(list)">
 							<v-icon 
@@ -395,8 +399,10 @@ export default {
 	}
 
 	.list-name-category {
+		border-radius: 3px;
 		display: flex;
 		justify-content: space-between;
+		padding: 2px 0 2px 5px;
 	}
 
 	.list-item-name {
