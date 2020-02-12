@@ -166,6 +166,10 @@
 		} catch (err) {
 			if (err.status === 500) {
 				this.showGenericError();
+			} else if (err.status === 401) {
+				if (err.data.message === 'TOKEN_HAS_EXPIRED') {
+					this.showGenericError('El enlace ha expirado. Se le ha enviado un nuevo enlace al correo.');
+				}
 			}
 		}
 	}
