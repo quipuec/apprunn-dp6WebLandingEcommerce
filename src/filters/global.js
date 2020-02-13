@@ -30,11 +30,11 @@ function exactDate(date, formatter = 'DD-MM-YYYY', splitBy = 'T') {
 
 function currencyFormat(val) {
 	if (!val) {
-		return 0;
+		return '0.00';
 	}
 	const [integer, decimals] = String(val).split('.');
 	if (!decimals) {
-		return val;
+		return `${integer}.00`;
 	}
 	const newDecimals = decimals > 9 ? decimals : `${decimals}0`;
 	return `${integer}.${newDecimals}`;
