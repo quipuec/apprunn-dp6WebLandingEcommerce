@@ -16,7 +16,7 @@
 				<p
 					:style="`color: ${globalColors.secondary};`"
 					class="product-title">Precio UND</p>
-				<p class="product-price">{{ product.salePrice || product.priceDiscount || product.price }}</p>
+				<p class="product-price">{{ product.salePrice || product.priceDiscount || product.price | currencyFormat }}</p>
 			</div>
 			<div class="quantity text-xs-center">
 				<p
@@ -35,7 +35,7 @@
 				<p
 					:style="`color: ${globalColors.secondary};`"
 					class="product-title">Total</p>
-				<p class="product-price">{{product.total}}</p>
+				<p class="product-price">{{product.total | currencyFormat}}</p>
 			</div>
 			<div class="comments">
 				<text-area

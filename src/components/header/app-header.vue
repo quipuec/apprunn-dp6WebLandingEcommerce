@@ -40,7 +40,7 @@
 				</div>
 			</div>
 			<div 
-				class="flex container-button-image"
+				class="flex container-button-image align-center"
 				:class="{'opacity' : isSearchMobile}">
 				<button-image 
 					:data="search" 
@@ -392,6 +392,10 @@ export default {
 		@media (max-width: 764px) {
 			display: none !important;
 		}
+	}
+
+	.align-center {
+		align-items: center;
 	}
 </style>
 

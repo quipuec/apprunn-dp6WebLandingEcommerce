@@ -102,6 +102,10 @@ function getPlansBanner(state) {
 	return state.banners.find(banner => banner.typeName === 'Promoción en planes');
 }
 
+function getCreditBanner(state) {
+	return state.banners.find(banner => banner.typeName === 'Promoción en creditos');
+}
+
 function productParams(state) {
 	return state.products.params;
 }
@@ -133,9 +137,10 @@ const methods = {
 	genders,
 	getBanners,
 	getBannersHome,
+	getCreditBanner,
 	getCommerceData,
-	getDirections,
 	getCurrencySymbol,
+	getDirections,
 	getLastPage,
 	getPlansBanner,
 	getPromotionalBanner,
