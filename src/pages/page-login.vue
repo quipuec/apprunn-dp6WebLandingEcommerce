@@ -105,6 +105,8 @@
 		};
 		const { data: userInfo } = await this.$httpSales.get('customers/current', { headers });
 		userInfo.dni = Number(userInfo.dni) ? userInfo.dni : null;
+		userInfo.dni =
+			Number(userInfo.typePerson.documentNumber) ? userInfo.typePerson.documentNumber : null;
 		userInfo.avatar = userInfo.urlImage || process.env.DEFAULT_AVATAR;
 		userInfo.fullName = userInfo.typePerson.fullName;
 		this.$store.dispatch('setUser', userInfo);
@@ -129,6 +131,7 @@
 				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, token);
 				this.$store.dispatch('setToken', token);
 				this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
+				this.$store.dispatch('LOAD_COMMERCE_INFO', this);
 				this.getCustomerData();
 				this.cleanForm();
 				this.goTo('page-home');

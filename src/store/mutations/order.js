@@ -64,4 +64,10 @@ export default {
 	SET_WAYS_PAYMENT(state, waysPayments) {
 		Vue.set(state.order, 'waysPayments', waysPayments);
 	},
+	SET_BANK_ACCOUNT_RELA(state, bankAccounts) {
+		Vue.set(state.order, 'bankAccountsRelated', bankAccounts);
+	},
+	SET_BANK_ACCOUNT(state, id) {
+		Vue.set(state.order.paymentMethod, 'bankAccountId', id);
+	},
 };

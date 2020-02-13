@@ -136,10 +136,6 @@ const asyncActions = {
 		const { data: user } = await context.$httpSales.get(url);
 		commit('setUser', user);
 	},
-	LOAD_WAY_PAYMENT: async ({ commit }, context) => {
-		const { data: waysPayment } = await context.$httpSales.get('way-payment');
-		commit('SET_WAYS_PAYMENT', waysPayment);
-	},
 	SET_CURRENCY_DEFAULT: async ({ commit }, context) => {
 		const aclCode = process.env.ACL_COMPANY_CODE;
 		const url = `companies/${aclCode}/acl`;
@@ -168,6 +164,7 @@ const asyncActions = {
 	LOAD_COMMERCE_INFO: async ({ commit, dispatch }, context) => {
 		const url = `com-ecommerce-companies/${process.env.COMMERCE_CODE}/public`;
 		const { data: commerceData } = await context.$httpSalesPublic.get(url);
+		context.setLocalData(`${process.env.STORAGE_USER_KEY}::ecommerce-data`, commerceData);
 		commit('SET_COMMERCE_DATA', commerceData);
 		dispatch('SET_ECOMMERCE_THEME', commerceData.settings.theme);
 		const link = document.querySelector("link[rel*='icon']") || document.createElement('link');

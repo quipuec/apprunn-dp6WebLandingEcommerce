@@ -39,16 +39,18 @@ class GlobalFeatures {
 		features.forEach((feature) => {
 			const { id, value } = feature;
 			const index = self.features.findIndex(fea => fea.id === id);
-			const currentFeature = { ...self.features[index] };
-			if (currentFeature.values) {
-				const indexValue = currentFeature.values.findIndex(item => item.value === value);
-				if (indexValue === -1) {
-					currentFeature.values.push(feature);
+			if (index > -1) {
+				const currentFeature = { ...self.features[index] };
+				if (currentFeature.values) {
+					const indexValue = currentFeature.values.findIndex(item => item.value === value);
+					if (indexValue === -1) {
+						currentFeature.values.push(feature);
+					}
+				} else {
+					currentFeature.values = [{ ...feature }];
 				}
-			} else {
-				currentFeature.values = [{ ...feature }];
+				self.features[index].values = currentFeature.values;
 			}
-			self.features[index].values = currentFeature.values;
 		});
 	}
 	update(incomingFeatures) {
