@@ -105,6 +105,21 @@ const getters = {
 	getWaysPayments(state) {
 		return state.order.waysPayments;
 	},
+	getBankAccounts(state) {
+		const bankAccounts = state.order.bankAccountsRelated;
+		return bankAccounts.reduce((acum, bank) => {
+			const newAcum = [...acum];
+			const newBank = { ...bank };
+			const index = newAcum.findIndex(n => n.bankId === bank.bankId);
+			if (index > -1) {
+				newAcum[index].accounts.push(bank);
+			} else {
+				newBank.accounts = [{ ...bank }];
+				newAcum.push(newBank);
+			}
+			return newAcum;
+		}, []);
+	},
 };
 
 export default getters;

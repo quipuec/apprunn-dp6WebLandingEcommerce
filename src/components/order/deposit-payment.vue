@@ -8,61 +8,86 @@
 			<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago, puedes utilizar la Banca por Internet Pichincha , Agentes del Pichincha y Oficinas Pichincha a Nivel nacional con tu número de pedido.</p>
 		</div>
 		<div class="deposit-wrapper" v-else>
-			<v-radio-group  v-model="selectedBankEcu">
-				<div class="deposit-select-bank">
+			<v-radio-group  v-model="selectedBank" row>
+				<v-radio 
+					:label="bank.bank.name" 
+					:value="bank.bankId"
+					v-for="bank in getBankAccounts" 
+					:key="bank.id">
+
+				</v-radio>
+				<!-- <div class="deposit-select-bank">
 					<v-radio value="pichincha"></v-radio>
 					<img :src="logo.pichincha" alt="logo de banco" class="icon-bank-ecuador">
 				</div>
 				<h4 class="deposit-title">Banco Pichincha</h4>
-				<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago, puedes utilizar la Banca por Internet Pichincha , Agentes del Pichincha y Oficinas Pichincha a Nivel nacional con tu número de pedido.</p>
+				<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago, puedes utilizar la Banca por Internet Pichincha , Agentes del Pichincha y Oficinas Pichincha a Nivel nacional con tu número de pedido.</p> -->
 			</v-radio-group>
 		</div>
-		<div class="bank-account-container">
-			<h4
-				:style="`color: ${globalColors.primary};`"
-				class="deposit-bank"
-			>Cuenta Bancaria MRC:</h4>
-			<p class="deposit-account-bank">
-				<span>Nombre de Cuenta:  MRC S.A.C.</span>
-				<span>Nro de Cuenta : 193-87656767-0-81</span>
-			</p>
+		<div>
+			<ul class="mb-1">
+				<li
+					v-for="account in bankAccounts"
+					:key="account.id"
+				>
+					<span
+						class="bank-account-info font-bold"
+					>{{account.name}}: </span>
+					<span>{{account.accountNumber}}</span>
+				</li>
+			</ul>
 		</div>
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
+
+function created() {
+	this.selectedBank = this.getBankAccounts[0].bankId;
+}
 
 function stepFour() {
 	return this.$route.meta.step === 4;
 }
 
+function selectedBank(value) {
+	this.$store.commit('SET_BANK_ACCOUNT', value);
+}
+
+function bankAccounts() {
+	const index = this.getBankAccounts.findIndex(b => b.bankId === this.selectedBank);
+	if (index > -1) {
+		return this.getBankAccounts[index].accounts;
+	}
+	return this.getBankAccounts[0].accounts;
+}
+
 function data() {
 	return {
-		logo: {
-			bbva: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/logo-bbva.png',
-			bcp: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/logo-bcp.png',
-			pichincha: 'https://japi-static.s3.amazonaws.com/japi-sales-error/banco-pichincha.jpg',
-		},
-		selectedBank: 'bcp',
-		selectedBankEcu: 'pichincha',
+		selectedBank: null,
 	};
 }
 
 export default {
 	name: 'deposit-payment',
+	created,
 	computed: {
+		...mapGetters([
+			'getBankAccounts',
+		]),
 		stepFour,
+		bankAccounts,
 	},
 	data,
+	watch: {
+		selectedBank,
+	},
 };
 </script>
 <style lang="scss" scoped>
 	.deposit-container {
-		align-items: flex-start;
 		color: color(dark);
-		display: flex;
-		flex-wrap: wrap;
 		font-family: font(medium);
-		justify-content: space-between;
 		margin-top: 40px;
 	}
 
@@ -119,5 +144,9 @@ export default {
 	.icon-bank-ecuador {
 		height: 70px;
 		width: 105px;
+	}
+
+	.font-bold {
+		font-family: font(bold);
 	}
 </style>
