@@ -14,7 +14,7 @@
 				target="_blank"
 				class="link-credit">
 				</a>
-					SOLICITA AQUÍ
+					{{ titleBtn }}
 			</button>
 		</div>
 	</div>
@@ -45,6 +45,10 @@ export default {
 		data: {
 			type: Object,
 			default: () => {},
+		},
+		titleBtn: {
+			type: String,
+			default: '',
 		},
 	},
 };

@@ -28,6 +28,7 @@
 		<app-banner-credit
 			v-if="getCreditBanner"
 			:data="getCreditBanner"
+			:title-btn="titleBtn"
 		/>
 		<app-banner-plans
 			v-if="getPlansBanner"
@@ -122,6 +123,7 @@ function data() {
 		colorDark: process.env.COLOR_TITLE,
 		colorBase: process.env.COLOR_PRIMARY,
 		colorSecondary: process.env.COLOR_SECONDARY,
+		titleBtn: 'SOLICITA AQUÍ',
 	};
 }
 export default {
