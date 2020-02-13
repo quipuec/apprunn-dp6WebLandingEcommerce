@@ -112,10 +112,10 @@ export default {
 .content-btn {
 	display: flex;
 	justify-content: center;
-	transform: translate(12%, 176px);
+	transform: translate(26%, 171px);
 
-	@media (max-width: 1000px) {
-		transform: translate(21%, 160px);
+	@media (min-width: 1000px) {
+		transform: translate(14%, 160px);
 	}
 }
 </style>

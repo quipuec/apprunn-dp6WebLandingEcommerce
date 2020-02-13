@@ -105,7 +105,10 @@ async function loadData(id) {
 	this.tabs = this.product.sections.map(p => p.name);
 	this.tabs.push('Comentarios');
 	this.lastIndex = this.product.sections.length;
-	this.productInstance = new ProductDetails(this.childrens);
+	this.productInstance = new ProductDetails(
+		this.childrens,
+		this.getCommerceData.settings.salPriceListId,
+	);
 	this.productInstance.firstProductSelected(this.product);
 	this.globalFeatures = [...this.productInstance.getFeatures()];
 	this.productDetails = { ...this.productInstance.getProductDetails() };
@@ -313,6 +316,7 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getCommerceData',
 			'getPromotionalBanner',
 			'token',
 		]),
