@@ -48,7 +48,7 @@
 					:class="[isLoading ? 'loading' : 'text-price-dis']"
 					:style="`color: ${globalColors.secondary}`"
 				>
-					{{ getCurrencySymbol }} {{ data.priceDiscount }}
+					{{ getCurrencySymbol }} {{ data.priceDiscount | currencyFormat }}
 				</span>
 			</div>
 			<span
@@ -58,7 +58,7 @@
 				]"
 				:style="`color: ${globalColors.secondary}`"
 			>
-				{{ getCurrencySymbol }} {{ data.price }}
+				{{ getCurrencySymbol }} {{ data.price | currencyFormat }}
 			</span>
 		</div>
 		<ProductConversions

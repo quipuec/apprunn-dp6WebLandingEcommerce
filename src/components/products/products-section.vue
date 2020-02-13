@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<section class="product-section transition-product-section">
+		<section  v-if="products.length > 0" class="product-section transition-product-section">
 			<product-card
 				class="product-card"
 				v-for="product in products"
@@ -8,7 +8,10 @@
 				:product="product"
 			/>
 		</section>
-		<div class="see-more-btn">
+		<section v-else>
+			<h2 class="no-results" :style="`color: ${globalColors.primary}`">No se encontraron productos para su búsqueda</h2>
+		</section>
+		<div class="see-more-btn" v-if="products.length > 0">
 			<button
 				v-if="getProducts && getLastPage !== currentPage"
 				type="button"
@@ -23,7 +26,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { isEmpty } from '@/shared/lib';
+// import { isEmpty } from '@/shared/lib';
 import productCard from '@/components/products/product-card';
 
 function addMoreProduct() {
@@ -32,7 +35,8 @@ function addMoreProduct() {
 }
 
 function products() {
-	return isEmpty(this.getProducts) ? this.defaultProducts : this.getProducts;
+	return this.indeterminate ? this.defaultProducts : this.getProducts;
+	// return isEmpty(this.getProducts) ? this.defaultProducts : this.getProducts;
 }
 
 function data() {
@@ -89,5 +93,10 @@ export default {
 			max-width: 630px;
 			min-width: 255px;
 		}
+	}
+
+	.no-results {
+		padding: 30px;
+		text-align: center;
 	}
 </style>

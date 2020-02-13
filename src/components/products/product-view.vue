@@ -2,7 +2,7 @@
   <div class="product-view">
 		<div class="btns-product-view">
 			<button 
-				v-for="(image, index) in images" 
+				v-for="(image, index) in localImages" 
 				:key="image.id"
 				class="btn-product-view"
 				:class="{'select' : image.select, 'not-select' : !image.select}"
@@ -18,7 +18,7 @@
 		<div class="slider-product-view" v-if="images && images.length">
 			<swiper ref="mySwiper" :options="swiperOption">
 				<swiper-slide 
-					v-for="image in images" 
+					v-for="image in localImages" 
 					:key="image.id">
 					<div class="wrapper-image">
 						<img 
@@ -44,16 +44,22 @@ function swiper() {
 
 function goToSlider(index, image) {
 	this.swiper.slideTo(index + 1, 1000, false);
-	this.data.images = this.data.images.map((i) => {
+	this.localImages = this.localImages.map((i) => {
 		const newImage = { ...i };
 		newImage.select = i.id === image.id;
 		return newImage;
 	});
 }
 
+function imagesHandler(newImages) {
+	this.localImages = [...newImages];
+	this.$set(this.localImages[0], 'select', true);
+}
+
 
 function data() {
 	return {
+		localImages: [],
 		swiperOption: {
 			allowTouchMove: false,
 			breakpoints: {
@@ -79,15 +85,22 @@ export default {
 	data,
 	methods: {
 		goToSlider,
+		imagesHandler,
 	},
 	props: {
 		data: {
-			type: Object,
 			default: () => {},
+			type: Object,
 		},
 		images: {
 			default: () => [],
 			type: Array,
+		},
+	},
+	watch: {
+		images: {
+			deep: true,
+			handler: imagesHandler,
 		},
 	},
 };
