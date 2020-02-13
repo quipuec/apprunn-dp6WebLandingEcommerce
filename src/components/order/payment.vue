@@ -10,7 +10,7 @@
 				<app-button
 					v-for="method in getWaysPayments"
 					:key="method.id"
-					max-width="360px"
+					max-width="205.31px"
 					class="method-item"
 					:action="method.name"
 					:active="paymentMethodSelected === method.code"
@@ -102,7 +102,7 @@ export default {
 		align-items: center;
 		display: grid;
 		grid-gap: 20px;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(205.31px, 1fr));
 		
 		@media (max-width: 600px) {
 			margin: 0 20px;
@@ -110,7 +110,6 @@ export default {
 	}
 
 	.component-container {
-
 		@media (max-width: 600px) {
 			margin: 0 20px;
 		}
