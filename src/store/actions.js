@@ -120,6 +120,10 @@ function addService({ commit }, service) {
 	commit('ADD_ONE_IN_SERVICE_COUNTER', service);
 }
 
+function resetCounter({ commit }) {
+	commit('RESETING_COUNTER');
+}
+
 function minusService({ commit, state }, service) {
 	const { config: { url } } = service;
 	const index = state.appConfig.loadingCounter.findIndex(l => l.url === url);
@@ -150,6 +154,7 @@ const methods = {
 	updateProductSelect,
 	UPDATE_PRODUCT_FILTER,
 	updateFilters,
+	resetCounter,
 	SET_ECOMMERCE_THEME,
 	SET_DEFAULT_VALUES,
 	SET_WAY_PAYMENT,
