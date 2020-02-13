@@ -46,7 +46,7 @@
 			<div class="d-center">
 				<span
 					:class="[isLoading ? 'loading' : 'text-price-dis']"
-					:style="`color: ${globalColors.secondary}`"
+					:style="`color: ${globalColors.primary}`"
 				>
 					{{ getCurrencySymbol }} {{ data.priceDiscount }}
 				</span>
@@ -56,7 +56,7 @@
 				:class="[
 					isLoading ? 'loading' : data.priceDiscount >= 0 ? 'text-price' : 'text-price-dis',
 				]"
-				:style="`color: ${globalColors.secondary}`"
+				:style="`color: ${globalColors.primary}`"
 			>
 				{{ getCurrencySymbol }} {{ data.price }}
 			</span>

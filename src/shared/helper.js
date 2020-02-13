@@ -66,6 +66,14 @@ function debounce(func, wait = 800, immediate) {
 	};
 };
 
+function setPrices(product, priceListId) {
+	const priceList = product.priceList || {};
+	const { price, discount } = priceList[priceListId] || {};
+	const priceDicount = (1 - (discount / 100)) * price;
+	return { price: discount ? price : 0, priceDicount: priceDicount || 0 };
+
+}
+
 const methods = {
 	debounce,
 	exactDate,
@@ -76,6 +84,7 @@ const methods = {
 	getLocalToken,
 	removeLocalData,
 	setLocalData,
+	setPrices,
 	showDownloadDialog,
 };
 

@@ -46,7 +46,7 @@
 							class="product-brand">{{product.warehouseProduct.brand.name}}</small>
 						<h3
 							v-if="product.priceDiscount"
-							:style="`color: ${indeterminate ? 'transparent' : globalColors.secondary};`"
+							:style="`color: ${indeterminate ? 'transparent' : globalColors.primary};`"
 							:class="[
 								indeterminate ? 'loading text-field' : 'product-price-discount'
 							]"
@@ -57,7 +57,7 @@
 							:class="[
 								indeterminate ? 'loading text-field' : product.priceDiscount ? 'product-price' : 'product-price-discount',
 							]"
-							:style="`color: ${indeterminate ? 'transparent' : globalColors.secondary};`"
+							:style="`color: ${indeterminate ? 'transparent' : globalColors.primary};`"
 						>
 							{{ product.price }}
 						</small>
