@@ -22,7 +22,7 @@
 		/>
   	</transition>
 	<router-view></router-view>
-	<section-visa></section-visa>
+	<section-visa v-if="existcreditsCard"></section-visa>
 	<form-bulletin />
 	<app-footer></app-footer>
 	<v-snackbar
@@ -51,12 +51,21 @@
 <script>
 import { mapGetters } from 'vuex';
 import appHeader from '@/components/header/app-header';
+import { isEmpty } from '@/shared/lib';
 
 const appMenuCategory = () => import(/* webpackChunkName: "app-Menu-Category" */'@/components/header/app-category');
 const formBulletin = () => import(/* webpackChunkName: "form-Bulletin" */'@/components/shared/form/form-bulletin');
 const sectionVisa = () => import(/* webpackChunkName: "section-Visa" */'@/components/footer/section-visa');
 const appFooter = () => import(/* webpackChunkName: "app-Footer" */'@/components/footer/app-footer');
 const appBannerTop = () => import(/* webpackChunkName: "app-Banner-Top" */ '@/components/header/app-banner-top');
+
+function existcreditsCard() {
+	if (!isEmpty(this.getCommerceData)) {
+		const cards = this.getCommerceData.wayPayment.find(c => c.code === 'CDC');
+		return Boolean(cards);
+	}
+	return false;
+}
 
 function indeterminate() {
 	return this.$store.getters.indeterminate;
@@ -114,6 +123,7 @@ export default {
 			'getFilters',
 			'user',
 		]),
+		existcreditsCard,
 	},
 	data,
 	components: {
