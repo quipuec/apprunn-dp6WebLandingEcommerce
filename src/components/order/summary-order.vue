@@ -14,19 +14,6 @@
 				<p class="summary-amount-container separate">
 					<span>Envío</span><span class="summary-amount">{{getCurrencySymbol}}. {{getShippingCost}}</span>
 				</p>
-				<p
-					v-if="stepThree"
-					:style="`color: ${globalColors.primary} !important;`"
-					class="summary-amount-container separate shipping"
-				>
-					<button
-						type="button"
-						class="shipping-cost"
-					>
-						<span>Calcular costo de envío</span>
-						<i class="material-icons">expand_less</i>
-					</button>
-				</p>
 				<p class="summary-amount-container total">
 					<span>Total</span><span class="summary-total">{{getCurrencySymbol}}. {{total}}</span>
 				</p>

@@ -36,9 +36,10 @@ import visaPayment from '@/components/order/visa-payment';
 
 function created() {
 	if (isEmpty(this.getWaysPayments)) {
-		this.$store.dispatch('LOAD_WAY_PAYMENT', this);
+		this.$store.dispatch('SET_WAY_PAYMENT', this);
+		this.$store.dispatch('SET_BANK_ACCOUNTS', this);
 	} else {
-		this.onSelect(this.getWaysPayments[2]);
+		this.onSelect(this.getWaysPayments[0]);
 	}
 }
 
@@ -46,7 +47,8 @@ function onSelect(method) {
 	this.$store.commit('SET_WAY_PAYMENT', { wayPayment: null, bankAccountId: null });
 	this.paymentMethodSelected = method.code;
 	if (method.code === 'IBD') {
-		this.$store.commit('SET_WAY_PAYMENT', { wayPayment: method.id, bankAccountId: 1 });
+		const firstBank = this.getBankAccounts[0].bankId;
+		this.$store.commit('SET_WAY_PAYMENT', { wayPayment: method.id, bankAccountId: firstBank });
 	}
 }
 
@@ -60,7 +62,7 @@ function paymentMethodSelectedComponent() {
 }
 
 function getWaysPayments() {
-	this.onSelect(this.getWaysPayments[2]);
+	this.onSelect(this.getWaysPayments[0]);
 }
 
 function data() {
@@ -84,6 +86,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getWaysPayments',
+			'getBankAccounts',
 		]),
 		paymentMethodSelectedComponent,
 	},

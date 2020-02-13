@@ -32,6 +32,7 @@ export default {
 		provinces: [],
 	},
 	order: {
+		bankAccountsRelated: null,
 		bill: null,
 		customerAddressId: 0,
 		customerAddress: null,

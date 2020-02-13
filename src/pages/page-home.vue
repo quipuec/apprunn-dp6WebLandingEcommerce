@@ -25,19 +25,24 @@
 			:data="getPromotionalBanner"
 			:color="colorSecondary"
 			big/>
+		<app-banner-credit
+			v-if="getCreditBanner"
+			:data="getCreditBanner"
+			:title-btn="titleBtn"
+		/>
 		<app-banner-plans
 			v-if="getPlansBanner"
 			:data="getPlansBanner"
 			big
-		/>	
+		/>
 	</layout-admin>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-
-import appBannerTop from '@/components/header/app-banner-top';
+import appBannerCredit from '@/components/home/app-banner-credit';
 import appBannerPlans from '@/components/header/app-banner-plans';
+import appBannerTop from '@/components/header/app-banner-top';
 import bannerCarousel from '@/components/home/banner-carousel';
 import categoriesCarousel from '@/components/home/categories-carousel';
 import componentFilterProduct from '@/components/shared/products/component-filter-product';
@@ -118,12 +123,14 @@ function data() {
 		colorDark: process.env.COLOR_TITLE,
 		colorBase: process.env.COLOR_PRIMARY,
 		colorSecondary: process.env.COLOR_SECONDARY,
+		titleBtn: 'SOLICITA AQUÍ',
 	};
 }
 export default {
 	name: 'page-home',
 	data,
 	components: {
+		appBannerCredit,
 		appBannerTop,
 		appBannerPlans,
 		bannerCarousel,
@@ -135,6 +142,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getBannersHome',
+			'getCreditBanner',
 			'getPromotionalBanner',
 			'getPlansBanner',
 			'getCategories',

@@ -1,15 +1,23 @@
 <template>
 	<button type="button" v-on="$listeners" :class="{ 'loading': indeterminate }">
-		<svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25">
-			<g
-				v-if="!indeterminate"
-				:fill="globalColors.primary"
-				fill-rule="nonzero"
-			>
-				<path d="M20.485 15.928a11.9 11.9 0 0 0-5.577-3.188 6.72 6.72 0 0 0 3.744-6.032C18.652 3.009 15.668 0 12 0S5.348 3.01 5.348 6.708a6.72 6.72 0 0 0 3.744 6.032 11.9 11.9 0 0 0-5.577 3.188A12.072 12.072 0 0 0 0 24.484c0 .285.23.516.512.516h22.976a.514.514 0 0 0 .512-.516c0-3.232-1.248-6.27-3.515-8.556zM6.371 6.61C6.371 3.48 8.896.934 12 .934c3.104 0 5.629 2.547 5.629 5.676 0 3.13-2.525 5.676-5.629 5.676-3.104 0-5.629-2.546-5.629-5.676zM1.035 23.968C1.303 18.103 6.12 13.416 12 13.416s10.697 4.687 10.965 10.552H1.035z"/>
-				<path d="M6.933 16.251a.454.454 0 0 0-.65-.178c-2.135 1.385-3.691 3.678-4.27 6.291-.061.277.096.555.35.622.038.01.075.014.112.014a.484.484 0 0 0 .46-.395c.52-2.346 1.917-4.404 3.834-5.647a.54.54 0 0 0 .164-.707z"/>
-			</g>
-		</svg>
+		<template v-if="user.urlImage">
+			<span
+				class="image-profile"
+				:style="`background-image: url(${user.urlImage})`"
+			></span>
+		</template>
+		<template v-else>
+			<svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25">
+				<g
+					v-if="!indeterminate"
+					:fill="globalColors.primary"
+					fill-rule="nonzero"
+				>
+					<path d="M20.485 15.928a11.9 11.9 0 0 0-5.577-3.188 6.72 6.72 0 0 0 3.744-6.032C18.652 3.009 15.668 0 12 0S5.348 3.01 5.348 6.708a6.72 6.72 0 0 0 3.744 6.032 11.9 11.9 0 0 0-5.577 3.188A12.072 12.072 0 0 0 0 24.484c0 .285.23.516.512.516h22.976a.514.514 0 0 0 .512-.516c0-3.232-1.248-6.27-3.515-8.556zM6.371 6.61C6.371 3.48 8.896.934 12 .934c3.104 0 5.629 2.547 5.629 5.676 0 3.13-2.525 5.676-5.629 5.676-3.104 0-5.629-2.546-5.629-5.676zM1.035 23.968C1.303 18.103 6.12 13.416 12 13.416s10.697 4.687 10.965 10.552H1.035z"/>
+					<path d="M6.933 16.251a.454.454 0 0 0-.65-.178c-2.135 1.385-3.691 3.678-4.27 6.291-.061.277.096.555.35.622.038.01.075.014.112.014a.484.484 0 0 0 .46-.395c.52-2.346 1.917-4.404 3.834-5.647a.54.54 0 0 0 .164-.707z"/>
+				</g>
+			</svg>
+		</template>
 	</button>
 </template>
 <script>
@@ -21,8 +29,24 @@ export default {
 	computed: {
 		...mapGetters([
 			'indeterminate',
+			'user',
 		]),
 	},
 };
 </script>
+<style lang="scss" scoped>
+	.image-profile {
+		background-position: center;
+		background-repeat: no-repeat;
+		background-size: cover;
+		border-radius: 100%;
+		display: inline-block;
+		height: 33px;
+		width: 33px;
 
+		img {
+			height: 100%;
+			width: 100%;
+		}
+	}
+</style>
