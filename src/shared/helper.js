@@ -69,7 +69,8 @@ function debounce(func, wait = 800, immediate) {
 function setPrices(product, priceListId, flag) {
 	const priceList = product.priceList || {};
 	const { price, discount } = priceList[priceListId] || {};
-	const priceDiscount = Number(((1 - (discount / 100)) * price).toFixed(2));
+	const newDiscount = discount || 0;
+	const priceDiscount = Number(((1 - (newDiscount / 100)) * price).toFixed(2));
 	const objPrice = { price: discount ? price : 0, priceDiscount: priceDiscount || 0 };
 	return objPrice[flag];
 
