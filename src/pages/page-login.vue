@@ -131,6 +131,7 @@
 				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, token);
 				this.$store.dispatch('setToken', token);
 				this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
+				this.$store.dispatch('LOAD_COMMERCE_INFO', this);
 				this.getCustomerData();
 				this.cleanForm();
 				this.goTo('page-home');
