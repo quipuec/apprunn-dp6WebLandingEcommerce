@@ -46,7 +46,7 @@
 							class="product-brand">{{product.warehouseProduct.brand.name}}</small>
 						<h3
 							v-if="product.priceDiscount"
-							:style="`color: ${indeterminate ? 'transparent' : globalColors.secondary};`"
+							:style="`color: ${indeterminate ? 'transparent' : globalColors.primary};`"
 							:class="[
 								indeterminate ? 'loading text-field' : 'product-price-discount'
 							]"
@@ -54,10 +54,11 @@
 							{{ product.priceDiscount | currencyFormat }}
 						</h3>
 						<small
+							v-if="product.price"
 							:class="[
 								indeterminate ? 'loading text-field' : product.priceDiscount ? 'product-price' : 'product-price-discount',
 							]"
-							:style="`color: ${indeterminate ? 'transparent' : globalColors.secondary};`"
+							:style="`color: ${indeterminate ? 'transparent' : globalColors.primary};`"
 						>
 							{{ product.price | currencyFormat }}
 						</small>
@@ -108,7 +109,8 @@ function goToProduct({ slug, id }) {
 
 function discountPercentage() {
 	const { price, priceDiscount } = this.product;
-	return Number((((price - priceDiscount) / price) * 100).toFixed(2)) || 0;
+	const percentage = Number((((price - priceDiscount) / price) * 100).toFixed(2));
+	return percentage >= 0 ? percentage : 0;
 }
 
 export default {

@@ -60,7 +60,7 @@ const appFooter = () => import(/* webpackChunkName: "app-Footer" */'@/components
 const appBannerTop = () => import(/* webpackChunkName: "app-Banner-Top" */ '@/components/header/app-banner-top');
 
 function existcreditsCard() {
-	if (!isEmpty(this.getCommerceData)) {
+	if (!isEmpty(this.getCommerceData.wayPayment)) {
 		const cards = this.getCommerceData.wayPayment.find(c => c.code === 'CDC');
 		return Boolean(cards);
 	}
