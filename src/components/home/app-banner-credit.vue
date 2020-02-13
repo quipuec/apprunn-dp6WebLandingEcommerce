@@ -5,16 +5,18 @@
 	class="app-banner-credit"
 	:style="`background-image: url(${webImage})`"
 	>
+		<div class="content-btn">
 			<button class="btn-submit"
 			:style="`background-color: ${globalColors.primary}`">
 				{{ titleBtn }}
-			</button>
-			<a
+				<a
 				v-if="webLink"
 				:href="webLink"
 				target="_blank"
 				class="link-credit">
 				</a>
+			</button>
+		</div>
 	</div>
 </template>
 
@@ -59,9 +61,7 @@ export default {
 	font-family: font(bold);
 	font-size: size(large);
 	height: 47px;
-	position: absolute;
-	right: 34%;
-	top: 61%;
+	padding-top: 13px;
 	width: 165px;
 
 	@media (max-width: 1000px) {
@@ -115,17 +115,19 @@ export default {
 	left: 0;
 	position: relative;
 	right: 0;
-	top: -35px;
+	top: -37px;
 	width: 165px;
 }
 
-// .content-btn {
-// 	display: flex;
-// 	justify-content: center;
-// 	transform: translate(26%, 171px);
+.content-btn {
+	display: flex;
+	justify-content: center;
+	left: 16%;
+    position: relative;
+    top: 56%;
 
-// 	@media (min-width: 1000px) {
-// 		transform: translate(14%, 160px);
-// 	}
-// }
+	@media (max-width: 1000px) {
+		left: 26%;
+	}
+}
 </style>
