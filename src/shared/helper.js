@@ -66,11 +66,12 @@ function debounce(func, wait = 800, immediate) {
 	};
 };
 
-function setPrices(product, priceListId) {
+function setPrices(product, priceListId, flag) {
 	const priceList = product.priceList || {};
 	const { price, discount } = priceList[priceListId] || {};
-	const priceDicount = (1 - (discount / 100)) * price;
-	return { price: discount ? price : 0, priceDicount: priceDicount || 0 };
+	const priceDiscount = Number(((1 - (discount / 100)) * price).toFixed(2));
+	const objPrice = { price: discount ? price : 0, priceDiscount: priceDiscount || 0 };
+	return objPrice[flag];
 
 }
 
