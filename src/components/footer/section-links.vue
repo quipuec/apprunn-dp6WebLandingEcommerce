@@ -22,7 +22,7 @@
 				</ul>
 			</div>
 		</div>
-		<div class="credit-cards">
+		<div class="credit-cards" v-if="existcreditsCard">
 			<img
 				v-for="(card, cardIndex) in creditCards"
 				:key="cardIndex"
@@ -35,6 +35,15 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { isEmpty } from '@/shared/lib';
+
+function existcreditsCard() {
+	if (!isEmpty(this.getCommerceData)) {
+		const cards = this.getCommerceData.wayPayment.find(c => c.code === 'CDC');
+		return Boolean(cards);
+	}
+	return false;
+}
 
 function data() {
 	return {
@@ -93,8 +102,10 @@ export default {
 	name: 'section-links',
 	computed: {
 		...mapGetters([
+			'getCommerceData',
 			'indeterminate',
 		]),
+		existcreditsCard,
 	},
 	data,
 };
