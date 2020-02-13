@@ -12,7 +12,7 @@
 		>
 		<span 
 			class="item-text"
-			:style="data.select ? `color: white` : `color: ${globalColors.dark};transition:all 200ms ease-in;`"
+			:style="data.select ? `color: white` : `color: ${globalColors.title};transition:all 200ms ease-in;`"
 		>{{data.title}}</span>
 	</div>
 </template>
