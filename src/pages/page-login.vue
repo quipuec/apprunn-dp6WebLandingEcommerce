@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<form-container
-			:background-image="backgroundImage"
-			:color="baseColor"
-			:disabled="disabled"
 			facebook
+			:background-image="backgroundImage"
+			:color="globalColors.primary"
+			:disabled="disabled"
 			:heading-image="headingImage"
 			:img-height="width > 768 ? '39.3' : '38'"
 			title="Iniciar Sesión"
@@ -132,6 +132,7 @@
 				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, token);
 				this.$store.dispatch('setToken', token);
 				this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
+				this.$store.dispatch('LOAD_COMMERCE_INFO', this);
 				this.getCustomerData();
 				this.cleanForm();
 				this.goTo('page-home');
@@ -188,7 +189,6 @@
 	function data() {
 		return {
 			backgroundImage: process.env.FORM_BACKGROUND,
-			baseColor: process.env.COLOR_PRIMARY,
 			headingImage: '/static/img/sign-in.svg',
 			loading: false,
 			model: {

@@ -90,6 +90,16 @@ function DEFAULT_USER({ commit }) {
 	commit('setUser', user);
 }
 
+function SET_WAY_PAYMENT({ commit }, context) {
+	const waysPayment = context.getLocalStorage('ecommerce::ecommerce-data').wayPayment;
+	commit('SET_WAYS_PAYMENT', waysPayment);
+}
+
+function SET_BANK_ACCOUNTS({ commit }, context) {
+	const bankAccounts = context.getLocalStorage('ecommerce::ecommerce-data').bankAccountsRelated;
+	commit('SET_BANK_ACCOUNT_RELA', bankAccounts);
+}
+
 function MORE_PRODUCTS({ commit }) {
 	commit('UPDATE_PRODUCT_PAGE');
 }
@@ -108,6 +118,10 @@ function START_PAGINATION({ commit }) {
 
 function addService({ commit }, service) {
 	commit('ADD_ONE_IN_SERVICE_COUNTER', service);
+}
+
+function resetCounter({ commit }) {
+	commit('RESETING_COUNTER');
 }
 
 function minusService({ commit, state }, service) {
@@ -140,8 +154,11 @@ const methods = {
 	updateProductSelect,
 	UPDATE_PRODUCT_FILTER,
 	updateFilters,
+	resetCounter,
 	SET_ECOMMERCE_THEME,
 	SET_DEFAULT_VALUES,
+	SET_WAY_PAYMENT,
+	SET_BANK_ACCOUNTS,
 	START_PAGINATION,
 	SET_WINDOW_LOADED_TO_TRUE,
 };
