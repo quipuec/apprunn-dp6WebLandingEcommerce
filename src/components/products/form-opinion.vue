@@ -50,7 +50,7 @@ async function sendOpinion() {
 	if (!this.token) {
 		this.showGenericError('Para realizar una opinión tiene que registrarse');
 	} else {
-		const idProduct = this.$route.params.id;
+		const idProduct = this.valoratingProductId;
 		const body = {
 			description: this.model.description,
 			typeQuestionAnswer: 3,
@@ -86,6 +86,7 @@ export default {
 		...mapGetters([
 			'token',
 			'user',
+			'valoratingProductId',
 		]),
 	},
 	methods: {

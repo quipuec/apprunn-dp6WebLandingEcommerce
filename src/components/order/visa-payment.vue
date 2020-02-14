@@ -110,4 +110,8 @@ export default {
 	.start-js-btn.modal-opener.default {
 		background: url('/static/img/icons/icon-visanet.png') !important;
 	}
+
+	#visa-payment {
+		width: 656px;
+	}
 </style>

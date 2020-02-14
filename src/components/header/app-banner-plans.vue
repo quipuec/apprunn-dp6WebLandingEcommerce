@@ -7,14 +7,6 @@ class="app-banner-plans"
 			:class="[
 			'banner-plans-height',
 			big ? 'big' : null, small ? 'small' : null,]">
-<<<<<<< HEAD
-			<div>
-				<picture>
-					<source :srcset="webImage" media="(min-width: 600px)">
-					<img :src="mobileImage">
-				</picture>
-			</div>
-=======
 				<div class="opacity">
 					<picture>
 						<source :srcset="webImage" media="(min-width: 600px)">
@@ -28,7 +20,6 @@ class="app-banner-plans"
 						<img :src="mobileImage">
 					</picture>
 				</div>
->>>>>>> b96be80b436747087d04258f65db4f1a50eabeb6
 		</div>
 </div>
 </template>
@@ -111,6 +102,7 @@ img {
 
 .banner-plans-height {
 	height: 100%;
+	position: relative;
 }
 
 .opacity::before {

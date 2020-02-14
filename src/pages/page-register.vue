@@ -2,7 +2,7 @@
 	<div>
 		<form-container
 			:background-image="backgroundImage"
-			:color="baseColor"
+			:color="globalColors.primary"
 			:disabled="disabled"
 			:heading-image="headingImage"
 			:img-height="width > 768 ? '39.3' : '38'"
@@ -10,7 +10,7 @@
 			@on-submit="createAccount"
 		>
 			<register-form
-				:check-color="baseColor"
+				:check-color="globalColors.primary"
 				:email-disabled="emailDisabled"
 				:flag-tyc="flagTyc"
 				:model="model"
@@ -177,7 +177,6 @@
 	function data() {
 		return {
 			backgroundImage: process.env.FORM_BACKGROUND,
-			baseColor: process.env.COLOR_PRIMARY,
 			emailDisabled: false,
 			flagTyc: null,
 			headingImage: '/static/img/sign-up.svg',

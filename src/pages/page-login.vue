@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<form-container
-			:background-image="backgroundImage"
-			:color="baseColor"
-			:disabled="disabled"
 			facebook
+			:background-image="backgroundImage"
+			:color="globalColors.primary"
+			:disabled="disabled"
 			:heading-image="headingImage"
 			:img-height="width > 768 ? '39.3' : '38'"
 			title="Iniciar Sesión"
@@ -167,6 +167,10 @@
 		} catch (err) {
 			if (err.status === 500) {
 				this.showGenericError();
+			} else if (err.status === 401) {
+				if (err.data.message === 'TOKEN_HAS_EXPIRED') {
+					this.showGenericError('El enlace ha expirado. Se le ha enviado un nuevo enlace al correo.');
+				}
 			}
 		}
 	}
@@ -188,7 +192,6 @@
 	function data() {
 		return {
 			backgroundImage: process.env.FORM_BACKGROUND,
-			baseColor: process.env.COLOR_PRIMARY,
 			headingImage: '/static/img/sign-in.svg',
 			loading: false,
 			model: {

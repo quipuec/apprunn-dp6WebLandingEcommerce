@@ -55,7 +55,11 @@ class ProductDetails {
 	firstProductSelected(product) {
 		const { unitId } = product;
 		this.globalFeatures.init();
-		this.productSelected(product);
+		if (isEmpty(this.childrens)) {
+			this.updateSelectedProducts([product]);
+		} else {
+			this.productSelected(product);
+		}
 		this.updateUnitId.call(this, unitId);
 		this.updateQuantity.call(this, 1);
 	}

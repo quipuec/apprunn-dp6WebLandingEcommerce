@@ -25,6 +25,11 @@
 			:data="getPromotionalBanner"
 			:color="colorSecondary"
 			big/>
+		<app-banner-credit
+			v-if="getCreditBanner"
+			:data="getCreditBanner"
+			:title-btn="titleBtn"
+		/>
 		<app-banner-plans
 			v-if="getPlansBanner"
 			:data="getPlansBanner"
@@ -33,10 +38,6 @@
 			v-if="getCouponsBanner"
 			:data="getCouponsBanner"
 		/>
-		<app-banner-credit
-			v-if="getCreditBanner"
-			:data="getCreditBanner"
-		/>
 	</layout-admin>
 </template>
 
@@ -44,8 +45,8 @@
 import { mapGetters } from 'vuex';
 import appBannerCoupons from '@/components/home/app-banner-coupons';
 import appBannerCredit from '@/components/home/app-banner-credit';
-import appBannerTop from '@/components/header/app-banner-top';
 import appBannerPlans from '@/components/header/app-banner-plans';
+import appBannerTop from '@/components/header/app-banner-top';
 import bannerCarousel from '@/components/home/banner-carousel';
 import categoriesCarousel from '@/components/home/categories-carousel';
 import componentFilterProduct from '@/components/shared/products/component-filter-product';
@@ -126,6 +127,7 @@ function data() {
 		colorDark: process.env.COLOR_TITLE,
 		colorBase: process.env.COLOR_PRIMARY,
 		colorSecondary: process.env.COLOR_SECONDARY,
+		titleBtn: 'SOLICITA AQUÍ',
 	};
 }
 export default {
