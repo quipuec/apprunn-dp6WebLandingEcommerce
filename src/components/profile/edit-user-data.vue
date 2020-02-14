@@ -51,7 +51,7 @@
 					@click="saveUserInfo"
 				/>
 				<app-button
-					:background="colorBase"
+					:background="globalColors.secondary"
 					action="Cancelar"
 					class="action-button cancel"
 					@click="goBack"
@@ -129,7 +129,6 @@ function labelCountry() {
 
 function data() {
 	return {
-		colorBase: process.env.COLOR_BASE,
 		userData: {
 			cityId: null,
 			dni: '',
@@ -234,7 +233,7 @@ export default {
 	.btn-section {
 		align-items: center;
 		display: flex;
-		justify-content: flex-end;
+		justify-content: center;
 
 		@media(max-width: 745px) {
 			justify-content: space-between;

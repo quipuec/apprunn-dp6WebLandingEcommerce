@@ -79,6 +79,7 @@ async function loadProduct() {
 		const { data: response } = await this.isLoggedUser();
 		this.product = response;
 		document.title = this.product.name.toUpperCase();
+		this.$store.dispatch('setRatingProductId', this.product.id);
 		this.loadData(this.product.id);
 		this.loadOpinions();
 	} catch (error) {
@@ -105,7 +106,10 @@ async function loadData(id) {
 	this.tabs = this.product.sections.map(p => p.name);
 	this.tabs.push('Comentarios');
 	this.lastIndex = this.product.sections.length;
-	this.productInstance = new ProductDetails(this.childrens);
+	this.productInstance = new ProductDetails(
+		this.childrens,
+		this.getCommerceData.settings.salPriceListId,
+	);
 	this.productInstance.firstProductSelected(this.product);
 	this.globalFeatures = [...this.productInstance.getFeatures()];
 	this.productDetails = { ...this.productInstance.getProductDetails() };
@@ -313,6 +317,7 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getCommerceData',
 			'getPromotionalBanner',
 			'token',
 		]),

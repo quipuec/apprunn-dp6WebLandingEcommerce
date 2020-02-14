@@ -14,7 +14,8 @@
 			v-model="responsible.dni"
 			@input="validateForm"
 		>
-			<span v-if="$v.responsible.dni.$invalid">{{labelError}}</span>
+			<span v-if="!$v.responsible.dni.required">{{labelError}}.</span>
+			<span v-if="!$v.responsible.dni.validDni">Solo se permiten números</span>
 		</app-input>
 		<app-input
 			placeholder="Celular"
@@ -67,11 +68,17 @@ function labelError() {
 	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'El número de documento es requerido' : 'El DNI es requerido';
 }
 
+function validDni(dni) {
+	const reg = /[0-9]/i;
+	return reg.test(dni);
+}
+
 function validations() {
 	return {
 		responsible: {
 			dni: {
 				required,
+				validDni: this.validDni,
 			},
 			email: { email, required },
 			name: { required },
@@ -106,6 +113,7 @@ export default {
 	},
 	data,
 	methods: {
+		validDni,
 		validateForm,
 	},
 	mounted,

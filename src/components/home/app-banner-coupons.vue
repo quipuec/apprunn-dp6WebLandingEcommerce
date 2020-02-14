@@ -43,6 +43,7 @@ function webLink() {
 }
 
 function webImage() {
+	debugger;
 	return lib.getDeeper('webImage')(this.data);
 }
 

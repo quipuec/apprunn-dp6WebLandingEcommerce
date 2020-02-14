@@ -32,6 +32,7 @@ export default {
 		provinces: [],
 	},
 	order: {
+		bankAccountsRelated: null,
 		bill: null,
 		customerAddressId: 0,
 		customerAddress: null,
@@ -73,6 +74,7 @@ export default {
 			page: 1,
 		},
 	},
+	productIdToRate: null,
 	token: null,
 	user: {
 		email: '',

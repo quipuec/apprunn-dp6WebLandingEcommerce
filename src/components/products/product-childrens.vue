@@ -1,5 +1,10 @@
 <template>
-  <div class="my-4 border-bottom">
+  <div 
+  	:class="[
+  		'my-4',
+		{ 'border-bottom': features.length > 0 }
+	]"
+	>
 	  <div
 	  	v-for="(feature, index) in features"
 		:key="index"

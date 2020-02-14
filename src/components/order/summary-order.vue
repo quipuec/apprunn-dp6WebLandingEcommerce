@@ -6,29 +6,16 @@
 			</div>
 			<div class="summary-amounts">
 				<p class="summary-amount-container separate">
-					<span>Subtotal</span><span class="summary-amount">{{getCurrencySymbol}}. {{getTotalToBuy}}</span>
+					<span>Subtotal</span><span class="summary-amount">{{getCurrencySymbol}}. {{getTotalToBuy | currencyFormat}}</span>
 				</p>
 				<p class="summary-amount-container separate">
-					<span>Descuento</span><span class="summary-amount">{{getCurrencySymbol}}. {{discount}}</span>
+					<span>Descuento</span><span class="summary-amount">{{getCurrencySymbol}}. {{discount | currencyFormat}}</span>
 				</p>
 				<p class="summary-amount-container separate">
-					<span>Envío</span><span class="summary-amount">{{getCurrencySymbol}}. {{getShippingCost}}</span>
-				</p>
-				<p
-					v-if="stepThree"
-					:style="`color: ${globalColors.primary} !important;`"
-					class="summary-amount-container separate shipping"
-				>
-					<button
-						type="button"
-						class="shipping-cost"
-					>
-						<span>Calcular costo de envío</span>
-						<i class="material-icons">expand_less</i>
-					</button>
+					<span>Envío</span><span class="summary-amount">{{getCurrencySymbol}}. {{getShippingCost | currencyFormat}}</span>
 				</p>
 				<p class="summary-amount-container total">
-					<span>Total</span><span class="summary-total">{{getCurrencySymbol}}. {{total}}</span>
+					<span>Total</span><span class="summary-total">{{getCurrencySymbol}}. {{total | currencyFormat}}</span>
 				</p>
 			</div>
 		</section>

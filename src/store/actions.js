@@ -90,6 +90,16 @@ function DEFAULT_USER({ commit }) {
 	commit('setUser', user);
 }
 
+function SET_WAY_PAYMENT({ commit }, context) {
+	const waysPayment = context.getLocalStorage('ecommerce::ecommerce-data').wayPayment;
+	commit('SET_WAYS_PAYMENT', waysPayment);
+}
+
+function SET_BANK_ACCOUNTS({ commit }, context) {
+	const bankAccounts = context.getLocalStorage('ecommerce::ecommerce-data').bankAccountsRelated;
+	commit('SET_BANK_ACCOUNT_RELA', bankAccounts);
+}
+
 function MORE_PRODUCTS({ commit }) {
 	commit('UPDATE_PRODUCT_PAGE');
 }
@@ -110,6 +120,10 @@ function addService({ commit }, service) {
 	commit('ADD_ONE_IN_SERVICE_COUNTER', service);
 }
 
+function resetCounter({ commit }) {
+	commit('RESETING_COUNTER');
+}
+
 function minusService({ commit, state }, service) {
 	const { config: { url } } = service;
 	const index = state.appConfig.loadingCounter.findIndex(l => l.url === url);
@@ -122,6 +136,10 @@ function SET_WINDOW_LOADED_TO_TRUE({ commit }) {
 
 function SET_ECOMMERCE_THEME({ commit }, theme) {
 	commit('SET_ECOMMERCE_COLORS', theme);
+}
+
+function setRatingProductId({ commit }, productId) {
+	commit('SET_PRODUCT_ID_TO_RATE', productId);
 }
 
 const methods = {
@@ -140,10 +158,14 @@ const methods = {
 	updateProductSelect,
 	UPDATE_PRODUCT_FILTER,
 	updateFilters,
+	resetCounter,
 	SET_ECOMMERCE_THEME,
 	SET_DEFAULT_VALUES,
-	START_PAGINATION,
+	SET_WAY_PAYMENT,
+	SET_BANK_ACCOUNTS,
+	setRatingProductId,
 	SET_WINDOW_LOADED_TO_TRUE,
+	START_PAGINATION,
 };
 
 export default methods;

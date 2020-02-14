@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<form-container
-			:background-image="backgroundImage"
-			:color="baseColor"
-			:disabled="disabled"
 			facebook
+			:background-image="backgroundImage"
+			:color="globalColors.primary"
+			:disabled="disabled"
 			:heading-image="headingImage"
 			:img-height="width > 768 ? '39.3' : '38'"
 			title="Iniciar Sesión"
@@ -105,6 +105,8 @@
 		};
 		const { data: userInfo } = await this.$httpSales.get('customers/current', { headers });
 		userInfo.dni = Number(userInfo.dni) ? userInfo.dni : null;
+		userInfo.dni =
+			Number(userInfo.typePerson.documentNumber) ? userInfo.typePerson.documentNumber : null;
 		userInfo.avatar = userInfo.urlImage || process.env.DEFAULT_AVATAR;
 		userInfo.fullName = userInfo.typePerson.fullName;
 		this.$store.dispatch('setUser', userInfo);
@@ -129,6 +131,7 @@
 				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, token);
 				this.$store.dispatch('setToken', token);
 				this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
+				this.$store.dispatch('LOAD_COMMERCE_INFO', this);
 				this.getCustomerData();
 				this.cleanForm();
 				this.goTo('page-home');
@@ -164,6 +167,10 @@
 		} catch (err) {
 			if (err.status === 500) {
 				this.showGenericError();
+			} else if (err.status === 401) {
+				if (err.data.message === 'TOKEN_HAS_EXPIRED') {
+					this.showGenericError('El enlace ha expirado. Se le ha enviado un nuevo enlace al correo.');
+				}
 			}
 		}
 	}
@@ -185,7 +192,6 @@
 	function data() {
 		return {
 			backgroundImage: process.env.FORM_BACKGROUND,
-			baseColor: process.env.COLOR_PRIMARY,
 			headingImage: '/static/img/sign-in.svg',
 			loading: false,
 			model: {

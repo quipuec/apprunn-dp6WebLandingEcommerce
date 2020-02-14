@@ -15,6 +15,7 @@ export default {
 		font-family: font(regular);
 		font-size: size(small);
 		margin-top: 66px;
+		max-width: 656px;
 	}
 
 	.principal {

@@ -138,6 +138,10 @@ function templateColors(state) {
 	return state.colors;
 }
 
+function valoratingProductId(state) {
+	return state.productIdToRate;
+}
+
 const methods = {
 	bannersCoupons,
 	bannersTypes,
@@ -174,6 +178,7 @@ const methods = {
 	getCategories,
 	totalProducts,
 	getFilters,
+	valoratingProductId,
 	windowLoaded,
 };
 

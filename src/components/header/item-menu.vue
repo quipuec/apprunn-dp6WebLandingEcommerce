@@ -10,7 +10,10 @@
 				{ 'active': data.select },
 			]"
 		>
-		<span class="item-text" :style="data.select ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`">{{data.title}}</span>
+		<span 
+			class="item-text"
+			:style="data.select ? `color: white` : `color: ${globalColors.title};transition:all 200ms ease-in;`"
+		>{{data.title}}</span>
 	</div>
 </template>
 <script>
@@ -52,7 +55,7 @@ export default {
 	}
 
 	.active {
-		filter: none;
+		filter: brightness(10);
 	}
 </style>
 
