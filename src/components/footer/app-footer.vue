@@ -26,24 +26,27 @@ import { mapGetters } from 'vuex';
 import sectionLinks from '@/components/footer/section-links';
 
 function helperCenter() {
-	return this.getCommerceData.helperCenter.reduce((acum, hc) => {
-		const newHc = { ...hc };
-		const section = { ...newHc.section[0] };
-		delete newHc.section;
-		const sectionIndex = acum.findIndex(a => a.id === section.id);
-		if (sectionIndex > -1) {
-			acum[sectionIndex].details.push({ ...newHc });
-		} else {
-			const newSection = {
-				code: section.code,
-				id: section.id,
-				name: section.name,
-				details: [{ ...newHc }],
-			};
-			acum.push(newSection);
-		}
-		return acum;
-	}, []);
+	if (this.getCommerceData && this.getCommerceData.helperCenter) {
+		return this.getCommerceData.helperCenter.reduce((acum, hc) => {
+			const newHc = { ...hc };
+			const section = { ...newHc.section[0] };
+			delete newHc.section;
+			const sectionIndex = acum.findIndex(a => a.id === section.id);
+			if (sectionIndex > -1) {
+				acum[sectionIndex].details.push({ ...newHc });
+			} else {
+				const newSection = {
+					code: section.code,
+					id: section.id,
+					name: section.name,
+					details: [{ ...newHc }],
+				};
+				acum.push(newSection);
+			}
+			return acum;
+		}, []);
+	}
+	return [];
 }
 
 export default {
