@@ -43,7 +43,6 @@ function webLink() {
 }
 
 function webImage() {
-	debugger;
 	return lib.getDeeper('webImage')(this.data);
 }
 
@@ -122,7 +121,7 @@ export default {
 
 .box-coupons {
 	background-color: color(white);
-	min-height: 248px;
+	height: 248px;
 	width: 363px;
 }
 
