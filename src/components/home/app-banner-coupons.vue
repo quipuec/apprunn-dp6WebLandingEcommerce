@@ -2,18 +2,21 @@
 	<div class="app-banner-cupons"
 	:style="`background-image: url(${webImage})`"
 	>
-		<p class="title-banner">CUPONES</p>
+		<p class="title-banner">{{ titleBanner }}</p>
 		<swiper :options="swiperOption">
 			<swiper-slide
 			v-for="(item, index) in imageCou"
 			:key="index">
 				<div class="content-coupons">
 					<div class="box-coupons">
-						<a href="#"
+						<a
+						v-if="item.webLink"
+						:href="item.webLink"
 						target="_blank"
+						class="link-coupons"
 						>
-							<img :src="item.webImage" class="img-coupons" alt="">
 						</a>
+						<img :src="item.webImage" class="img-coupons" alt="image-coupons">
 					</div>
 				</div>
 			</swiper-slide>
@@ -33,6 +36,10 @@ function created() {
 	if (this.imageCou.length <= 3) {
 		this.lengthImageCoupons = false;
 	}
+}
+
+function webLink() {
+	return lib.getDeeper('webLink')(this.data);
 }
 
 function webImage() {
@@ -67,6 +74,7 @@ function data() {
 			},
 		},
 		imageCou: [],
+		titleBanner: 'CUPONES',
 	};
 }
 
@@ -76,6 +84,7 @@ export default {
 	data,
 	computed: {
 		webImage,
+		webLink,
 		...mapGetters([
 			'getBanners',
 		]),
@@ -112,7 +121,7 @@ export default {
 
 .box-coupons {
 	background-color: color(white);
-	min-height: 248px;
+	height: 248px;
 	width: 363px;
 }
 
@@ -124,5 +133,15 @@ export default {
 .img-coupons {
 	height: 100%;
 	width: 100%;
+}
+
+.link-coupons {
+	bottom: 0;
+	display: block;
+	left: 56px;
+	position: absolute;
+	right: 0;
+	top: 0;
+	widows: 365px;
 }
 </style>
