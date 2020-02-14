@@ -131,6 +131,10 @@ function SET_ECOMMERCE_COLORS(state, theme) {
 	Vue.set(state, 'colors', colors);
 }
 
+function RESETING_COUNTER(state) {
+	Vue.set(state.appConfig, 'loadingCounter', []);
+}
+
 const methods = {
 	ADD_ONE_IN_SERVICE_COUNTER,
 	clearUser,
@@ -159,6 +163,7 @@ const methods = {
 	UPDATE_POLL_PROGRESS,
 	SET_CATEGORIES,
 	SET_ORDER_TOTAL,
+	RESETING_COUNTER,
 	UPDATE_FILTERS,
 	UPDATE_PRODUCT_PAGE,
 	UPDATE_PRODUCTS_SELECTED,
