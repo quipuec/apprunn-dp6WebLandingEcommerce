@@ -17,9 +17,11 @@ const asyncActions = {
 		const [{ data: products, headers }] = await Promise.all(request);
 		const commercePriceListId = getters.getCommerceData.settings.salPriceListId;
 		const setUpDateInProducts = products.map(
-			lib.setNewProperty('price', product => helper.setPrices(product, commercePriceListId).price),
-			lib.setNewProperty('priceDiscount', product => helper.setPrices(product, commercePriceListId).priceDiscount),
-			lib.setNewProperty('createdAt', ({ createdAt }) => helper.formatDate(createdAt)),
+			lib.compose(
+				lib.setNewProperty('price', product => helper.setPrices(product, commercePriceListId, 'price')),
+				lib.setNewProperty('priceDiscount', product => helper.setPrices(product, commercePriceListId, 'priceDiscount')),
+				lib.setNewProperty('createdAt', ({ createdAt }) => helper.formatDate(createdAt)),
+			),
 		);
 		const newProducts = [].concat(state.products.list, setUpDateInProducts);
 		commit('SET_PRODUCTS', newProducts);

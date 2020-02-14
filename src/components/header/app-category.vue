@@ -33,12 +33,12 @@
 				>
 					<div
 						class="list-name-category"
-						@click-item="goToCategory(list)"
 						:style="`background-color:${list.select ? globalColors.secondary : 'white'};transition:all 200ms ease-in;`"
 					>
 						<item-menu 
 						:data="list" 
 						color-select="#ed0000"
+						@click-item="goToCategory(list)"
 						@hover-item="hoverCategory"/>
 						<button class="btn-collapse" @click="clickCategory(list)">
 							<v-icon 

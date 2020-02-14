@@ -8,7 +8,7 @@
 				:breadcrumbs="breadcrumbs"
         		@change-category="changeCategory"
 				@open-category="openCategory"/>
-			<filters-category></filters-category>
+			<filters-category v-if="false"></filters-category>
 			<div class="wrapper-btns py-3">
 				<app-button 
 					action="Cerrar"
