@@ -16,7 +16,7 @@
 				<p
 					:style="`color: ${globalColors.secondary};`"
 					class="product-title">Precio UND</p>
-				<p class="product-price">{{ product.salePrice || product.priceDiscount || product.price }}</p>
+				<p class="product-price">{{ product.salePrice || product.priceDiscount || product.price | currencyFormat }}</p>
 			</div>
 			<div class="quantity text-xs-center">
 				<p
@@ -35,7 +35,7 @@
 				<p
 					:style="`color: ${globalColors.secondary};`"
 					class="product-title">Total</p>
-				<p class="product-price">{{product.total}}</p>
+				<p class="product-price">{{product.total | currencyFormat}}</p>
 			</div>
 			<div class="comments">
 				<text-area
@@ -52,11 +52,10 @@
 	</div>
 </template>
 <script>
-
-const commentsComponent = () => import('@/components/shared/icons/comments-component');
-const textArea = () => import('@/components/shared/inputs/text-area');
-const trashComponent = () => import('@/components/shared/icons/trash-component');
-const quantityButton = () => import('@/components/shared/buttons/quantity-button');
+import commentsComponent from '@/components/shared/icons/comments-component';
+import textArea from '@/components/shared/inputs/text-area';
+import trashComponent from '@/components/shared/icons/trash-component';
+import quantityButton from '@/components/shared/buttons/quantity-button';
 
 function showComments() {
 	this.show = !this.show;

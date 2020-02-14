@@ -26,6 +26,10 @@ import './global-components';
 import store from './store';
 import registerMap from './vue-map';
 
+window.onload = () => {
+	store.dispatch('SET_WINDOW_LOADED_TO_TRUE');
+	store.dispatch('toggleLoading', false);
+};
 registerAxios(Vue);
 registerMap(Vue);
 Vue.use(VueAxios, axios);

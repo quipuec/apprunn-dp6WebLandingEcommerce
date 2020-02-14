@@ -16,6 +16,7 @@ export default {
 		Home: 3,
 		Top: 4,
 	},
+	colors: {},
 	commerce: {},
 	currencyDefault: null,
 	directions: [
@@ -31,6 +32,7 @@ export default {
 		provinces: [],
 	},
 	order: {
+		bankAccountsRelated: null,
 		bill: null,
 		customerAddressId: 0,
 		customerAddress: null,
@@ -72,6 +74,7 @@ export default {
 			page: 1,
 		},
 	},
+	productIdToRate: null,
 	token: null,
 	user: {
 		email: '',
@@ -86,4 +89,5 @@ export default {
 		{ id: 0, name: 'Seleccione una tienda' },
 	],
 	filters: null,
+	windowLoaded: false,
 };

@@ -43,39 +43,35 @@
 			</div>
 		</div>
 		<div class="container-detail-bottom">
-			<div v-show="data.priceDiscount" class="d-center">
+			<div class="d-center">
 				<span
 					:class="[isLoading ? 'loading' : 'text-price-dis']"
-					:style="`color: ${globalColors.secondary}`"
+					:style="`color: ${globalColors.primary}`"
 				>
-					{{ getCurrencySymbol }} {{ data.priceDiscount }}
+					{{ getCurrencySymbol }} {{ data.priceDiscount | currencyFormat }}
 				</span>
-				<div
-					:style="`background: ${globalColors.primary};`"
-					:class="[isLoading ? 'loading' : 'content-discount']"
-				>
-					- {{ getDiscont }}%
-				</div>
 			</div>
 			<span
+				v-if="data.price"
 				:class="[
-					isLoading ? 'loading' : data.priceDiscount ? 'text-price' : 'text-price-dis',
+					isLoading ? 'loading' : data.priceDiscount >= 0 ? 'text-price' : 'text-price-dis',
 				]"
-				:style="`color: ${globalColors.secondary}`"
+				:style="`color: ${globalColors.primary}`"
 			>
-				{{ getCurrencySymbol }} {{ data.price }}
+				{{ getCurrencySymbol }} {{ data.price | currencyFormat }}
 			</span>
 		</div>
 		<ProductConversions
 			:default-unit="data.unit"
 			:conversions="data.conversions"
-			@unit-selection="$emit('unit-selection', $event)"
+			@unit-selection="unitSelection"
 		/>
 		<product-childrens 
 			:features="features"
 			@selected="selecFeature"
 			@clear="$emit('clear')"/>
-		<product-buy 
+		<product-buy
+			:open-warehouse="openWarehouse"
 			@click="clickQuantity"
 			@add-to-car="addToCar"
 			@open-dialog="$emit('open-dialog')"
@@ -85,10 +81,10 @@
 <script>
 import { mapGetters } from 'vuex';
 import lib from '@/shared/lib';
-
-const heartComponent = () => import('@/components/shared/icons/heart-component');
-const productChildrens = () => import('@/components/products/product-childrens');
-const productBuy = () => import('@/components/products/product-buy');
+import heartComponent from '@/components/shared/icons/heart-component';
+import productChildrens from '@/components/products/product-childrens';
+import productBuy from '@/components/products/product-buy';
+import ProductConversions from '@/components/products/product-conversions';
 
 function stopClick() {
 	return false;
@@ -97,10 +93,6 @@ function stopClick() {
 async function addToFavorites() {
 	this.$store.dispatch('SET_FAVORITE_FLAG', { context: this, product: this.data });
 	this.$set(this.data, 'flagFavorite', !this.data.flagFavorite);
-}
-
-function getDiscont() {
-	return Math.round(Number(this.data.percentageDiscount) * 100);
 }
 
 function selecFeature(value) {
@@ -134,12 +126,16 @@ function getBrandName(data) {
 	return lib.getDeeper('warehouseProduct.brand.name')(data);
 }
 
+function unitSelection(item) {
+	this.$emit('unit-selection', item);
+}
+
 export default {
 	name: 'product-detail',
 	components: {
 		heartComponent,
 		productChildrens,
-		ProductConversions: () => import('@/components/products/product-conversions'),
+		ProductConversions,
 		productBuy,
 	},
 	computed: {
@@ -150,7 +146,6 @@ export default {
 		...mapGetters('loading', [
 			'isLoading',
 		]),
-		getDiscont,
 		noStock,
 	},
 	methods: {
@@ -160,6 +155,7 @@ export default {
 		getBrandName,
 		stopClick,
 		selecFeature,
+		unitSelection,
 	},
 	props: {
 		data: {
@@ -170,13 +166,14 @@ export default {
 			default: () => [],
 			type: Array,
 		},
+		openWarehouse: false,
 	},
 };
 </script>
 <style lang="scss" scoped>
 	.product-detail-name {
-		color: color(dark);
-		font-family: font(bold);
+		color: color(black);
+		font-family: font(demi);
 		font-size: size(xlarge);
 		margin: 20px 0 5px 0;
 	}
@@ -184,6 +181,7 @@ export default {
 	.product-detail-code {
 		color: color(base);
 		flex: 1 1 30%;
+		font-family: font(medium);
 		font-size: size(medium);
 
 		@media screen and (max-width: 996px) {
@@ -213,7 +211,7 @@ export default {
 
 	.text-price-dis {
 		font-family: font(bold);
-		font-size: 23px;
+		font-size: 26px;
 	}
 
 	.content-discount {
@@ -287,6 +285,8 @@ export default {
 	}
 
 	.product-detail-brand {
+		color: color(dark);
+		font-family: font(bold);
 		font-size: size(small);
 		text-transform: uppercase;
 

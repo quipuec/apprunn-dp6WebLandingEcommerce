@@ -90,17 +90,17 @@
 </template>
 
 <script>
-	const appButton = () => import('@/components/shared/buttons/app-button');
-	const appInput = () => import('@/components/shared/inputs/app-input');
-	const callMenu = () => import('@/components/header/call-menu');
-	const containerCompanyData = () => import('@/components/shared/company/container-company-data');
-	const modalLogin = () => import('@/components/header/modal-login');
-	const appSearch = () => import('@/components/shared/inputs/app-input-search');
-	const buttonImage = () => import('@/components/shared/buttons/app-button-image');
-	const mediaCompanyData = () => import('@/components/shared/company/media-company-data');
-	const appFooter = () => import('@/components/footer/app-footer');
-	const itemMenu = () => import('@/components/header/item-menu');
-	const menuCategory = () => import('@/components/shared/category/menu-category');
+	import appButton from '@/components/shared/buttons/app-button';
+	import appInput from '@/components/shared/inputs/app-input';
+	import callMenu from '@/components/header/call-menu';
+	import containerCompanyData from '@/components/shared/company/container-company-data';
+	import modalLogin from '@/components/header/modal-login';
+	import appSearch from '@/components/shared/inputs/app-input-search';
+	import buttonImage from '@/components/shared/buttons/app-button-image';
+	import mediaCompanyData from '@/components/shared/company/media-company-data';
+	import appFooter from '@/components/footer/app-footer';
+	import itemMenu from '@/components/header/item-menu';
+	import menuCategory from '@/components/shared/category/menu-category';
 
 	function data() {
 		return {

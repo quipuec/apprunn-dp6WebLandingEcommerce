@@ -10,7 +10,7 @@
 				<app-button
 					v-for="method in getWaysPayments"
 					:key="method.id"
-					max-width="360px"
+					max-width="205.31px"
 					class="method-item"
 					:action="method.name"
 					:active="paymentMethodSelected === method.code"
@@ -29,17 +29,17 @@
 import { mapGetters } from 'vuex';
 import appButton from '@/components/shared/buttons/app-button';
 import { isEmpty } from '@/shared/lib';
-
-const depositPayment = () => import('@/components/order/deposit-payment');
-const productsBuyed = () => import('@/components/order/products-buyed');
-const recievedPayment = () => import('@/components/order/recieved-payment');
-const visaPayment = () => import('@/components/order/visa-payment');
+import depositPayment from '@/components/order/deposit-payment';
+import productsBuyed from '@/components/order/products-buyed';
+import recievedPayment from '@/components/order/recieved-payment';
+import visaPayment from '@/components/order/visa-payment';
 
 function created() {
 	if (isEmpty(this.getWaysPayments)) {
-		this.$store.dispatch('LOAD_WAY_PAYMENT', this);
+		this.$store.dispatch('SET_WAY_PAYMENT', this);
+		this.$store.dispatch('SET_BANK_ACCOUNTS', this);
 	} else {
-		this.onSelect(this.getWaysPayments[2]);
+		this.onSelect(this.getWaysPayments[0]);
 	}
 }
 
@@ -47,7 +47,8 @@ function onSelect(method) {
 	this.$store.commit('SET_WAY_PAYMENT', { wayPayment: null, bankAccountId: null });
 	this.paymentMethodSelected = method.code;
 	if (method.code === 'IBD') {
-		this.$store.commit('SET_WAY_PAYMENT', { wayPayment: method.id, bankAccountId: 1 });
+		const firstBank = this.getBankAccounts[0].bankId;
+		this.$store.commit('SET_WAY_PAYMENT', { wayPayment: method.id, bankAccountId: firstBank });
 	}
 }
 
@@ -61,7 +62,7 @@ function paymentMethodSelectedComponent() {
 }
 
 function getWaysPayments() {
-	this.onSelect(this.getWaysPayments[2]);
+	this.onSelect(this.getWaysPayments[0]);
 }
 
 function data() {
@@ -85,6 +86,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getWaysPayments',
+			'getBankAccounts',
 		]),
 		paymentMethodSelectedComponent,
 	},
@@ -103,7 +105,7 @@ export default {
 		align-items: center;
 		display: grid;
 		grid-gap: 20px;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(205.31px, 1fr));
 		
 		@media (max-width: 600px) {
 			margin: 0 20px;
@@ -111,7 +113,6 @@ export default {
 	}
 
 	.component-container {
-
 		@media (max-width: 600px) {
 			margin: 0 20px;
 		}

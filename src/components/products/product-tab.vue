@@ -1,5 +1,5 @@
 <template>
-  <div class="product-tab">
+  	<div class="product-tab">
 		<v-tabs 
 			v-model="active" 
 			slider-color="transparent"
@@ -16,21 +16,21 @@
 					class="text-tab">{{ tab }}</div>
 			</v-tab>
 			<v-tab-item v-for="(section, index) in sections" :key="index">
-        <content-text
+        		<content-text
 					:content="subSection"
 					v-for="subSection in section.subSections"
 					:key="subSection.id"
 				/>
-      </v-tab-item>
+      		</v-tab-item>
 			<v-tab-item v-if="active === lastIndex">
-        <product-opinion :opinions="opinions" @update-opinion="$emit('update-opinion')"/>
-      </v-tab-item>
+        		<product-opinion :opinions="opinions" @update-opinion="$emit('update-opinion')"/>
+      		</v-tab-item>
 		</v-tabs>
 	</div>
 </template>
 <script>
-const contentText = () => import('@/components/products/content');
-const productOpinion = () => import('@/components/products/product-opinion');
+import contentText from '@/components/products/content';
+import productOpinion from '@/components/products/product-opinion';
 
 function data() {
 	return {
@@ -46,7 +46,8 @@ export default {
 		productOpinion,
 	},
 	props: {
-		tabs: {
+		lastIndex: Number,
+		opinions: {
 			type: Array,
 			default: () => [],
 		},
@@ -54,8 +55,7 @@ export default {
 			type: Array,
 			default: () => [],
 		},
-		lastIndex: Number,
-		opinions: {
+		tabs: {
 			type: Array,
 			default: () => [],
 		},

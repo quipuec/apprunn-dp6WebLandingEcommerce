@@ -21,8 +21,7 @@
 import cameraComponent from '@/components/shared/icons/camera-component';
 import editComponent from '@/components/shared/icons/edit-component';
 import { mapGetters } from 'vuex';
-
-const UploadImage = () => import('@/components/shared/upload-image');
+import UploadImage from '@/components/shared/upload-image';
 
 function created() {
 	this.loadGeoData();
@@ -57,6 +56,7 @@ async function updateUserAvatar(urlImage) {
 
 async function getCustomerData() {
 	const { data: userInfo } = await this.$httpSales.get('customers/current');
+	this.setLocalData('ecommerce::ecommerce-user', userInfo);
 	this.setLocalData('ecommerce-user', userInfo);
 	this.$store.dispatch('setUser', userInfo);
 	this.$userInfo = this.$store.getters.user;

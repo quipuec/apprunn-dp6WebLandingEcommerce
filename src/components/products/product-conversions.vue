@@ -8,20 +8,26 @@
 			]"
 			:style="`color:${globalColors.base}`"
 		>Presentaciones:</h3>
-		<div
-			:class="{ 'loading conversions-select-container': indeterminate }"
-		>
-			<AppSelect
-				v-show="!indeterminate"
-				return-object
-				class="conversions-select"
-				placeholder="presentaciones..."
-				item-text="code"
-				:items="conversionsComputed"
-				:value="defaultUnit"
-				@input="$emit('unit-selection', $event)"
-			/>
-		</div>
+		<v-flex xs12>
+			<div
+				:class="{ 'loading conversions-select-container': indeterminate }"
+			>
+				<div v-if="!indeterminate">
+					<v-btn
+						v-for="(item, index) in conversionsComputed"
+						class="btn-conversions pa-2"
+						:style="`border:1px solid ${globalColors.primary};color: ${item.isSelected ? 'white' : globalColors.primary};background-color: ${item.isSelected ? globalColors.primary : 'white'}`"
+						:key="index"
+						type="button"
+						v-model="conversionSelected"
+						:value="defaultUnit"
+						@click="selectedConversion(item)"
+					>
+						{{ item.name }}
+					</v-btn>
+				</div>
+			</div>
+		</v-flex>
 	</div>
 </template>
 <script>
@@ -29,12 +35,34 @@ import AppSelect from '@/components/shared/inputs/app-select';
 import { mapGetters } from 'vuex';
 import l from '@/shared/lib';
 
-function conversionsComputed() {
+
+function conversionsChanges(conversions) {
 	const conversionsFormatted = l.map(
-		k => l.setNewProperty('id', Number(k))(this.conversions[k]),
-		Object.keys(this.conversions),
+		k => l.setNewProperty('id', Number(k))(conversions[k]),
+		Object.keys(conversions),
 	);
-	return [].concat(this.defaultUnit, conversionsFormatted);
+	this.conversionsComputed = [].concat(this.defaultUnit, conversionsFormatted);
+	this.conversionsComputed = this.conversionsComputed.map((p, index) => {
+		const newP = { ...p };
+		newP.isSelected = index === 0;
+		return newP;
+	});
+}
+
+function selectedConversion(item)	{
+	this.conversionsComputed = this.conversionsComputed.map((o) => {
+		const newData = { ...o };
+		newData.isSelected = item.id === o.id;
+		return newData;
+	});
+	this.$emit('unit-selection', item);
+}
+
+function data() {
+	return {
+		conversionSelected: null,
+		conversionsComputed: [],
+	};
 }
 
 export default {
@@ -46,7 +74,11 @@ export default {
 		...mapGetters([
 			'indeterminate',
 		]),
-		conversionsComputed,
+	},
+	data,
+	methods: {
+		conversionsChanges,
+		selectedConversion,
 	},
 	props: {
 		conversions: {
@@ -56,6 +88,12 @@ export default {
 		defaultUnit: {
 			default: () => {},
 			type: Object,
+		},
+	},
+	watch: {
+		conversions: {
+			deep: true,
+			handler: conversionsChanges,
 		},
 	},
 };
@@ -79,5 +117,15 @@ export default {
 		height: 24px;
 		margin-left: 10px;
 		width: 100%;
+	}
+
+	.btn-conversions {
+		border-radius: 7px;
+		font-family: font(bold);
+
+		&.active {
+			background-color: red;
+			color: white;
+		}
 	}
 </style>

@@ -17,7 +17,7 @@ export function httpRequestInterceptor(config) {
 export function httpResponseSuccessInterceptor(response) {
 	store.dispatch('minusService', response);
 	const counter = store.getters.loadingCounter;
-	if (counter === 0) {
+	if (counter === 0 && store.getters.windowLoaded) {
 		store.dispatch('toggleLoading', false);
 	}
 	return response;
@@ -25,6 +25,7 @@ export function httpResponseSuccessInterceptor(response) {
 
 export function httpResponseInterceptor(error) {
 	store.dispatch('toggleLoading', false);
+	store.dispatch('resetCounter');
 	let text = 'Su sesión expiró.';
 	const status = error.response.status;
 	if (status === 401) {

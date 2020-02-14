@@ -13,8 +13,8 @@
 			:len="getCategoriesLength"
 			:color-base="colorBase"/>
 		<component-filter-product 
-			@click-filter="filterSelect"
 			v-if="filtersExist"
+			@click-filter="filterSelect"
 		>
 		</component-filter-product>
 		<div class="page-products">
@@ -25,12 +25,27 @@
 			:data="getPromotionalBanner"
 			:color="colorSecondary"
 			big/>
+		<app-banner-credit
+			v-if="getCreditBanner"
+			:data="getCreditBanner"
+			:title-btn="titleBtn"
+		/>
+		<app-banner-plans
+			v-if="getPlansBanner"
+			:data="getPlansBanner"
+		/>
+		<app-banner-coupons
+			v-if="getCouponsBanner"
+			:data="getCouponsBanner"
+		/>
 	</layout-admin>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-
+import appBannerCoupons from '@/components/home/app-banner-coupons';
+import appBannerCredit from '@/components/home/app-banner-credit';
+import appBannerPlans from '@/components/header/app-banner-plans';
 import appBannerTop from '@/components/header/app-banner-top';
 import bannerCarousel from '@/components/home/banner-carousel';
 import categoriesCarousel from '@/components/home/categories-carousel';
@@ -112,13 +127,17 @@ function data() {
 		colorDark: process.env.COLOR_TITLE,
 		colorBase: process.env.COLOR_PRIMARY,
 		colorSecondary: process.env.COLOR_SECONDARY,
+		titleBtn: 'SOLICITA AQUÍ',
 	};
 }
 export default {
 	name: 'page-home',
 	data,
 	components: {
+		appBannerCoupons,
+		appBannerCredit,
 		appBannerTop,
+		appBannerPlans,
 		bannerCarousel,
 		categoriesCarousel,
 		componentFilterProduct,
@@ -128,7 +147,10 @@ export default {
 	computed: {
 		...mapGetters([
 			'getBannersHome',
+			'getCouponsBanner',
+			'getCreditBanner',
 			'getPromotionalBanner',
+			'getPlansBanner',
 			'getCategories',
 			'getFilters',
 			'indeterminate',

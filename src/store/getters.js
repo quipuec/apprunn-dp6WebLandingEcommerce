@@ -82,6 +82,10 @@ function bannersTypes(state) {
 	return state.bannerTypes;
 }
 
+function bannersCoupons(state) {
+	return state.bannersCoupons;
+}
+
 function getBanners(state) {
 	return state.banners;
 }
@@ -96,6 +100,18 @@ function getPromotionalBanner(state) {
 
 function getPromotionalDetailsBanner(state) {
 	return state.banners.find(banner => banner.typeName === 'Promoción en detalle');
+}
+
+function getPlansBanner(state) {
+	return state.banners.find(banner => banner.typeName === 'Promoción en planes');
+}
+
+function getCreditBanner(state) {
+	return state.banners.find(banner => banner.typeName === 'Promoción en creditos');
+}
+
+function getCouponsBanner(state) {
+	return state.banners.find(banner => banner.typeName === 'Promoción en cupones');
 }
 
 function productParams(state) {
@@ -114,17 +130,33 @@ function loadingCounter(state) {
 	return state.appConfig.loadingCounter.length;
 }
 
+function windowLoaded(state) {
+	return state.windowLoaded;
+}
+
+function templateColors(state) {
+	return state.colors;
+}
+
+function valoratingProductId(state) {
+	return state.productIdToRate;
+}
+
 const methods = {
+	bannersCoupons,
 	bannersTypes,
 	companyLogo,
 	currentPage,
 	genders,
 	getBanners,
 	getBannersHome,
+	getCouponsBanner,
+	getCreditBanner,
 	getCommerceData,
-	getDirections,
 	getCurrencySymbol,
+	getDirections,
 	getLastPage,
+	getPlansBanner,
 	getPromotionalBanner,
 	getProducts,
 	getPromotionalDetailsBanner,
@@ -138,6 +170,7 @@ const methods = {
 	pollData,
 	productParams,
 	snackbar,
+	templateColors,
 	themeColors,
 	token,
 	user,
@@ -145,6 +178,8 @@ const methods = {
 	getCategories,
 	totalProducts,
 	getFilters,
+	valoratingProductId,
+	windowLoaded,
 };
 
 export default methods;
