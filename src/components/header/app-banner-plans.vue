@@ -66,8 +66,7 @@ export default {
 <style lang="scss" scoped>
 .app-banner-plans {
 	background-color: color(white);
-	height: 389px;
-	padding: 12px 7%;
+	height: 379px;
 
 	@media (max-width: 764px) {
 		padding: 7px 5%;
@@ -103,6 +102,7 @@ img {
 
 .banner-plans-height {
 	height: 100%;
+	position: relative;
 }
 
 .opacity::before {
