@@ -138,6 +138,10 @@ function SET_ECOMMERCE_THEME({ commit }, theme) {
 	commit('SET_ECOMMERCE_COLORS', theme);
 }
 
+function setRatingProductId({ commit }, productId) {
+	commit('SET_PRODUCT_ID_TO_RATE', productId);
+}
+
 const methods = {
 	addProductToBuyCar,
 	addService,
@@ -159,8 +163,9 @@ const methods = {
 	SET_DEFAULT_VALUES,
 	SET_WAY_PAYMENT,
 	SET_BANK_ACCOUNTS,
-	START_PAGINATION,
+	setRatingProductId,
 	SET_WINDOW_LOADED_TO_TRUE,
+	START_PAGINATION,
 };
 
 export default methods;
