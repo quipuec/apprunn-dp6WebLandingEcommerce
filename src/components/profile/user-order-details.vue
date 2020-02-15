@@ -23,7 +23,7 @@
 					<span class="label">Estado: </span><span class="order-info-data">{{getValue('orderState.name', getOrderInfo)}}</span>
 				</div>
 			</div>
-			<div class="order-payment">
+			<div class="order-payment" v-if="!rating">
 				<div class="order-payment-wrapper">
 					<div class="my-2 delivery-address">
 						<span v-if="flagPickUp === 1" class="label">
@@ -48,28 +48,42 @@
 				<load-payment v-if="flagAddVoucher"/>
 			</div>
 		</section>
-		<section class="table">
-			<responsive-table
-				align-left
-				:columns="columns"
-				:rows="details"
-			>
-				<template slot-scope="{ row }">
-					<td class="row-product">
-						<div class="product-info-container">
-							<img :src="row.productImage" alt="imagen del producto" class="product-img"/>
-							<div class="text-xs-left">
-								<h4 class="product-name">{{row.productName}}</h4>
-								<span class="product-description">{{row.description}}</span>
+		<transition-group name="go-right" tag="div" class="relative rating-container">
+			<section v-if="rating" class="absolute w-100" :key="1">
+				<product-rating :product="currentProduct"/>
+				<form-opinion @cancel-opinion="rating = !rating"/>
+			</section>
+			<section class="table absolute w-100" v-else :key="2">
+				<responsive-table
+					align-left
+					:columns="columns"
+					:rows="details"
+				>
+					<template slot-scope="{ row }">
+						<td class="row-product">
+							<div class="product-info-container">
+								<img :src="row.productImage" alt="imagen del producto" class="product-img"/>
+								<div class="text-xs-left">
+									<h4 class="product-name">{{row.productName}}</h4>
+									<span class="product-description">{{row.description}}</span>
+								</div>
 							</div>
-						</div>
-					</td>
-					<td class="product-unit-price">{{row.salePrice}}</td>
-					<td class="product-quantity">{{row.quantity}}</td>
-					<td class="product-sub">{{row.total}}</td>
-				</template>
-			</responsive-table>
-		</section>
+						</td>
+						<td class="product-unit-price">{{row.salePrice}}</td>
+						<td class="product-quantity">{{row.quantity}}</td>
+						<td class="product-sub">{{row.total}}</td>
+						<td v-if="orderStatusIsGiven">
+							<button
+								type="button"
+								class="rating-button"
+								:style="`color:${globalColors.primary};border-color:${globalColors.primary}`"
+								@click="onRating(row)"
+							>Califica</button>
+						</td>
+					</template>
+				</responsive-table>
+			</section>
+		</transition-group>
 	</div>
 </template>
 <script>
@@ -79,6 +93,8 @@ import leftComponent from '@/components/shared/icons/left-component';
 import loadPayment from '@/components/profile/load-payment';
 import responsiveTable from '@/components/shared/table/respondive-table';
 import lib, { isEmpty } from '@/shared/lib';
+import formOpinion from '@/components/products/form-opinion';
+import productRating from '@/components/profile/product-rating';
 
 async function created() {
 	({ id: this.orderId } = this.$route.params);
@@ -87,6 +103,16 @@ async function created() {
 		const { additionalInfo } = this.getOrderInfo;
 		this.$store.commit('UPDATE_FLAG_ADD_VOUCHER', !isEmpty(additionalInfo));
 	}
+	this.updateColumns();
+}
+
+function updateColumns() {
+	this.columns = this.columns.reduce((list, col) => {
+		if (!this.orderStatusIsGiven && col.value === 'action') {
+			return list;
+		}
+		return list.concat(col);
+	}, []);
 }
 
 function goTo() {
@@ -109,6 +135,16 @@ function details() {
 	return lib.getDeeper('details')(this.getOrderInfo);
 }
 
+function orderStatusIsGiven() {
+	return lib.getDeeper('orderState.code')(this.getOrderInfo) === 'GIVEN';
+}
+
+function onRating(product) {
+	this.currentProduct = { ...product };
+	this.$store.dispatch('setRatingProductId', product.productId);
+	this.rating = !this.rating;
+}
+
 function data() {
 	return {
 		columns: [
@@ -116,8 +152,11 @@ function data() {
 			{ value: 'unitPrice', title: 'Precio Und', responsive: true },
 			{ value: 'quantity', title: 'Cantidad', responsive: true },
 			{ value: 'sub', title: 'Precio Subtotal', responsive: true },
+			{ value: 'action', title: 'Acción', responsive: false },
 		],
+		currentProduct: {},
 		orderId: 0,
+		rating: false,
 	};
 }
 
@@ -125,8 +164,10 @@ export default {
 	name: 'user-order-details',
 	components: {
 		appButton,
+		formOpinion,
 		leftComponent,
 		loadPayment,
+		productRating,
 		responsiveTable,
 	},
 	computed: {
@@ -136,6 +177,7 @@ export default {
 		]),
 		details,
 		flagPickUp,
+		orderStatusIsGiven,
 	},
 	created,
 	data,
@@ -143,6 +185,8 @@ export default {
 		addPaymentInfo,
 		getValue,
 		goTo,
+		onRating,
+		updateColumns,
 	},
 };
 </script>
@@ -171,11 +215,6 @@ export default {
 	}
 
 	.table {
-		margin: 0 50px;
-
-		@media (max-width: 600px) {
-			margin: 0 10px;
-		}
 
 		td {
 			padding: 10px 30px;
@@ -232,7 +271,7 @@ export default {
 	}
 
 	.header {
-		margin: 0 30px 30px;
+		margin: 0 30px 10px;
 
 		@media (max-width: 600px) {
 			margin: 0 15px 30px;
@@ -330,4 +369,37 @@ export default {
 			margin-right: 40px;
 		}
 	}
+
+	.absolute {
+		position: absolute;
+	}
+
+	.relative {
+		position: relative;
+	}
+
+	.w-100 {
+		width: 100%;
+	}
+
+	.rating-container {
+		margin: 0 50px;
+
+			@media (max-width: 600px) {
+				margin: 0 10px;
+			}
+	}
+
+	.rating-button {
+		border-radius: 8px;
+		border-style: solid;
+		border-width: 1px;
+		background-color: transparent;
+		padding: 2px 10px;
+	}
+
+	.rating-button:hover {
+		background-color: color(border);
+	}
+
 </style>
