@@ -1,6 +1,6 @@
 <template>
 	<div class="app-footer">
-		<section-links></section-links>
+		<section-links :menu="helperCenter"></section-links>
 		<div class="content-company-footer">
 			<p class="company-footer">© 2019   www.mrc.com  Todos los Derechos reservados.</p>
 			<div>
@@ -25,6 +25,30 @@
 import { mapGetters } from 'vuex';
 import sectionLinks from '@/components/footer/section-links';
 
+function helperCenter() {
+	if (this.getCommerceData && this.getCommerceData.helperCenter) {
+		return this.getCommerceData.helperCenter.reduce((acum, hc) => {
+			const newHc = { ...hc };
+			const section = { ...newHc.section[0] };
+			delete newHc.section;
+			const sectionIndex = acum.findIndex(a => a.id === section.id);
+			if (sectionIndex > -1) {
+				acum[sectionIndex].details.push({ ...newHc });
+			} else {
+				const newSection = {
+					code: section.code,
+					id: section.id,
+					name: section.name,
+					details: [{ ...newHc }],
+				};
+				acum.push(newSection);
+			}
+			return acum;
+		}, []);
+	}
+	return [];
+}
+
 export default {
 	name: 'app-footer',
 	components: {
@@ -34,6 +58,7 @@ export default {
 		...mapGetters([
 			'getCommerceData',
 		]),
+		helperCenter,
 	},
 };
 </script>
