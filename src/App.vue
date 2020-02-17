@@ -645,12 +645,24 @@ input.app-input::-webkit-input-placeholder {
 		transform: translateX(100%);
 	}
 
+	.go-right-enter {
+		opacity: 0;
+		transform: translateX(-100%);
+	}
+
 	.go-left-leave-to {
 		opacity: 0;
 		transform: translateX(-100%);
 	}
 
+	.go-right-leave-to {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+
 	.go-left-enter-active,
+	.go-right-enter-active,
+	.go-right-leave-active,
 	.go-left-leave-active {
 		transition: all 0.2s cubic-bezier(.32,1.09,.62,.98);
 }
