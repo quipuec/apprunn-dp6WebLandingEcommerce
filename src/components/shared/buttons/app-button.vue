@@ -85,7 +85,6 @@
 	}
 
 	[disabled] {
-		background-color: color(disabled) !important;
 		cursor: not-allowed;
 	}
 </style>
