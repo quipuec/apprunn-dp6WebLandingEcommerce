@@ -1,4 +1,6 @@
 import Vue from 'vue';
+import h from '@/shared/helper';
+import { isEmpty } from '@/shared/lib';
 
 export default {
 	SET_FLAG_PICKUP(state, val) {
@@ -69,5 +71,11 @@ export default {
 	},
 	SET_BANK_ACCOUNT(state, id) {
 		Vue.set(state.order.paymentMethod, 'bankAccountId', id);
+	},
+	UPDATE_ORDER_DETAILS_IF_EXIST(state, products) {
+		if (!isEmpty(state.order.order)) {
+			h.updateOrderDetailsInLocalStorage(products);
+			Vue.set(state.order.order, 'details', [...products]);
+		}
 	},
 };

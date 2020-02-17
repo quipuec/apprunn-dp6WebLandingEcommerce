@@ -35,6 +35,7 @@
 <script>
 import lib, { isEmpty } from '@/shared/lib';
 import { mapGetters } from 'vuex';
+import PickUpIn from '@/shared/PickUp';
 
 function isNotEmptyBilling() {
 	const customerBill = lib.getDeeper('dataBill')(this.getOrderInfo);
@@ -58,6 +59,9 @@ function getPhone() {
 }
 
 function getDirection() {
+	if (lib.getDeeper('flagPickUp')(this.getOrderInfo) === PickUpIn.store) {
+		return lib.getDeeper('warehouseAddress')(this.getOrderInfo);
+	}
 	return lib.getDeeper('deliveryAddress.addressLine1')(this.getOrderInfo);
 }
 
@@ -66,7 +70,11 @@ function stepFour() {
 }
 
 function getWayPayment() {
-	return lib.getDeeper('wayPayment.description')(this.getOrderInfo);
+	const wayPayment = lib.getDeeper('wayPayment.description')(this.getOrderInfo);
+	if (wayPayment) {
+		return wayPayment;
+	}
+	return 'Recojo en tienda';
 }
 
 function getRuc() {
