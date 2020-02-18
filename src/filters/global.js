@@ -36,7 +36,7 @@ function currencyFormat(val) {
 	if (!decimals) {
 		return `${integer}.00`;
 	}
-	const newDecimals = decimals > 9 ? decimals : `${decimals}0`;
+	const newDecimals = decimals.length === 1 && decimals < 10 ? `${decimals}0` : decimals;
 	return `${integer}.${newDecimals}`;
 }
 
