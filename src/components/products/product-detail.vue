@@ -227,7 +227,7 @@ export default {
 	}
 
 	.text-price {
-		color: color(border) !important;
+		color: color(base) !important;
 		font-family: font(bold);
 		font-size: size(large);
 		position: relative;
