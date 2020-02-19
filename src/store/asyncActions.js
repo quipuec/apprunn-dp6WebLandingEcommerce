@@ -53,6 +53,10 @@ const asyncActions = {
 		const { data: order } = await context.$httpSales.patch(url, body);
 		asyncActions.GET_ORDER_INFO(store, { context, id: order.id });
 	},
+	CANCEL_ORDER: async (store, { context, id }) => {
+		const url = `orders/${id}/cancel`;
+		await context.$httpSales.patch(url);
+	},
 	GET_ORDER_INFO: async (store, { context, id }) => {
 		const url = `orders/${id}`;
 		const { data: order } = await context.$httpSales.get(url);
@@ -146,6 +150,7 @@ const asyncActions = {
 		const url = `companies/${aclCode}/acl`;
 		const { data: res } = await context.$httpSales.get(url);
 		context.setLocalData(`${process.env.STORAGE_USER_KEY}::currency-default`, res.currencyDefault);
+		context.setLocalData(`${process.env.STORAGE_USER_KEY}::country`, res.country.countryCode);
 		commit('SET_CURRENCY_DEFAULT', res.currencyDefault);
 	},
 	LOAD_FILTERS: async ({ commit }, context) => {

@@ -11,10 +11,24 @@
 		<section class="payment">
 			<payment-methods/>
 		</section>
+		<section class="sumary-order-buttons-container">
+			<button
+				type="button"
+				class="summary-order-button"
+				:style="`background-color:${globalColors.primary}`"
+				@click="seeOrder"
+			>Ver Pedido</button>
+			<button
+				type="button"
+				class="summary-order-button"
+				:style="`background-color:${globalColors.primary}`"
+				@click="cancalOrder"
+			>Cancelar pedido</button>
+		</section>
 	</div>
 </template>
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import productsBuyed from '@/components/order/products-buyed';
 import summaryOrder from '@/components/order/summary-order';
 import thanksMessage from '@/components/order/thanks-message';
@@ -29,6 +43,17 @@ function mounted() {
 	this.$store.commit('EMPTY_CAR');
 }
 
+function seeOrder() {
+	const { id } = this.getOrderInfo;
+	this.$router.push({ name: 'order-detail', params: { id } });
+}
+
+async function cancalOrder() {
+	const { id } = this.getOrderInfo;
+	await this.CANCEL_ORDER({ context: this, id });
+	this.goTo('home');
+}
+
 export default {
 	name: 'page-summary-order',
 	beforeDestroy,
@@ -39,10 +64,18 @@ export default {
 		summaryOrder,
 		thanksMessage,
 	},
+	computed: {
+		...mapGetters([
+			'getOrderInfo',
+		]),
+	},
 	methods: {
 		...mapActions([
 			'SET_DEFAULT_VALUES',
+			'CANCEL_ORDER',
 		]),
+		cancalOrder,
+		seeOrder,
 	},
 	mounted,
 };
@@ -84,5 +117,26 @@ export default {
 		@media (max-width: 600px) {
 			margin: auto;
 		}
+	}
+
+	.sumary-order-buttons-container {
+		align-items: center;
+		display: flex;
+		justify-content: center;
+		margin: 30px 0 80px;
+	}
+
+	.summary-order-button {
+		border-radius: 10px;
+		box-sizing: border-box;
+		color: white;
+		font-family: font(bold);
+		padding: 15px 50px;
+		margin: 0 10px;
+		width: 240px;
+	}
+
+	.summary-order-button:hover {
+		filter: brightness(1.3);
 	}
 </style>

@@ -10,36 +10,36 @@
 		<app-select
 			item-text="name"
 			item-value="id"
-			placeholder="Departamento"
+			:placeholder="countryLabels.department"
 			class="mx-2 my-1 department-field field"
 			:items="departments"
 			v-model="newAddress.department"
 			@input="selectDepartment"
 		>
-			<span v-if="$v.newAddress.department.$invalid">El departamento es requerido</span>
+			<span v-if="$v.newAddress.department.$invalid">El {{countryLabels.department}} es requerido</span>
 		</app-select>
 		<app-select
 			item-text="name"
 			item-value="id"
-			placeholder="Provincia"
+			:placeholder="countryLabels.province"
 			class="mx-2 my-1 province-field field"
 			:items="provinces"
 			:disabled="!newAddress.department"
 			@input="selectProvince"
 			v-model="newAddress.province"
 		>
-			<span v-if="$v.newAddress.province.$invalid">La provincia es requerida</span>
+			<span v-if="$v.newAddress.province.$invalid">La {{countryLabels.province}} es requerida</span>
 		</app-select>
 		<app-select
 			item-text="name"
 			item-value="id"
-			placeholder="Distrito"
+			:placeholder="countryLabels.district"
 			class="mx-2 my-1 district-field field"
 			:items="districts"
 			:disabled="!newAddress.department"
 			v-model="newAddress.district"
 		>
-			<span v-if="$v.newAddress.district.$invalid">El distrito es requerido</span>
+			<span v-if="$v.newAddress.district.$invalid">El {{countryLabels.district}} es requerido</span>
 		</app-select>
 		<app-input
 			placeholder="Dirección"
