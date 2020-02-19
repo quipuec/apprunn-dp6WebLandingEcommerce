@@ -32,8 +32,10 @@ function addProductToBuyCar(context, product) {
 		const quantity = currentProduct.quantity + newProduct.quantity;
 		productsSelected[index].quantity = quantity;
 		context.commit('UPDATE_PRODUCTS_SELECTED', productsSelected);
+		context.commit('UPDATE_ORDER_DETAILS_IF_EXIST', productsSelected);
 	} else {
 		context.commit('UPDATE_PRODUCTS_SELECTED', productsSelected.concat(newProduct));
+		context.commit('UPDATE_ORDER_DETAILS_IF_EXIST', productsSelected.concat(newProduct));
 	}
 }
 

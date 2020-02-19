@@ -26,9 +26,9 @@
 							:background="globalColors.secondary"
 							@click="goTo('page-home')"
 						/>
-						<div class="total-product" :style="`color: ${globalColors.base}`">
+						<div class="total-product" :style="`color: ${globalColors.subtitle}`">
 							<span>Total de productos: </span>
-							<div class="amount-total-products" :style="`background-color: ${globalColors.base}`">
+							<div class="amount-total-products" :style="`background-color: ${globalColors.title}`">
 								<output>{{getTotalQuantityProducts}}</output>
 							</div>
 						</div>
