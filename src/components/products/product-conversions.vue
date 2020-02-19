@@ -6,7 +6,7 @@
 			:class="[
 				indeterminate ? 'loading' : 'conversions-title',
 			]"
-			:style="`color:${globalColors.base}`"
+			:style="`color:${globalColors.title}`"
 		>Presentaciones:</h3>
 		<v-flex xs12>
 			<div

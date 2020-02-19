@@ -122,7 +122,7 @@
 		height: 46.8px;
 		justify-content: center;
 		transform: translateX(-5px);
-		width: 57px;
+		width: 140px;
 	}
 
 	.voucher {

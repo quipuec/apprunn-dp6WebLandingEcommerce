@@ -3,7 +3,7 @@
 		<div class="app-wrapper">
 			<div class="flex container-call-menu">
 				<call-menu
-					text="Categorías"
+					text="Menú"
 					:color="globalColors.primary"
 					:menu="menu"
 					@change-menu="changeMenu"
