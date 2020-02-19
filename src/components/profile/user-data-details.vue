@@ -18,7 +18,7 @@
 				<span class="user-content">{{getValue('phone', user)}}</span>
 			</p>
 			<p>
-				<span class="label">Provincia:</span>
+				<span class="label">{{countryLabels.province}}:</span>
 				<span class="user-content">{{provinceHandler()}}</span>
 			</p>
 			<p>
@@ -40,11 +40,11 @@
 				<span class="user-content">{{getValue('postalCode', user)}}</span>
 			</p>
 			<p>
-				<span class="label">Departamento:</span>
+				<span class="label">{{countryLabels.department}}:</span>
 				<span class="user-content">{{departmentsHandler()}}</span>
 			</p>
 			<p>
-				<span class="label">Distrito:</span>
+				<span class="label">{{countryLabels.district}}:</span>
 				<span class="user-content">{{districtsHandler()}}</span>
 			</p>
 		</div>

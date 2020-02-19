@@ -91,6 +91,22 @@ function globalColors() {
 	};
 }
 
+function countryLabels() {
+	const countryCode = JSON.parse(localStorage.getItem('ecommerce::country'));
+	if (countryCode === 'PER') {
+		return {
+			department: 'Departamento',
+			district: 'Distrito',
+			province: 'Provincia',
+		};
+	}
+	return {
+		department: 'Provincia',
+		district: 'Parroquia',
+		province: 'Ciudad',
+	};
+}
+
 function getLocalStorage(key) {
 	const items = JSON.parse(localStorage.getItem(key));
 	return items;
@@ -122,8 +138,9 @@ function scrollTo(element, duration, fit) {
 const mixin = {
 	data,
 	computed: {
-		token,
+		countryLabels,
 		globalColors,
+		token,
 	},
 	methods: {
 		getImageUrl,
