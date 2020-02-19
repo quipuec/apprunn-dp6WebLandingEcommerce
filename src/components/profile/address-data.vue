@@ -43,7 +43,21 @@ import responsiveTable from '@/components/shared/table/respondive-table';
 import starComponent from '@/components/shared/icons/star-component';
 
 function created() {
+	this.updateColumns();
 	this.loadAddress();
+}
+
+function updateColumns() {
+	this.columns = this.columns.map((col) => {
+		if (col.value === 'district') {
+			return lib.setNewProperty('title', this.countryLabels.district)(col);
+		} else if (col.value === 'province') {
+			return lib.setNewProperty('title', this.countryLabels.province)(col);
+		} else if (col.value === 'department') {
+			return lib.setNewProperty('title', this.countryLabels.department)(col);
+		}
+		return col;
+	});
 }
 
 async function loadAddress() {
@@ -91,9 +105,9 @@ function data() {
 	return {
 		columns: [
 			{ value: 'alias', title: 'Alias', responsive: true },
-			{ value: 'department', title: 'Departamento', responsive: true },
-			{ value: 'province', title: 'Provincia', responsive: true },
-			{ value: 'district', title: 'Distrito', responsive: true },
+			{ value: 'department', title: '', responsive: true },
+			{ value: 'province', title: '', responsive: true },
+			{ value: 'district', title: '', responsive: true },
 			{ value: 'address', title: 'Dirección', responsive: false },
 			{ value: 'actions', title: 'Acción', responsive: false },
 		],
@@ -124,6 +138,7 @@ export default {
 		getValue,
 		loadAddress,
 		pageChange,
+		updateColumns,
 	},
 };
 </script>
