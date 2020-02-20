@@ -645,12 +645,24 @@ input.app-input::-webkit-input-placeholder {
 		transform: translateX(100%);
 	}
 
+	.go-right-enter {
+		opacity: 0;
+		transform: translateX(-100%);
+	}
+
 	.go-left-leave-to {
 		opacity: 0;
 		transform: translateX(-100%);
 	}
 
+	.go-right-leave-to {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+
 	.go-left-enter-active,
+	.go-right-enter-active,
+	.go-right-leave-active,
 	.go-left-leave-active {
 		transition: all 0.2s cubic-bezier(.32,1.09,.62,.98);
 }
@@ -817,6 +829,20 @@ input.app-input::-webkit-input-placeholder {
 
 	.ecommerce-select {
 		background-color: white !important;
+	}
+}
+
+.app-banner-cupons {
+	.swiper-button-next {
+		background-image: url('/static/img/icons/right-arrow-slider-coupons.svg');
+		right: -10px;
+		width: 35px;
+	}
+
+	.swiper-button-prev {
+		background-image: url('/static/img/icons/image-slider-left-coupons.svg');
+		left: -10px;
+		width: 35px;
 	}
 }
 </style>

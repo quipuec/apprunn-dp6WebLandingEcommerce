@@ -29,14 +29,15 @@ function exactDate(date, formatter = 'DD-MM-YYYY', splitBy = 'T') {
 }
 
 function currencyFormat(val) {
-	if (!val) {
+	const newVal = val ? Number(val.toFixed(2)) : 0;
+	if (!newVal) {
 		return '0.00';
 	}
-	const [integer, decimals] = String(val).split('.');
+	const [integer, decimals] = String(newVal).split('.');
 	if (!decimals) {
 		return `${integer}.00`;
 	}
-	const newDecimals = decimals > 9 ? decimals : `${decimals}0`;
+	const newDecimals = decimals.length === 1 && decimals < 10 ? `${decimals}0` : decimals;
 	return `${integer}.${newDecimals}`;
 }
 

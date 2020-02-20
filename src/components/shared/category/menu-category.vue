@@ -96,6 +96,16 @@ export default {
 	height: 100%;
 	position: relative;
 
+	@media (min-width: 1440px) {
+		max-height: 840px;
+		overflow-y: auto;
+	}
+
+	@media (max-width: 1440px) {
+		max-height: 1150px;
+		overflow-y: auto;
+	}
+
 	@media (max-width: 986px) {
 		border-right: none;
 	}

@@ -9,8 +9,8 @@
 			<div class="methods-container">
 				<app-button
 					v-for="method in getWaysPayments"
+					max-width="205.31px"
 					:key="method.id"
-					max-width="360px"
 					class="method-item"
 					:action="method.name"
 					:active="paymentMethodSelected === method.code"
@@ -46,10 +46,12 @@ function created() {
 function onSelect(method) {
 	this.$store.commit('SET_WAY_PAYMENT', { wayPayment: null, bankAccountId: null });
 	this.paymentMethodSelected = method.code;
+	const wayPayment = method.id;
+	let bankAccountId = null;
 	if (method.code === 'IBD') {
-		const firstBank = this.getBankAccounts[0].bankId;
-		this.$store.commit('SET_WAY_PAYMENT', { wayPayment: method.id, bankAccountId: firstBank });
+		bankAccountId = isEmpty(this.getBankAccounts) ? null : this.getBankAccounts[0].bankId;
 	}
+	this.$store.commit('SET_WAY_PAYMENT', { wayPayment, bankAccountId });
 }
 
 function paymentMethodSelectedComponent() {
@@ -105,7 +107,7 @@ export default {
 		align-items: center;
 		display: grid;
 		grid-gap: 20px;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(205.31px, 1fr));
 		
 		@media (max-width: 600px) {
 			margin: 0 20px;
@@ -113,7 +115,6 @@ export default {
 	}
 
 	.component-container {
-
 		@media (max-width: 600px) {
 			margin: 0 20px;
 		}

@@ -26,9 +26,9 @@
 							:background="globalColors.secondary"
 							@click="goTo('page-home')"
 						/>
-						<div class="total-product" :style="`color: ${globalColors.base}`">
+						<div class="total-product" :style="`color: ${globalColors.subtitle}`">
 							<span>Total de productos: </span>
-							<div class="amount-total-products" :style="`background-color: ${globalColors.base}`">
+							<div class="amount-total-products" :style="`background-color: ${globalColors.title}`">
 								<output>{{getTotalQuantityProducts}}</output>
 							</div>
 						</div>
@@ -49,6 +49,11 @@ import appButton from '@/components/shared/buttons/app-button';
 import productInCar from '@/components/products/product-in-car';
 import summaryOrder from '@/components/order/summary-order';
 import summaryInPayment from '@/components/order/summary-in-payment';
+
+function created() {
+	const localOrder = this.getLocalStorage('ecommerce-order');
+	this.$store.dispatch('UPDATE_ORDER_FROM_LOCAL_STORAGE', localOrder);
+}
 
 function stepOneAndTwo() {
 	const step = lib.getDeeper('meta.step')(this.$route);
@@ -94,6 +99,7 @@ export default {
 		stepThree,
 		stepTwo,
 	},
+	created,
 	data,
 	methods: {
 		getProductToBuyHandler,

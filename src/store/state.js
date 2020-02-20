@@ -74,6 +74,7 @@ export default {
 			page: 1,
 		},
 	},
+	productIdToRate: null,
 	token: null,
 	user: {
 		email: '',

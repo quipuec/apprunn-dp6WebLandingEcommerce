@@ -15,15 +15,24 @@
 				v-model="model.description"
 				class="form-textarea"
 			/>
-			<app-button
-				:background="globalColors.primary"
-				action="Enviar"
-				class="form-btn"
-				type="button"
-				:class="{'disabled': disabledBtn}"
-				:disabled="disabledBtn"
-				@click="sendOpinion"
-			/>
+			<div class="buttons-containers">
+				<app-button
+					action="Cancelar"
+					class="form-btn"
+					type="button"
+					:background="globalColors.secondary"
+					@click="cancelOpinion"
+				/>
+				<app-button
+					action="Enviar"
+					class="form-btn"
+					type="button"
+					:background="globalColors.primary"
+					:class="{'disabled': disabledBtn}"
+					:disabled="disabledBtn"
+					@click="sendOpinion"
+				/>
+			</div>
 		</div>
 	</form>
 </template>
@@ -50,7 +59,7 @@ async function sendOpinion() {
 	if (!this.token) {
 		this.showGenericError('Para realizar una opinión tiene que registrarse');
 	} else {
-		const idProduct = this.$route.params.id;
+		const idProduct = this.valoratingProductId;
 		const body = {
 			description: this.model.description,
 			typeQuestionAnswer: 3,
@@ -63,11 +72,15 @@ async function sendOpinion() {
 		try {
 			await this.$httpProducts.post(`question-answer/${idProduct}/product`, body);
 			this.clearForm();
-			this.$emit('update');
+			this.cancelOpinion();
 		} catch (error) {
 			this.showGenericError();
 		}
 	}
+}
+
+function cancelOpinion() {
+	this.$emit('cancel-opinion');
 }
 
 function clearForm() {
@@ -86,11 +99,13 @@ export default {
 		...mapGetters([
 			'token',
 			'user',
+			'valoratingProductId',
 		]),
 	},
 	methods: {
-		sendOpinion,
+		cancelOpinion,
 		clearForm,
+		sendOpinion,
 	},
 };
 </script>
@@ -140,7 +155,6 @@ export default {
 	}
 
 	.form-btn {
-		margin-left: auto;
 		width: 127px;
 
 		&.disabled {
@@ -150,6 +164,12 @@ export default {
 		@media screen and (max-width: 996px) {
 			margin: auto;
 		}
+	}
+
+	.buttons-containers {
+		display: flex;
+		justify-content: space-evenly;
+		width: 100%;
 	}
 </style>
 

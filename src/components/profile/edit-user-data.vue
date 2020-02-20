@@ -17,7 +17,7 @@
 				<app-input class="user-postcode" placeholder="Código postal" v-model="userData.postalCode"/>
 				<app-select
 					class="user-department"
-					placeholder="Departamento"
+					:placeholder="countryLabels.department"
 					item-text="name"
 					item-value="id"
 					:items="departments"
@@ -27,7 +27,7 @@
 				<app-input class="user-phone" placeholder="Teléfono" v-model="userData.phone"/>
 				<app-select
 					class="user-district"
-					placeholder="Distrito"
+					:placeholder="countryLabels.district"
 					item-text="name"
 					item-value="id"
 					:items="districts"
@@ -35,7 +35,7 @@
 				/>
 				<app-select
 					class="user-province"
-					placeholder="Provincia"
+					:placeholder="countryLabels.province"
 					item-text="name"
 					item-value="id"
 					:items="provinces"
@@ -51,7 +51,7 @@
 					@click="saveUserInfo"
 				/>
 				<app-button
-					:background="colorBase"
+					:background="globalColors.secondary"
 					action="Cancelar"
 					class="action-button cancel"
 					@click="goBack"
@@ -129,7 +129,6 @@ function labelCountry() {
 
 function data() {
 	return {
-		colorBase: process.env.COLOR_BASE,
 		userData: {
 			cityId: null,
 			dni: '',
@@ -234,7 +233,7 @@ export default {
 	.btn-section {
 		align-items: center;
 		display: flex;
-		justify-content: flex-end;
+		justify-content: center;
 
 		@media(max-width: 745px) {
 			justify-content: space-between;

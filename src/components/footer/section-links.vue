@@ -1,13 +1,13 @@
 <template>
 	<div class="footer-main-container">
 		<div class="section-links">
-			<div v-for="(item, index) in sections" :key="index" class="mb-2">
+			<div v-for="item in menu" :key="item.id" class="mb-2">
 				<p
 					:class="[
 						'title-section-links',
 						{ 'loading loading-dark': indeterminate },
-					]">{{item.title}}</p>
-				<ul v-for="(link, indexLink) in item.links" :key="indexLink">
+					]">{{ item.name }}</p>
+				<ul v-for="link in item.details" :key="link.id">
 					<li>
 						<router-link
 							to="/help"
@@ -16,7 +16,7 @@
 								{ 'loading': indeterminate },
 							]"
 						>
-							{{link}}
+							{{ link.name }}
 						</router-link>
 					</li>
 				</ul>
@@ -47,48 +47,6 @@ function existcreditsCard() {
 
 function data() {
 	return {
-		sections: [
-			{
-				title: 'Información',
-				links: [
-					'Ubicación y horas de trabajo',
-					'Sobre Nosotros',
-					'Términos y condiciones',
-					'Politicas de privacidad y confidencialidad',
-					'No encuentro lo que quiero',
-					'Buscamos proveedores',
-				],
-			},
-			{
-				title: 'Pago y envío',
-				links: [
-					'Forma de Pago',
-					'Forma de entrega',
-					'Tiempo de Envio',
-				],
-			},
-			{
-				title: 'Políticas de la empresa',
-				links: [
-					'Politica de garantía',
-					'Politicas de privacidad',
-					'Politicas de devolución o cambio',
-					'Garantía',
-				],
-			},
-			{
-				title: 'Servicio al cliente',
-				links: [
-					'Contáctenos',
-					'¿Cómo ganar y usar tus Puntos?',
-					'¿Cómo comprar?',
-					'Preguntas Frecuentes',
-					'Seguir su pedido',
-					'Reclamos',
-					'¿Cómo usar tus puntos?',
-				],
-			},
-		],
 		creditCards: [
 			{ url: 'static/img/creditCards/visa.png', alt: 'visa' },
 			{ url: 'static/img/creditCards/mastercard.png', alt: 'mastercard' },
@@ -108,6 +66,12 @@ export default {
 		existcreditsCard,
 	},
 	data,
+	props: {
+		menu: {
+			default: () => [],
+			type: Array,
+		},
+	},
 };
 </script>
 

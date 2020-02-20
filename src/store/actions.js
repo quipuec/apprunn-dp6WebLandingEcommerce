@@ -32,8 +32,10 @@ function addProductToBuyCar(context, product) {
 		const quantity = currentProduct.quantity + newProduct.quantity;
 		productsSelected[index].quantity = quantity;
 		context.commit('UPDATE_PRODUCTS_SELECTED', productsSelected);
+		context.commit('UPDATE_ORDER_DETAILS_IF_EXIST', productsSelected);
 	} else {
 		context.commit('UPDATE_PRODUCTS_SELECTED', productsSelected.concat(newProduct));
+		context.commit('UPDATE_ORDER_DETAILS_IF_EXIST', productsSelected.concat(newProduct));
 	}
 }
 
@@ -78,6 +80,10 @@ function SET_DEFAULT_VALUES({ commit }) {
 	commit('SET_SHIPPING_COST', 0);
 	commit('SET_ORDER_STATUS', null);
 	commit('SET_FLAG_STATUS_ORDER', null);
+}
+
+function UPDATE_ORDER_FROM_LOCAL_STORAGE({ commit }, orderInfo) {
+	commit('SET_ORDER_INFO', { ...orderInfo } || null);
 }
 
 function DEFAULT_USER({ commit }) {
@@ -138,6 +144,10 @@ function SET_ECOMMERCE_THEME({ commit }, theme) {
 	commit('SET_ECOMMERCE_COLORS', theme);
 }
 
+function setRatingProductId({ commit }, productId) {
+	commit('SET_PRODUCT_ID_TO_RATE', productId);
+}
+
 const methods = {
 	addProductToBuyCar,
 	addService,
@@ -152,6 +162,7 @@ const methods = {
 	showSnackBar,
 	toggleLoading,
 	updateProductSelect,
+	UPDATE_ORDER_FROM_LOCAL_STORAGE,
 	UPDATE_PRODUCT_FILTER,
 	updateFilters,
 	resetCounter,
@@ -159,8 +170,9 @@ const methods = {
 	SET_DEFAULT_VALUES,
 	SET_WAY_PAYMENT,
 	SET_BANK_ACCOUNTS,
-	START_PAGINATION,
+	setRatingProductId,
 	SET_WINDOW_LOADED_TO_TRUE,
+	START_PAGINATION,
 };
 
 export default methods;

@@ -1,4 +1,5 @@
 import { format } from 'date-fns';
+import { isEmpty } from '@/shared/lib';
 
 function exactDate(date, formatter = 'DD-MM-YYYY', splitBy = 'T') {
 	if (date) {
@@ -76,6 +77,14 @@ function setPrices(product, priceListId, flag) {
 
 }
 
+function updateOrderDetailsInLocalStorage(products) {
+	const localOrder = JSON.parse(localStorage.getItem('ecommerce-order'));
+	if (!isEmpty(localOrder)) {
+		localOrder.details = [...products];
+		localStorage.setItem('ecommerce-order', JSON.stringify(localOrder));
+	}
+}
+
 const methods = {
 	debounce,
 	exactDate,
@@ -88,6 +97,7 @@ const methods = {
 	setLocalData,
 	setPrices,
 	showDownloadDialog,
+	updateOrderDetailsInLocalStorage,
 };
 
 export default methods;

@@ -33,9 +33,9 @@ function created() {
 }
 
 function updateFlags() {
-	this.showSuccessVisa = !isEmpty(this.getOrderInfo.gatewayAuthorizationResponse);
-	this.showSuccessDeposit = !isEmpty(this.getOrderInfo.wayPaymentId);
-	this.showFailure = !isEmpty(this.getOrderInfo.gatewayErrorCode);
+	this.showSuccessVisa = !isEmpty(lib.getDeeper('gatewayAuthorizationResponse')(this.getOrderInfo));
+	this.showSuccessDeposit = !isEmpty(lib.getDeeper('wayPaymentId')(this.getOrderInfo));
+	this.showFailure = !isEmpty(lib.getDeeper('gatewayErrorCode')(this.getOrderInfo));
 }
 
 function getFullName() {
@@ -102,6 +102,10 @@ export default {
 	},
 	watch: {
 		'getOrderInfo.wayPaymentId': wayPaymentIdHandler,
+		getOrderInfo: {
+			deep: true,
+			handler: updateFlags,
+		},
 	},
 };
 </script>

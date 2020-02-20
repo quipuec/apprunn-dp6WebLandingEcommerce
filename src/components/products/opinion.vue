@@ -12,6 +12,7 @@
 					background-color="#f8e71c"
 					color="#f8e71c"
 					v-model="opinion.rating"
+					readonly
 				>
 				</v-rating>
 			</div>

@@ -46,7 +46,8 @@ export default {
 		productOpinion,
 	},
 	props: {
-		tabs: {
+		lastIndex: Number,
+		opinions: {
 			type: Array,
 			default: () => [],
 		},
@@ -54,8 +55,7 @@ export default {
 			type: Array,
 			default: () => [],
 		},
-		lastIndex: Number,
-		opinions: {
+		tabs: {
 			type: Array,
 			default: () => [],
 		},

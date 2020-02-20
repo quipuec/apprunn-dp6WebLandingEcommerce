@@ -36,7 +36,7 @@
 			</div>
 		</div>
 		<div class="btn-section" v-if="!voucherLoaded">
-			<app-button :background="bgCancelBtn" action="Cancelar" class="action-button cancel" @click="goBack"/>
+			<app-button :background="globalColors.secondary" action="Cancelar" class="action-button cancel" @click="goBack"/>
 			<app-button
 				class="action-button save"
 				action="Guardar"
@@ -64,10 +64,6 @@ function created() {
 			urlImage: urlVoucher,
 		};
 	}
-}
-
-function bgCancelBtn() {
-	return process.env.COLOR_PRIMARY;
 }
 
 function goBack() {
@@ -148,7 +144,6 @@ export default {
 		...mapGetters([
 			'getOrderInfo',
 		]),
-		bgCancelBtn,
 	},
 	created,
 	data,

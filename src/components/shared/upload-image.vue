@@ -21,6 +21,7 @@
 			:style="transparent ? 'background-color: transparent' : `background-color:${globalColors.primary}`"
 		>
 			<CameraSvg
+				:text="text"
 				:white="!transparent"
 				@click="upload"
 			/>
@@ -93,6 +94,10 @@
 				default: false,
 				type: Boolean,
 			},
+			text: {
+				default: false,
+				type: Boolean,
+			},
 			transparent: {
 				default: false,
 				type: Boolean,
@@ -122,7 +127,7 @@
 		height: 46.8px;
 		justify-content: center;
 		transform: translateX(-5px);
-		width: 57px;
+		width: 140px;
 	}
 
 	.voucher {

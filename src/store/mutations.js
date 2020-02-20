@@ -135,6 +135,10 @@ function RESETING_COUNTER(state) {
 	Vue.set(state.appConfig, 'loadingCounter', []);
 }
 
+function SET_PRODUCT_ID_TO_RATE(state, productId) {
+	Vue.set(state, 'productIdToRate', productId);
+}
+
 const methods = {
 	ADD_ONE_IN_SERVICE_COUNTER,
 	clearUser,
@@ -163,6 +167,7 @@ const methods = {
 	UPDATE_POLL_PROGRESS,
 	SET_CATEGORIES,
 	SET_ORDER_TOTAL,
+	SET_PRODUCT_ID_TO_RATE,
 	RESETING_COUNTER,
 	UPDATE_FILTERS,
 	UPDATE_PRODUCT_PAGE,

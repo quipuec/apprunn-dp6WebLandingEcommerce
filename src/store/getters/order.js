@@ -22,10 +22,13 @@ const getters = {
 	},
 	getTotalToBuy(state) {
 		const { products, order } = state.order;
-		const newProducts = order ? order.details : products;
-		return newProducts.reduce(
-			(acc, { price, priceDiscount, salePrice, quantity }) =>
-				twoDecimals((priceDiscount || salePrice || price) * quantity) + acc, 0);
+		const newProducts = isEmpty(order) ? products : order.details;
+		if (newProducts) {
+			return newProducts.reduce(
+				(acc, { price, priceDiscount, salePrice, quantity }) =>
+					twoDecimals((priceDiscount || salePrice || price) * quantity) + acc, 0);
+		}
+		return 0;
 	},
 	getTotalQuantityProducts(state) {
 		const { products } = state.order;
@@ -72,7 +75,7 @@ const getters = {
 	},
 	getOrderDetails(state) {
 		const { products, order } = state.order;
-		const newProducts = order ? order.details : products;
+		const newProducts = isEmpty(order) ? products : order.details;
 		return newProducts;
 	},
 	getResponsible(state) {

@@ -191,7 +191,7 @@ export default {
 		height: 115px;
 		justify-content: center;
 		margin: auto;
-		padding: 0.5rem;
+		padding: 0.7rem;
 		transition: all .3s;
 		width: 140px;
 

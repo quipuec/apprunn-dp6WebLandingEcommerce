@@ -82,6 +82,10 @@ function bannersTypes(state) {
 	return state.bannerTypes;
 }
 
+function bannersCoupons(state) {
+	return state.bannersCoupons;
+}
+
 function getBanners(state) {
 	return state.banners;
 }
@@ -104,6 +108,10 @@ function getPlansBanner(state) {
 
 function getCreditBanner(state) {
 	return state.banners.find(banner => banner.typeName === 'Promoción en creditos');
+}
+
+function getCouponsBanner(state) {
+	return state.banners.find(banner => banner.typeName === 'Promoción en cupones');
 }
 
 function productParams(state) {
@@ -130,13 +138,19 @@ function templateColors(state) {
 	return state.colors;
 }
 
+function valoratingProductId(state) {
+	return state.productIdToRate;
+}
+
 const methods = {
+	bannersCoupons,
 	bannersTypes,
 	companyLogo,
 	currentPage,
 	genders,
 	getBanners,
 	getBannersHome,
+	getCouponsBanner,
 	getCreditBanner,
 	getCommerceData,
 	getCurrencySymbol,
@@ -164,6 +178,7 @@ const methods = {
 	getCategories,
 	totalProducts,
 	getFilters,
+	valoratingProductId,
 	windowLoaded,
 };
 

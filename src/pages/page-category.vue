@@ -87,7 +87,8 @@
 		</section>
 		</div>
 	</div>
-	<app-banner-top 
+	<app-banner-top
+		v-if="getPromotionalBanner"
 		:data="getPromotionalBanner"
 		:color="globalColors.secondary"
 		big/>
