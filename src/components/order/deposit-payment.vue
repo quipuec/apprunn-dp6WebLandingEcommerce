@@ -1,24 +1,21 @@
 <template>
 	<div class="deposit-container">
 		<div class="deposit-wrapper" v-if="stepFour">
-			<div class="deposit-select-bank">
-				<img src="" alt="logo de banco" class="icon-bank-ecuador">
-			</div>
 			<h4 class="deposit-title">¡Gracias por comprar en {{getCommerceData.name}}!</h4>
 			<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago, puedes utilizar la Banca por Internet Pichincha , Agentes del Pichincha y Oficinas Pichincha a Nivel nacional con tu número de pedido.</p>
 		</div>
 		<div class="deposit-wrapper" v-else>
-			<v-radio-group  v-model="selectedBank" row>
+			<h2 v-if="thereAreNoBanksAccounts">No existen cuentas bancarias configuradas</h2>
+			<v-radio-group  v-model="selectedBank" row v-else>
 				<v-radio 
 					:label="bank.bank.name" 
 					:value="bank.bankId"
 					v-for="bank in getBankAccounts" 
 					:key="bank.id">
-
 				</v-radio>
 			</v-radio-group>
 		</div>
-		<div>
+		<div v-if="!thereAreNoBanksAccounts">
 			<ul class="mb-1">
 				<li
 					v-for="account in bankAccounts"
@@ -56,6 +53,10 @@ function bankAccounts() {
 	return this.getBankAccounts[0].accounts;
 }
 
+function thereAreNoBanksAccounts() {
+	return this.getBankAccounts.length === 0;
+}
+
 function data() {
 	return {
 		selectedBank: null,
@@ -72,6 +73,7 @@ export default {
 		]),
 		stepFour,
 		bankAccounts,
+		thereAreNoBanksAccounts,
 	},
 	data,
 	watch: {

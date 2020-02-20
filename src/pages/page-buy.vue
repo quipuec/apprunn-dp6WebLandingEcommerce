@@ -50,6 +50,11 @@ import productInCar from '@/components/products/product-in-car';
 import summaryOrder from '@/components/order/summary-order';
 import summaryInPayment from '@/components/order/summary-in-payment';
 
+function created() {
+	const localOrder = this.getLocalStorage('ecommerce-order');
+	this.$store.dispatch('UPDATE_ORDER_FROM_LOCAL_STORAGE', localOrder);
+}
+
 function stepOneAndTwo() {
 	const step = lib.getDeeper('meta.step')(this.$route);
 	return step !== 3;
@@ -94,6 +99,7 @@ export default {
 		stepThree,
 		stepTwo,
 	},
+	created,
 	data,
 	methods: {
 		getProductToBuyHandler,
