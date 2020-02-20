@@ -22,7 +22,7 @@ const getters = {
 	},
 	getTotalToBuy(state) {
 		const { products, order } = state.order;
-		const newProducts = order ? order.details : products;
+		const newProducts = isEmpty(order) ? products : order.details;
 		if (newProducts) {
 			return newProducts.reduce(
 				(acc, { price, priceDiscount, salePrice, quantity }) =>
