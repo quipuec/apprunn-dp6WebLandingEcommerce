@@ -51,7 +51,7 @@ function seeOrder() {
 async function cancalOrder() {
 	const { id } = this.getOrderInfo;
 	await this.CANCEL_ORDER({ context: this, id });
-	this.goTo('home');
+	this.goTo('page-home');
 }
 
 export default {

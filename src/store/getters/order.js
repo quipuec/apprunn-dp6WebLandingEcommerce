@@ -75,7 +75,7 @@ const getters = {
 	},
 	getOrderDetails(state) {
 		const { products, order } = state.order;
-		const newProducts = order ? order.details : products;
+		const newProducts = isEmpty(order) ? products : order.details;
 		return newProducts;
 	},
 	getResponsible(state) {

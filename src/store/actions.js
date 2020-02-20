@@ -82,6 +82,10 @@ function SET_DEFAULT_VALUES({ commit }) {
 	commit('SET_FLAG_STATUS_ORDER', null);
 }
 
+function UPDATE_ORDER_FROM_LOCAL_STORAGE({ commit }, orderInfo) {
+	commit('SET_ORDER_INFO', { ...orderInfo } || null);
+}
+
 function DEFAULT_USER({ commit }) {
 	const user = {
 		email: '',
@@ -158,6 +162,7 @@ const methods = {
 	showSnackBar,
 	toggleLoading,
 	updateProductSelect,
+	UPDATE_ORDER_FROM_LOCAL_STORAGE,
 	UPDATE_PRODUCT_FILTER,
 	updateFilters,
 	resetCounter,
