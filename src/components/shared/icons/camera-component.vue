@@ -9,7 +9,7 @@
 				<path d="M11.5 16A5.506 5.506 0 0 1 6 10.5C6 7.467 8.467 5 11.5 5S17 7.467 17 10.5 14.533 16 11.5 16zm0-10.124A4.63 4.63 0 0 0 6.876 10.5a4.63 4.63 0 0 0 4.624 4.624 4.63 4.63 0 0 0 4.624-4.624A4.63 4.63 0 0 0 11.5 5.876zM16.5 6c-.21 0-.4-.135-.47-.332a.504.504 0 0 1 .146-.55.505.505 0 0 1 .588-.044c.175.11.267.321.227.523A.505.505 0 0 1 16.5 6z"/>
 			</g>
 		</svg>
-		<span :style="`color:${globalColors.title}`">Cambiar Imagen</span>
+		<span v-if="text" :style="`color:${globalColors.title}`">Cambiar Imagen</span>
 	</button>
 </template>
 <script>
@@ -22,6 +22,10 @@ export default {
 		clicked,
 	},
 	props: {
+		text: {
+			type: Boolean,
+			default: false,
+		},
 		white: {
 			default: false,
 			type: Boolean,

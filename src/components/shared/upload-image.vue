@@ -21,6 +21,7 @@
 			:style="transparent ? 'background-color: transparent' : `background-color:${globalColors.primary}`"
 		>
 			<CameraSvg
+				:text="text"
 				:white="!transparent"
 				@click="upload"
 			/>
@@ -90,6 +91,10 @@
 		},
 		props: {
 			noInput: {
+				default: false,
+				type: Boolean,
+			},
+			text: {
 				default: false,
 				type: Boolean,
 			},

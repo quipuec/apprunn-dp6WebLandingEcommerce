@@ -3,6 +3,7 @@
 		<section class="user-header">
 			<edit-component @click="editing" class="mr-3" :active="editActive"/>
 			<UploadImage
+				text
 				no-input
 				transparent
 				@url-image="updateUserAvatar"
