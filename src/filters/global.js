@@ -29,7 +29,7 @@ function exactDate(date, formatter = 'DD-MM-YYYY', splitBy = 'T') {
 }
 
 function currencyFormat(val) {
-	const newVal = Number(val.toFixed(2));
+	const newVal = val ? Number(val.toFixed(2)) : 0;
 	if (!newVal) {
 		return '0.00';
 	}
