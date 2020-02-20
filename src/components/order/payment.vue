@@ -23,6 +23,7 @@
 				:is="paymentMethodSelectedComponent"
 			></component>
 		</section>
+		<paymentez/>
 	</div>
 </template>
 <script>
@@ -33,6 +34,7 @@ import depositPayment from '@/components/order/deposit-payment';
 import productsBuyed from '@/components/order/products-buyed';
 import recievedPayment from '@/components/order/recieved-payment';
 import visaPayment from '@/components/order/visa-payment';
+import paymentez from '@/components/order/paymentsMethods/paymentez';
 
 function created() {
 	if (isEmpty(this.getWaysPayments)) {
@@ -41,42 +43,6 @@ function created() {
 	} else {
 		this.onSelect(this.getWaysPayments[0]);
 	}
-	this.createPaymentezObject();
-}
-
-function createPaymentezObject() {
-	const paymentezCheckout = new PaymentezCheckout.modal({
-		client_app_code: '',
-		client_app_key: '',
-		locale: 'es',
-		env_mode: 'stg',
-		onOpen: () => {
-			console.log('modal open');
-		},
-		onClose: () => {
-			console.log('modal closed');
-		},
-		onResponse: (response) => {
-			console.log('modal response');
-			document.getElementById('response').innerHTML = JSON.stringify(response);
-		},
-	});
-	const btnOpenCheckout = document.querySelector('.js-paymentez-checkout');
-	btnOpenCheckout.addEventListener('click', () => {
-		paymentezCheckout.open({
-			user_id: '1234',
-			user_email: 'test@paymentez.com',
-			user_phone: '7777777777',
-			order_description: '1 Green Salad',
-			order_amount: 1500,
-			order_vat: 0,
-			order_reference: '#234323411',
-		});
-	});
-
-	window.addEventListener('popstate', () => {
-		paymentezCheckout.close();
-	});
 }
 
 function onSelect(method) {
@@ -115,6 +81,7 @@ export default {
 	components: {
 		depositPayment,
 		appButton,
+		paymentez,
 		productsBuyed,
 		recievedPayment,
 		visaPayment,
@@ -129,7 +96,6 @@ export default {
 	created,
 	data,
 	methods: {
-		createPaymentezObject,
 		onSelect,
 	},
 	watch: {

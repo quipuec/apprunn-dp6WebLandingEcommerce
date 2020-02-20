@@ -28,7 +28,10 @@
           if (file.match(/\.(js|css)$/)) { %>
     <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>">
     <% }}} %>
-      <link rel="preload" href='//fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' as="style">
+  <link rel="preload" href='//fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' as="style">
+
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js" charset="UTF-8"></script>
+  <script src="https://cdn.paymentez.com/checkout/1.0.1/paymentez-checkout.min.js"></script>
 </head>
 
 <body>
