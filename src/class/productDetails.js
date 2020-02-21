@@ -12,6 +12,48 @@ class ProductDetails {
 		this.unitId = 0;
 		this.priceListId = priceListSelectedId;
 	}
+	get brand() {
+		return this.selectedProduct.warehouseProduct.brand.name;
+	}
+	get code() {
+		return this.selectedProduct.code;
+	}
+	get conversions() {
+		return this.selectedProduct.conversions;
+	}
+	get description() {
+		return this.selectedProduct.description;
+	}
+	get flagFavorite() {
+		return this.selectedProduct.flagFavorite;
+	}
+	get image() {
+		return this.selectedProduct.imagePresentation;
+	}
+	get name() {
+		return this.selectedProduct.name;
+	}
+	get price() {
+		return this.selectedProduct.price;
+	}
+	get priceDiscount() {
+		return this.selectedProduct.priceDiscount;
+	}
+	get quantity() {
+		return this.selectedProduct.quantity;
+	}
+	get rating() {
+		return this.selectedProduct.rating;
+	}
+	get stock() {
+		return this.selectedProduct.stock;
+	}
+	get total() {
+		return Number((this.quantity * this.price).toFixed(2));
+	}
+	get unit() {
+		return this.selectedProduct.unit;
+	}
 	buyingProduct() {
 		return { ...this.selectedProduct };
 	}
@@ -28,8 +70,11 @@ class ProductDetails {
 		const imgArray = this.getProductDetails().images;
 		const imagesFiltered = imgArray.filter(img => img.unitId === this.unitId);
 		if (isEmpty(imagesFiltered)) {
-			return imgArray.filter(img => !img.unitId);
+			const imgs = imgArray.filter(img => !img.unitId);
+			this.selectedProduct.imagePresentation = imgs[0].urlImage;
+			return imgs;
 		}
+		this.selectedProduct.imagePresentation = imagesFiltered[0].urlImage;
 		return imagesFiltered;
 	}
 	getProductDetails() {

@@ -1,7 +1,11 @@
 <template>
 	<div class="product-container">
 		<section class="grid-areas">
-			<img :src="product.productImage || product.urlImage" alt="imagen del producto" class="product-img image">
+			<img
+				:src="product.imagePresentation"
+				alt="imagen del producto"
+				class="product-img image"
+			>
 			<div class="description">
 				<p
 					:style="`color: ${globalColors.secondary};`"
@@ -10,13 +14,13 @@
 				<p
 					:style="`color: ${globalColors.secondary};`"
 					class="product-content">{{product.description}}</p>
-				<p class="product-brand">{{product.brandName || product.warehouseProduct.brand.name}}</p>
+				<p class="product-brand">{{product.brand}}</p>
 			</div>
 			<div class="price text-xs-center">
 				<p
 					:style="`color: ${globalColors.secondary};`"
 					class="product-title">Precio UND</p>
-				<p class="product-price">{{ product.salePrice || product.priceDiscount || product.price | currencyFormat }}</p>
+				<p class="product-price">{{ product.price | currencyFormat }}</p>
 			</div>
 			<div class="quantity text-xs-center">
 				<p
