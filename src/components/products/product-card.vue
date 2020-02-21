@@ -123,19 +123,14 @@ function animatingCard() {
 }
 
 function onCard(v) {
-	this.offSetTop = v.target.offsetTop;
-	this.offSetLeft = v.target.offsetLeft;
 	this.elWidth = v.target.offsetWidth;
 	this.elHeight = v.target.offsetHeight;
 	this.x = v.offsetX;
 	this.y = v.offsetY;
-	// debugger;
 }
 
 function data() {
 	return {
-		offSetTop: 0,
-		offSetLeft: 0,
 		x: 0,
 		y: 0,
 		elWidth: 0,
