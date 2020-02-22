@@ -1,5 +1,13 @@
 <template>
-	<div class="product-container" :class="{ 'small': small }" @click="goToProduct(product)">
+	<div
+		class="product-container"
+		:class="{ 'small': small }"
+		@click="goToProduct(product)"
+		@mousemove="onCard"
+		@mouseenter="mouseOnCard = true"
+		@mouseleave="mouseOnCard = false"
+		:style="animatingCard"
+	>
 		<div :class="{ 'opacity': !product.stockWarehouse }">
 			<div v-if="!product.stockWarehouse && !indeterminate" class="without-stock-tag">
 				Agotado
@@ -102,6 +110,35 @@ function discountPercentage() {
 	return percentage >= 0 ? percentage : 0;
 }
 
+function animatingCard() {
+	if (this.mouseOnCard) {
+		const middleX = this.elWidth / 2;
+		const middleY = this.elHeight / 2;
+		const maxDeg = 4;
+		const rateX = (middleX - this.x) / (this.elWidth / 2);
+		const rateY = (middleY - this.y) / (this.elHeight / 2);
+		return `transform:perspective(500px) rotateY(${(-rateX * maxDeg)}deg) rotateX(${(rateY * maxDeg)}deg) scale3d(1.02, 1.02, 1.02);`;
+	}
+	return 'transform: perspective(500px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1);';
+}
+
+function onCard(v) {
+	this.elWidth = v.target.offsetWidth;
+	this.elHeight = v.target.offsetHeight;
+	this.x = v.offsetX;
+	this.y = v.offsetY;
+}
+
+function data() {
+	return {
+		x: 0,
+		y: 0,
+		elWidth: 0,
+		elHeight: 0,
+		mouseOnCard: false,
+	};
+}
+
 export default {
 	name: 'product-card',
 	components: {
@@ -112,12 +149,15 @@ export default {
 			'getProductsParams',
 			'indeterminate',
 		]),
+		animatingCard,
 		discountPercentage,
 	},
+	data,
 	methods: {
 		buyProduct,
 		productFavo,
 		goToProduct,
+		onCard,
 	},
 	props: {
 		small: {
@@ -139,6 +179,8 @@ export default {
 		cursor: pointer;
 		font-family: font(medium);
 		height: auto;
+		transform: perspective(0px) rotateY(deg) rotateX(0deg) scale3d(0, 0, 0);
+  		transition: all 120ms ease;
 
 		@media (min-width: 500px) {
 			border: 3px solid color(border);
