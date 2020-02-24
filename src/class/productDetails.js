@@ -71,10 +71,10 @@ class ProductDetails {
 		const imagesFiltered = imgArray.filter(img => img.unitId === this.unitId);
 		if (isEmpty(imagesFiltered)) {
 			const imgs = imgArray.filter(img => !img.unitId);
-			this.selectedProduct.imagePresentation = imgs[0].urlImage;
+			this.setImagePresentation.call(this, imgs[0].urlImage);
 			return imgs;
 		}
-		this.selectedProduct.imagePresentation = imagesFiltered[0].urlImage;
+		this.setImagePresentation.call(this, imagesFiltered[0].urlImage);
 		return imagesFiltered;
 	}
 	getProductDetails() {
@@ -107,6 +107,7 @@ class ProductDetails {
 		}
 		this.updateUnitId.call(this, unitId);
 		this.updateQuantity.call(this, 1);
+		this.setImagePresentation.call(this, product.urlImage);
 	}
 	productSelected(product) {
 		if (product.features.length > 0) {
@@ -136,6 +137,9 @@ class ProductDetails {
 		});
 		this.updateFilteredFeatures(features);
 		this.updateSelectedProducts(localCache);
+	}
+	setImagePresentation(urlImage) {
+		this.selectedProduct.imagePresentation = urlImage;
 	}
 	updateSelectedFeatures(feature) {
 		this.selectedFeatures[feature.id] = feature;
