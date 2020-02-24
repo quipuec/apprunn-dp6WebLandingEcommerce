@@ -20,7 +20,7 @@
 				<p
 					:style="`color: ${globalColors.secondary};`"
 					class="product-title">Precio UND</p>
-				<p class="product-price">{{ product.price | currencyFormat }}</p>
+				<p class="product-price">{{ product.priceDiscount | currencyFormat }}</p>
 			</div>
 			<div class="quantity text-xs-center">
 				<p
