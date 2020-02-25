@@ -76,6 +76,7 @@ export default {
 
 	.wrap-buttons {
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: flex-start;
 	}
 
