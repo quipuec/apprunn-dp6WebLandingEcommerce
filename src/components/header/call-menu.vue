@@ -1,7 +1,7 @@
 <template>
 	<button 
 		class="call-menu"
-		@click="toggleMenu">
+		@click.stop="toggleMenu">
 		<div
 			:class="[
 				{ 'open': menuIsVisible },
