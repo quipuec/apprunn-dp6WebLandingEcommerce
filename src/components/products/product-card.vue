@@ -114,7 +114,7 @@ function animatingCard() {
 	if (this.mouseOnCard) {
 		const middleX = this.elWidth / 2;
 		const middleY = this.elHeight / 2;
-		const maxDeg = 4;
+		const maxDeg = 3;
 		const rateX = (middleX - this.x) / (this.elWidth / 2);
 		const rateY = (middleY - this.y) / (this.elHeight / 2);
 		return `transform:perspective(500px) rotateY(${(-rateX * maxDeg)}deg) rotateX(${(rateY * maxDeg)}deg) scale3d(1.02, 1.02, 1.02);`;
