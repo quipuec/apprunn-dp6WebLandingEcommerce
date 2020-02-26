@@ -71,12 +71,21 @@ export default {
 }
 
 .app-banner-credit {
+	align-items: flex-end;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
+	display: flex;
 	height: 283px;
+	justify-content: center;
+	padding: 40px;
 	position: relative;
 	width: 100%;
+
+	@media (min-width: 600px) {
+		align-items: center;
+		justify-content: flex-end;
+	}
 
 	@media (max-width: 764px) {
 		height: 310px;
@@ -120,14 +129,18 @@ export default {
 }
 
 .content-btn {
-	display: flex;
-	justify-content: center;
-	left: 16%;
-    position: relative;
-    top: 56%;
 
-	@media (max-width: 1000px) {
-		left: 26%;
+	@media (min-width: 600px) {
+		margin-top: 100px;
+		margin-right: 80px;
+	}
+
+	@media (min-width: 1000px) {
+		margin-right: 200px;
+	}
+
+	@media (min-width: 1370px) {
+		margin-right: 400px;
 	}
 }
 </style>
