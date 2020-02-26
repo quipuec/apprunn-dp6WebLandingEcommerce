@@ -36,10 +36,11 @@
 						:style="`background-color:${list.select ? globalColors.secondary : 'white'};transition:all 200ms ease-in;`"
 					>
 						<item-menu 
-						:data="list" 
-						color-select="#ed0000"
-						@click-item="goToCategory(list)"
-						@hover-item="hoverCategory"/>
+							:data="list" 
+							color-select="#ed0000"
+							@click-item="goToCategory(list)"
+							@hover-item="hoverCategory
+						"/>
 						<button class="btn-collapse" @click="clickCategory(list)">
 							<v-icon 
 								:class="{'rotate-icon': list.select}"
@@ -144,7 +145,7 @@ function clickCategory(item) {
 
 function selectCategory() {
 	const index = this.categories.findIndex(c => c.select);
-	return this.categories[index];
+	return this.categories[index] || {};
 }
 
 function isMoreTwo() {
