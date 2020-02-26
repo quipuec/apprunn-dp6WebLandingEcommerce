@@ -12,8 +12,8 @@
 			isLoading ? 'loading features' : 'product-childrens',
 		]">
 	  	<h3
-		  	:class="{ 'loading': isLoading }"
-			:style="`color:${globalColors.base}`"  
+		  	:class="[ 'mx-2', { 'loading': isLoading } ]"
+			:style="`color:${globalColors.title}`"
 		>{{feature.name}}:</h3>
 		<div class="wrap-buttons">
 			<span
@@ -65,8 +65,12 @@ export default {
 	.product-childrens {
 		align-items: center;
 		display: grid;
-		grid-template-columns: 120px 3fr;
+		grid-template-columns: [linename] auto;
 		margin-bottom: 10px;
+
+		@media (max-width: 996px) {
+			padding-left: 10px;
+		}
 	}
 
 	.select-feature {
@@ -76,7 +80,14 @@ export default {
 
 	.wrap-buttons {
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: flex-start;
+
+		@media (max-width: 996px) {
+			flex-wrap: nowrap;
+			overflow: auto;
+			padding: 10px 0;
+		}
 	}
 
 	.feature-button {

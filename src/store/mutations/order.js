@@ -52,6 +52,9 @@ const orderMutation = {
 	SET_ORDER_STATUS(state, orderStatus) {
 		Vue.set(state.order, 'orderStatus', orderStatus);
 	},
+	SET_ORDER_STATES(state, orderStates) {
+		Vue.set(state.order, 'orderStates', orderStates);
+	},
 	SET_FLAG_STATUS_ORDER(state, flagStatusOrder) {
 		Vue.set(state.order, 'flagStatusOrder', flagStatusOrder);
 	},

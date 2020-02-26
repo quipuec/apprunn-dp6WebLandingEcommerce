@@ -365,6 +365,10 @@ export default {
 
 	.page-detail-product {
 		background: color(white);
+
+		@media screen and (max-width: 996px) {
+			padding-top: 20px;
+		}
 	}
 
 	.detail-product-top {
@@ -381,7 +385,7 @@ export default {
 	}
 
 	.container-product-detail {
-		width: 45%;
+		width: 48%;
 
 		@media screen and (max-width: 996px) {
 			width: 100%;

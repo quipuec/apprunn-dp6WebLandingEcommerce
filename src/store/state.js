@@ -44,6 +44,7 @@ export default {
 		id: null,
 		list: [],
 		order: null,
+		orderStates: null,
 		orderStatus: null,
 		paymentMethod: {
 			bankAccountId: null,

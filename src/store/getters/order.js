@@ -70,8 +70,8 @@ const getters = {
 	getOrders(state) {
 		return state.order.list;
 	},
-	getStatus(state) {
-		return state.order.orderStatus;
+	getStates(state) {
+		return state.order.orderStates;
 	},
 	getOrderDetails(state) {
 		const { products, order } = state.order;

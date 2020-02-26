@@ -1,7 +1,7 @@
 <template>
 	<div 
 		class="item-menu" 
-		@click="$emit('click-item', data)"
+		@click.stop="$emit('click-item', data)"
 		@mouseenter="$emit('hover-item', data)">
 		<img
 			:src="data.webImage"

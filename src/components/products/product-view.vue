@@ -64,16 +64,15 @@ function data() {
 			allowTouchMove: false,
 			breakpoints: {
 				996: {
-					slidesPerView: 2,
-					slidesPerGroup: 1,
 					allowTouchMove: true,
 					centeredSlides: true,
 					grabCursor: true,
 					spaceBetween: 30,
+					width: 298,
 				},
 			},
 			loop: true,
-			width: 408,
+			width: 385,
 		},
 	};
 }
@@ -141,14 +140,14 @@ export default {
 		border-radius: 7px;
 		box-shadow: 0 2px 4px 0 rgba(213, 213, 213, 0.5);
 		padding: 0 19px;
-		width: 440px;
+		width: 400px;
 
 		@media screen and (max-width: 996px) {
 			background: transparent;
 			box-shadow: none;
 			height: 217px;
 			padding: 0;
-			width: 70%;
+			width: 298px;
 		}
 	}
 

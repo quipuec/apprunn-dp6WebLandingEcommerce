@@ -20,7 +20,11 @@
 					<td class="row-wayPayment">{{getValue('wayPayment.name', row)}}</td>
 					<td class="row-actions">
 						<details-component class="action-btn" @click="seeDetails(row)"/>
-						<delete-component class="action-btn"/>
+						<delete-component
+							v-show="row.orderState.code === 'REQUESTED' || row.orderState.code === 'CONFIRMED'"
+							class="action-btn"
+							@click="deleteOrder(row)"
+						/>
 					</td>
 				</template>
 			</responsive-table>
@@ -28,7 +32,7 @@
 	</div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import lib from '@/shared/lib';
 import deleteComponent from '@/components/shared/icons/delete-component';
 import detailsComponent from '@/components/shared/icons/details-component';
@@ -39,9 +43,11 @@ function created() {
 	this.$store.dispatch('LOAD_ORDERS_STATUS', this);
 }
 
-async function getStatusHandler() {
-	({ id: this.orderStatusId } = lib.find(lib.equality('code', 'REQUESTED'), this.getStatus));
-	this.loadOrders(this.orderStatusId);
+async function getStatesHandler(status) {
+	if (status) {
+		({ id: this.orderStatusId } = lib.find(lib.equality('code', 'REQUESTED'), status));
+		this.loadOrders(this.orderStatusId);
+	}
 }
 
 async function loadOrders(orderStatusId) {
@@ -69,6 +75,13 @@ function statusChanged(id) {
 	this.orderStatusId = id;
 	this.params.page = 1;
 	this.loadOrders(this.orderStatusId);
+}
+
+async function deleteOrder(order) {
+	const { id } = order;
+	const newOrdersArray = this.getOrders.filter(o => o.id !== id);
+	this.$store.commit('SET_ORDERS', newOrdersArray);
+	await this.CANCEL_ORDER({ context: this, id });
 }
 
 function data() {
@@ -102,23 +115,27 @@ export default {
 	computed: {
 		...mapGetters([
 			'getOrders',
-			'getStatus',
+			'getStates',
 		]),
 	},
 	created,
 	data,
 	methods: {
+		...mapActions([
+			'CANCEL_ORDER',
+		]),
 		changePage,
-		getStatusHandler,
+		deleteOrder,
+		getStatesHandler,
 		getValue,
 		loadOrders,
 		seeDetails,
 		statusChanged,
 	},
 	watch: {
-		getStatus: {
+		getStates: {
 			deep: true,
-			handler: getStatusHandler,
+			handler: getStatesHandler,
 		},
 	},
 };
