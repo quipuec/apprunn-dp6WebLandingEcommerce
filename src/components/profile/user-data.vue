@@ -57,9 +57,9 @@ async function updateUserAvatar(urlImage) {
 
 async function getCustomerData() {
 	const { data: userInfo } = await this.$httpSales.get('customers/current');
+	this.$store.dispatch('setUser', userInfo);
 	this.setLocalData('ecommerce::ecommerce-user', userInfo);
 	this.setLocalData('ecommerce-user', userInfo);
-	this.$store.dispatch('setUser', userInfo);
 	this.$userInfo = this.$store.getters.user;
 }
 
