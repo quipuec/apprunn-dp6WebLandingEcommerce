@@ -59,6 +59,14 @@ const sectionVisa = () => import(/* webpackChunkName: "section-Visa" */'@/compon
 const appFooter = () => import(/* webpackChunkName: "app-Footer" */'@/components/footer/app-footer');
 const appBannerTop = () => import(/* webpackChunkName: "app-Banner-Top" */ '@/components/header/app-banner-top');
 
+function mounted() {
+	document.addEventListener('click', () => {
+		if (this.showMenu) {
+			this.showMenu = false;
+		}
+	});
+}
+
 function existcreditsCard() {
 	if (!isEmpty(this.getCommerceData.wayPayment)) {
 		const cards = this.getCommerceData.wayPayment.find(c => c.code === 'CDC');
@@ -137,6 +145,7 @@ export default {
 	methods: {
 		changeMenu,
 	},
+	mounted,
 	watch: {
 		$route: routeHandler,
 		getBanners,
