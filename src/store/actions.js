@@ -20,7 +20,12 @@ function setToken(context, token) {
 }
 
 function setUser(context, user) {
-	context.commit('setUser', user);
+	const newUser = user;
+	debugger;
+	newUser.dni = Number(user.dni) ? user.dni : null;
+	newUser.typePerson.documentNumber =
+			Number(newUser.typePerson.documentNumber) ? newUser.typePerson.documentNumber : null;
+	context.commit('setUser', newUser);
 }
 
 function addProductToBuyCar(context, product) {
