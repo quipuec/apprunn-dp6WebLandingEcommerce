@@ -2,7 +2,7 @@
 	<section class="tabs-container">
 		<button
 			type="button"
-			v-for="status in getStatus"
+			v-for="status in getStates"
 			:key="status.id"
 			:value="status.id"
 			:class="['tab-btn', { 'active': activeTab === status.id }]"
@@ -28,7 +28,7 @@ export default {
 	name: 'profile-tab',
 	computed: {
 		...mapGetters([
-			'getStatus',
+			'getStates',
 		]),
 	},
 	data,

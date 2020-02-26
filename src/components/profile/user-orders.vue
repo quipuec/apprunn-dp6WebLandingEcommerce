@@ -43,7 +43,7 @@ function created() {
 	this.$store.dispatch('LOAD_ORDERS_STATUS', this);
 }
 
-async function getStatusHandler(status) {
+async function getStatesHandler(status) {
 	if (status) {
 		({ id: this.orderStatusId } = lib.find(lib.equality('code', 'REQUESTED'), status));
 		this.loadOrders(this.orderStatusId);
@@ -115,7 +115,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'getOrders',
-			'getStatus',
+			'getStates',
 		]),
 	},
 	created,
@@ -126,16 +126,16 @@ export default {
 		]),
 		changePage,
 		deleteOrder,
-		getStatusHandler,
+		getStatesHandler,
 		getValue,
 		loadOrders,
 		seeDetails,
 		statusChanged,
 	},
 	watch: {
-		getStatus: {
+		getStates: {
 			deep: true,
-			handler: getStatusHandler,
+			handler: getStatesHandler,
 		},
 	},
 };
