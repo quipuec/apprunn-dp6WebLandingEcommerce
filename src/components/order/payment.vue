@@ -23,7 +23,6 @@
 				:is="paymentMethodSelectedComponent"
 			></component>
 		</section>
-		<paymentez/>
 	</div>
 </template>
 <script>
@@ -33,8 +32,8 @@ import { isEmpty } from '@/shared/lib';
 import depositPayment from '@/components/order/deposit-payment';
 import productsBuyed from '@/components/order/products-buyed';
 import recievedPayment from '@/components/order/recieved-payment';
-import visaPayment from '@/components/order/visa-payment';
-import paymentez from '@/components/order/paymentsMethods/paymentez';
+// import visaPayment from '@/components/order/visa-payment';
+import VisaByCountry from '@/components/order/credit-card-payment';
 
 function created() {
 	if (isEmpty(this.getWaysPayments)) {
@@ -58,7 +57,8 @@ function onSelect(method) {
 
 function paymentMethodSelectedComponent() {
 	const opt = {
-		CDC: 'visaPayment',
+		CDC: 'VisaByCountry',
+		// CDC: 'visaPayment',
 		PPR: 'recievedPayment',
 		IBD: 'depositPayment',
 	};
@@ -83,10 +83,10 @@ export default {
 	components: {
 		depositPayment,
 		appButton,
-		paymentez,
 		productsBuyed,
 		recievedPayment,
-		visaPayment,
+		// visaPayment,
+		VisaByCountry,
 	},
 	computed: {
 		...mapGetters([
