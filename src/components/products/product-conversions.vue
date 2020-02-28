@@ -104,13 +104,14 @@ export default {
 		border-bottom: 1px solid color(border);
 		border-top: 1px solid color(border);
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: flex-start;
 		margin-top: 10px;
 		padding: 20px 0;
 	}
 
 	.conversions-title {
-		margin-right: 10px;
+		margin: 0 10px;
 	}
 
 	.conversions-select-container {

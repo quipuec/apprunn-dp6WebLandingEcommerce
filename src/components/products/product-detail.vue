@@ -15,7 +15,7 @@
 				>{{ data.name }}</p>
 				<p
 					:class="[isLoading ? 'loading' : 'product-detail-brand']"
-				>{{ getBrandName(data) || '--' }}</p>
+				>{{ data.getBrandName || '--' }}</p>
 			</div>
 			<div class="d-center container-code-rating">
 				<span

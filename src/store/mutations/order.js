@@ -2,7 +2,7 @@ import Vue from 'vue';
 import h from '@/shared/helper';
 import { isEmpty } from '@/shared/lib';
 
-export default {
+const orderMutation = {
 	SET_FLAG_PICKUP(state, val) {
 		Vue.set(state.order, 'flagPickUp', val);
 	},
@@ -30,6 +30,7 @@ export default {
 		products[index].quantity = quantity;
 		Vue.set(state.order, 'products', [...products]);
 		localStorage.setItem('ecommerce::product-select', JSON.stringify([...products]));
+		orderMutation.UPDATE_ORDER_DETAILS_IF_EXIST(state, products);
 	},
 	DELETE_PRODUCT_BUY_CAR(state, id) {
 		const { products } = state.order;
@@ -37,6 +38,7 @@ export default {
 		products.splice(index, 1);
 		Vue.set(state.order, 'products', [...products]);
 		localStorage.setItem('ecommerce::product-select', JSON.stringify([...products]));
+		orderMutation.UPDATE_ORDER_DETAILS_IF_EXIST(state, products);
 	},
 	SET_SHIPPING_COST(state, amount) {
 		Vue.set(state.order, 'shippingCost', amount);
@@ -49,6 +51,9 @@ export default {
 	},
 	SET_ORDER_STATUS(state, orderStatus) {
 		Vue.set(state.order, 'orderStatus', orderStatus);
+	},
+	SET_ORDER_STATES(state, orderStates) {
+		Vue.set(state.order, 'orderStates', orderStates);
 	},
 	SET_FLAG_STATUS_ORDER(state, flagStatusOrder) {
 		Vue.set(state.order, 'flagStatusOrder', flagStatusOrder);
@@ -79,3 +84,4 @@ export default {
 		}
 	},
 };
+export default orderMutation;

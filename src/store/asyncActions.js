@@ -118,7 +118,7 @@ const asyncActions = {
 	},
 	LOAD_ORDERS_STATUS: async ({ commit }, context) => {
 		const { data: orderStatus } = await context.$httpSales.get('order-states');
-		commit('SET_ORDER_STATUS', orderStatus);
+		commit('SET_ORDER_STATES', orderStatus);
 	},
 	LOAD_ORDERS: async ({ commit }, { context, params, orderStatusId }) => {
 		const url = `orders?orderStateId=${orderStatusId}`;
