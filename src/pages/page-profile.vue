@@ -1,6 +1,11 @@
 <template>
 	<layout-admin>
 		<section class="profile-layout">
+			<div class="home-button-container">
+				<button type="button" class="home-button" @click="goTo('page-home')">
+					<left-component/>
+				</button>
+			</div>
 			<div
 				:style="`background-color: ${globalColors.dark};`"
 				class="profile-menu"
@@ -68,6 +73,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import leftComponent from '@/components/shared/icons/left-component';
 
 function goTo(name) {
 	this.$router.push({ name });
@@ -114,6 +120,9 @@ function getUserAvatar() {
 
 export default {
 	name: 'page-profile',
+	components: {
+		leftComponent,
+	},
 	computed: {
 		...mapGetters([
 			'getFilters',
@@ -141,6 +150,7 @@ export default {
 		margin: auto;
 		max-width: 1142px;
 		padding-top: 100px;
+		position: relative;
 
 		@media (max-width: 900px) {
 			grid-template-columns: 1fr;
@@ -261,7 +271,23 @@ export default {
 	.avatar-img {
 		height: 100%;
 		object-fit: contain;
+		width: 10%;
+	}
+
+	.home-button-container {
+		align-items: center;
+		bottom: 90%;
+		display: flex;
+		justify-content: flex-end;
+		padding: 0 20px;
+		position: absolute;
 		width: 100%;
+		z-index: 99;
+
+		.home-button {
+			padding: 10px;
+			transform: rotate(180deg);
+		}
 	}
 </style>
 
