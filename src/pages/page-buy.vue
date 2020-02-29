@@ -43,7 +43,7 @@
 	</div>
 </template>
 <script>
-import lib from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 import { mapGetters } from 'vuex';
 import appButton from '@/components/shared/buttons/app-button';
 import productInCar from '@/components/products/product-in-car';
@@ -56,16 +56,16 @@ function created() {
 }
 
 function stepOneAndTwo() {
-	const step = lib.getDeeper('meta.step')(this.$route);
+	const step = getDeeper('meta.step')(this.$route);
 	return step !== 3;
 }
 
 function stepThree() {
-	return lib.getDeeper('meta.step')(this.$route) === 3;
+	return getDeeper('meta.step')(this.$route) === 3;
 }
 
 function stepTwo() {
-	return lib.getDeeper('meta.step')(this.$route) === 2;
+	return getDeeper('meta.step')(this.$route) === 2;
 }
 
 function getProductToBuyHandler(newProducts) {
@@ -141,6 +141,10 @@ export default {
 		flex: 1 1 5%;
 		height: 100%;
 		margin: 0 10px;
+
+		@media (max-width: 987px) {
+			height: auto;
+		}
 	}
 
 	.footter-products-buy {

@@ -9,9 +9,9 @@
 			<div class="methods-container">
 				<app-button
 					v-for="method in getWaysPayments"
-					max-width="205.31px"
 					:key="method.id"
 					class="method-item"
+					:max-width="'100%'"
 					:action="method.name"
 					:active="paymentMethodSelected === method.code"
 					:background="globalColors.secondary"
