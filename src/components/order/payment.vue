@@ -32,7 +32,6 @@ import { isEmpty } from '@/shared/lib';
 import depositPayment from '@/components/order/deposit-payment';
 import productsBuyed from '@/components/order/products-buyed';
 import recievedPayment from '@/components/order/recieved-payment';
-// import visaPayment from '@/components/order/visa-payment';
 import VisaByCountry from '@/components/order/credit-card-payment';
 
 function created() {
@@ -58,7 +57,6 @@ function onSelect(method) {
 function paymentMethodSelectedComponent() {
 	const opt = {
 		CDC: 'VisaByCountry',
-		// CDC: 'visaPayment',
 		PPR: 'recievedPayment',
 		IBD: 'depositPayment',
 	};
@@ -85,7 +83,6 @@ export default {
 		appButton,
 		productsBuyed,
 		recievedPayment,
-		// visaPayment,
 		VisaByCountry,
 	},
 	computed: {
