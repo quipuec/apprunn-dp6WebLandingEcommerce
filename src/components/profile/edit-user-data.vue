@@ -67,7 +67,7 @@ import appInput from '@/components/shared/inputs/app-input';
 import appSelect from '@/components/shared/inputs/app-select';
 import cameraComponent from '@/components/shared/icons/camera-component';
 import editComponent from '@/components/shared/icons/edit-component';
-import lib from '@/shared/lib';
+import lib, { getDeeper } from '@/shared/lib';
 
 function created() {
 	this.userData = this.user || this.userData;
@@ -124,7 +124,7 @@ function selectProvince(id) {
 }
 
 function labelCountry() {
-	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Cédula' : 'DNI';
+	return getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Cédula' : 'DNI';
 }
 
 function data() {

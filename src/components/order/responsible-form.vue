@@ -40,11 +40,11 @@
 <script>
 import { required, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import lib from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 import appInput from '@/components/shared/inputs/app-input';
 
 function mounted() {
-	if (lib.getDeeper('responsiblePickUp')(this.getOrderInfo)) {
+	if (getDeeper('responsiblePickUp')(this.getOrderInfo)) {
 		this.responsible = { ...this.getOrderInfo.responsiblePickUp };
 	} else {
 		const { dni, email: mail, name, phone } = this.user;
@@ -61,11 +61,11 @@ function validateForm() {
 }
 
 function labelCountry() {
-	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Cédula' : 'DNI';
+	return getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Cédula' : 'DNI';
 }
 
 function labelError() {
-	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'El número de documento es requerido' : 'El DNI es requerido';
+	return getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'El número de documento es requerido' : 'El DNI es requerido';
 }
 
 function validDni(dni) {

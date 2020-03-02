@@ -7,10 +7,10 @@
 import depositMethods from '@/components/order/deposit-payment';
 import { mapGetters } from 'vuex';
 import PickUp from '@/shared/PickUp';
-import lib from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 
 function isNotStorePickUp() {
-	return lib.getDeeper('flagPickUp')(this.getOrderInfo) === PickUp.myDirection;
+	return getDeeper('flagPickUp')(this.getOrderInfo) === PickUp.myDirection;
 }
 
 export default {

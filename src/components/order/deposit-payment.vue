@@ -86,6 +86,10 @@ export default {
 		color: color(dark);
 		font-family: font(medium);
 		margin-top: 40px;
+
+		@media (max-width: 768px) {
+			padding: 0 20px;
+		}
 	}
 
 	.deposit-content {

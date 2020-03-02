@@ -77,7 +77,7 @@ function buildBody(flagFinish) {
 		customerBill: this.getFlagBill ? this.getBillingData : null,
 		deliveryAddress: this.getCustomerAddressId
 			? this.getDeliveryAddress : this.getCustomerAddress,
-		details: this.getDetails(this.getOrderDetails),
+		details: this.getDetails(this.getOrderDetails, this.getOrderId),
 		flagPickUp: this.getFlagPickUp,
 		responsiblePickUp: this.getResponsible,
 		warehouseId: process.env.WAREHOUSE_ID,
@@ -95,8 +95,17 @@ function buildBody(flagFinish) {
 	return body;
 }
 
-function getDetails(products) {
+function getUnitOrConvesion(product, orderId) {
+	if (orderId) {
+		return product.unit;
+	}
+	const { conversions, unit, unitId, unitSelected } = product;
+	return unitId === unitSelected ? unit : conversions[unitSelected];
+}
+
+function getDetails(products, orderId) {
 	return products.map((p) => {
+		const conversionSelected = this.getUnitOrConvesion(p, orderId);
 		const { taxes } = p;
 		const newTaxes = this.setTaxes(taxes);
 		const newP = {
@@ -116,17 +125,17 @@ function getDetails(products) {
 			},
 			productCode: p.code || p.productCode,
 			productId: p.productId || p.id,
-			productImage: p.urlImage || p.productImage,
+			productImage: p.imagePresentation || p.productImage,
 			productName: p.name || p.productName,
 			quantity: p.quantity,
 			salePrice: p.priceDiscount || p.salePrice || p.price,
 			stockQuantity: p.stock,
 			taxes: newTaxes,
-			unit: p.unit,
-			unitCode: p.unit.code,
-			unitConversion: 1,
-			unitId: p.unitId,
-			unitName: p.unit.name,
+			unit: conversionSelected,
+			unitCode: conversionSelected.code,
+			unitConversion: conversionSelected.quantity,
+			unitId: conversionSelected.id,
+			unitName: conversionSelected.name,
 			unitQuantity: p.quantity,
 			warehouseId: process.env.WAREHOUSE_ID,
 			warehouseName: process.env.WAREHOUSE_NAME,
@@ -212,6 +221,7 @@ export default {
 	methods: {
 		buildBody,
 		getDetails,
+		getUnitOrConvesion,
 		makeOrder,
 		setTaxes,
 	},

@@ -33,7 +33,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import lib from '@/shared/lib';
+import lib, { getDeeper } from '@/shared/lib';
 import deleteComponent from '@/components/shared/icons/delete-component';
 import detailsComponent from '@/components/shared/icons/details-component';
 import profileTab from '@/components/shared/tabs/profile-tab';
@@ -62,7 +62,7 @@ function seeDetails(order) {
 }
 
 function getValue(route, order) {
-	return lib.getDeeper(route)(order);
+	return getDeeper(route)(order);
 }
 
 

@@ -52,7 +52,7 @@ import { mapGetters } from 'vuex';
 import { required } from 'vuelidate/lib/validators';
 import appButton from '@/components/shared/buttons/app-button';
 import appInput from '@/components/shared/inputs/app-input';
-import lib from '@/shared/lib';
+import lib, { getDeeper } from '@/shared/lib';
 import UploadImage from '@/components/shared/upload-image';
 
 function created() {
@@ -101,7 +101,7 @@ function getUrlImage(urlImage) {
 }
 
 function getValue(route, order) {
-	return lib.getDeeper(route)(order);
+	return getDeeper(route)(order);
 }
 
 function handlerOrderUpdate(newVal) {
