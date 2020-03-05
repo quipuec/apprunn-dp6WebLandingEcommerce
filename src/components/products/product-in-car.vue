@@ -8,23 +8,23 @@
 			>
 			<div class="description">
 				<p
-					:style="`color: ${globalColors.secondary};`"
+					:style="`color: ${globalColors.primary};`"
 					class="product-title"
 				>Producto</p>
 				<p
-					:style="`color: ${globalColors.secondary};`"
+					:style="`color: ${globalColors.title};`"
 					class="product-content">{{product.description}}</p>
 				<p class="product-brand">{{product.brand}}</p>
 			</div>
 			<div class="price text-xs-center">
 				<p
-					:style="`color: ${globalColors.secondary};`"
-					class="product-title pu">Precio UND</p>
-				<p class="product-price">{{ product.priceDiscount | currencyFormat }}</p>
+					:style="`color: ${globalColors.primary};`"
+					class="product-title">P.U.</p>
+				<p class="product-price">{{getCurrencySymbol}} {{ product.priceDiscount | currencyFormat }}</p>
 			</div>
 			<div class="quantity text-xs-center">
 				<p
-					:style="`color: ${globalColors.secondary};`"
+					:style="`color: ${globalColors.primary};`"
 					class="product-title">Cantidad</p>
 				<div v-if="stepOne" class="quantity-button-container">
 					<quantityButton
@@ -37,9 +37,9 @@
 			</div>
 			<div class="total text-xs-center">
 				<p
-					:style="`color: ${globalColors.secondary};`"
+					:style="`color: ${globalColors.primary};`"
 					class="product-title">Total</p>
-				<p class="product-price">{{product.total | currencyFormat}}</p>
+				<p class="product-price">{{getCurrencySymbol}} {{product.total | currencyFormat}}</p>
 			</div>
 			<div class="comments">
 				<text-area
@@ -60,6 +60,7 @@ import commentsComponent from '@/components/shared/icons/comments-component';
 import textArea from '@/components/shared/inputs/text-area';
 import trashComponent from '@/components/shared/icons/trash-component';
 import quantityButton from '@/components/shared/buttons/quantity-button';
+import { mapGetters } from 'vuex';
 
 function showComments() {
 	this.show = !this.show;
@@ -103,6 +104,9 @@ export default {
 		quantityButton,
 	},
 	computed: {
+		...mapGetters([
+			'getCurrencySymbol',
+		]),
 		stepOne,
 	},
 	data,
@@ -142,7 +146,7 @@ export default {
 		grid-template-areas:
 			"image description price quantity total"
 			"image comments comments comments comments";
-		grid-template-columns: 1fr 1fr 0.5fr 1fr 0.4fr;
+		grid-template-columns: 1fr 1fr 0.5fr 1fr 0.7fr;
 		padding-right: 10px;
 
 		@media (max-width: 600px) {
@@ -173,6 +177,10 @@ export default {
 
 	.description {
 		grid-area: description;
+
+		@media (max-width: 600px) {
+			align-self: center; 
+		}
 	}
 
 	.price {
@@ -207,7 +215,7 @@ export default {
 
 	.product-content {
 		color: color(dark);
-		font-family: font(demi);
+		font-family: font(regular);
 		font-size: size(msmall);
 		font-weight: bold;
 		height: 30px;
@@ -225,7 +233,7 @@ export default {
 
 	.product-price {
 		color: color(dark);
-		font-family: font(bold);
+		font-family: font(heavy);
 		font-size: size(medium);
 	}
 
@@ -259,9 +267,5 @@ export default {
 
 	.quantity-button-container {
 		margin-top: 16px;
-	}
-
-	.pu {
-		max-width: max-content;
 	}
 </style>
