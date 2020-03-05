@@ -110,6 +110,7 @@ function noStock() {
 }
 
 function addToCar() {
+<<<<<<< HEAD
 	if (this.token) {
 		if (!this.noStock) {
 			this.$store.dispatch('addProductToBuyCar', this.data);
@@ -117,8 +118,13 @@ function addToCar() {
 		} else {
 			this.showGenericError('Producto sin stock');
 		}
+=======
+	if (!this.noStock) {
+		this.$store.dispatch('addProductToBuyCar', this.data);
+		this.goTo('buy');
+>>>>>>> beab2b49676202fc45075dff2998536d2c9f06c1
 	} else {
-		this.showGenericError('Debe iniciar sesión');
+		this.showGenericError('Producto sin stock');
 	}
 }
 
@@ -141,7 +147,6 @@ export default {
 	computed: {
 		...mapGetters([
 			'getCurrencySymbol',
-			'token',
 		]),
 		...mapGetters('loading', [
 			'isLoading',
