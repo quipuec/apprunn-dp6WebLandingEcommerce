@@ -9,7 +9,7 @@
 		<section class="modal-content">
 			<img :src="product.imagePresentation" alt="imagen del producto">
 			<p class="product-information">
-				<span>{{ product.name }}</span>
+				<span class="product-name">{{ product.name }}</span>
 				<span>{{ product.description }}</span>
 				<span
 					class="product-price"
@@ -41,6 +41,10 @@ function redirect(name) {
 	this.$emit('close-modal');
 }
 
+function deleteProduct() {
+	this.$store.commit('DELETE_PRODUCT_BUY_CAR', this.product.id);
+}
+
 export default {
 	name: 'app-modal',
 	components: {
@@ -52,6 +56,7 @@ export default {
 		]),
 	},
 	methods: {
+		deleteProduct,
 		redirect,
 	},
 	props: {
@@ -92,7 +97,7 @@ export default {
 	display: grid;
 	font-size: size(small);
 	grid-gap: 15px;
-	grid-template-columns: 0.5fr 1fr 0.25fr;
+	grid-template-columns: 0.5fr 1fr 0.15fr;
 	padding: 10px 20px;
 	text-align: center;
 
@@ -105,6 +110,11 @@ export default {
 		display: flex;
 		flex-direction: column;
 		margin: 0;
+		text-align: left;
+
+		.product-name {
+			font-family: font(bold);
+		}
 
 		.product-price {
 			font-family: font(bold);

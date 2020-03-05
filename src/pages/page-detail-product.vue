@@ -278,10 +278,6 @@ function selectedUnit(unit) {
 	this.productDetails = { ...this.productInstance.getProductDetails() };
 }
 
-function deleteProduct() {
-	this.$store.commit('DELETE_PRODUCT_BUY_CAR', this.product.id);
-}
-
 function closeConfirmModal() {
 	this.showConfirmModal = false;
 }
@@ -353,7 +349,6 @@ export default {
 		clickQuantity,
 		closeConfirmModal,
 		closeModal,
-		deleteProduct,
 		isLoggedUser,
 		loadData,
 		loadOpinions,
@@ -463,6 +458,7 @@ export default {
 		position: absolute;
 		right: 37px;
 		top: 14px;
+		width: 350px;
 		z-index: 2;
 	}
 
