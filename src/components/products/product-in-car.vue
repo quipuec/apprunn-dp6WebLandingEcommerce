@@ -83,7 +83,8 @@ function stepOne() {
 }
 
 function deleteProduct() {
-	this.$store.commit('DELETE_PRODUCT_BUY_CAR', this.product.id);
+	const { id, unitSelected } = this.product;
+	this.$store.commit('DELETE_PRODUCT_BUY_CAR', { id, unitSelected });
 }
 
 function data() {
@@ -129,7 +130,7 @@ export default {
 		padding: 20px 5px;
 
 		@media (max-width: 700px) {
-			padding: 22px 34px 5px;
+			padding: 22px 15px 5px;
 		}
 	}
 
@@ -141,7 +142,7 @@ export default {
 		grid-template-areas:
 			"image description price quantity total"
 			"image comments comments comments comments";
-		grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
+		grid-template-columns: 1fr 1fr 0.5fr 1fr 0.4fr;
 		padding-right: 10px;
 
 		@media (max-width: 600px) {
@@ -149,10 +150,10 @@ export default {
 			border-bottom: 1px solid color(border);
 			grid-gap: 10px;
 			grid-template-areas:
-				"image image description description description"
-				"price quantity quantity quantity total"
-				"comments comments comments comments comments";
-			grid-template-columns: 1fr repeat(2, minmax(45px, 75px));
+				"image image description description"
+				"price quantity quantity total"
+				"comments comments comments comments";
+			grid-template-columns: repeat(4, 1fr);
 			padding: 0 0 10px 0;
 		}
 	}
@@ -193,6 +194,10 @@ export default {
 		justify-self: flex-start;
 		object-fit: contain;
 		width: 120px;
+
+		@media (max-width: 600px) {
+			justify-self: center;
+		}
 	}
 
 	.product-title {
