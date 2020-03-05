@@ -1,4 +1,4 @@
-import l, { isEmpty } from '@/shared/lib';
+import l, { isEmpty, getDeeper } from '@/shared/lib';
 
 class GlobalFeatures {
 	constructor(products) {
@@ -13,7 +13,7 @@ class GlobalFeatures {
 					l.compose(
 						l.setNewProperty('isSelected', el => !!el.isSelected),
 						l.setNewProperty('notAllowed', false),
-					), l.getDeeper('values')(item)),
+					), getDeeper('values')(item)),
 			), this.features);
 	}
 	allUnSelected() {
@@ -24,14 +24,14 @@ class GlobalFeatures {
 					l.compose(
 						l.setNewProperty('isSelected', false),
 						l.setNewProperty('notAllowed', false),
-					), l.getDeeper('values')(item)),
+					), getDeeper('values')(item)),
 			), this.features);
 	}
 	get() {
 		return this.features;
 	}
 	init() {
-		this.features = l.getDeeper('category.features')(this.products[0]) || [];
+		this.features = getDeeper('category.features')(this.products[0]) || [];
 		this.products.forEach(this.setFeaturesValuesToGlobalFeatures.bind(this));
 	}
 	setFeaturesValuesToGlobalFeatures({ features }) {

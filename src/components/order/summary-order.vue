@@ -48,7 +48,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import appButton from '@/components/shared/buttons/app-button';
-import lib, { isEmpty } from '@/shared/lib';
+import { isEmpty, getDeeper } from '@/shared/lib';
 
 function total() {
 	return (this.getTotalToBuy - this.discount) + this.getShippingCost;
@@ -77,7 +77,7 @@ function buildBody(flagFinish) {
 		customerBill: this.getFlagBill ? this.getBillingData : null,
 		deliveryAddress: this.getCustomerAddressId
 			? this.getDeliveryAddress : this.getCustomerAddress,
-		details: this.getDetails(this.getOrderDetails),
+		details: this.getDetails(this.getOrderDetails, this.getOrderId),
 		flagPickUp: this.getFlagPickUp,
 		responsiblePickUp: this.getResponsible,
 		warehouseId: process.env.WAREHOUSE_ID,
@@ -95,16 +95,25 @@ function buildBody(flagFinish) {
 	return body;
 }
 
-function getDetails(products) {
+function getUnitOrConvesion(product, orderId) {
+	if (orderId) {
+		return product.unit;
+	}
+	const { conversions, unit, unitId, unitSelected } = product;
+	return unitId === unitSelected ? unit : conversions[unitSelected];
+}
+
+function getDetails(products, orderId) {
 	return products.map((p) => {
+		const conversionSelected = this.getUnitOrConvesion(p, orderId);
 		const { taxes } = p;
 		const newTaxes = this.setTaxes(taxes);
 		const newP = {
 			alternateCode: p.alternateCode,
-			brandId: lib.getDeeper('warehouseProduct.brandId')(p) || p.brandId,
-			brandName: lib.getDeeper('warehouseProduct.brand.name')(p) || p.brandName,
+			brandId: getDeeper('warehouseProduct.brandId')(p) || p.brandId,
+			brandName: getDeeper('warehouseProduct.brand.name')(p) || p.brandName,
 			categoryId: p.categoryId,
-			categoryName: lib.getDeeper('category.name')(p) || p.categoryName,
+			categoryName: getDeeper('category.name')(p) || p.categoryName,
 			codeTaxes: taxes[0].code,
 			description: p.description,
 			discount: p.discount || 0,
@@ -112,21 +121,21 @@ function getDetails(products) {
 			product: {
 				id: p.productId || p.id,
 				taxes: [...newTaxes],
-				type: lib.getDeeper('typeInfo.id')(p) || lib.getDeeper('product.type')(p),
+				type: getDeeper('typeInfo.id')(p) || getDeeper('product.type')(p),
 			},
 			productCode: p.code || p.productCode,
 			productId: p.productId || p.id,
-			productImage: p.urlImage || p.productImage,
+			productImage: p.imagePresentation || p.productImage,
 			productName: p.name || p.productName,
 			quantity: p.quantity,
 			salePrice: p.priceDiscount || p.salePrice || p.price,
 			stockQuantity: p.stock,
 			taxes: newTaxes,
-			unit: p.unit,
-			unitCode: p.unit.code,
-			unitConversion: 1,
-			unitId: p.unitId,
-			unitName: p.unit.name,
+			unit: conversionSelected,
+			unitCode: conversionSelected.code,
+			unitConversion: conversionSelected.quantity,
+			unitId: conversionSelected.id,
+			unitName: conversionSelected.name,
 			unitQuantity: p.quantity,
 			warehouseId: process.env.WAREHOUSE_ID,
 			warehouseName: process.env.WAREHOUSE_NAME,
@@ -159,15 +168,15 @@ function setTaxes(taxes) {
 }
 
 function stepThree() {
-	return lib.getDeeper('meta.step')(this.$route) === 3;
+	return getDeeper('meta.step')(this.$route) === 3;
 }
 
 function stepOne() {
-	return lib.getDeeper('meta.step')(this.$route) === 1;
+	return getDeeper('meta.step')(this.$route) === 1;
 }
 
 function stepTwo() {
-	return lib.getDeeper('meta.step')(this.$route) === 2;
+	return getDeeper('meta.step')(this.$route) === 2;
 }
 
 function goToMakeOrder() {
@@ -221,6 +230,7 @@ export default {
 	methods: {
 		buildBody,
 		getDetails,
+		getUnitOrConvesion,
 		goToMakeOrder,
 		makeOrder,
 		setTaxes,
@@ -231,6 +241,8 @@ export default {
 	.summary-container {
 		position: sticky;
 		top: 115px;
+		margin: 0 auto;
+		max-width: 400px;
 	}
 
 	.summary-order {

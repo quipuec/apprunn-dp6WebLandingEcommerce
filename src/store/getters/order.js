@@ -1,4 +1,4 @@
-import lib, { isEmpty } from '@/shared/lib';
+import lib, { isEmpty, getDeeper } from '@/shared/lib';
 
 const twoDecimals = lib.decimals(2);
 
@@ -52,7 +52,7 @@ const getters = {
 		} = state.order;
 		const invalidResponsible = isEmpty(responsible);
 		const invalidDelivery = isEmpty(delivery);
-		const invalidNewDelvery = lib.getDeeper('id')(delivery) === 0
+		const invalidNewDelvery = getDeeper('id')(delivery) === 0
 			? isEmpty(customerAddress) : false;
 		const invalidBill = flagBill ? isEmpty(bill) : false;
 		const invalidShippingCost = flagPickUp === 1 ? isEmpty(shippingCost) : false;
