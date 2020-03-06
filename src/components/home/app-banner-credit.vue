@@ -21,15 +21,15 @@
 </template>
 
 <script>
-import lib from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 import { mapGetters } from 'vuex';
 
 function webImage() {
-	return lib.getDeeper('webImage')(this.data);
+	return getDeeper('webImage')(this.data);
 }
 
 function webLink() {
-	return lib.getDeeper('webLink')(this.data);
+	return getDeeper('webLink')(this.data);
 }
 
 export default {

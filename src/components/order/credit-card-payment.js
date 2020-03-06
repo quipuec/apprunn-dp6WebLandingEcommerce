@@ -1,14 +1,13 @@
-import VisaPeru from '@/components/order/visa-payment';
-import VisaEcu from '@/components/order/paymentsMethods/paymentez';
 import { mapGetters } from 'vuex';
-import { getDeeper } from '@/shared/lib';
+
+const VisaPeru = () => import('@/components/order/visa-payment');
+const VisaEcu = () => import('@/components/order/paymentsMethods/paymentez');
 
 export default {
 	computed: {
 		...mapGetters(['user']),
 	},
 	render(h) {
-		const isPeru = getDeeper('company.country.countryCode')(this.user) === 'PER';
-		return isPeru ? h(VisaPeru) : h(VisaEcu);
+		return this.isPeru ? h(VisaPeru) : h(VisaEcu);
 	},
 };

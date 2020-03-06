@@ -1,4 +1,5 @@
 import store from '@/store';
+import { getDeeper } from '@/shared/lib';
 
 function data() {
 	return {
@@ -13,6 +14,10 @@ function data() {
 			rows: [],
 		},
 	};
+}
+
+function isPeru() {
+	return getDeeper('company.country.countryCode')(store.getters.user) === 'PER';
 }
 
 Math.easeInOutQuad = (t, b, c, d) => {
@@ -140,6 +145,7 @@ const mixin = {
 	computed: {
 		countryLabels,
 		globalColors,
+		isPeru,
 		token,
 	},
 	methods: {

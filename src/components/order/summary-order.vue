@@ -22,10 +22,10 @@
 		<section class="btns-summary-order">
 			<app-button
 				v-if="stepOne"
-				action='Pagar'
+				action='Hacer pedido'
 				class="btn-order"
 				:background="globalColors.primary"
-				@click="goTo('buy-delivery')"
+				@click="goToMakeOrder"
 			/>
 			<app-button
 				v-else-if="stepTwo"
@@ -48,114 +48,14 @@
 <script>
 import { mapGetters } from 'vuex';
 import appButton from '@/components/shared/buttons/app-button';
-import { isEmpty, getDeeper } from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 
 function total() {
 	return (this.getTotalToBuy - this.discount) + this.getShippingCost;
 }
 
-async function makeOrder(flagFinish) {
-	const body = this.buildBody(flagFinish);
-	const orderExist = !isEmpty(this.getOrderInfo);
-	const dispatchName = orderExist ? 'UPDATE_ORDER' : 'CREATE_ORDER';
-	const dispatchObj = orderExist
-		? { context: this, id: this.getOrderInfo.id, body }
-		: { context: this, body };
-	await this.$store.dispatch(dispatchName, dispatchObj);
-	if (flagFinish) {
-		this.goTo('buy-summary');
-	} else {
-		this.goTo('buy-payment');
-	}
-}
-
-function buildBody(flagFinish) {
-	const body = {
-		costShipping: this.getShippingCost,
-		customerAddressId: this.getCustomerAddressId,
-		customerAddress: this.getCustomerAddressId ? null : this.getCustomerAddress,
-		customerBill: this.getFlagBill ? this.getBillingData : null,
-		deliveryAddress: this.getCustomerAddressId
-			? this.getDeliveryAddress : this.getCustomerAddress,
-		details: this.getDetails(this.getOrderDetails),
-		flagPickUp: this.getFlagPickUp,
-		responsiblePickUp: this.getResponsible,
-		warehouseId: process.env.WAREHOUSE_ID,
-		warehouseName: process.env.WAREHOUSE_NAME,
-		warehouseAddress: process.env.WAREHOUSE_ADDRESS,
-	};
-	if (this.getOrderId && this.getOrderStatus) {
-		body.orderStateId = this.getOrderStatus;
-		body.flagStatusOrder = flagFinish ? 3 : this.getFlagStatusOrder;
-		body.bankAccountId = flagFinish ? this.getWayPayment.bankAccountId : null;
-		body.wayPaymentId = flagFinish ? this.getWayPayment.wayPayment : null;
-	} else {
-		body.commerceCode = process.env.COMMERCE_CODE;
-	}
-	return body;
-}
-
-function getDetails(products) {
-	return products.map((p) => {
-		const { taxes } = p;
-		const newTaxes = this.setTaxes(taxes);
-		const newP = {
-			alternateCode: p.alternateCode,
-			brandId: getDeeper('warehouseProduct.brandId')(p) || p.brandId,
-			brandName: getDeeper('warehouseProduct.brand.name')(p) || p.brandName,
-			categoryId: p.categoryId,
-			categoryName: getDeeper('category.name')(p) || p.categoryName,
-			codeTaxes: taxes[0].code,
-			description: p.description,
-			discount: p.discount || 0,
-			discountPercentage: p.discountPercentage || 0,
-			product: {
-				id: p.productId || p.id,
-				taxes: [...newTaxes],
-				type: getDeeper('typeInfo.id')(p) || getDeeper('product.type')(p),
-			},
-			productCode: p.code || p.productCode,
-			productId: p.productId || p.id,
-			productImage: p.urlImage || p.productImage,
-			productName: p.name || p.productName,
-			quantity: p.quantity,
-			salePrice: p.priceDiscount || p.salePrice || p.price,
-			stockQuantity: p.stock,
-			taxes: newTaxes,
-			unit: p.unit,
-			unitCode: p.unit.code,
-			unitConversion: 1,
-			unitId: p.unitId,
-			unitName: p.unit.name,
-			unitQuantity: p.quantity,
-			warehouseId: process.env.WAREHOUSE_ID,
-			warehouseName: process.env.WAREHOUSE_NAME,
-		};
-		return newP;
-	});
-}
-
-function setTaxes(taxes) {
-	const newTaxes = [];
-	if (!taxes && taxes.length === 0) {
-		newTaxes[0] = {
-			code: '01',
-			codeTable: 'TABLE17',
-			codePercentage: '01',
-			flagSales: true,
-			flagPurchases: false,
-		};
-	} else {
-		const tax = taxes[0];
-		newTaxes[0] = {
-			code: tax.code,
-			codeTable: tax.codeTable,
-			codePercentage: tax.codePercentage,
-			flagSales: Boolean(tax.flagSales),
-			flagPurchases: Boolean(tax.flagPurchases),
-		};
-	}
-	return newTaxes;
+function makeOrder(flagFinish) {
+	this.$store.dispatch('MAKE_ORDER', { flagFinish, context: this });
 }
 
 function stepThree() {
@@ -168,6 +68,14 @@ function stepOne() {
 
 function stepTwo() {
 	return getDeeper('meta.step')(this.$route) === 2;
+}
+
+function goToMakeOrder() {
+	if (this.token) {
+		this.goTo('buy-delivery');
+	} else {
+		this.showGenericError('Debe iniciar sesión para hacer el pedido');
+	}
 }
 
 function data() {
@@ -202,6 +110,7 @@ export default {
 			'getTotalToBuy',
 			'getWayPayment',
 			'invalidOrder',
+			'token',
 		]),
 		stepOne,
 		stepThree,
@@ -210,10 +119,8 @@ export default {
 	},
 	data,
 	methods: {
-		buildBody,
-		getDetails,
+		goToMakeOrder,
 		makeOrder,
-		setTaxes,
 	},
 };
 </script>

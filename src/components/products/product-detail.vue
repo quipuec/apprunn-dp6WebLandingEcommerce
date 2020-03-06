@@ -80,7 +80,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import lib from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 import heartComponent from '@/components/shared/icons/heart-component';
 import productChildrens from '@/components/products/product-childrens';
 import productBuy from '@/components/products/product-buy';
@@ -110,20 +110,16 @@ function noStock() {
 }
 
 function addToCar() {
-	if (this.token) {
-		if (!this.noStock) {
-			this.$store.dispatch('addProductToBuyCar', this.data);
-			this.goTo('buy');
-		} else {
-			this.showGenericError('Producto sin stock');
-		}
+	if (!this.noStock) {
+		this.$store.dispatch('addProductToBuyCar', this.data);
+		this.goTo('buy');
 	} else {
-		this.showGenericError('Debe iniciar sesión');
+		this.showGenericError('Producto sin stock');
 	}
 }
 
 function getBrandName(data) {
-	return lib.getDeeper('warehouseProduct.brand.name')(data);
+	return getDeeper('warehouseProduct.brand.name')(data);
 }
 
 function unitSelection(item) {
@@ -141,7 +137,6 @@ export default {
 	computed: {
 		...mapGetters([
 			'getCurrencySymbol',
-			'token',
 		]),
 		...mapGetters('loading', [
 			'isLoading',
