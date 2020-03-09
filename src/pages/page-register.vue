@@ -104,7 +104,7 @@
 			}
 		} catch (err) {
 			if (err.status === 400) {
-				if (err.data.message === 'CUSTOMER_EXIST_ERROR') {
+				if (err.data.message === 'CUSTOMER_EXIST_ERROR' || err.data.message === 'ACL_REGISTER_USER_ERROR') {
 					this.showGenericError('El email ya ha sido registrado.');
 				}
 			} else if (err.status === 500) {
