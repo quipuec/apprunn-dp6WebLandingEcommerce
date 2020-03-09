@@ -35,12 +35,11 @@ function mounted() {
 }
 
 function clientAppCode() {
-	return process.env.NODE_ENV === 'production' ? 'TPP2-EC-SERVER' : 'TPP2-EC-CLIENT';
+	return process.env.PAYMENTEZ_CLIENT;
 }
 
 function clientAppKey() {
-	return process.env.NODE_ENV === 'production'
-		? 'NIJ6kjmMK482BWAngpa9QpKVtj4cUe' : 'sDAwQAdBqetYhVZFFLpOg6FU2cmjF0';
+	return process.env.PAYMENTEZ_KEY;
 }
 
 async function onCreditCardResponse(response) {
