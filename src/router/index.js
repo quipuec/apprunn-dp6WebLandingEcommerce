@@ -19,6 +19,10 @@ export default function (Vue) {
 			{
 				path: '/',
 				name: 'page-home',
+				meta: {
+					title: 'Home',
+					description: 'pantalla principal del ecommerce',
+				},
 				component: () => import(/* webpackChunkName: "home" */ '@/pages/page-home'),
 			},
 			Category,
