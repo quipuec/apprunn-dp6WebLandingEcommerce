@@ -135,6 +135,15 @@ function scrollTo(element, duration, fit) {
 	this.isVisible = false;
 }
 
+function updateDescriptionTag(description) {
+	const metaDescription = document.getElementById('myDescription');
+	metaDescription.content = description;
+}
+
+function updatePageTitle(title) {
+	document.title = title;
+}
+
 const mixin = {
 	data,
 	computed: {
@@ -155,6 +164,8 @@ const mixin = {
 		showRow,
 		stopClick,
 		scrollTo,
+		updateDescriptionTag,
+		updatePageTitle,
 	},
 };
 

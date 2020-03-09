@@ -53,6 +53,10 @@ import componentFilterProduct from '@/components/shared/products/component-filte
 import productsSection from '@/components/products/products-section';
 import sectionSettlement from '@/components/home/section-settlement';
 
+function created() {
+	this.updateDescriptionTag(this.homeDescriptionMetaTag);
+}
+
 function filterSelect(filter) {
 	if (filter.link) {
 		window.open(filter.link, '_blank');
@@ -127,6 +131,7 @@ function data() {
 		colorDark: process.env.COLOR_TITLE,
 		colorBase: process.env.COLOR_PRIMARY,
 		colorSecondary: process.env.COLOR_SECONDARY,
+		homeDescriptionMetaTag: 'Vende tus productos online con nosotros, el mejor ecommerce de América Latina',
 		titleBtn: 'SOLICITA AQUÍ',
 	};
 }
@@ -158,6 +163,7 @@ export default {
 		filtersExist,
 		getCategoriesLength,
 	},
+	created,
 	methods: {
 		filterSelect,
 	},
