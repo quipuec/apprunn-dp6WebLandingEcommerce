@@ -136,11 +136,17 @@ function selectCategory() {
 	this.loadProduct();
 	this.categories = this.getCategories;
 	this.currentSelect = this.getCurrentcategory(this.categories, this.id);
+	this.updateMetaTag(this.currentSelect);
 	if (this.breadcrumbs.length) {
 		this.breadcrumbs[0].disabled = true;
 		this.breadcrumbs = this.breadcrumbs.reverse();
 		this.categorySelected = this.breadcrumbs[0];
 	}
+}
+
+function updateMetaTag(category) {
+	this.updatePageTitle(category && category.title);
+	this.updateDescriptionTag(category && category.description);
 }
 
 function getCurrentcategory(categories, id) {
@@ -236,17 +242,18 @@ export default {
 		]),
 	},
 	methods: {
-		loadProduct,
-		updateProductCard,
-		selectCategory,
 		changeCategory,
-		openCategory,
-		toggleMenu,
 		changeOpen,
 		closeOpen,
-		linkCategories,
-		toggleCategory,
 		getCurrentcategory,
+		linkCategories,
+		loadProduct,
+		openCategory,
+		selectCategory,
+		toggleCategory,
+		toggleMenu,
+		updateMetaTag,
+		updateProductCard,
 	},
 	data,
 	props: {
