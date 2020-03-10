@@ -1,5 +1,11 @@
 <template>
 	<div class="page-detail-product">
+		<div class="confirm-modal-container" v-if="showConfirmModal">
+			<app-modal
+				:product="productDetails"
+				@close-modal="closeConfirmModal"
+			></app-modal>
+		</div>
 		<div class="detail-product-top">
 			<product-view 
 				:data="productDetails"
@@ -16,6 +22,7 @@
 				@clear="clearFeatures"
 				@click-quantity="clickQuantity"
 				@open-dialog="openDialog"
+				@open-confirm-modal="showConfirmModal = true"
 				@unit-selection="selectedUnit"
 			/>
 		</div>
@@ -61,6 +68,7 @@ import productTab from '@/components/products/product-tab';
 import productRelated from '@/components/products/product-related';
 import warehousesModal from '@/components/products/warehouses-modal';
 import productPublicity from '@/components/products/product-publicity';
+import appModal from '@/components/shared/modal/app-modal';
 
 async function created() {
 	this.$loading(true);
@@ -270,6 +278,10 @@ function selectedUnit(unit) {
 	this.productDetails = { ...this.productInstance.getProductDetails() };
 }
 
+function closeConfirmModal() {
+	this.showConfirmModal = false;
+}
+
 function data() {
 	return {
 		allFeatures: [],
@@ -297,6 +309,7 @@ function data() {
 		productImages: [],
 		productFather: {},
 		relateds: [],
+		showConfirmModal: false,
 		stockWarehouse: false,
 		tabs: [],
 		warehouses: [],
@@ -308,6 +321,7 @@ export default {
 	created,
 	components: {
 		appBannerTop,
+		appModal,
 		productDetail,
 		productPublicity,
 		productView,
@@ -333,6 +347,7 @@ export default {
 		assignProduct,
 		clearFeatures,
 		clickQuantity,
+		closeConfirmModal,
 		closeModal,
 		isLoggedUser,
 		loadData,
@@ -365,6 +380,7 @@ export default {
 
 	.page-detail-product {
 		background: color(white);
+		position: relative;
 
 		@media screen and (max-width: 996px) {
 			padding-top: 20px;
@@ -431,6 +447,19 @@ export default {
 		@media screen and (max-width: 764px) {
 			padding: 0 5%;
 		}
+	}
+
+	.confirm-modal-container {
+		background-color: white;
+		border: 1px solid color(border);
+		border-radius: 8px;
+		box-shadow: 0 2px 4px 0 rgba(213, 213, 213, 0.5);
+		padding: 10px;
+		position: absolute;
+		right: 37px;
+		top: 14px;
+		width: 350px;
+		z-index: 2;
 	}
 
 </style>
