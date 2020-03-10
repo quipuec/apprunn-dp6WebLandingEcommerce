@@ -271,7 +271,6 @@ export default {
 	.avatar-img {
 		height: 100%;
 		object-fit: contain;
-		width: 10%;
 	}
 
 	.home-button-container {
