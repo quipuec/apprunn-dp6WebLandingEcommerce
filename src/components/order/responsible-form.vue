@@ -15,7 +15,7 @@
 			@input="validateForm"
 		>
 			<span v-if="!$v.responsible.dni.required">{{labelError}}.</span>
-			<span v-if="!$v.responsible.dni.validDni">Solo se permiten números</span>
+			<span v-if="isPeru && !$v.responsible.dni.validDni">Solo se permiten números</span>
 		</app-input>
 		<app-input
 			placeholder="Celular"
@@ -74,17 +74,18 @@ function validDni(dni) {
 }
 
 function validations() {
-	return {
+	const validating = {
 		responsible: {
-			dni: {
-				required,
-				validDni: this.validDni,
-			},
+			dni: { required },
 			email: { email, required },
 			name: { required },
 			phone: { required },
 		},
 	};
+	if (this.isPeru) {
+		validating.responsible.dni.validDni = this.validDni;
+	}
+	return validating;
 }
 
 function data() {
