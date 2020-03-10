@@ -5,13 +5,6 @@ const route = {
 	meta: {
 		step: 1,
 	},
-	beforeEnter: (to, from, next) => {
-		if (to.fullPath.includes('carrito-de-compras') && localStorage.getItem('ecommerce::token')) {
-			next();
-		} else {
-			next({ name: 'page-home' });
-		}
-	},
 	children: [
 		{
 			name: 'buy-delivery',
@@ -20,6 +13,13 @@ const route = {
 				step: 2,
 			},
 			component: () => import(/* webpackChunkName: "delivery" */ '@/components/order/delivery'),
+			beforeEnter: (to, from, next) => {
+				if (to.fullPath.includes('entrega-y-facturacion') && localStorage.getItem('ecommerce::token')) {
+					next();
+				} else {
+					next({ name: 'page-home' });
+				}
+			},
 		},
 		{
 			name: 'buy-payment',
@@ -28,6 +28,13 @@ const route = {
 				step: 3,
 			},
 			component: () => import(/* webpackChunkName: "payment" */ '@/components/order/payment'),
+			beforeEnter: (to, from, next) => {
+				if (to.fullPath.includes('pago') && localStorage.getItem('ecommerce::token')) {
+					next();
+				} else {
+					next({ name: 'page-home' });
+				}
+			},
 		},
 	],
 };

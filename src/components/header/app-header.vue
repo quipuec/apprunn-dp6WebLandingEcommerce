@@ -131,11 +131,7 @@ function updateFilter(id) {
 }
 
 function goShopping() {
-	if (this.token) {
-		this.goTo('buy');
-	} else {
-		this.showGenericError('Debe iniciar sesión');
-	}
+	this.goTo('buy');
 }
 
 function goToFavorites() {
