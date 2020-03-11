@@ -112,7 +112,11 @@ function noStock() {
 function addToCar() {
 	if (!this.noStock) {
 		this.$store.dispatch('addProductToBuyCar', this.data);
+<<<<<<< HEAD
 		this.$emit('open-confirm-modal');
+=======
+		this.goTo('buy');
+>>>>>>> 0d001e31092627d6976f8860c4084849e6168d57
 	} else {
 		this.showGenericError('Producto sin stock');
 	}
