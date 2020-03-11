@@ -54,6 +54,7 @@ import productsSection from '@/components/products/products-section';
 import sectionSettlement from '@/components/home/section-settlement';
 
 function created() {
+	this.updatePageTitle(this.getCommerceData.name);
 	this.updateDescriptionTag(this.homeDescriptionMetaTag);
 }
 
@@ -157,6 +158,7 @@ export default {
 			'getPromotionalBanner',
 			'getPlansBanner',
 			'getCategories',
+			'getCommerceData',
 			'getFilters',
 			'indeterminate',
 		]),
