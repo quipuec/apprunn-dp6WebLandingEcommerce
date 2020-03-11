@@ -22,10 +22,10 @@
 		<section class="btns-summary-order">
 			<app-button
 				v-if="stepOne"
-				action='Pagar'
+				action='Hacer pedido'
 				class="btn-order"
 				:background="globalColors.primary"
-				@click="goTo('buy-delivery')"
+				@click="goToMakeOrder"
 			/>
 			<app-button
 				v-else-if="stepTwo"
@@ -179,6 +179,14 @@ function stepTwo() {
 	return getDeeper('meta.step')(this.$route) === 2;
 }
 
+function goToMakeOrder() {
+	if (this.token) {
+		this.goTo('buy-delivery');
+	} else {
+		this.showGenericError('Debe iniciar sesión para hacer el pedido');
+	}
+}
+
 function data() {
 	return {
 		discount: 0,
@@ -211,6 +219,7 @@ export default {
 			'getTotalToBuy',
 			'getWayPayment',
 			'invalidOrder',
+			'token',
 		]),
 		stepOne,
 		stepThree,
@@ -222,6 +231,7 @@ export default {
 		buildBody,
 		getDetails,
 		getUnitOrConvesion,
+		goToMakeOrder,
 		makeOrder,
 		setTaxes,
 	},

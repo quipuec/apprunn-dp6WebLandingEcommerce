@@ -19,14 +19,14 @@
 			<div class="price text-xs-center">
 				<p
 					:style="`color: ${globalColors.secondary};`"
-					class="product-title">Precio UND</p>
+					class="product-title pu">Precio UND</p>
 				<p class="product-price">{{ product.priceDiscount | currencyFormat }}</p>
 			</div>
 			<div class="quantity text-xs-center">
 				<p
 					:style="`color: ${globalColors.secondary};`"
 					class="product-title">Cantidad</p>
-				<div v-if="stepOne">
+				<div v-if="stepOne" class="quantity-button-container">
 					<quantityButton
 						class="continer-quantity-button"
 						:number="product.quantity"
@@ -126,7 +126,7 @@ export default {
 		flex-wrap: wrap;
 		display: flex;
 		margin-bottom: 10px;
-		padding: 22px 5px 5px 34px;
+		padding: 20px 5px;
 
 		@media (max-width: 700px) {
 			padding: 22px 34px 5px;
@@ -141,7 +141,7 @@ export default {
 		grid-template-areas:
 			"image description price quantity total"
 			"image comments comments comments comments";
-		grid-template-columns: repeat(4, minmax(125px, 1fr)) 60px;
+		grid-template-columns: repeat(auto-fit, minmax(125px, 1fr));
 		padding-right: 10px;
 
 		@media (max-width: 600px) {
@@ -149,9 +149,9 @@ export default {
 			border-bottom: 1px solid color(border);
 			grid-gap: 10px;
 			grid-template-areas:
-				"image description description"
-				"price quantity total"
-				"comments comments comments";
+				"image image description description description"
+				"price quantity quantity quantity total"
+				"comments comments comments comments comments";
 			grid-template-columns: 1fr repeat(2, minmax(45px, 75px));
 			padding: 0 0 10px 0;
 		}
@@ -180,20 +180,24 @@ export default {
 
 	.quantity {
 		grid-area: quantity;
+		justify-self: center;
 	}
 
 	.total {
 		grid-area: total;
+		justify-self: flex-end;
 	}
 
 	.product-img {
 		height: 136px;
+		justify-self: flex-start;
 		object-fit: contain;
 		width: 120px;
 	}
 
 	.product-title {
 		font-family: font(bold);
+		margin-bottom: 0;
 	}
 
 	.product-content {
@@ -246,5 +250,13 @@ export default {
 
 	.continer-quantity-button {
 		margin-top: -12px;
+	}
+
+	.quantity-button-container {
+		margin-top: 16px;
+	}
+
+	.pu {
+		max-width: max-content;
 	}
 </style>

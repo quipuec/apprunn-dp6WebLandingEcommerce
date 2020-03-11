@@ -1,6 +1,6 @@
 <template>
 	<v-dialog
-		max-width="80%"
+		:max-width="maxWidth"
 		:value="value"
 		@input="showModal"
 	>
@@ -19,6 +19,10 @@ export default {
 		showModal,
 	},
 	props: {
+		maxWidth: {
+			default: '80%',
+			type: String,
+		},
 		value: null,
 	},
 };

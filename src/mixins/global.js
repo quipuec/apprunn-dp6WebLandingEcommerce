@@ -1,4 +1,5 @@
 import store from '@/store';
+import { getDeeper } from '@/shared/lib';
 
 function data() {
 	return {
@@ -13,6 +14,10 @@ function data() {
 			rows: [],
 		},
 	};
+}
+
+function isPeru() {
+	return getDeeper('company.country.countryCode')(store.getters.user) === 'PER';
 }
 
 Math.easeInOutQuad = (t, b, c, d) => {
@@ -135,11 +140,21 @@ function scrollTo(element, duration, fit) {
 	this.isVisible = false;
 }
 
+function updateDescriptionTag(description) {
+	const metaDescription = document.getElementById('myDescription');
+	metaDescription.content = description;
+}
+
+function updatePageTitle(title) {
+	document.title = title;
+}
+
 const mixin = {
 	data,
 	computed: {
 		countryLabels,
 		globalColors,
+		isPeru,
 		token,
 	},
 	methods: {
@@ -155,6 +170,8 @@ const mixin = {
 		showRow,
 		stopClick,
 		scrollTo,
+		updateDescriptionTag,
+		updatePageTitle,
 	},
 };
 
