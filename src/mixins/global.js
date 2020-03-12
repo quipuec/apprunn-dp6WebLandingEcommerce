@@ -1,5 +1,5 @@
 import store from '@/store';
-import lib from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 
 function data() {
 	return {
@@ -17,7 +17,7 @@ function data() {
 }
 
 function isPeru() {
-	return lib.getDeeper('company.country.countryCode')(store.getters.user) === 'PER';
+	return getDeeper('company.country.countryCode')(store.getters.user) === 'PER';
 }
 
 Math.easeInOutQuad = (t, b, c, d) => {

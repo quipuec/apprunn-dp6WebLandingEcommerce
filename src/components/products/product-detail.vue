@@ -80,7 +80,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import lib from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 import heartComponent from '@/components/shared/icons/heart-component';
 import productChildrens from '@/components/products/product-childrens';
 import productBuy from '@/components/products/product-buy';
@@ -119,7 +119,7 @@ function addToCar() {
 }
 
 function getBrandName(data) {
-	return lib.getDeeper('warehouseProduct.brand.name')(data);
+	return getDeeper('warehouseProduct.brand.name')(data);
 }
 
 function unitSelection(item) {

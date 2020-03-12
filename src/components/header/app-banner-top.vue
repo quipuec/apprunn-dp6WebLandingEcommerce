@@ -17,15 +17,15 @@
 	</div>
 </template>
 <script>
-import lib from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 import appButton from '@/components/shared/buttons/app-button';
 
 function webImage() {
-	return lib.getDeeper('webImage')(this.data);
+	return getDeeper('webImage')(this.data);
 }
 
 function mobileImage() {
-	return lib.getDeeper('mobileImage')(this.data);
+	return getDeeper('mobileImage')(this.data);
 }
 
 function data() {
