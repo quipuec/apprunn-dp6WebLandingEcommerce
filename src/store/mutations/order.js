@@ -32,13 +32,12 @@ const orderMutation = {
 		localStorage.setItem('ecommerce::product-select', JSON.stringify([...products]));
 		orderMutation.UPDATE_ORDER_DETAILS_IF_EXIST(state, products);
 	},
-	DELETE_PRODUCT_BUY_CAR(state, id) {
+	DELETE_PRODUCT_BUY_CAR(state, { id, unitSelected }) {
 		const { products } = state.order;
-		const index = products.findIndex(p => p.id === id);
-		products.splice(index, 1);
-		Vue.set(state.order, 'products', [...products]);
-		localStorage.setItem('ecommerce::product-select', JSON.stringify([...products]));
-		orderMutation.UPDATE_ORDER_DETAILS_IF_EXIST(state, products);
+		const newProducts = products.filter(p => !(p.id === id && p.unitSelected === unitSelected));
+		Vue.set(state.order, 'products', [...newProducts]);
+		localStorage.setItem('ecommerce::product-select', JSON.stringify([...newProducts]));
+		orderMutation.UPDATE_ORDER_DETAILS_IF_EXIST(state, newProducts);
 	},
 	SET_SHIPPING_COST(state, amount) {
 		Vue.set(state.order, 'shippingCost', amount);

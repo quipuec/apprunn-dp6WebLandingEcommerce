@@ -140,8 +140,11 @@ export default {
 	.small {
 		flex: 1 1 5%;
 		height: 100%;
-		margin: 0 auto;
-		max-width: 450px;
+		margin: 0 10px;
+
+		@media (max-width: 987px) {
+			height: auto;
+		}
 	}
 
 	.footter-products-buy {
