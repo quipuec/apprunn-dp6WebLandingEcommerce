@@ -36,7 +36,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import lib from '@/shared/lib';
+import lib, { getDeeper } from '@/shared/lib';
 import newAddressForm from '@/components/profile/new-address-form';
 import deleteComponent from '@/components/shared/icons/delete-component';
 import responsiveTable from '@/components/shared/table/respondive-table';
@@ -67,7 +67,7 @@ async function loadAddress() {
 }
 
 function getValue(route, row) {
-	return lib.getDeeper(route)(row);
+	return getDeeper(route)(row);
 }
 
 function pageChange(page) {

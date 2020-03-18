@@ -26,32 +26,32 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import lib, { isEmpty } from '@/shared/lib';
+import { isEmpty, getDeeper } from '@/shared/lib';
 
 function created() {
 	this.updateFlags();
 }
 
 function updateFlags() {
-	this.showSuccessVisa = !isEmpty(lib.getDeeper('gatewayAuthorizationResponse')(this.getOrderInfo));
-	this.showSuccessDeposit = !isEmpty(lib.getDeeper('wayPaymentId')(this.getOrderInfo));
-	this.showFailure = !isEmpty(lib.getDeeper('gatewayErrorCode')(this.getOrderInfo));
+	this.showSuccessVisa = !isEmpty(getDeeper('gatewayAuthorizationResponse')(this.getOrderInfo));
+	this.showSuccessDeposit = !isEmpty(getDeeper('wayPaymentId')(this.getOrderInfo));
+	this.showFailure = !isEmpty(getDeeper('gatewayErrorCode')(this.getOrderInfo));
 }
 
 function getFullName() {
-	return lib.getDeeper('typePerson.fullName')(this.user);
+	return getDeeper('typePerson.fullName')(this.user);
 }
 
 function getOrderNumber() {
-	return lib.getDeeper('number')(this.getOrderInfo);
+	return getDeeper('number')(this.getOrderInfo);
 }
 
 function getOrderCreatedAt() {
-	return lib.getDeeper('createdAt')(this.getOrderInfo);
+	return getDeeper('createdAt')(this.getOrderInfo);
 }
 
 function getOrderTotal() {
-	return lib.getDeeper('total')(this.getOrderInfo);
+	return getDeeper('total')(this.getOrderInfo);
 }
 
 function closeFailure() {

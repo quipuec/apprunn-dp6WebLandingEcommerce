@@ -86,7 +86,8 @@ async function loadProduct() {
 	try {
 		const { data: response } = await this.isLoggedUser();
 		this.product = response;
-		document.title = this.product.name.toUpperCase();
+		this.updatePageTitle(this.product.name.toUpperCase());
+		this.updateDescriptionTag(this.product.description);
 		this.$store.dispatch('setRatingProductId', this.product.id);
 		this.loadData(this.product.id);
 		this.loadOpinions();
@@ -455,9 +456,9 @@ export default {
 		border-radius: 8px;
 		box-shadow: 0 2px 4px 0 rgba(213, 213, 213, 0.5);
 		padding: 10px;
-		position: absolute;
+		position: fixed;
 		right: 37px;
-		top: 14px;
+		top: 115px;
 		width: 350px;
 		z-index: 2;
 	}

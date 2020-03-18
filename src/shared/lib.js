@@ -46,5 +46,6 @@ const methods = {
 
 };
 export const isEmpty = methods.isEmpty;
+export const getDeeper = methods.getDeeper;
 
 export default methods;

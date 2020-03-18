@@ -1,9 +1,7 @@
 import orderGetters from '@/store/getters/order';
 import geoGetters from '@/store/getters/geo';
 import profileGetters from '@/store/getters/profile';
-import lib from '@/shared/lib';
-
-const { getDeeper } = lib;
+import { getDeeper } from '@/shared/lib';
 
 function indeterminate(state) {
 	return state.appConfig.isLoading;

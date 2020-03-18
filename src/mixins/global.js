@@ -1,5 +1,5 @@
 import store from '@/store';
-import lib from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 
 function data() {
 	return {
@@ -17,7 +17,7 @@ function data() {
 }
 
 function isPeru() {
-	return lib.getDeeper('company.country.countryCode')(store.getters.user) === 'PER';
+	return getDeeper('company.country.countryCode')(store.getters.user) === 'PER';
 }
 
 Math.easeInOutQuad = (t, b, c, d) => {
@@ -140,6 +140,15 @@ function scrollTo(element, duration, fit) {
 	this.isVisible = false;
 }
 
+function updateDescriptionTag(description) {
+	const metaDescription = document.getElementById('myDescription');
+	metaDescription.content = description;
+}
+
+function updatePageTitle(title) {
+	document.title = title;
+}
+
 const mixin = {
 	data,
 	computed: {
@@ -161,6 +170,8 @@ const mixin = {
 		showRow,
 		stopClick,
 		scrollTo,
+		updateDescriptionTag,
+		updatePageTitle,
 	},
 };
 

@@ -42,7 +42,8 @@ function redirect(name) {
 }
 
 function deleteProduct() {
-	this.$store.commit('DELETE_PRODUCT_BUY_CAR', this.product.id);
+	const { id, unitSelected } = this.product;
+	this.$store.commit('DELETE_PRODUCT_BUY_CAR', { id, unitSelected });
 }
 
 export default {

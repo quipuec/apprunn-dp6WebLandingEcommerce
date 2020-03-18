@@ -52,7 +52,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import lib, { isEmpty } from '@/shared/lib';
+import lib, { isEmpty, getDeeper } from '@/shared/lib';
 
 function getGenderName(id) {
 	const { title } = lib.find(lib.equality('id', id), this.genders) || {};
@@ -60,7 +60,7 @@ function getGenderName(id) {
 }
 
 function getValue(route, user) {
-	return lib.getDeeper(route)(user);
+	return getDeeper(route)(user);
 }
 
 function departmentsHandler() {
@@ -88,7 +88,7 @@ function provinceHandler() {
 }
 
 function labelCountry() {
-	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Cédula' : 'DNI';
+	return getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Cédula' : 'DNI';
 }
 
 export default {
