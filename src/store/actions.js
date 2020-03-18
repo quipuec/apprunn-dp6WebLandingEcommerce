@@ -24,6 +24,7 @@ function setUser(context, user) {
 	newUser.dni = Number(user.dni) ? user.dni : null;
 	newUser.typePerson.documentNumber =
 			Number(newUser.typePerson.documentNumber) ? newUser.typePerson.documentNumber : null;
+	localStorage.setItem('ecommerce::ecommerce-user', JSON.stringify(newUser));
 	context.commit('setUser', newUser);
 }
 

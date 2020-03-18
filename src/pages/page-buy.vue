@@ -142,7 +142,7 @@ export default {
 		height: 100%;
 		margin: 0 10px;
 
-		@media (max-width: 987px) {
+		@media (max-width: 880px) {
 			height: auto;
 		}
 	}
