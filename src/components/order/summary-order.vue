@@ -77,7 +77,12 @@ function buildBody(flagFinish) {
 		customerBill: this.getFlagBill ? this.getBillingData : null,
 		deliveryAddress: this.getCustomerAddressId
 			? this.getDeliveryAddress : this.getCustomerAddress,
+<<<<<<< HEAD
 		details: this.getDetails(this.getOrderDetails, this.getOrderId),
+=======
+		details: this.getDetails(this.getOrderDetails),
+		discount: this.discount,
+>>>>>>> 618af1e67c91cff76eab0ba89ba214fffa1f1e10
 		flagPickUp: this.getFlagPickUp,
 		responsiblePickUp: this.getResponsible,
 		warehouseId: process.env.WAREHOUSE_ID,
@@ -187,10 +192,10 @@ function goToMakeOrder() {
 	}
 }
 
-function data() {
-	return {
-		discount: 0,
-	};
+function discount() {
+	const percentage = this.user.discount;
+	const amount = this.getTotalToBuy * (Number(percentage) / 100);
+	return Number(amount.toFixed(2));
 }
 
 export default {
@@ -220,13 +225,14 @@ export default {
 			'getWayPayment',
 			'invalidOrder',
 			'token',
+			'user',
 		]),
+		discount,
 		stepOne,
 		stepThree,
 		stepTwo,
 		total,
 	},
-	data,
 	methods: {
 		buildBody,
 		getDetails,
