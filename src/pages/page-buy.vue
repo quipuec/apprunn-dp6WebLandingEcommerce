@@ -17,7 +17,11 @@
 						<img :src="logo.section" alt="logo del método de pago">
 						<h2 class="payment-section-title">PRODUCTOS </h2>
 					</div>
-					<product-in-car v-for="(product, indexProduct) in getProductToBuy" :key="indexProduct" :product="product"/>
+					<product-in-car
+						v-for="(product, indexProduct) in getProductToBuy"
+						:key="indexProduct"
+						:product="product"
+					/>
 					<div class="footter-products-buy">
 						<app-button
 							max-width="225px"
