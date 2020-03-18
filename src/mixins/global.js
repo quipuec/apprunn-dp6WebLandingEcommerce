@@ -1,5 +1,6 @@
 import store from '@/store';
 import { getDeeper } from '@/shared/lib';
+import countries from '@/shared/countries.json';
 
 function data() {
 	return {
@@ -98,18 +99,7 @@ function globalColors() {
 
 function countryLabels() {
 	const countryCode = JSON.parse(localStorage.getItem('ecommerce::country'));
-	if (countryCode === 'PER') {
-		return {
-			department: 'Departamento',
-			district: 'Distrito',
-			province: 'Provincia',
-		};
-	}
-	return {
-		department: 'Provincia',
-		district: 'Parroquia',
-		province: 'Ciudad',
-	};
+	return countries[countryCode];
 }
 
 function getLocalStorage(key) {
