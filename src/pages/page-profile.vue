@@ -7,7 +7,7 @@
 				</button>
 			</div>
 			<div
-				:style="`background-color: ${globalColors.dark};`"
+				:style="`background-color: ${globalColors.title};`"
 				class="profile-menu"
 			>
 				<div class="user-avatar-container">
@@ -24,7 +24,7 @@
 				<ul class="user-actions">
 					<li class="user-action">
 						<button
-							:style="`border-bottom: 6px solid ${globalColors.dark};${borderPrimaryUserData}`"
+							:style="borderPrimaryUserData"
 							:class="[
 								'user-action-btn',
 							]"
@@ -33,7 +33,7 @@
 					</li>
 					<li class="user-action">
 						<button
-							:style="`border-bottom: 6px solid ${globalColors.dark};${borderPrimaryUserOrder}`"
+							:style="borderPrimaryUserOrder"
 							:class="[
 								'user-action-btn',
 							]"
@@ -42,7 +42,7 @@
 					</li>
 					<li class="user-action">
 						<button
-							:style="`border-bottom: 6px solid ${globalColors.dark};${borderPrimaryFavorites}`"
+							:style="borderPrimaryFavorites"
 							:class="[
 								'user-action-btn',
 							]"
@@ -51,7 +51,7 @@
 					</li>
 					<li class="user-action">
 						<button
-							:style="`border-bottom: 6px solid ${globalColors.dark};${borderPrimaryAddress}`"
+							:style="borderPrimaryAddress"
 							:class="[
 								'user-action-btn',
 							]"

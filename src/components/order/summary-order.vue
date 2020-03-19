@@ -77,12 +77,8 @@ function buildBody(flagFinish) {
 		customerBill: this.getFlagBill ? this.getBillingData : null,
 		deliveryAddress: this.getCustomerAddressId
 			? this.getDeliveryAddress : this.getCustomerAddress,
-<<<<<<< HEAD
-		details: this.getDetails(this.getOrderDetails, this.getOrderId),
-=======
 		details: this.getDetails(this.getOrderDetails),
 		discount: this.discount,
->>>>>>> 618af1e67c91cff76eab0ba89ba214fffa1f1e10
 		flagPickUp: this.getFlagPickUp,
 		responsiblePickUp: this.getResponsible,
 		warehouseId: process.env.WAREHOUSE_ID,
