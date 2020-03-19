@@ -1,7 +1,7 @@
 <template>
 	<div class="quantity-button">
 		<button class="item" @click="$emit('click', 'less')">-</button>
-		<div class="item item-number">{{number}}</div>
+		<div class="item item-number" :style="`color:${globalColors.title}`">{{number}}</div>
 		<button class="item" @click="$emit('click', 'more')">+</button>
 	</div>
 </template>
@@ -23,8 +23,8 @@ export default {
 		color: color(base);
 		display: flex;
 		font-family: font(bold);
-		font-size: size(large);
-		height: 37px;
+		font-size: size(medium);
+		height: 27px;
 		width: 116px;
 
 		.item {
@@ -33,8 +33,15 @@ export default {
 
 		.item-number {
 			align-items: center;
+			border-left: 1px solid color(base);
+			border-right: 1px solid color(base);
 			display: flex;
+			font-family: font(heavy);
 			justify-content: center;
+		}
+
+		button:hover {
+			background-color: color(border);
 		}
 	}
 </style>

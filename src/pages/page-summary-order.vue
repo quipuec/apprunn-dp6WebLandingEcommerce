@@ -139,6 +139,7 @@ export default {
 	.sumary-order-buttons-container {
 		align-items: center;
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: center;
 		margin: 30px 0 80px;
 	}
@@ -149,7 +150,7 @@ export default {
 		color: white;
 		font-family: font(bold);
 		padding: 15px 50px;
-		margin: 0 10px;
+		margin: 10px;
 		width: 240px;
 	}
 

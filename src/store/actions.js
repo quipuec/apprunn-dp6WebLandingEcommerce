@@ -30,7 +30,9 @@ function setUser(context, user) {
 function addProductToBuyCar(context, product) {
 	const newProduct = product.quantity ? product : lib.setNewProperty('quantity', 1)(product);
 	const productsSelected = JSON.parse(localStorage.getItem('ecommerce::product-select')) || [];
-	const index = productsSelected.findIndex(p => p.id === newProduct.id);
+	const index = productsSelected.findIndex(
+		p => p.id === newProduct.id && p.unitSelected === newProduct.unitSelected,
+	);
 	if (index > -1) {
 		const currentProduct = productsSelected[index];
 		const quantity = currentProduct.quantity + newProduct.quantity;
