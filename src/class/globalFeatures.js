@@ -1,4 +1,4 @@
-import l, { isEmpty, getDeeper } from '@/shared/lib';
+import l, { getDeeper, isEmpty } from '@/shared/lib';
 
 class GlobalFeatures {
 	constructor(products) {

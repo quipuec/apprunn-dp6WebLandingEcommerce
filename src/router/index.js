@@ -21,9 +21,21 @@ export default function (Vue) {
 				name: 'page-home',
 				meta: {
 					title: 'Home',
-					description: 'ecommerce',
+					description: 'pantalla principal del ecommerce',
 				},
 				component: () => import(/* webpackChunkName: "home" */ '@/pages/page-home'),
+				beforeEnter: (to, from, next) => {
+					console.dir(`beforeEnter: ${to}-${from}`);
+					next();
+				},
+				beforeRouteLeave: (to, from, next) => {
+					console.log(`beforeRouteLeave: ${to}-${from}`);
+					next();
+				},
+				beforeResolve: (to, from, next) => {
+					console.log(`beforeResolve: ${to}-${from}`);
+					next();
+				},
 			},
 			Category,
 			Components,

@@ -41,6 +41,8 @@ export default {
 		flagBill: false,
 		flagPickUp: 1,
 		flagStatusOrder: null,
+		gatewayErrorCode: null,
+		gatewayAuthorizationResponse: null,
 		id: null,
 		list: [],
 		order: null,
