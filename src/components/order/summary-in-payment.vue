@@ -33,7 +33,7 @@
 	</div>
 </template>
 <script>
-import { isEmpty, getDeeper } from '@/shared/lib';
+import { getDeeper, isEmpty } from '@/shared/lib';
 import { mapGetters } from 'vuex';
 import PickUpIn from '@/shared/PickUp';
 
