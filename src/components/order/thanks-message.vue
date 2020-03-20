@@ -26,16 +26,24 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { isEmpty, getDeeper } from '@/shared/lib';
+import { getDeeper, isEmpty } from '@/shared/lib';
+import WayPayments from '@/shared/enums/wayPayment';
 
 function created() {
 	this.updateFlags();
 }
 
 function updateFlags() {
-	this.showSuccessVisa = !isEmpty(getDeeper('gatewayAuthorizationResponse')(this.getOrderInfo));
-	this.showSuccessDeposit = !isEmpty(getDeeper('wayPaymentId')(this.getOrderInfo));
-	this.showFailure = !isEmpty(getDeeper('gatewayErrorCode')(this.getOrderInfo));
+	if (this.isPeru) {
+		this.showSuccessVisa = !isEmpty(getDeeper('gatewayAuthorizationResponse')(this.getOrderInfo));
+		this.showSuccessDeposit = !isEmpty(getDeeper('wayPaymentId')(this.getOrderInfo));
+		this.showFailure = !isEmpty(getDeeper('gatewayErrorCode')(this.getOrderInfo));
+	} else {
+		const code = getDeeper('wayPayment.code')(this.getOrderInfo);
+		this.showFailure = !isEmpty(getDeeper('gatewayErrorCode')(this.getOrderInfo));
+		this.showSuccessVisa = !this.showFailure && WayPayments.creditCard.code === code;
+		this.showSuccessDeposit = !this.showFailure && WayPayments.deposit.code === code;
+	}
 }
 
 function getFullName() {

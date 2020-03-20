@@ -115,6 +115,8 @@ export default {
 	}
 
 	.component-container {
+		margin-top: 15px;
+
 		@media (max-width: 600px) {
 			margin: 0 20px;
 		}
