@@ -92,7 +92,7 @@ import appButton from '@/components/shared/buttons/app-button';
 import leftComponent from '@/components/shared/icons/left-component';
 import loadPayment from '@/components/profile/load-payment';
 import responsiveTable from '@/components/shared/table/respondive-table';
-import { isEmpty, getDeeper } from '@/shared/lib';
+import { getDeeper, isEmpty } from '@/shared/lib';
 import formOpinion from '@/components/products/form-opinion';
 import productRating from '@/components/profile/product-rating';
 
