@@ -123,6 +123,12 @@ const getters = {
 			return newAcum;
 		}, []);
 	},
+	getGatewayAuthorizationResponse(state) {
+		return state.order.gatewayAuthorizationResponse;
+	},
+	getGatewayErrorCode(state) {
+		return state.order.gatewayErrorCode;
+	},
 };
 
 export default getters;

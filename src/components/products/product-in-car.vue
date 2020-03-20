@@ -235,6 +235,7 @@ export default {
 		color: color(dark);
 		font-family: font(heavy);
 		font-size: size(medium);
+		white-space: nowrap;
 	}
 
 	.product-quantity {

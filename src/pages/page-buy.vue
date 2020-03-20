@@ -17,7 +17,11 @@
 						<img :src="logo.section" alt="logo del método de pago">
 						<h2 class="payment-section-title">PRODUCTOS </h2>
 					</div>
-					<product-in-car v-for="(product, indexProduct) in getProductToBuy" :key="indexProduct" :product="product"/>
+					<product-in-car
+						v-for="(product, indexProduct) in getProductToBuy"
+						:key="indexProduct"
+						:product="product"
+					/>
 					<div class="footter-products-buy">
 						<app-button
 							max-width="225px"
@@ -140,11 +144,8 @@ export default {
 	.small {
 		flex: 1 1 5%;
 		height: 100%;
-		margin: 0 10px;
-
-		@media (max-width: 987px) {
-			height: auto;
-		}
+		margin: 0 auto;
+		max-width: 450px;
 	}
 
 	.footter-products-buy {

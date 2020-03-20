@@ -1,4 +1,4 @@
-import lib from '@/shared/lib';
+import lib, { isEmpty } from '@/shared/lib';
 import helper from '@/shared/helper';
 
 const asyncActions = {
@@ -185,6 +185,20 @@ const asyncActions = {
 		document.getElementsByTagName('head')[0].appendChild(link);
 		const pageTitle = document.getElementsByTagName('title');
 		pageTitle[0].innerHTML = commerceData.name || 'AppRunn SAC';
+	},
+	MAKE_ORDER: async ({ dispatch, getters }, { flagFinish, context }) => {
+		const body = helper.buildOrderBody(flagFinish, getters);
+		const orderExist = !isEmpty(getters.getOrderInfo);
+		const dispatchName = orderExist ? 'UPDATE_ORDER' : 'CREATE_ORDER';
+		const dispatchObj = orderExist
+			? { context, id: getters.getOrderInfo.id, body }
+			: { context, body };
+		await dispatch(dispatchName, dispatchObj);
+		if (flagFinish) {
+			context.goTo('buy-summary');
+		} else {
+			context.goTo('buy-payment');
+		}
 	},
 };
 

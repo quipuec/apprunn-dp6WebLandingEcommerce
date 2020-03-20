@@ -24,9 +24,9 @@ const orderMutation = {
 	SET_ORDER_DETAILS(state, details) {
 		Vue.set(state.order, 'products', [...details]);
 	},
-	UPDATE_PRODUCTS_TO_BUY(state, { id, quantity }) {
+	UPDATE_PRODUCTS_TO_BUY(state, { id, quantity, unitSelected }) {
 		const { products } = state.order;
-		const index = products.findIndex(p => p.id === id);
+		const index = products.findIndex(p => p.id === id && p.unitSelected === unitSelected);
 		products[index].quantity = quantity;
 		Vue.set(state.order, 'products', [...products]);
 		localStorage.setItem('ecommerce::product-select', JSON.stringify([...products]));
@@ -81,6 +81,12 @@ const orderMutation = {
 			h.updateOrderDetailsInLocalStorage(products);
 			Vue.set(state.order.order, 'details', [...products]);
 		}
+	},
+	SET_GATEWAY_ERROR_CODE(state, errorCode) {
+		Vue.set(state.order, 'gatewayErrorCode', errorCode);
+	},
+	SET_GATEWAY_AUTHORIZATION_RESPONSE(state, data) {
+		Vue.set(state.order, 'gatewayAuthorizationResponse', data);
 	},
 };
 export default orderMutation;

@@ -48,12 +48,13 @@
 <script>
 import { mapGetters } from 'vuex';
 import appButton from '@/components/shared/buttons/app-button';
-import { isEmpty, getDeeper } from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 
 function total() {
 	return (this.getTotalToBuy - this.discount) + this.getShippingCost;
 }
 
+<<<<<<< HEAD
 async function makeOrder(flagFinish) {
 	const body = this.buildBody(flagFinish);
 	const orderExist = !isEmpty(this.getOrderInfo);
@@ -166,6 +167,10 @@ function setTaxes(taxes) {
 		};
 	}
 	return newTaxes;
+=======
+function makeOrder(flagFinish) {
+	this.$store.dispatch('MAKE_ORDER', { flagFinish, context: this });
+>>>>>>> 45832c0660bd81e025405b93db4546878eb0a715
 }
 
 function stepThree() {
@@ -230,12 +235,8 @@ export default {
 		total,
 	},
 	methods: {
-		buildBody,
-		getDetails,
-		getUnitOrConvesion,
 		goToMakeOrder,
 		makeOrder,
-		setTaxes,
 	},
 };
 </script>

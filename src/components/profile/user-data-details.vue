@@ -52,7 +52,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import lib, { isEmpty, getDeeper } from '@/shared/lib';
+import lib, { getDeeper, isEmpty } from '@/shared/lib';
 
 function getGenderName(id) {
 	const { title } = lib.find(lib.equality('id', id), this.genders) || {};
