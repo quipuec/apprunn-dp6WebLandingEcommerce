@@ -24,6 +24,7 @@ function setUser(context, user) {
 	newUser.dni = Number(user.dni) ? user.dni : null;
 	newUser.typePerson.documentNumber =
 			Number(newUser.typePerson.documentNumber) ? newUser.typePerson.documentNumber : null;
+	localStorage.setItem('ecommerce::ecommerce-user', JSON.stringify(newUser));
 	context.commit('setUser', newUser);
 }
 
@@ -154,6 +155,14 @@ function setRatingProductId({ commit }, productId) {
 	commit('SET_PRODUCT_ID_TO_RATE', productId);
 }
 
+function updateGatewayErrorCode({ commit }, errorCode) {
+	commit('SET_GATEWAY_ERROR_CODE', errorCode);
+}
+
+function updateGatewayAuthorizationResponse({ commit }, data) {
+	commit('SET_GATEWAY_AUTHORIZATION_RESPONSE', data);
+}
+
 const methods = {
 	addProductToBuyCar,
 	addService,
@@ -167,10 +176,12 @@ const methods = {
 	setToken,
 	showSnackBar,
 	toggleLoading,
-	updateProductSelect,
+	updateFilters,
+	updateGatewayAuthorizationResponse,
+	updateGatewayErrorCode,
 	UPDATE_ORDER_FROM_LOCAL_STORAGE,
 	UPDATE_PRODUCT_FILTER,
-	updateFilters,
+	updateProductSelect,
 	resetCounter,
 	SET_ECOMMERCE_THEME,
 	SET_DEFAULT_VALUES,

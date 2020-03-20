@@ -26,7 +26,6 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-// import { isEmpty } from '@/shared/lib';
 import productCard from '@/components/products/product-card';
 
 function addMoreProduct() {
@@ -36,7 +35,6 @@ function addMoreProduct() {
 
 function products() {
 	return this.indeterminate ? this.defaultProducts : this.getProducts;
-	// return isEmpty(this.getProducts) ? this.defaultProducts : this.getProducts;
 }
 
 function data() {

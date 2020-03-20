@@ -82,5 +82,11 @@ const orderMutation = {
 			Vue.set(state.order.order, 'details', [...products]);
 		}
 	},
+	SET_GATEWAY_ERROR_CODE(state, errorCode) {
+		Vue.set(state.order, 'gatewayErrorCode', errorCode);
+	},
+	SET_GATEWAY_AUTHORIZATION_RESPONSE(state, data) {
+		Vue.set(state.order, 'gatewayAuthorizationResponse', data);
+	},
 };
 export default orderMutation;
