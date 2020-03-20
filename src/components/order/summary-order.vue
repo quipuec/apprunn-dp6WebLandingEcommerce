@@ -78,10 +78,10 @@ function goToMakeOrder() {
 	}
 }
 
-function data() {
-	return {
-		discount: 0,
-	};
+function discount() {
+	const percentage = this.user.discount;
+	const amount = this.getTotalToBuy * (Number(percentage) / 100);
+	return Number(amount.toFixed(2));
 }
 
 export default {
@@ -111,13 +111,14 @@ export default {
 			'getWayPayment',
 			'invalidOrder',
 			'token',
+			'user',
 		]),
+		discount,
 		stepOne,
 		stepThree,
 		stepTwo,
 		total,
 	},
-	data,
 	methods: {
 		goToMakeOrder,
 		makeOrder,
