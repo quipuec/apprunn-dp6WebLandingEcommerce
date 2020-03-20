@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<profile-tab class="web-tab" @status-changed="statusChanged"/>
+		<profile-tab @status-changed="statusChanged" class="tabs-container"/>
 		<div class="table-container">
 			<responsive-table
 				:columns="columns"
@@ -57,7 +57,7 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import lib, { getDeeper } from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 import deleteComponent from '@/components/shared/icons/delete-component';
 import detailsComponent from '@/components/shared/icons/details-component';
 import profileTab from '@/components/shared/tabs/profile-tab';
@@ -66,19 +66,13 @@ import modalComponent from '@/components/shared/modal/modal-component';
 
 function created() {
 	this.$store.dispatch('LOAD_ORDERS_STATUS', this);
+	this.loadOrders();
 }
 
-async function getStatesHandler(status) {
-	if (status) {
-		({ id: this.orderStatusId } = lib.find(lib.equality('code', 'REQUESTED'), status));
-		this.loadOrders(this.orderStatusId);
-	}
-}
-
-async function loadOrders(orderStatusId) {
+async function loadOrders() {
 	this.lastPage = await this.$store.dispatch(
 		'LOAD_ORDERS',
-		{ context: this, params: this.params, orderStatusId },
+		{ context: this, params: this.params },
 	);
 }
 
@@ -92,14 +86,14 @@ function getValue(route, order) {
 
 
 function changePage(page) {
-	this.loadOrders(this.orderStatusId);
+	this.loadOrders();
 	this.params.page = page;
 }
 
 function statusChanged(id) {
-	this.orderStatusId = id;
+	this.params.orderStateId = id;
 	this.params.page = 1;
-	this.loadOrders(this.orderStatusId);
+	this.loadOrders();
 }
 
 async function deleteOrder() {
@@ -135,8 +129,9 @@ function data() {
 		lastPage: 0,
 		orderStatusId: 0,
 		params: {
-			limit: 5,
+			limit: 7,
 			page: 1,
+			orderStateId: null,
 		},
 		showModal: false,
 	};
@@ -166,26 +161,21 @@ export default {
 		changePage,
 		closeModal,
 		deleteOrder,
-		getStatesHandler,
 		getValue,
 		loadOrders,
 		openDeletingOrderModal,
 		seeDetails,
 		statusChanged,
 	},
-	watch: {
-		getStates: {
-			deep: true,
-			handler: getStatesHandler,
-		},
-	},
 };
 </script>
 <style lang="scss" scoped>
+	.tabs-container {
+		margin-left: 50px;
+	}
 	.web-tab {
-		bottom: 100%;
+		bottom: 90%;
 		position: absolute;
-		width: 100%;
 
 		@media (max-width: 900px) {
 			bottom: 90%;
@@ -193,7 +183,7 @@ export default {
 	}
 
 	.table-container {
-		margin: 50px 50px 0;
+		margin: 20px 50px 0;
 
 		@media (max-width: 600px) {
 			margin: 20px 10px 0;

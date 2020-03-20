@@ -120,8 +120,8 @@ const asyncActions = {
 		const { data: orderStatus } = await context.$httpSales.get('order-states');
 		commit('SET_ORDER_STATES', orderStatus);
 	},
-	LOAD_ORDERS: async ({ commit }, { context, params, orderStatusId }) => {
-		const url = `orders?orderStateId=${orderStatusId}`;
+	LOAD_ORDERS: async ({ commit }, { context, params }) => {
+		const url = 'orders';
 		const { data: orders, headers } = await context.$httpSales.get(url, { params });
 		const setUpDateInOrders = orders.map(
 			lib.setNewProperty('createdAt', ({ createdAt }) => helper.formatDate(createdAt)),

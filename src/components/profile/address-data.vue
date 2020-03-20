@@ -250,7 +250,7 @@ export default {
 	.section-title {
 		font-family: font(bold);
 		font-size: size(large);
-		margin: 30px 0 40px 40px;
+		margin: 20px 0 20px 40px;
 		text-transform: uppercase;
 
 		@media (max-width: 500px) {
