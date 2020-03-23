@@ -6,7 +6,13 @@
 				@close-modal="closeConfirmModal"
 			></app-modal>
 		</div>
-		<div class="detail-product-top">
+		<div v-if="disabled" class="product-disabled">
+			<h1
+				:style="`color:${globalColors.primary}`"
+				class="sorry-text"
+			>Lo sentimos, este producto está desactivado  :(</h1>
+		</div>
+		<div v-else class="detail-product-top">
 			<product-view 
 				:data="productDetails"
 				:images="productImages"
@@ -26,12 +32,12 @@
 				@unit-selection="selectedUnit"
 			/>
 		</div>
-		<div class="detail-tab-publicity">
+		<div v-if="!disabled" class="detail-tab-publicity">
 			<product-publicity
 				class="container-publicity desktop"
 				:products-publicity="[]"
 			/>
-			<product-tab 
+			<product-tab
 				class="container-product-tab"
 				:tabs="tabs"
 				:sections="productDetails.sections"
@@ -92,8 +98,19 @@ async function loadProduct() {
 		this.loadData(this.product.id);
 		this.loadOpinions();
 	} catch (error) {
-		this.showGenericError();
+		if (error.data.message === 'PRODUCT_NOT_FOUND') {
+			this.disabled = true;
+			this.showNotification('Este producto ya no está disponible', 'warning');
+			this.loadRelatedProducts(this.id);
+		} else {
+			this.showGenericError();
+		}
 	}
+}
+
+async function loadRelatedProducts(slug) {
+	const url = `products-public/${slug}/related`;
+	({ data: this.relateds } = await this.$httpProductsPublic.get(url));
 }
 
 async function loadData(id) {
@@ -293,6 +310,7 @@ function data() {
 		},
 		childrens: [],
 		cities: [],
+		disabled: false,
 		disabledBtn: false,
 		dialogWarehouses: false,
 		features: [],
@@ -354,6 +372,7 @@ export default {
 		loadData,
 		loadOpinions,
 		loadProduct,
+		loadRelatedProducts,
 		newRoute,
 		openDialog,
 		possibleFeature,
@@ -463,5 +482,16 @@ export default {
 		z-index: 2;
 	}
 
+	.product-disabled {
+		align-items: center;
+		display: flex;
+		height: 300px;
+		justify-content: center;
+	}
+
+	.sorry-text {
+		margin: 0 20px;
+		text-align: center;
+	}
 </style>
 
