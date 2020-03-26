@@ -79,14 +79,16 @@ function created() {
 
 function setOrderInfoByDefault() {
 	if (!isEmpty(this.getOrderInfo)) {
-		this.$store.commit('SET_DELIVERY_PLACE', this.getOrderInfo.deliveryAddress);
+		const deliveryAddress = this.getOrderInfo.deliveryAddress;
+		this.$store.commit('SET_DELIVERY_PLACE', deliveryAddress);
 		const flagPickUp = this.getOrderInfo.flagPickUp;
 		this.selectedDirection = flagPickUp === waysDeliveries.house.value
-			? this.getOrderInfo.deliveryAddress || this.selectedDirection
+			? deliveryAddress || this.selectedDirection
 			: this.selectedDirection;
 		this.selectedWarehouse = flagPickUp === waysDeliveries.store.value
-			? this.getOrderInfo.deliveryAddress || this.selectedWarehouse
+			? deliveryAddress || this.selectedWarehouse
 			: this.selectedWarehouse;
+		this.$store.commit('SET_FLAG_PICKUP', flagPickUp);
 	}
 }
 
@@ -121,18 +123,20 @@ function warehousesMarkers() {
 
 
 function handlerDeliveryAddress(newDelivery) {
-	const { addressLine1, id, location, name } = newDelivery || {};
-	if (this.getFlagPickUp === 1) {
-		this.clearSelectedWarehouse();
-		this.selectedDirection.id = id;
-		this.selectedDirection.addressLine1 = addressLine1;
-		this.selectedDirection.location = location;
-		this.selectedDirection.name = name;
-	} else {
-		this.clearSelectedDirection();
-		this.selectedWarehouse.id = id;
-		this.selectedWarehouse.name = name;
-		this.selectedWarehouse.location = location;
+	if (newDelivery) {
+		const { addressLine1, id, location, name } = newDelivery || {};
+		if (this.getFlagPickUp === waysDeliveries.house.value) {
+			this.clearSelectedWarehouse();
+			this.selectedDirection.id = id;
+			this.selectedDirection.addressLine1 = addressLine1;
+			this.selectedDirection.location = location;
+			this.selectedDirection.name = name;
+		} else {
+			this.clearSelectedDirection();
+			this.selectedWarehouse.id = id;
+			this.selectedWarehouse.name = name;
+			this.selectedWarehouse.location = location;
+		}
 	}
 }
 
