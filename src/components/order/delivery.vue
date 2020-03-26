@@ -210,7 +210,8 @@ function clearSelectedWarehouse() {
 
 function handlerDirectionsChange() {
 	if (this.getFlagPickUp === waysDeliveries.house.value) {
-		const directionDelivery = this.getDeliveryAddress || this.favoriteDirection;
+		const deliveryExist = this.getDirections.find(d => d.id === this.getDeliveryAddress.id);
+		const directionDelivery = deliveryExist || this.favoriteDirection;
 		this.$store.commit('SET_DELIVERY_PLACE', directionDelivery);
 		this.calculateShippingCost(directionDelivery);
 	} else {
