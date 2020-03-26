@@ -32,4 +32,5 @@ module.exports = merge(prodEnv, {
 	WAREHOUSE_ID: `'${process.env.WAREHOUSE_ID}'`,
 	WAREHOUSE_NAME: `'${process.env.WAREHOUSE_NAME}'`,
 	BANNER_SEARCHER_SHOW: `'${process.env.BANNER_SEARCHER_SHOW}'`,
+	WAYS_DELIVERIES: `'${process.env.WAYS_DELIVERIES}'`,
 });

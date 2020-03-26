@@ -6,24 +6,26 @@
 		</div>
 		<section class="delivery">
 			<app-button-order
+				v-if="atHouse"
 				button-title="Envío a Domicilio"
 				class="btn"
-				:active="getFlagPickUp === 1"
-				@click="selected(1)"
+				:active="getFlagPickUp === house.value"
+				@click="selected(house.code)"
 			>
-				<location-svg :active="getFlagPickUp === 1"/>
+				<location-svg :active="getFlagPickUp === house.value"/>
 			</app-button-order>
 			<app-button-order
+				v-if="atStore"
 				button-title="Recoger en Tienda"
 				class="btn"
-				@click="selected(2)"
-				:active="getFlagPickUp === 2"
+				:active="getFlagPickUp === store.value"
+				@click="selected(store.code)"
 			>
-				<coffee-svg :active="getFlagPickUp === 2"/>
+				<coffee-svg :active="getFlagPickUp === store.value"/>
 			</app-button-order>
 		</section>
 		<address-component
-			v-if="getFlagPickUp === 2"
+			v-if="getFlagPickUp === store.value && atStore"
 			class="mt-4"
 			placeholder="Seleccione una tienda"
 			item-text="name"
@@ -38,7 +40,7 @@
 			@input="warehouseSelected"
 		/>
 		<responsible-form/>
-		<div v-if="getFlagPickUp === 1">
+		<div v-if="getFlagPickUp === house.value && atHouse">
 			<address-component
 				hide-map-button
 				placeholder="Seleccione una dirección"
@@ -65,27 +67,40 @@ import coffeeSvg from '@/components/shared/icons/coffee-shop';
 import locationSvg from '@/components/shared/icons/location';
 import newAddress from '@/components/order/new-address';
 import responsibleForm from '@/components/order/responsible-form';
+import waysDeliveries from '@/shared/enums/waysDeliveries';
 
 function created() {
 	this.$store.dispatch('LOAD_DIRECTIONS', this);
 	this.$store.dispatch('LOAD_WAREHOUSES', this);
 	this.$store.commit('SET_DELIVERY_PLACE', null);
+	this.setDeliveryPlaceByDefault();
+	this.setOrderInfoByDefault();
+}
+
+function setOrderInfoByDefault() {
 	if (!isEmpty(this.getOrderInfo)) {
 		this.$store.commit('SET_DELIVERY_PLACE', this.getOrderInfo.deliveryAddress);
-		this.selectedDirection = this.getOrderInfo.deliveryAddress || this.selectedDirection;
+		const flagPickUp = this.getOrderInfo.flagPickUp;
+		this.selectedDirection = flagPickUp === waysDeliveries.house.value
+			? this.getOrderInfo.deliveryAddress || this.selectedDirection
+			: this.selectedDirection;
+		this.selectedWarehouse = flagPickUp === waysDeliveries.store.value
+			? this.getOrderInfo.deliveryAddress || this.selectedWarehouse
+			: this.selectedWarehouse;
 	}
 }
 
 function selected(val) {
 	let delivery = null;
-	if (val === 1) {
-		delivery = this.favoriteDirection;
+	if (val === this.house.code) {
+		delivery = this.favoriteDirection || this.selectedDirection;
+		this.selectedDirection = delivery;
 		this.calculateShippingCost(delivery);
 	} else {
 		this.$store.commit('SET_SHIPPING_COST', 0);
 	}
 	this.$store.commit('SET_DELIVERY_PLACE', delivery);
-	this.$store.commit('SET_FLAG_PICKUP', val);
+	this.$store.commit('SET_FLAG_PICKUP', waysDeliveries[val].value);
 }
 
 function warehousesMarkers() {
@@ -194,8 +209,9 @@ function clearSelectedWarehouse() {
 }
 
 function handlerDirectionsChange() {
-	if (this.getFlagPickUp === 1) {
-		const directionDelivery = this.getDeliveryAddress || this.favoriteDirection;
+	if (this.getFlagPickUp === waysDeliveries.house.value) {
+		const deliveryExist = this.getDirections.find(d => d.id === this.getDeliveryAddress.id);
+		const directionDelivery = deliveryExist || this.favoriteDirection;
 		this.$store.commit('SET_DELIVERY_PLACE', directionDelivery);
 		this.calculateShippingCost(directionDelivery);
 	} else {
@@ -243,6 +259,30 @@ function beforeDestroy() {
 	this.$store.commit('SET_SHIPPING_COST', 0);
 }
 
+function atStore() {
+	return process.env.WAYS_DELIVERIES.includes(this.store.code);
+}
+
+function store() {
+	return waysDeliveries.store || {};
+}
+
+function atHouse() {
+	return process.env.WAYS_DELIVERIES.includes(this.house.code);
+}
+
+function house() {
+	return waysDeliveries.house || {};
+}
+
+function setDeliveryPlaceByDefault() {
+	if (this.atHouse) {
+		this.selected(this.house.code);
+	} else {
+		this.selected(this.store.code);
+	}
+}
+
 function data() {
 	return {
 		logo: {
@@ -283,9 +323,13 @@ export default {
 			'getProductToBuy',
 			'getWarehouses',
 		]),
+		atHouse,
+		atStore,
 		disableMapButtonByWarehouse,
 		favoriteDirection,
+		house,
 		singleOrMultiMarkersOnWarehouses,
+		store,
 		warehouesesCenter,
 		warehousesMarkers,
 		warehousesZoom,
@@ -301,6 +345,8 @@ export default {
 		handlerDeliveryAddress,
 		handlerDirectionsChange,
 		selected,
+		setDeliveryPlaceByDefault,
+		setOrderInfoByDefault,
 		warehouseSelected,
 	},
 	watch: {
