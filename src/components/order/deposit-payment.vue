@@ -2,7 +2,7 @@
 	<div class="deposit-container">
 		<div class="deposit-wrapper" v-if="stepFour">
 			<h4 class="deposit-title">¡Gracias por comprar en {{getCommerceData.name}}!</h4>
-			<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago, puedes utilizar la Banca por Internet Pichincha , Agentes del Pichincha y Oficinas Pichincha a Nivel nacional con tu número de pedido.</p>
+			<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago en cualquiera de nuestros bancos afiliados con tu número de pedido.</p>
 		</div>
 		<div class="deposit-wrapper" v-else>
 			<h2 v-if="thereAreNoBanksAccounts">No existen cuentas bancarias configuradas</h2>
