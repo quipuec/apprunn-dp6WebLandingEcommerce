@@ -10,6 +10,7 @@ class ProductDetails {
 		this.selectedProduct = {};
 		this.selectedProductsArray = [];
 		this.unitId = 0;
+		this.pictureNotFound = '/static/icons/no-picture-found.svg';
 		this.priceListId = priceListSelectedId;
 	}
 	get brand() {
@@ -67,15 +68,32 @@ class ProductDetails {
 		return this.globalFeatures.get();
 	}
 	getImages() {
-		const imgArray = this.getProductDetails().images;
-		const imagesFiltered = imgArray.filter(img => img.unitId === this.unitId);
-		if (isEmpty(imagesFiltered)) {
-			const imgs = imgArray.filter(img => !img.unitId);
+		const allProductsImages = this.getProductDetails().images;
+		const imgsBySelectedUnitId = allProductsImages.filter(img => img.unitId === this.unitId);
+		if (isEmpty(imgsBySelectedUnitId)) {
+			// this.setImagePresentation.call(this, this.pictureNotFound);
+			// return [{ urlImage: this.pictureNotFound, select: false }];
+			// const imgs = allProductsImages.filter(img => !img.unitId);
+			// const imagePresentation = !isEmpty(imgs) ? this.pictureNotFound : imgs[0].urlImage;
+			// this.setImagePresentation.call(this, imagePresentation);
+			// return imgs;
+			const imgs = this.getImgsWithoutUnitId.call(this, allProductsImages);
 			this.setImagePresentation.call(this, imgs[0].urlImage);
 			return imgs;
 		}
-		this.setImagePresentation.call(this, imagesFiltered[0].urlImage);
-		return imagesFiltered;
+		this.setImagePresentation.call(this, imgsBySelectedUnitId[0].urlImage);
+		return imgsBySelectedUnitId;
+	}
+	getImgsWithoutUnitId(allImgs) {
+		const baseUnitId = this.getProductDetails().unitId;
+		const selectedUnitId = this.unitId;
+		if (baseUnitId === selectedUnitId) {
+			const imgsWithoutUnitId = isEmpty(allImgs) ? [] : allImgs.filter(img => !img.unitId);
+			const productUrlImage = this.getProductDetails().urlImage || this.pictureNotFound;
+			const mainImg = { urlImage: productUrlImage, select: false };
+			return [].concat(mainImg, imgsWithoutUnitId);
+		}
+		return [{ urlImage: this.pictureNotFound, select: false }];
 	}
 	getProductDetails() {
 		return { ...this.selectedProduct };

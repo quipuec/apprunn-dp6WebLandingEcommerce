@@ -1,6 +1,6 @@
 <template>
   <div class="product-view">
-		<div class="btns-product-view">
+		<div class="btns-product-view" v-if="localImages.length > 0">
 			<button 
 				v-for="(image, index) in localImages" 
 				:key="image.id"
@@ -37,6 +37,7 @@
 	</div>
 </template>
 <script>
+import { isEmpty } from '@/shared/lib';
 
 function swiper() {
 	return this.$refs.mySwiper.swiper;
@@ -52,8 +53,10 @@ function goToSlider(index, image) {
 }
 
 function imagesHandler(newImages) {
-	this.localImages = [...newImages];
-	this.$set(this.localImages[0], 'select', true);
+	if (!isEmpty(newImages)) {
+		this.localImages = [...newImages];
+		this.$set(this.localImages[0], 'select', true);
+	}
 }
 
 
