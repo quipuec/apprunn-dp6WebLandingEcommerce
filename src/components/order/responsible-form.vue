@@ -15,7 +15,7 @@
 			@input="validateForm"
 		>
 			<span v-if="!$v.responsible.dni.required">{{labelError}}.</span>
-			<span v-if="!$v.responsible.dni.validDni">Solo se permiten números</span>
+			<span v-if="isPeru && !$v.responsible.dni.validDni">Solo se permiten números</span>
 		</app-input>
 		<app-input
 			placeholder="Celular"
@@ -40,11 +40,11 @@
 <script>
 import { required, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
-import lib from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 import appInput from '@/components/shared/inputs/app-input';
 
 function mounted() {
-	if (lib.getDeeper('responsiblePickUp')(this.getOrderInfo)) {
+	if (getDeeper('responsiblePickUp')(this.getOrderInfo)) {
 		this.responsible = { ...this.getOrderInfo.responsiblePickUp };
 	} else {
 		const { dni, email: mail, name, phone } = this.user;
@@ -61,11 +61,11 @@ function validateForm() {
 }
 
 function labelCountry() {
-	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Cédula' : 'DNI';
+	return getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Cédula' : 'DNI';
 }
 
 function labelError() {
-	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'El número de documento es requerido' : 'El DNI es requerido';
+	return getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'El número de documento es requerido' : 'El DNI es requerido';
 }
 
 function validDni(dni) {
@@ -74,17 +74,18 @@ function validDni(dni) {
 }
 
 function validations() {
-	return {
+	const validating = {
 		responsible: {
-			dni: {
-				required,
-				validDni: this.validDni,
-			},
+			dni: { required },
 			email: { email, required },
 			name: { required },
 			phone: { required },
 		},
 	};
+	if (this.isPeru) {
+		validating.responsible.dni.validDni = this.validDni;
+	}
+	return validating;
 }
 
 function data() {

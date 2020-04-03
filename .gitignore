@@ -5,6 +5,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# dotenv environment variables file
+.env
+.env*
+
 # Editor directories and files
 .idea
 *.suo

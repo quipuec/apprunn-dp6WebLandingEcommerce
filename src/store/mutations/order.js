@@ -24,21 +24,20 @@ const orderMutation = {
 	SET_ORDER_DETAILS(state, details) {
 		Vue.set(state.order, 'products', [...details]);
 	},
-	UPDATE_PRODUCTS_TO_BUY(state, { id, quantity }) {
+	UPDATE_PRODUCTS_TO_BUY(state, { id, quantity, unitSelected }) {
 		const { products } = state.order;
-		const index = products.findIndex(p => p.id === id);
+		const index = products.findIndex(p => p.id === id && p.unitSelected === unitSelected);
 		products[index].quantity = quantity;
 		Vue.set(state.order, 'products', [...products]);
 		localStorage.setItem('ecommerce::product-select', JSON.stringify([...products]));
 		orderMutation.UPDATE_ORDER_DETAILS_IF_EXIST(state, products);
 	},
-	DELETE_PRODUCT_BUY_CAR(state, id) {
+	DELETE_PRODUCT_BUY_CAR(state, { id, unitSelected }) {
 		const { products } = state.order;
-		const index = products.findIndex(p => p.id === id);
-		products.splice(index, 1);
-		Vue.set(state.order, 'products', [...products]);
-		localStorage.setItem('ecommerce::product-select', JSON.stringify([...products]));
-		orderMutation.UPDATE_ORDER_DETAILS_IF_EXIST(state, products);
+		const newProducts = products.filter(p => !(p.id === id && p.unitSelected === unitSelected));
+		Vue.set(state.order, 'products', [...newProducts]);
+		localStorage.setItem('ecommerce::product-select', JSON.stringify([...newProducts]));
+		orderMutation.UPDATE_ORDER_DETAILS_IF_EXIST(state, newProducts);
 	},
 	SET_SHIPPING_COST(state, amount) {
 		Vue.set(state.order, 'shippingCost', amount);
@@ -82,6 +81,12 @@ const orderMutation = {
 			h.updateOrderDetailsInLocalStorage(products);
 			Vue.set(state.order.order, 'details', [...products]);
 		}
+	},
+	SET_GATEWAY_ERROR_CODE(state, errorCode) {
+		Vue.set(state.order, 'gatewayErrorCode', errorCode);
+	},
+	SET_GATEWAY_AUTHORIZATION_RESPONSE(state, data) {
+		Vue.set(state.order, 'gatewayAuthorizationResponse', data);
 	},
 };
 export default orderMutation;

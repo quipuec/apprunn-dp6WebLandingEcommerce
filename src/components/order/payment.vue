@@ -9,9 +9,9 @@
 			<div class="methods-container">
 				<app-button
 					v-for="method in getWaysPayments"
-					max-width="205.31px"
 					:key="method.id"
 					class="method-item"
+					:max-width="'100%'"
 					:action="method.name"
 					:active="paymentMethodSelected === method.code"
 					:background="globalColors.secondary"
@@ -32,7 +32,7 @@ import { isEmpty } from '@/shared/lib';
 import depositPayment from '@/components/order/deposit-payment';
 import productsBuyed from '@/components/order/products-buyed';
 import recievedPayment from '@/components/order/recieved-payment';
-import visaPayment from '@/components/order/visa-payment';
+import VisaByCountry from '@/components/order/credit-card-payment';
 
 function created() {
 	if (isEmpty(this.getWaysPayments)) {
@@ -56,7 +56,12 @@ function onSelect(method) {
 
 function paymentMethodSelectedComponent() {
 	const opt = {
+<<<<<<< HEAD
 		CDC: 'visaPayment',
+=======
+		CDC: 'VisaByCountry',
+		PPR: 'recievedPayment',
+>>>>>>> dev
 		IBD: 'depositPayment',
 		PPR: 'recievedPayment',
 	};
@@ -83,7 +88,7 @@ export default {
 		appButton,
 		productsBuyed,
 		recievedPayment,
-		visaPayment,
+		VisaByCountry,
 	},
 	computed: {
 		...mapGetters([
@@ -107,7 +112,7 @@ export default {
 		align-items: center;
 		display: grid;
 		grid-gap: 20px;
-		grid-template-columns: repeat(auto-fit, minmax(205.31px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 		
 		@media (max-width: 600px) {
 			margin: 0 20px;
@@ -115,6 +120,8 @@ export default {
 	}
 
 	.component-container {
+		margin-top: 15px;
+
 		@media (max-width: 600px) {
 			margin: 0 20px;
 		}

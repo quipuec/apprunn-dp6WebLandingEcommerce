@@ -1,35 +1,47 @@
 <template>
 	<section class="tabs-container">
-		<button
-			type="button"
-			v-for="status in getStates"
-			:key="status.id"
-			:value="status.id"
-			:class="['tab-btn', { 'active': activeTab === status.id }]"
-			@click="selectIt"
-		>{{status.name}}</button>
+		<app-select
+			class="order-states"
+			item-text="name"
+			item-value="id"
+			:items="statesComputed"
+			v-model="activeTab"
+			@input="selectIt"
+		/>
 	</section>
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import appSelect from '@/components/shared/inputs/app-select';
 
-function selectIt($e) {
-	this.activeTab = Number($e.target.value);
-	this.$emit('status-changed', this.activeTab);
+function selectIt(state) {
+	this.$emit('status-changed', state);
+}
+
+function statesComputed() {
+	return [].concat(this.all, this.getStates);
 }
 
 function data() {
 	return {
-		activeTab: 1,
+		all: {
+			id: null,
+			name: 'Todos',
+		},
+		activeTab: null,
 	};
 }
 
 export default {
 	name: 'profile-tab',
+	components: {
+		appSelect,
+	},
 	computed: {
 		...mapGetters([
 			'getStates',
 		]),
+		statesComputed,
 	},
 	data,
 	methods: {
@@ -38,25 +50,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-	.tabs-container {
-		align-items: center;
-		background-color: color(border);
-		border-top-left-radius: 6px;
-		border-top-right-radius: 6px;
-		display: flex;
-	}
+.tabs-container {
 
-	.tab-btn {
-		flex: 1 1 33%;
-		font-family: font(bold);
-		font-size: size(small);
-		height: 31px;
+	.order-states {
+		width: fit-content;
 	}
-
-	.active {
-		background-color: color(disabled);
-		border-top-left-radius: 6px;
-		border-top-right-radius: 6px;
-		color: color(dark);
-	}
+}
 </style>

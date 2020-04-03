@@ -103,6 +103,7 @@ import menuCategory from '@/components/shared/category/menu-category';
 import productCard from '@/components/products/product-card';
 import productsSection from '@/components/products/products-section';
 import lib from '@/shared/lib';
+import helper from '@/shared/helper';
 
 const { setNewProperty } = lib;
 
@@ -119,7 +120,15 @@ async function loadProduct() {
 		};
 		const url = `products-public?eCategories=${this.id}`;
 		const { data: products, headers } = await this.$httpProductsPublic.get(url, { params });
-		this.listProducts = products;
+		debugger;
+		const commercePriceListId = this.getCommerceData.settings.salPriceListId;
+		this.listProducts = products.map(
+			lib.compose(
+				lib.setNewProperty('price', product => helper.setPrices(product, commercePriceListId, 'price')),
+				lib.setNewProperty('priceDiscount', product => helper.setPrices(product, commercePriceListId, 'priceDiscount')),
+				lib.setNewProperty('createdAt', ({ createdAt }) => helper.formatDate(createdAt)),
+			),
+		);
 		this.lastPage = Number(headers['x-last-page']);
 	} catch (error) {
 		this.showGenericError();
@@ -136,11 +145,17 @@ function selectCategory() {
 	this.loadProduct();
 	this.categories = this.getCategories;
 	this.currentSelect = this.getCurrentcategory(this.categories, this.id);
+	this.updateMetaTag(this.currentSelect);
 	if (this.breadcrumbs.length) {
 		this.breadcrumbs[0].disabled = true;
 		this.breadcrumbs = this.breadcrumbs.reverse();
 		this.categorySelected = this.breadcrumbs[0];
 	}
+}
+
+function updateMetaTag(category) {
+	this.updatePageTitle(category && category.title);
+	this.updateDescriptionTag(category && category.description);
 }
 
 function getCurrentcategory(categories, id) {
@@ -233,20 +248,22 @@ export default {
 		...mapGetters([
 			'getCategories',
 			'getPromotionalBanner',
+			'getCommerceData',
 		]),
 	},
 	methods: {
-		loadProduct,
-		updateProductCard,
-		selectCategory,
 		changeCategory,
-		openCategory,
-		toggleMenu,
 		changeOpen,
 		closeOpen,
-		linkCategories,
-		toggleCategory,
 		getCurrentcategory,
+		linkCategories,
+		loadProduct,
+		openCategory,
+		selectCategory,
+		toggleCategory,
+		toggleMenu,
+		updateMetaTag,
+		updateProductCard,
 	},
 	data,
 	props: {

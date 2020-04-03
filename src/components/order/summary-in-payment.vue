@@ -33,36 +33,36 @@
 	</div>
 </template>
 <script>
-import lib, { isEmpty } from '@/shared/lib';
+import { getDeeper, isEmpty } from '@/shared/lib';
 import { mapGetters } from 'vuex';
 import PickUpIn from '@/shared/PickUp';
 
 function isNotEmptyBilling() {
-	const customerBill = lib.getDeeper('dataBill')(this.getOrderInfo);
+	const customerBill = getDeeper('dataBill')(this.getOrderInfo);
 	return !(isEmpty(customerBill));
 }
 
 function pickUpName() {
-	return lib.getDeeper('pickUpName')(this.getOrderInfo);
+	return getDeeper('pickUpName')(this.getOrderInfo);
 }
 
 function getResponsibleName() {
-	return lib.getDeeper('responsiblePickUp.name')(this.getOrderInfo);
+	return getDeeper('responsiblePickUp.name')(this.getOrderInfo);
 }
 
 function getDni() {
-	return lib.getDeeper('responsiblePickUp.dni')(this.getOrderInfo);
+	return getDeeper('responsiblePickUp.dni')(this.getOrderInfo);
 }
 
 function getPhone() {
-	return lib.getDeeper('responsiblePickUp.phone')(this.getOrderInfo);
+	return getDeeper('responsiblePickUp.phone')(this.getOrderInfo);
 }
 
 function getDirection() {
-	if (lib.getDeeper('flagPickUp')(this.getOrderInfo) === PickUpIn.store) {
-		return lib.getDeeper('warehouseAddress')(this.getOrderInfo);
+	if (getDeeper('flagPickUp')(this.getOrderInfo) === PickUpIn.store) {
+		return getDeeper('warehouseAddress')(this.getOrderInfo);
 	}
-	return lib.getDeeper('deliveryAddress.addressLine1')(this.getOrderInfo);
+	return getDeeper('deliveryAddress.addressLine1')(this.getOrderInfo);
 }
 
 function stepFour() {
@@ -70,7 +70,7 @@ function stepFour() {
 }
 
 function getWayPayment() {
-	const wayPayment = lib.getDeeper('wayPayment.description')(this.getOrderInfo);
+	const wayPayment = getDeeper('wayPayment.description')(this.getOrderInfo);
 	if (wayPayment) {
 		return wayPayment;
 	}
@@ -78,19 +78,19 @@ function getWayPayment() {
 }
 
 function getRuc() {
-	return lib.getDeeper('dataBill.ruc')(this.getOrderInfo);
+	return getDeeper('dataBill.ruc')(this.getOrderInfo);
 }
 
 function getRzSocial() {
-	return lib.getDeeper('dataBill.rzSocial')(this.getOrderInfo);
+	return getDeeper('dataBill.rzSocial')(this.getOrderInfo);
 }
 
 function getAddress() {
-	return lib.getDeeper('dataBill.address')(this.getOrderInfo);
+	return getDeeper('dataBill.address')(this.getOrderInfo);
 }
 
 function labelCountry() {
-	return lib.getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Número de Documento' : 'DNI';
+	return getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'Número de Documento' : 'DNI';
 }
 
 function data() {

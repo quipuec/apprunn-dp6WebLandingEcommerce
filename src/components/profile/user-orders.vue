@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<profile-tab class="web-tab" @status-changed="statusChanged"/>
+		<profile-tab @status-changed="statusChanged" class="tabs-container"/>
 		<div class="table-container">
 			<responsive-table
 				:columns="columns"
@@ -23,37 +23,56 @@
 						<delete-component
 							v-show="row.orderState.code === 'REQUESTED' || row.orderState.code === 'CONFIRMED'"
 							class="action-btn"
-							@click="deleteOrder(row)"
+							@click="openDeletingOrderModal(row)"
 						/>
 					</td>
 				</template>
 			</responsive-table>
 		</div>
+		<modal-component v-model="showModal" max-width="370px">
+			<div class="deleting-order-modal">
+				<section class="modal-close-button" :style="`color:${globalColors.primary}`">
+					<button type="button" @click="closeModal" class="close-button">X</button>
+				</section>
+				<section class="modal-content">
+					<p class="confirm">¿Desea anular<br> el pedido Nro: {{currentOrder.number}}?</p>
+				</section>
+				<section class="modal-buttons-container">
+					<button
+						type="button"
+						class="modal-button"
+						:style="`background-color:${globalColors.primary}`"
+						@click="deleteOrder"
+					>SI</button>
+					<button
+						type="button"
+						class="modal-button"
+						:style="`background-color:${globalColors.secondary}`"
+						@click="closeModal"
+					>NO</button>
+				</section>
+			</div>
+		</modal-component>
 	</div>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex';
-import lib from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 import deleteComponent from '@/components/shared/icons/delete-component';
 import detailsComponent from '@/components/shared/icons/details-component';
 import profileTab from '@/components/shared/tabs/profile-tab';
 import responsiveTable from '@/components/shared/table/respondive-table';
+import modalComponent from '@/components/shared/modal/modal-component';
 
 function created() {
 	this.$store.dispatch('LOAD_ORDERS_STATUS', this);
+	this.loadOrders();
 }
 
-async function getStatesHandler(status) {
-	if (status) {
-		({ id: this.orderStatusId } = lib.find(lib.equality('code', 'REQUESTED'), status));
-		this.loadOrders(this.orderStatusId);
-	}
-}
-
-async function loadOrders(orderStatusId) {
+async function loadOrders() {
 	this.lastPage = await this.$store.dispatch(
 		'LOAD_ORDERS',
-		{ context: this, params: this.params, orderStatusId },
+		{ context: this, params: this.params },
 	);
 }
 
@@ -62,26 +81,37 @@ function seeDetails(order) {
 }
 
 function getValue(route, order) {
-	return lib.getDeeper(route)(order);
+	return getDeeper(route)(order);
 }
 
 
 function changePage(page) {
-	this.loadOrders(this.orderStatusId);
+	this.loadOrders();
 	this.params.page = page;
 }
 
 function statusChanged(id) {
-	this.orderStatusId = id;
+	this.params.orderStateId = id;
 	this.params.page = 1;
-	this.loadOrders(this.orderStatusId);
+	this.loadOrders();
 }
 
-async function deleteOrder(order) {
-	const { id } = order;
+async function deleteOrder() {
+	const { id } = this.currentOrder;
 	const newOrdersArray = this.getOrders.filter(o => o.id !== id);
 	this.$store.commit('SET_ORDERS', newOrdersArray);
 	await this.CANCEL_ORDER({ context: this, id });
+	this.closeModal();
+}
+
+function openDeletingOrderModal(order) {
+	this.showModal = !this.showModal;
+	this.currentOrder = order;
+}
+
+function closeModal() {
+	this.showModal = false;
+	this.currentOrder = {};
 }
 
 function data() {
@@ -95,12 +125,15 @@ function data() {
 			{ value: 'wayPayment', title: 'Método de pago', responsive: true },
 			{ value: '', title: 'Acción' },
 		],
+		currentOrder: {},
 		lastPage: 0,
 		orderStatusId: 0,
 		params: {
-			limit: 5,
+			limit: 7,
 			page: 1,
+			orderStateId: null,
 		},
+		showModal: false,
 	};
 }
 
@@ -109,6 +142,7 @@ export default {
 	components: {
 		deleteComponent,
 		detailsComponent,
+		modalComponent,
 		profileTab,
 		responsiveTable,
 	},
@@ -125,26 +159,23 @@ export default {
 			'CANCEL_ORDER',
 		]),
 		changePage,
+		closeModal,
 		deleteOrder,
-		getStatesHandler,
 		getValue,
 		loadOrders,
+		openDeletingOrderModal,
 		seeDetails,
 		statusChanged,
-	},
-	watch: {
-		getStates: {
-			deep: true,
-			handler: getStatesHandler,
-		},
 	},
 };
 </script>
 <style lang="scss" scoped>
+	.tabs-container {
+		margin-left: 50px;
+	}
 	.web-tab {
-		bottom: 100%;
+		bottom: 90%;
 		position: absolute;
-		width: 100%;
 
 		@media (max-width: 900px) {
 			bottom: 90%;
@@ -152,7 +183,7 @@ export default {
 	}
 
 	.table-container {
-		margin: 50px 50px 0;
+		margin: 20px 50px 0;
 
 		@media (max-width: 600px) {
 			margin: 20px 10px 0;
@@ -245,6 +276,56 @@ export default {
 
 		@media (max-width: 600px) {
 			display: inline-block,
+		}
+	}
+
+	.deleting-order-modal {
+		align-items: center;
+		background-color: white;
+		border-radius: 8px;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		padding: 14px;
+		margin: auto;
+
+		.modal-close-button {
+			text-align: right;
+			width: 100%;
+
+			.close-button {
+				margin-bottom: 15px;
+				padding: 5px 15px;
+			}
+		}
+
+		.modal-content {
+			border-bottom: 1px solid color(border);
+			width: 100%;
+
+			.confirm {
+				font-family: font(demi);
+				font-size: medium;
+				margin: 0 auto 30px;
+				text-align: center;
+				width: max-content;
+			}
+		}
+
+		.modal-buttons-container {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+			margin-top: 20px;
+			width: 100%;
+
+			.modal-button {
+				border-radius: 7px;
+				color: white;
+				font-family: font(demi);
+				margin: 0 10px;
+				padding: 5px 35px;
+			}
 		}
 	}
 </style>

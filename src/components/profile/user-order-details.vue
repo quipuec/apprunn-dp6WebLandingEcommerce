@@ -92,7 +92,7 @@ import appButton from '@/components/shared/buttons/app-button';
 import leftComponent from '@/components/shared/icons/left-component';
 import loadPayment from '@/components/profile/load-payment';
 import responsiveTable from '@/components/shared/table/respondive-table';
-import lib, { isEmpty } from '@/shared/lib';
+import { getDeeper, isEmpty } from '@/shared/lib';
 import formOpinion from '@/components/products/form-opinion';
 import productRating from '@/components/profile/product-rating';
 
@@ -124,19 +124,19 @@ function addPaymentInfo() {
 }
 
 function getValue(route, order) {
-	return lib.getDeeper(route)(order);
+	return getDeeper(route)(order);
 }
 
 function flagPickUp() {
-	return lib.getDeeper('flagPickUp')(this.getOrderInfo);
+	return getDeeper('flagPickUp')(this.getOrderInfo);
 }
 
 function details() {
-	return lib.getDeeper('details')(this.getOrderInfo);
+	return getDeeper('details')(this.getOrderInfo);
 }
 
 function orderStatusIsGiven() {
-	return lib.getDeeper('orderState.code')(this.getOrderInfo) === 'GIVEN';
+	return getDeeper('orderState.code')(this.getOrderInfo) === 'GIVEN';
 }
 
 function onRating(product) {

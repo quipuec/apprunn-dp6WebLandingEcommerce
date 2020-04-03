@@ -1,0 +1,12 @@
+{
+    "PER": {
+        "department": "Departamento",
+        "district": "Distrito",
+        "province": "Provincia"
+    },
+    "ECU": {
+        "department": "Provincia",
+        "district": "Parroquia",
+        "province": "Ciudad"
+    }
+}

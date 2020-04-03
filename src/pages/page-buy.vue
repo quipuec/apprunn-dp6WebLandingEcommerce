@@ -17,7 +17,11 @@
 						<img :src="logo.section" alt="logo del método de pago">
 						<h2 class="payment-section-title">PRODUCTOS </h2>
 					</div>
-					<product-in-car v-for="(product, indexProduct) in getProductToBuy" :key="indexProduct" :product="product"/>
+					<product-in-car
+						v-for="(product, indexProduct) in getProductToBuy"
+						:key="indexProduct"
+						:product="product"
+					/>
 					<div class="footter-products-buy">
 						<app-button
 							max-width="225px"
@@ -43,7 +47,7 @@
 	</div>
 </template>
 <script>
-import lib from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 import { mapGetters } from 'vuex';
 import appButton from '@/components/shared/buttons/app-button';
 import productInCar from '@/components/products/product-in-car';
@@ -56,16 +60,16 @@ function created() {
 }
 
 function stepOneAndTwo() {
-	const step = lib.getDeeper('meta.step')(this.$route);
+	const step = getDeeper('meta.step')(this.$route);
 	return step !== 3;
 }
 
 function stepThree() {
-	return lib.getDeeper('meta.step')(this.$route) === 3;
+	return getDeeper('meta.step')(this.$route) === 3;
 }
 
 function stepTwo() {
-	return lib.getDeeper('meta.step')(this.$route) === 2;
+	return getDeeper('meta.step')(this.$route) === 2;
 }
 
 function getProductToBuyHandler(newProducts) {
@@ -140,7 +144,8 @@ export default {
 	.small {
 		flex: 1 1 5%;
 		height: 100%;
-		margin: 0 10px;
+		margin: 0 auto;
+		max-width: 450px;
 	}
 
 	.footter-products-buy {
