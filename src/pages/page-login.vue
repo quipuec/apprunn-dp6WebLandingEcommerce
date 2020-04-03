@@ -24,6 +24,7 @@
 	import { email, required } from 'vuelidate/lib/validators';
 	import formContainer from '@/components/shared/account/form-container';
 	import loginForm from '@/components/shared/account/login-form';
+	import { mapGetters } from 'vuex';
 
 	function created() {
 		this.setWidth();
@@ -208,6 +209,9 @@
 			loginForm,
 		},
 		computed: {
+			...mapGetters([
+				'getFilters',
+			]),
 			disabled,
 		},
 		created,
