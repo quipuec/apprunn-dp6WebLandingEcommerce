@@ -56,12 +56,7 @@ function onSelect(method) {
 
 function paymentMethodSelectedComponent() {
 	const opt = {
-<<<<<<< HEAD
 		CDC: 'visaPayment',
-=======
-		CDC: 'VisaByCountry',
-		PPR: 'recievedPayment',
->>>>>>> dev
 		IBD: 'depositPayment',
 		PPR: 'recievedPayment',
 	};
