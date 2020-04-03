@@ -1,8 +1,13 @@
 <template>
 	<layout-admin>
 		<section class="profile-layout">
+			<div class="home-button-container">
+				<button type="button" class="home-button" @click="goTo('page-home')">
+					<left-component/>
+				</button>
+			</div>
 			<div
-				:style="`background-color: ${globalColors.dark};`"
+				:style="`background-color: ${globalColors.title};`"
 				class="profile-menu"
 			>
 				<div class="user-avatar-container">
@@ -19,7 +24,7 @@
 				<ul class="user-actions">
 					<li class="user-action">
 						<button
-							:style="`border-bottom: 6px solid ${globalColors.dark};${borderPrimaryUserData}`"
+							:style="borderPrimaryUserData"
 							:class="[
 								'user-action-btn',
 							]"
@@ -28,7 +33,7 @@
 					</li>
 					<li class="user-action">
 						<button
-							:style="`border-bottom: 6px solid ${globalColors.dark};${borderPrimaryUserOrder}`"
+							:style="borderPrimaryUserOrder"
 							:class="[
 								'user-action-btn',
 							]"
@@ -37,7 +42,7 @@
 					</li>
 					<li class="user-action">
 						<button
-							:style="`border-bottom: 6px solid ${globalColors.dark};${borderPrimaryFavorites}`"
+							:style="borderPrimaryFavorites"
 							:class="[
 								'user-action-btn',
 							]"
@@ -46,7 +51,7 @@
 					</li>
 					<li class="user-action">
 						<button
-							:style="`border-bottom: 6px solid ${globalColors.dark};${borderPrimaryAddress}`"
+							:style="borderPrimaryAddress"
 							:class="[
 								'user-action-btn',
 							]"
@@ -68,6 +73,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import leftComponent from '@/components/shared/icons/left-component';
 
 function goTo(name) {
 	this.$router.push({ name });
@@ -114,6 +120,9 @@ function getUserAvatar() {
 
 export default {
 	name: 'page-profile',
+	components: {
+		leftComponent,
+	},
 	computed: {
 		...mapGetters([
 			'getFilters',
@@ -141,6 +150,7 @@ export default {
 		margin: auto;
 		max-width: 1142px;
 		padding-top: 100px;
+		position: relative;
 
 		@media (max-width: 900px) {
 			grid-template-columns: 1fr;
@@ -262,6 +272,22 @@ export default {
 		height: 100%;
 		object-fit: contain;
 		width: 100%;
+	}
+
+	.home-button-container {
+		align-items: center;
+		bottom: 90%;
+		display: flex;
+		justify-content: flex-end;
+		padding: 0 20px;
+		position: absolute;
+		width: 100%;
+		z-index: 99;
+
+		.home-button {
+			padding: 10px;
+			transform: rotate(180deg);
+		}
 	}
 </style>
 

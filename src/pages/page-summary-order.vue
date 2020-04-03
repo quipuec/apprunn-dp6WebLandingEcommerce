@@ -22,6 +22,7 @@
 				type="button"
 				class="summary-order-button"
 				:style="`background-color:${globalColors.primary}`"
+				:disabled="canNotCancelOrder"
 				@click="cancalOrder"
 			>Cancelar pedido</button>
 		</section>
@@ -34,6 +35,7 @@ import summaryOrder from '@/components/order/summary-order';
 import thanksMessage from '@/components/order/thanks-message';
 import summaryInPayment from '@/components/order/summary-in-payment';
 import paymentMethods from '@/components/order/payment-method';
+import orderStatesEnum from '@/shared/enums/orderStateId';
 
 function beforeDestroy() {
 	this.SET_DEFAULT_VALUES();
@@ -54,6 +56,18 @@ async function cancalOrder() {
 	this.goTo('page-home');
 }
 
+function canNotCancelOrder() {
+	return this.isCanceled || this.isConfirmed;
+}
+
+function isCanceled() {
+	return this.getOrderInfo.orderState.code === orderStatesEnum.canceled.code;
+}
+
+function isConfirmed() {
+	return this.getOrderInfo.orderState.code === orderStatesEnum.confirmed.code;
+}
+
 export default {
 	name: 'page-summary-order',
 	beforeDestroy,
@@ -68,6 +82,9 @@ export default {
 		...mapGetters([
 			'getOrderInfo',
 		]),
+		canNotCancelOrder,
+		isCanceled,
+		isConfirmed,
 	},
 	methods: {
 		...mapActions([
@@ -122,6 +139,7 @@ export default {
 	.sumary-order-buttons-container {
 		align-items: center;
 		display: flex;
+		flex-wrap: wrap;
 		justify-content: center;
 		margin: 30px 0 80px;
 	}
@@ -132,7 +150,7 @@ export default {
 		color: white;
 		font-family: font(bold);
 		padding: 15px 50px;
-		margin: 0 10px;
+		margin: 10px;
 		width: 240px;
 	}
 

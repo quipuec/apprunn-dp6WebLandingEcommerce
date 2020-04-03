@@ -9,7 +9,7 @@
 			>
 				<div class="grid-product">
 					<span class="product-name">{{product.description}}</span>
-					<span class="product-quantity">Cantidad: {{product.quantity}}</span>
+					<span class="product-quantity">Cantidad: {{product.quantity}} / {{product.unitName}}</span>
 					<h3
 						:style="`color: ${globalColors.secondary};`"
 						class="product-total"
@@ -50,7 +50,7 @@ export default {
 		align-items: center;
 		display: grid;
     	grid-column-gap: 40px;
-		grid-template-columns: 1fr 90px 0.5fr;
+		grid-template-columns: 1fr 0.5fr 0.5fr;
 		transform: translateX(15px);
 
 		@media (max-width: 600px) {
@@ -83,6 +83,7 @@ export default {
 	.product-quantity {
 		color: color(dark);
 		font-family: font(medium);
+		white-space: nowrap;
 
 		@media (max-width: 600px) {
 			grid-column: 1/2;

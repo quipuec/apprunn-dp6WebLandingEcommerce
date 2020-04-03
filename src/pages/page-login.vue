@@ -107,6 +107,7 @@
 		const { data: userInfo } = await this.$httpSales.get('customers/current', { headers });
 		userInfo.avatar = userInfo.urlImage || process.env.DEFAULT_AVATAR;
 		userInfo.fullName = userInfo.typePerson.fullName;
+		userInfo.showCustomerDiscountMessage = true;
 		this.$store.dispatch('setUser', userInfo);
 	}
 

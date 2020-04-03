@@ -1,4 +1,6 @@
 import store from '@/store';
+import { getDeeper } from '@/shared/lib';
+import countries from '@/shared/countries.json';
 
 function data() {
 	return {
@@ -13,6 +15,10 @@ function data() {
 			rows: [],
 		},
 	};
+}
+
+function isPeru() {
+	return getDeeper('company.country.countryCode')(store.getters.user) === 'PER';
 }
 
 Math.easeInOutQuad = (t, b, c, d) => {
@@ -93,18 +99,7 @@ function globalColors() {
 
 function countryLabels() {
 	const countryCode = JSON.parse(localStorage.getItem('ecommerce::country'));
-	if (countryCode === 'PER') {
-		return {
-			department: 'Departamento',
-			district: 'Distrito',
-			province: 'Provincia',
-		};
-	}
-	return {
-		department: 'Provincia',
-		district: 'Parroquia',
-		province: 'Ciudad',
-	};
+	return countries[countryCode];
 }
 
 function getLocalStorage(key) {
@@ -135,11 +130,21 @@ function scrollTo(element, duration, fit) {
 	this.isVisible = false;
 }
 
+function updateDescriptionTag(description) {
+	const metaDescription = document.getElementById('myDescription');
+	metaDescription.content = description;
+}
+
+function updatePageTitle(title) {
+	document.title = title;
+}
+
 const mixin = {
 	data,
 	computed: {
 		countryLabels,
 		globalColors,
+		isPeru,
 		token,
 	},
 	methods: {
@@ -155,6 +160,8 @@ const mixin = {
 		showRow,
 		stopClick,
 		scrollTo,
+		updateDescriptionTag,
+		updatePageTitle,
 	},
 };
 

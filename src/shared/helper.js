@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { isEmpty } from '@/shared/lib';
+import { getDeeper, isEmpty } from '@/shared/lib';
 
 function exactDate(date, formatter = 'DD-MM-YYYY', splitBy = 'T') {
 	if (date) {
@@ -85,7 +85,99 @@ function updateOrderDetailsInLocalStorage(products) {
 	}
 }
 
+function buildOrderBody(flagFinish, getters) {
+	const body = {
+		costShipping: getters.getShippingCost,
+		customerAddressId: getters.getCustomerAddressId,
+		customerAddress: getters.getCustomerAddressId ? null : getters.getCustomerAddress,
+		customerBill: getters.getFlagBill ? getters.getBillingData : null,
+		deliveryAddress: getters.getCustomerAddressId
+			? getters.getDeliveryAddress : getters.getCustomerAddress,
+		details: getOrderDetails(getters.getOrderDetails),
+		flagPickUp: getters.getFlagPickUp,
+		responsiblePickUp: getters.getResponsible,
+		warehouseId: process.env.WAREHOUSE_ID,
+		warehouseName: process.env.WAREHOUSE_NAME,
+		warehouseAddress: process.env.WAREHOUSE_ADDRESS,
+	};
+	if (getters.getOrderId && getters.getOrderStatus) {
+		body.orderStateId = getters.getOrderStatus;
+		body.flagStatusOrder = flagFinish ? 3 : getters.getFlagStatusOrder;
+		body.bankAccountId = flagFinish ? getters.getWayPayment.bankAccountId : null;
+		body.wayPaymentId = flagFinish ? getters.getWayPayment.wayPayment : null;
+		body.gatewayAuthorizationResponse = flagFinish ? getters.getGatewayAuthorizationResponse : null;
+		body.gatewayErrorCode = flagFinish ? getters.getGatewayErrorCode : null;
+	} else {
+		body.commerceCode = process.env.COMMERCE_CODE;
+	}
+	return body;
+}
+
+function getOrderDetails(products) {
+	return products.map((p) => {
+		const { taxes } = p;
+		const newTaxes = setTaxes(taxes);
+		const newP = {
+			alternateCode: p.alternateCode,
+			brandId: getDeeper('warehouseProduct.brandId')(p) || p.brandId,
+			brandName: getDeeper('warehouseProduct.brand.name')(p) || p.brandName,
+			categoryId: p.categoryId,
+			categoryName: getDeeper('category.name')(p) || p.categoryName,
+			codeTaxes: taxes[0].code,
+			description: p.description,
+			discount: p.discount || 0,
+			discountPercentage: p.discountPercentage || 0,
+			product: {
+				id: p.productId || p.id,
+				taxes: [...newTaxes],
+				type: getDeeper('typeInfo.id')(p) || getDeeper('product.type')(p),
+			},
+			productCode: p.code || p.productCode,
+			productId: p.productId || p.id,
+			productImage: p.urlImage || p.productImage,
+			productName: p.name || p.productName,
+			quantity: p.quantity,
+			salePrice: p.priceDiscount || p.salePrice || p.price,
+			stockQuantity: p.stock,
+			taxes: newTaxes,
+			unit: p.unit,
+			unitCode: p.unit.code,
+			unitConversion: 1,
+			unitId: p.unitId,
+			unitName: p.unit.name,
+			unitQuantity: p.quantity,
+			warehouseId: process.env.WAREHOUSE_ID,
+			warehouseName: process.env.WAREHOUSE_NAME,
+		};
+		return newP;
+	});
+}
+
+function setTaxes(taxes) {
+	const newTaxes = [];
+	if (!taxes && taxes.length === 0) {
+		newTaxes[0] = {
+			code: '01',
+			codeTable: 'TABLE17',
+			codePercentage: '01',
+			flagSales: true,
+			flagPurchases: false,
+		};
+	} else {
+		const tax = taxes[0];
+		newTaxes[0] = {
+			code: tax.code,
+			codeTable: tax.codeTable,
+			codePercentage: tax.codePercentage,
+			flagSales: Boolean(tax.flagSales),
+			flagPurchases: Boolean(tax.flagPurchases),
+		};
+	}
+	return newTaxes;
+}
+
 const methods = {
+	buildOrderBody,
 	debounce,
 	exactDate,
 	formatDate,

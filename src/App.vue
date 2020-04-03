@@ -1,5 +1,9 @@
 <template>
 	<v-app class="main-container">
+		<app-customer-discount
+			v-if="user.discount && user.showCustomerDiscountMessage"
+			:discount="user.discount"
+		/>
 		<app-banner-top v-if="!indeterminate" :data="bannerTop"/>
 		<app-header
 			:logo="logo" 
@@ -52,6 +56,7 @@
 import { mapGetters } from 'vuex';
 import appHeader from '@/components/header/app-header';
 import { isEmpty } from '@/shared/lib';
+import appCustomerDiscount from '@/components/header/app-customer-discount';
 
 const appMenuCategory = () => import(/* webpackChunkName: "app-Menu-Category" */'@/components/header/app-category');
 const formBulletin = () => import(/* webpackChunkName: "form-Bulletin" */'@/components/shared/form/form-bulletin');
@@ -135,9 +140,10 @@ export default {
 	},
 	data,
 	components: {
-		appFooter,
-		appHeader,
 		appBannerTop,
+		appCustomerDiscount,
+		appHeader,
+		appFooter,
 		appMenuCategory,
 		formBulletin,
 		sectionVisa,

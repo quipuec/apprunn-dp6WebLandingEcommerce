@@ -1,6 +1,18 @@
 <template>
 	<div class="page-detail-product">
-		<div class="detail-product-top">
+		<div class="confirm-modal-container" v-if="showConfirmModal">
+			<app-modal
+				:product="productDetails"
+				@close-modal="closeConfirmModal"
+			></app-modal>
+		</div>
+		<div v-if="disabled" class="product-disabled">
+			<h1
+				:style="`color:${globalColors.primary}`"
+				class="sorry-text"
+			>Lo sentimos, este producto está desactivado  :(</h1>
+		</div>
+		<div v-else class="detail-product-top">
 			<product-view 
 				:data="productDetails"
 				:images="productImages"
@@ -16,15 +28,16 @@
 				@clear="clearFeatures"
 				@click-quantity="clickQuantity"
 				@open-dialog="openDialog"
+				@open-confirm-modal="showConfirmModal = true"
 				@unit-selection="selectedUnit"
 			/>
 		</div>
-		<div class="detail-tab-publicity">
+		<div v-if="!disabled" class="detail-tab-publicity">
 			<product-publicity
 				class="container-publicity desktop"
 				:products-publicity="[]"
 			/>
-			<product-tab 
+			<product-tab
 				class="container-product-tab"
 				:tabs="tabs"
 				:sections="productDetails.sections"
@@ -61,6 +74,7 @@ import productTab from '@/components/products/product-tab';
 import productRelated from '@/components/products/product-related';
 import warehousesModal from '@/components/products/warehouses-modal';
 import productPublicity from '@/components/products/product-publicity';
+import appModal from '@/components/shared/modal/app-modal';
 
 async function created() {
 	this.$loading(true);
@@ -78,13 +92,25 @@ async function loadProduct() {
 	try {
 		const { data: response } = await this.isLoggedUser();
 		this.product = response;
-		document.title = this.product.name.toUpperCase();
+		this.updatePageTitle(this.product.name.toUpperCase());
+		this.updateDescriptionTag(this.product.description);
 		this.$store.dispatch('setRatingProductId', this.product.id);
 		this.loadData(this.product.id);
 		this.loadOpinions();
 	} catch (error) {
-		this.showGenericError();
+		if (error.data.message === 'PRODUCT_NOT_FOUND') {
+			this.disabled = true;
+			this.showNotification('Este producto ya no está disponible', 'warning');
+			this.loadRelatedProducts(this.id);
+		} else {
+			this.showGenericError();
+		}
 	}
+}
+
+async function loadRelatedProducts(slug) {
+	const url = `products-public/${slug}/related`;
+	({ data: this.relateds } = await this.$httpProductsPublic.get(url));
 }
 
 async function loadData(id) {
@@ -270,6 +296,10 @@ function selectedUnit(unit) {
 	this.productDetails = { ...this.productInstance.getProductDetails() };
 }
 
+function closeConfirmModal() {
+	this.showConfirmModal = false;
+}
+
 function data() {
 	return {
 		allFeatures: [],
@@ -280,6 +310,7 @@ function data() {
 		},
 		childrens: [],
 		cities: [],
+		disabled: false,
 		disabledBtn: false,
 		dialogWarehouses: false,
 		features: [],
@@ -297,6 +328,7 @@ function data() {
 		productImages: [],
 		productFather: {},
 		relateds: [],
+		showConfirmModal: false,
 		stockWarehouse: false,
 		tabs: [],
 		warehouses: [],
@@ -308,6 +340,7 @@ export default {
 	created,
 	components: {
 		appBannerTop,
+		appModal,
 		productDetail,
 		productPublicity,
 		productView,
@@ -333,11 +366,13 @@ export default {
 		assignProduct,
 		clearFeatures,
 		clickQuantity,
+		closeConfirmModal,
 		closeModal,
 		isLoggedUser,
 		loadData,
 		loadOpinions,
 		loadProduct,
+		loadRelatedProducts,
 		newRoute,
 		openDialog,
 		possibleFeature,
@@ -365,6 +400,7 @@ export default {
 
 	.page-detail-product {
 		background: color(white);
+		position: relative;
 
 		@media screen and (max-width: 996px) {
 			padding-top: 20px;
@@ -433,5 +469,29 @@ export default {
 		}
 	}
 
+	.confirm-modal-container {
+		background-color: white;
+		border: 1px solid color(border);
+		border-radius: 8px;
+		box-shadow: 0 2px 4px 0 rgba(213, 213, 213, 0.5);
+		padding: 10px;
+		position: fixed;
+		right: 37px;
+		top: 115px;
+		width: 350px;
+		z-index: 2;
+	}
+
+	.product-disabled {
+		align-items: center;
+		display: flex;
+		height: 300px;
+		justify-content: center;
+	}
+
+	.sorry-text {
+		margin: 0 20px;
+		text-align: center;
+	}
 </style>
 

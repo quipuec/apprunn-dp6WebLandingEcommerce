@@ -113,5 +113,9 @@ export default {
 
 	#visa-payment {
 		width: 656px;
+
+		@media (max-width: 768px) {
+			width: auto;
+		}
 	}
 </style>

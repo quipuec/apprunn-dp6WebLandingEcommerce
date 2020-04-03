@@ -25,18 +25,18 @@ class="app-banner-plans"
 </template>
 
 <script>
-import lib from '@/shared/lib';
+import { getDeeper } from '@/shared/lib';
 
 function webLink() {
-	return lib.getDeeper('webLink')(this.data);
+	return getDeeper('webLink')(this.data);
 }
 
 function webImage() {
-	return lib.getDeeper('webImage')(this.data);
+	return getDeeper('webImage')(this.data);
 }
 
 function mobileImage() {
-	return lib.getDeeper('mobileImage')(this.data);
+	return getDeeper('mobileImage')(this.data);
 }
 
 export default {

@@ -1,4 +1,4 @@
-import lib from '@/shared/lib';
+import lib, { isEmpty } from '@/shared/lib';
 import helper from '@/shared/helper';
 
 const asyncActions = {
@@ -120,8 +120,8 @@ const asyncActions = {
 		const { data: orderStatus } = await context.$httpSales.get('order-states');
 		commit('SET_ORDER_STATES', orderStatus);
 	},
-	LOAD_ORDERS: async ({ commit }, { context, params, orderStatusId }) => {
-		const url = `orders?orderStateId=${orderStatusId}`;
+	LOAD_ORDERS: async ({ commit }, { context, params }) => {
+		const url = 'orders';
 		const { data: orders, headers } = await context.$httpSales.get(url, { params });
 		const setUpDateInOrders = orders.map(
 			lib.setNewProperty('createdAt', ({ createdAt }) => helper.formatDate(createdAt)),
@@ -155,8 +155,10 @@ const asyncActions = {
 	},
 	LOAD_FILTERS: async ({ commit }, context) => {
 		const { data: filters } = await context.$httpProductsPublic.get('filters-public');
-		const newFilters = lib.map(lib.setNewProperty('select', (filter, index) => index === 0), filters);
-		commit('UPDATE_FILTERS', newFilters);
+		const allFilter = { id: null, title: 'Todos', urlImage: filters[0].urlImage };
+		const newFilters = [].concat(allFilter, filters);
+		const updatedFilters = lib.map(lib.setNewProperty('select', (filter, index) => index === 0), newFilters);
+		commit('UPDATE_FILTERS', updatedFilters);
 	},
 	LOAD_FAVORITES_PRODUCTS: async ({ commit }, { context, params }) => {
 		const url = 'products/favorites?favorite=true';
@@ -185,6 +187,20 @@ const asyncActions = {
 		document.getElementsByTagName('head')[0].appendChild(link);
 		const pageTitle = document.getElementsByTagName('title');
 		pageTitle[0].innerHTML = commerceData.name || 'AppRunn SAC';
+	},
+	MAKE_ORDER: async ({ dispatch, getters }, { flagFinish, context }) => {
+		const body = helper.buildOrderBody(flagFinish, getters);
+		const orderExist = !isEmpty(getters.getOrderInfo);
+		const dispatchName = orderExist ? 'UPDATE_ORDER' : 'CREATE_ORDER';
+		const dispatchObj = orderExist
+			? { context, id: getters.getOrderInfo.id, body }
+			: { context, body };
+		await dispatch(dispatchName, dispatchObj);
+		if (flagFinish) {
+			context.goTo('buy-summary');
+		} else {
+			context.goTo('buy-payment');
+		}
 	},
 };
 
