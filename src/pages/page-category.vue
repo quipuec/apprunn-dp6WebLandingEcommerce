@@ -120,7 +120,6 @@ async function loadProduct() {
 		};
 		const url = `products-public?eCategories=${this.id}`;
 		const { data: products, headers } = await this.$httpProductsPublic.get(url, { params });
-		debugger;
 		const commercePriceListId = this.getCommerceData.settings.salPriceListId;
 		this.listProducts = products.map(
 			lib.compose(

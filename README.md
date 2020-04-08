@@ -10,6 +10,7 @@
 2.  [Vue-Router](https://router.vuejs.org/en/)
 3.  [Vuetify](http://next.vuetifyjs.com)
 4.  [Axios replace to vue-resource](https://github.com/axios/axios)
+5.  [Vuex](https://vuex.vuejs.org/)
 
 ### Basic Rules
 
@@ -20,32 +21,31 @@ Read our official [guide](https://style-guide.eperedo.com/)
 Before you launch the server please create the .env file with the following values:
 
 ```bash
-APP_CODE=ecommerce
-ACL_COMPANY_CODE=taurus2
-APP_NAME=ecommerce
-ACL_URL=https://devacl.japisale.com/api
-CLIENT_ID=473070913240169
-CODE_PROJECT=japi_proyect
-COLOR_PRIMARY=#F42B17
-COLOR_SECONDARY=#004e9c
-COLOR_TITLE=#4a4a4a
-COLOR_SUBTITLE=#d2d2d2
-COLOR_BORDER=#ACAAAA
-COMMERCE_CODE=mistore
-COMPANY_LOGIN_TITLE=MRC
-COMPANY_LOGO=/static/img/mrc-logo.png
-DEFAULT_AVATAR=/static/img/icons/Xiaomi_logo.svg
-FORM_BACKGROUND=https://apprunn.s3.amazonaws.com/login-mrc-background.png
-PRODUCTS_URL=https://products2.perudatos.com
-REDIRECT_URI=https://ecommerce-template.netlify.com
-ROLE_CODE=ROLEBASIC
-SALES_URL=https://sales.perudatos.com
-UPLOAD_URL=https://production.perudatos.com
-TOKEN=qq1NJP5K8nVOK6erZousKXd5arzPDgk77mPSvME1sJptVOdgHi2dpocSTZ1DQVN1nhx51gznMqOqQbaKiwgJ8013VR65Gxls6wB6OVkOnBMI1ZzpumgJrD0jmrPVJYiNaGybqTcsIV9YUCxAYI1nYkTMWWIoVrpy250iWiS1RLvxcahDUjLqZGyBq0jjdelU2HavPig3YdLBeeZUFCCjSoRmIUuDxvCV2pdRkrTUtG0aU5k0DTxxxtR2w19w7YXUpJpWDJ2gpn85SpQTqWhoGf0xcCVQVkAiKmazNV7ifdmB9fjVqOtJHbPBiA2
-VISA_MERCHAN_ID=202380085
-WAREHOUSE_ID=711
-WAREHOUSE_NAME=Xiaomi de Shell
-WAREHOUSE_ADDRESS=dirección de la tienda
+ACL_COMPANY_CODE=
+ACL_URL=
+API_JAPI=
+APP_CODE=
+APP_NAME=
+CLIENT_ID=
+CODE_PROJECT=
+COMMERCE_CODE=
+COMPANY_LOGIN_TITLE=
+COMPANY_LOGO=
+DEFAULT_AVATAR=
+FORM_BACKGROUND=
+GOOGLE_MAP_API_KEY=
+PAYMENTEZ_CLIENT=
+PAYMENTEZ_KEY=
+PRODUCTS_URL=
+REDIRECT_URI=
+ROLE_CODE=
+SALES_URL=
+TOKEN=
+UPLOAD_URL=
+WAREHOUSE_ADDRESS=
+WAREHOUSE_ID=
+WAREHOUSE_NAME=
+WAYS_DELIVERIES=
 ```
 
 Now you can start the server, if you have any problems please ask @azulchic. She will not answer you, but worth the try.
