@@ -47,7 +47,7 @@
 </div>
 </template>
 <script>
-import { required, minLength } from 'vuelidate/lib/validators';
+import { required } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import appInput from '@/components/shared/inputs/app-input';
 
@@ -75,7 +75,7 @@ function validations() {
 	return {
 		billing: {
 			address: { required },
-			ruc: { required, minLength: minLength(11) },
+			ruc: { required },
 			rzSocial: { required },
 		},
 	};
