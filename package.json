@@ -2,8 +2,8 @@
   "name": "ecommerce-landing",
   "version": "1.0.0",
   "description": "ecommerce landing",
-  "author": "Arelis Chicchon",
-  "private": true,
+  "author": "Arelis Chicchon - Apprunn, SAC",
+  "private": false,
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
