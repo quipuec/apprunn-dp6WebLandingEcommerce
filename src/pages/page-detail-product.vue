@@ -391,10 +391,12 @@ export default {
 </script>
 <style lang="scss" scoped>
 	.container-product-view {
-		width: 50%;
+		flex: 1 1 50%;
+		margin-right: 15px;
 
 		@media screen and (max-width: 996px) {
-			width: 100%;
+			flex: 1 1 100%;
+			margin-right: 0;
 		}
 	}
 
@@ -421,10 +423,12 @@ export default {
 	}
 
 	.container-product-detail {
-		width: 48%;
+		flex: 1 1 40%;
+		margin-left: 15px;
 
 		@media screen and (max-width: 996px) {
-			width: 100%;
+			flex: 1 1 100%;
+			margin-left: 0;
 		}
 	}
 
