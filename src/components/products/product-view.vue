@@ -75,7 +75,7 @@ function data() {
 				},
 			},
 			loop: true,
-			width: 385,
+			width: 362,
 		},
 	};
 }
@@ -167,8 +167,7 @@ export default {
 	}
 
 	.image-product-slider {
-		max-height: 487px;
-		max-width: 100%;
+		width: 100%;
 
 		@media screen and (max-width: 996px) {
 			max-height: 217px;
