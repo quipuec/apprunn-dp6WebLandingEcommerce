@@ -10,7 +10,7 @@
 				:style="idSelect(data.id) ? `color: ${globalColors.primary}` : `color: ${globalColors.dark}`"
 				@click="$emit('change-category', data)"	
 			>
-				<img :src="data.webImage" :alt="data.title" class="mr-3">
+				<img :src="data.webImage" :alt="data.title" class="mr-3" width="25">
 				<span>{{data.title}}</span>
 			</button>
 			<button @click="$emit('open-category', data.id)" v-if="data.detail.length">
