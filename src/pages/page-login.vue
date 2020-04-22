@@ -24,6 +24,7 @@
 	import { email, required } from 'vuelidate/lib/validators';
 	import formContainer from '@/components/shared/account/form-container';
 	import loginForm from '@/components/shared/account/login-form';
+	import { mapGetters } from 'vuex';
 
 	function created() {
 		this.setWidth();
@@ -55,7 +56,8 @@
 				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, response.data.token);
 				this.$store.dispatch('setToken', response.data.token);
 				this.getCustomerData();
-				this.$store.dispatch('UPDATE_PRODUCT_FILTER', this.getFilters[0].id);
+				const filterSelectedId = this.getFilters[0] ? this.getFilters[0].id : null;
+				this.$store.dispatch('UPDATE_PRODUCT_FILTER', filterSelectedId);
 				this.$store.dispatch('LOAD_PRODUCTS', { context: this });
 				this.goTo('page-home');
 			}
@@ -208,6 +210,9 @@
 			loginForm,
 		},
 		computed: {
+			...mapGetters([
+				'getFilters',
+			]),
 			disabled,
 		},
 		created,

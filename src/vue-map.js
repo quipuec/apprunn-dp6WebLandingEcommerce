@@ -3,7 +3,7 @@ import * as VueGoogleMaps from 'vue2-google-maps';
 export default function (Vue) {
 	Vue.use(VueGoogleMaps, {
 		load: {
-			key: 'AIzaSyAiBgECkdiXxPjb3d74UUQE_LY6PhtIHT4',
+			key: process.env.GOOGLE_MAP_API_KEY,
 			libraries: 'places', // This is required if you use the Autocomplete plugin
 		},
 		// installComponents: true,

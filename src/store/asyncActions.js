@@ -155,10 +155,14 @@ const asyncActions = {
 	},
 	LOAD_FILTERS: async ({ commit }, context) => {
 		const { data: filters } = await context.$httpProductsPublic.get('filters-public');
-		const allFilter = { id: null, title: 'Todos', urlImage: filters[0].urlImage };
-		const newFilters = [].concat(allFilter, filters);
-		const updatedFilters = lib.map(lib.setNewProperty('select', (filter, index) => index === 0), newFilters);
-		commit('UPDATE_FILTERS', updatedFilters);
+		if (filters.length > 0) {
+			const allFilter = { id: null, title: 'Todos', urlImage: filters[0].urlImage };
+			const newFilters = [].concat(allFilter, filters);
+			const updatedFilters = lib.map(lib.setNewProperty('select', (filter, index) => index === 0), newFilters);
+			commit('UPDATE_FILTERS', updatedFilters);
+		} else {
+			commit('UPDATE_FILTERS', filters);
+		}
 	},
 	LOAD_FAVORITES_PRODUCTS: async ({ commit }, { context, params }) => {
 		const url = 'products/favorites?favorite=true';
