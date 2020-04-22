@@ -30,6 +30,10 @@ const uploadInstance = axios.create({
 	baseURL: process.env.UPLOAD_URL,
 });
 
+const makiInstance = axios.create({
+	baseURL: process.env.MAKI_URL,
+});
+
 export default function (Vue) {
 	/* eslint-disable no-param-reassign */
 	Vue.prototype.$httpProducts = productsInstance;
@@ -38,4 +42,5 @@ export default function (Vue) {
 	Vue.prototype.$httpSalesPublic = salesPublicInstance;
 	Vue.prototype.$httpProductsPublic = productsPublicInstance;
 	Vue.prototype.$httpUpLoad = uploadInstance;
+	Vue.prototype.$httpMaki = makiInstance;
 }
