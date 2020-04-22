@@ -58,7 +58,7 @@
 	}
 
 	async function restorePassword() {
-		const token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBQ0wgR2VuZXJhciB0b2tlbiB0ZW1wb3JhbCBkZSBhY2Nlc28gcG9yIHJlZCBzb2NpYWwiLCJhdWQiOiJUSEVfQVVESUVOQ0UiLCJpYXQiOjE1ODc1OTQ2MDIsIm5iZiI6MTU4NzU5NDYwMiwiZXhwIjoxNTg3NTk4MjAyLCJkYXRhIjpbXSwic3ViIjoxNDQxLCJqdGkiOiJJT1dGbzZ4RlY1ZWtuTE9zIn0.dkhwnThgmz_HfHyj9j4YoKgStCz0CjZK4crA-86nLgU';
+		const token = this.$route.params.token;
 		const body = {
 			password: this.model.password,
 			token,
