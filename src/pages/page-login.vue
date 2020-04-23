@@ -55,6 +55,8 @@
 				);
 				({ email: this.model.email } = params);
 				this.model.password = null;
+			} else if (response.code === 1008) {
+				this.showGenericError('Correo o password incorrecto');
 			} else if (response.data && response.data.token) {
 				localStorage.clear();
 				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, response.data.token);
@@ -130,8 +132,10 @@
 				body,
 				{ headers },
 			);
-			const { token } = response.data;
-			if (token) {
+			if (response.code === 1008) {
+				this.showGenericError('Correo o password incorrecto.');
+			} else if (response.data) {
+				const { token } = response.data;
 				localStorage.clear();
 				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, token);
 				this.$store.dispatch('setToken', token);

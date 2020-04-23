@@ -86,11 +86,6 @@ async function created() {
 		this.httpResponseSuccessInterceptor,
 		this.httpResponseInterceptor,
 	);
-	this.$httpMaki.interceptors.request.use(this.httpRequestInterceptor);
-	this.$httpMaki.interceptors.response.use(
-		this.httpResponseSuccessInterceptor,
-		this.httpResponseInterceptor,
-	);
 }
 
 /* eslint-disable no-new */
