@@ -143,7 +143,7 @@ function getOrderDetails(products) {
 			unit: p.unit,
 			unitCode: p.unit.code,
 			unitConversion: 1,
-			unitId: p.unitId,
+			unitId: p.unit.id,
 			unitName: p.unit.name,
 			unitQuantity: p.quantity,
 			warehouseId: process.env.WAREHOUSE_ID,
