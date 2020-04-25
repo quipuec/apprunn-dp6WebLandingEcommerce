@@ -70,8 +70,11 @@
 			email: this.model.email,
 			codeApp: process.env.APP_CODE,
 		};
+		const headers = {
+			Authorization: `Bearer ${process.env.TOKEN}`,
+		};
 		try {
-			await this.$httpAcl.post('password/email', body);
+			await this.$httpSales.post('password/email', body, { headers });
 			this.isVisibleMessage = true;
 		} catch (err) {
 			if (err.status === 400) {
