@@ -39,9 +39,13 @@
 			codeApp: process.env.APP_CODE,
 			provider: 2,
 			extUserId: params.id,
+			password: params.id,
+		};
+		const headers = {
+			Authorization: `Bearer ${process.env.TOKEN}`,
 		};
 		try {
-			const { data: response } = await this.$httpAcl.post('signin/auth', body);
+			const { data: response } = await this.$httpSales.post('signin/auth', body, { headers });
 			if (response.msg === 'USER_NOT_FOUND') {
 				this.goTo('register', { query: params });
 			} else if (response.msg === 'USER_NOT_VALIDATED') {
@@ -51,6 +55,8 @@
 				);
 				({ email: this.model.email } = params);
 				this.model.password = null;
+			} else if (response.code === 1008) {
+				this.showGenericError('Correo o password incorrecto');
 			} else if (response.data && response.data.token) {
 				localStorage.clear();
 				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, response.data.token);
@@ -115,18 +121,21 @@
 	async function initSession() {
 		this.loading = true;
 		const body = { ...this.model };
+		body.provider = 1;
 		const headers = {
 			Authorization: `Bearer ${process.env.TOKEN}`,
 		};
 		body.codeApp = process.env.APP_CODE;
 		try {
-			const { data: response } = await this.$httpAcl.post(
-				'authenticate',
+			const { data: response } = await this.$httpSales.post(
+				'signin/auth',
 				body,
 				{ headers },
 			);
-			const { token } = response;
-			if (token) {
+			if (response.code === 1008) {
+				this.showGenericError('Correo o password incorrecto.');
+			} else if (response.data) {
+				const { token } = response.data;
 				localStorage.clear();
 				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, token);
 				this.$store.dispatch('setToken', token);
@@ -158,11 +167,12 @@
 	}
 
 	async function tokenVerification(token) {
+		const body = { token };
 		const headers = {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${process.env.TOKEN}`,
 		};
 		try {
-			await this.$httpAcl.post('confirm/email', null, { headers });
+			await this.$httpSales.post('confirm/email', body, { headers });
 			this.showNotification('Su cuenta ha sido activada, ingrese sus datos.');
 		} catch (err) {
 			if (err.status === 500) {

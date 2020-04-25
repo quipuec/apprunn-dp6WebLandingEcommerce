@@ -71,6 +71,7 @@
 			body.provider = 2;
 			body.extUserId = this.modelFacebook.id;
 			body.activation = Number(!this.modelFacebook.email);
+			body.password = this.modelFacebook.id;
 		}
 		try {
 			const { data: response } = await this.$httpSales.post(

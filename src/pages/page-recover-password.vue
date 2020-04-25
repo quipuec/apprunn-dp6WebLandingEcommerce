@@ -61,12 +61,13 @@
 		const token = this.$route.params.token;
 		const body = {
 			password: this.model.password,
+			token,
 		};
 		const headers = {
-			Authorization: `Bearer ${token}`,
+			Authorization: `Bearer ${process.env.TOKEN}`,
 		};
 		try {
-			await this.$httpAcl.post('password/reset', body, { headers });
+			await this.$httpSales.post('password/reset', body, { headers });
 			this.showNotification('La contraseña ha sido cambiada exitosamente');
 			this.goTo('login');
 		} catch (err) {
