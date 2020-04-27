@@ -291,7 +291,7 @@ function closeModal(value) {
 }
 
 function selectedUnit(unit) {
-	this.productInstance.updateUnitId(unit.id);
+	this.productInstance.updateUnit(unit);
 	this.productImages = [...this.productInstance.getImages()];
 	this.productDetails = { ...this.productInstance.getProductDetails() };
 }

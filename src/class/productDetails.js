@@ -12,6 +12,7 @@ class ProductDetails {
 		this.unitId = 0;
 		this.pictureNotFound = '/static/icons/no-picture-found.svg';
 		this.priceListId = priceListSelectedId;
+		this.selectedUnit = {};
 	}
 	get brand() {
 		return this.selectedProduct.warehouseProduct.brand.name;
@@ -71,12 +72,6 @@ class ProductDetails {
 		const allProductsImages = this.getProductDetails().images;
 		const imgsBySelectedUnitId = allProductsImages.filter(img => img.unitId === this.unitId);
 		if (isEmpty(imgsBySelectedUnitId)) {
-			// this.setImagePresentation.call(this, this.pictureNotFound);
-			// return [{ urlImage: this.pictureNotFound, select: false }];
-			// const imgs = allProductsImages.filter(img => !img.unitId);
-			// const imagePresentation = !isEmpty(imgs) ? this.pictureNotFound : imgs[0].urlImage;
-			// this.setImagePresentation.call(this, imagePresentation);
-			// return imgs;
 			const imgs = this.getImgsWithoutUnitId.call(this, allProductsImages);
 			this.setImagePresentation.call(this, imgs[0].urlImage);
 			return imgs;
@@ -203,6 +198,12 @@ class ProductDetails {
 	updateUnitId(unitId) {
 		this.unitId = unitId;
 		this.updateProductSelected.call(this, 'unitSelected', unitId);
+	}
+	updateUnit(unit) {
+		this.unitId = unit.id;
+		this.selectedUnit = unit;
+		this.updateProductSelected.call(this, 'unit', unit);
+		this.updateUnitId.call(this, unit.id);
 	}
 }
 
