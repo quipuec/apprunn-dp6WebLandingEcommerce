@@ -74,7 +74,6 @@
 			} else if (err.data.code === 1008) {
 				this.showGenericError('Correo o password incorrecto');
 			}
-			this.showGenericError();
 		}
 	}
 
@@ -87,7 +86,6 @@
 			);
 			this.aclAuthentication(response);
 		} catch (err) {
-			console.log(err);
 			this.showGenericError();
 		}
 	}
