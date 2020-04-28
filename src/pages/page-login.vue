@@ -46,7 +46,8 @@
 		};
 		try {
 			const { data: response } = await this.$httpSales.post('signin/auth', body, { headers });
-			if (response.msg === 'USER_NOT_FOUND') {
+			if (response.statusCode === 401) {
+				this.showNotification('Usted debe registrarse', 'info');
 				this.goTo('register', { query: params });
 			} else if (response.msg === 'USER_NOT_VALIDATED') {
 				this.showNotification(
