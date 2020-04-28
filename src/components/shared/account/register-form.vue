@@ -36,7 +36,7 @@
 					Ingrese un email válido
 				</span>
 			</v-flex>
-			<v-flex xs12 pb-4 text-xs-left>
+			<v-flex xs12 pb-4 text-xs-left v-if="noFacebookPass">
 				<app-input
 					type="password"
 					placeholder="Contraseña"
@@ -47,7 +47,7 @@
 					La contraseña es requerida
 				</span>
 			</v-flex>
-			<v-flex xs12 text-xs-left>
+			<v-flex xs12 text-xs-left v-if="noFacebookPass">
 				<app-input
 					type="password"
 					placeholder="Verificar contraseña"
@@ -81,14 +81,29 @@
 
 <script>
 	import appInput from '@/components/shared/inputs/app-input';
+	import { mapState } from 'vuex';
 
 	/* eslint-disable arrow-body-style */
+
+	function created() {
+		if (!this.noFacebookPass) {
+			this.model.password = this.externalId;
+			this.model.passwordVerified = this.externalId;
+		}
+	}
 
 	export default {
 		name: 'register-form',
 		components: {
 			appInput,
 		},
+		computed: {
+			...mapState('login', {
+				noFacebookPass: state => !!state.externalId,
+				facebookExternalId: state => state.externalId,
+			}),
+		},
+		created,
 		props: {
 			checkColor: String,
 			emailDisabled: {
