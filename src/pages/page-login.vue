@@ -57,22 +57,21 @@
 				this.goTo('page-home');
 			}
 		} catch (err) {
-			console.log(err);
-			if (err.statusCode === 401) {
+			if (err.status === 401) {
 				this.showNotification('Usted debe registrarse', 'info');
 				this.$store.dispatch('login/setFacebookCredentials', {
 					provider: body.provider,
 					externalId: body.extUserId,
 				});
 				this.goTo('register', { query: params });
-			} else if (err.msg === 'USER_NOT_VALIDATED') {
+			} else if (err.data.message === 'USER_NOT_VALIDATED') {
 				this.showNotification(
 					'Se le ha enviado un correo para la validación de su cuenta.',
 					'info',
 				);
 				({ email: this.model.email } = params);
 				this.model.password = null;
-			} else if (err.code === 1008) {
+			} else if (err.data.code === 1008) {
 				this.showGenericError('Correo o password incorrecto');
 			}
 			this.showGenericError();
