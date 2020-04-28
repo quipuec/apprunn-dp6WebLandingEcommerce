@@ -44,32 +44,38 @@
 		const headers = {
 			Authorization: `Bearer ${process.env.TOKEN}`,
 		};
-		const { data: response } = await this.$httpSales.post('signin/auth', body, { headers });
-		if (response.statusCode === 401) {
-			this.showNotification('Usted debe registrarse', 'info');
-			this.$store.dispatch('login/setFacebookCredentials', {
-				provider: body.provider,
-				externalId: body.extUserId,
-			});
-			this.goTo('register', { query: params });
-		} else if (response.msg === 'USER_NOT_VALIDATED') {
-			this.showNotification(
-				'Se le ha enviado un correo para la validación de su cuenta.',
-				'info',
-			);
-			({ email: this.model.email } = params);
-			this.model.password = null;
-		} else if (response.code === 1008) {
-			this.showGenericError('Correo o password incorrecto');
-		} else if (response.data && response.data.token) {
-			localStorage.clear();
-			localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, response.data.token);
-			this.$store.dispatch('setToken', response.data.token);
-			this.getCustomerData();
-			const filterSelectedId = this.getFilters[0] ? this.getFilters[0].id : null;
-			this.$store.dispatch('UPDATE_PRODUCT_FILTER', filterSelectedId);
-			this.$store.dispatch('LOAD_PRODUCTS', { context: this });
-			this.goTo('page-home');
+		try {
+			const { data: response } = await this.$httpSales.post('signin/auth', body, { headers });
+			if (response.data && response.data.token) {
+				localStorage.clear();
+				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, response.data.token);
+				this.$store.dispatch('setToken', response.data.token);
+				this.getCustomerData();
+				const filterSelectedId = this.getFilters[0] ? this.getFilters[0].id : null;
+				this.$store.dispatch('UPDATE_PRODUCT_FILTER', filterSelectedId);
+				this.$store.dispatch('LOAD_PRODUCTS', { context: this });
+				this.goTo('page-home');
+			}
+		} catch (err) {
+			console.log(err);
+			if (err.statusCode === 401) {
+				this.showNotification('Usted debe registrarse', 'info');
+				this.$store.dispatch('login/setFacebookCredentials', {
+					provider: body.provider,
+					externalId: body.extUserId,
+				});
+				this.goTo('register', { query: params });
+			} else if (err.msg === 'USER_NOT_VALIDATED') {
+				this.showNotification(
+					'Se le ha enviado un correo para la validación de su cuenta.',
+					'info',
+				);
+				({ email: this.model.email } = params);
+				this.model.password = null;
+			} else if (err.code === 1008) {
+				this.showGenericError('Correo o password incorrecto');
+			}
+			this.showGenericError();
 		}
 	}
 
