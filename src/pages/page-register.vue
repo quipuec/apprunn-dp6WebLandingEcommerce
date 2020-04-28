@@ -38,8 +38,6 @@ import { mapState } from 'vuex';
 			this.setModel({ model: 'name', value: this.modelFacebook.first_name });
 			this.setModel({ model: 'password', value: this.facebookExternalId });
 			this.setModel({ model: 'passwordVerified', value: this.facebookExternalId });
-			this.showNotification('Es necesario ingresar una contraseña para completar el registro.',
-				'info');
 		}
 	}
 
