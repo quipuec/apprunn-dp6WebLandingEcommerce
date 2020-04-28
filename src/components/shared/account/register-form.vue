@@ -85,20 +85,6 @@
 
 	/* eslint-disable arrow-body-style */
 
-	function created() {
-		if (!this.noFacebookPass) {
-			this.model.password = this.externalId;
-			this.model.passwordVerified = this.externalId;
-		}
-	}
-
-	function noFacebookPass(val) {
-		if (!val) {
-			this.model.password = this.externalId;
-			this.model.passwordVerified = this.externalId;
-		}
-	}
-
 	export default {
 		name: 'register-form',
 		components: {
@@ -106,11 +92,9 @@
 		},
 		computed: {
 			...mapState('login', {
-				noFacebookPass: state => !!state.externalId,
-				facebookExternalId: state => state.externalId,
+				noFacebookPass: state => !state.externalId,
 			}),
 		},
-		created,
 		props: {
 			checkColor: String,
 			emailDisabled: {
@@ -142,9 +126,6 @@
 				},
 				type: Object,
 			},
-		},
-		watch: {
-			noFacebookPass,
 		},
 	};
 </script>
