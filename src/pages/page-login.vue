@@ -87,6 +87,7 @@
 			);
 			this.aclAuthentication(response);
 		} catch (err) {
+			console.log(err);
 			this.showGenericError();
 		}
 	}
