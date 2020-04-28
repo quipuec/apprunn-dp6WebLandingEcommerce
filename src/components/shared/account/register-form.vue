@@ -92,6 +92,13 @@
 		}
 	}
 
+	function noFacebookPass(val) {
+		if (!val) {
+			this.model.password = this.externalId;
+			this.model.passwordVerified = this.externalId;
+		}
+	}
+
 	export default {
 		name: 'register-form',
 		components: {
@@ -135,6 +142,9 @@
 				},
 				type: Object,
 			},
+		},
+		watch: {
+			noFacebookPass,
 		},
 	};
 </script>
