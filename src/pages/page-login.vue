@@ -50,6 +50,8 @@
 				localStorage.clear();
 				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, response.data.token);
 				this.$store.dispatch('setToken', response.data.token);
+				this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
+				this.$store.dispatch('LOAD_COMMERCE_INFO', this);
 				this.getCustomerData();
 				const filterSelectedId = this.getFilters[0] ? this.getFilters[0].id : null;
 				this.$store.dispatch('UPDATE_PRODUCT_FILTER', filterSelectedId);
