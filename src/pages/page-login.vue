@@ -46,21 +46,12 @@
 		};
 		try {
 			const { data: response } = await this.$httpSales.post('signin/auth', body, { headers });
-			if (response.msg === 'USER_NOT_FOUND') {
-				this.goTo('register', { query: params });
-			} else if (response.msg === 'USER_NOT_VALIDATED') {
-				this.showNotification(
-					'Se le ha enviado un correo para la validación de su cuenta.',
-					'info',
-				);
-				({ email: this.model.email } = params);
-				this.model.password = null;
-			} else if (response.code === 1008) {
-				this.showGenericError('Correo o password incorrecto');
-			} else if (response.data && response.data.token) {
+			if (response.data && response.data.token) {
 				localStorage.clear();
 				localStorage.setItem(`${process.env.STORAGE_USER_KEY}::token`, response.data.token);
 				this.$store.dispatch('setToken', response.data.token);
+				this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
+				this.$store.dispatch('LOAD_COMMERCE_INFO', this);
 				this.getCustomerData();
 				const filterSelectedId = this.getFilters[0] ? this.getFilters[0].id : null;
 				this.$store.dispatch('UPDATE_PRODUCT_FILTER', filterSelectedId);
@@ -68,7 +59,23 @@
 				this.goTo('page-home');
 			}
 		} catch (err) {
-			this.showGenericError();
+			if (err.status === 401) {
+				this.showNotification('Usted debe registrarse', 'info');
+				this.$store.dispatch('login/setFacebookCredentials', {
+					provider: body.provider,
+					externalId: body.extUserId,
+				});
+				this.goTo('register', { query: params });
+			} else if (err.data.message === 'USER_NOT_VALIDATED') {
+				this.showNotification(
+					'Se le ha enviado un correo para la validación de su cuenta.',
+					'info',
+				);
+				({ email: this.model.email } = params);
+				this.model.password = null;
+			} else if (err.data.code === 1008) {
+				this.showGenericError('Correo o password incorrecto');
+			}
 		}
 	}
 

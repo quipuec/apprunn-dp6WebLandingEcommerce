@@ -26,6 +26,7 @@
 	import { email, required, sameAs } from 'vuelidate/lib/validators';
 	import formContainer from '@/components/shared/account/form-container';
 	import registerForm from '@/components/shared/account/register-form';
+import { mapState } from 'vuex';
 
 	function created() {
 		this.setWidth();
@@ -35,8 +36,8 @@
 			this.setModel({ model: 'email', value: this.modelFacebook.email });
 			this.setModel({ model: 'lastname', value: this.modelFacebook.last_name });
 			this.setModel({ model: 'name', value: this.modelFacebook.first_name });
-			this.showNotification('Es necesario ingresar una contraseña para completar el registro.',
-				'info');
+			this.setModel({ model: 'password', value: this.facebookExternalId });
+			this.setModel({ model: 'passwordVerified', value: this.facebookExternalId });
 		}
 	}
 
@@ -208,6 +209,9 @@
 		},
 		computed: {
 			disabled,
+			...mapState('login', {
+				facebookExternalId: state => state.externalId,
+			}),
 		},
 		created,
 		data,
