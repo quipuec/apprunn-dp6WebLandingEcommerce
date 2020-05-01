@@ -19,7 +19,7 @@
 			<div class="thanks-order-summary">
 				<span>Pedido No. {{getOrderNumber}}</span> <span class="separater">|</span>
 				<span>Comprado el {{getOrderCreatedAt | formatDate}}</span> <span class="separater">|</span>
-				<span>Total: {{getCurrencySymbol}}. {{getOrderTotal}}</span>
+				<span>Total: {{getCurrencySymbol}}. {{getOrderTotal | currencyFormat}}</span>
 			</div>
 		</section>
 	</div>
@@ -59,7 +59,13 @@ function getOrderCreatedAt() {
 }
 
 function getOrderTotal() {
-	return getDeeper('total')(this.getOrderInfo);
+	return (this.getTotalToBuy - this.discount) + this.getShippingCost;
+}
+
+function discount() {
+	const percentage = this.user.discount;
+	const amount = this.getTotalToBuy * (Number(percentage) / 100);
+	return Number(amount.toFixed(2));
 }
 
 function closeFailure() {
@@ -92,8 +98,11 @@ export default {
 		...mapGetters([
 			'getCurrencySymbol',
 			'getOrderInfo',
+			'getShippingCost',
+			'getTotalToBuy',
 			'user',
 		]),
+		discount,
 		getFullName,
 		getOrderCreatedAt,
 		getOrderNumber,

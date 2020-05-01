@@ -56,9 +56,11 @@ function updateFilters(context, filters) {
 
 function getOrderData({ commit }, order) {
 	const { customerBill } = order;
+	commit('SET_BILL_SELECTION', false);
 	if (customerBill) {
-		const { address, ruc, rzSocial } = customerBill;
-		commit('SET_BILLING_DATA', { address, ruc, rzSocial });
+		const { address, typePerson: { fullName: rzSocial, documentNumber: ruc } } = customerBill;
+		commit('SET_BILLING_DATA', { address, rzSocial, ruc });
+		commit('SET_BILL_SELECTION', true);
 	}
 	commit('SET_ORDER_INFO', { ...order });
 	commit('SET_FLAG_PICKUP', order.flagPickUp);
