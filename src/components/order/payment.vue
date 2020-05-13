@@ -115,6 +115,11 @@ export default {
 	}
 
 	.component-container {
+		align-items: center;
+		display: grid;
+		flex-wrap: wrap;
+		grid-gap: 10px;
+		grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
 		margin-top: 15px;
 
 		@media (max-width: 600px) {
