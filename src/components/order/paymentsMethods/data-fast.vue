@@ -1,11 +1,6 @@
 <template>
-	<div>
+	<div ref="data-fast">
 		<h1>Data fast</h1>
-		<form
-			ref="data-fast"
-			data-brand="VISA MASTER DINERS AMEX DISCOVER"
-			:action="redirecUrl"
-		></form>
 	</div>
 </template>
 <script>
@@ -27,11 +22,20 @@ async function getTokenId() {
 }
 
 function createDataFastForm() {
-	const dataFastForm = document.createElement('script');
+	const dataFastScript = document.createElement('script');
 	const src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${this.checkoutId}`;
-	dataFastForm.setAttribute('src', src);
-	const form = this.$refs['data-fast'];
-	form.appendChild(dataFastForm);
+	dataFastScript.setAttribute('src', src);
+	const el = this.$refs['data-fast'];
+	el.appendChild(dataFastScript);
+	this.insertForm();
+}
+
+function insertForm() {
+	const dataFastForm = document.createElement('form');
+	dataFastForm.setAttribute('action', this.redirecUrl);
+	dataFastForm.setAttribute('data-brand', 'VISA MASTER DINERS AMEX DISCOVER');
+	const el = this.$refs['data-fast'];
+	el.appendChild(dataFastForm);
 }
 
 function redirecUrl() {
@@ -57,6 +61,7 @@ export default {
 	methods: {
 		createDataFastForm,
 		getTokenId,
+		insertForm,
 	},
 	mounted,
 };
