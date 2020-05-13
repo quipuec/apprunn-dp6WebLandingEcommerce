@@ -1,6 +1,10 @@
 <template>
 	<div ref="data-fast">
-		<h1>Data fast</h1>
+		<button
+			v-show="show"
+			type="button"
+			@click="createDataFastForm"
+		>Data Fast</button>
 	</div>
 </template>
 <script>
@@ -18,12 +22,12 @@ async function getTokenId() {
 	const url = 'payment-transaction/dataweb/checkouts';
 	const { data: response } = await this.$httpSales.post(url, body);
 	this.checkoutId = response.id;
-	this.createDataFastForm();
+	this.show = true;
 }
 
 function createDataFastForm() {
 	const dataFastScript = document.createElement('script');
-	const src = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${this.checkoutId}`;
+	const src = `${process.env.DATA_FAST_URL}${this.checkoutId}`;
 	dataFastScript.setAttribute('src', src);
 	const el = this.$refs['data-fast'];
 	el.appendChild(dataFastScript);
@@ -33,7 +37,9 @@ function createDataFastForm() {
 function insertForm() {
 	const dataFastForm = document.createElement('form');
 	dataFastForm.setAttribute('action', this.redirecUrl);
-	dataFastForm.setAttribute('data-brand', 'VISA MASTER DINERS AMEX DISCOVER');
+	dataFastForm.setAttribute('data-brands', 'VISA MASTER DINERS AMEX DISCOVER');
+	dataFastForm.setAttribute('id', 'datafast-form');
+	dataFastForm.setAttribute('class', 'paymentWidgets');
 	const el = this.$refs['data-fast'];
 	el.appendChild(dataFastForm);
 }
@@ -45,6 +51,7 @@ function redirecUrl() {
 function data() {
 	return {
 		checkoutId: null,
+		show: false,
 	};
 }
 
