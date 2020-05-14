@@ -12,7 +12,6 @@
 		<modal v-model="showModal" max-width="420px" @input="closeModal">
 			<div ref="data-fast" class="modal-data-fast" v-if="showModal">
 				<h3 v-if="loading">Cargando...</h3>
-				<!-- <form v-else method="post" :action="urlAction" ref="mask-form"></form> -->
 			</div>
 		</modal>
 	</div>
@@ -57,9 +56,10 @@ function loadingFn() {
 
 function insertForm() {
 	const dataFastForm = document.createElement('form');
-	const commerceCode = `?commerceCode=${this.getCommerceData.code}`;
-	const purchaseNumber = `&purchaseNumber=${this.getOrderId}`;
-	const url = `${this.baseUrl}${commerceCode}${purchaseNumber}`;
+	// const commerceCode = `?commerceCode=${this.getCommerceData.code}`;
+	// const purchaseNumber = `&purchaseNumber=${this.getOrderId}`;
+	// const url = `${this.baseUrl}${commerceCode}${purchaseNumber}`;
+	const url = 'localhost:9000/resumen-de-mi-pedido';
 	dataFastForm.setAttribute('action', url);
 	dataFastForm.setAttribute('method', 'get');
 	dataFastForm.setAttribute('data-brands', 'VISA MASTER DINERS AMEX DISCOVER');
@@ -71,12 +71,6 @@ function insertForm() {
 
 function baseUrl() {
 	return `${process.env.SALES_URL}/payment-transaction/checkouts/validate`;
-}
-
-function urlAction() {
-	const commerceCode = `?commerceCode=${this.getCommerceData.code}`;
-	const purchaseNumber = `&purchaseNumber=${this.getOrderId}`;
-	return `${this.baseUrl}${commerceCode}${purchaseNumber}`;
 }
 
 function closeModal(val) {
@@ -105,7 +99,6 @@ export default {
 			'getOrderId',
 		]),
 		baseUrl,
-		urlAction,
 	},
 	data,
 	methods: {
