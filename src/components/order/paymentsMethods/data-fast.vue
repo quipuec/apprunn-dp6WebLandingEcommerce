@@ -36,7 +36,10 @@ function createDataFastForm() {
 
 function insertForm() {
 	const dataFastForm = document.createElement('form');
-	dataFastForm.setAttribute('action', this.redirecUrl);
+	const commerceCode = `?commerceCode=${this.getCommerceData.code}`;
+	const purchaseNumber = `&purchaseNumber=${this.getOrderId}`;
+	const url = `${this.baseUrl}${commerceCode}${purchaseNumber}`;
+	dataFastForm.setAttribute('action', url);
 	dataFastForm.setAttribute('data-brands', 'VISA MASTER DINERS AMEX DISCOVER');
 	dataFastForm.setAttribute('id', 'datafast-form');
 	dataFastForm.setAttribute('class', 'paymentWidgets');
@@ -44,8 +47,8 @@ function insertForm() {
 	el.appendChild(dataFastForm);
 }
 
-function redirecUrl() {
-	return process.env.REDIRECT_URI;
+function baseUrl() {
+	return `${process.env.SALES_URL}/payment-transaction/checkouts`;
 }
 
 function data() {
@@ -62,7 +65,7 @@ export default {
 			'getCommerceData',
 			'getOrderId',
 		]),
-		redirecUrl,
+		baseUrl,
 	},
 	data,
 	methods: {
