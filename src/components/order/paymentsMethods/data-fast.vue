@@ -59,7 +59,7 @@ function insertForm() {
 	// const commerceCode = `?commerceCode=${this.getCommerceData.code}`;
 	// const purchaseNumber = `&purchaseNumber=${this.getOrderId}`;
 	// const url = `${this.baseUrl}${commerceCode}${purchaseNumber}`;
-	const url = process.env.REDIRECT_URL;
+	const url = process.env.REDIRECT_URI;
 	dataFastForm.setAttribute('action', url);
 	dataFastForm.setAttribute('method', 'get');
 	dataFastForm.setAttribute('data-brands', 'VISA MASTER DINERS AMEX DISCOVER');
