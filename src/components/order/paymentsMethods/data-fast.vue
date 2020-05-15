@@ -57,7 +57,7 @@ function loadingFn() {
 function insertForm() {
 	const dataFastForm = document.createElement('form');
 	const commerceCode = `commerceCode=${this.getCommerceData.code}`;
-	const purchaseNumber = `purhaseNumber=${this.getOrderId}`;
+	const purchaseNumber = `purchaseNumber=${this.getOrderId}`;
 	const url = `${this.baseUrl}?${commerceCode}&${purchaseNumber}`;
 	// const url = process.env.REDIRECT_URI;
 	dataFastForm.setAttribute('action', url);
