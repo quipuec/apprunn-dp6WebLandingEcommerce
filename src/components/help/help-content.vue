@@ -7,7 +7,7 @@
 			:style="`text-align:center;margin-bottom:40px;color:${globalColors.primary}`"
 		>{{subTitle}}</h3>
 		<p>{{content}}</p>
-		<img :src="image" alt="">
+		<img :src="image" alt="imagen">
 	</div>
 </template>
 <script>
