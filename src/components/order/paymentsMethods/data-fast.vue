@@ -6,8 +6,10 @@
 			v-show="show"
 			type="button"
 			@click="createDataFastForm"
-		>
-			<img src="https://media-exp1.licdn.com/dms/image/C561BAQGPZh2xTzv5GQ/company-background_10000/0?e=1589554800&v=beta&t=NKiH-Qc6DZdtRd0iL5aDvWYq5rjrFGcOX9CUCqBl_pM" alt="">
+		>Data Fast
+			<!-- <img
+				src="https://media-exp1.licdn.com/dms/image/C561BAQGPZh2xTzv5GQ/company-background_10000/0?e=1589554800&v=beta&t=NKiH-Qc6DZdtRd0iL5aDvWYq5rjrFGcOX9CUCqBl_pM"
+				alt="data_fast"> -->
 		</button>
 		<modal v-model="showModal" max-width="420px" @input="closeModal">
 			<div ref="data-fast" class="modal-data-fast" v-if="showModal">
@@ -21,7 +23,9 @@ import { mapGetters } from 'vuex';
 import modal from '@/components/shared/modal/modal-component';
 
 function mounted() {
-	this.getTokenId();
+	setTimeout(() => {
+		this.getTokenId();
+	});
 }
 
 async function getTokenId() {
@@ -59,14 +63,12 @@ function insertForm() {
 	const commerceCode = `commerceCode=${this.getCommerceData.code}`;
 	const purchaseNumber = `purchaseNumber=${this.getOrderId}`;
 	const url = `${this.baseUrl}?${commerceCode}&${purchaseNumber}`;
-	// const url = process.env.REDIRECT_URI;
 	dataFastForm.setAttribute('action', url);
 	dataFastForm.setAttribute('method', 'get');
 	dataFastForm.setAttribute('data-brands', 'VISA MASTER DINERS AMEX DISCOVER');
 	dataFastForm.setAttribute('id', 'datafast-form');
 	dataFastForm.setAttribute('class', 'paymentWidgets');
 	const el = this.$refs['data-fast'];
-	console.log(url);
 	el.appendChild(dataFastForm);
 }
 
