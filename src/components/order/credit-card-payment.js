@@ -14,18 +14,13 @@ export default {
 		const options = {
 			visa: h(VisaPeru),
 			paymentez: h(Paymentez),
-			datafast: h(DataFast),
+			dataweb: h(DataFast),
 		};
-		let selectedPaymentMethods = [h(DataFast)];
+		let selectedPaymentMethods = [];
 		this.paymentsTypes.forEach((t) => {
 			const { code } = t;
 			selectedPaymentMethods = selectedPaymentMethods.concat(options[code]);
 		});
-		// if (this.isPeru) {
-		// 	selectedPaymentMethods = [h(VisaPeru), h(DataFast)];
-		// } else {
-		// 	selectedPaymentMethods = [h(Paymentez), h(DataFast)];
-		// }
 		return h('div', {}, selectedPaymentMethods);
 	},
 };

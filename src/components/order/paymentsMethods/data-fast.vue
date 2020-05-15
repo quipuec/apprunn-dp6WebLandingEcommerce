@@ -56,13 +56,17 @@ function loadingFn() {
 
 function insertForm() {
 	const dataFastForm = document.createElement('form');
-	const url = process.env.REDIRECT_URI;
+	const commerceCode = `commerceCode=${this.getCommerceData.code}`;
+	const purchaseNumber = `purhaseNumber=${this.getOrderId}`;
+	const url = `${this.baseUrl}?${commerceCode}&${purchaseNumber}`;
+	// const url = process.env.REDIRECT_URI;
 	dataFastForm.setAttribute('action', url);
 	dataFastForm.setAttribute('method', 'get');
 	dataFastForm.setAttribute('data-brands', 'VISA MASTER DINERS AMEX DISCOVER');
 	dataFastForm.setAttribute('id', 'datafast-form');
 	dataFastForm.setAttribute('class', 'paymentWidgets');
 	const el = this.$refs['data-fast'];
+	console.log(url);
 	el.appendChild(dataFastForm);
 }
 
