@@ -23,40 +23,92 @@
 	</div>
 </template>
 <script>
+import { mapGetters } from 'vuex';
 
 function created() {
 	this.loadHelpInformation();
 }
 
 function loadHelpInformation() {
-	this.helpData = this.fake;
+	const { help, slug } = this.$route.params;
+	if (this.getCommerceData && this.getCommerceData.helperCenter) {
+		const { helperCenter } = this.getCommerceData;
+		this.helpData = this.findCurrentHelpSection(helperCenter, help, slug);
+	} else {
+		this.$router.push({ name: 'not-found' });
+	}
+}
+
+function findCurrentHelpSection(helper, section, subSection) {
+	const sectionFormatted = this.formattedString(section);
+	const subSectionFormatted = this.formattedString(subSection);
+	const filteredHelpCenter = helper.filter(h => h.section[0].name === sectionFormatted);
+	return this.constructingHelpObject(filteredHelpCenter, sectionFormatted, subSectionFormatted);
+}
+
+function constructingHelpObject(helpArray, sectionTitle, subSectionTitle) {
+	return helpArray.reduce((acc, item) => {
+		const obj = { ...acc };
+		if (!obj.title) {
+			obj.title = sectionTitle;
+		}
+		if (item.name === subSectionTitle) {
+			obj.section = {
+				title: item.name,
+				subTitle: item.subTitle,
+				content: item.description,
+				image: item.urlImage,
+			};
+		} else {
+			const help = sectionTitle.split(' ').join('-');
+			const slug = item.name.split(' ').join('-');
+			obj.subTitles.push({ title: item.name, route: `/ayuda/${help}/${slug}` });
+		}
+		return obj;
+	}, { title: '', section: {}, subTitles: [] });
+}
+
+function formattedString(str) {
+	return str.split('-').join(' ');
+}
+
+function routeHandler() {
+	this.loadHelpInformation();
 }
 
 function data() {
 	return {
-		fake: {
-			title: 'Información',
+		helpData: {
+			title: '',
 			section: {
-				title: 'Términos y condiciones',
-				subTitle: 'Términos',
-				content: 'párrafos con contenido',
-				imgage: '',
+				title: '',
+				subTitle: '',
+				content: '',
+				image: '',
 			},
-			subTitles: [
-				{ title: 'Términos y condiciones', route: '/terminos-y-condiciones' },
-				{ title: 'Reclamo', route: '/reclamos' },
-			],
+			subTitles: [{ title: '', route: '' }],
 		},
-		helpData: {},
 	};
 }
 
 export default {
 	name: 'information',
+	computed: {
+		...mapGetters([
+			'getCommerceData',
+		]),
+	},
 	created,
 	data,
 	methods: {
+		constructingHelpObject,
+		findCurrentHelpSection,
+		formattedString,
 		loadHelpInformation,
+		routeHandler,
+	},
+	watch: {
+		'$route.fullPath': routeHandler,
 	},
 };
 </script>
