@@ -37,9 +37,15 @@ export default function (Vue) {
 			restorePassword,
 			SummaryOrder,
 			{
-				name: 'not-found',
+				name: 'not-exist',
 				path: '*',
+				redirect: '/no-conseguida',
 				component: () => import('@/pages/page-not-found'),
+				children: [{
+					name: 'not-found',
+					path: '/no-conseguida',
+					component: () => import('@/components/shared/not-found'),
+				}],
 			},
 		],
 		scrollBehavior() {
