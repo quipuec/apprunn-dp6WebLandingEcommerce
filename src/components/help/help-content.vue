@@ -7,7 +7,9 @@
 			:style="`text-align:center;margin-bottom:40px;color:${globalColors.primary}`"
 		>{{subTitle}}</h3>
 		<p>{{content}}</p>
-		<img :src="image" alt="imagen">
+		<div class="img-help-container">
+			<img :src="image" alt="imagen" class="img-help">
+		</div>
 	</div>
 </template>
 <script>
@@ -34,5 +36,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.img-help-container {
+	height: auto;
+	min-width: 320px;
 
+	.img-help {
+		height: 100%;
+		object-fit: contain;
+		width: 100%;
+	}
+}
 </style>

@@ -46,7 +46,7 @@ function existcreditsCard() {
 function goToHelp(item, link) {
 	const newItem = item.name.split(' ').join('-');
 	const newLink = link.name.split(' ').join('-');
-	this.$router.push(`/ayuda/${newItem}/${newLink}`);
+	this.$router.push(`/ayuda/apartado/${newItem}/seccion/${newLink}`);
 }
 
 function data() {

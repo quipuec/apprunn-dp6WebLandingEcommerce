@@ -6,13 +6,13 @@ const route = {
 	children: [
 		{
 			name: 'help-base',
-			path: ':help',
+			path: 'apartado/:help',
 			redirect: { name: 'informacion-content' },
 			component: () => import('@/components/help/help-base'),
 			children: [
 				{
 					name: 'help-content',
-					path: ':slug',
+					path: 'seccion/:slug',
 					component: () => import('@/components/help/help-content'),
 				},
 			],

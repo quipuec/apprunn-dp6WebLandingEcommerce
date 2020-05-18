@@ -1,18 +1,13 @@
 <template>
   <div class="page-help-center">
-		<!-- <tabs-help></tabs-help> -->
 		<router-view></router-view>
 	</div>  
 </template>
 
 <script>
-// import tabsHelp from '@/components/help/tabs-help';
 
 export default {
 	name: 'page-help-center',
-	components: {
-		// tabsHelp,
-	},
 };
 </script>
 
