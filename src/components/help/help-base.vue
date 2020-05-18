@@ -1,16 +1,28 @@
 <template>
 	<div class="help-main-container">
 		<div class="help-menu" :style="`border:1px solid ${globalColors.base}`">
-			<h2
+			<button
+				class="title-btn-container"
 				:style="`border-bottom:1px solid ${globalColors.base};color:${globalColors.primary}`"
-			>{{helpData.title}}</h2>
-			<router-link
-				class="sub-title"
-				v-for="(sub, indexSub) in helpData.subTitles"
-				:key="indexSub"
-				:to="sub.route"
-				:style="`color:${globalColors.title}`"
-			>{{sub.title}}</router-link>
+				@click="show = !show"
+			>
+				<h2
+					type="button"
+					class="title-btn"
+				>{{helpData.title}}</h2>
+				<div
+					:class="[show ? 'up' : 'down']"
+				>^</div>
+			</button>
+			<div class="help-menu-routes" v-show="show">
+				<router-link
+					class="sub-title"
+					v-for="(sub, indexSub) in helpData.subTitles"
+					:key="indexSub"
+					:to="sub.route"
+					:style="`color:${globalColors.title}`"
+				>{{sub.title}}</router-link>
+			</div>
 		</div>
 		<div class="help-content" :style="`border:1px solid ${globalColors.base}`">
 			<router-view
@@ -88,6 +100,8 @@ function data() {
 			},
 			subTitles: [{ title: '', route: '' }],
 		},
+		open: false,
+		show: true,
 	};
 }
 
@@ -114,22 +128,62 @@ export default {
 </script>
 <style lang="scss" scoped>
 .help-main-container {
-	display: grid;
-	grid-column-gap: 10px;
-	grid-template-columns: 250px 1fr;
+	display: flex;
+	flex-direction: column;
 	width: 100%;
 
+	@media(min-width: 768px) {
+		flex-direction: row;
+	}
+
 	.help-menu {
+		background-color: white;
 		border-radius: 5px;
 		display: flex;
+		flex-basis: 45%;
 		flex-direction: column;
 		height: fit-content;
+		margin: 0 0 20px 0;
 		padding: 21px;
 		position: sticky;
-		top: 140px;
+		top: 80px;
 
-		h2 {
-			margin-bottom: 5px;
+		@media(min-width: 768px) {
+			flex-direction: row;
+			margin-right: 20px;
+			top: 140px;
+		}
+
+		.title-btn-container {
+			alignt-items: center;
+			display: flex;
+			justify-content: space-between;
+
+			.title-btn {
+				font-family: font(bold);
+				font-size: size(large);
+				margin-bottom: 5px;
+				text-align: left;
+			}
+
+			.up, .down {
+				align-items: center;
+				display: flex;
+				margin-right: 10px;
+				transform: rotate(0deg);
+				transition: transform 250ms ease;
+				transform-origin: center 7px;
+			}
+
+			.down {
+				transform: rotate(180deg);
+			}
+		}
+
+
+		.help-menu-routes {
+			display: flex;
+			flex-direction: column;
 		}
 
 		.sub-title {
@@ -140,7 +194,12 @@ export default {
 
 	.help-content {
 		border-radius: 5px;
-		padding: 35px 60px 60px;
+		flex-basis: auto;
+		padding: 35px 20px 60px;
+
+		@media(min-width: 768px) {
+			padding: 35px 60px 60px;
+		}
 	}
 }
 </style>
