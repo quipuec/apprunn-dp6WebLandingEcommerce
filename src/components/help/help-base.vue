@@ -62,7 +62,7 @@ function constructingHelpObject(helpArray, sectionTitle, subSectionTitle) {
 		} else {
 			const help = sectionTitle.split(' ').join('-');
 			const slug = item.name.split(' ').join('-');
-			obj.subTitles.push({ title: item.name, route: `/ayuda/${help}/${slug}` });
+			obj.subTitles.push({ title: item.name, route: `/ayuda/apartado/${help}/seccion/${slug}` });
 		}
 		return obj;
 	}, { title: '', section: {}, subTitles: [] });
