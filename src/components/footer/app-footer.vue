@@ -2,7 +2,7 @@
 	<div class="app-footer">
 		<section-links :menu="helperCenter"></section-links>
 		<div class="content-company-footer">
-			<p class="company-footer">© 2019   www.mrc.com  Todos los Derechos reservados.</p>
+			<p class="company-footer">© 2019   power by Makipos.la.</p>
 			<div>
 				<a
 					v-for="social in getCommerceData.socialNetworks" :key="social.id"
