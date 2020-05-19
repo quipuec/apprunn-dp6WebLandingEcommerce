@@ -71,11 +71,10 @@ function constructingHelpObject(helpArray, sectionTitle, subSectionTitle) {
 				content: item.description,
 				image: item.urlImage,
 			};
-		} else {
-			const help = sectionTitle.split(' ').join('-');
-			const slug = item.name.split(' ').join('-');
-			obj.subTitles.push({ title: item.name, route: `/ayuda/apartado/${help}/seccion/${slug}` });
 		}
+		const help = sectionTitle.split(' ').join('-');
+		const slug = item.name.split(' ').join('-');
+		obj.subTitles.push({ title: item.name, route: `/ayuda/apartado/${help}/seccion/${slug}` });
 		return obj;
 	}, { title: '', section: {}, subTitles: [] });
 }
@@ -130,9 +129,9 @@ export default {
 .help-main-container {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	justify-content: flex-start;
 	margin: auto;
-	max-width: 1280px;
+	max-width: 1090px;
 	width: 100%;
 
 	@media(min-width: 768px) {
@@ -143,7 +142,7 @@ export default {
 		background-color: white;
 		border-radius: 5px;
 		display: flex;
-		flex-basis: 25%;
+		flex-basis: 40%;
 		flex-direction: column;
 		height: fit-content;
 		margin: 0 0 20px 0;
@@ -195,13 +194,17 @@ export default {
 		.sub-title {
 			margin: 10px 0;
 			text-decoration: none;
+
+			&.router-link-exact-active {
+				text-decoration: underline;
+			}
 		}
 	}
 
 	.help-content {
 		border-radius: 5px;
-		flex-basis: auto;
 		padding: 35px 20px 60px;
+		width: 800px;
 
 		@media(min-width: 768px) {
 			padding: 35px 60px 60px;
