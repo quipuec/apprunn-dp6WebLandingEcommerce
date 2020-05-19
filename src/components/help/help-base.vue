@@ -106,7 +106,7 @@ function data() {
 }
 
 export default {
-	name: 'information',
+	name: 'help-base',
 	computed: {
 		...mapGetters([
 			'getCommerceData',
@@ -149,7 +149,6 @@ export default {
 		top: 80px;
 
 		@media(min-width: 768px) {
-			flex-direction: row;
 			margin-right: 20px;
 			top: 140px;
 		}
@@ -173,6 +172,10 @@ export default {
 				transform: rotate(0deg);
 				transition: transform 250ms ease;
 				transform-origin: center 7px;
+
+				@media (min-width: 768px) {
+					display: none;
+				}
 			}
 
 			.down {
