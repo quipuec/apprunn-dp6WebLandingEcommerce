@@ -72,3 +72,8 @@ npm run build
 5. PRO - Products
 6. COM - Components (Header, Subheader, Filters, Searcher, Footer, Carrousel, etc...)
 7. LOG - Login, register, etc.
+
+## Payments Methods
+1. VisaNet: Requiere dos variables de entorno: `VISA_MERCHAN_ID` y `COMMERCE_CODE`.
+2. Paymentez: Requiere dos variables de entorno: `PAYMENTEZ_CLIENT` y `PAYMENTEZ_KEY`.
+3. DataFast: Requiere ? variables de entorno: 
