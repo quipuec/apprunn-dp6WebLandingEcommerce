@@ -76,6 +76,10 @@ function getCommerceData(state) {
 	return state.commerce;
 }
 
+function getWaypaymentsByCommerce(state) {
+	return state.commerce.wayPaymentCommerce;
+}
+
 function bannersTypes(state) {
 	return state.bannerTypes;
 }
@@ -158,6 +162,7 @@ const methods = {
 	getPromotionalBanner,
 	getProducts,
 	getPromotionalDetailsBanner,
+	getWaypaymentsByCommerce,
 	getWarehouses,
 	flagAddVoucher,
 	indeterminate,
