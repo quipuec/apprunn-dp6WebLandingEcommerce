@@ -1,15 +1,14 @@
 <template>
 	<div>
-		<h3 v-if="!show">¡ Recargue la pantalla !</h3>
 		<button
 			class="data-fast-btn"
-			v-show="show"
 			type="button"
-			@click="createDataFastForm"
+			@click="getTokenId"
 		>Data Fast
 			<!-- <img
-				src="https://media-exp1.licdn.com/dms/image/C561BAQGPZh2xTzv5GQ/company-background_10000/0?e=1589554800&v=beta&t=NKiH-Qc6DZdtRd0iL5aDvWYq5rjrFGcOX9CUCqBl_pM"
-				alt="data_fast"> -->
+				src="https://media-exp1.licdn.com/dms/image/C561BAQGPZh2xTzv5GQ/company-background_10000/0?e=1589932800&amp;v=beta&amp;t=6QzMTu5cHwQsjSmCy3WFFvFwPKzqCOZnoC_A40AlCMk"
+				alt="data_fast"
+			> -->
 		</button>
 		<modal v-model="showModal" max-width="420px" @input="closeModal">
 			<div ref="data-fast" class="modal-data-fast" v-if="showModal">
@@ -22,12 +21,6 @@
 import { mapGetters } from 'vuex';
 import modal from '@/components/shared/modal/modal-component';
 
-function mounted() {
-	setTimeout(() => {
-		this.getTokenId();
-	});
-}
-
 async function getTokenId() {
 	const body = {
 		orderId: this.getOrderId,
@@ -36,7 +29,7 @@ async function getTokenId() {
 	const url = 'payment-transaction/dataweb/checkouts';
 	const { data: response } = await this.$httpSales.post(url, body);
 	this.checkoutId = response.id;
-	this.show = true;
+	this.createDataFastForm();
 }
 
 function createDataFastForm() {
@@ -112,20 +105,18 @@ export default {
 		insertForm,
 		loadingFn,
 	},
-	mounted,
 };
 </script>
 <style lang="scss" scoped>
 .data-fast-btn {
+	background-color: #184D73;
+	border-radius: 5px;
+	color: white;
+	font-family: font(bold);
+	font-size: size(big);
 	height: 50px;
 	overflow: hidden;
 	width: 200px;
-
-	img {
-		height: 100%;
-		transform: scale(2);
-		width: auto;
-	}
 }
 
 .modal-data-fast {
