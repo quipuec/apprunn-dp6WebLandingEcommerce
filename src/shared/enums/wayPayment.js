@@ -1,3 +1,8 @@
+export const deposit = {
+	code: 'IBD',
+	description: 'Banca por internet o depósito',
+};
+
 export default {
 	creditCard: {
 		code: 'CDC',
