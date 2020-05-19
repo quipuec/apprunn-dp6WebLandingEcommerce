@@ -130,6 +130,9 @@ export default {
 .help-main-container {
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
+	margin: auto;
+	max-width: 1280px;
 	width: 100%;
 
 	@media(min-width: 768px) {
@@ -140,7 +143,7 @@ export default {
 		background-color: white;
 		border-radius: 5px;
 		display: flex;
-		flex-basis: 45%;
+		flex-basis: 25%;
 		flex-direction: column;
 		height: fit-content;
 		margin: 0 0 20px 0;
