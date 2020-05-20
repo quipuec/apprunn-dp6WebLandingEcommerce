@@ -37,7 +37,7 @@
 				>S/ 115.00</output>
 			</div>
 			<div class="modal-qr">
-				<img src="https://upload.wikimedia.org/wikipedia/commons/d/d7/Commons_QR_code.png" alt="">
+				<img :src="urlImage" alt="yape_qr">
 			</div>
 			<div class="modal-send">
 				<app-input
@@ -77,6 +77,12 @@ export default {
 		modal,
 	},
 	data,
+	props: {
+		urlImage: {
+			required: true,
+			type: String,
+		},
+	},
 };
 </script>
 <style lang="scss" scoped>
@@ -168,6 +174,11 @@ export default {
 		margin: 25px 0;
 		padding: 20px;
 		width: 220px;
+
+		img {
+			height: 100%;
+			width: 100%;
+		}
 	}
 
 	.modal-send {
