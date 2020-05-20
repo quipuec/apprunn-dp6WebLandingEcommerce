@@ -1,13 +1,26 @@
-import { mapGetters } from 'vuex';
 
-const VisaPeru = () => import('@/components/order/visa-payment');
-const VisaEcu = () => import('@/components/order/paymentsMethods/paymentez');
+const VisaPeru = () => import('@/components/order/paymentsMethods/visa-payment');
+const Paymentez = () => import('@/components/order/paymentsMethods/paymentez');
+const DataFast = () => import('@/components/order/paymentsMethods/data-fast');
 
 export default {
-	computed: {
-		...mapGetters(['user']),
+	props: {
+		paymentsTypes: {
+			required: true,
+			type: Array,
+		},
 	},
 	render(h) {
-		return this.isPeru ? h(VisaPeru) : h(VisaEcu);
+		const options = {
+			visa: h(VisaPeru),
+			paymentez: h(Paymentez),
+			dataweb: h(DataFast),
+		};
+		let selectedPaymentMethods = [];
+		this.paymentsTypes.forEach((t) => {
+			const { code } = t;
+			selectedPaymentMethods = selectedPaymentMethods.concat(options[code]);
+		});
+		return h('div', {}, selectedPaymentMethods);
 	},
 };

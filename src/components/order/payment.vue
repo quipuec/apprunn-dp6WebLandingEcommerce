@@ -21,6 +21,7 @@
 			</div>
 			<component class="component-container"
 				:is="paymentMethodSelectedComponent"
+				:paymentsTypes="gatewayConfiguration"
 			></component>
 		</section>
 	</div>
@@ -46,6 +47,7 @@ function created() {
 function onSelect(method) {
 	this.$store.commit('SET_WAY_PAYMENT', { wayPayment: null, bankAccountId: null });
 	this.paymentMethodSelected = method.code;
+	this.gatewayConfiguration = method.gatewayConfiguration || [];
 	const wayPayment = method.id;
 	let bankAccountId = null;
 	if (method.code === 'IBD') {
@@ -69,6 +71,7 @@ function getWaysPayments() {
 
 function data() {
 	return {
+		gatewayConfiguration: [],
 		logo: {
 			section: '/static/icons/payment.svg',
 		},
@@ -115,6 +118,11 @@ export default {
 	}
 
 	.component-container {
+		align-items: center;
+		display: grid;
+		flex-wrap: wrap;
+		grid-gap: 10px;
+		grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
 		margin-top: 15px;
 
 		@media (max-width: 600px) {

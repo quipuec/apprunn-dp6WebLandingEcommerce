@@ -6,14 +6,17 @@
 		</div>
 		<div class="deposit-wrapper" v-else>
 			<h2 v-if="thereAreNoBanksAccounts">No existen cuentas bancarias configuradas</h2>
-			<v-radio-group  v-model="selectedBank" row v-else>
-				<v-radio 
-					:label="bank.bank.name" 
-					:value="bank.bankId"
-					v-for="bank in getBankAccounts" 
-					:key="bank.id">
-				</v-radio>
-			</v-radio-group>
+			<div v-else>
+				<online-deposits :deposits="filtered"/>
+				<v-radio-group  v-model="selectedBank" row>
+					<v-radio 
+						:label="bank.bank.name" 
+						:value="bank.bankId"
+						v-for="bank in getBankAccounts" 
+						:key="bank.id">
+					</v-radio>
+				</v-radio-group>
+			</div>
 		</div>
 		<div v-if="!thereAreNoBanksAccounts">
 			<ul class="mb-1">
@@ -32,9 +35,21 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
+import { deposit } from '@/shared/enums/wayPayment';
+import onlineDeposits from '@/components/order/deposit-payments';
+
 
 function created() {
 	this.selectedBank = this.getBankAccounts[0].bankId;
+	this.getDeposits();
+}
+
+function getDeposits() {
+	const { id } = this.getCommerceData.wayPayment.find(g => g.code === deposit.code);
+	const { gatewayConfiguration } = this.getWaypaymentsByCommerce.find(
+		g => g.wayPaymentId === id,
+	);
+	this.filtered = gatewayConfiguration;
 }
 
 function stepFour() {
@@ -59,23 +74,31 @@ function thereAreNoBanksAccounts() {
 
 function data() {
 	return {
+		filtered: [],
 		selectedBank: null,
 	};
 }
 
 export default {
 	name: 'deposit-payment',
+	components: {
+		onlineDeposits,
+	},
 	created,
 	computed: {
 		...mapGetters([
 			'getBankAccounts',
 			'getCommerceData',
+			'getWaypaymentsByCommerce',
 		]),
 		stepFour,
 		bankAccounts,
 		thereAreNoBanksAccounts,
 	},
 	data,
+	methods: {
+		getDeposits,
+	},
 	watch: {
 		selectedBank,
 	},
