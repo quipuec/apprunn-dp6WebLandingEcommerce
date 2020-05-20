@@ -15,7 +15,7 @@
 	<modal v-model="show" max-width="fit-content">
 		<div class="yape-modal-container">
 			<div class="modal-close">
-				<button type="button" @click="show = false">X</button>
+				<button type="button" @click="closeModal">X</button>
 			</div>
 			<div class="modal-header">
 				<img
@@ -29,32 +29,42 @@
 						<span class="bold">Ingresa</span> el monto a pagar y listo.</li>
 				</ol>
 			</div>
-			<div class="modal-amount">
+			<div class="modal-amount" v-if="!successTransaction">
 				<span class="amount-title">Monto a pagar</span>
 				<output
 					class="amount"
 					:style="`color:${globalColors.title}`"
 				>S/ 115.00</output>
 			</div>
-			<div class="modal-qr">
-				<img :src="urlImage" alt="yape_qr">
+			<div v-if="successTransaction">
+				<div class="modal-success">
+					<success-icon class="success-icon" />
+					<h3>¡ Listo !</h3>
+				</div>
+				<p class="thanks">Gracias por comprar con nosotros, en unos momentos te enviaremos la confirmación de tu compra a tu correo electrónico</p>
 			</div>
-			<div class="modal-send">
-				<app-input
-					placeholder="Número de celular"
-					class="mx-2 phone-number"
-					v-model="phone"
-				>
-					<small
-						v-if="!phone"
-						class="validate-text"
-					>El número de celular es requerido</small>
-				</app-input>
-				<button
-					:disabled="!phone"
-					type="button"
-					:style="`background-color:${globalColors.secondary}`"
-				>Enviar</button>
+			<div v-else>
+				<div class="modal-qr">
+					<img :src="urlImage" alt="yape_qr">
+				</div>
+				<div class="modal-send">
+					<app-input
+						placeholder="Número de celular"
+						class="mx-2 phone-number"
+						v-model="phone"
+					>
+						<small
+							v-if="!phone"
+							class="validate-text"
+						>El número de celular es requerido</small>
+					</app-input>
+					<button
+						type="button"
+						:disabled="!phone"
+						:style="`background-color:${globalColors.secondary}`"
+						@click="successTransaction = true"
+					>Enviar</button>
+				</div>
 			</div>
 		</div>
 	</modal>
@@ -63,11 +73,21 @@
 <script>
 import modal from '@/components/shared/modal/modal-component';
 import appInput from '@/components/shared/inputs/app-input';
+import successIcon from '@/components/svg/success';
+
+function closeModal() {
+	this.show = false;
+	this.phone = '';
+	setTimeout(() => {
+		this.successTransaction = false;
+	}, 200);
+}
 
 function data() {
 	return {
 		phone: '',
 		show: false,
+		successTransaction: false,
 	};
 }
 export default {
@@ -75,8 +95,12 @@ export default {
 	components: {
 		appInput,
 		modal,
+		successIcon,
 	},
 	data,
+	methods: {
+		closeModal,
+	},
 	props: {
 		urlImage: {
 			required: true,
@@ -164,6 +188,36 @@ export default {
 		}
 	}
 
+	.modal-success {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+		height: 160px;
+		margin: 41px auto 20px;
+		width: 130px;
+
+		.success-icon {
+			border: 5px solid color(success);
+			border-radius: 50%;
+			color: color(success);
+			padding: 15px;
+			height: 130px;
+			width: 130px;
+		}
+
+		h3 {
+			color: color(success);
+			font-family: font(bold);
+			font-size: size(sbig);
+		}
+
+	}
+
+	.thanks {
+		text-align: center;
+		max-width: 325px;
+	}
+
 	.modal-qr {
 		align-items: center;
 		border: 2px solid #7D349B;
@@ -171,7 +225,7 @@ export default {
 		display: flex;
 		height: 230px;
 		justify-content: center;
-		margin: 25px 0;
+		margin: 25px auto;
 		padding: 20px;
 		width: 220px;
 
