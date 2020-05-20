@@ -121,7 +121,7 @@ ul, ol {
 
 .section-links {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 
 	@media (max-width: 925px) {
 		align-items: center;

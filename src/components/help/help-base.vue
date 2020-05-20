@@ -136,13 +136,14 @@ export default {
 
 	@media(min-width: 768px) {
 		flex-direction: row;
+		justify-content: center;
 	}
 
 	.help-menu {
 		background-color: white;
 		border-radius: 5px;
 		display: flex;
-		flex-basis: 40%;
+		flex: 0 0 30%;
 		flex-direction: column;
 		height: fit-content;
 		margin: 0 0 20px 0;
@@ -204,10 +205,11 @@ export default {
 	.help-content {
 		border-radius: 5px;
 		padding: 35px 20px 60px;
-		width: 800px;
+		width: auto;
 
 		@media(min-width: 768px) {
 			padding: 35px 60px 60px;
+			width: 800px;
 		}
 	}
 }
