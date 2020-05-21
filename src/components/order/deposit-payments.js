@@ -1,5 +1,6 @@
 
 import { Yape } from '@/shared/enums/depositPayment';
+import { mapGetters } from 'vuex';
 
 const YapeComponent = () => import('@/components/order/yape-component');
 
@@ -8,10 +9,29 @@ function yapeUrlImage() {
 	return urlImage;
 }
 
+function yapeProps() {
+	const urlImage = this.yapeUrlImage;
+	const amount = (this.getTotalToBuy - this.discount) + this.getShippingCost;
+	return { urlImage, amount };
+}
+
+function discount() {
+	const percentage = this.user.discount;
+	const amount = this.getTotalToBuy * (Number(percentage) / 100);
+	return Number(amount.toFixed(2));
+}
+
 export default {
 	name: 'deposit-payments',
 	computed: {
+		...mapGetters([
+			'getShippingCost',
+			'getTotalToBuy',
+			'user',
+		]),
+		discount,
 		yapeUrlImage,
+		yapeProps,
 	},
 	props: {
 		deposits: {
@@ -21,7 +41,7 @@ export default {
 	},
 	render(h) {
 		const options = {
-			[Yape]: h(YapeComponent, { props: { urlImage: this.yapeUrlImage } }),
+			[Yape]: h(YapeComponent, { props: this.yapeProps }),
 		};
 		let selectedPaymentMethods = [];
 		this.deposits.forEach((t) => {

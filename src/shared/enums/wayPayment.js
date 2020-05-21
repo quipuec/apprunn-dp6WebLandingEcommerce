@@ -3,6 +3,11 @@ export const deposit = {
 	description: 'Banca por internet o depósito',
 };
 
+export const creditCard = {
+	code: 'CDC',
+	description: 'Tarjeta de crédito o débito',
+};
+
 export default {
 	creditCard: {
 		code: 'CDC',

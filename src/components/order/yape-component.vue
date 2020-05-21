@@ -34,7 +34,7 @@
 				<output
 					class="amount"
 					:style="`color:${globalColors.title}`"
-				>S/ 115.00</output>
+				>S/ {{amount | currencyFormat}}</output>
 			</div>
 			<div v-if="successTransaction">
 				<div class="modal-success">
@@ -102,6 +102,10 @@ export default {
 		closeModal,
 	},
 	props: {
+		amount: {
+			required: true,
+			type: Number,
+		},
 		urlImage: {
 			required: true,
 			type: String,
