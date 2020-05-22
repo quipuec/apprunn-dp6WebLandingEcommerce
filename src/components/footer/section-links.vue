@@ -20,14 +20,6 @@
 				</ul>
 			</div>
 		</div>
-		<div class="credit-cards" v-if="existcreditsCard">
-			<img
-				v-for="(card, cardIndex) in creditCards"
-				:key="cardIndex"
-				:src="card.url"
-				:alt="card.alt"
-			>
-		</div>
 	</div>
 </template>
 
