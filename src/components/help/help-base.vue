@@ -26,10 +26,10 @@
 		</div>
 		<div class="help-content" :style="`border:1px solid ${globalColors.base}`">
 			<router-view
-				:title="helpData.section.title"
-				:sub-title="helpData.section.subTitle"
-				:content="helpData.section.content"
-				:image="helpData.section.image"
+				:title="title"
+				:sub-title="subtitle"
+				:content="content"
+				:image="image"
 			></router-view>
 		</div>
 	</div>
@@ -37,8 +37,10 @@
 <script>
 import { mapGetters } from 'vuex';
 
-function created() {
-	this.loadHelpInformation();
+function mounted() {
+	setTimeout(() => {
+		this.loadHelpInformation();
+	}, 200);
 }
 
 function loadHelpInformation() {
@@ -54,7 +56,9 @@ function loadHelpInformation() {
 function findCurrentHelpSection(helper, section, subSection) {
 	const sectionFormatted = this.formattedString(section);
 	const subSectionFormatted = this.formattedString(subSection);
-	const filteredHelpCenter = helper.filter(h => h.section[0].name === sectionFormatted);
+	const filteredHelpCenter = helper.filter(
+		h => h.section[0].name.trim() === sectionFormatted.trim(),
+	);
 	return this.constructingHelpObject(filteredHelpCenter, sectionFormatted, subSectionFormatted);
 }
 
@@ -87,6 +91,22 @@ function routeHandler() {
 	this.loadHelpInformation();
 }
 
+function title() {
+	return this.helpData.section.title || '';
+}
+
+function subtitle() {
+	return this.helpData.section.subTitle || '';
+}
+
+function content() {
+	return this.helpData.section.content || '';
+}
+
+function image() {
+	return this.helpData.section.image || '';
+}
+
 function data() {
 	return {
 		helpData: {
@@ -110,8 +130,11 @@ export default {
 		...mapGetters([
 			'getCommerceData',
 		]),
+		content,
+		image,
+		subtitle,
+		title,
 	},
-	created,
 	data,
 	methods: {
 		constructingHelpObject,
@@ -120,6 +143,7 @@ export default {
 		loadHelpInformation,
 		routeHandler,
 	},
+	mounted,
 	watch: {
 		'$route.fullPath': routeHandler,
 	},

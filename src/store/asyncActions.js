@@ -78,8 +78,10 @@ const asyncActions = {
 		const { data: parish } = await context.$httpSales.get(url);
 		commit('SET_DISTRICTS', parish);
 	},
-	LOAD_CATEGORIES: async ({ commit }, { context }) => {
-		let { data: response } = await context.$httpProductsPublic.get('e-categories-public');
+	LOAD_CATEGORIES: async ({ commit, getters }, { context }) => {
+		const { id } = getters.getCommerceData;
+		const url = `e-categories-public?commerceId=${id}`;
+		let { data: response } = await context.$httpProductsPublic.get(url);
 		response = response.map((r) => {
 			const newCategory = { ...r };
 			newCategory.select = false;
@@ -173,8 +175,10 @@ const asyncActions = {
 		commit('SET_FAVORITES', newFavorites);
 		return Number(headers['x-last-page']);
 	},
-	LOAD_BANNERS: async ({ commit }, context) => {
-		const { data: banners } = await context.$httpProductsPublic.get('banners-public');
+	LOAD_BANNERS: async ({ commit, getters }, context) => {
+		const { id } = getters.getCommerceData;
+		const url = `banners-public?commerceId=${id}`;
+		const { data: banners } = await context.$httpProductsPublic.get(url);
 		commit('SET_BANNERS', banners);
 	},
 	LOAD_COMMERCE_INFO: async ({ commit, dispatch }, context) => {
