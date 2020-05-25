@@ -21,6 +21,15 @@ export default {
 			const { code } = t;
 			selectedPaymentMethods = selectedPaymentMethods.concat(options[code]);
 		});
-		return h('div', {}, selectedPaymentMethods);
+		return h(
+			'div',
+			{
+				style: {
+					display: 'grid',
+					gridGap: '10px',
+					gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+				},
+			},
+			selectedPaymentMethods);
 	},
 };
