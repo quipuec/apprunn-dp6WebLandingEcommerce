@@ -173,8 +173,8 @@
 				:style="`background-color:${globalColors.primary}`"
 			>Enviar Reclamación</button>
 		</form>
-		<small><b>RECLAMO:</b> Disconformidad relacionada a los productos o servicios</small>
-		<small><b>QUEJA:</b> Disconformidad no relacionada a los productos o servicios; o malestar o descontento specto a la atención al público</small>
+		<small><b>*RECLAMO:</b> Disconformidad relacionada a los productos o servicios.</small>
+		<small><b>*QUEJA:</b> Disconformidad no relacionada a los productos o servicios; o malestar o descontento specto a la atención al público.</small>
 	</div>
 </template>
 <script>
