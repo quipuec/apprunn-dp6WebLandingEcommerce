@@ -37,6 +37,11 @@ export default function (Vue) {
 			restorePassword,
 			SummaryOrder,
 			{
+				name: 'reclamaciones',
+				path: '/reclamaciones',
+				component: () => import('@/pages/page-reclamaciones'),
+			},
+			{
 				name: 'not-exist',
 				path: '*',
 				redirect: '/no-conseguida',
