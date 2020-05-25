@@ -3,7 +3,7 @@
 		<section-links :menu="helperCenter"></section-links>
 		<div class="content-company-footer">
 			<p class="company-footer">© 2019   power by Makipos.la.</p>
-			<router-link :to="{ name: 'reclamaciones' }" v-if="!isPeru">
+			<router-link :to="{ name: 'reclamaciones' }" v-if="isPeru">
 				Libro de Reclamaciones
 			</router-link>
 			<div>
