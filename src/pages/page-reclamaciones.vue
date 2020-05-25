@@ -12,7 +12,7 @@
 					<app-input
 						type="date"
 						placeholder="Fecha"
-						v-model="date"
+						v-model="reclamation.claimDate"
 					/>
 				</label>
 			</div>
@@ -22,7 +22,7 @@
 					Nombre
 					<app-input
 						type="text"
-						v-model="name"
+						v-model="reclamation.claimentName"
 						placeholder="Nombre"
 					/>
 				</label>
@@ -30,7 +30,7 @@
 					Domicilio
 					<app-input
 						type="text"
-						v-model="address"
+						v-model="reclamation.claimentAddress"
 						placeholder="Domicilio"
 					/>
 				</label>
@@ -38,7 +38,7 @@
 					Documento de identidad
 					<app-input
 						type="text"
-						v-model="documentNumber"
+						v-model="reclamation.claimentDocument"
 						placeholder="Documento Identidad (DNI, CE)"
 					/>
 				</label>
@@ -46,7 +46,7 @@
 					Teléfono o celular
 					<app-input
 						type="tel"
-						v-model="phone"
+						v-model="reclamation.claimetPhone"
 						placeholder="Teléfono"
 					/>
 				</label>
@@ -54,7 +54,7 @@
 					Correo electrónico
 					<app-input
 						type="email"
-						v-model="email"
+						v-model="reclamation.claimentEmail"
 						placeholder="Correo"
 					/>
 				</label>
@@ -62,7 +62,7 @@
 					Padres (en caso de ser menor de edad)
 					<app-input
 						type="text"
-						v-model="parents"
+						v-model="reclamation.parents"
 						placeholder="Padre o Madre (en caso de ser menor de edad)"
 					/>
 				</label>
@@ -97,7 +97,7 @@
 					Monto reclamado
 					<app-input
 						type="text"
-						v-model="reclamationAmount"
+						v-model="reclamation.claimentWellHired.amountClaiment"
 						placeholder="Monto reclamado"
 					/>
 				</label>
@@ -106,7 +106,7 @@
 					<text-area
 						rows="5"
 						placeholder="Descripción"
-						v-model="reclamationDescription"
+						v-model="reclamation.claimentWellHired.description"
 					></text-area>
 				</label>
 			</div>
@@ -119,7 +119,7 @@
 						type="radio"
 						name="reclamacion"
 						id="reclamo"
-						value="reclamo"
+						:value="1"
 						@input="reclamo"
 					>
 				</label>
@@ -130,19 +130,19 @@
 						type="radio"
 						name="reclamacion"
 						id="queja"
-						value="queja"
+						:value="2"
 						@input="reclamo"
 					>
 				</label>
 				<text-area rows="5"
 					placeholder="Detalle"
-					v-model="reclamationDetails"
+					v-model="reclamation.claimDetail"
 				></text-area>
 				<text-area
 					class="consumer-order"
 					rows="5"
 					placeholder="Pedido"
-					v-model="reclamationOrder"
+					v-model="reclamation.claimOrder"
 				></text-area>
 				<div class="sign">
 					<h5 :style="`border-top:1px solid ${globalColors.base}`">Firma del consumidor</h5>
@@ -155,12 +155,12 @@
 					<app-input
 						class="input"
 						type="date"
-						v-model="answerDate"
+						v-model="reclamation.answerDate"
 					/>
 					<text-area
 						rows="5"
 						placeholder="Observaciones"
-						v-model="anwerDescription"
+						v-model="reclamation.answerDescription"
 					></text-area>
 					<div class="sign">
 						<h5 :style="`border-top:1px solid ${globalColors.base}`">Firma del proveedor</h5>
@@ -169,8 +169,10 @@
 			</div>
 			<button
 				type="button"
+				:disabled="$v.$invalid"
 				class="send-reclamation"
 				:style="`background-color:${globalColors.primary}`"
+				@click="reclamationAction"
 			>Enviar Reclamación</button>
 		</form>
 		<small><b>*RECLAMO:</b> Disconformidad relacionada a los productos o servicios.</small>
@@ -178,35 +180,109 @@
 	</div>
 </template>
 <script>
+import { required, requiredIf, email, minValue } from 'vuelidate/lib/validators';
 import appInput from '@/components/shared/inputs/app-input';
 import textArea from '@/components/shared/inputs/text-area';
 import { mapGetters } from 'vuex';
 
+function getCommerceData(commerceData) {
+	const { address, documentNumber, id, rzSocial, code } = commerceData;
+	this.reclamation.commerceAddress = address;
+	this.reclamation.commerceCode = code;
+	this.reclamation.commerceName = rzSocial;
+	this.reclamation.commereRuc = documentNumber;
+	this.reclamation.commerceId = id;
+}
+
 function reclamo({ target }) {
-	this.reclamationType = target.value;
+	this.reclamation.orderClaimDetail = Number(target.value);
 }
 
 function typesGood({ target }) {
-	this.productType = target.value;
+	this.reclamation.claimentWellHired.product = target.value === 'product';
+	this.reclamation.claimentWellHired.services = target.value === 'services';
+}
+
+async function reclamationAction() {
+	const body = this.reclamation;
+	const url = 'claim-book';
+	try {
+		await this.$httpSales.post(url, body);
+		this.showNotification(
+			'Su reclamo ha sido registrado',
+			'success',
+		);
+	} catch (err) {
+		console.log(err);
+		this.showGenericError();
+	}
+}
+
+function validations() {
+	return {
+		reclamation: {
+			answerDate: { required },
+			answerDescription: { required },
+			claimDetail: { required },
+			claimDate: { required },
+			claimOrder: { required },
+			claimentAddress: { required },
+			claimentDocument: { required },
+			claimentEmail: { required, email },
+			claimentName: { required },
+			claimetPhone: { required },
+			claimentWellHired: {
+				product: {
+					required: requiredIf(() => {
+						const { services } = this.reclamation.claimentWellHired;
+						return services === false || services === null;
+					}),
+				},
+				services: {
+					required: requiredIf(() => {
+						const { product } = this.reclamation.claimentWellHired;
+						return product === false || product === null;
+					}),
+				},
+				amountClaiment: { required, minValue: minValue(1) },
+				description: { required },
+			},
+			commerceAddress: { required },
+			commerceCode: { required },
+			commerceId: { required, minValue: minValue(1) },
+			commerceName: { required },
+			commereRuc: { required },
+			orderClaimDetail: { required, minValue: minValue(1) },
+		},
+	};
 }
 
 function data() {
 	return {
-		address: '',
-		answerDate: '',
-		anwerDescription: '',
-		date: '',
-		documentNumber: '',
-		email: '',
-		name: '',
-		productType: '',
-		reclamationAmount: 0,
-		reclamationDescription: '',
-		reclamationDetails: '',
-		reclamationOrder: '',
-		reclamationType: '',
-		parents: '',
-		phone: '',
+		reclamation: {
+			answerDate: '',
+			answerDescription: '',
+			claimDetail: '',
+			claimDate: '',
+			claimOrder: '',
+			claimentAddress: '',
+			claimentDocument: '',
+			claimentEmail: '',
+			claimentName: '',
+			claimetPhone: '',
+			claimentWellHired: {
+				product: null,
+				services: null,
+				amountClaiment: 0,
+				description: '',
+			},
+			commerceAddress: '',
+			commerceCode: '',
+			commerceId: 0,
+			commerceName: '',
+			commereRuc: '',
+			orderClaimDetail: 0,
+		},
 	};
 }
 
@@ -225,6 +301,11 @@ export default {
 	methods: {
 		reclamo,
 		typesGood,
+		reclamationAction,
+	},
+	validations,
+	watch: {
+		getCommerceData,
 	},
 };
 </script>
@@ -274,6 +355,10 @@ export default {
 		font-family: font(bold);
 		height: 50px;
 		width: 100%;
+	}
+	.send-reclamation[disabled] {
+		cursor: not-allowed;
+		opacity: 0.3;
 	}
 }
 .flex {
