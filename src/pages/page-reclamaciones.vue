@@ -185,13 +185,21 @@ import appInput from '@/components/shared/inputs/app-input';
 import textArea from '@/components/shared/inputs/text-area';
 import { mapGetters } from 'vuex';
 
-function getCommerceData(commerceData) {
-	const { address, documentNumber, id, rzSocial, code } = commerceData;
+function mounted() {
+	this.setCommerceData();
+}
+
+function setCommerceData() {
+	const { address, documentNumber, id, rzSocial, code } = this.getCommerceData;
 	this.reclamation.commerceAddress = address;
 	this.reclamation.commerceCode = code;
 	this.reclamation.commerceName = rzSocial;
 	this.reclamation.commereRuc = documentNumber;
 	this.reclamation.commerceId = id;
+}
+
+function getCommerceData() {
+	this.setCommerceData();
 }
 
 function reclamo({ target }) {
@@ -302,7 +310,9 @@ export default {
 		reclamo,
 		typesGood,
 		reclamationAction,
+		setCommerceData,
 	},
+	mounted,
 	validations,
 	watch: {
 		getCommerceData,
