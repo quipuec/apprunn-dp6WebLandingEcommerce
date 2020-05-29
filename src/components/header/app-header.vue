@@ -102,13 +102,13 @@ function getData($event) {
 }
 
 function searchProduct(value) {
-	const params = {
-		search: value.trim() ? value : null,
-	};
-	const id = value.trim() ? null : this.getFilters[0].id;
+	const search = value.trim() ? value : null;
+	const filterId = this.getFilters[0] ? this.getFilters[0].id : null;
+	const id = value.trim() ? null : filterId;
 	this.$store.dispatch('CLEAN_PRODUCTS_ARRAY');
 	this.$store.dispatch('UPDATE_PRODUCT_FILTER', null);
-	this.$store.dispatch('LOAD_PRODUCTS', { context: this, params });
+	this.$store.dispatch('UPDATE_PRODUCT_SEARCH', search);
+	this.$store.dispatch('LOAD_PRODUCTS', { context: this });
 	this.isSearchMobile = false;
 	this.updateFilter(id);
 	if (this.$route.name !== 'page-home') {

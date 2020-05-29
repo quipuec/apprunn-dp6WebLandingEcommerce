@@ -165,6 +165,10 @@ function updateGatewayAuthorizationResponse({ commit }, data) {
 	commit('SET_GATEWAY_AUTHORIZATION_RESPONSE', data);
 }
 
+function UPDATE_PRODUCT_SEARCH({ commit }, search) {
+	commit('SET_PRODUCT_SEARCH', search);
+}
+
 const methods = {
 	addProductToBuyCar,
 	addService,
@@ -183,6 +187,7 @@ const methods = {
 	updateGatewayErrorCode,
 	UPDATE_ORDER_FROM_LOCAL_STORAGE,
 	UPDATE_PRODUCT_FILTER,
+	UPDATE_PRODUCT_SEARCH,
 	updateProductSelect,
 	resetCounter,
 	SET_ECOMMERCE_THEME,

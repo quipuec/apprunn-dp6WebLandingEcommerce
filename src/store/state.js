@@ -75,6 +75,7 @@ export default {
 			filters: null,
 			limit: 20,
 			page: 1,
+			search: null,
 		},
 		relateds: [],
 	},
