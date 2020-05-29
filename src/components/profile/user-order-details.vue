@@ -36,7 +36,7 @@
 						</span>
 					</div>
 					<app-button
-						v-if="!flagAddVoucher"
+						v-if="!flagAddVoucher && isDeposit"
 						class="payment-btn mx-2"
 						action="Añadir datos del deposito"
 						max-width="276px"
@@ -45,7 +45,7 @@
 						@click="addPaymentInfo"
 					/>
 				</div>
-				<load-payment v-if="flagAddVoucher"/>
+				<load-payment v-if="flagAddVoucher && isDeposit"/>
 			</div>
 		</section>
 		<transition-group name="go-right" tag="div" class="relative rating-container">
@@ -95,6 +95,7 @@ import responsiveTable from '@/components/shared/table/respondive-table';
 import { getDeeper, isEmpty } from '@/shared/lib';
 import formOpinion from '@/components/products/form-opinion';
 import productRating from '@/components/profile/product-rating';
+import { deposit } from '@/shared/enums/wayPayment';
 
 async function created() {
 	({ id: this.orderId } = this.$route.params);
@@ -145,6 +146,10 @@ function onRating(product) {
 	this.rating = !this.rating;
 }
 
+function isDeposit() {
+	return getDeeper('wayPayment.code')(this.getOrderInfo) === deposit.code;
+}
+
 function data() {
 	return {
 		columns: [
@@ -177,6 +182,7 @@ export default {
 		]),
 		details,
 		flagPickUp,
+		isDeposit,
 		orderStatusIsGiven,
 	},
 	created,
