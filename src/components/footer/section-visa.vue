@@ -1,5 +1,5 @@
 <template>
-  <div class="section-visa">
+  <div class="section-visa" v-if="isPeru">
 		<img
 			:src="indeterminate ? null : iconVisa"
 			alt="logo_visa"
