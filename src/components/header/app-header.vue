@@ -104,7 +104,10 @@ function getData($event) {
 function searchProduct(value) {
 	const search = value.trim() ? value : null;
 	const filterId = this.getFilters[0] ? this.getFilters[0].id : null;
-	const id = value.trim() ? null : filterId;
+	const id = search ? null : filterId;
+	if (!search) {
+		this.$store.dispatch('START_PAGINATION');
+	}
 	this.$store.dispatch('CLEAN_PRODUCTS_ARRAY');
 	this.$store.dispatch('UPDATE_PRODUCT_FILTER', null);
 	this.$store.dispatch('UPDATE_PRODUCT_SEARCH', search);
