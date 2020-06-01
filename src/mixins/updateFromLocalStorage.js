@@ -29,7 +29,6 @@ async function loadDataFromLocalStorage() {
 		this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
 	}
 	await Promise.all([
-		this.$store.dispatch('LOAD_CATEGORIES', { context: this }),
 		this.$store.dispatch('LOAD_FILTERS', this),
 		this.$store.dispatch('LOAD_PRODUCTS', { context: this }),
 	]);
