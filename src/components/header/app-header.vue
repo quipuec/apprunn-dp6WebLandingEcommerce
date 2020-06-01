@@ -105,7 +105,7 @@ function searchProduct(value) {
 	const search = value.trim() ? value : null;
 	const filterId = this.getFilters[0] ? this.getFilters[0].id : null;
 	const id = search ? null : filterId;
-	if (!search) {
+	if (!search || this.productParams.search !== search) {
 		this.$store.dispatch('START_PAGINATION');
 	}
 	this.$store.dispatch('CLEAN_PRODUCTS_ARRAY');
@@ -199,6 +199,7 @@ export default {
 			'getFilters',
 			'getTotalQuantityProducts',
 			'indeterminate',
+			'productParams',
 		]),
 	},
 	data,
