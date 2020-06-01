@@ -76,6 +76,7 @@ export default {
 			limit: 20,
 			page: 1,
 		},
+		relateds: [],
 	},
 	productIdToRate: null,
 	token: null,

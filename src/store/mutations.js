@@ -139,6 +139,10 @@ function SET_PRODUCT_ID_TO_RATE(state, productId) {
 	Vue.set(state, 'productIdToRate', productId);
 }
 
+function SET_RELATED_PRODUCTS(state, relatedProducts) {
+	Vue.set(state.products, 'relateds', relatedProducts);
+}
+
 const methods = {
 	ADD_ONE_IN_SERVICE_COUNTER,
 	clearUser,
@@ -168,6 +172,7 @@ const methods = {
 	SET_CATEGORIES,
 	SET_ORDER_TOTAL,
 	SET_PRODUCT_ID_TO_RATE,
+	SET_RELATED_PRODUCTS,
 	RESETING_COUNTER,
 	UPDATE_FILTERS,
 	UPDATE_PRODUCT_PAGE,

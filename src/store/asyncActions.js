@@ -1,6 +1,16 @@
 import lib, { isEmpty } from '@/shared/lib';
 import helper from '@/shared/helper';
 
+function updateProducts(products, priceListId) {
+	return products.map(
+		lib.compose(
+			lib.setNewProperty('price', product => helper.setPrices(product, priceListId, 'price')),
+			lib.setNewProperty('priceDiscount', product => helper.setPrices(product, priceListId, 'priceDiscount')),
+			lib.setNewProperty('createdAt', ({ createdAt }) => helper.formatDate(createdAt)),
+		),
+	);
+}
+
 const asyncActions = {
 	LOAD_PRODUCTS: async ({ commit, state, getters }, { context, params = {} }) => {
 		const request = [];
@@ -16,16 +26,17 @@ const asyncActions = {
 		}
 		const [{ data: products, headers }] = await Promise.all(request);
 		const commercePriceListId = getters.getCommerceData.settings.salPriceListId;
-		const setUpDateInProducts = products.map(
-			lib.compose(
-				lib.setNewProperty('price', product => helper.setPrices(product, commercePriceListId, 'price')),
-				lib.setNewProperty('priceDiscount', product => helper.setPrices(product, commercePriceListId, 'priceDiscount')),
-				lib.setNewProperty('createdAt', ({ createdAt }) => helper.formatDate(createdAt)),
-			),
-		);
+		const setUpDateInProducts = updateProducts(products, commercePriceListId);
 		const newProducts = [].concat(state.products.list, setUpDateInProducts);
 		commit('SET_PRODUCTS', newProducts);
 		commit('LAST_PAGE', headers);
+	},
+	LOAD_RELATED_PRODUCTS: async ({ commit, getters }, { context, id }) => {
+		const url = `products-public/${id}/related`;
+		const { data: products } = await context.$httpProductsPublic.get(url);
+		const commercePriceListId = getters.getCommerceData.settings.salPriceListId;
+		const updatedProducts = updateProducts(products, commercePriceListId);
+		commit('SET_RELATED_PRODUCTS', updatedProducts);
 	},
 	SET_FAVORITE_FLAG: async ({ commit, state }, { context, product }) => {
 		const url = `products/favorite/${product.id}`;
