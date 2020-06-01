@@ -48,6 +48,15 @@ export default {
 			const { name } = t;
 			selectedPaymentMethods = selectedPaymentMethods.concat(options[name]);
 		});
-		return h('div', {}, selectedPaymentMethods);
+		return h(
+			'div',
+			{
+				style: {
+					display: 'grid',
+					gridGap: '10px',
+					gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 180px))',
+				},
+			},
+			selectedPaymentMethods);
 	},
 };

@@ -5,10 +5,6 @@
 			type="button"
 			@click="getTokenId"
 		>Data Fast
-			<!-- <img
-				src="https://media-exp1.licdn.com/dms/image/C561BAQGPZh2xTzv5GQ/company-background_10000/0?e=1589932800&amp;v=beta&amp;t=6QzMTu5cHwQsjSmCy3WFFvFwPKzqCOZnoC_A40AlCMk"
-				alt="data_fast"
-			> -->
 		</button>
 		<modal v-model="showModal" max-width="420px" @input="closeModal">
 			<div ref="data-fast" class="modal-data-fast" v-if="showModal">
@@ -116,7 +112,7 @@ export default {
 	font-size: size(big);
 	height: 50px;
 	overflow: hidden;
-	width: 200px;
+	width: 100%;
 }
 
 .modal-data-fast {

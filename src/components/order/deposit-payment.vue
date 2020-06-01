@@ -8,8 +8,9 @@
 			<h2 v-if="thereAreNoBanksAccounts">No existen cuentas bancarias configuradas</h2>
 			<div v-else>
 				<online-deposits :deposits="filtered"/>
-				<v-radio-group  v-model="selectedBank" row>
-					<v-radio 
+				<v-radio-group  v-model="selectedBank" row class="mt-4">
+					<v-radio
+						:color="`${globalColors.primary}`"
 						:label="bank.bank.name" 
 						:value="bank.bankId"
 						v-for="bank in getBankAccounts" 
