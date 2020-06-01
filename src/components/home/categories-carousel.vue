@@ -131,7 +131,10 @@ export default {
 			default: () => [],
 		},
 		colorBase: String,
-		len: Number,
+		len: {
+			type: Number,
+			required: true,
+		},
 	},
 };
 </script>

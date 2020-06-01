@@ -3,7 +3,7 @@
 		<banner-carousel :banners="getBannersHome"/>
 		<div
 			class="loading-categories-container"
-			v-if="getCategories.length === 0 && indeterminate"
+			v-if="getCategories.length === 0 || indeterminate"
 		>
 			<div class="loading-categories loading"></div>
 		</div>
