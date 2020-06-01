@@ -2,6 +2,7 @@ import orderGetters from '@/store/getters/order';
 import geoGetters from '@/store/getters/geo';
 import profileGetters from '@/store/getters/profile';
 import { getDeeper } from '@/shared/lib';
+import { creditCard } from '@/shared/enums/wayPayment';
 
 function indeterminate(state) {
 	return state.appConfig.isLoading;
@@ -144,6 +145,10 @@ function valoratingProductId(state) {
 	return state.productIdToRate;
 }
 
+function isCreditCard(state) {
+	return !!state.commerce.wayPayment.find(w => w.code === creditCard.code);
+}
+
 const methods = {
 	bannersCoupons,
 	bannersTypes,
@@ -166,6 +171,7 @@ const methods = {
 	getWarehouses,
 	flagAddVoucher,
 	indeterminate,
+	isCreditCard,
 	loadingCounter,
 	...geoGetters,
 	...orderGetters,

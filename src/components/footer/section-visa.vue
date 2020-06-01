@@ -1,5 +1,5 @@
 <template>
-  <div class="section-visa">
+  <div class="section-visa" v-if="isPeru && isCreditCard">
 		<img
 			:src="indeterminate ? null : iconVisa"
 			alt="logo_visa"
@@ -32,6 +32,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'indeterminate',
+			'isCreditCard',
 		]),
 	},
 	data,
