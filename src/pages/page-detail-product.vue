@@ -65,7 +65,7 @@
 	</div>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapState } from 'vuex';
 import ProductDetails from '@/class/productDetails';
 import appBannerTop from '@/components/header/app-banner-top';
 import productView from '@/components/products/product-view';
@@ -101,25 +101,19 @@ async function loadProduct() {
 		if (error.data.message === 'PRODUCT_NOT_FOUND') {
 			this.disabled = true;
 			this.showNotification('Este producto ya no está disponible', 'warning');
-			this.loadRelatedProducts(this.id);
+			this.$store.dispatch('LOAD_RELATED_PRODUCTS', { context: this, id: this.id });
 		} else {
 			this.showGenericError();
 		}
 	}
 }
 
-async function loadRelatedProducts(slug) {
-	const url = `products-public/${slug}/related`;
-	({ data: this.relateds } = await this.$httpProductsPublic.get(url));
-}
-
 async function loadData(id) {
+	this.$store.dispatch('LOAD_RELATED_PRODUCTS', { context: this, id });
 	const requests = [
-		this.$httpProductsPublic.get(`products-public/${id}/related`),
 		this.$httpProductsPublic.get(`products-public/${id}/children`),
 	];
 	([
-		{ data: this.relateds },
 		{ data: this.childrens },
 	] = await Promise.all(requests));
 	this.product.images = this.product.images.map((i, index) => {
@@ -327,7 +321,6 @@ function data() {
 		productsFilter: [],
 		productImages: [],
 		productFather: {},
-		relateds: [],
 		showConfirmModal: false,
 		stockWarehouse: false,
 		tabs: [],
@@ -357,6 +350,9 @@ export default {
 		...mapGetters('loading', [
 			'isLoading',
 		]),
+		...mapState({
+			relateds: state => state.products.relateds,
+		}),
 	},
 	data,
 	methods: {
@@ -372,7 +368,6 @@ export default {
 		loadData,
 		loadOpinions,
 		loadProduct,
-		loadRelatedProducts,
 		newRoute,
 		openDialog,
 		possibleFeature,

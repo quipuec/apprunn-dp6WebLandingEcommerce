@@ -1,13 +1,11 @@
 const route = {
 	name: 'help-center',
 	path: '/ayuda',
-	redirect: { name: 'help-base' },
 	component: () => import('@/pages/page-help-center'),
 	children: [
 		{
 			name: 'help-base',
 			path: 'apartado/:help',
-			redirect: { name: 'informacion-content' },
 			component: () => import('@/components/help/help-base'),
 			children: [
 				{

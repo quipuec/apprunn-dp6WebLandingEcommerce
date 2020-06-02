@@ -109,8 +109,8 @@ export default {
 	.methods-container {
 		align-items: center;
 		display: grid;
-		grid-gap: 20px;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		grid-gap: 10px;
+		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 		
 		@media (max-width: 600px) {
 			margin: 0 20px;
@@ -118,11 +118,6 @@ export default {
 	}
 
 	.component-container {
-		align-items: center;
-		display: grid;
-		flex-wrap: wrap;
-		grid-gap: 10px;
-		grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
 		margin-top: 15px;
 
 		@media (max-width: 600px) {
