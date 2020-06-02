@@ -79,7 +79,7 @@ function goToMakeOrder() {
 }
 
 function discount() {
-	const percentage = this.user.discount;
+	const percentage = this.user.discount || 0;
 	const amount = this.getTotalToBuy * (Number(percentage) / 100);
 	return Number(amount.toFixed(2));
 }
