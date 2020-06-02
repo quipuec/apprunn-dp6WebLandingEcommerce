@@ -474,9 +474,9 @@ export default {
 		border-radius: 8px;
 		box-shadow: 0 2px 4px 0 rgba(213, 213, 213, 0.5);
 		padding: 10px;
-		position: fixed;
+		position: absolute;
 		right: 37px;
-		top: 115px;
+		top: 15px;
 		width: 350px;
 		z-index: 2;
 	}
