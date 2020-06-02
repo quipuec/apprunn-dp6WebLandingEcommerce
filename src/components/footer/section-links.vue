@@ -8,27 +8,17 @@
 						{ 'loading loading-dark': indeterminate },
 					]">{{ item.name }}</p>
 				<ul v-for="link in item.details" :key="link.id">
-					<li>
-						<router-link
-							to="/help"
-							:class="[
-								'section-link',
-								{ 'loading': indeterminate },
-							]"
-						>
+					<li
+						:class="[
+							'section-link',
+							{ 'loading': indeterminate },
+						]"
+						@click="goToHelp(item, link)"
+					>
 							{{ link.name }}
-						</router-link>
 					</li>
 				</ul>
 			</div>
-		</div>
-		<div class="credit-cards" v-if="existcreditsCard">
-			<img
-				v-for="(card, cardIndex) in creditCards"
-				:key="cardIndex"
-				:src="card.url"
-				:alt="card.alt"
-			>
 		</div>
 	</div>
 </template>
@@ -43,6 +33,12 @@ function existcreditsCard() {
 		return Boolean(cards);
 	}
 	return false;
+}
+
+function goToHelp(item, link) {
+	const newItem = item.name.split(' ').join('-');
+	const newLink = link.name.split(' ').join('-');
+	this.$router.push(`/ayuda/apartado/${newItem}/seccion/${newLink}`);
 }
 
 function data() {
@@ -66,6 +62,9 @@ export default {
 		existcreditsCard,
 	},
 	data,
+	methods: {
+		goToHelp,
+	},
 	props: {
 		menu: {
 			default: () => [],
@@ -106,6 +105,7 @@ ul, ol {
 
 .section-link {
 	color: color(dark);
+	cursor: pointer;
 	font-family: font(regular);
 	font-size: size(minmedium);
 	text-decoration: none;
@@ -113,7 +113,7 @@ ul, ol {
 
 .section-links {
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 
 	@media (max-width: 925px) {
 		align-items: center;

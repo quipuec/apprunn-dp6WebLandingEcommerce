@@ -85,5 +85,8 @@ export default {
 <style lang="scss" scoped>
 	.js-paymentez-checkout {
 		background-color: #333333;
+		height: 50px;
+		overflow: hidden;
+		width: 200px;
 	}
 </style>
