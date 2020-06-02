@@ -27,7 +27,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { getDeeper, isEmpty } from '@/shared/lib';
-import { creditCard, deposit } from '@/shared/enums/wayPayment';
+import { deposit, creditCard } from '@/shared/enums/wayPayment';
 
 function created() {
 	this.updateFlags();
