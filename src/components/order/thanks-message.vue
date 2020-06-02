@@ -27,7 +27,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { getDeeper, isEmpty } from '@/shared/lib';
-import WayPayments from '@/shared/enums/wayPayment';
+import { deposit, creditCard } from '@/shared/enums/wayPayment';
 
 function created() {
 	this.updateFlags();
@@ -41,8 +41,8 @@ function updateFlags() {
 	} else {
 		const code = getDeeper('wayPayment.code')(this.getOrderInfo);
 		this.showFailure = !isEmpty(getDeeper('gatewayErrorCode')(this.getOrderInfo));
-		this.showSuccessVisa = !this.showFailure && WayPayments.creditCard.code === code;
-		this.showSuccessDeposit = !this.showFailure && WayPayments.deposit.code === code;
+		this.showSuccessVisa = !this.showFailure && creditCard.code === code;
+		this.showSuccessDeposit = !this.showFailure && deposit.code === code;
 	}
 }
 
