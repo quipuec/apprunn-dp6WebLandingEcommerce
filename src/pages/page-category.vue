@@ -336,9 +336,10 @@ export default {
 .section-pagination-category {
 	align-items: center;
 	display: flex;
+	padding: 1rem;
 
 	@media (max-width: 986px) {
-		display: none;
+		// display: none;
 	}
 }
 
@@ -438,7 +439,7 @@ export default {
 	justify-content: flex-end;
 
 	@media (max-width: 986px) {
-		display: none !important;
+		// display: none !important;
 	}
 }
 </style>
