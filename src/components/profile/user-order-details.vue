@@ -53,7 +53,7 @@
 				<product-rating :product="currentProduct"/>
 				<form-opinion @cancel-opinion="rating = !rating"/>
 			</section>
-			<section class="table absolute w-100" v-else :key="2">
+			<section class="table w-100" v-else :key="2">
 				<responsive-table
 					align-left
 					:columns="columns"

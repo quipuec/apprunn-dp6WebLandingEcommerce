@@ -117,6 +117,7 @@ async function loadProduct() {
 	try {
 		const params = {
 			page: this.page,
+			limit: 20,
 		};
 		const url = `products-public?eCategories=${this.id}`;
 		const { data: products, headers } = await this.$httpProductsPublic.get(url, { params });
