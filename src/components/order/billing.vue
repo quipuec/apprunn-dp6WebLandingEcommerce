@@ -33,7 +33,7 @@
 			:value="billing.ruc"
 			@blur="onBlur"
 		>
-			<span v-if="$v.billing.ruc.$invalid">Documento inválido</span>
+			<span v-if="$v.billing.ruc.$invalid">Documento {{rucWordByCountry}}</span>
 		</app-input>
 		<app-input
 			placeholder="Dirección de domicilio fiscal"
@@ -86,6 +86,14 @@ function validatingDocumentNumber(val) {
 }
 
 function validations() {
+	if (this.isPeru) {
+		const billing = {
+			address: { required },
+			ruc: { required },
+			rzSocial: { required },
+		};
+		return { billing };
+	}
 	return {
 		billing: {
 			address: { required },
@@ -96,6 +104,10 @@ function validations() {
 			rzSocial: { required },
 		},
 	};
+}
+
+function rucWordByCountry() {
+	return this.isPeru ? 'requerido' : 'inválido';
 }
 
 function data() {
@@ -118,6 +130,7 @@ export default {
 			'getFlagBill',
 			'getOrderInfo',
 		]),
+		rucWordByCountry,
 	},
 	data,
 	methods: {
