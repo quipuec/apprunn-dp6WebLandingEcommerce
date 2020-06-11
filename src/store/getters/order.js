@@ -55,7 +55,10 @@ const getters = {
 		const invalidNewDelvery = getDeeper('id')(delivery) === 0
 			? isEmpty(customerAddress) : false;
 		const invalidBill = flagBill ? isEmpty(bill) : false;
-		const invalidShippingCost = flagPickUp === 1 ? isEmpty(shippingCost) : false;
+		let invalidShippingCost = false;
+		if (flagPickUp === 1) {
+			invalidShippingCost = shippingCost >= 0;
+		}
 		return lib.atLeastOneTrue(
 			invalidResponsible,
 			invalidDelivery,
