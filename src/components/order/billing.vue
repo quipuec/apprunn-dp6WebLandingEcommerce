@@ -78,6 +78,7 @@ function changeBillSelection(val) {
 function onBlur(val) {
 	this.billing.ruc = val;
 	this.$v.billing.ruc.$touch();
+	this.showNotification('Validando documento', 'info');
 }
 
 function validatingDocumentNumber(val) {
@@ -114,6 +115,10 @@ function rucWordByCountry() {
 	return this.isPeru ? 'requerido' : 'inválido';
 }
 
+function handlerInvalid() {
+	this.validateForm();
+}
+
 function data() {
 	return {
 		billing: {
@@ -140,12 +145,16 @@ export default {
 	data,
 	methods: {
 		changeBillSelection,
+		handlerInvalid,
 		onBlur,
 		validateForm,
 		validatingDocumentNumber,
 	},
 	mounted,
 	validations,
+	watch: {
+		'$v.$invalid': handlerInvalid,
+	},
 };
 </script>
 <style lang="scss" scoped>

@@ -54,15 +54,16 @@ import appInput from '@/components/shared/inputs/app-input';
 function mounted() {
 	if (getDeeper('responsiblePickUp')(this.getOrderInfo)) {
 		this.responsible = { ...this.getOrderInfo.responsiblePickUp };
+		this.validateForm();
 	} else {
 		this.setUserData(this.user);
 	}
-	this.validateForm();
 }
 
 function setUserData(user) {
 	const { dni, email: mail, name, phone, lastname } = user;
 	this.responsible = { dni, name, email: mail, phone, lastname };
+	this.validateForm();
 }
 
 function validateForm() {
