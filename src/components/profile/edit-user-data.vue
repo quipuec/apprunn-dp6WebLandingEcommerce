@@ -3,8 +3,8 @@
 		<div class="form-container">
 			<form class="user-form">
 				<app-input class="user-name" placeholder="Nombre" v-model="userData.name"/>
-				<app-input class="user-dni" :placeholder="labelCountry" v-model="userData.dni"/>
 				<app-input class="user-lastname" placeholder="Apellido" v-model="userData.lastname"/>
+				<app-input class="user-dni" :placeholder="labelCountry" v-model="userData.dni"/>
 				<app-input class="user-ruc" placeholder="RUC" v-model="userData.ruc"/>
 				<app-select
 					class="user-gender"
@@ -14,7 +14,7 @@
 					:items="genders"
 					v-model="userData.gender"
 				/>
-				<app-input class="user-postcode" placeholder="Código postal" v-model="userData.postalCode"/>
+				<app-input class="user-phone" placeholder="Teléfono" v-model="userData.phone"/>
 				<app-select
 					class="user-department"
 					:placeholder="countryLabels.department"
@@ -24,15 +24,7 @@
 					v-model="userData.provinceId"
 					@input="selectDepartment"
 				/>
-				<app-input class="user-phone" placeholder="Teléfono" v-model="userData.phone"/>
-				<app-select
-					class="user-district"
-					:placeholder="countryLabels.district"
-					item-text="name"
-					item-value="id"
-					:items="districts"
-					v-model="userData.parishId"
-				/>
+				<app-input class="user-postcode" placeholder="Código postal" v-model="userData.postalCode"/>
 				<app-select
 					class="user-province"
 					:placeholder="countryLabels.province"
@@ -41,6 +33,14 @@
 					:items="provinces"
 					v-model="userData.cityId"
 					@input="selectProvince"
+				/>
+				<app-select
+					class="user-district"
+					:placeholder="countryLabels.district"
+					item-text="name"
+					item-value="id"
+					:items="districts"
+					v-model="userData.parishId"
 				/>
 			</form>
 			<section class="btn-section mb-2">
