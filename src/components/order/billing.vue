@@ -10,7 +10,7 @@
 		<v-switch
 			:readonly="disabledSwitch"
 			hide-details
-			label="Solicitar Factura"
+			:label="labelByCountry"
 			class="billing-style"
 			:value="getFlagBill"
 			:input-value="getFlagBill"
@@ -117,6 +117,10 @@ function handlerInvalid() {
 	this.validateForm();
 }
 
+function labelByCountry() {
+	return this.isEcuador ? 'Factura a terceros' : 'Solicitar Factura';
+}
+
 function data() {
 	return {
 		billing: {
@@ -138,6 +142,7 @@ export default {
 			'getFlagBill',
 			'getOrderInfo',
 		]),
+		labelByCountry,
 		rucWordByCountry,
 	},
 	data,
