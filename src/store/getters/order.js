@@ -82,10 +82,25 @@ const getters = {
 		return newProducts;
 	},
 	getResponsible(state) {
-		return state.order.responsible;
+		const { name, lastname, dni, phone } = state.order.responsible;
+		const fullname = `${name} ${lastname}`;
+		return { name, lastname, fullname, dni, phone };
 	},
 	getShippingCost(state) {
-		return state.order.shippingCost;
+		const { price, taxAmount } = state.order.shippingCost;
+		if (price >= 0 && taxAmount >= 0) {
+			return price + taxAmount;
+		}
+		return null;
+	},
+	getShippingTaxAmount(state) {
+		return state.order.shippingCost.taxAmount;
+	},
+	getShippingFlagTax(state) {
+		return !!state.order.shippingCost.flagTax;
+	},
+	getShippingTax(state) {
+		return state.order.shippingCost.tax;
 	},
 	getCustomerAddress(state) {
 		return state.order.customerAddress;

@@ -9,6 +9,14 @@
 			<span v-if="$v.responsible.name.$invalid">El nombre es requerido</span>
 		</app-input>
 		<app-input
+			placeholder="Apellido responsable de recibir"
+			class="mx-2 my-1 responsible-field"
+			v-model="responsible.lastname"
+			@input="validateForm"
+		>
+			<span v-if="$v.responsible.lastname.$invalid">El Apellido es requerido</span>
+		</app-input>
+		<app-input
 			:placeholder="labelCountry"
 			class="mx-2 my-1 responsible-field"
 			v-model="responsible.dni"
@@ -47,8 +55,8 @@ function mounted() {
 	if (getDeeper('responsiblePickUp')(this.getOrderInfo)) {
 		this.responsible = { ...this.getOrderInfo.responsiblePickUp };
 	} else {
-		const { dni, email: mail, name, phone } = this.user;
-		this.responsible = { dni, name, email: mail, phone };
+		const { dni, email: mail, name, phone, lastname } = this.user;
+		this.responsible = { dni, name, email: mail, phone, lastname };
 	}
 	this.validateForm();
 }
@@ -78,6 +86,7 @@ function validations() {
 		responsible: {
 			dni: { required },
 			email: { email, required },
+			lastname: { required },
 			name: { required },
 			phone: { required },
 		},
@@ -93,6 +102,7 @@ function data() {
 		responsible: {
 			dni: '',
 			email: '',
+			lastname: '',
 			name: '',
 			phone: '',
 		},
