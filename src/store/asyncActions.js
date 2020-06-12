@@ -156,6 +156,7 @@ const asyncActions = {
 	LOAD_USER_DATA: async ({ commit }, context) => {
 		const url = 'customers/current';
 		const { data: user } = await context.$httpSales.get(url);
+		context.setLocalData('ecommerce::ecommerce-user', user);
 		commit('setUser', user);
 	},
 	SET_CURRENCY_DEFAULT: async ({ commit }, context) => {
