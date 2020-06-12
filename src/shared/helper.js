@@ -88,6 +88,9 @@ function updateOrderDetailsInLocalStorage(products) {
 function buildOrderBody(flagFinish, getters) {
 	const body = {
 		costShipping: getters.getShippingCost,
+		costShippingFlagTax: getters.getShippingFlagTax,
+		costShippingTax: getters.getShippingTax,
+		costShippingTaxAmount: getters.getShippingTaxAmount,
 		customerAddressId: getters.getCustomerAddressId,
 		customerAddress: getters.getCustomerAddressId ? null : getters.getCustomerAddress,
 		customerBill: getters.getFlagBill ? getters.getBillingData : null,

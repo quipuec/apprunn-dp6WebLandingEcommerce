@@ -95,10 +95,10 @@ async function calculateShippingCost(provinceId) {
 	const body = this.buildBody(provinceId);
 	try {
 		const { data: amount } = await this.$httpProducts.post(url, body);
-		this.$store.commit('SET_SHIPPING_COST', amount || 0);
+		this.$store.commit('SET_SHIPPING_COST', amount);
 	} catch (error) {
 		if (error.data.message === 'PRICE_NOT_CONFIGURATION') {
-			this.$store.commit('SET_SHIPPING_COST', 0);
+			this.$store.commit('SET_SHIPPING_COST', null);
 			this.showNotification('No es posible hacer envios a ese destino.', 'error');
 		}
 	}

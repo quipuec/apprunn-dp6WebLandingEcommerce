@@ -6,6 +6,7 @@
 			:style="`border-color: ${borderColor}`"
 			:value="value"
 			@input="sendValue"
+			@blur="blurValue"
 		/>
 		<span class="err-message">
 			<slot></slot>
@@ -19,10 +20,15 @@
 		this.$emit('input', target.value);
 	}
 
+	function blurValue({ target }) {
+		this.$emit('blur', target.value);
+	}
+
 	export default {
 		name: 'app-input',
 		inheritAttrs: false,
 		methods: {
+			blurValue,
 			sendValue,
 		},
 		props: {

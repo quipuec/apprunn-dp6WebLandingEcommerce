@@ -54,7 +54,7 @@ function updateFilters(context, filters) {
 	this.commit('UPDATE_FILTERS', filters);
 }
 
-function getOrderData({ commit }, order) {
+function getOrderData({ commit, dispatch }, order) {
 	const { customerBill } = order;
 	commit('SET_BILL_SELECTION', false);
 	if (customerBill) {
@@ -69,10 +69,22 @@ function getOrderData({ commit }, order) {
 	commit('SET_ORDER_ID', order.id);
 	commit('SET_ORDER_TOTAL', order.total);
 	commit('SET_ORDER_DETAILS', order.details);
-	commit('SET_SHIPPING_COST', order.costShipping);
+	dispatch('setShippingCost', order);
 	commit('SET_CUSTOMER_ADDRESS', null);
 	commit('SET_ORDER_STATUS', order.orderStateId);
 	commit('SET_FLAG_STATUS_ORDER', order.flagStatusOrder);
+}
+
+function setShippingCost({ commit }, order) {
+	const { costShippingFlagTax, costShippingTax, costShippingTaxAmount, costShipping } = order;
+	const costShippingObject = {
+		flagTax: costShippingFlagTax,
+		tax: costShippingTax,
+		taxAmount: costShippingTaxAmount,
+		price: costShipping - costShippingTaxAmount,
+
+	};
+	commit('SET_SHIPPING_COST', costShippingObject);
 }
 
 function SET_DEFAULT_VALUES({ commit }) {
@@ -86,7 +98,7 @@ function SET_DEFAULT_VALUES({ commit }) {
 	commit('SET_ORDER_ID', null);
 	commit('SET_ORDER_TOTAL', null);
 	commit('SET_ORDER_DETAILS', []);
-	commit('SET_SHIPPING_COST', 0);
+	commit('SET_SHIPPING_COST', {});
 	commit('SET_ORDER_STATUS', null);
 	commit('SET_FLAG_STATUS_ORDER', null);
 }
@@ -190,6 +202,7 @@ const methods = {
 	UPDATE_PRODUCT_SEARCH,
 	updateProductSelect,
 	resetCounter,
+	setShippingCost,
 	SET_ECOMMERCE_THEME,
 	SET_DEFAULT_VALUES,
 	SET_WAY_PAYMENT,

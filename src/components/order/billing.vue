@@ -30,10 +30,10 @@
 		<app-input
 			placeholder="Número de RUC"
 			class="mx-2 my-1 ruc-field"
-			v-model="billing.ruc"
-			@input="validateForm"
+			:value="billing.ruc"
+			@blur="onBlur"
 		>
-			<span v-if="$v.billing.ruc.$invalid">El RUC es requerido</span>
+			<span v-if="$v.billing.ruc.$invalid">Documento {{rucWordByCountry}}</span>
 		</app-input>
 		<app-input
 			placeholder="Dirección de domicilio fiscal"
@@ -71,14 +71,43 @@ function changeBillSelection(val) {
 	this.$store.commit('SET_BILL_SELECTION', val);
 }
 
+function onBlur(val) {
+	this.billing.ruc = val;
+	this.$v.billing.ruc.$touch();
+}
+
+function validatingDocumentNumber(val) {
+	if (this.isPeru) {
+		return true;
+	}
+	const countryCode = this.getLocalStorage('ecommerce::country');
+	const url = `ruc/${val}?codeCountry=${countryCode}`;
+	return this.$httpDocumentNumberValidating.get(url);
+}
+
 function validations() {
-	return {
-		billing: {
+	if (this.isPeru) {
+		const billing = {
 			address: { required },
 			ruc: { required },
 			rzSocial: { required },
+		};
+		return { billing };
+	}
+	return {
+		billing: {
+			address: { required },
+			ruc: {
+				required,
+				validatingDocumentNumber,
+			},
+			rzSocial: { required },
 		},
 	};
+}
+
+function rucWordByCountry() {
+	return this.isPeru ? 'requerido' : 'inválido';
 }
 
 function data() {
@@ -101,11 +130,14 @@ export default {
 			'getFlagBill',
 			'getOrderInfo',
 		]),
+		rucWordByCountry,
 	},
 	data,
 	methods: {
 		changeBillSelection,
+		onBlur,
 		validateForm,
+		validatingDocumentNumber,
 	},
 	mounted,
 	validations,
