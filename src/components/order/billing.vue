@@ -10,6 +10,7 @@
 	</section>
 	<div class="billing-switch">
 		<v-switch
+			:readonly="disabledSwitch"
 			hide-details
 			label="Solicitar Factura"
 			class="billing-style"
@@ -57,6 +58,9 @@ function mounted() {
 		this.billing = { address, ruc, rzSocial };
 		this.changeBillSelection(true);
 		this.validateForm();
+	} else if (this.isEcuador) {
+		this.changeBillSelection(true);
+		this.disabledSwitch = true;
 	}
 }
 
@@ -117,6 +121,7 @@ function data() {
 			ruc: '',
 			rzSocial: '',
 		},
+		disabledSwitch: false,
 	};
 }
 

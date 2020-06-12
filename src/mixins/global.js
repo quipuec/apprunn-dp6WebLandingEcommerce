@@ -139,11 +139,16 @@ function updatePageTitle(title) {
 	document.title = title;
 }
 
+function isEcuador() {
+	return !this.isPeru;
+}
+
 const mixin = {
 	data,
 	computed: {
 		countryLabels,
 		globalColors,
+		isEcuador,
 		isPeru,
 		token,
 	},
