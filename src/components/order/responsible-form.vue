@@ -54,10 +54,15 @@ import appInput from '@/components/shared/inputs/app-input';
 function mounted() {
 	if (getDeeper('responsiblePickUp')(this.getOrderInfo)) {
 		this.responsible = { ...this.getOrderInfo.responsiblePickUp };
+		this.validateForm();
 	} else {
-		const { dni, email: mail, name, phone, lastname } = this.user;
-		this.responsible = { dni, name, email: mail, phone, lastname };
+		this.setUserData(this.user);
 	}
+}
+
+function setUserData(user) {
+	const { dni, email: mail, name, phone, lastname } = user;
+	this.responsible = { dni, name, email: mail, phone, lastname };
 	this.validateForm();
 }
 
@@ -124,11 +129,15 @@ export default {
 	},
 	data,
 	methods: {
+		setUserData,
 		validDni,
 		validateForm,
 	},
 	mounted,
 	validations,
+	watch: {
+		user: setUserData,
+	},
 };
 </script>
 <style lang="scss" scoped>

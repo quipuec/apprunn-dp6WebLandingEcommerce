@@ -59,7 +59,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { isEmpty } from '@/shared/lib';
+import { getDeeper, isEmpty } from '@/shared/lib';
 import addressComponent from '@/components/order/address-component';
 import appButtonOrder from '@/components/shared/buttons/app-button-order';
 import billing from '@/components/order/billing';
@@ -69,9 +69,9 @@ import newAddress from '@/components/order/new-address';
 import responsibleForm from '@/components/order/responsible-form';
 import waysDeliveries from '@/shared/enums/waysDeliveries';
 
-function created() {
-	this.$store.dispatch('LOAD_DIRECTIONS', this);
-	this.$store.dispatch('LOAD_WAREHOUSES', this);
+async function mounted() {
+	await this.$store.dispatch('LOAD_DIRECTIONS', this);
+	await this.$store.dispatch('LOAD_WAREHOUSES', this);
 	this.$store.commit('SET_DELIVERY_PLACE', null);
 	this.setDeliveryPlaceByDefault();
 	this.setOrderInfoByDefault();
@@ -137,6 +137,7 @@ function handlerDeliveryAddress(newDelivery) {
 			this.selectedWarehouse.name = name;
 			this.selectedWarehouse.location = location;
 		}
+		this.handlerDirectionsChange();
 	}
 }
 
@@ -214,7 +215,8 @@ function clearSelectedWarehouse() {
 
 function handlerDirectionsChange() {
 	if (this.getFlagPickUp === waysDeliveries.house.value) {
-		const deliveryExist = this.getDirections.find(d => d.id === this.getDeliveryAddress.id);
+		const id = getDeeper('id')(this.getDeliveryAddress);
+		const deliveryExist = this.getDirections.find(d => d.id === id);
 		const directionDelivery = deliveryExist || this.favoriteDirection;
 		this.$store.commit('SET_DELIVERY_PLACE', directionDelivery);
 		this.calculateShippingCost(directionDelivery);
@@ -229,7 +231,7 @@ function favoriteDirection() {
 }
 
 async function calculateShippingCost(location) {
-	if (location) {
+	if (location && location.provinceId) {
 		const { provinceId } = location;
 		const url = '/weight/price';
 		const body = this.buildBody(provinceId);
@@ -338,7 +340,6 @@ export default {
 		warehousesMarkers,
 		warehousesZoom,
 	},
-	created,
 	data,
 	methods: {
 		buildBody,
@@ -353,6 +354,7 @@ export default {
 		setOrderInfoByDefault,
 		warehouseSelected,
 	},
+	mounted,
 	watch: {
 		getDeliveryAddress: {
 			deep: true,

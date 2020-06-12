@@ -5,13 +5,12 @@
 			<img src="/static/icons/tax.svg" alt="ícono de impuestos">
 			<h2 class="billing-section-title">Facturación</h2>
 		</div>
-		<p class="billing-text-regular">Activa esta opción para solicitar factura. No aplican productos que indicaban "No se emite factura".</p>
-		<p class="billing-text-highlight">Estimado cliente, recuerda que solamente recibirás factura sobre compras realizadas a Linio o a sellers obligados a facturar. Gracias!</p>
 	</section>
 	<div class="billing-switch">
 		<v-switch
+			:readonly="disabledSwitch"
 			hide-details
-			label="Solicitar Factura"
+			:label="labelByCountry"
 			class="billing-style"
 			:value="getFlagBill"
 			:input-value="getFlagBill"
@@ -57,6 +56,9 @@ function mounted() {
 		this.billing = { address, ruc, rzSocial };
 		this.changeBillSelection(true);
 		this.validateForm();
+	} else if (this.isEcuador) {
+		this.changeBillSelection(true);
+		this.disabledSwitch = true;
 	}
 }
 
@@ -74,6 +76,7 @@ function changeBillSelection(val) {
 function onBlur(val) {
 	this.billing.ruc = val;
 	this.$v.billing.ruc.$touch();
+	this.showNotification('Validando documento', 'info');
 }
 
 function validatingDocumentNumber(val) {
@@ -110,6 +113,14 @@ function rucWordByCountry() {
 	return this.isPeru ? 'requerido' : 'inválido';
 }
 
+function handlerInvalid() {
+	this.validateForm();
+}
+
+function labelByCountry() {
+	return this.isEcuador ? 'Factura a terceros' : 'Solicitar Factura';
+}
+
 function data() {
 	return {
 		billing: {
@@ -117,6 +128,7 @@ function data() {
 			ruc: '',
 			rzSocial: '',
 		},
+		disabledSwitch: false,
 	};
 }
 
@@ -130,17 +142,22 @@ export default {
 			'getFlagBill',
 			'getOrderInfo',
 		]),
+		labelByCountry,
 		rucWordByCountry,
 	},
 	data,
 	methods: {
 		changeBillSelection,
+		handlerInvalid,
 		onBlur,
 		validateForm,
 		validatingDocumentNumber,
 	},
 	mounted,
 	validations,
+	watch: {
+		'$v.$invalid': handlerInvalid,
+	},
 };
 </script>
 <style lang="scss" scoped>
