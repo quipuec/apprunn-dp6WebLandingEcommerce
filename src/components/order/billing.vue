@@ -5,8 +5,6 @@
 			<img src="/static/icons/tax.svg" alt="ícono de impuestos">
 			<h2 class="billing-section-title">Facturación</h2>
 		</div>
-		<p class="billing-text-regular">Activa esta opción para solicitar factura. No aplican productos que indicaban "No se emite factura".</p>
-		<p class="billing-text-highlight">Estimado cliente, recuerda que solamente recibirás factura sobre compras realizadas a Linio o a sellers obligados a facturar. Gracias!</p>
 	</section>
 	<div class="billing-switch">
 		<v-switch
