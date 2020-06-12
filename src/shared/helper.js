@@ -165,6 +165,7 @@ function setTaxes(taxes) {
 			codePercentage: '01',
 			flagSales: true,
 			flagPurchases: false,
+			percentage: 0,
 		};
 	} else {
 		const tax = taxes[0];
@@ -174,6 +175,7 @@ function setTaxes(taxes) {
 			codePercentage: tax.codePercentage,
 			flagSales: Boolean(tax.flagSales),
 			flagPurchases: Boolean(tax.flagPurchases),
+			percentage: tax.percentage,
 		};
 	}
 	return newTaxes;
