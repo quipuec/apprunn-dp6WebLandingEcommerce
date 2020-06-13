@@ -86,8 +86,12 @@ function updateOrderDetailsInLocalStorage(products) {
 }
 
 function buildOrderBody(flagFinish, getters) {
+	const { id, name, address } = getters.getCommerceData.settings.defaultWarehouse;
 	const body = {
 		costShipping: getters.getShippingCost,
+		costShippingFlagTax: getters.getShippingFlagTax,
+		costShippingTax: getters.getShippingTax,
+		costShippingTaxAmount: getters.getShippingTaxAmount,
 		customerAddressId: getters.getCustomerAddressId,
 		customerAddress: getters.getCustomerAddressId ? null : getters.getCustomerAddress,
 		customerBill: getters.getFlagBill ? getters.getBillingData : null,
@@ -96,9 +100,9 @@ function buildOrderBody(flagFinish, getters) {
 		details: getOrderDetails(getters.getOrderDetails),
 		flagPickUp: getters.getFlagPickUp,
 		responsiblePickUp: getters.getResponsible,
-		warehouseId: process.env.WAREHOUSE_ID,
-		warehouseName: process.env.WAREHOUSE_NAME,
-		warehouseAddress: process.env.WAREHOUSE_ADDRESS,
+		warehouseId: id,
+		warehouseName: name,
+		warehouseAddress: address,
 	};
 	if (getters.getOrderId && getters.getOrderStatus) {
 		body.orderStateId = getters.getOrderStatus;
@@ -162,6 +166,7 @@ function setTaxes(taxes) {
 			codePercentage: '01',
 			flagSales: true,
 			flagPurchases: false,
+			percentage: 0,
 		};
 	} else {
 		const tax = taxes[0];
@@ -171,6 +176,7 @@ function setTaxes(taxes) {
 			codePercentage: tax.codePercentage,
 			flagSales: Boolean(tax.flagSales),
 			flagPurchases: Boolean(tax.flagPurchases),
+			percentage: tax.percentage,
 		};
 	}
 	return newTaxes;

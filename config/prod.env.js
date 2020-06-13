@@ -33,4 +33,5 @@ module.exports = {
 	WAYS_DELIVERIES: `'${process.env.WAYS_DELIVERIES}'`,
 	GOOGLE_MAP_API_KEY: `'${process.env.GOOGLE_MAP_API_KEY}'`,
 	DATA_FAST_URL: `'${process.env.DATA_FAST_URL}'`,
+	URL_VALID_DOCUMENT_NUMBER: `'${process.env.URL_VALID_DOCUMENT_NUMBER}'`,
 };

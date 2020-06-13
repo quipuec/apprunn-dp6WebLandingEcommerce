@@ -54,7 +54,7 @@ export default {
 		},
 		products: [],
 		responsible: null,
-		shippingCost: 0,
+		shippingCost: {},
 		status: [],
 		total: null,
 		waysPayments: null,

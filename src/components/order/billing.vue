@@ -5,13 +5,11 @@
 			<img src="/static/icons/tax.svg" alt="ícono de impuestos">
 			<h2 class="billing-section-title">Facturación</h2>
 		</div>
-		<p class="billing-text-regular">Activa esta opción para solicitar factura. No aplican productos que indicaban "No se emite factura".</p>
-		<p class="billing-text-highlight">Estimado cliente, recuerda que solamente recibirás factura sobre compras realizadas a Linio o a sellers obligados a facturar. Gracias!</p>
 	</section>
 	<div class="billing-switch">
 		<v-switch
 			hide-details
-			label="Solicitar Factura"
+			:label="labelByCountry"
 			class="billing-style"
 			:value="getFlagBill"
 			:input-value="getFlagBill"
@@ -20,20 +18,24 @@
 	</div>	
 	<form class="billing-form" v-if="getFlagBill">
 		<app-input
+			placeholder="Número de RUC"
+			class="mx-2 my-1 ruc-field"
+			v-model="billing.ruc"
+			@input="checkingFalgValidDocumentNumber"
+			@blur="onBlur"
+		>
+			<span
+				v-if="$v.flagValidDocumentNumber.$invalid && $v.billing.ruc.required"
+			>Documento {{rucWordByCountry}}</span>
+			<span v-if="$v.billing.ruc.$invalid">Documento requerido</span>
+		</app-input>
+		<app-input
 			placeholder="Razón Social"
 			class="mx-2 my-1 rzSocial-field"
 			v-model="billing.rzSocial"
 			@input="validateForm"
 		>
 			<span v-if="$v.billing.rzSocial.$invalid">La razón social es requerida</span>
-		</app-input>
-		<app-input
-			placeholder="Número de RUC"
-			class="mx-2 my-1 ruc-field"
-			v-model="billing.ruc"
-			@input="validateForm"
-		>
-			<span v-if="$v.billing.ruc.$invalid">El RUC es requerido</span>
 		</app-input>
 		<app-input
 			placeholder="Dirección de domicilio fiscal"
@@ -71,14 +73,69 @@ function changeBillSelection(val) {
 	this.$store.commit('SET_BILL_SELECTION', val);
 }
 
+function onBlur(val) {
+	this.billing.ruc = val;
+	if (this.isEcuador && val) {
+		this.validatingDocumentNumber(val);
+	}
+}
+
+async function validatingDocumentNumber(val) {
+	this.showNotification('Validando documento', 'info');
+	const countryCode = this.getLocalStorage('ecommerce::country');
+	const url = `ruc/${val}?codeCountry=${countryCode}`;
+	try {
+		const { data: res } = await this.$httpDocumentNumberValidating.get(url);
+		this.billing.address = res.data.domicilio;
+		this.billing.rzSocial = res.data.nombre;
+		this.showNotification('Validación exitosa', 'success');
+		this.flagValidDocumentNumber = true;
+	} catch (error) {
+		this.billing.address = '';
+		this.billing.rzSocial = '';
+		this.showNotification(
+			'No fue posible validar el documento. Intente con otro.',
+			'error',
+		);
+		this.flagValidDocumentNumber = false;
+	}
+}
+
 function validations() {
+	if (this.isPeru) {
+		const billing = {
+			address: { required },
+			ruc: { required },
+			rzSocial: { required },
+		};
+		return { billing };
+	}
 	return {
 		billing: {
 			address: { required },
 			ruc: { required },
 			rzSocial: { required },
 		},
+		flagValidDocumentNumber: {
+			valid: v => !!v,
+		},
 	};
+}
+
+function rucWordByCountry() {
+	return this.isPeru ? 'requerido' : 'inválido';
+}
+
+function handlerInvalid() {
+	this.validateForm();
+}
+
+function labelByCountry() {
+	return this.isEcuador ? 'Factura a terceros' : 'Solicitar Factura';
+}
+
+function checkingFalgValidDocumentNumber() {
+	this.flagValidDocumentNumber = !!this.billing.ruc;
 }
 
 function data() {
@@ -88,6 +145,7 @@ function data() {
 			ruc: '',
 			rzSocial: '',
 		},
+		flagValidDocumentNumber: true,
 	};
 }
 
@@ -101,14 +159,23 @@ export default {
 			'getFlagBill',
 			'getOrderInfo',
 		]),
+		labelByCountry,
+		rucWordByCountry,
 	},
 	data,
 	methods: {
 		changeBillSelection,
+		checkingFalgValidDocumentNumber,
+		handlerInvalid,
+		onBlur,
 		validateForm,
+		validatingDocumentNumber,
 	},
 	mounted,
 	validations,
+	watch: {
+		'$v.$invalid': handlerInvalid,
+	},
 };
 </script>
 <style lang="scss" scoped>

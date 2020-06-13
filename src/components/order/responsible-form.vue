@@ -9,6 +9,14 @@
 			<span v-if="$v.responsible.name.$invalid">El nombre es requerido</span>
 		</app-input>
 		<app-input
+			placeholder="Apellido responsable de recibir"
+			class="mx-2 my-1 responsible-field"
+			v-model="responsible.lastname"
+			@input="validateForm"
+		>
+			<span v-if="$v.responsible.lastname.$invalid">El Apellido es requerido</span>
+		</app-input>
+		<app-input
 			:placeholder="labelCountry"
 			class="mx-2 my-1 responsible-field"
 			v-model="responsible.dni"
@@ -46,11 +54,19 @@ import appInput from '@/components/shared/inputs/app-input';
 function mounted() {
 	if (getDeeper('responsiblePickUp')(this.getOrderInfo)) {
 		this.responsible = { ...this.getOrderInfo.responsiblePickUp };
+		this.loadedFromOrder = true;
+		this.validateForm();
 	} else {
-		const { dni, email: mail, name, phone } = this.user;
-		this.responsible = { dni, name, email: mail, phone };
+		this.setUserData(this.user);
 	}
-	this.validateForm();
+}
+
+function setUserData(user) {
+	if (!this.loadedFromOrder) {
+		const { dni, email: mail, name, phone, lastname } = user;
+		this.responsible = { dni, name, email: mail, phone, lastname };
+		this.validateForm();
+	}
 }
 
 function validateForm() {
@@ -78,6 +94,7 @@ function validations() {
 		responsible: {
 			dni: { required },
 			email: { email, required },
+			lastname: { required },
 			name: { required },
 			phone: { required },
 		},
@@ -90,9 +107,11 @@ function validations() {
 
 function data() {
 	return {
+		loadedFromOrder: false,
 		responsible: {
 			dni: '',
 			email: '',
+			lastname: '',
 			name: '',
 			phone: '',
 		},
@@ -114,11 +133,15 @@ export default {
 	},
 	data,
 	methods: {
+		setUserData,
 		validDni,
 		validateForm,
 	},
 	mounted,
 	validations,
+	watch: {
+		user: setUserData,
+	},
 };
 </script>
 <style lang="scss" scoped>

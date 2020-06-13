@@ -59,7 +59,7 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import { isEmpty } from '@/shared/lib';
+import { getDeeper, isEmpty } from '@/shared/lib';
 import addressComponent from '@/components/order/address-component';
 import appButtonOrder from '@/components/shared/buttons/app-button-order';
 import billing from '@/components/order/billing';
@@ -69,12 +69,12 @@ import newAddress from '@/components/order/new-address';
 import responsibleForm from '@/components/order/responsible-form';
 import waysDeliveries from '@/shared/enums/waysDeliveries';
 
-function created() {
-	this.$store.dispatch('LOAD_DIRECTIONS', this);
-	this.$store.dispatch('LOAD_WAREHOUSES', this);
-	this.$store.commit('SET_DELIVERY_PLACE', null);
-	this.setDeliveryPlaceByDefault();
-	this.setOrderInfoByDefault();
+async function created() {
+	await this.$store.dispatch('LOAD_DIRECTIONS', this);
+	await this.$store.dispatch('LOAD_WAREHOUSES', this);
+	if (!this.flagWatchOrderInfo) {
+		this.setOrderInfoByDefault();
+	}
 }
 
 function setOrderInfoByDefault() {
@@ -137,6 +137,7 @@ function handlerDeliveryAddress(newDelivery) {
 			this.selectedWarehouse.name = name;
 			this.selectedWarehouse.location = location;
 		}
+		this.handlerDirectionsChange();
 	}
 }
 
@@ -190,9 +191,7 @@ function directionSelected(id) {
 		this.$store.commit('SET_SHIPPING_COST', 0);
 	} else {
 		this.calculateShippingCost(w);
-		if (!isEmpty(this.getCustomerAddress)) {
-			this.$store.commit('SET_CUSTOMER_ADDRESS', null);
-		}
+		this.$store.commit('SET_CUSTOMER_ADDRESS', null);
 	}
 }
 
@@ -213,8 +212,9 @@ function clearSelectedWarehouse() {
 }
 
 function handlerDirectionsChange() {
-	if (this.getFlagPickUp === waysDeliveries.house.value) {
-		const deliveryExist = this.getDirections.find(d => d.id === this.getDeliveryAddress.id);
+	if (this.getFlagPickUp === waysDeliveries.house.value && isEmpty(this.getOrderInfo)) {
+		const id = getDeeper('id')(this.getDeliveryAddress);
+		const deliveryExist = this.getDirections.find(d => d.id === id);
 		const directionDelivery = deliveryExist || this.favoriteDirection;
 		this.$store.commit('SET_DELIVERY_PLACE', directionDelivery);
 		this.calculateShippingCost(directionDelivery);
@@ -229,16 +229,16 @@ function favoriteDirection() {
 }
 
 async function calculateShippingCost(location) {
-	if (location) {
+	if (location && location.provinceId) {
 		const { provinceId } = location;
 		const url = '/weight/price';
 		const body = this.buildBody(provinceId);
 		try {
 			const { data: amount } = await this.$httpProducts.post(url, body);
-			this.$store.commit('SET_SHIPPING_COST', amount || 0);
+			this.$store.commit('SET_SHIPPING_COST', amount);
 		} catch (error) {
 			if (error.data.message === 'PRICE_NOT_CONFIGURATION') {
-				this.$store.commit('SET_SHIPPING_COST', 0);
+				this.$store.commit('SET_SHIPPING_COST', null);
 				this.showNotification('No es posible hacer envios a ese destino.', 'error');
 			}
 		}
@@ -264,7 +264,11 @@ function beforeDestroy() {
 }
 
 function atStore() {
-	return process.env.WAYS_DELIVERIES.includes(this.store.code);
+	const deliveryType = getDeeper('deliveryType')(this.getCommerceData);
+	if (deliveryType) {
+		return !!deliveryType.find(d => d.code === this.store.code);
+	}
+	return false;
 }
 
 function store() {
@@ -272,7 +276,11 @@ function store() {
 }
 
 function atHouse() {
-	return process.env.WAYS_DELIVERIES.includes(this.house.code);
+	const deliveryType = getDeeper('deliveryType')(this.getCommerceData);
+	if (deliveryType) {
+		return !!deliveryType.find(d => d.code === this.house.code);
+	}
+	return false;
 }
 
 function house() {
@@ -287,11 +295,19 @@ function setDeliveryPlaceByDefault() {
 	}
 }
 
+function handlerOrderInfo(newOrderInfo) {
+	if (!isEmpty(newOrderInfo)) {
+		this.flagWatchOrderInfo = true;
+		this.setOrderInfoByDefault();
+	}
+}
+
 function data() {
 	return {
 		logo: {
 			section: '/static/icons/delivery-truck.svg',
 		},
+		flagWatchOrderInfo: false,
 		selectedDirection: {
 			id: 0,
 			addressLine1: '',
@@ -319,6 +335,7 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getCommerceData',
 			'getCustomerAddress',
 			'getDeliveryAddress',
 			'getDirections',
@@ -348,6 +365,7 @@ export default {
 		directionSelected,
 		handlerDeliveryAddress,
 		handlerDirectionsChange,
+		handlerOrderInfo,
 		selected,
 		setDeliveryPlaceByDefault,
 		setOrderInfoByDefault,
@@ -359,6 +377,7 @@ export default {
 			handler: handlerDeliveryAddress,
 		},
 		getDirections: handlerDirectionsChange,
+		getOrderInfo: handlerOrderInfo,
 	},
 };
 </script>

@@ -39,8 +39,8 @@ const orderMutation = {
 		localStorage.setItem('ecommerce::product-select', JSON.stringify([...newProducts]));
 		orderMutation.UPDATE_ORDER_DETAILS_IF_EXIST(state, newProducts);
 	},
-	SET_SHIPPING_COST(state, amount) {
-		Vue.set(state.order, 'shippingCost', amount);
+	SET_SHIPPING_COST(state, shippingCostObject) {
+		Vue.set(state.order, 'shippingCost', shippingCostObject);
 	},
 	SET_CUSTOMER_ADDRESS(state, address) {
 		Vue.set(state.order, 'customerAddress', address);
