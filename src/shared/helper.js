@@ -86,6 +86,7 @@ function updateOrderDetailsInLocalStorage(products) {
 }
 
 function buildOrderBody(flagFinish, getters) {
+	const { id, name, address } = getters.getCommerceData.settings.defaultWarehouse;
 	const body = {
 		costShipping: getters.getShippingCost,
 		costShippingFlagTax: getters.getShippingFlagTax,
@@ -99,9 +100,9 @@ function buildOrderBody(flagFinish, getters) {
 		details: getOrderDetails(getters.getOrderDetails),
 		flagPickUp: getters.getFlagPickUp,
 		responsiblePickUp: getters.getResponsible,
-		warehouseId: process.env.WAREHOUSE_ID,
-		warehouseName: process.env.WAREHOUSE_NAME,
-		warehouseAddress: process.env.WAREHOUSE_ADDRESS,
+		warehouseId: id,
+		warehouseName: name,
+		warehouseAddress: address,
 	};
 	if (getters.getOrderId && getters.getOrderStatus) {
 		body.orderStateId = getters.getOrderStatus;

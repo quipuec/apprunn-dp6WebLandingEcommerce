@@ -69,12 +69,12 @@ import newAddress from '@/components/order/new-address';
 import responsibleForm from '@/components/order/responsible-form';
 import waysDeliveries from '@/shared/enums/waysDeliveries';
 
-async function mounted() {
+async function created() {
 	await this.$store.dispatch('LOAD_DIRECTIONS', this);
 	await this.$store.dispatch('LOAD_WAREHOUSES', this);
-	this.$store.commit('SET_DELIVERY_PLACE', null);
-	this.setDeliveryPlaceByDefault();
-	this.setOrderInfoByDefault();
+	if (!this.flagWatchOrderInfo) {
+		this.setOrderInfoByDefault();
+	}
 }
 
 function setOrderInfoByDefault() {
@@ -191,9 +191,7 @@ function directionSelected(id) {
 		this.$store.commit('SET_SHIPPING_COST', 0);
 	} else {
 		this.calculateShippingCost(w);
-		if (!isEmpty(this.getCustomerAddress)) {
-			this.$store.commit('SET_CUSTOMER_ADDRESS', null);
-		}
+		this.$store.commit('SET_CUSTOMER_ADDRESS', null);
 	}
 }
 
@@ -214,7 +212,7 @@ function clearSelectedWarehouse() {
 }
 
 function handlerDirectionsChange() {
-	if (this.getFlagPickUp === waysDeliveries.house.value) {
+	if (this.getFlagPickUp === waysDeliveries.house.value && isEmpty(this.getOrderInfo)) {
 		const id = getDeeper('id')(this.getDeliveryAddress);
 		const deliveryExist = this.getDirections.find(d => d.id === id);
 		const directionDelivery = deliveryExist || this.favoriteDirection;
@@ -266,7 +264,11 @@ function beforeDestroy() {
 }
 
 function atStore() {
-	return process.env.WAYS_DELIVERIES.includes(this.store.code);
+	const deliveryType = getDeeper('deliveryType')(this.getCommerceData);
+	if (deliveryType) {
+		return !!deliveryType.find(d => d.code === this.store.code);
+	}
+	return false;
 }
 
 function store() {
@@ -274,7 +276,11 @@ function store() {
 }
 
 function atHouse() {
-	return process.env.WAYS_DELIVERIES.includes(this.house.code);
+	const deliveryType = getDeeper('deliveryType')(this.getCommerceData);
+	if (deliveryType) {
+		return !!deliveryType.find(d => d.code === this.house.code);
+	}
+	return false;
 }
 
 function house() {
@@ -289,11 +295,19 @@ function setDeliveryPlaceByDefault() {
 	}
 }
 
+function handlerOrderInfo(newOrderInfo) {
+	if (!isEmpty(newOrderInfo)) {
+		this.flagWatchOrderInfo = true;
+		this.setOrderInfoByDefault();
+	}
+}
+
 function data() {
 	return {
 		logo: {
 			section: '/static/icons/delivery-truck.svg',
 		},
+		flagWatchOrderInfo: false,
 		selectedDirection: {
 			id: 0,
 			addressLine1: '',
@@ -321,6 +335,7 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getCommerceData',
 			'getCustomerAddress',
 			'getDeliveryAddress',
 			'getDirections',
@@ -340,6 +355,7 @@ export default {
 		warehousesMarkers,
 		warehousesZoom,
 	},
+	created,
 	data,
 	methods: {
 		buildBody,
@@ -349,18 +365,19 @@ export default {
 		directionSelected,
 		handlerDeliveryAddress,
 		handlerDirectionsChange,
+		handlerOrderInfo,
 		selected,
 		setDeliveryPlaceByDefault,
 		setOrderInfoByDefault,
 		warehouseSelected,
 	},
-	mounted,
 	watch: {
 		getDeliveryAddress: {
 			deep: true,
 			handler: handlerDeliveryAddress,
 		},
 		getDirections: handlerDirectionsChange,
+		getOrderInfo: handlerOrderInfo,
 	},
 };
 </script>
