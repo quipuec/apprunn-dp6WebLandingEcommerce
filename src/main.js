@@ -3,6 +3,7 @@ import Vuelidate from 'vuelidate';
 import VueAnalytics from 'vue-analytics';
 import VueSimpleSVG from 'vue-simple-svg';
 import VueAwesomeSwiper from 'vue-awesome-swiper';
+import VueMeta from 'vue-meta';
 import 'swiper/dist/css/swiper.css';
 import VueTheMask from 'vue-the-mask';
 import VueAuthenticate from 'vue-authenticate';
@@ -35,6 +36,7 @@ registerMap(Vue);
 Vue.use(VueAxios, axios);
 Vue.use(VueTheMask);
 Vue.use(Vuelidate);
+Vue.use(VueMeta);
 Vue.use(VueSimpleSVG);
 Vue.use(VueAuthenticate, {
 	baseUrl: process.env.ACL_URL,
