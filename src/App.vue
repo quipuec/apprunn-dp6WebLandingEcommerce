@@ -157,7 +157,7 @@ export default {
 		getBanners,
 		getCommerceData,
 	},
-	metaInfo() {
+	head() {
 		return {
 			meta: [
 				{ property: 'og:title', content: 'Nombre del producto' },
