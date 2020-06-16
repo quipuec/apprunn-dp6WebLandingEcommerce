@@ -17,10 +17,23 @@
 import { mapGetters } from 'vuex';
 import modal from '@/components/shared/modal/modal-component';
 
+function mounted() {
+	this.getClientIp();
+}
+
+async function getClientIp() {
+	try {
+		({ data: this.clientIp } = await this.$http.get('https://api.ipify.org'));
+	} catch (err) {
+		this.showGenericError();
+	}
+}
+
 async function getTokenId() {
 	const body = {
 		orderId: this.getOrderId,
 		commerceCode: this.getCommerceData.code,
+		clientIp: this.clientIp,
 	};
 	const url = 'payment-transaction/dataweb/checkouts';
 	const { data: response } = await this.$httpSales.post(url, body);
@@ -75,6 +88,7 @@ function closeModal(val) {
 function data() {
 	return {
 		checkoutId: null,
+		clientIp: null,
 		loading: true,
 		show: false,
 		showModal: false,
@@ -94,9 +108,11 @@ export default {
 		baseUrl,
 	},
 	data,
+	mounted,
 	methods: {
 		closeModal,
 		createDataFastForm,
+		getClientIp,
 		getTokenId,
 		insertForm,
 		loadingFn,
