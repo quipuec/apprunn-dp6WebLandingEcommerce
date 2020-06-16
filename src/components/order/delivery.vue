@@ -10,7 +10,7 @@
 				button-title="Envío a Domicilio"
 				class="btn"
 				:active="getFlagPickUp === house.value"
-				@click="selected(house.code)"
+				@click="selected(house)"
 			>
 				<location-svg :active="getFlagPickUp === house.value"/>
 			</app-button-order>
@@ -19,7 +19,7 @@
 				button-title="Recoger en Tienda"
 				class="btn"
 				:active="getFlagPickUp === store.value"
-				@click="selected(store.code)"
+				@click="selected(store)"
 			>
 				<coffee-svg :active="getFlagPickUp === store.value"/>
 			</app-button-order>
@@ -94,7 +94,7 @@ function setOrderInfoByDefault() {
 
 function selected(val) {
 	let delivery = null;
-	if (val === this.house.code) {
+	if (val.code === this.house.code) {
 		delivery = this.favoriteDirection || this.selectedDirection;
 		this.selectedDirection = delivery;
 		this.calculateShippingCost(delivery);
@@ -102,7 +102,7 @@ function selected(val) {
 		this.$store.dispatch('setNoShippingCost');
 	}
 	this.$store.commit('SET_DELIVERY_PLACE', delivery);
-	this.$store.commit('SET_FLAG_PICKUP', waysDeliveries[val].value);
+	this.$store.commit('SET_FLAG_PICKUP', val.value);
 }
 
 function warehousesMarkers() {
