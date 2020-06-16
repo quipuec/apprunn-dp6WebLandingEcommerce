@@ -98,7 +98,7 @@ async function calculateShippingCost(provinceId) {
 		this.$store.commit('SET_SHIPPING_COST', amount);
 	} catch (error) {
 		if (error.data.message === 'PRICE_NOT_CONFIGURATION') {
-			this.$store.commit('SET_SHIPPING_COST', null);
+			this.$store.dispatch('setNoShippingCost');
 			this.showNotification('No es posible hacer envios a ese destino.', 'error');
 		}
 	}

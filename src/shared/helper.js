@@ -97,7 +97,7 @@ function buildOrderBody(flagFinish, getters) {
 		customerBill: getters.getFlagBill ? getters.getBillingData : null,
 		deliveryAddress: getters.getCustomerAddressId
 			? getters.getDeliveryAddress : getters.getCustomerAddress,
-		details: getOrderDetails(getters.getOrderDetails),
+		details: getOrderDetails(getters.getOrderDetails, id, name),
 		flagPickUp: getters.getFlagPickUp,
 		responsiblePickUp: getters.getResponsible,
 		warehouseId: id,
@@ -117,7 +117,7 @@ function buildOrderBody(flagFinish, getters) {
 	return body;
 }
 
-function getOrderDetails(products) {
+function getOrderDetails(products, warehouseId, warehouseName) {
 	return products.map((p) => {
 		const { taxes } = p;
 		const newTaxes = setTaxes(taxes);
@@ -150,8 +150,8 @@ function getOrderDetails(products) {
 			unitId: p.unit.id,
 			unitName: p.unit.name,
 			unitQuantity: p.quantity,
-			warehouseId: process.env.WAREHOUSE_ID,
-			warehouseName: process.env.WAREHOUSE_NAME,
+			warehouseId,
+			warehouseName,
 		};
 		return newP;
 	});
