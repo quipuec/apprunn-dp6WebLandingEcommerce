@@ -99,7 +99,7 @@ function selected(val) {
 		this.selectedDirection = delivery;
 		this.calculateShippingCost(delivery);
 	} else {
-		this.$store.commit('SET_SHIPPING_COST', 0);
+		this.$store.dispatch('setNoShippingCost');
 	}
 	this.$store.commit('SET_DELIVERY_PLACE', delivery);
 	this.$store.commit('SET_FLAG_PICKUP', waysDeliveries[val].value);
@@ -188,7 +188,7 @@ function directionSelected(id) {
 	const w = this.getDirections.find(war => war.id === id);
 	this.$store.commit('SET_DELIVERY_PLACE', w);
 	if (id === 0) {
-		this.$store.commit('SET_SHIPPING_COST', 0);
+		this.$store.dispatch('setNoShippingCost');
 	} else {
 		this.calculateShippingCost(w);
 		this.$store.commit('SET_CUSTOMER_ADDRESS', null);
@@ -235,10 +235,10 @@ async function calculateShippingCost(location) {
 		const body = this.buildBody(provinceId);
 		try {
 			const { data: amount } = await this.$httpProducts.post(url, body);
-			this.$store.commit('SET_SHIPPING_COST', amount);
+			this.$store.dispatch('setShippingCost', amount);
 		} catch (error) {
 			if (error.data.message === 'PRICE_NOT_CONFIGURATION') {
-				this.$store.commit('SET_SHIPPING_COST', null);
+				this.$store.dispatch('setNoShippingCost');
 				this.showNotification('No es posible hacer envios a ese destino.', 'error');
 			}
 		}
@@ -260,7 +260,7 @@ function buildBody(provinceId) {
 
 function beforeDestroy() {
 	this.$store.commit('SET_DELIVERY_PLACE', null);
-	this.$store.commit('SET_SHIPPING_COST', 0);
+	this.$store.dispatch('setNoShippingCost');
 }
 
 function atStore() {
