@@ -109,7 +109,7 @@ function setNoShippingCost({ commit }) {
 	commit('SET_SHIPPING_COST_OBJECT', shippingCost);
 }
 
-function SET_DEFAULT_VALUES({ commit }) {
+function SET_DEFAULT_VALUES({ commit, dispatch }) {
 	localStorage.removeItem('ecommerce-order');
 	commit('SET_BILLING_DATA', null);
 	commit('SET_ORDER_INFO', null);
@@ -120,7 +120,7 @@ function SET_DEFAULT_VALUES({ commit }) {
 	commit('SET_ORDER_ID', null);
 	commit('SET_ORDER_TOTAL', null);
 	commit('SET_ORDER_DETAILS', []);
-	commit('SET_SHIPPING_COST', 0);
+	dispatch('setNoShippingCost');
 	commit('SET_ORDER_STATUS', null);
 	commit('SET_FLAG_STATUS_ORDER', null);
 }
