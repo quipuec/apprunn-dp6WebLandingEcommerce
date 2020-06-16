@@ -382,6 +382,13 @@ export default {
 	watch: {
 		$route: newRoute,
 	},
+	metaInfo: {
+		meta: [
+			{ property: 'og:title', content: 'Nombre del producto' },
+			{ property: 'og:description', content: 'Detalle del producto' },
+			{ property: 'og:image', itemprop: 'image', content: 'https://casa-market-site.netlify.app/static/images/logos/casa-market.jpg' },
+		],
+	},
 };
 </script>
 <style lang="scss" scoped>
