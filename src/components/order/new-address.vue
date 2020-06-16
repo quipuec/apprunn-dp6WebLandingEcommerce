@@ -76,18 +76,20 @@ function created() {
 }
 
 function selectDepartment(id) {
-	this.newAddress.provinces = null;
-	this.newAddress.districts = null;
+	this.newAddress.province = null;
+	this.newAddress.district = null;
 	this.$store.commit('SET_PROVINCES', []);
 	this.$store.commit('SET_DISTRICTS', []);
 	this.calculateShippingCost(id);
 	this.$store.dispatch('LOAD_PROVINCES', { context: this, provinceId: id });
+	this.setCustomerAddress();
 }
 
 function selectProvince(id) {
 	this.newAddress.districts = null;
 	this.$store.commit('SET_DISTRICTS', []);
 	this.$store.dispatch('LOAD_DISTRICTS', { context: this, cityId: id });
+	this.setCustomerAddress();
 }
 
 async function calculateShippingCost(provinceId) {
@@ -95,7 +97,7 @@ async function calculateShippingCost(provinceId) {
 	const body = this.buildBody(provinceId);
 	try {
 		const { data: amount } = await this.$httpProducts.post(url, body);
-		this.$store.commit('SET_SHIPPING_COST', amount);
+		this.$store.dispatch('setShippingCost', amount);
 	} catch (error) {
 		if (error.data.message === 'PRICE_NOT_CONFIGURATION') {
 			this.$store.dispatch('setNoShippingCost');

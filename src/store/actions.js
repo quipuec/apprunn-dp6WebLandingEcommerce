@@ -101,7 +101,7 @@ function setShippingCost({ commit }, shippingCost) {
 
 function setNoShippingCost({ commit }) {
 	const shippingCost = {
-		flagTaxe: false,
+		flagTax: false,
 		price: 0,
 		tax: 0,
 		taxAmount: 0,
