@@ -75,7 +75,7 @@ function changeBillSelection(val) {
 
 function onBlur(val) {
 	this.billing.ruc = val;
-	if (this.isEcuador && val) {
+	if (this.isEcuador && this.flagBillingValidate && val) {
 		this.validatingDocumentNumber(val);
 	}
 }
@@ -138,6 +138,10 @@ function checkingFalgValidDocumentNumber() {
 	this.flagValidDocumentNumber = !!this.billing.ruc;
 }
 
+function flagBillingValidate() {
+	return this.getCommerceData.settings.flagBillingValidate;
+}
+
 function data() {
 	return {
 		billing: {
@@ -158,7 +162,9 @@ export default {
 		...mapGetters([
 			'getFlagBill',
 			'getOrderInfo',
+			'getCommerceData',
 		]),
+		flagBillingValidate,
 		labelByCountry,
 		rucWordByCountry,
 	},
