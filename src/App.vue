@@ -157,18 +157,16 @@ export default {
 		getBanners,
 		getCommerceData,
 	},
-	head() {
-		return {
-			meta: [
-				{ property: 'og:title', content: 'Nombre del producto' },
-				{ property: 'og:description', content: 'Detalle del producto' },
-				{ property: 'og:image', itemprop: 'image', content: 'https://casa-market-site.netlify.app/static/images/logos/casa-market.jpg' },
-				{ name: 'description', content: 'Detalle del producto' },
-				{ itemprop: 'image', content: 'https://casamarket-landing.netlify.app/static/images-new/logos/casa-market.jpg' },
-				{ name: 'thumbnail', content: 'https://casamarket-landing.netlify.app/static/images-new/logos/casa-market.jpg' },
-				{ name: 'title', content: 'Nombre del producto' },
-			],
-		};
+	metaInfo: {
+		meta: [
+			{ property: 'og:title', content: 'Nombre del producto' },
+			{ property: 'og:description', content: 'Detalle del producto' },
+			{ property: 'og:image', itemprop: 'image', content: 'https://casa-market-site.netlify.app/static/images/logos/casa-market.jpg' },
+			{ name: 'description', content: 'Detalle del producto' },
+			{ itemprop: 'image', content: 'https://casamarket-landing.netlify.app/static/images-new/logos/casa-market.jpg' },
+			{ name: 'thumbnail', content: 'https://casamarket-landing.netlify.app/static/images-new/logos/casa-market.jpg' },
+			{ name: 'title', content: 'Nombre del producto' },
+		],
 	},
 };
 </script>

@@ -1,4 +1,5 @@
 import Router from 'vue-router';
+import Meta from 'vue-meta';
 import login from './login';
 import Components from './components';
 import Profile from './profile';
@@ -13,6 +14,7 @@ import RecoverPassword from './recover-password';
 
 export default function (Vue) {
 	Vue.use(Router);
+	Vue.use(Meta);
 	const config = new Router({
 		mode: 'history',
 		routes: [
