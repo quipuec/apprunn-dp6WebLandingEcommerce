@@ -169,8 +169,8 @@ function data() {
 		},
 		flagValidDocumentNumber: true,
 		typeDocuments: [
-			{ name: 'RUC', code: 'ruc' },
 			{ name: 'CÉDULA', code: 'dni' },
+			{ name: 'RUC', code: 'ruc' },
 		],
 	};
 }
