@@ -14,7 +14,7 @@ function updateProducts(products, priceListId) {
 const asyncActions = {
 	LOAD_PRODUCTS: async ({ commit, state, getters }, { context, params = {} }) => {
 		const request = [];
-		const completeParams = Object.assign({}, params, getters.productParams);
+		const completeParams = Object.assign({}, getters.productParams, params);
 		if (state.token) {
 			request.push(
 				context.$httpProducts.get('products/favorites', { params: completeParams }),
