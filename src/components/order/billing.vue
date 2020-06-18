@@ -78,7 +78,8 @@ function mounted() {
 function validateForm() {
 	this.$store.commit('SET_BILLING_DATA', null);
 	if (!this.$v.$invalid) {
-		this.$store.commit('SET_BILLING_DATA', this.billing);
+		const { documentType, ...billing } = this.billing;
+		this.$store.commit('SET_BILLING_DATA', billing);
 	}
 }
 
