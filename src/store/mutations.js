@@ -147,6 +147,10 @@ function SET_PRODUCT_SEARCH(state, search) {
 	Vue.set(state.products.params, 'search', search);
 }
 
+function SET_FLAG_GROUPER(state, flagGrouper) {
+	Vue.set(state.products.params, 'flagGrouper', flagGrouper);
+}
+
 const methods = {
 	ADD_ONE_IN_SERVICE_COUNTER,
 	clearUser,
@@ -174,6 +178,7 @@ const methods = {
 	UPDATE_FLAG_ADD_VOUCHER,
 	UPDATE_POLL_PROGRESS,
 	SET_CATEGORIES,
+	SET_FLAG_GROUPER,
 	SET_ORDER_TOTAL,
 	SET_PRODUCT_ID_TO_RATE,
 	SET_PRODUCT_SEARCH,

@@ -77,7 +77,7 @@ export default {
 		lastPage: 0,
 		list: [],
 		params: {
-			flagGrouper: true,
+			flagGrouper: false,
 			filters: null,
 			limit: 20,
 			page: 1,
