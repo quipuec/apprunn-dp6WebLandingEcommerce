@@ -124,7 +124,7 @@ const getters = {
 		return state.order.flagStatusOrder;
 	},
 	getWaysPayments(state) {
-		return state.order.waysPayments;
+		return state.commerce.wayPaymentCommerce;
 	},
 	getBankAccounts(state) {
 		const bankAccounts = state.order.bankAccountsRelated;
