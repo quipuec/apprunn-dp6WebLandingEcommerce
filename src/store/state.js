@@ -54,7 +54,12 @@ export default {
 		},
 		products: [],
 		responsible: null,
-		shippingCost: {},
+		shippingCost: {
+			flagTaxe: false,
+			price: 0,
+			tax: 0,
+			taxAmount: 0,
+		},
 		status: [],
 		total: null,
 		waysPayments: null,

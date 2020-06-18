@@ -54,6 +54,7 @@ import appInput from '@/components/shared/inputs/app-input';
 function mounted() {
 	if (getDeeper('responsiblePickUp')(this.getOrderInfo)) {
 		this.responsible = { ...this.getOrderInfo.responsiblePickUp };
+		this.loadedFromOrder = true;
 		this.validateForm();
 	} else {
 		this.setUserData(this.user);
@@ -61,9 +62,11 @@ function mounted() {
 }
 
 function setUserData(user) {
-	const { dni, email: mail, name, phone, lastname } = user;
-	this.responsible = { dni, name, email: mail, phone, lastname };
-	this.validateForm();
+	if (!this.loadedFromOrder) {
+		const { dni, email: mail, name, phone, lastname } = user;
+		this.responsible = { dni, name, email: mail, phone, lastname };
+		this.validateForm();
+	}
 }
 
 function validateForm() {
@@ -104,6 +107,7 @@ function validations() {
 
 function data() {
 	return {
+		loadedFromOrder: false,
 		responsible: {
 			dni: '',
 			email: '',

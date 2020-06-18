@@ -8,7 +8,6 @@
 	</section>
 	<div class="billing-switch">
 		<v-switch
-			:readonly="disabledSwitch"
 			hide-details
 			:label="labelByCountry"
 			class="billing-style"
@@ -19,20 +18,24 @@
 	</div>	
 	<form class="billing-form" v-if="getFlagBill">
 		<app-input
+			placeholder="Número de RUC"
+			class="mx-2 my-1 ruc-field"
+			v-model="billing.ruc"
+			@input="checkingFalgValidDocumentNumber"
+			@blur="onBlur"
+		>
+			<span
+				v-if="$v.flagValidDocumentNumber.$invalid && $v.billing.ruc.required"
+			>Documento {{rucWordByCountry}}</span>
+			<span v-if="$v.billing.ruc.$invalid">Documento requerido</span>
+		</app-input>
+		<app-input
 			placeholder="Razón Social"
 			class="mx-2 my-1 rzSocial-field"
 			v-model="billing.rzSocial"
 			@input="validateForm"
 		>
 			<span v-if="$v.billing.rzSocial.$invalid">La razón social es requerida</span>
-		</app-input>
-		<app-input
-			placeholder="Número de RUC"
-			class="mx-2 my-1 ruc-field"
-			:value="billing.ruc"
-			@blur="onBlur"
-		>
-			<span v-if="$v.billing.ruc.$invalid">Documento {{rucWordByCountry}}</span>
 		</app-input>
 		<app-input
 			placeholder="Dirección de domicilio fiscal"
@@ -56,9 +59,6 @@ function mounted() {
 		this.billing = { address, ruc, rzSocial };
 		this.changeBillSelection(true);
 		this.validateForm();
-	} else if (this.isEcuador) {
-		this.changeBillSelection(true);
-		this.disabledSwitch = true;
 	}
 }
 
@@ -75,17 +75,30 @@ function changeBillSelection(val) {
 
 function onBlur(val) {
 	this.billing.ruc = val;
-	this.$v.billing.ruc.$touch();
-	this.showNotification('Validando documento', 'info');
+	if (this.isEcuador && this.flagBillingValidate && val) {
+		this.validatingDocumentNumber(val);
+	}
 }
 
-function validatingDocumentNumber(val) {
-	if (this.isPeru) {
-		return true;
-	}
+async function validatingDocumentNumber(val) {
+	this.showNotification('Validando documento', 'info');
 	const countryCode = this.getLocalStorage('ecommerce::country');
 	const url = `ruc/${val}?codeCountry=${countryCode}`;
-	return this.$httpDocumentNumberValidating.get(url);
+	try {
+		const { data: res } = await this.$httpDocumentNumberValidating.get(url);
+		this.billing.address = res.data.domicilio;
+		this.billing.rzSocial = res.data.nombre;
+		this.showNotification('Validación exitosa', 'success');
+		this.flagValidDocumentNumber = true;
+	} catch (error) {
+		this.billing.address = '';
+		this.billing.rzSocial = '';
+		this.showNotification(
+			'No fue posible validar el documento. Intente con otro.',
+			'error',
+		);
+		this.flagValidDocumentNumber = false;
+	}
 }
 
 function validations() {
@@ -100,11 +113,11 @@ function validations() {
 	return {
 		billing: {
 			address: { required },
-			ruc: {
-				required,
-				validatingDocumentNumber,
-			},
+			ruc: { required },
 			rzSocial: { required },
+		},
+		flagValidDocumentNumber: {
+			valid: v => !!v,
 		},
 	};
 }
@@ -121,6 +134,14 @@ function labelByCountry() {
 	return this.isEcuador ? 'Factura a terceros' : 'Solicitar Factura';
 }
 
+function checkingFalgValidDocumentNumber() {
+	this.flagValidDocumentNumber = !!this.billing.ruc;
+}
+
+function flagBillingValidate() {
+	return this.getCommerceData.settings.flagBillingValidate;
+}
+
 function data() {
 	return {
 		billing: {
@@ -128,7 +149,7 @@ function data() {
 			ruc: '',
 			rzSocial: '',
 		},
-		disabledSwitch: false,
+		flagValidDocumentNumber: true,
 	};
 }
 
@@ -141,13 +162,16 @@ export default {
 		...mapGetters([
 			'getFlagBill',
 			'getOrderInfo',
+			'getCommerceData',
 		]),
+		flagBillingValidate,
 		labelByCountry,
 		rucWordByCountry,
 	},
 	data,
 	methods: {
 		changeBillSelection,
+		checkingFalgValidDocumentNumber,
 		handlerInvalid,
 		onBlur,
 		validateForm,

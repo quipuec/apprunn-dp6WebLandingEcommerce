@@ -153,7 +153,7 @@ export default {
 	}
 
 	.deposit-wrapper {
-		width: 656px;
+		max-width: 656px;
 
 		@media (max-width: 768px) {
 			width: auto;

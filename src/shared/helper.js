@@ -86,6 +86,7 @@ function updateOrderDetailsInLocalStorage(products) {
 }
 
 function buildOrderBody(flagFinish, getters) {
+	const { id, name, address } = getters.getCommerceData.settings.defaultWarehouse;
 	const body = {
 		costShipping: getters.getShippingCost,
 		costShippingFlagTax: getters.getShippingFlagTax,
@@ -96,12 +97,12 @@ function buildOrderBody(flagFinish, getters) {
 		customerBill: getters.getFlagBill ? getters.getBillingData : null,
 		deliveryAddress: getters.getCustomerAddressId
 			? getters.getDeliveryAddress : getters.getCustomerAddress,
-		details: getOrderDetails(getters.getOrderDetails),
+		details: getOrderDetails(getters.getOrderDetails, id, name),
 		flagPickUp: getters.getFlagPickUp,
 		responsiblePickUp: getters.getResponsible,
-		warehouseId: process.env.WAREHOUSE_ID,
-		warehouseName: process.env.WAREHOUSE_NAME,
-		warehouseAddress: process.env.WAREHOUSE_ADDRESS,
+		warehouseId: id,
+		warehouseName: name,
+		warehouseAddress: address,
 	};
 	if (getters.getOrderId && getters.getOrderStatus) {
 		body.orderStateId = getters.getOrderStatus;
@@ -116,7 +117,7 @@ function buildOrderBody(flagFinish, getters) {
 	return body;
 }
 
-function getOrderDetails(products) {
+function getOrderDetails(products, warehouseId, warehouseName) {
 	return products.map((p) => {
 		const { taxes } = p;
 		const newTaxes = setTaxes(taxes);
@@ -149,8 +150,8 @@ function getOrderDetails(products) {
 			unitId: p.unit.id,
 			unitName: p.unit.name,
 			unitQuantity: p.quantity,
-			warehouseId: process.env.WAREHOUSE_ID,
-			warehouseName: process.env.WAREHOUSE_NAME,
+			warehouseId,
+			warehouseName,
 		};
 		return newP;
 	});
@@ -165,6 +166,7 @@ function setTaxes(taxes) {
 			codePercentage: '01',
 			flagSales: true,
 			flagPurchases: false,
+			percentage: 0,
 		};
 	} else {
 		const tax = taxes[0];
@@ -174,6 +176,7 @@ function setTaxes(taxes) {
 			codePercentage: tax.codePercentage,
 			flagSales: Boolean(tax.flagSales),
 			flagPurchases: Boolean(tax.flagPurchases),
+			percentage: tax.percentage,
 		};
 	}
 	return newTaxes;

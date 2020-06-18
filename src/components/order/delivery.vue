@@ -10,7 +10,7 @@
 				button-title="Envío a Domicilio"
 				class="btn"
 				:active="getFlagPickUp === house.value"
-				@click="selected(house.code)"
+				@click="selected(house)"
 			>
 				<location-svg :active="getFlagPickUp === house.value"/>
 			</app-button-order>
@@ -19,7 +19,7 @@
 				button-title="Recoger en Tienda"
 				class="btn"
 				:active="getFlagPickUp === store.value"
-				@click="selected(store.code)"
+				@click="selected(store)"
 			>
 				<coffee-svg :active="getFlagPickUp === store.value"/>
 			</app-button-order>
@@ -69,12 +69,12 @@ import newAddress from '@/components/order/new-address';
 import responsibleForm from '@/components/order/responsible-form';
 import waysDeliveries from '@/shared/enums/waysDeliveries';
 
-async function mounted() {
+async function created() {
 	await this.$store.dispatch('LOAD_DIRECTIONS', this);
 	await this.$store.dispatch('LOAD_WAREHOUSES', this);
-	this.$store.commit('SET_DELIVERY_PLACE', null);
-	this.setDeliveryPlaceByDefault();
-	this.setOrderInfoByDefault();
+	if (!this.flagWatchOrderInfo) {
+		this.setOrderInfoByDefault();
+	}
 }
 
 function setOrderInfoByDefault() {
@@ -94,15 +94,15 @@ function setOrderInfoByDefault() {
 
 function selected(val) {
 	let delivery = null;
-	if (val === this.house.code) {
+	if (val.code === this.house.code) {
 		delivery = this.favoriteDirection || this.selectedDirection;
 		this.selectedDirection = delivery;
 		this.calculateShippingCost(delivery);
 	} else {
-		this.$store.commit('SET_SHIPPING_COST', 0);
+		this.$store.dispatch('setNoShippingCost');
 	}
 	this.$store.commit('SET_DELIVERY_PLACE', delivery);
-	this.$store.commit('SET_FLAG_PICKUP', waysDeliveries[val].value);
+	this.$store.commit('SET_FLAG_PICKUP', val.value);
 }
 
 function warehousesMarkers() {
@@ -188,12 +188,10 @@ function directionSelected(id) {
 	const w = this.getDirections.find(war => war.id === id);
 	this.$store.commit('SET_DELIVERY_PLACE', w);
 	if (id === 0) {
-		this.$store.commit('SET_SHIPPING_COST', 0);
+		this.$store.dispatch('setNoShippingCost');
 	} else {
 		this.calculateShippingCost(w);
-		if (!isEmpty(this.getCustomerAddress)) {
-			this.$store.commit('SET_CUSTOMER_ADDRESS', null);
-		}
+		this.$store.commit('SET_CUSTOMER_ADDRESS', null);
 	}
 }
 
@@ -214,7 +212,7 @@ function clearSelectedWarehouse() {
 }
 
 function handlerDirectionsChange() {
-	if (this.getFlagPickUp === waysDeliveries.house.value) {
+	if (this.getFlagPickUp === waysDeliveries.house.value && isEmpty(this.getOrderInfo)) {
 		const id = getDeeper('id')(this.getDeliveryAddress);
 		const deliveryExist = this.getDirections.find(d => d.id === id);
 		const directionDelivery = deliveryExist || this.favoriteDirection;
@@ -237,10 +235,10 @@ async function calculateShippingCost(location) {
 		const body = this.buildBody(provinceId);
 		try {
 			const { data: amount } = await this.$httpProducts.post(url, body);
-			this.$store.commit('SET_SHIPPING_COST', amount);
+			this.$store.dispatch('setShippingCost', amount);
 		} catch (error) {
 			if (error.data.message === 'PRICE_NOT_CONFIGURATION') {
-				this.$store.commit('SET_SHIPPING_COST', null);
+				this.$store.dispatch('setNoShippingCost');
 				this.showNotification('No es posible hacer envios a ese destino.', 'error');
 			}
 		}
@@ -262,11 +260,15 @@ function buildBody(provinceId) {
 
 function beforeDestroy() {
 	this.$store.commit('SET_DELIVERY_PLACE', null);
-	this.$store.commit('SET_SHIPPING_COST', 0);
+	this.$store.dispatch('setNoShippingCost');
 }
 
 function atStore() {
-	return process.env.WAYS_DELIVERIES.includes(this.store.code);
+	const deliveryType = getDeeper('deliveryType')(this.getCommerceData);
+	if (deliveryType) {
+		return !!deliveryType.find(d => d.code === this.store.code);
+	}
+	return false;
 }
 
 function store() {
@@ -274,7 +276,11 @@ function store() {
 }
 
 function atHouse() {
-	return process.env.WAYS_DELIVERIES.includes(this.house.code);
+	const deliveryType = getDeeper('deliveryType')(this.getCommerceData);
+	if (deliveryType) {
+		return !!deliveryType.find(d => d.code === this.house.code);
+	}
+	return false;
 }
 
 function house() {
@@ -289,11 +295,19 @@ function setDeliveryPlaceByDefault() {
 	}
 }
 
+function handlerOrderInfo(newOrderInfo) {
+	if (!isEmpty(newOrderInfo)) {
+		this.flagWatchOrderInfo = true;
+		this.setOrderInfoByDefault();
+	}
+}
+
 function data() {
 	return {
 		logo: {
 			section: '/static/icons/delivery-truck.svg',
 		},
+		flagWatchOrderInfo: false,
 		selectedDirection: {
 			id: 0,
 			addressLine1: '',
@@ -321,6 +335,7 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getCommerceData',
 			'getCustomerAddress',
 			'getDeliveryAddress',
 			'getDirections',
@@ -340,6 +355,7 @@ export default {
 		warehousesMarkers,
 		warehousesZoom,
 	},
+	created,
 	data,
 	methods: {
 		buildBody,
@@ -349,18 +365,19 @@ export default {
 		directionSelected,
 		handlerDeliveryAddress,
 		handlerDirectionsChange,
+		handlerOrderInfo,
 		selected,
 		setDeliveryPlaceByDefault,
 		setOrderInfoByDefault,
 		warehouseSelected,
 	},
-	mounted,
 	watch: {
 		getDeliveryAddress: {
 			deep: true,
 			handler: handlerDeliveryAddress,
 		},
 		getDirections: handlerDirectionsChange,
+		getOrderInfo: handlerOrderInfo,
 	},
 };
 </script>
