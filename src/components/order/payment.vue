@@ -110,7 +110,7 @@ export default {
 		align-items: center;
 		display: grid;
 		grid-gap: 10px;
-		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+		grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
 		
 		@media (max-width: 600px) {
 			margin: 0 20px;
@@ -121,7 +121,7 @@ export default {
 		margin-top: 15px;
 
 		@media (max-width: 600px) {
-			margin: 0 20px;
+			margin: 20px;
 		}
 	}
 
