@@ -24,11 +24,19 @@
 				<li
 					v-for="account in bankAccounts"
 					:key="account.id"
+					class="mb-4"
 				>
-					<span
-						class="bank-account-info font-bold"
-					>{{account.name}}: </span>
-					<span>{{account.accountNumber}}</span>
+					<div class="bank-account-number">
+						<h4
+							class="bank-account-info font-bold"
+						>{{account.name}}: </h4>
+						<h3>{{account.accountNumber}}</h3>
+					</div>
+					<div class="person-name-info">
+						<h4>A Nombre de: <span>{{account.additionalInformation.personName}}</span></h4>
+						<h4>Documentode identidad: <span>{{account.additionalInformation.personDocumentNumber}}</span></h4>
+						<h4>Correo: <span>{{account.additionalInformation.documentEmail}}</span></h4>
+					</div>
 				</li>
 			</ul>
 		</div>
@@ -177,5 +185,25 @@ export default {
 
 	.font-bold {
 		font-family: font(bold);
+	}
+
+	.bank-account-number {
+		align-items: center;
+		display: flex;
+		font-size: size(large);
+
+		h3 {
+			font-size: large;
+			margin-left: 10px
+		}
+	}
+
+	.person-name-info {
+		font-family: font(regular);
+
+		span {
+			font-family: font(bold);
+			font-size: size(medium);
+		}
 	}
 </style>
