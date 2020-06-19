@@ -127,7 +127,7 @@ const getters = {
 		return state.commerce.wayPaymentCommerce;
 	},
 	getBankAccounts(state) {
-		const bankAccounts = state.order.bankAccountsRelated;
+		const bankAccounts = state.commerce.bankAccountsRelated;
 		return bankAccounts.reduce((acum, bank) => {
 			const newAcum = [...acum];
 			const newBank = { ...bank };

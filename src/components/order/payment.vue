@@ -110,19 +110,15 @@ export default {
 		align-items: center;
 		display: grid;
 		grid-gap: 10px;
-		grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
-		
-		@media (max-width: 600px) {
-			margin: 0 20px;
+		grid-auto-flow: row;
+
+		@media (min-width: 768px) {
+			grid-auto-flow: column;
 		}
 	}
 
 	.component-container {
 		margin-top: 15px;
-
-		@media (max-width: 600px) {
-			margin: 20px;
-		}
 	}
 
 	.payment-section-title {

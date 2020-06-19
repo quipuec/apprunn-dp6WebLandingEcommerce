@@ -13,7 +13,8 @@
 						:color="`${globalColors.primary}`"
 						:label="bank.bank.name" 
 						:value="bank.bankId"
-						v-for="bank in getBankAccounts" 
+						v-for="bank in getBankAccounts"
+						class="my-2"
 						:key="bank.id">
 					</v-radio>
 				</v-radio-group>
@@ -34,7 +35,7 @@
 					</div>
 					<div class="person-name-info">
 						<h4>A Nombre de: <span>{{account.additionalInformation.personName}}</span></h4>
-						<h4>Documentode identidad: <span>{{account.additionalInformation.personDocumentNumber}}</span></h4>
+						<h4>Documento de identidad: <span>{{account.additionalInformation.personDocumentNumber}}</span></h4>
 						<h4>Correo: <span>{{account.additionalInformation.documentEmail}}</span></h4>
 					</div>
 				</li>
@@ -117,10 +118,9 @@ export default {
 	.deposit-container {
 		color: color(dark);
 		font-family: font(medium);
-		margin-top: 40px;
+		padding: 0 10px;
 
 		@media (max-width: 768px) {
-			padding: 0 20px;
 		}
 	}
 
@@ -168,7 +168,7 @@ export default {
 		}
 
 		@media (max-width: 600px) {
-			margin: 0 auto 30px;
+			margin: 0 auto 15px;
 		}
 	}
 
@@ -188,18 +188,24 @@ export default {
 	}
 
 	.bank-account-number {
-		align-items: center;
 		display: flex;
+		flex-direction: column;
 		font-size: size(large);
+		margin-bottom: 10px;
 
 		h3 {
-			font-size: large;
+			align-self: center;
+			font-size: size(sbig);
 			margin-left: 10px
 		}
 	}
 
 	.person-name-info {
 		font-family: font(regular);
+
+		h4 {
+			margin: 7px 0;
+		}
 
 		span {
 			font-family: font(bold);

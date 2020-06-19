@@ -38,11 +38,11 @@ export default {
 		border-radius: 8px;
 		border: solid 1px color(border);
 		font-family: font(bold);
-		margin-bottom: 70px;
-		padding: 27px 92px 27px 55px;
+		margin-bottom: 40px;
+		padding: 10px 20px 10px 30px;
 
-		@media (max-width: 600px) {
-			padding: 27px 20px 26px 21px;
+		@media (min-width: 768px) {
+			padding: 20px 32px 27px 20px;
 		}
 	}
 

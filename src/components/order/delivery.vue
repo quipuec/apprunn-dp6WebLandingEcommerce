@@ -384,9 +384,13 @@ export default {
 <style lang="scss" scoped>
 	.delivery {
 		align-items: center;
-		display: flex;
-		justify-content: space-between;
-		width: 100%;
+		display: grid;
+		grid-auto-flow: row;
+		grid-gap: 10px;
+
+		@media (min-width: 768px) {
+			grid-auto-flow: column;
+		}
 	}
 
 	.btn {
