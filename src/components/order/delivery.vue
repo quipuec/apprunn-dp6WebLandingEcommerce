@@ -72,6 +72,7 @@ import waysDeliveries from '@/shared/enums/waysDeliveries';
 async function created() {
 	await this.$store.dispatch('LOAD_DIRECTIONS', this);
 	await this.$store.dispatch('LOAD_WAREHOUSES', this);
+	this.$store.dispatch('loadProductsFromLocal', this);
 	if (!this.flagWatchOrderInfo) {
 		this.setOrderInfoByDefault();
 	}
@@ -95,7 +96,7 @@ function setOrderInfoByDefault() {
 function selected(val) {
 	let delivery = null;
 	if (val.code === this.house.code) {
-		delivery = this.favoriteDirection || this.selectedDirection;
+		delivery = this.favoriteDirection() || this.selectedDirection;
 		this.selectedDirection = delivery;
 		this.calculateShippingCost(delivery);
 	} else {
@@ -215,7 +216,7 @@ function handlerDirectionsChange() {
 	if (this.getFlagPickUp === waysDeliveries.house.value && isEmpty(this.getOrderInfo)) {
 		const id = getDeeper('id')(this.getDeliveryAddress);
 		const deliveryExist = this.getDirections.find(d => d.id === id);
-		const directionDelivery = deliveryExist || this.favoriteDirection;
+		const directionDelivery = deliveryExist || this.favoriteDirection();
 		this.$store.commit('SET_DELIVERY_PLACE', directionDelivery);
 		this.calculateShippingCost(directionDelivery);
 	} else {
@@ -347,7 +348,6 @@ export default {
 		atHouse,
 		atStore,
 		disableMapButtonByWarehouse,
-		favoriteDirection,
 		house,
 		singleOrMultiMarkersOnWarehouses,
 		store,
@@ -363,6 +363,7 @@ export default {
 		clearSelectedDirection,
 		clearSelectedWarehouse,
 		directionSelected,
+		favoriteDirection,
 		handlerDeliveryAddress,
 		handlerDirectionsChange,
 		handlerOrderInfo,
