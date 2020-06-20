@@ -14,7 +14,7 @@ function updateProducts(products, priceListId) {
 const asyncActions = {
 	LOAD_PRODUCTS: async ({ commit, state, getters }, { context, params = {} }) => {
 		const request = [];
-		const completeParams = Object.assign({}, params, getters.productParams);
+		const completeParams = Object.assign({}, getters.productParams, params);
 		if (state.token) {
 			request.push(
 				context.$httpProducts.get('products/favorites', { params: completeParams }),
@@ -199,6 +199,7 @@ const asyncActions = {
 		context.setLocalData(`${process.env.STORAGE_USER_KEY}::ecommerce-data`, commerceData);
 		commit('SET_COMMERCE_DATA', commerceData);
 		dispatch('SET_ECOMMERCE_THEME', commerceData.settings.theme);
+		dispatch('setFlagGrouper', commerceData.settings.flagGrouper);
 		const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
 		link.type = 'image/x-icon';
 		link.rel = 'shortcut icon';

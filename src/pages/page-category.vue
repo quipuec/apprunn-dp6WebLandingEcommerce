@@ -107,20 +107,20 @@ import helper from '@/shared/helper';
 
 const { setNewProperty } = lib;
 
-function created() {
+function mounted() {
 	this.selectCategory();
 	this.changeOpen();
+	this.loadProduct();
 	window.addEventListener('resize', this.changeOpen);
 }
 
 async function loadProduct() {
 	try {
-		debugger;
 		const params = {
-			page: this.page,
 			limit: 20,
 			eCategories: this.id,
 			flagGrouper: this.$store.getters.productParams.flagGrouper,
+			page: this.page,
 		};
 		const url = 'products-public';
 		const { data: products, headers } = await this.$httpProductsPublic.get(url, { params });
@@ -145,7 +145,7 @@ function updateProductCard(value) {
 
 function selectCategory() {
 	this.breadcrumbs = [];
-	this.loadProduct();
+	// this.loadProduct();
 	this.categories = this.getCategories;
 	this.currentSelect = this.getCurrentcategory(this.categories, this.id);
 	this.updateMetaTag(this.currentSelect);
@@ -239,7 +239,6 @@ function data() {
 
 export default {
 	name: 'page-category',
-	created,
 	components: {
 		appBannerTop,
 		buttonImage,
@@ -268,6 +267,7 @@ export default {
 		updateMetaTag,
 		updateProductCard,
 	},
+	mounted,
 	data,
 	props: {
 		id: {
@@ -277,6 +277,7 @@ export default {
 	},
 	watch: {
 		$route: selectCategory,
+		'$store.getters.productParams.flagGrouper': loadProduct,
 	},
 };
 </script>

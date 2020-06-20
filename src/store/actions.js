@@ -203,6 +203,10 @@ function UPDATE_PRODUCT_SEARCH({ commit }, search) {
 	commit('SET_PRODUCT_SEARCH', search);
 }
 
+function setFlagGrouper({ commit }, flagGrouper) {
+	commit('SET_FLAG_GROUPER', Boolean(flagGrouper));
+}
+
 const methods = {
 	addProductToBuyCar,
 	addService,
@@ -224,6 +228,7 @@ const methods = {
 	UPDATE_PRODUCT_SEARCH,
 	updateProductSelect,
 	resetCounter,
+	setFlagGrouper,
 	setNoShippingCost,
 	setShippingCost,
 	setShippingCostFromOrder,

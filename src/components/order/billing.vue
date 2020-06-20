@@ -17,8 +17,20 @@
 		></v-switch>
 	</div>	
 	<form class="billing-form" v-if="getFlagBill">
+		<div class="document-type-container">
+			<app-select
+				v-if="isEcuador"
+				item-text="name"
+				item-value="code"
+				placeholder="Tipo de documento"
+				class="mx-2 my-1 select-field"
+				:items="typeDocuments"
+				v-model="billing.documentType"
+			>
+			</app-select>
+		</div>
 		<app-input
-			placeholder="Número de RUC"
+			placeholder="Número de Documento"
 			class="mx-2 my-1 ruc-field"
 			v-model="billing.ruc"
 			@input="checkingFalgValidDocumentNumber"
@@ -30,7 +42,7 @@
 			<span v-if="$v.billing.ruc.$invalid">Documento requerido</span>
 		</app-input>
 		<app-input
-			placeholder="Razón Social"
+			:placeholder="rzSocialLabel"
 			class="mx-2 my-1 rzSocial-field"
 			v-model="billing.rzSocial"
 			@input="validateForm"
@@ -52,6 +64,7 @@
 import { required } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import appInput from '@/components/shared/inputs/app-input';
+import appSelect from '@/components/shared/inputs/app-select';
 
 function mounted() {
 	if (this.getOrderInfo && this.getOrderInfo.dataBill) {
@@ -65,7 +78,8 @@ function mounted() {
 function validateForm() {
 	this.$store.commit('SET_BILLING_DATA', null);
 	if (!this.$v.$invalid) {
-		this.$store.commit('SET_BILLING_DATA', this.billing);
+		const { documentType, ...billing } = this.billing;
+		this.$store.commit('SET_BILLING_DATA', billing);
 	}
 }
 
@@ -83,11 +97,11 @@ function onBlur(val) {
 async function validatingDocumentNumber(val) {
 	this.showNotification('Validando documento', 'info');
 	const countryCode = this.getLocalStorage('ecommerce::country');
-	const url = `ruc/${val}?codeCountry=${countryCode}`;
+	const url = `${this.billing.documentType}/${val}?codeCountry=${countryCode}`;
 	try {
 		const { data: res } = await this.$httpDocumentNumberValidating.get(url);
 		this.billing.address = res.data.domicilio;
-		this.billing.rzSocial = res.data.nombre;
+		this.billing.rzSocial = res.data.nombre || res.data.Nombre_completo;
 		this.showNotification('Validación exitosa', 'success');
 		this.flagValidDocumentNumber = true;
 	} catch (error) {
@@ -142,14 +156,23 @@ function flagBillingValidate() {
 	return this.getCommerceData.settings.flagBillingValidate;
 }
 
+function rzSocialLabel() {
+	return this.isEcuador ? 'Nombre o Razón Social' : 'Razón Social';
+}
+
 function data() {
 	return {
 		billing: {
 			address: '',
+			documentType: 'ruc',
 			ruc: '',
 			rzSocial: '',
 		},
 		flagValidDocumentNumber: true,
+		typeDocuments: [
+			{ name: 'CÉDULA', code: 'dni' },
+			{ name: 'RUC', code: 'ruc' },
+		],
 	};
 }
 
@@ -157,6 +180,7 @@ export default {
 	name: 'billing',
 	components: {
 		appInput,
+		appSelect,
 	},
 	computed: {
 		...mapGetters([
@@ -167,6 +191,7 @@ export default {
 		flagBillingValidate,
 		labelByCountry,
 		rucWordByCountry,
+		rzSocialLabel,
 	},
 	data,
 	methods: {
@@ -233,6 +258,19 @@ export default {
 
 	.billing-switch {
 		margin-bottom: 30px;
+	}
+
+	.document-type-container {
+		display: flex;
+		flex: 0 1 100%;
+
+		.select-field {
+			flex: 1 1 100%;
+
+			@media (min-width: 768px) {
+				flex: 0 0 30%;
+			}
+		}
 	}
 </style>
 
