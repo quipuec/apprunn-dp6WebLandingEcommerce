@@ -133,14 +133,17 @@ export default {
 	}
 
 	.grid-areas {
+		border-bottom: 1px solid color(border);
 		display: grid;
 		grid-gap: 5px;
-		grid-template-columns: repeat(4, 1fr);
 		grid-template-areas:
 			"image image image image"
 			"description description description description"
 			"price quantity quantity total";
-		margin-bottom: 15px;
+		grid-template-columns: repeat(4, 1fr);
+		grid-template-rows: 1fr 0.2fr 0.2fr;
+		margin-bottom: 10px;
+		padding-bottom: 8px;
 
 		@media (min-width: 768px) {
 			grid-gap: 10px;
@@ -202,6 +205,7 @@ export default {
 	.total {
 		grid-area: total;
 		place-self: flex-end;
+		padding-right: 10px;
 
 		@media (min-width: 768px) {
 			place-self: stretch;

@@ -9,6 +9,7 @@ async function loadDataFromLocalStorage() {
 	const user = this.getLocalStorage('ecommerce::ecommerce-user');
 	const order = this.getLocalStorage('ecommerce-order');
 	const currencyDefault = this.getLocalStorage('ecommerce::currency-default');
+	// const storageProducts = this.getLocalStorage('ecommerce::product-select');
 	const token = helper.getLocalToken();
 	if (token) {
 		this.$store.dispatch('setToken', token);
@@ -28,6 +29,9 @@ async function loadDataFromLocalStorage() {
 	} else {
 		this.$store.dispatch('SET_CURRENCY_DEFAULT', this);
 	}
+	// if (storageProducts && storageProducts.length > 0) {
+	// 	storageProducts.forEach(p => this.$store.commit('UPDATE_PRODUCTS_TO_BUY', p));
+	// }
 	await Promise.all([
 		this.$store.dispatch('LOAD_FILTERS', this),
 		this.$store.dispatch('LOAD_PRODUCTS', { context: this }),

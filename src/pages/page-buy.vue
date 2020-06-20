@@ -133,32 +133,25 @@ export default {
 	}
 
 	.big {
-		flex: 1 1 65%;
+		flex: 1 0 60%;
 		height: max-content;
+		margin-bottom: 20px;
 
-		@media (min-width: 768px) {
+		@media (min-width: 750px) {
 			margin-right: 10px;
 		}
 	}
 
 	.small {
-		flex: 1 1 20%;
+		flex: 0 0 20%;
 		height: 100%;
 		margin: 0 auto;
-		max-width: 450px;
 	}
 
 	.footter-products-buy {
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
-
-		@media (max-width: 600px) {
-			align-items: flex-end;
-			font-size: size(xsmall);
-			justify-content: flex-end;
-			margin-bottom: 55px;
-		}
 	}
 
 	.total-product {
@@ -191,7 +184,7 @@ export default {
 	}
 
 	.continue-buying {
-		width: 225px;
+		width: 200px;
 
 		@media (max-width: 600px) {
 			width: 190px !important;

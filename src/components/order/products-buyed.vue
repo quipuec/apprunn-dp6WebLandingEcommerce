@@ -39,7 +39,7 @@ export default {
 		border: solid 1px color(border);
 		font-family: font(bold);
 		margin-bottom: 40px;
-		padding: 10px 20px 10px 30px;
+		padding: 10px 20px 10px 20px;
 
 		@media (min-width: 768px) {
 			padding: 20px 32px 27px 20px;
@@ -49,8 +49,8 @@ export default {
 	.grid-product {
 		align-items: center;
 		display: grid;
-    	grid-column-gap: 40px;
-		grid-template-columns: 1fr 0.5fr 0.5fr;
+    	grid-column-gap: 14px;
+		grid-template-columns: 0.8fr 0.5fr 0.5fr;
 		transform: translateX(15px);
 
 		@media (max-width: 600px) {

@@ -193,10 +193,18 @@ export default {
 		font-size: size(large);
 		margin-bottom: 10px;
 
+		@media (min-width: 599px){
+			align-items: center;
+			flex-direction: row;
+		}
+
 		h3 {
 			align-self: center;
 			font-size: size(sbig);
-			margin-left: 10px
+
+			@media (min-width: 599px){
+				margin-left: 20px;
+			}
 		}
 	}
 
