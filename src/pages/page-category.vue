@@ -115,11 +115,14 @@ function created() {
 
 async function loadProduct() {
 	try {
+		debugger;
 		const params = {
 			page: this.page,
 			limit: 20,
+			eCategories: this.id,
+			flagGrouper: this.$store.getters.productParams.flagGrouper,
 		};
-		const url = `products-public?eCategories=${this.id}`;
+		const url = 'products-public';
 		const { data: products, headers } = await this.$httpProductsPublic.get(url, { params });
 		const commercePriceListId = this.getCommerceData.settings.salPriceListId;
 		this.listProducts = products.map(
