@@ -110,7 +110,6 @@ const { setNewProperty } = lib;
 function mounted() {
 	this.selectCategory();
 	this.changeOpen();
-	this.loadProduct();
 	window.addEventListener('resize', this.changeOpen);
 }
 
@@ -145,7 +144,7 @@ function updateProductCard(value) {
 
 function selectCategory() {
 	this.breadcrumbs = [];
-	// this.loadProduct();
+	this.loadProduct();
 	this.categories = this.getCategories;
 	this.currentSelect = this.getCurrentcategory(this.categories, this.id);
 	this.updateMetaTag(this.currentSelect);
@@ -342,10 +341,6 @@ export default {
 	align-items: center;
 	display: flex;
 	padding: 1rem;
-
-	@media (max-width: 986px) {
-		// display: none;
-	}
 }
 
 .section-product-card {
@@ -442,9 +437,5 @@ export default {
 
 .container-end {
 	justify-content: flex-end;
-
-	@media (max-width: 986px) {
-		// display: none !important;
-	}
 }
 </style>
