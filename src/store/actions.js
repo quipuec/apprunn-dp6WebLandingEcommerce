@@ -204,7 +204,7 @@ function UPDATE_PRODUCT_SEARCH({ commit }, search) {
 }
 
 function setFlagGrouper({ commit }, flagGrouper) {
-	commit('SET_FLAG_GROUPER', Boolean(flagGrouper));
+	commit('SET_FLAG_GROUPER', flagGrouper);
 }
 
 function loadProductsFromLocal({ commit }, context) {
