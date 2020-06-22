@@ -48,7 +48,7 @@ function onSelect(method) {
 	this.$store.commit('SET_WAY_PAYMENT', { wayPayment: null, bankAccountId: null });
 	this.paymentMethodSelected = method.code;
 	this.gatewayConfiguration = method.gatewayConfiguration || [];
-	const wayPayment = method.id;
+	const wayPayment = method.wayPaymentId;
 	let bankAccountId = null;
 	if (method.code === 'IBD') {
 		bankAccountId = isEmpty(this.getBankAccounts) ? null : this.getBankAccounts[0].bankId;
@@ -114,7 +114,12 @@ export default {
 
 		@media (min-width: 768px) {
 			grid-auto-flow: column;
+
 		}
+	}
+	.method-item {
+		font-family: font(medium) !important;
+		font-size: size(minmedium);
 	}
 
 	.component-container {
