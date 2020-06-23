@@ -131,11 +131,11 @@ export default {
 		align-items: flex-start;
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: space-around;
+		justify-content: flex-start;
+		margin: 0 30px;
 
-		@media(max-width: 600px) {
-			justify-content: flex-start;
-			margin: 0 50px;
+		@media (min-width: 750px) {
+			justify-content: space-between;
 		}
 	}
 
@@ -146,6 +146,7 @@ export default {
 		font-family: font(regular);
 		grid-column-gap: 8px;
 		grid-template-columns: 15px 1fr;
+		max-width: 380px;
 	}
 
 	.summary-title {

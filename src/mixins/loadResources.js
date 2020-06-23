@@ -14,6 +14,7 @@ async function loadResource() {
 	const requests = [
 		this.$store.dispatch('LOAD_BANNERS', this),
 		this.$store.dispatch('LOAD_CATEGORIES', { context: this }),
+		this.$store.dispatch('LOAD_PRODUCTS', { context: this }),
 	];
 	await Promise.all(requests);
 }

@@ -140,7 +140,7 @@ function DEFAULT_USER({ commit }) {
 }
 
 function SET_WAY_PAYMENT({ commit }, context) {
-	const waysPayment = context.getLocalStorage('ecommerce::ecommerce-data').wayPayment;
+	const waysPayment = context.getLocalStorage('ecommerce::ecommerce-data').wayPaymentCommerce;
 	commit('SET_WAYS_PAYMENT', waysPayment);
 }
 
@@ -203,6 +203,15 @@ function UPDATE_PRODUCT_SEARCH({ commit }, search) {
 	commit('SET_PRODUCT_SEARCH', search);
 }
 
+function setFlagGrouper({ commit }, flagGrouper) {
+	commit('SET_FLAG_GROUPER', flagGrouper);
+}
+
+function loadProductsFromLocal({ commit }, context) {
+	const products = context.getLocalStorage('ecommerce::product-select');
+	commit('SET_ORDER_DETAILS', products);
+}
+
 const methods = {
 	addProductToBuyCar,
 	addService,
@@ -210,6 +219,7 @@ const methods = {
 	clearUser,
 	DEFAULT_USER,
 	getOrderData,
+	loadProductsFromLocal,
 	minusService,
 	MORE_PRODUCTS,
 	setUser,
@@ -224,6 +234,7 @@ const methods = {
 	UPDATE_PRODUCT_SEARCH,
 	updateProductSelect,
 	resetCounter,
+	setFlagGrouper,
 	setNoShippingCost,
 	setShippingCost,
 	setShippingCostFromOrder,

@@ -26,7 +26,8 @@ const orderMutation = {
 	},
 	UPDATE_PRODUCTS_TO_BUY(state, { id, quantity, unitSelected }) {
 		const { products } = state.order;
-		const index = products.findIndex(p => p.id === id && p.unitSelected === unitSelected);
+		const index = products.findIndex(
+			p => p.productId === id && p.unitSelected === unitSelected);
 		products[index].quantity = quantity;
 		Vue.set(state.order, 'products', [...products]);
 		localStorage.setItem('ecommerce::product-select', JSON.stringify([...products]));
