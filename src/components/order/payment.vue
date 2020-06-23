@@ -144,7 +144,7 @@ export default {
 		margin-bottom: 30px;
 
 		@media (min-width: 768px) {
-			min-width: 478px;
+			width: 650px;
 		}
 	}
 </style>
