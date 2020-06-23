@@ -22,12 +22,6 @@
 import { mapGetters } from 'vuex';
 import SearchIcon from '@/components/shared/icons/search-component';
 
-function changeRoute(newRouteName) {
-	if (newRouteName.name !== 'page-home') {
-		this.searchText = '';
-	}
-}
-
 function data() {
 	return {
 		searchText: null,
@@ -48,9 +42,6 @@ export default {
 	props: {
 		image: String,
 		color: String,
-	},
-	watch: {
-		$route: changeRoute,
 	},
 };
 </script>
