@@ -860,4 +860,14 @@ input.app-input::-webkit-input-placeholder {
 		width: 35px;
 	}
 }
+
+.xchange-btn {
+
+	button {
+		background-position: top !important;
+    	background-size: cover !important;
+    	height: 50px !important;
+		width: 210px !important;
+	}
+}
 </style>

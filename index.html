@@ -26,9 +26,41 @@
     <link rel="<%= chunk.initial?'preload':'prefetch' %>" href="<%= htmlWebpackPlugin.files.publicPath + file %>" as="<%= file.match(/\.css$/)?'style':'script' %>">
     <% }}} %>
   <link rel="preload" href='//fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' as="style">
-
   <script src="https://code.jquery.com/jquery-1.11.3.min.js" charset="UTF-8"></script>
   <script src="https://cdn.paymentez.com/checkout/1.0.1/paymentez-checkout.min.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-2.2.4.js"></script> -->
+  <script src="https://cdn.xchange.la/paybox/index.js"></script>
+  <script type="text/javascript">
+    var data = {
+      /* Email de la cuenta XChange o Id/Class del elemento html que posee el valor */
+      PayboxRemail: "#PayboxRemail",
+      /* Email del usuario que realiza el pago o Id/Class del elemento html que posee el valor */
+      PayboxSendmail: "#PayboxSendmail",
+      /* Nombre del usuario/cuenta XChange o Id/Class del elemento html que posee el valor */
+      PayboxRename: "#PayboxRename",
+      /* Nombre del usuario que realiza el pago o Id/Class del elemento html que posee el valor */
+      PayboxSendname: "#PayboxSendname",
+      /* Ejemplo: 100.00, 10.00, 1.00 o Id/Class del elemento html que posee el valor */
+      PayboxAmount: "#PayboxAmount",
+      /* Descripcion del pago o Id/Class del elemento html que posee el valor */
+      PayboxDescription: "#PayboxDescription", 
+      /* Tipo de Ejecución
+      * Production: true (Modo Producción, Se procesarán cobros y se cargarán al sistema, afectará a la tdc)
+      * Production: false (Modo Prueba, se realizaran cobros de prueba y no se guardará ni afectará al sistema)
+      */
+      PayboxProduction: false,
+      /* Lenguaje del Paybox
+      * Español: es | (string) (Paybox en español)
+      * Ingles: us | (string) (Paybox en Ingles)
+      */
+      PayboxLanguage: "es",
+      /* Valores HTML que son requeridos por la web que implementa el botón de pago.
+      * Se permiten utilizar los identificadores de # y . que describen los Id y Class de los Elementos HTML
+      * Array de identificadores de elementos HTML | Ejemplo: PayboxRequired: ["#nombre", "#correo", "#monto"]
+      */
+    PayboxRequired: []
+  };
+</script> 
 </head>
 
 <body>
