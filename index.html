@@ -60,7 +60,26 @@
       */
     PayboxRequired: []
   };
-</script> 
+</script>
+
+<script type="text/javascript">
+  var onAuthorize = function(response) {
+    // La variable response posee un Objeto con la respuesta de xchange.
+
+    if (response.status == 'succeeded') {
+        // Si el pago fue exitoso se ejecutará el código contenido en este if.
+
+        /* Referencia a la vista donde se aplicará el authorize "parent.document" */
+
+        /* Ejemplo */
+        /* Insertar un el status de la transacción al final del body */
+        /* jQuery(parent.document).find("body").append(response.status); */ 
+    } else {
+        // Si hubo un problema con el pago se ejecutará este código.
+    }
+  };
+</script>
+  
 </head>
 
 <body>

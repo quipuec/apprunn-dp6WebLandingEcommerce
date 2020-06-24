@@ -28,8 +28,8 @@ const route = {
 				step: 3,
 			},
 			component: () => import(/* webpackChunkName: "payment" */ '@/components/order/payment'),
-			beforeEnter: (to, from, next) => {
-				if (to.fullPath.includes('pago') && localStorage.getItem('ecommerce::token')) {
+			beforeEnter: (from, to, next) => {
+				if (localStorage.getItem('ecommerce::token')) {
 					next();
 				} else {
 					next({ name: 'page-home' });
@@ -38,4 +38,5 @@ const route = {
 		},
 	],
 };
+
 export default route;
