@@ -107,7 +107,7 @@ import helper from '@/shared/helper';
 
 const { setNewProperty } = lib;
 
-function created() {
+function mounted() {
 	this.selectCategory();
 	this.changeOpen();
 	window.addEventListener('resize', this.changeOpen);
@@ -116,10 +116,12 @@ function created() {
 async function loadProduct() {
 	try {
 		const params = {
-			page: this.page,
 			limit: 20,
+			eCategories: this.id,
+			flagGrouper: this.$store.getters.productParams.flagGrouper,
+			page: this.page,
 		};
-		const url = `products-public?eCategories=${this.id}`;
+		const url = 'products-public';
 		const { data: products, headers } = await this.$httpProductsPublic.get(url, { params });
 		const commercePriceListId = this.getCommerceData.settings.salPriceListId;
 		this.listProducts = products.map(
@@ -236,7 +238,6 @@ function data() {
 
 export default {
 	name: 'page-category',
-	created,
 	components: {
 		appBannerTop,
 		buttonImage,
@@ -265,6 +266,7 @@ export default {
 		updateMetaTag,
 		updateProductCard,
 	},
+	mounted,
 	data,
 	props: {
 		id: {
@@ -274,6 +276,7 @@ export default {
 	},
 	watch: {
 		$route: selectCategory,
+		'$store.getters.productParams.flagGrouper': loadProduct,
 	},
 };
 </script>
@@ -338,10 +341,6 @@ export default {
 	align-items: center;
 	display: flex;
 	padding: 1rem;
-
-	@media (max-width: 986px) {
-		// display: none;
-	}
 }
 
 .section-product-card {
@@ -438,9 +437,5 @@ export default {
 
 .container-end {
 	justify-content: flex-end;
-
-	@media (max-width: 986px) {
-		// display: none !important;
-	}
 }
 </style>

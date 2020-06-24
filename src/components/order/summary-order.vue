@@ -139,6 +139,7 @@ export default {
 		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.18);
 		margin-bottom: 10px;
 		padding: 8px;
+		width: 260px;
 	}
 
 	.summary-header {
@@ -147,7 +148,7 @@ export default {
 		font-family: font(demi);
 		font-size: size(medium);
 		font-weight: bold;
-		padding: 25px 70px 17px;
+		padding: 25px 50px 17px;
 	}
 
 	.summary-title {
@@ -159,13 +160,14 @@ export default {
 		color: color(dark);
 		font-family: font(demi);
 		font-size: size(medium);
-		padding: 50px 32px 16px;
+		padding: 30px 32px 16px;
 	}
 
 	.summary-amount-container {
 		align-items: center;
 		display: flex;
 		justify-content: space-between;
+		padding: 8px 5px;
 	}
 
 	.total {

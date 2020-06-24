@@ -48,7 +48,7 @@ function onSelect(method) {
 	this.$store.commit('SET_WAY_PAYMENT', { wayPayment: null, bankAccountId: null });
 	this.paymentMethodSelected = method.code;
 	this.gatewayConfiguration = method.gatewayConfiguration || [];
-	const wayPayment = method.id;
+	const wayPayment = method.wayPaymentId;
 	let bankAccountId = null;
 	if (method.code === 'IBD') {
 		bankAccountId = isEmpty(this.getBankAccounts) ? null : this.getBankAccounts[0].bankId;
@@ -110,19 +110,20 @@ export default {
 		align-items: center;
 		display: grid;
 		grid-gap: 10px;
-		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-		
-		@media (max-width: 600px) {
-			margin: 0 20px;
+		grid-auto-flow: row;
+
+		@media (min-width: 768px) {
+			grid-auto-flow: column;
+
 		}
+	}
+	.method-item {
+		font-family: font(medium) !important;
+		font-size: size(minmedium);
 	}
 
 	.component-container {
 		margin-top: 15px;
-
-		@media (max-width: 600px) {
-			margin: 0 20px;
-		}
 	}
 
 	.payment-section-title {
@@ -141,5 +142,9 @@ export default {
 
 	.section-container {
 		margin-bottom: 30px;
+
+		@media (min-width: 768px) {
+			width: 650px;
+		}
 	}
 </style>

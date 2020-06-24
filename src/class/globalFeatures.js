@@ -30,7 +30,8 @@ class GlobalFeatures {
 	get() {
 		return this.features;
 	}
-	init() {
+	init(product) {
+		this.products = [].concat(product, this.products);
 		this.features = getDeeper('category.features')(this.products[0]) || [];
 		this.products.forEach(this.setFeaturesValuesToGlobalFeatures.bind(this));
 	}

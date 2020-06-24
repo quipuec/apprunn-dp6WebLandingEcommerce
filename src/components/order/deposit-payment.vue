@@ -13,7 +13,8 @@
 						:color="`${globalColors.primary}`"
 						:label="bank.bank.name" 
 						:value="bank.bankId"
-						v-for="bank in getBankAccounts" 
+						v-for="bank in getBankAccounts"
+						class="my-2"
 						:key="bank.id">
 					</v-radio>
 				</v-radio-group>
@@ -24,11 +25,19 @@
 				<li
 					v-for="account in bankAccounts"
 					:key="account.id"
+					class="mb-4"
 				>
-					<span
-						class="bank-account-info font-bold"
-					>{{account.name}}: </span>
-					<span>{{account.accountNumber}}</span>
+					<div class="bank-account-number">
+						<h4
+							class="bank-account-info font-bold"
+						>{{account.name}}: </h4>
+						<h3>{{account.accountNumber}}</h3>
+					</div>
+					<div class="person-name-info">
+						<h4>A Nombre de: <span>{{account.additionalInformation.personName}}</span></h4>
+						<h4>Documento de identidad: <span>{{account.additionalInformation.personDocumentNumber}}</span></h4>
+						<h4>Correo: <span>{{account.additionalInformation.documentEmail}}</span></h4>
+					</div>
 				</li>
 			</ul>
 		</div>
@@ -109,10 +118,9 @@ export default {
 	.deposit-container {
 		color: color(dark);
 		font-family: font(medium);
-		margin-top: 40px;
+		padding: 0 10px;
 
 		@media (max-width: 768px) {
-			padding: 0 20px;
 		}
 	}
 
@@ -160,7 +168,7 @@ export default {
 		}
 
 		@media (max-width: 600px) {
-			margin: 0 auto 30px;
+			margin: 0 auto 15px;
 		}
 	}
 
@@ -177,5 +185,39 @@ export default {
 
 	.font-bold {
 		font-family: font(bold);
+	}
+
+	.bank-account-number {
+		display: flex;
+		flex-direction: column;
+		font-size: size(large);
+		margin-bottom: 10px;
+
+		@media (min-width: 599px){
+			align-items: center;
+			flex-direction: row;
+		}
+
+		h3 {
+			align-self: center;
+			font-size: size(sbig);
+
+			@media (min-width: 599px){
+				margin-left: 20px;
+			}
+		}
+	}
+
+	.person-name-info {
+		font-family: font(regular);
+
+		h4 {
+			margin: 7px 0;
+		}
+
+		span {
+			font-family: font(bold);
+			font-size: size(medium);
+		}
 	}
 </style>

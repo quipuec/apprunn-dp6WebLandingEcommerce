@@ -16,13 +16,13 @@
 					class="product-content">{{product.description}}</p>
 				<p class="product-brand">{{product.brand}}</p>
 			</div>
-			<div class="price text-xs-center">
+			<div class="price">
 				<p
 					:style="`color: ${globalColors.primary};`"
 					class="product-title">P.U.</p>
 				<p class="product-price">{{getCurrencySymbol}} {{ product.priceDiscount | currencyFormat }}</p>
 			</div>
-			<div class="quantity text-xs-center">
+			<div class="quantity">
 				<p
 					:style="`color: ${globalColors.primary};`"
 					class="product-title">Cantidad</p>
@@ -50,8 +50,8 @@
 			</div>
 		</section>
 		<section class="actions">
-			<trash-component class="action" @click="deleteProduct"/>
 			<comments-component class="action" @click="showComments"/>
+			<trash-component class="action" @click="deleteProduct"/>
 		</section>
 	</div>
 </template>
@@ -128,46 +128,42 @@ export default {
 		background-color: color(background);
 		border-radius: 20px;
 		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.18);
-		flex-wrap: wrap;
-		display: flex;
 		margin-bottom: 10px;
-		padding: 20px 5px;
-
-		@media (max-width: 700px) {
-			padding: 22px 15px 5px;
-		}
+		padding: 20px 10px;
 	}
 
 	.grid-areas {
-		border-right: 1px solid color(border);
+		border-bottom: 1px solid color(border);
 		display: grid;
-		flex: 1 1 85%;
-		grid-gap: 15px;
+		grid-gap: 5px;
 		grid-template-areas:
-			"image description price quantity total"
-			"image comments comments comments comments";
-		grid-template-columns: 1fr 1fr 0.5fr 1fr 0.7fr;
-		padding-right: 10px;
+			"image image image image"
+			"description description description description"
+			"price quantity quantity total";
+		grid-template-columns: repeat(4, 1fr);
+		grid-template-rows: 1fr 0.2fr 0.2fr;
+		margin-bottom: 10px;
+		padding-bottom: 8px;
 
-		@media (max-width: 600px) {
-			border-right: none;
-			border-bottom: 1px solid color(border);
+		@media (min-width: 768px) {
 			grid-gap: 10px;
+			grid-template-columns: 1fr 1fr 0.5fr 1fr 0.7fr;
 			grid-template-areas:
-				"image image description description"
-				"price quantity quantity total"
-				"comments comments comments comments";
-			grid-template-columns: repeat(4, 1fr);
-			padding: 0 0 10px 0;
+				"image image description description description "
+				"image image price quantity total"
+				"comments comments comments comments comments";
+			margin-bottom: 0px;
 		}
 	}
 
 	.comments {
+		display: none;
 		grid-area: comments;
 		margin-top: 20px;
+		margin: 0;
 
-		@media (max-width: 600px) {
-			margin: 0;
+		@media (min-width: 768px) {
+			display: block;
 		}
 	}
 
@@ -177,53 +173,68 @@ export default {
 
 	.description {
 		grid-area: description;
-
-		@media (max-width: 600px) {
-			align-self: center; 
+		place-self: flex-start;
+		margin-top: 15px;
+		padding-left: 15px;
+		width: 100%;
+		@media (min-width: 768px) {
+			padding-left: 0;
 		}
 	}
 
 	.price {
 		grid-area: price;
+		padding-left: 15px;
+		@media (min-width: 768px) {
+			padding-left: 0px;
+		}
 	}
 
 	.quantity {
+		align-items: center;
+		display: flex;
+		flex-direction: column;
 		grid-area: quantity;
-		justify-self: center;
-	}
+		place-self: stretch;
 
-	.total {
-		grid-area: total;
-		justify-self: flex-end;
-	}
-
-	.product-img {
-		height: 136px;
-		justify-self: flex-start;
-		object-fit: contain;
-		width: 120px;
-
-		@media (max-width: 600px) {
+		@media (min-width: 768px) {
 			justify-self: center;
 		}
 	}
 
+	.total {
+		grid-area: total;
+		place-self: flex-end;
+		padding-right: 10px;
+
+		@media (min-width: 768px) {
+			place-self: stretch;
+		}
+	}
+
+	.product-img {
+		height: 136px;
+		object-fit: contain;
+		width: 100%;
+
+		@media (min-width: 768px) {
+			height: 100%;
+		}
+	}
+
 	.product-title {
-		font-family: font(bold);
+		font-family: font(regular);
 		margin-bottom: 0;
 	}
 
 	.product-content {
 		color: color(dark);
 		font-family: font(regular);
-		font-size: size(msmall);
+		font-size: size(large);
 		font-weight: bold;
-		height: 30px;
 		margin-bottom: 5px;
-		overflow: hidden;
 		text-align: left;
-		text-overflow: ellipsis;
-		width: 130px;
+		width: inherit;
 	}
 
 	.product-brand {
@@ -247,15 +258,10 @@ export default {
 	.actions {
 		align-items: center;
 		display: flex;
-		flex: 1 1 10%;
 		flex-direction: column;
-		justify-content: center;
+		justify-content: space-between;
 		margin: auto;
-		padding-left: 5px;
-
-		@media (max-width: 700px) {
-			flex-direction: row;
-		}
+		flex-direction: row;
 	}
 
 	.action {
@@ -267,6 +273,8 @@ export default {
 	}
 
 	.quantity-button-container {
+		display: flex;
+		justify-content: center;
 		margin-top: 16px;
 	}
 </style>

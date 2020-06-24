@@ -87,6 +87,6 @@ export default {
 		background-color: #333333;
 		height: 50px;
 		overflow: hidden;
-		width: 200px;
+		width: 100%;
 	}
 </style>

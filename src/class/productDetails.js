@@ -10,6 +10,7 @@ class ProductDetails {
 		this.selectedProduct = {};
 		this.selectedProductsArray = [];
 		this.unitId = 0;
+		this.parentProduct = {};
 		this.pictureNotFound = '/static/icons/no-picture-found.svg';
 		this.priceListId = priceListSelectedId;
 		this.selectedUnit = {};
@@ -112,7 +113,8 @@ class ProductDetails {
 	}
 	firstProductSelected(product) {
 		const { unitId } = product;
-		this.globalFeatures.init();
+		this.parentProduct = product;
+		this.globalFeatures.init(product);
 		if (isEmpty(this.childrens)) {
 			this.updateSelectedProducts([product]);
 		} else {
@@ -130,7 +132,7 @@ class ProductDetails {
 		}
 	}
 	setFilteredProducts() {
-		let localCache = this.childrens;
+		let localCache = [this.parentProduct, ...this.childrens];
 		const features = [];
 		Object.values(this.selectedFeatures).forEach((f) => {
 			const products = [];

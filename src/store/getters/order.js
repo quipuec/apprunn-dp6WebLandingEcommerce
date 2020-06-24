@@ -124,10 +124,10 @@ const getters = {
 		return state.order.flagStatusOrder;
 	},
 	getWaysPayments(state) {
-		return state.order.waysPayments;
+		return state.commerce.wayPaymentCommerce;
 	},
 	getBankAccounts(state) {
-		const bankAccounts = state.order.bankAccountsRelated;
+		const bankAccounts = state.commerce.bankAccountsRelated;
 		return bankAccounts.reduce((acum, bank) => {
 			const newAcum = [...acum];
 			const newBank = { ...bank };
