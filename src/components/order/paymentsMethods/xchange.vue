@@ -20,10 +20,17 @@ import { mapGetters } from 'vuex';
 
 function mounted() {
 	document.addEventListener('xchange-success', this.xchangeHandlerSuccess);
+	document.addEventListener('xchange-error', this.xchangeHandlerError);
 }
 
 function xchangeHandlerSuccess() {
+	this.showNotification('Transacción exitosa', 'success');
 	this.$store.dispatch('MAKE_ORDER', { flagFinish: true, context: this });
+}
+
+function xchangeHandlerError(error) {
+	this.showNotification('Error. La transacción no se completó por un error', 'error');
+	console.log(error);
 }
 
 export default {
@@ -35,6 +42,7 @@ export default {
 		]),
 	},
 	methods: {
+		xchangeHandlerError,
 		xchangeHandlerSuccess,
 	},
 	mounted,
