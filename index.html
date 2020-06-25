@@ -48,14 +48,20 @@
     // La variable response posee un Objeto con la respuesta de xchange.
 
     if (response.status == 'succeeded') {
-        // Si el pago fue exitoso se ejecutará el código contenido en este if.
-
-        /* Referencia a la vista donde se aplicará el authorize "parent.document" */
-
-        /* Ejemplo */
-        /* Insertar un el status de la transacción al final del body */
-        /* jQuery(parent.document).find("body").append(response.status); */ 
+      console.log('XCHANGE SUCCESS')
+      console.log(response);
+      const xchangeSucess = new CustomEvent('xchange-success', null);
+      document.dispatchEvent(xchangeSucess);
+      // Si el pago fue exitoso se ejecutará el código contenido en este if.
+      
+      /* Referencia a la vista donde se aplicará el authorize "parent.document" */
+      
+      /* Ejemplo */
+      /* Insertar un el status de la transacción al final del body */
+      /* jQuery(parent.document).find("body").append(response.status); */ 
     } else {
+      console.log('XCHANGE ERROR')
+      console.log(response);
         // Si hubo un problema con el pago se ejecutará este código.
     }
   };

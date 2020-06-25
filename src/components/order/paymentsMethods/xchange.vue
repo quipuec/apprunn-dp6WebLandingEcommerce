@@ -18,6 +18,14 @@
 <script>
 import { mapGetters } from 'vuex';
 
+function mounted() {
+	document.addEventListener('xchange-success', this.xchangeHandlerSuccess);
+}
+
+function xchangeHandlerSuccess() {
+	this.$store.dispatch('MAKE_ORDER', { flagFinish: true, context: this });
+}
+
 export default {
 	name: 'xchange',
 	computed: {
@@ -26,6 +34,10 @@ export default {
 			'getResponsible',
 		]),
 	},
+	methods: {
+		xchangeHandlerSuccess,
+	},
+	mounted,
 };
 </script>
 <style lang="scss" scoped>

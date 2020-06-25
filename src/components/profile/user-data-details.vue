@@ -52,10 +52,10 @@
 </template>
 <script>
 import { mapGetters } from 'vuex';
-import lib, { getDeeper, isEmpty } from '@/shared/lib';
+import { getDeeper, isEmpty, equality, find } from '@/shared/lib';
 
 function getGenderName(id) {
-	const { title } = lib.find(lib.equality('id', id), this.genders) || {};
+	const { title } = find(equality('id', id), this.genders) || {};
 	return title;
 }
 
@@ -67,7 +67,7 @@ function departmentsHandler() {
 	if (isEmpty(this.departments)) {
 		return '--';
 	}
-	const { name } = lib.find(lib.equality('id', this.user.provinceId), this.departments) || {};
+	const { name } = find(equality('id', this.user.provinceId), this.departments) || {};
 	return name;
 }
 
@@ -75,7 +75,7 @@ function districtsHandler() {
 	if (isEmpty(this.districts)) {
 		return '--';
 	}
-	const { name } = lib.find(lib.equality('id', this.user.parishId), this.districts) || {};
+	const { name } = find(equality('id', this.user.parishId), this.districts) || {};
 	return name;
 }
 
@@ -83,7 +83,7 @@ function provinceHandler() {
 	if (isEmpty(this.provinces)) {
 		return '--';
 	}
-	const { name } = lib.find(lib.equality('id', this.user.cityId), this.provinces) || {};
+	const { name } = find(equality('id', this.user.cityId), this.provinces) || {};
 	return name;
 }
 
