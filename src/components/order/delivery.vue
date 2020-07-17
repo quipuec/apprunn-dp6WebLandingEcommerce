@@ -69,34 +69,43 @@ import newAddress from '@/components/order/new-address';
 import responsibleForm from '@/components/order/responsible-form';
 import waysDeliveries from '@/shared/enums/waysDeliveries';
 
-async function created() {
-	await this.$store.dispatch('LOAD_DIRECTIONS', this);
-	await this.$store.dispatch('LOAD_WAREHOUSES', this);
-	this.$store.dispatch('loadProductsFromLocal', this);
-	if (!this.flagWatchOrderInfo) {
-		this.setOrderInfoByDefault();
-	}
+function created() {
+	const that = this;
+	Promise.all([
+		this.$store.dispatch('LOAD_DIRECTIONS', this),
+		this.$store.dispatch('LOAD_WAREHOUSES', this),
+	]).then(() => {
+		if (that.noOrder) {
+			that.setDefaultDelivery();
+		} else {
+			that.setOrderInfoByDefault();
+		}
+	});
+}
+
+function setDefaultDelivery() {
+	const delivery = this.favoriteDirection || this.selectedDirection;
+	this.$store.commit('SET_DELIVERY_PLACE', delivery);
+}
+
+function noOrder() {
+	return isEmpty(this.getOrderInfo);
 }
 
 function setOrderInfoByDefault() {
-	if (!isEmpty(this.getOrderInfo)) {
-		const deliveryAddress = this.getOrderInfo.deliveryAddress;
-		this.$store.commit('SET_DELIVERY_PLACE', deliveryAddress);
-		const flagPickUp = this.getOrderInfo.flagPickUp;
-		this.selectedDirection = flagPickUp === waysDeliveries.house.value
-			? deliveryAddress || this.selectedDirection
-			: this.selectedDirection;
-		this.selectedWarehouse = flagPickUp === waysDeliveries.store.value
-			? deliveryAddress || this.selectedWarehouse
-			: this.selectedWarehouse;
-		this.$store.commit('SET_FLAG_PICKUP', flagPickUp);
+	this.$store.commit('SET_DELIVERY_PLACE', this.getDeliveryAddress);
+	if (this.getFlagPickUp === waysDeliveries.house.value) {
+		this.selectedDirection = this.getDeliveryAddress || this.selectedDirection;
+	} else {
+		this.selectedWarehouse = this.getDeliveryAddress || this.selectedWarehouse;
 	}
+	this.$store.commit('SET_FLAG_PICKUP', this.getFlagPickUp);
 }
 
 function selected(val) {
 	let delivery = null;
 	if (val.code === this.house.code) {
-		delivery = this.favoriteDirection() || this.selectedDirection;
+		delivery = this.favoriteDirection || this.selectedDirection;
 		this.selectedDirection = delivery;
 		this.calculateShippingCost(delivery);
 	} else {
@@ -120,26 +129,6 @@ function warehousesMarkers() {
 		return list;
 	}, []);
 	return warehousesLocation;
-}
-
-
-function handlerDeliveryAddress(newDelivery) {
-	if (newDelivery) {
-		const { addressLine1, id, location, name } = newDelivery || {};
-		if (this.getFlagPickUp === waysDeliveries.house.value) {
-			this.clearSelectedWarehouse();
-			this.selectedDirection.id = id;
-			this.selectedDirection.addressLine1 = addressLine1;
-			this.selectedDirection.location = location;
-			this.selectedDirection.name = name;
-		} else {
-			this.clearSelectedDirection();
-			this.selectedWarehouse.id = id;
-			this.selectedWarehouse.name = name;
-			this.selectedWarehouse.location = location;
-		}
-		this.handlerDirectionsChange();
-	}
 }
 
 function singleOrMultiMarkersOnWarehouses() {
@@ -210,19 +199,6 @@ function clearSelectedWarehouse() {
 		name: '',
 		location: {},
 	};
-}
-
-function handlerDirectionsChange() {
-	if (this.getFlagPickUp === waysDeliveries.house.value && isEmpty(this.getOrderInfo)) {
-		const id = getDeeper('id')(this.getDeliveryAddress);
-		const deliveryExist = this.getDirections.find(d => d.id === id);
-		const directionDelivery = deliveryExist || this.favoriteDirection();
-		this.$store.commit('SET_DELIVERY_PLACE', directionDelivery);
-		this.calculateShippingCost(directionDelivery);
-	} else {
-		const warehouseDirection = this.getDeliveryAddress || this.selectedWarehouse;
-		this.$store.commit('SET_DELIVERY_PLACE', warehouseDirection);
-	}
 }
 
 function favoriteDirection() {
@@ -296,11 +272,8 @@ function setDeliveryPlaceByDefault() {
 	}
 }
 
-function handlerOrderInfo(newOrderInfo) {
-	if (!isEmpty(newOrderInfo)) {
-		this.flagWatchOrderInfo = true;
-		this.setOrderInfoByDefault();
-	}
+function handlerOrderInfo() {
+	this.setOrderInfoByDefault();
 }
 
 function data() {
@@ -348,7 +321,9 @@ export default {
 		atHouse,
 		atStore,
 		disableMapButtonByWarehouse,
+		favoriteDirection,
 		house,
+		noOrder,
 		singleOrMultiMarkersOnWarehouses,
 		store,
 		warehouesesCenter,
@@ -363,21 +338,14 @@ export default {
 		clearSelectedDirection,
 		clearSelectedWarehouse,
 		directionSelected,
-		favoriteDirection,
-		handlerDeliveryAddress,
-		handlerDirectionsChange,
 		handlerOrderInfo,
 		selected,
+		setDefaultDelivery,
 		setDeliveryPlaceByDefault,
 		setOrderInfoByDefault,
 		warehouseSelected,
 	},
 	watch: {
-		getDeliveryAddress: {
-			deep: true,
-			handler: handlerDeliveryAddress,
-		},
-		getDirections: handlerDirectionsChange,
 		getOrderInfo: handlerOrderInfo,
 	},
 };
