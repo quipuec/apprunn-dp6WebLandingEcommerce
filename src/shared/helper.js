@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import { getDeeper, isEmpty } from '@/shared/lib';
+import waysDeliveries from '@/shared/enums/waysDeliveries';
 
 function exactDate(date, formatter = 'DD-MM-YYYY', splitBy = 'T') {
 	if (date) {
@@ -87,16 +88,20 @@ function updateOrderDetailsInLocalStorage(products) {
 
 function buildOrderBody(flagFinish, getters) {
 	const { id, name, address } = getters.getCommerceData.settings.defaultWarehouse;
+	const { getDeliveryAddress, getCustomerAddress, getCustomerAddressId } = getters;
+	const isStore = getters.getFlagPickUp === waysDeliveries.store.value;
+	const storeAddress = isStore ? getDeliveryAddress : null;
+	const placeAddress = getCustomerAddressId ? getDeliveryAddress : getCustomerAddress;
+	const deliveryAddress = isStore ? storeAddress : placeAddress;
 	const body = {
 		costShipping: getters.getShippingCost,
 		costShippingFlagTax: getters.getShippingFlagTax,
 		costShippingTax: getters.getShippingTax,
 		costShippingTaxAmount: getters.getShippingTaxAmount,
-		customerAddressId: getters.getCustomerAddressId,
-		customerAddress: getters.getCustomerAddressId ? null : getters.getCustomerAddress,
+		customerAddressId: isStore ? null : getCustomerAddressId,
+		customerAddress: getCustomerAddressId || isStore ? null : getCustomerAddress,
 		customerBill: getters.getFlagBill ? getters.getBillingData : null,
-		deliveryAddress: getters.getCustomerAddressId
-			? getters.getDeliveryAddress : getters.getCustomerAddress,
+		deliveryAddress,
 		details: getOrderDetails(getters.getOrderDetails, id, name),
 		flagPickUp: getters.getFlagPickUp,
 		responsiblePickUp: getters.getResponsible,

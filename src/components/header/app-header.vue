@@ -317,7 +317,6 @@ export default {
 		height: 100%;
 		margin: 0 1rem;
 		@media (max-width: 768px) {
-			flex-basis: 100%;
 			transform: translateX(0);
 			transition: transform 220ms ease-out;
 		}
