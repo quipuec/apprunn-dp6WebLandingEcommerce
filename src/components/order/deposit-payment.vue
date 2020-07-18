@@ -2,7 +2,10 @@
 	<div class="deposit-container">
 		<div class="deposit-wrapper" v-if="stepFour">
 			<h4 class="deposit-title">¡Gracias por comprar en {{getCommerceData.name}}!</h4>
-			<p class="deposit-content">Tienes hasta 24 horas para efectuar el pago en cualquiera de nuestros bancos afiliados con tu número de pedido.</p>
+			<p
+				v-if="isDeposit"
+				class="deposit-content"
+			>Tienes hasta 24 horas para efectuar el pago en cualquiera de nuestros bancos afiliados con tu número de pedido.</p>
 		</div>
 		<div class="deposit-wrapper" v-else>
 			<h2 v-if="thereAreNoBanksAccounts">No existen cuentas bancarias configuradas</h2>
@@ -19,27 +22,27 @@
 					</v-radio>
 				</v-radio-group>
 			</div>
-		</div>
-		<div v-if="!thereAreNoBanksAccounts">
-			<ul class="mb-1">
-				<li
-					v-for="account in bankAccounts"
-					:key="account.id"
-					class="mb-4"
-				>
-					<div class="bank-account-number">
-						<h4
-							class="bank-account-info font-bold"
-						>{{account.name}}: </h4>
-						<h3>{{account.accountNumber}}</h3>
-					</div>
-					<div class="person-name-info">
-						<h4>A Nombre de: <span>{{account.additionalInformation.personName}}</span></h4>
-						<h4>Documento de identidad: <span>{{account.additionalInformation.personDocumentNumber}}</span></h4>
-						<h4>Correo: <span>{{account.additionalInformation.documentEmail}}</span></h4>
-					</div>
-				</li>
-			</ul>
+			<div v-if="!thereAreNoBanksAccounts">
+				<ul class="mb-1">
+					<li
+						v-for="account in bankAccounts"
+						:key="account.id"
+						class="mb-4"
+					>
+						<div class="bank-account-number">
+							<h4
+								class="bank-account-info font-bold"
+							>{{account.name}}: </h4>
+							<h3>{{account.accountNumber}}</h3>
+						</div>
+						<div class="person-name-info">
+							<h4>A Nombre de: <span>{{account.additionalInformation.personName}}</span></h4>
+							<h4>Documento de identidad: <span>{{account.additionalInformation.personDocumentNumber}}</span></h4>
+							<h4>Correo: <span>{{account.additionalInformation.documentEmail}}</span></h4>
+						</div>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</div>
 </template>
@@ -47,6 +50,7 @@
 import { mapGetters } from 'vuex';
 import { deposit } from '@/shared/enums/wayPayment';
 import onlineDeposits from '@/components/order/deposit-payments';
+import { getDeeper } from '@/shared/lib';
 
 
 function created() {
@@ -82,6 +86,11 @@ function thereAreNoBanksAccounts() {
 	return this.getBankAccounts.length === 0;
 }
 
+function isDeposit() {
+	const wayPaymentSelected = getDeeper('wayPayment.code')(this.getOrderInfo);
+	return wayPaymentSelected === deposit.code;
+}
+
 function data() {
 	return {
 		filtered: [],
@@ -100,9 +109,11 @@ export default {
 			'getBankAccounts',
 			'getCommerceData',
 			'getWaypaymentsByCommerce',
+			'getOrderInfo',
 		]),
-		stepFour,
 		bankAccounts,
+		isDeposit,
+		stepFour,
 		thereAreNoBanksAccounts,
 	},
 	data,

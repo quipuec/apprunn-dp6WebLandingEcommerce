@@ -8,6 +8,11 @@ export const creditCard = {
 	description: 'Tarjeta de crédito o débito',
 };
 
+export const transfer = {
+	code: 'TB',
+	description: 'Transferencia bancaria',
+};
+
 export default {
 	creditCard: {
 		code: 'CDC',
