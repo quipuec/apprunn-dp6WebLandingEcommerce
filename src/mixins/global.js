@@ -76,12 +76,12 @@ function showRow(columns, columnId) {
 	return column.visible;
 }
 
-function token() {
-	return this.$store.getters.token;
-}
-
 function stopClick() {
 	return false;
+}
+
+function token() {
+	return this.$store.getters.token;
 }
 
 function globalColors() {

@@ -11,9 +11,8 @@ const orderMutation = {
 	},
 	SET_DELIVERY_PLACE(state, address) {
 		Vue.set(state.order, 'delivery', address);
-		if (address && address.addressLine1) {
-			Vue.set(state.order, 'customerAddressId', address.id);
-		}
+		const id = address && address.addressLine1 ? address.id : null;
+		Vue.set(state.order, 'customerAddressId', id);
 	},
 	SET_BILL_SELECTION(state, flag) {
 		Vue.set(state.order, 'flagBill', flag);
@@ -26,8 +25,10 @@ const orderMutation = {
 	},
 	UPDATE_PRODUCTS_TO_BUY(state, { id, quantity, unitSelected }) {
 		const { products } = state.order;
-		const index = products.findIndex(
-			p => p.productId === id && p.unitSelected === unitSelected);
+		const index = products.findIndex((p) => {
+			const productId = p.productId || p.id;
+			return productId === id && p.unitSelected === unitSelected;
+		});
 		products[index].quantity = quantity;
 		Vue.set(state.order, 'products', [...products]);
 		localStorage.setItem('ecommerce::product-select', JSON.stringify([...products]));

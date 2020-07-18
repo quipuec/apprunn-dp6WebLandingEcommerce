@@ -55,7 +55,9 @@ function updateFilters(context, filters) {
 }
 
 function getOrderData({ commit, dispatch }, order) {
-	const { customerBill } = order;
+	const { customerBill, deliveryAddress, customerAddress } = order;
+	const { id } = deliveryAddress;
+	const place = id ? deliveryAddress : customerAddress;
 	commit('SET_BILL_SELECTION', false);
 	if (customerBill) {
 		const { address, typePerson: { fullName: rzSocial, documentNumber: ruc } } = customerBill;
@@ -65,7 +67,7 @@ function getOrderData({ commit, dispatch }, order) {
 	commit('SET_ORDER_INFO', { ...order });
 	commit('SET_FLAG_PICKUP', order.flagPickUp);
 	commit('SET_RESPONSIBLE', order.responsiblePickUp);
-	commit('SET_DELIVERY_PLACE', order.customerAddress);
+	commit('SET_DELIVERY_PLACE', place);
 	commit('SET_ORDER_ID', order.id);
 	commit('SET_ORDER_TOTAL', order.total);
 	commit('SET_ORDER_DETAILS', order.details);

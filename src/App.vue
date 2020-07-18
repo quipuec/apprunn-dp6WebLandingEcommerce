@@ -402,6 +402,7 @@ input.app-input::-webkit-input-placeholder {
 			max-width: 100% !important;
 		}
 	}
+
 }
 
 .section-settlement {
