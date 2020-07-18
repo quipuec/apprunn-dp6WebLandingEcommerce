@@ -1,4 +1,4 @@
-import l, { getDeeper, isEmpty } from '@/shared/lib';
+import l, { getDeeper, isEmpty, equality, find } from '@/shared/lib';
 
 class GlobalFeatures {
 	constructor(products) {
@@ -57,7 +57,7 @@ class GlobalFeatures {
 	update(incomingFeatures) {
 		this.features = this.features.map((feature) => {
 			const newValues = feature.values.map((v) => {
-				const current = l.find(l.equality('value', v.value), incomingFeatures);
+				const current = find(equality('value', v.value), incomingFeatures);
 				if (isEmpty(current)) {
 					return l.compose(
 						l.setNewProperty('isSelected', false),

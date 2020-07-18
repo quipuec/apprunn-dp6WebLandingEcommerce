@@ -45,6 +45,17 @@ const methods = {
 	merge: (obj1, obj2) => Object.assign({}, obj1, obj2),
 
 };
-export const { getDeeper, isEmpty } = methods;
+
+export const curry = (fn) => {
+	const arity = fn.length;
+	return function $curry(...args) {
+		if (args.length < arity) {
+			return $curry.bind(null, ...args);
+		}
+		return fn.call(null, ...args);
+	};
+};
+
+export const { getDeeper, isEmpty, find, equality } = methods;
 
 export default methods;

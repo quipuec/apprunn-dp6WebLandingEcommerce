@@ -57,12 +57,12 @@ const asyncActions = {
 	CREATE_ORDER: async (store, { context, body }) => {
 		const url = 'orders';
 		const { data: order } = await context.$httpSales.post(url, body);
-		asyncActions.GET_ORDER_INFO(store, { context, id: order.id });
+		await asyncActions.GET_ORDER_INFO(store, { context, id: order.id });
 	},
 	UPDATE_ORDER: async (store, { context, id, body }) => {
 		const url = `orders/${id}`;
 		const { data: order } = await context.$httpSales.patch(url, body);
-		asyncActions.GET_ORDER_INFO(store, { context, id: order.id });
+		await asyncActions.GET_ORDER_INFO(store, { context, id: order.id });
 	},
 	CANCEL_ORDER: async (store, { context, id }) => {
 		const url = `orders/${id}/cancel`;
@@ -217,11 +217,8 @@ const asyncActions = {
 			? { context, id: getters.getOrderInfo.id, body }
 			: { context, body };
 		await dispatch(dispatchName, dispatchObj);
-		if (flagFinish) {
-			context.goTo('buy-summary');
-		} else {
-			context.goTo('buy-payment');
-		}
+		const page = flagFinish ? 'buy-summary' : 'buy-payment';
+		context.goTo(page);
 	},
 };
 

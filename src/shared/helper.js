@@ -112,7 +112,8 @@ function buildOrderBody(flagFinish, getters) {
 	if (getters.getOrderId && getters.getOrderStatus) {
 		body.orderStateId = getters.getOrderStatus;
 		body.flagStatusOrder = flagFinish ? 3 : getters.getFlagStatusOrder;
-		body.bankAccountId = flagFinish ? getters.getWayPayment.bankAccountId : null;
+		body.bankAccountId = null;
+		// body.bankAccountId = flagFinish ? getters.getWayPayment.bankAccountId : null;
 		body.wayPaymentId = flagFinish ? getters.getWayPayment.wayPayment : null;
 		body.gatewayAuthorizationResponse = flagFinish ? getters.getGatewayAuthorizationResponse : null;
 		body.gatewayErrorCode = flagFinish ? getters.getGatewayErrorCode : null;

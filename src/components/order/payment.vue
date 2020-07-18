@@ -29,18 +29,20 @@
 <script>
 import { mapGetters } from 'vuex';
 import appButton from '@/components/shared/buttons/app-button';
-import { isEmpty } from '@/shared/lib';
+import { isEmpty, curry, equality, find } from '@/shared/lib';
 import depositPayment from '@/components/order/deposit-payment';
 import productsBuyed from '@/components/order/products-buyed';
 import recievedPayment from '@/components/order/recieved-payment';
 import VisaByCountry from '@/components/order/credit-card-payment';
+import { creditCard, transfer } from '@/shared/enums/wayPayment';
 
 function created() {
 	if (isEmpty(this.getWaysPayments)) {
 		this.$store.dispatch('SET_WAY_PAYMENT', this);
 		this.$store.dispatch('SET_BANK_ACCOUNTS', this);
 	} else {
-		this.onSelect(this.getWaysPayments[0]);
+		const selectThisWayPayment = this.getCreditCard || this.getWaysPayments[0];
+		this.onSelect(selectThisWayPayment);
 	}
 }
 
@@ -50,7 +52,7 @@ function onSelect(method) {
 	this.gatewayConfiguration = method.gatewayConfiguration || [];
 	const wayPayment = method.wayPaymentId;
 	let bankAccountId = null;
-	if (method.code === 'IBD') {
+	if (method.code === transfer.code) {
 		bankAccountId = isEmpty(this.getBankAccounts) ? null : this.getBankAccounts[0].bankId;
 	}
 	this.$store.commit('SET_WAY_PAYMENT', { wayPayment, bankAccountId });
@@ -66,7 +68,15 @@ function paymentMethodSelectedComponent() {
 }
 
 function getWaysPayments() {
-	this.onSelect(this.getWaysPayments[0]);
+	const selectThisWayPayment = this.getCreditCard || this.getWaysPayments[0];
+	this.onSelect(selectThisWayPayment);
+}
+
+function getCreditCard() {
+	const findCurried = curry(find);
+	const searchCreditCard = findCurried(equality('code', creditCard.code));
+	const findCreditCard = searchCreditCard(this.getWaysPayments);
+	return findCreditCard;
 }
 
 function data() {
@@ -79,8 +89,18 @@ function data() {
 	};
 }
 
+function beforeRouteEnter(from, to, next) {
+	if (to.name === 'buy-delivery' && from.name === 'buy-payment') {
+		next();
+		window.location.reload();
+	} else {
+		next();
+	}
+}
+
 export default {
 	name: 'payment',
+	beforeRouteEnter,
 	components: {
 		depositPayment,
 		appButton,
@@ -92,7 +112,9 @@ export default {
 		...mapGetters([
 			'getWaysPayments',
 			'getBankAccounts',
+			'indeterminate',
 		]),
+		getCreditCard,
 		paymentMethodSelectedComponent,
 	},
 	created,

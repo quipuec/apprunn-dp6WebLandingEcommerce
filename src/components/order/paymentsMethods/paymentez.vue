@@ -16,8 +16,8 @@ function mounted() {
 		client_app_key: this.clientAppKey,
 		locale: 'es',
 		env_mode: process.env.NODE_ENV === 'production' ? 'prod' : 'stg',
-		onOpen: () => console.log('open Modal'),
-		onClose: () => console.log('close Modal'),
+		onOpen: () => console.log('open Modal Paymentez'),
+		onClose: () => console.log('close Modal Paymentez'),
 		onResponse: this.onCreditCardResponse,
 	});
 	const btnOpenCheckout = document.querySelector('.js-paymentez-checkout');

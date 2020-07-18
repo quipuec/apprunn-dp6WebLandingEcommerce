@@ -82,7 +82,7 @@ const getters = {
 		return newProducts;
 	},
 	getResponsible(state) {
-		const { name, lastname, dni, phone, email } = state.order.responsible;
+		const { name, lastname, dni, phone, email } = state.order.responsible || {};
 		const fullname = `${name} ${lastname}`;
 		return { name, lastname, fullname, dni, phone, email };
 	},
