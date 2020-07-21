@@ -3,6 +3,7 @@ const VisaPeru = () => import('@/components/order/paymentsMethods/visa-payment')
 const Paymentez = () => import('@/components/order/paymentsMethods/paymentez');
 const DataFast = () => import('@/components/order/paymentsMethods/data-fast');
 const Xchange = () => import('@/components/order/paymentsMethods/xchange');
+const Pagoplux = () => import('@/components/order/paymentsMethods/pago-plux');
 
 export default {
 	props: {
@@ -17,8 +18,9 @@ export default {
 			paymentez: h(Paymentez),
 			dataweb: h(DataFast),
 			xchange: h(Xchange),
+			pagoplux: h(Pagoplux),
 		};
-		let selectedPaymentMethods = [h(Xchange)];
+		let selectedPaymentMethods = [];
 		this.paymentsTypes.forEach((t) => {
 			const { code } = t;
 			selectedPaymentMethods = selectedPaymentMethods.concat(options[code]);
