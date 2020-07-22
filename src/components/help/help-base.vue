@@ -26,6 +26,7 @@
 		</div>
 		<div class="help-content" :style="`border:1px solid ${globalColors.base}`">
 			<router-view
+				:is-html="isHtml"
 				:title="title"
 				:sub-title="subtitle"
 				:content="content"
@@ -100,7 +101,11 @@ function subtitle() {
 }
 
 function content() {
-	return this.helpData.section.content || '';
+	debugger;
+	const html = this.helpData.section.content.includes('</');
+	this.isHtml = !!html;
+	return this.helpData.section.content;
+	// return this.helpData.section.content || '';
 }
 
 function image() {
@@ -109,6 +114,7 @@ function image() {
 
 function data() {
 	return {
+		isHtml: false,
 		helpData: {
 			title: '',
 			section: {
@@ -181,7 +187,7 @@ export default {
 		}
 
 		.title-btn-container {
-			alignt-items: center;
+			align-items: center;
 			display: flex;
 			justify-content: space-between;
 
