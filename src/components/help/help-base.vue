@@ -101,11 +101,9 @@ function subtitle() {
 }
 
 function content() {
-	debugger;
 	const html = this.helpData.section.content.includes('</');
 	this.isHtml = !!html;
 	return this.helpData.section.content;
-	// return this.helpData.section.content || '';
 }
 
 function image() {
