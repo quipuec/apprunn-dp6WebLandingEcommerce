@@ -28,8 +28,9 @@ function openPagoPlux() {
 	this.mountJQ();
 	this.mountPagoPlux();
 	this.loadXchangeData();
-	const btn = this.$refs.pagopluxbtn.children.pay;
-	btn.click();
+	// no se está generando el iframe.
+	// const btn = this.$refs.pagopluxbtn.children.pay;
+	// btn.click();
 }
 
 function mountPagoPlux() {

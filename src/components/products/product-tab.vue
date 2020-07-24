@@ -11,7 +11,7 @@
 				:key="index"
 				ripple
 			>
-				<div 
+				<div
 					:style="active === index ? `background-color: ${globalColors.primary}; color: white` : null"
 					class="text-tab">{{ tab }}</div>
 			</v-tab>
