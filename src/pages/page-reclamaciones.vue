@@ -1,6 +1,6 @@
 <template>
 	<div class="reclamations-container">
-		<h2 class="main-title">Libro de reclamanciones</h2>
+		<h2 class="main-title">Libro de reclamaciones</h2>
 		<div class="section">
 			<h3>Razón social: {{getCommerceData.rzSocial}}</h3>
 			<h3>RUC: {{getCommerceData.documentNumber}}</h3>
@@ -144,14 +144,11 @@
 					placeholder="Pedido"
 					v-model="reclamation.claimOrder"
 				></text-area>
-				<div class="sign">
-					<h5 :style="`border-top:1px solid ${globalColors.base}`">Firma del consumidor</h5>
-				</div>
 			</div>
 			<div class="section">
 				<h4>4. Observaciones y acciones adoptadas por el proveedor</h4>
 				<label>
-					Fecha de comunicación de la respuesa
+					Fecha de comunicación de la respuesta
 					<app-input
 						class="input"
 						type="date"
@@ -162,9 +159,6 @@
 						placeholder="Observaciones"
 						v-model="reclamation.answerDescription"
 					></text-area>
-					<div class="sign">
-						<h5 :style="`border-top:1px solid ${globalColors.base}`">Firma del proveedor</h5>
-					</div>
 				</label>
 			</div>
 			<button
@@ -176,7 +170,7 @@
 			>Enviar Reclamación</button>
 		</form>
 		<small><b>*RECLAMO:</b> Disconformidad relacionada a los productos o servicios.</small>
-		<small><b>*QUEJA:</b> Disconformidad no relacionada a los productos o servicios; o malestar o descontento specto a la atención al público.</small>
+		<small><b>*QUEJA:</b> Disconformidad no relacionada a los productos o servicios; o malestar o descontento respecto a la atención al público.</small>
 	</div>
 </template>
 <script>
