@@ -8,7 +8,8 @@
 			<swiper :options="swiperOption" v-if="!indeterminate">
 				<swiper-slide 
 					v-for="banner in banners" 
-					:key="banner.id">
+					:key="banner.id"
+				>
 					<div :style="getBackground(banner)" class="img-carousel">
 						<a 
 							v-if="banner.webLink"
@@ -33,7 +34,10 @@ import companyData from '@/components/shared/company/container-company-data';
 import Searcher from '@/components/home/searcher';
 
 function getBackground(value) {
-	return `background-image: url(${value.webImage})`;
+	const web = value.webImage;
+	const mobile = value.mobileImage;
+	const img = window.innerWidth < 500 ? mobile : web;
+	return `background-image: url(${img})`;
 }
 
 function showSearcher() {
@@ -90,6 +94,12 @@ export default {
 		
 		@media (max-width: 764px) {
 			height: 505px;
+		}
+
+		picture {
+			height: 100%;
+			object-fit: cover;
+			width: 100%;
 		}
 	}
 
