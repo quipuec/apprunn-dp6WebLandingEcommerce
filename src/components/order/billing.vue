@@ -117,12 +117,16 @@ async function validatingDocumentNumber(val) {
 
 function validations() {
 	if (this.isPeru) {
-		const billing = {
-			address: { required },
-			ruc: { required },
-			rzSocial: { required },
+		return {
+			billing: {
+				address: { required },
+				ruc: { required },
+				rzSocial: { required },
+			},
+			flagValidDocumentNumber: {
+				valid: true,
+			},
 		};
-		return { billing };
 	}
 	return {
 		billing: {

@@ -6,7 +6,9 @@
 		<h3
 			:style="`text-align:center;margin-bottom:40px;color:${globalColors.primary}`"
 		>{{subTitle}}</h3>
-		<p>{{content}}</p>
+		<p v-if="isHtml"
+		v-html="content"></p>
+		<p v-else>{{content}}</p>
 		<div class="img-help-container">
 			<img :src="image" alt="imagen" class="img-help">
 		</div>
@@ -31,6 +33,10 @@ export default {
 		title: {
 			type: String,
 			required: true,
+		},
+		isHtml: {
+			type: Boolean,
+			default: false,
 		},
 	},
 };

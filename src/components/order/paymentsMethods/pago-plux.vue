@@ -1,6 +1,8 @@
 <template>
 	<div>
-		<button @click="openPagoPlux" type="button" class="pago-plux-img"></button>
+		<button @click="openPagoPlux" type="button" class="pago-plux-img">
+			<img src="https://quipu-acl.s3.amazonaws.com/icons/logo-pago-plux.png" alt="logo pagoplux">
+		</button>
 		<div id="ButtonPaybox" ref="pagopluxbtn" style="visibility:hidden"></div>
 		<div v-show="false">
 			<!-- correo del usuario de la cuenta xchange -->
@@ -23,19 +25,43 @@
 <script>
 import { mapGetters } from 'vuex';
 
-function openPagoPlux() {
+function mounted() {
 	this.mountData();
 	this.mountJQ();
 	this.mountPagoPlux();
-	this.loadXchangeData();
-	// no se está generando el iframe.
-	// const btn = this.$refs.pagopluxbtn.children.pay;
-	// btn.click();
+	this.loadPagoPluxData();
+	const loadEvent = new Event('load');
+	window.dispatchEvent(loadEvent);
+	window.onAuthorize = (response) => {
+		this.informBackend(response);
+		if (response.status === 'succeeded') {
+			this.pagoPluxHandlerSuccess(response);
+		} else {
+			this.pagoPluxHandlerError(response);
+		}
+	};
+}
+
+function informBackend(res) {
+	const url = 'payment-gateway/validation';
+	const body = {
+		hash: this.hash,
+		gatewayResponse: res,
+	};
+	this.$httpSales.patch(url, body);
+}
+
+function openPagoPlux() {
+	const btn = this.$refs.pagopluxbtn.children.pay;
+	btn.click();
 }
 
 function mountPagoPlux() {
+	const testENV = 'https://sandbox-paybox.pagoplux.com/paybox/index.js';
+	const prodENV = 'https://paybox.pagoplux.com/paybox/index.js';
+	const url = process.env.NODE_ENV === 'production' ? prodENV : testENV;
 	const PagoPluxScript = document.createElement('script');
-	PagoPluxScript.setAttribute('src', 'https://sandbox-paybox.pagoplux.com/paybox/index.js');
+	PagoPluxScript.setAttribute('src', url);
 	const body = document.querySelector('body');
 	body.appendChild(PagoPluxScript);
 }
@@ -65,23 +91,14 @@ function mountData() {
 	body.appendChild(Data);
 }
 
-function mounted() {
-	window.onAuthorize = (response) => {
-		if (response.status === 'succeeded') {
-			this.xchangeHandlerSuccess(response);
-		} else {
-			this.xchangeHandlerError(response);
-		}
-	};
-}
-
-async function loadXchangeData() {
+async function loadPagoPluxData() {
 	const body = {
 		orderId: this.getOrderInfo.id,
 		commerceCode: process.env.COMMERCE_CODE,
 	};
 	const url = 'payment-gateway/pagoplux/checkout';
 	const { data: res } = await this.$httpSales.post(url, body);
+	this.hash = res.hash;
 	this.payboxRemail = res.payboxRemail;
 	this.payboxRename = res.payboxRename;
 	this.payboxBase0 = res.payboxBase0;
@@ -91,18 +108,18 @@ async function loadXchangeData() {
 	this.payboxDescription = res.payboxDescription;
 }
 
-function xchangeHandlerSuccess() {
+function pagoPluxHandlerSuccess() {
 	this.showNotification('Transacción exitosa', 'success');
 	this.$store.dispatch('MAKE_ORDER', { flagFinish: true, context: this });
 }
 
-function xchangeHandlerError(error) {
+function pagoPluxHandlerError() {
 	this.showNotification('Error. La transacción no se completó por un error', 'error');
-	console.log(error);
 }
 
 function data() {
 	return {
+		hash: null,
 		payboxRemail: '',
 		payboxRename: '',
 		payboxBase0: '',
@@ -123,13 +140,14 @@ export default {
 	},
 	data,
 	methods: {
-		loadXchangeData,
+		informBackend,
+		loadPagoPluxData,
 		mountData,
 		mountJQ,
 		mountPagoPlux,
 		openPagoPlux,
-		xchangeHandlerError,
-		xchangeHandlerSuccess,
+		pagoPluxHandlerError,
+		pagoPluxHandlerSuccess,
 	},
 	mounted,
 };
@@ -143,12 +161,13 @@ export default {
 }
 
 .pago-plux-img {
-	background-image: url('https://www.pagoplux.com/wp-content/uploads/2020/04/pagoplux-logo.png');
-	background-position: center;
-	background-size: contain;
+	align-items: center;
+	display: flex;
 	height: 50px;
+	justify-content: center;
+	margin: auto 1rem;
+	padding: 0 2rem;
 	transition-duration: 250ms;
-	width: 100%;
 
 	&:hover {
 		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);

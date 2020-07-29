@@ -1,7 +1,10 @@
 <template>
 	<div>
-		<button @click="openXchange" type="button" class="xchange-img"></button>
-		<div id="ButtonPaybox" class="xchange-btn" ref="xchangebtn"></div>
+		<button @click="openXchange" type="button" class="xchange-img">
+			<img src="https://quipu-acl.s3.amazonaws.com/icons/logo_xchange.png" alt="logo xchange">
+		</button>
+		<div id="ButtonPaybox" class="xchange-btn" ref="xchangebtn" style="visibility:hidden"></div>
+		<!-- <div id="ButtonPaybox" class="xchange-btn" ref="xchangebtn" style="visibility:hidden"></div> -->
 		<div v-show="false">
 			<!-- correo del usuario de la cuenta xchange -->
 			<input type="text" id="PayboxRemail" :value="payboxRemail">
@@ -19,12 +22,35 @@
 <script>
 import { mapGetters } from 'vuex';
 
-function openXchange() {
+function mounted() {
+	this.mountData();
 	this.mountJQ();
 	this.mountXchange();
-	this.mountData();
-	// const btn = this.$refs.xchangebtn.children.pay;
-	// btn.click();
+	this.loadXchangeData();
+	const loadEvent = new Event('load');
+	window.dispatchEvent(loadEvent);
+	window.onAuthorize = (response) => {
+		this.informBackend(response);
+		if (response.status === 'succeeded') {
+			this.xchangeHandlerSuccess(response);
+		} else {
+			this.xchangeHandlerError(response);
+		}
+	};
+}
+
+function informBackend(res) {
+	const url = 'payment-gateway/validation';
+	const body = {
+		hash: this.hash,
+		gatewayResponse: res,
+	};
+	this.$httpSales.patch(url, body);
+}
+
+async function openXchange() {
+	const btn = this.$refs.xchangebtn.children.pay;
+	btn.click();
 }
 
 function mountXchange() {
@@ -37,8 +63,8 @@ function mountXchange() {
 function mountJQ() {
 	const JQScript = document.createElement('script');
 	JQScript.setAttribute('src', 'https://code.jquery.com/jquery-2.2.4.js');
-	const head = document.querySelector('head');
-	head.appendChild(JQScript);
+	const body = document.querySelector('body');
+	body.appendChild(JQScript);
 }
 
 function mountData() {
@@ -53,19 +79,8 @@ function mountData() {
 		PayboxProduction: false,
 		PayboxLanguage: "es",
 	}`;
-	const head = document.querySelector('head');
-	head.appendChild(Data);
-}
-
-function mounted() {
-	window.onAuthorize = (response) => {
-		if (response.status === 'succeeded') {
-			this.xchangeHandlerSuccess(response);
-		} else {
-			this.xchangeHandlerError(response);
-		}
-	};
-	this.loadXchangeData();
+	const body = document.querySelector('body');
+	body.appendChild(Data);
 }
 
 async function loadXchangeData() {
@@ -75,6 +90,7 @@ async function loadXchangeData() {
 	};
 	const url = 'payment-gateway/xchange/checkout';
 	const { data: res } = await this.$httpSales.post(url, body);
+	this.hash = res.hash;
 	this.payboxAmount = res.total;
 	this.payboxRemail = res.email;
 	this.payboxRename = res.username;
@@ -94,6 +110,7 @@ function xchangeHandlerError(error) {
 
 function data() {
 	return {
+		hash: null,
 		payboxAmount: '',
 		payboxRemail: '',
 		payboxRename: '',
@@ -114,6 +131,7 @@ export default {
 	},
 	data,
 	methods: {
+		informBackend,
 		loadXchangeData,
 		mountData,
 		mountJQ,
@@ -134,12 +152,13 @@ export default {
 }
 
 .xchange-img {
-	background-image: url('https://cdn.xchange.la/img/logos/logo-color.png');
-	background-position: center;
-	background-size: contain;
+	align-items: center;
+	display: flex;
 	height: 50px;
+	justify-content: center;
+	margin: auto 1rem;
+	padding: 0 2rem;
 	transition-duration: 250ms;
-	width: 100%;
 
 	&:hover {
 		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
