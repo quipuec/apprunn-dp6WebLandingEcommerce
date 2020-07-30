@@ -26,10 +26,12 @@
 import { mapGetters } from 'vuex';
 
 async function mounted() {
-	await this.loadPagoPluxData();
-	this.mountData();
-	this.mountJQ();
-	this.mountPagoPlux();
+	await Promise.all([
+		this.loadPagoPluxData(),
+		this.mountData(),
+		this.mountJQ(),
+		this.mountPagoPlux(),
+	]);
 	const loadEvent = new Event('load');
 	window.dispatchEvent(loadEvent);
 	setTimeout(() => {
@@ -94,7 +96,7 @@ function mountData() {
 		PayboxBase0: "#PayboxBase0",
 		PayboxBase12: "#PayboxBase12",
 		PayboxDescription: "#PayboxDescriptionPlux",
-		PayboxProduction: ${this.productionENV},
+		PayboxProduction: ${this.productionEnv},
 		PayboxLanguage: "es",
 	}`;
 	const body = document.querySelector('body');

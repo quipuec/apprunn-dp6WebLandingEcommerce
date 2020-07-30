@@ -89,18 +89,18 @@ function data() {
 	};
 }
 
-function beforeRouteEnter(from, to, next) {
-	if (to.name === 'buy-delivery' && from.name === 'buy-payment') {
-		next();
-		window.location.reload();
-	} else {
-		next();
-	}
-}
+// function beforeRouteEnter(from, to, next) {
+// 	if (to.name === 'buy-delivery' && from.name === 'buy-payment') {
+// 		next();
+// 		window.location.reload();
+// 	} else {
+// 		next();
+// 	}
+// }
 
 export default {
 	name: 'payment',
-	beforeRouteEnter,
+	// beforeRouteEnter,
 	components: {
 		depositPayment,
 		appButton,
