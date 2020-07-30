@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<button @click="openPagoPlux" type="button" class="pago-plux-img">
+		<button @click="openPagoPlux" type="button" class="pago-plux-img" :disabled="loading">
 			<img src="https://quipu-acl.s3.amazonaws.com/icons/logo-pago-plux.png" alt="logo pagoplux">
 		</button>
 		<div id="ButtonPaybox" ref="pagopluxbtn" style="visibility:hidden"></div>
@@ -26,12 +26,16 @@
 import { mapGetters } from 'vuex';
 
 function mounted() {
+	this.loading = true;
 	this.mountData();
 	this.mountJQ();
 	this.mountPagoPlux();
 	this.loadPagoPluxData();
 	const loadEvent = new Event('load');
 	window.dispatchEvent(loadEvent);
+	setTimeout(() => {
+		this.loading = false;
+	}, 1000);
 	window.onAuthorize = (response) => {
 		this.informBackend(response);
 		if (response.status === 'succeeded') {
@@ -53,7 +57,14 @@ function informBackend(res) {
 
 function openPagoPlux() {
 	const btn = this.$refs.pagopluxbtn.children.pay;
-	btn.click();
+	if (btn) {
+		btn.click();
+	} else {
+		this.showNotification(
+			'ocurrió un error con la pasarela de pago. Por favor recargue la pantalla',
+			'primary',
+		);
+	}
 }
 
 function mountPagoPlux() {
@@ -127,6 +138,7 @@ function data() {
 		payboxSendmail: '',
 		payboxSendname: '',
 		payboxDescription: '',
+		loading: true,
 	};
 }
 
@@ -172,6 +184,9 @@ export default {
 	&:hover {
 		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 		transform: scale(1.05);
+	}
+	&[disabled] {
+		opacity: 0.3;
 	}
 }
 </style>

@@ -4,7 +4,7 @@ const VisaPeru = () => import('@/components/order/paymentsMethods/visa-payment')
 const Paymentez = () => import('@/components/order/paymentsMethods/paymentez');
 const DataFast = () => import('@/components/order/paymentsMethods/data-fast');
 const PagoPlux = () => import('@/components/order/paymentsMethods/pago-plux');
-const PagoPluxLink = () => {};
+const PagoPluxLink = () => import('@/components/order/paymentsMethods/pago-plux-link');
 const Xchange = () => import('@/components/order/paymentsMethods/xchange');
 const LeadGods = () => import('@/components/order/paymentsMethods/leadgods');
 const PlaceToPay = () => {};
@@ -42,7 +42,9 @@ const paymentButtonCreator = (h, gateway) => {
 		'div',
 		{
 			style: {
+				borderTop: '1px solid gray',
 				display: 'flex',
+				paddingTop: '1rem',
 			},
 		},
 		selectedButtons,
