@@ -27,33 +27,6 @@
   <link rel="preload" href='//fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' as="style">
   <script src="https://code.jquery.com/jquery-1.11.3.min.js" charset="UTF-8"></script>
   <script src="https://cdn.paymentez.com/checkout/1.0.1/paymentez-checkout.min.js"></script>
-  <!-- <script src="https://code.jquery.com/jquery-2.2.4.js"></script> -->
-  <script src="https://cdn.xchange.la/paybox/index.js"></script>
-  <script type="text/javascript">
-    var data = {
-      PayboxRemail: "#PayboxRemail",
-      PayboxSendmail: "#PayboxSendmail",
-      PayboxRename: "#PayboxRename",
-      PayboxSendname: "#PayboxSendname",
-      PayboxAmount: "#PayboxAmount",
-      PayboxDescription: "#PayboxDescription", 
-      PayboxProduction: false,
-      PayboxLanguage: "es",
-  };
-</script>
-
-<script type="text/javascript">
-  var onAuthorize = function(response) {
-    if (response.status == 'succeeded') {
-      const xchangeSucess = new CustomEvent('xchange-success', null);
-      document.dispatchEvent(xchangeSucess);
-    } else {
-      const xchangeError = new CustomEvent('xchange-error', response);
-      document.dispatchEvent(xchangeError);
-    }
-  };
-</script>
-  
 </head>
 
 <body>

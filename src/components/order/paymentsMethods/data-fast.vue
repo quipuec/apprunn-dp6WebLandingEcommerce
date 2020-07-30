@@ -4,7 +4,8 @@
 			class="data-fast-btn"
 			type="button"
 			@click="getTokenId"
-		>Data Fast
+		>
+		<img src="https://quipu-acl.s3.amazonaws.com/icons/logo-datafast.png" alt="logo data fast">
 		</button>
 		<modal v-model="showModal" max-width="420px" @input="closeModal">
 			<div ref="data-fast" class="modal-data-fast" v-if="showModal">
@@ -121,14 +122,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 .data-fast-btn {
-	background-color: #184D73;
+	align-items: center;
+	border: 1px solid #184D73;
 	border-radius: 5px;
 	color: white;
+	display: flex;
 	font-family: font(bold);
 	font-size: size(big);
 	height: 50px;
+	justify-content: center;
 	overflow: hidden;
-	width: 100%;
+	padding: 1rem 2rem;
 }
 
 .modal-data-fast {

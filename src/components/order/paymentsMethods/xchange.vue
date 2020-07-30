@@ -1,17 +1,21 @@
 <template>
 	<div>
-		<div id="ButtonPaybox" class="xchange-btn"></div>
+		<button @click="openXchange" type="button" class="xchange-img">
+			<img src="https://quipu-acl.s3.amazonaws.com/icons/logo_xchange.png" alt="logo xchange">
+		</button>
+		<div id="ButtonPaybox" class="xchange-btn" ref="xchangebtn" style="visibility:hidden"></div>
+		<!-- <div id="ButtonPaybox" class="xchange-btn" ref="xchangebtn" style="visibility:hidden"></div> -->
 		<div v-show="false">
 			<!-- correo del usuario de la cuenta xchange -->
-			<input type="text" id="PayboxRemail" :value="email">
+			<input type="text" id="PayboxRemail" :value="payboxRemail">
 			<!-- correo del usuario que está comprando -->
-			<input type="text" id="PayboxSendmail" :value="getResponsible.email">
+			<input type="text" id="PayboxSendmail" :value="payboxSendmail">
 			<!-- Nombre del usuario xchange -->
-			<input type="text" id="PayboxRename" :value="username">
+			<input type="text" id="PayboxRename" :value="payboxRename">
 			<!-- Nombre del usuario que realiza el pedido -->
-			<input type="text" id="PayboxSendname" :value="getResponsible.fullname">
+			<input type="text" id="PayboxSendname" :value="payboxSendname">
 			<!-- Monto del pedido -->
-			<input type="text" id="PayboxAmount" :value="getOrderInfo.total">
+			<input type="text" id="PayboxAmount" :value="payboxAmount">
 		</div>
 	</div>
 </template>
@@ -19,20 +23,79 @@
 import { mapGetters } from 'vuex';
 
 function mounted() {
-	// this.loadXchangeData();
-	document.addEventListener('xchange-success', this.xchangeHandlerSuccess);
-	document.addEventListener('xchange-error', this.xchangeHandlerError);
+	this.mountData();
+	this.mountJQ();
+	this.mountXchange();
+	this.loadXchangeData();
+	const loadEvent = new Event('load');
+	window.dispatchEvent(loadEvent);
+	window.onAuthorize = (response) => {
+		this.informBackend(response);
+		if (response.status === 'succeeded') {
+			this.xchangeHandlerSuccess(response);
+		} else {
+			this.xchangeHandlerError(response);
+		}
+	};
+}
+
+function informBackend(res) {
+	const url = 'payment-gateway/validation';
+	const body = {
+		hash: this.hash,
+		gatewayResponse: res,
+	};
+	this.$httpSales.patch(url, body);
+}
+
+async function openXchange() {
+	const btn = this.$refs.xchangebtn.children.pay;
+	btn.click();
+}
+
+function mountXchange() {
+	const Xchange = document.createElement('script');
+	Xchange.setAttribute('src', 'https://cdn.xchange.la/paybox/index.js');
+	const head = document.querySelector('head');
+	head.appendChild(Xchange);
+}
+
+function mountJQ() {
+	const JQScript = document.createElement('script');
+	JQScript.setAttribute('src', 'https://code.jquery.com/jquery-2.2.4.js');
+	const body = document.querySelector('body');
+	body.appendChild(JQScript);
+}
+
+function mountData() {
+	const Data = document.createElement('script');
+	Data.setAttribute('type', 'text/javascript');
+	Data.innerHTML = `var data = {
+		PayboxRemail: "#PayboxRemail",
+		PayboxSendmail: "#PayboxSendmail",
+		PayboxRename: "#PayboxRename",
+		PayboxSendname: "#PayboxSendname",
+		PayboxAmount: "#PayboxAmount",
+		PayboxProduction: false,
+		PayboxLanguage: "es",
+	}`;
+	const body = document.querySelector('body');
+	body.appendChild(Data);
 }
 
 async function loadXchangeData() {
 	const body = {
-		orderId: '',
-		commerceCode: '',
+		orderId: this.getOrderInfo.id,
+		commerceCode: process.env.COMMERCE_CODE,
 	};
-	const url = 'payment-transaction/checkout-exchange';
+	const url = 'payment-gateway/xchange/checkout';
 	const { data: res } = await this.$httpSales.post(url, body);
-	this.email = res.email;
-	this.username = res.username;
+	this.hash = res.hash;
+	this.payboxAmount = res.total;
+	this.payboxRemail = res.email;
+	this.payboxRename = res.username;
+	this.payboxSendmail = res.responsibleEmail;
+	this.payboxSendname = res.responsibleName;
 }
 
 function xchangeHandlerSuccess() {
@@ -47,8 +110,14 @@ function xchangeHandlerError(error) {
 
 function data() {
 	return {
-		email: 'donuterapia@gmail.com',
-		username: 'Ivan',
+		hash: null,
+		payboxAmount: '',
+		payboxRemail: '',
+		payboxRename: '',
+		payboxBase0: '',
+		payboxBase12: '',
+		payboxSendmail: '',
+		payboxSendname: '',
 	};
 }
 
@@ -62,7 +131,12 @@ export default {
 	},
 	data,
 	methods: {
+		informBackend,
 		loadXchangeData,
+		mountData,
+		mountJQ,
+		mountXchange,
+		openXchange,
 		xchangeHandlerError,
 		xchangeHandlerSuccess,
 	},
@@ -74,6 +148,21 @@ export default {
 
 	button {
 		width: 210px !important;
+	}
+}
+
+.xchange-img {
+	align-items: center;
+	display: flex;
+	height: 50px;
+	justify-content: center;
+	margin: auto 1rem;
+	padding: 0 2rem;
+	transition-duration: 250ms;
+
+	&:hover {
+		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+		transform: scale(1.05);
 	}
 }
 </style>
