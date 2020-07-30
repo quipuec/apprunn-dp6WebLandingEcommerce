@@ -48,10 +48,19 @@ export default {
 </script>
 <style lang="scss" scoped>
 .pago-plux-styles-container {
-	padding: 1rem 2rem;
+	color: #0679FB;
+	font-weight: bold;
 
 	.pago-plux-styles {
 		background-color: white;
+		border: 1px solid #0679FB;
+		padding: 1rem 2rem;
+		text-decoration: none;
+
+		&:hover {
+			background-color: #0679FB;
+			color: white;
+		}
 	}
 }
 </style>

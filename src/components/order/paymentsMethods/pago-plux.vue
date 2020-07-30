@@ -174,6 +174,7 @@ export default {
 
 .pago-plux-img {
 	align-items: center;
+	border: 1px solid #0679FB;
 	display: flex;
 	height: 50px;
 	justify-content: center;

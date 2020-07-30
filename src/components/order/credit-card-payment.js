@@ -22,6 +22,12 @@ const paymentLinkCreator = (h, gateway) => {
 	});
 	return h(
 		'div',
+		{
+			style: {
+				margin: '1rem',
+				padding: '1rem 0',
+			},
+		},
 		selectedLinks,
 	);
 };
@@ -42,7 +48,7 @@ const paymentButtonCreator = (h, gateway) => {
 		'div',
 		{
 			style: {
-				borderTop: '1px solid gray',
+				borderTop: '1px solid #e6e6e6',
 				display: 'flex',
 				paddingTop: '1rem',
 			},
