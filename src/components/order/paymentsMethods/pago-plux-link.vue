@@ -2,6 +2,7 @@
 	<div class="pago-plux-styles-container">
 		<a
 			:href="link"
+			target="_blank"
 			class="pago-plux-styles"
 		>Pague aquí
 		</a>
