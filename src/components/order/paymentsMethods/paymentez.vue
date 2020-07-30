@@ -84,9 +84,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 	.js-paymentez-checkout {
+		align-items: center;
 		background-color: #333333;
+		display: flex;
 		height: 50px;
 		overflow: hidden;
-		width: 100%;
+		padding: 0 2rem;
 	}
 </style>
