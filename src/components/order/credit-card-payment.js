@@ -5,7 +5,7 @@ const Paymentez = () => import('@/components/order/paymentsMethods/paymentez');
 const DataFast = () => import('@/components/order/paymentsMethods/data-fast');
 const PagoPlux = () => import('@/components/order/paymentsMethods/pago-plux');
 const PagoPluxLink = () => {};
-const Xchange = () => import('@/components/order/paymentsMethods/xchange');
+// const Xchange = () => import('@/components/order/paymentsMethods/xchange');
 const LeadGods = () => import('@/components/order/paymentsMethods/leadgods');
 const PlaceToPay = () => {};
 
@@ -31,7 +31,7 @@ const paymentButtonCreator = (h, gateway) => {
 		paymentez: Paymentez,
 		datafast: DataFast,
 		pagoplux: PagoPlux,
-		xchange: Xchange,
+		// xchange: Xchange,
 	};
 	let selectedButtons = [];
 	gateway.forEach((t) => {
