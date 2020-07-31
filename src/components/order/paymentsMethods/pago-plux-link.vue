@@ -4,7 +4,8 @@
 			:href="link"
 			target="_blank"
 			class="pago-plux-styles"
-		>Pague aquí
+		>
+			<img :src="imgLink" alt="imagen de pagoplux">
 		</a>
 	</div>
 </template>
@@ -44,16 +45,26 @@ export default {
 	methods: {
 		linkGenerator,
 	},
+	props: {
+		imgLink: {
+			type: String,
+			required: true,
+		},
+	},
 };
 </script>
 <style lang="scss" scoped>
 .pago-plux-styles-container {
 	color: #0679FB;
 	font-weight: bold;
+	max-width: fit-content;
 
 	.pago-plux-styles {
+		align-items: center;
 		background-color: white;
 		border: 1px solid #0679FB;
+		display: flex;
+		justify-content: center;
 		padding: 1rem 2rem;
 		text-decoration: none;
 
