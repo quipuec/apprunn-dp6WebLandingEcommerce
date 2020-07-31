@@ -17,8 +17,16 @@ const paymentLinkCreator = (h, gateway) => {
 	};
 	let selectedLinks = [];
 	gateway.forEach((t) => {
-		const { code } = t;
-		selectedLinks = selectedLinks.concat(h(linkOptions[code]));
+		const { code, urlImage } = t;
+		const paymentLinkComponent = h(
+			linkOptions[code],
+			{
+				props: {
+					imgLink: urlImage,
+				},
+			},
+		);
+		selectedLinks = selectedLinks.concat(paymentLinkComponent);
 	});
 	return h(
 		'div',

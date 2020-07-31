@@ -139,7 +139,6 @@ function data() {
 		payboxSendmail: '',
 		payboxSendname: '',
 		payboxDescription: '',
-		loading: true,
 	};
 }
 
@@ -189,10 +188,7 @@ export default {
 	}
 	&[disabled] {
 		opacity: 0.3;
-<<<<<<< HEAD
-=======
 		cursor: not-allowed;
->>>>>>> 63c48d27373ea5a63e7752c4752632922901b1d5
 	}
 }
 </style>
