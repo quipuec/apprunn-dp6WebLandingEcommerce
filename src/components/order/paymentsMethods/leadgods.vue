@@ -4,8 +4,8 @@
 			target="_blank"
 			class="leadgods-styles"
 			:href="link"
-			:style="`color:${globalColors.primary};border:1px solid ${globalColors.primary}`"
-		>Pague aquí
+		>
+			<img :src="imgLink" alt="imagen de marketpago">
 		</a>
 	</div>
 </template>
@@ -44,17 +44,25 @@ export default {
 	methods: {
 		linkGenerator,
 	},
+	props: {
+		imgLink: {
+			type: String,
+			required: true,
+		},
+	},
 };
 </script>
 <style lang="scss" scoped>
 .leadgods-styles-container {
 	font-weight: bold;
 	transition-duration: 250ms;
-	width: fit-content;
+	max-width: fit-content;
 
 	.leadgods-styles {
+		align-items: center;
 		background-color: white;
-		padding: 1rem 2rem;
+		display: flex;
+		justify-content: center;
 		text-decoration: none;
 	}
 	&:hover {
