@@ -19,9 +19,11 @@ function created() {
 async function linkGenerator() {
 	const url = 'payment-gateway/pagoplux/checkout';
 	const body = {
-		orderId: this.getOrderInfo.id,
+		categoryCode: this.categoryCode,
 		commerceCode: process.env.COMMERCE_CODE,
-		categoryCode: 'PAYMENT_LINK',
+		ipAddress: this.ipAddress,
+		orderId: this.orderId,
+		uri: this.uri,
 	};
 	const { data: res } = await this.$httpSales.post(url, body);
 	this.link = res.data.url;
@@ -46,7 +48,23 @@ export default {
 		linkGenerator,
 	},
 	props: {
+		categoryCode: {
+			type: String,
+			required: true,
+		},
 		imgLink: {
+			type: String,
+			required: true,
+		},
+		ipAddress: {
+			type: String,
+			required: true,
+		},
+		orderId: {
+			type: Number,
+			required: true,
+		},
+		uri: {
 			type: String,
 			required: true,
 		},
@@ -55,22 +73,20 @@ export default {
 </script>
 <style lang="scss" scoped>
 .pago-plux-styles-container {
-	color: #0679FB;
 	font-weight: bold;
+	transition-duration: 250ms;
 	max-width: fit-content;
 
 	.pago-plux-styles {
 		align-items: center;
 		background-color: white;
-		border: 1px solid #0679FB;
 		display: flex;
 		justify-content: center;
-		padding: 1rem 2rem;
 		text-decoration: none;
 
 		&:hover {
-			background-color: #0679FB;
-			color: white;
+			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+			transform: scale(1.05);
 		}
 	}
 }

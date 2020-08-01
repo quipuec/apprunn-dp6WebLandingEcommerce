@@ -1,3 +1,4 @@
+import { mapGetters } from 'vuex';
 import { LINK, BUTTON } from '@/shared/enums/paymentStrategy';
 
 const VisaPeru = () => import('@/components/order/paymentsMethods/visa-payment');
@@ -7,38 +8,63 @@ const PagoPlux = () => import('@/components/order/paymentsMethods/pago-plux');
 const PagoPluxLink = () => import('@/components/order/paymentsMethods/pago-plux-link');
 const Xchange = () => import('@/components/order/paymentsMethods/xchange');
 const LeadGods = () => import('@/components/order/paymentsMethods/leadgods');
-const PlaceToPay = () => {};
+const PlaceToPay = () => import('@/components/order/paymentsMethods/place-to-pay');
 
-const paymentLinkCreator = (h, gateway) => {
-	const linkOptions = {
-		leadgods: LeadGods,
-		placetopay: PlaceToPay,
-		pagoplux_link: PagoPluxLink,
-	};
-	let selectedLinks = [];
-	gateway.forEach((t) => {
-		const { code, urlImage } = t;
-		const paymentLinkComponent = h(
-			linkOptions[code],
+function created() {
+	this.getClientIp();
+}
+
+async function getClientIp() {
+	try {
+		({ data: this.clientIp } = await this.$http.get('https://api.ipify.org'));
+	} catch (err) {
+		this.showNotification(
+			'Ocurrio un error con la ip de origen',
+			'error',
+		);
+	}
+}
+
+function paymentLinkCreator(h, gateway) {
+	if (this.getOrderInfo && this.clientIp) {
+		const orderId = this.getOrderInfo.id;
+		const redirectUri = 'perfil/detalle-orden';
+		const linkOptions = {
+			leadgods: LeadGods,
+			placetopay: PlaceToPay,
+			pagoplux_link: PagoPluxLink,
+		};
+		let selectedLinks = [];
+		gateway.forEach((t) => {
+			const { categoryCode, code, urlImage } = t;
+			const paymentLinkComponent = h(
+				linkOptions[code],
+				{
+					props: {
+						categoryCode,
+						code,
+						imgLink: urlImage,
+						ipAddress: this.clientIp,
+						orderId,
+						uri: redirectUri,
+					},
+				},
+			);
+			selectedLinks = selectedLinks.concat(paymentLinkComponent);
+		});
+		return h(
+			'div',
 			{
-				props: {
-					imgLink: urlImage,
+				style: {
+					margin: '1rem',
+					padding: '1rem 0',
 				},
 			},
+			selectedLinks,
 		);
-		selectedLinks = selectedLinks.concat(paymentLinkComponent);
-	});
-	return h(
-		'div',
-		{
-			style: {
-				margin: '1rem',
-				padding: '1rem 0',
-			},
-		},
-		selectedLinks,
-	);
-};
+	}
+	return null;
+}
 const paymentButtonCreator = (h, gateway) => {
 	const buttonOptions = {
 		visa: VisaPeru,
@@ -65,7 +91,25 @@ const paymentButtonCreator = (h, gateway) => {
 	);
 };
 
+function data() {
+	return {
+		clientIp: null,
+	};
+}
+
 export default {
+	computed: {
+		...mapGetters([
+			'getOrderInfo',
+		]),
+	},
+	created,
+	data,
+	methods: {
+		getClientIp,
+		paymentButtonCreator,
+		paymentLinkCreator,
+	},
 	props: {
 		paymentsTypes: {
 			required: true,
@@ -79,11 +123,11 @@ export default {
 		const paymentsMethos = [];
 		const link = this.paymentsTypes.find(p => p.code === LINK);
 		if (link) {
-			paymentsMethos.push(paymentLinkCreator(h, link.gateway));
+			paymentsMethos.push(this.paymentLinkCreator(h, link.gateway));
 		}
 		const button = this.paymentsTypes.find(p => p.code === BUTTON);
 		if (button) {
-			paymentsMethos.push(paymentButtonCreator(h, button.gateway));
+			paymentsMethos.push(this.paymentButtonCreator(h, button.gateway));
 		}
 		return h('div', paymentsMethos);
 	},
