@@ -4,7 +4,7 @@ const VisaPeru = () => import('@/components/order/paymentsMethods/visa-payment')
 const Paymentez = () => import('@/components/order/paymentsMethods/paymentez');
 const DataFast = () => import('@/components/order/paymentsMethods/data-fast');
 const PagoPlux = () => import('@/components/order/paymentsMethods/pago-plux');
-const PagoPluxLink = () => {};
+const PagoPluxLink = () => import('@/components/order/paymentsMethods/pago-plux-link');
 const Xchange = () => import('@/components/order/paymentsMethods/xchange');
 const LeadGods = () => import('@/components/order/paymentsMethods/leadgods');
 const PlaceToPay = () => {};
@@ -17,11 +17,25 @@ const paymentLinkCreator = (h, gateway) => {
 	};
 	let selectedLinks = [];
 	gateway.forEach((t) => {
-		const { code } = t;
-		selectedLinks = selectedLinks.concat(h(linkOptions[code]));
+		const { code, urlImage } = t;
+		const paymentLinkComponent = h(
+			linkOptions[code],
+			{
+				props: {
+					imgLink: urlImage,
+				},
+			},
+		);
+		selectedLinks = selectedLinks.concat(paymentLinkComponent);
 	});
 	return h(
 		'div',
+		{
+			style: {
+				margin: '1rem',
+				padding: '1rem 0',
+			},
+		},
 		selectedLinks,
 	);
 };
@@ -42,7 +56,9 @@ const paymentButtonCreator = (h, gateway) => {
 		'div',
 		{
 			style: {
+				borderTop: '1px solid #e6e6e6',
 				display: 'flex',
+				paddingTop: '1rem',
 			},
 		},
 		selectedButtons,
