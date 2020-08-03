@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<button @click="openXchange" type="button" class="xchange-img">
+		<button @click="openXchange" type="button" class="xchange-img" :disabled="loading">
 			<img src="https://quipu-acl.s3.amazonaws.com/icons/logo_xchange.png" alt="logo xchange">
 		</button>
 		<div id="ButtonPaybox" class="xchange-btn" ref="xchangebtn" style="visibility:hidden"></div>
@@ -29,6 +29,9 @@ function mounted() {
 	this.loadXchangeData();
 	const loadEvent = new Event('load');
 	window.dispatchEvent(loadEvent);
+	setTimeout(() => {
+		this.loading = false;
+	});
 	window.onAuthorize = (response) => {
 		this.informBackend(response);
 		if (response.status === 'succeeded') {
@@ -111,6 +114,7 @@ function xchangeHandlerError(error) {
 function data() {
 	return {
 		hash: null,
+		loading: true,
 		payboxAmount: '',
 		payboxRemail: '',
 		payboxRename: '',
@@ -163,6 +167,10 @@ export default {
 	&:hover {
 		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 		transform: scale(1.05);
+	}
+	&[disabled] {
+		cursor: not-allowed;
+		opacity: 0.3;
 	}
 }
 </style>

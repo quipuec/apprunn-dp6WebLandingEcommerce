@@ -26,6 +26,7 @@
 import { mapGetters } from 'vuex';
 
 function mounted() {
+	this.loading = true;
 	this.mountData();
 	this.mountJQ();
 	this.mountPagoPlux();
@@ -173,6 +174,7 @@ export default {
 
 .pago-plux-img {
 	align-items: center;
+	border: 1px solid #0679FB;
 	display: flex;
 	height: 50px;
 	justify-content: center;

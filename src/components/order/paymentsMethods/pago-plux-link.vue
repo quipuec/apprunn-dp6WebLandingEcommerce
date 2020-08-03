@@ -1,11 +1,11 @@
 <template>
-	<div class="leadgods-styles-container">
+	<div class="pago-plux-styles-container">
 		<a
-			target="_blank"
-			class="leadgods-styles"
 			:href="link"
+			target="_blank"
+			class="pago-plux-styles"
 		>
-			<img :src="imgLink" alt="imagen de marketpago">
+			<img :src="imgLink" alt="imagen de pagoplux">
 		</a>
 	</div>
 </template>
@@ -17,10 +17,11 @@ function created() {
 }
 
 async function linkGenerator() {
-	const url = 'payment-gateway/leadgods/checkout';
+	const url = 'payment-gateway/pagoplux/checkout';
 	const body = {
 		orderId: this.getOrderInfo.id,
 		commerceCode: process.env.COMMERCE_CODE,
+		categoryCode: 'PAYMENT_LINK',
 	};
 	const { data: res } = await this.$httpSales.post(url, body);
 	this.link = res.data.url;
@@ -33,7 +34,7 @@ function data() {
 }
 
 export default {
-	name: 'leadgods',
+	name: 'pago-plux-link',
 	computed: {
 		...mapGetters([
 			'getOrderInfo',
@@ -53,21 +54,24 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.leadgods-styles-container {
+.pago-plux-styles-container {
+	color: #0679FB;
 	font-weight: bold;
-	transition-duration: 250ms;
 	max-width: fit-content;
 
-	.leadgods-styles {
+	.pago-plux-styles {
 		align-items: center;
 		background-color: white;
+		border: 1px solid #0679FB;
 		display: flex;
 		justify-content: center;
+		padding: 1rem 2rem;
 		text-decoration: none;
-	}
-	&:hover {
-		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-		transform: scale(1.05);
+
+		&:hover {
+			background-color: #0679FB;
+			color: white;
+		}
 	}
 }
 </style>
