@@ -9,7 +9,6 @@
 	</div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
 
 async function linkGenerator() {
 	const url = 'payment-gateway/leadgods/checkout';
@@ -21,9 +20,10 @@ async function linkGenerator() {
 		uri: this.uri,
 	};
 	try {
-		const { data: res } = await this.$httpSales.post(url, body);
-		this.$store.commit('SET_PAYMENT_LINK', res.data.url);
-		this.$store.dispatch('MAKE_ORDER', { flagFinish: true, context: this });
+		await this.$httpSales.post(url, body);
+		this.showNotification('Se generó un enlace de pagos de forma exitosa', 'success');
+		this.$router.push({ name: 'buy-summary' });
+		this.$store.dispatch('GET_ORDER_INFO', { context: this, id: this.orderId });
 	} catch (error) {
 		this.showNotification(
 			'Ocurrió un error en el checkout de MarketPago. Recargue e intente de nuevo',
@@ -35,11 +35,6 @@ async function linkGenerator() {
 
 export default {
 	name: 'leadgods',
-	computed: {
-		...mapGetters([
-			'getOrderInfo',
-		]),
-	},
 	methods: {
 		linkGenerator,
 	},

@@ -1,20 +1,15 @@
 <template>
 	<div class="pago-plux-styles-container">
-		<a
-			:href="link"
-			target="_blank"
+		<button
+			type="button"
 			class="pago-plux-styles"
+			@click="linkGenerator"
 		>
 			<img :src="imgLink" alt="imagen de pagoplux">
-		</a>
+		</button>
 	</div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
-
-function created() {
-	this.linkGenerator();
-}
 
 async function linkGenerator() {
 	const url = 'payment-gateway/pagoplux/checkout';
@@ -25,8 +20,18 @@ async function linkGenerator() {
 		orderId: this.orderId,
 		uri: this.uri,
 	};
-	const { data: res } = await this.$httpSales.post(url, body);
-	this.link = res.data.url;
+	try {
+		await this.$httpSales.post(url, body);
+		this.showNotification('Se generó un enlace de pagos de forma exitosa', 'success');
+		this.$router.push({ name: 'buy-summary' });
+		this.$store.dispatch('GET_ORDER_INFO', { context: this, id: this.orderId });
+	} catch (error) {
+		this.showNotification(
+			'Ocurrió un error al generar el enlace de pago. Recargue y vuelva a intentarlo por favor',
+			'error',
+		);
+		console.log(error);
+	}
 }
 
 function data() {
@@ -37,12 +42,6 @@ function data() {
 
 export default {
 	name: 'pago-plux-link',
-	computed: {
-		...mapGetters([
-			'getOrderInfo',
-		]),
-	},
-	created,
 	data,
 	methods: {
 		linkGenerator,
