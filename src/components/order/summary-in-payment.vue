@@ -27,7 +27,14 @@
 			<img :src="iconSvg.pay" alt="ícono de factura">
 			<div class="summary-content">
 				<h4 class="summary-title">Método de pago</h4>
-				<span>{{getWayPayment}}</span>
+				<div>
+					<h5>{{getWayPayment.title}}</h5>
+					<div v-if="getWayPayment.code === 'link'" class="link-container">
+						<a :href="getWayPayment.payment"
+						>{{getWayPayment.payment}}:</a>
+					</div>
+					<span v-else>{{getWayPayment.payment}}</span>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -72,7 +79,18 @@ function stepFour() {
 function getWayPayment() {
 	const wayPayment = getDeeper('wayPayment.description')(this.getOrderInfo);
 	if (wayPayment) {
-		return wayPayment;
+		return {
+			payment: wayPayment,
+			title: '',
+		};
+	}
+	const link = getDeeper('sessionGateway.data.url')(this.getOrderInfo);
+	if (link) {
+		return {
+			code: 'link',
+			payment: link,
+			title: 'Enlace de pago',
+		};
 	}
 	return 'Recojo en tienda';
 }
@@ -169,5 +187,12 @@ export default {
 			display: flex;
 			flex-direction: column;
 		}
+	}
+
+	.link-container {
+		max-width: 150px;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
 </style>
