@@ -143,7 +143,7 @@ function data() {
 }
 
 export default {
-	name: 'xchange',
+	name: 'pagoplux',
 	computed: {
 		...mapGetters([
 			'getOrderInfo',
