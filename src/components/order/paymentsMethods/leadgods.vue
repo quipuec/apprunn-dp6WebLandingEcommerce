@@ -19,8 +19,11 @@ function created() {
 async function linkGenerator() {
 	const url = 'payment-gateway/leadgods/checkout';
 	const body = {
-		orderId: this.getOrderInfo.id,
+		categoryCode: this.categoryCode,
 		commerceCode: process.env.COMMERCE_CODE,
+		ipAddress: this.ipAddress,
+		orderId: this.orderId,
+		uri: this.uri,
 	};
 	const { data: res } = await this.$httpSales.post(url, body);
 	this.link = res.data.url;
@@ -45,7 +48,23 @@ export default {
 		linkGenerator,
 	},
 	props: {
+		categoryCode: {
+			type: String,
+			required: true,
+		},
 		imgLink: {
+			type: String,
+			required: true,
+		},
+		ipAddress: {
+			type: String,
+			required: true,
+		},
+		orderId: {
+			type: Number,
+			required: true,
+		},
+		uri: {
 			type: String,
 			required: true,
 		},
