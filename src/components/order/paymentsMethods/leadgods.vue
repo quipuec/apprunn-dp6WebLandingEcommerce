@@ -1,20 +1,15 @@
 <template>
 	<div class="leadgods-styles-container">
-		<a
-			target="_blank"
+		<button
 			class="leadgods-styles"
-			:href="link"
+			@click="linkGenerator"
 		>
 			<img :src="imgLink" alt="imagen de marketpago">
-		</a>
+		</button>
 	</div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
-
-function created() {
-	this.linkGenerator();
-}
 
 async function linkGenerator() {
 	const url = 'payment-gateway/leadgods/checkout';
@@ -25,14 +20,17 @@ async function linkGenerator() {
 		orderId: this.orderId,
 		uri: this.uri,
 	};
-	const { data: res } = await this.$httpSales.post(url, body);
-	this.link = res.data.url;
-}
-
-function data() {
-	return {
-		link: null,
-	};
+	try {
+		const { data: res } = await this.$httpSales.post(url, body);
+		this.$store.commit('SET_PAYMENT_LINK', res.data.url);
+		this.$store.dispatch('MAKE_ORDER', { flagFinish: true, context: this });
+	} catch (error) {
+		this.showNotification(
+			'Ocurrió un error en el checkout de MarketPago. Recargue e intente de nuevo',
+			'error',
+		);
+		console.log(error);
+	}
 }
 
 export default {
@@ -42,8 +40,6 @@ export default {
 			'getOrderInfo',
 		]),
 	},
-	created,
-	data,
 	methods: {
 		linkGenerator,
 	},

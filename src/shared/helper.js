@@ -110,6 +110,7 @@ function buildOrderBody(flagFinish, getters) {
 		warehouseAddress: address,
 	};
 	if (getters.getOrderId && getters.getOrderStatus) {
+		body.additionalInformation = { paymentLink: getters.getPaymentLink },
 		body.orderStateId = getters.getOrderStatus;
 		body.flagStatusOrder = flagFinish ? 3 : getters.getFlagStatusOrder;
 		body.bankAccountId = null;

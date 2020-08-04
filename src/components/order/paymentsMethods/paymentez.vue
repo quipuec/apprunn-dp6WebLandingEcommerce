@@ -28,8 +28,10 @@ function mounted() {
 			user_phone: this.getOrderInfo.customer.phone || '0000000000',
 			order_description: `${this.getCommerceData.name}-PE:${this.getOrderInfo.number}`,
 			order_amount: this.getOrderInfo.total,
-			order_vat: 0,
+			order_vat: 0, // valor del impuesto
 			order_reference: String(this.getOrderInfo.number),
+			// taxable_amount: subtotal (total sin impuesto)
+			// tax_percentage: valor porcentual del impuesto
 		});
 	});
 }
