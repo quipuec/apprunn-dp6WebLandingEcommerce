@@ -69,7 +69,7 @@ const asyncActions = {
 		await context.$httpSales.patch(url);
 	},
 	GET_ORDER_INFO: async (store, { context, id }) => {
-		const url = `orders/${id}`;
+		const url = `orders/${id}?summary=true`;
 		const { data: order } = await context.$httpSales.get(url);
 		localStorage.setItem('ecommerce-order', JSON.stringify(order));
 		store.dispatch('getOrderData', order);

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<button class="js-paymentez-checkout">
+		<button class="js-paymentez-checkout" @click="openPaymentezModal">
 			<img src="https://developers.paymentez.com/wp-content/uploads/2017/10/logo.png" alt="logo de paymentez">
 		</button>
 	</div>
@@ -9,29 +9,48 @@
 import { mapGetters } from 'vuex';
 import orderStatesEnum from '@/shared/enums/orderStateId';
 
-function mounted() {
-	/* eslint-disable new-cap */
-	const paymentezCheckout = new window.PaymentezCheckout.modal({
-		client_app_code: this.clientAppCode,
-		client_app_key: this.clientAppKey,
-		locale: 'es',
-		env_mode: process.env.NODE_ENV === 'production' ? 'prod' : 'stg',
-		onOpen: () => console.log('open Modal Paymentez'),
-		onClose: () => console.log('close Modal Paymentez'),
-		onResponse: this.onCreditCardResponse,
-	});
-	const btnOpenCheckout = document.querySelector('.js-paymentez-checkout');
-	btnOpenCheckout.addEventListener('click', () => {
-		paymentezCheckout.open({
-			user_id: String(this.getOrderInfo.customer.id),
-			user_email: this.getOrderInfo.customer.email,
-			user_phone: this.getOrderInfo.customer.phone || '0000000000',
-			order_description: `${this.getCommerceData.name}-PE:${this.getOrderInfo.number}`,
-			order_amount: this.getOrderInfo.total,
-			order_vat: 0,
-			order_reference: String(this.getOrderInfo.number),
+function openPaymentezModal() {
+	this.checkout()
+		.then((res) => {
+			console.log(res);
+			/* eslint-disable new-cap */
+			const paymentezCheckout = new window.PaymentezCheckout.modal({
+				client_app_code: this.clientAppCode,
+				client_app_key: this.clientAppKey,
+				locale: 'es',
+				env_mode: process.env.NODE_ENV === 'production' ? 'prod' : 'stg',
+				onOpen: () => console.log('open Modal Paymentez'),
+				onClose: () => console.log('close Modal Paymentez'),
+				onResponse: this.onCreditCardResponse,
+			});
+			paymentezCheckout.open({
+				user_id: String(this.getOrderInfo.customer.id),
+				user_email: this.getOrderInfo.customer.email,
+				user_phone: this.getOrderInfo.customer.phone || '0000000000',
+				order_description: `${this.getCommerceData.name}-PE:${this.getOrderInfo.number}`,
+				order_amount: this.getOrderInfo.total,
+				order_vat: 0, // valor del impuesto
+				order_reference: String(this.getOrderInfo.number),
+				// taxable_amount: subtotal (total sin impuesto)
+				// tax_percentage: valor porcentual del impuesto
+			});
+		})
+		.catch((error) => {
+			this.showNotification(
+				'Ocurrió un error en el checkout de Paymentez. Recargue e intente de nuevo',
+				'error',
+			);
+			console.log(error);
 		});
-	});
+}
+
+async function checkout() {
+	const url = 'payment-gateway/paymentez/checkout';
+	const body = {
+		orderId: this.getOrderInfo.id,
+		commerceCode: process.env.COMMERCE_CODE,
+	};
+	return this.$httpSales.post(url, body);
 }
 
 function clientAppCode() {
@@ -76,10 +95,11 @@ export default {
 		clientAppCode,
 	},
 	methods: {
+		checkout,
 		getOrderStateIdForCreditCard,
 		onCreditCardResponse,
+		openPaymentezModal,
 	},
-	mounted,
 };
 </script>
 <style lang="scss" scoped>

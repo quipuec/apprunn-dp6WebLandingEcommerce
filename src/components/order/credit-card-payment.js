@@ -52,7 +52,7 @@ function paymentLinkCreator(h, gateway) {
 			);
 			selectedLinks = selectedLinks.concat(paymentLinkComponent);
 		});
-		return h(
+		const links = h(
 			'div',
 			{
 				style: {
@@ -62,6 +62,8 @@ function paymentLinkCreator(h, gateway) {
 			},
 			selectedLinks,
 		);
+		const linkTitle = h('h3', { style: { marginBottom: '0rem' } }, 'Paga más tarde');
+		return h('div', [linkTitle, links]);
 	}
 	return null;
 }
@@ -78,16 +80,25 @@ const paymentButtonCreator = (h, gateway) => {
 		const { code } = t;
 		selectedButtons = selectedButtons.concat(h(buttonOptions[code]));
 	});
+	const btns = h(
+		'div',
+		{
+			style: {
+				display: 'flex',
+			},
+		},
+		selectedButtons,
+	);
+	const btnTitle = h('h3', { style: { marginBottom: '1rem' } }, 'Paga ahora');
 	return h(
 		'div',
 		{
 			style: {
 				borderTop: '1px solid #e6e6e6',
-				display: 'flex',
 				paddingTop: '1rem',
 			},
 		},
-		selectedButtons,
+		[btnTitle, btns],
 	);
 };
 

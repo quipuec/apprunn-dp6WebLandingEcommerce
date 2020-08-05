@@ -93,5 +93,8 @@ const orderMutation = {
 	SET_GATEWAY_AUTHORIZATION_RESPONSE(state, data) {
 		Vue.set(state.order, 'gatewayAuthorizationResponse', data);
 	},
+	SET_PAYMENT_LINK(state, link) {
+		Vue.set(state.order, 'paymentLink', link);
+	},
 };
 export default orderMutation;
