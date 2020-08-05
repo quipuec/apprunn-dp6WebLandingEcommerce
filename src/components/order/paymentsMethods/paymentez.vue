@@ -12,7 +12,7 @@ import orderStatesEnum from '@/shared/enums/orderStateId';
 function openPaymentezModal() {
 	this.checkout()
 		.then((res) => {
-			console.log(res);
+			this.hash = res.hash;
 			/* eslint-disable new-cap */
 			const paymentezCheckout = new window.PaymentezCheckout.modal({
 				client_app_code: this.clientAppCode,
@@ -62,6 +62,7 @@ function clientAppKey() {
 }
 
 async function onCreditCardResponse(response) {
+	this.informBackend(response);
 	const { transaction: { status } } = response;
 	this.$store.dispatch('updateGatewayErrorCode', status === 'success' ? null : status);
 	this.$store.dispatch('updateGatewayAuthorizationResponse', response);
@@ -84,6 +85,21 @@ async function getOrderStateIdForCreditCard(state) {
 	this.$store.commit('SET_ORDER_STATUS', creditCardState.id);
 }
 
+function informBackend(res) {
+	const url = 'payment-gateway/validation';
+	const body = {
+		hash: this.hash,
+		gatewayResponse: res,
+	};
+	this.$httpSales.patch(url, body);
+}
+
+function data() {
+	return {
+		hash: null,
+	};
+}
+
 export default {
 	name: 'paymentez',
 	computed: {
@@ -94,9 +110,11 @@ export default {
 		clientAppKey,
 		clientAppCode,
 	},
+	data,
 	methods: {
 		checkout,
 		getOrderStateIdForCreditCard,
+		informBackend,
 		onCreditCardResponse,
 		openPaymentezModal,
 	},
