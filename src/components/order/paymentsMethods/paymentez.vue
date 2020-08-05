@@ -29,9 +29,9 @@ function openPaymentezModal() {
 				user_phone: res.data.userPhone || '0000000000',
 				order_description: res.data.orderDescription,
 				order_amount: Number(res.data.orderAmount.toFixed(2)),
-				order_vat: Number(res.data.orderVat.toFixed(2)),
+				order_vat: Number(res.data.orderVat),
 				order_reference: String(res.data.orderReference),
-				order_taxable_amount: Number(res.data.taxableAmount.toFixed(2)),
+				order_taxable_amount: Number(res.data.taxableAmount),
 				order_tax_percentage: res.data.taxPercentage,
 			};
 			console.log(orderValues);
