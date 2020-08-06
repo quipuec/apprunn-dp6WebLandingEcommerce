@@ -188,8 +188,18 @@ function setTaxes(taxes) {
 	return newTaxes;
 }
 
+function copyFn(node) {
+	const range = document.createRange();
+	range.selectNodeContents(node);
+	window.getSelection().removeAllRanges();
+	window.getSelection().addRange(range);
+	document.execCommand('copy');
+	window.getSelection().removeRange(range);
+}
+
 const methods = {
 	buildOrderBody,
+	copyFn,
 	debounce,
 	exactDate,
 	formatDate,

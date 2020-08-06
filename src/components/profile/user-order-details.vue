@@ -26,7 +26,7 @@
 			<div class="order-payment" v-if="!rating">
 				<div class="order-payment-wrapper">
 					<div class="mb-2 delivery-address">
-						<div v-if="pendingPayment && isPaymentLink" class="label payment-link-data">
+						<div v-if="pendingPayment && isPaymentLink" class="payment-link-data">
 							<div class="link-container">
 								<span>Paga ahora en {{gatewayName}}: </span>
 								<div class="link-wrapper">
@@ -41,7 +41,15 @@
 								<button class="copy-button" type="button" @click="copyLink">copiar</button>
 							</div>
 							<div>
-								ID de transacción: <span>{{transactionPaymentLinkId}}</span>
+								ID de transacción: <span class="label">{{transactionPaymentLinkId}}</span>
+							</div>
+						</div>
+						<div v-if="pendingPayment && isPaymentez" class="payment-link-data">
+							<div class="link-container">
+								Id transacción: <span class="label">{{paymentezData.id}}</span>
+							</div>
+							<div>
+								Código de transacción: <span class="label">{{paymentezData.code}}</span>
 							</div>
 						</div>
 						<span v-if="flagPickUp === 1" class="label">
@@ -114,6 +122,7 @@ import { getDeeper, isEmpty } from '@/shared/lib';
 import formOpinion from '@/components/products/form-opinion';
 import productRating from '@/components/profile/product-rating';
 import { deposit } from '@/shared/enums/wayPayment';
+import helper from '@/shared/helper';
 
 async function created() {
 	({ id: this.orderId } = this.$route.params);
@@ -198,13 +207,22 @@ function isDeposit() {
 
 function copyLink() {
 	const linkContainer = this.$refs.link;
-	const range = document.createRange();
-	range.selectNodeContents(linkContainer);
-	window.getSelection().removeAllRanges();
-	window.getSelection().addRange(range);
-	document.execCommand('copy');
-	window.getSelection().removeRange(range);
-	this.showNotification('Enlace copiado al porta papeles', 'info');
+	helper.copyFn(linkContainer);
+	this.showNotification('Enlace copiado al porta papeles', 'primary');
+}
+
+function isPaymentez() {
+	return this.getValue('additionalInformation.paymentGateway', this.getOrderInfo);
+}
+
+function paymentezData() {
+	if (this.isPaymentez) {
+		return {
+			id: this.isPaymentez.referenceId,
+			code: this.isPaymentez.authorizationCode,
+		};
+	}
+	return false;
 }
 
 function data() {
@@ -243,8 +261,10 @@ export default {
 		flagPickUp,
 		gatewayName,
 		isDeposit,
+		isPaymentez,
 		isPaymentLink,
 		orderStatusIsGiven,
+		paymentezData,
 		paymentLink,
 		pendingPayment,
 		transactionPaymentLinkId,
@@ -355,7 +375,7 @@ export default {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
-		margin: 10px 40px 0;
+		margin-top: 10px;
 		padding: 10px 0;
 
 		@media (max-width: 600px) {
@@ -364,7 +384,6 @@ export default {
 	}
 
 	.order-payment {
-		margin: 0 40px;
 		padding: 10px 0;
 
 		@media (max-width: 600px) {
@@ -454,7 +473,7 @@ export default {
 	}
 
 	.rating-container {
-		margin: 0 50px;
+		margin: 0 30px;
 
 			@media (max-width: 600px) {
 				margin: 0 10px;
@@ -478,6 +497,7 @@ export default {
 		background-color: color(border);
 		border-radius: 0.5rem;
 		display: flex;
+		font-size: size(small);
 		justify-content: space-between;
 		margin-bottom: 0.5rem;
 		padding: 0.5rem 1rem;
