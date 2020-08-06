@@ -63,12 +63,14 @@ async function onCreditCardResponse(response) {
 	if (status === 'success') {
 		await this.getOrderStateIdForCreditCard(orderStatesEnum.confirmed.code);
 		this.showNotification('Pago realizado con éxito', 'success');
+		this.$router.push({ name: 'buy-summary' });
 	} else if (status === 'failure') {
 		this.showNotification('El pago no fue realizado con éxito', 'error');
 		await this.getOrderStateIdForCreditCard(orderStatesEnum.canceled.code);
 	} else if (status === 'pending') {
 		this.showNotification('El pago está en revisión', 'warning');
 		await this.getOrderStateIdForCreditCard(orderStatesEnum.requested.code);
+		this.$router.push({ name: 'buy-summary' });
 	}
 }
 

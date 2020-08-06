@@ -44,7 +44,7 @@
 								ID de transacción: <span class="label">{{transactionPaymentLinkId}}</span>
 							</div>
 						</div>
-						<div v-if="pendingPayment && isPaymentez" class="payment-link-data">
+						<div v-if="pendingPayment && isPaymentez && !isPaymentLink" class="payment-link-data">
 							<div class="link-container">
 								Id transacción: <span class="label">{{paymentezData.id}}</span>
 							</div>
@@ -52,14 +52,16 @@
 								Código de transacción: <span class="label">{{paymentezData.code}}</span>
 							</div>
 						</div>
-						<span v-if="flagPickUp === 1" class="label">
-							Direccion de envio: 
-							<span class="order-info-data">{{getValue('customerAddress.addressLine1', getOrderInfo)}}</span>
-						</span>
-						<span v-else class="label">
-							Direccion de recojo: 
-							<span class="order-info-data">{{getValue('warehouseName', getOrderInfo)}}</span>
-						</span>
+						<section>
+							<span v-if="flagPickUp === 1" class="label">
+								Direccion de envio: 
+								<span class="order-info-data">{{getValue('customerAddress.addressLine1', getOrderInfo)}}</span>
+							</span>
+							<span v-else class="label">
+								Direccion de recojo: 
+								<span class="order-info-data">{{getValue('warehouseName', getOrderInfo)}}</span>
+							</span>
+						</section>
 					</div>
 					<app-button
 						v-if="!flagAddVoucher && isDeposit"
@@ -121,8 +123,9 @@ import responsiveTable from '@/components/shared/table/respondive-table';
 import { getDeeper, isEmpty } from '@/shared/lib';
 import formOpinion from '@/components/products/form-opinion';
 import productRating from '@/components/profile/product-rating';
-import { deposit } from '@/shared/enums/wayPayment';
 import helper from '@/shared/helper';
+import { deposit } from '@/shared/enums/wayPayment';
+import * as gatewayCodes from '@/shared/enums/gatewayCodes';
 
 async function created() {
 	({ id: this.orderId } = this.$route.params);
@@ -136,24 +139,31 @@ async function created() {
 	this.updateColumns();
 }
 
-function paymentLink() {
-	return getDeeper('data.url')(this.sessionGateway);
+function isPaymentLink() {
+	return !isEmpty(this.getValue('data.url', this.sessionGateway));
 }
 
-function isPaymentLink() {
-	return !isEmpty(this.getValue('sessionGateway.data.url', this.getOrderInfo));
+function paymentLink() {
+	if (this.isPaymentLink) {
+		return this.getValue('data.url', this.sessionGateway);
+	}
+	return false;
 }
 
 function transactionPaymentLinkId() {
-	return this.getValue('additionalInformation.gatewayTransactionId', this.getOrderInfo);
+	if (this.isPaymentLink) {
+		return this.getValue('gatewayTransactionId', this.additionalInformation);
+	}
+	return false;
 }
 
 function gatewayName() {
-	const code = this.getValue('additionalInformation.gatewayCode', this.getOrderInfo);
+	const { leadgods, pagopluxLink, placetopay } = gatewayCodes;
+	const code = this.getValue('gatewayCode', this.additionalInformation);
 	const options = {
-		leadgods: 'Market Pago',
-		pagoplux_link: 'Pago plux',
-		placetopay: 'Place to Pay',
+		[leadgods]: 'Market Pago',
+		[pagopluxLink]: 'Pago plux',
+		[placetopay]: 'Place to Pay',
 	};
 	return options[code];
 }
@@ -212,7 +222,7 @@ function copyLink() {
 }
 
 function isPaymentez() {
-	return this.getValue('additionalInformation.paymentGateway', this.getOrderInfo);
+	return this.additionalInformation.paymentGateway;
 }
 
 function paymentezData() {
