@@ -103,7 +103,6 @@ async function loadXchangeData() {
 
 function xchangeHandlerSuccess() {
 	this.showNotification('Transacción exitosa', 'success');
-	this.$store.dispatch('MAKE_ORDER', { flagFinish: true, context: this });
 }
 
 function xchangeHandlerError(error) {
