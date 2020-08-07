@@ -153,7 +153,7 @@ export default {
 		margin: 0 30px;
 
 		@media (min-width: 750px) {
-			justify-content: space-between;
+			justify-content: space-around;
 		}
 	}
 
