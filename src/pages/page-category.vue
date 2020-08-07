@@ -32,6 +32,7 @@
 			<menu-category
 				:categories="categories"
 				:breadcrumbs="breadcrumbs"
+				:toggle="toggle"
 				@change-category="changeCategory"
 				@open-category="openCategory"
 				@toggle="toggleCategory"
