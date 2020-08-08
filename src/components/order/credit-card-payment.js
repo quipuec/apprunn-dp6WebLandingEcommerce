@@ -1,5 +1,8 @@
 import { mapGetters } from 'vuex';
 import { LINK, BUTTON } from '@/shared/enums/paymentStrategy';
+import {
+	leadgods, visa, datafast, pagoplux, pagopluxLink, xchange, paymentez, placetopay,
+} from '@/shared/enums/gatewayCodes';
 
 const VisaPeru = () => import('@/components/order/paymentsMethods/visa-payment');
 const Paymentez = () => import('@/components/order/paymentsMethods/paymentez');
@@ -30,9 +33,9 @@ function paymentLinkCreator(h, gateway) {
 		const orderId = this.getOrderInfo.id;
 		const redirectUri = 'perfil/detalle-orden';
 		const linkOptions = {
-			leadgods: LeadGods,
-			placetopay: PlaceToPay,
-			pagoplux_link: PagoPluxLink,
+			[leadgods]: LeadGods,
+			[placetopay]: PlaceToPay,
+			[pagopluxLink]: PagoPluxLink,
 		};
 		let selectedLinks = [];
 		gateway.forEach((t) => {
@@ -69,11 +72,11 @@ function paymentLinkCreator(h, gateway) {
 }
 const paymentButtonCreator = (h, gateway) => {
 	const buttonOptions = {
-		visa: VisaPeru,
-		paymentez: Paymentez,
-		datafast: DataFast,
-		pagoplux: PagoPlux,
-		xchange: Xchange,
+		[visa]: VisaPeru,
+		[paymentez]: Paymentez,
+		[datafast]: DataFast,
+		[pagoplux]: PagoPlux,
+		[xchange]: Xchange,
 	};
 	let selectedButtons = [];
 	gateway.forEach((t) => {

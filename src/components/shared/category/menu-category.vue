@@ -8,7 +8,7 @@
 				:breadcrumbs="breadcrumbs"
         		@change-category="changeCategory"
 				@open-category="openCategory"/>
-			<filters-category v-if="false"></filters-category>
+			<filters-category></filters-category>
 			<div class="wrapper-btns py-3">
 				<app-button 
 					action="Cerrar"
@@ -25,12 +25,13 @@
 			</div>
 		</div>
 		<button class="btn-menu-category" @click="$emit('toggle')">
-			<img 
-				src="https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-point-to-right-(1).svg" 
-				alt="abrir" 
-				width="15px" 
-				height="15px"
-				class="toggle">
+			<simple-svg
+				filepath="/static/img/arrow-left.svg"
+				:fill="globalColors.primary"
+				width="11"
+				class="icon"
+				:class="{'rotate-icon': toggle }"
+			/>
 		</button>
 	</div>
 </template>
@@ -85,6 +86,10 @@ export default {
 				type: Array,
 				default: () => [],
 			},
+		},
+		toggle: {
+			type: Boolean,
+			required: true,
 		},
 	},
 };
@@ -152,6 +157,14 @@ export default {
 
 	@media (max-width: 986px) {
 		display: flex;
+	}
+}
+
+.icon {
+	transform: rotateZ(0deg);
+
+	&.rotate-icon {
+		transform: rotateZ(180deg);
 	}
 }
 

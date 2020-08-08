@@ -121,8 +121,8 @@ async function loadPagoPluxData() {
 
 function pagoPluxHandlerSuccess() {
 	this.showNotification('Transacción exitosa', 'success');
-	this.$store.dispatch('MAKE_ORDER', { flagFinish: true, context: this });
 	this.showNotification('Pago realizado con éxito', 'success');
+	this.$router.push({ name: 'buy-summary' });
 }
 
 function pagoPluxHandlerError() {
