@@ -49,6 +49,11 @@ const route = {
 			name: 'address',
 			component: () => import(/* webpackChunkName: "address" */ '@/components/profile/address-data'),
 		},
+		{
+			path: 'mis-pagos-online',
+			name: 'online-transactions',
+			component: () => import(/* webpackChunkName: "pagos-online" */ '@/components/profile/online-transactions'),
+		},
 	],
 };
 
