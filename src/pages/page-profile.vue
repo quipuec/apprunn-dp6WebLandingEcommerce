@@ -57,7 +57,6 @@
 							]"
 							@click="goTo('address')"
 						>Direcciones</button></li>
-					<li class="user-action user-logout">
 					<li class="user-action" v-if="isOnlinePayment">
 						<button
 							:style="borderPrimaryOnline"
@@ -273,7 +272,7 @@ export default {
 	}
 
 	.user-action-btn {
-		width: 92px;
+		width: 120px;
 	}
 
 	.user-name {

@@ -9,16 +9,17 @@
 			<responsive-table
 				align-left
 				:columns="columns"
-				:rows="defaultTransactions"
+				:rows="transactions"
+				:page="currentPage"
 				:pages="totalPages"
 				@page-changed="pageChange"
 			>
 				<template slot-scope="{ row }">
-					<td class="order-number">{{row.orderNumber}}</td>
+					<td class="order-number">{{row.documentNumber}}</td>
 					<td class="order-amount">{{row.amount}}</td>
 					<td class="order-status">{{row.status}}</td>
-					<td class="order-reference">{{row.reference}}</td>
-					<td class="date">{{row.createdAt}}</td>
+					<td class="order-reference">{{row.documentNumber}}</td>
+					<td class="date">{{row.dateTransaction | formatDate}}</td>
 					<td class="actions">
 						<details-component class="action-btn" @click="seeDetails(row)"/>
 					</td>
@@ -32,28 +33,26 @@ import carComponent from '@/components/shared/icons/car-component';
 import deleteComponent from '@/components/shared/icons/delete-component';
 import responsiveTable from '@/components/shared/table/respondive-table';
 import detailsComponent from '@/components/shared/icons/details-component';
+import { mapState } from 'vuex';
 
 async function created() {
 	this.loadTransactions();
 }
 
-function loadTransactions() {
-	return this.defaultTransactions;
-}
-
-function buyThisProduct(product) {
-	this.$store.dispatch('addProductToBuyCar', product);
-	this.goTo('buy');
-}
-
-async function noMoreFavorite(product) {
-	await this.$store.dispatch('SET_FAVORITE_FLAG', { context: this, product });
-	this.$store.dispatch('LOAD_FAVORITES_PRODUCTS', { context: this, params: this.params });
+async function loadTransactions() {
+	this.totalPages = await this.$store.dispatch(
+		'LOAD_PAYMENT_TRANSACTIONS',
+		{ context: this, codeGateway: 'placetopay', page: this.currentPage },
+	);
 }
 
 function pageChange(page) {
-	this.params.page = page;
-	this.$store.dispatch('LOAD_FAVORITES_PRODUCTS', { context: this, params: this.params });
+	this.currentPage = page;
+	this.loadTransactions();
+}
+
+function seeDetails(order) {
+	this.$router.push({ name: 'order-detail', params: { id: order.orderId } });
 }
 
 function data() {
@@ -66,19 +65,7 @@ function data() {
 			{ value: 'date', title: 'Fecha', responsive: false },
 			{ value: 'actions', title: 'Acciones', responsive: false },
 		],
-		defaultTransactions: [
-			{
-				orderNumber: '321',
-				status: 'Pagado',
-				amount: '1.232',
-				reference: 'DF-3432',
-				createdAt: '2020-08-02',
-			},
-		],
-		params: {
-			page: 1,
-			limit: 5,
-		},
+		currentPage: 0,
 		totalPages: 0,
 	};
 }
@@ -91,13 +78,17 @@ export default {
 		detailsComponent,
 		responsiveTable,
 	},
+	computed: {
+		...mapState({
+			transactions: state => state.profile.onlineTransactions,
+		}),
+	},
 	created,
 	data,
 	methods: {
-		buyThisProduct,
 		loadTransactions,
-		noMoreFavorite,
 		pageChange,
+		seeDetails,
 	},
 };
 </script>

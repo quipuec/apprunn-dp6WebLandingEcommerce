@@ -220,6 +220,17 @@ const asyncActions = {
 		const page = flagFinish ? 'buy-summary' : 'buy-payment';
 		context.goTo(page);
 	},
+	LOAD_PAYMENT_TRANSACTIONS: async ({ commit }, { context, codeGateway, page }) => {
+		console.log(page);
+		const url = 'payment-gateway';
+		const params = {
+			codeGateway,
+			commerceCode: process.env.COMMERCE_CODE,
+		};
+		const { data: response, headers } = await context.$httpSales.get(url, { params });
+		commit('SET_ONLINE_TRANSACTIONS', response);
+		return Number(headers['x-last-page']);
+	},
 };
 
 export default asyncActions;

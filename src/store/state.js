@@ -72,6 +72,7 @@ export default {
 		address: [],
 		favorites: [],
 		flagAddVoucher: false,
+		onlineTransactions: [],
 		userData: null,
 	},
 	products: {
