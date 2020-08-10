@@ -23,15 +23,17 @@
 import { mapGetters } from 'vuex';
 
 function mounted() {
-	this.mountData();
-	this.mountJQ();
-	this.mountXchange();
-	this.loadXchangeData();
+	await Promise.all([
+		this.mountData(),
+		this.mountJQ(),
+		this.mountXchange(),
+		this.loadXchangeData(),
+	]);
 	const loadEvent = new Event('load');
 	window.dispatchEvent(loadEvent);
 	setTimeout(() => {
 		this.loading = false;
-	});
+	}, 1500);
 	window.onAuthorize = (response) => {
 		this.informBackend(response);
 		if (response.status === 'succeeded') {

@@ -25,12 +25,13 @@
 <script>
 import { mapGetters } from 'vuex';
 
-function mounted() {
-	this.loading = true;
-	this.mountData();
-	this.mountJQ();
-	this.mountPagoPlux();
-	this.loadPagoPluxData();
+async function mounted() {
+	await Promise.all([
+		this.loadPagoPluxData(),
+		this.mountData(),
+		this.mountJQ(),
+		this.mountPagoPlux(),
+	]);
 	const loadEvent = new Event('load');
 	window.dispatchEvent(loadEvent);
 	setTimeout(() => {
@@ -70,7 +71,7 @@ function openPagoPlux() {
 function mountPagoPlux() {
 	const testENV = 'https://sandbox-paybox.pagoplux.com/paybox/index.js';
 	const prodENV = 'https://paybox.pagoplux.com/paybox/index.js';
-	const url = process.env.NODE_ENV === 'production' ? prodENV : testENV;
+	const url = this.productionEnv ? prodENV : testENV;
 	const PagoPluxScript = document.createElement('script');
 	PagoPluxScript.setAttribute('src', url);
 	const body = document.querySelector('body');
@@ -95,7 +96,7 @@ function mountData() {
 		PayboxBase0: "#PayboxBase0",
 		PayboxBase12: "#PayboxBase12",
 		PayboxDescription: "#PayboxDescriptionPlux",
-		PayboxProduction: false,
+		PayboxProduction: ${this.productionEnv},
 		PayboxLanguage: "es",
 	}`;
 	const body = document.querySelector('body');
@@ -110,6 +111,7 @@ async function loadPagoPluxData() {
 	const url = 'payment-gateway/pagoplux/checkout';
 	const { data: res } = await this.$httpSales.post(url, body);
 	this.hash = res.hash;
+	this.productionEnv = res.payboxProduction;
 	this.payboxRemail = res.payboxRemail;
 	this.payboxRename = res.payboxRename;
 	this.payboxBase0 = res.payboxBase0;
@@ -140,6 +142,7 @@ function data() {
 		payboxSendmail: '',
 		payboxSendname: '',
 		payboxDescription: '',
+		productionEnv: null,
 	};
 }
 
