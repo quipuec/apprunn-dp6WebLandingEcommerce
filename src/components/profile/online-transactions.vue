@@ -33,6 +33,7 @@ import carComponent from '@/components/shared/icons/car-component';
 import deleteComponent from '@/components/shared/icons/delete-component';
 import responsiveTable from '@/components/shared/table/respondive-table';
 import detailsComponent from '@/components/shared/icons/details-component';
+import { placetopay } from '@/shared/enums/gatewayCodes';
 import { mapState } from 'vuex';
 
 async function created() {
@@ -42,7 +43,7 @@ async function created() {
 async function loadTransactions() {
 	this.totalPages = await this.$store.dispatch(
 		'LOAD_PAYMENT_TRANSACTIONS',
-		{ context: this, codeGateway: 'placetopay', page: this.currentPage },
+		{ context: this, codeGateway: placetopay, page: this.currentPage },
 	);
 }
 
