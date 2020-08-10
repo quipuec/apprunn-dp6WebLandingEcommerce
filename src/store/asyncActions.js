@@ -69,7 +69,7 @@ const asyncActions = {
 		await context.$httpSales.patch(url);
 	},
 	GET_ORDER_INFO: async (store, { context, id }) => {
-		const url = `orders/${id}`;
+		const url = `orders/${id}?summary=true`;
 		const { data: order } = await context.$httpSales.get(url);
 		localStorage.setItem('ecommerce-order', JSON.stringify(order));
 		store.dispatch('getOrderData', order);
@@ -143,7 +143,7 @@ const asyncActions = {
 		return Number(headers['x-last-page']);
 	},
 	LOAD_ORDER_DETAILS: async ({ commit }, { context, orderId }) => {
-		const url = `orders/${orderId}`;
+		const url = `orders/${orderId}?summary=true`;
 		const { data: orderDetails } = await context.$httpSales.get(url);
 		orderDetails.createdAt = helper.formatDate(orderDetails.createdAt);
 		commit('SET_ORDER_INFO', orderDetails);

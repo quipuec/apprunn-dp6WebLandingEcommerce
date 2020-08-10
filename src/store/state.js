@@ -48,6 +48,7 @@ export default {
 		order: null,
 		orderStates: null,
 		orderStatus: null,
+		paymentLink: null,
 		paymentMethod: {
 			bankAccountId: null,
 			wayPayment: null,

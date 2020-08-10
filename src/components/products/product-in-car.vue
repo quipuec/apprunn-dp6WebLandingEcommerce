@@ -73,10 +73,10 @@ function clickQuantity(val) {
 		less: -1,
 	};
 	quantity += opt[val];
-	quantity = quantity < 0 ? 0 : quantity;
+	quantity = quantity < 1 ? 1 : quantity;
 	this.$set(this.product, 'quantity', quantity);
 	this.$forceUpdate();
-	this.$store.commit('UPDATE_PRODUCTS_TO_BUY', this.product);
+	this.$store.commit('UPDATE_PRODUCTS_TO_BUY', { product: this.product, context: this });
 }
 
 function stepOne() {

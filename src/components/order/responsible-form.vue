@@ -6,7 +6,8 @@
 			v-model="responsible.name"
 			@input="validateForm"
 		>
-			<span v-if="$v.responsible.name.$invalid">El nombre es requerido</span>
+			<span v-if="!$v.responsible.name.required">El nombre es requerido</span>
+			<span v-if="!$v.responsible.name.validNameAndLastname">Solo se permiten letras</span>
 		</app-input>
 		<app-input
 			placeholder="Apellido responsable de recibir"
@@ -14,7 +15,8 @@
 			v-model="responsible.lastname"
 			@input="validateForm"
 		>
-			<span v-if="$v.responsible.lastname.$invalid">El Apellido es requerido</span>
+			<span v-if="!$v.responsible.lastname.required">El Apellido es requerido</span>
+			<span v-if="!$v.responsible.lastname.validNameAndLastname">Solo se permiten letras</span>
 		</app-input>
 		<app-input
 			:placeholder="labelCountry"
@@ -89,13 +91,25 @@ function validDni(dni) {
 	return reg.test(dni);
 }
 
+function validNameAndLastname(char) {
+	const trimedChar = char.split(' ').join('');
+	const noChar = /[^a-zA-ZáéíóúáéíóúÁÉÍÓÚ]/i.test(trimedChar);
+	return !noChar;
+}
+
 function validations() {
 	const validating = {
 		responsible: {
 			dni: { required },
 			email: { email, required },
-			lastname: { required },
-			name: { required },
+			lastname: {
+				required,
+				validNameAndLastname,
+			},
+			name: {
+				required,
+				validNameAndLastname,
+			},
 			phone: { required },
 		},
 	};
@@ -136,6 +150,7 @@ export default {
 		setUserData,
 		validDni,
 		validateForm,
+		validNameAndLastname,
 	},
 	mounted,
 	validations,

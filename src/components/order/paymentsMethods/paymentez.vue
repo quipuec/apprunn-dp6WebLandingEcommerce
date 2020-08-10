@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<button class="js-paymentez-checkout">
+		<button class="js-paymentez-checkout" @click="openPaymentezModal">
 			<img src="https://developers.paymentez.com/wp-content/uploads/2017/10/logo.png" alt="logo de paymentez">
 		</button>
 	</div>
@@ -9,54 +9,69 @@
 import { mapGetters } from 'vuex';
 import orderStatesEnum from '@/shared/enums/orderStateId';
 
-function mounted() {
-	/* eslint-disable new-cap */
-	const paymentezCheckout = new window.PaymentezCheckout.modal({
-		client_app_code: this.clientAppCode,
-		client_app_key: this.clientAppKey,
-		locale: 'es',
-		env_mode: process.env.NODE_ENV === 'production' ? 'prod' : 'stg',
-		onOpen: () => console.log('open Modal Paymentez'),
-		onClose: () => console.log('close Modal Paymentez'),
-		onResponse: this.onCreditCardResponse,
-	});
-	const btnOpenCheckout = document.querySelector('.js-paymentez-checkout');
-	btnOpenCheckout.addEventListener('click', () => {
-		paymentezCheckout.open({
-			user_id: String(this.getOrderInfo.customer.id),
-			user_email: this.getOrderInfo.customer.email,
-			user_phone: this.getOrderInfo.customer.phone || '0000000000',
-			order_description: `${this.getCommerceData.name}-PE:${this.getOrderInfo.number}`,
-			order_amount: this.getOrderInfo.total,
-			order_vat: 0,
-			order_reference: String(this.getOrderInfo.number),
+function openPaymentezModal() {
+	this.checkout()
+		.then((res) => {
+			this.hash = res.data.hash;
+			/* eslint-disable new-cap */
+			const paymentezCheckout = new window.PaymentezCheckout.modal({
+				client_app_code: res.data.clientAppCode,
+				client_app_key: res.data.clientAppKey,
+				locale: 'es',
+				env_mode: process.env.NODE_ENV === 'production' ? 'prod' : 'stg',
+				onOpen: () => console.log('open Modal Paymentez'),
+				onClose: () => console.log('close Modal Paymentez'),
+				onResponse: this.onCreditCardResponse,
+			});
+			const orderValues = {
+				user_id: String(res.data.userId),
+				user_email: res.data.userEmail,
+				user_phone: res.data.userPhone || '0000000000',
+				order_description: res.data.orderDescription,
+				order_amount: Number(res.data.orderAmount.toFixed(2)),
+				order_vat: Number(res.data.orderVat),
+				order_reference: String(res.data.orderReference),
+				order_taxable_amount: Number(res.data.taxableAmount),
+				order_tax_percentage: res.data.taxPercentage,
+			};
+			console.log(orderValues);
+			paymentezCheckout.open(orderValues);
+		})
+		.catch((error) => {
+			this.showNotification(
+				'Ocurrió un error en el checkout de Paymentez. Recargue e intente de nuevo',
+				'error',
+			);
+			console.log(error);
 		});
-	});
 }
 
-function clientAppCode() {
-	return process.env.PAYMENTEZ_CLIENT;
-}
-
-function clientAppKey() {
-	return process.env.PAYMENTEZ_KEY;
+async function checkout() {
+	const url = 'payment-gateway/paymentez/checkout';
+	const body = {
+		orderId: this.getOrderInfo.id,
+		commerceCode: process.env.COMMERCE_CODE,
+	};
+	return this.$httpSales.post(url, body);
 }
 
 async function onCreditCardResponse(response) {
+	this.informBackend(response);
 	const { transaction: { status } } = response;
 	this.$store.dispatch('updateGatewayErrorCode', status === 'success' ? null : status);
 	this.$store.dispatch('updateGatewayAuthorizationResponse', response);
 	if (status === 'success') {
 		await this.getOrderStateIdForCreditCard(orderStatesEnum.confirmed.code);
 		this.showNotification('Pago realizado con éxito', 'success');
+		this.$router.push({ name: 'buy-summary' });
 	} else if (status === 'failure') {
 		this.showNotification('El pago no fue realizado con éxito', 'error');
 		await this.getOrderStateIdForCreditCard(orderStatesEnum.canceled.code);
 	} else if (status === 'pending') {
 		this.showNotification('El pago está en revisión', 'warning');
 		await this.getOrderStateIdForCreditCard(orderStatesEnum.requested.code);
+		this.$router.push({ name: 'buy-summary' });
 	}
-	this.$store.dispatch('MAKE_ORDER', { flagFinish: true, context: this });
 }
 
 async function getOrderStateIdForCreditCard(state) {
@@ -65,21 +80,36 @@ async function getOrderStateIdForCreditCard(state) {
 	this.$store.commit('SET_ORDER_STATUS', creditCardState.id);
 }
 
+function informBackend(res) {
+	const url = 'payment-gateway/validation';
+	const body = {
+		hash: this.hash,
+		gatewayResponse: res,
+	};
+	this.$httpSales.patch(url, body);
+}
+
+function data() {
+	return {
+		hash: null,
+	};
+}
+
 export default {
 	name: 'paymentez',
 	computed: {
 		...mapGetters([
-			'getCommerceData',
 			'getOrderInfo',
 		]),
-		clientAppKey,
-		clientAppCode,
 	},
+	data,
 	methods: {
+		checkout,
 		getOrderStateIdForCreditCard,
+		informBackend,
 		onCreditCardResponse,
+		openPaymentezModal,
 	},
-	mounted,
 };
 </script>
 <style lang="scss" scoped>

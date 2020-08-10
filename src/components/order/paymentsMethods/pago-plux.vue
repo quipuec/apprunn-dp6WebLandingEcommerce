@@ -123,7 +123,8 @@ async function loadPagoPluxData() {
 
 function pagoPluxHandlerSuccess() {
 	this.showNotification('Transacción exitosa', 'success');
-	this.$store.dispatch('MAKE_ORDER', { flagFinish: true, context: this });
+	this.showNotification('Pago realizado con éxito', 'success');
+	this.$router.push({ name: 'buy-summary' });
 }
 
 function pagoPluxHandlerError() {
@@ -146,7 +147,7 @@ function data() {
 }
 
 export default {
-	name: 'pago-plux',
+	name: 'pagoplux',
 	computed: {
 		...mapGetters([
 			'getOrderInfo',
@@ -177,6 +178,7 @@ export default {
 
 .pago-plux-img {
 	align-items: center;
+	border: 1px solid #0679FB;
 	display: flex;
 	height: 50px;
 	justify-content: center;

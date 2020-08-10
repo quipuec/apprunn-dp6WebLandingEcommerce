@@ -1,18 +1,18 @@
 <template>
-	<div class="placetopay-styles-container">
+	<div class="pago-plux-styles-container">
 		<button
 			type="button"
-			class="placetopay-styles"
+			class="pago-plux-styles"
 			@click="linkGenerator"
 		>
-			<img :src="imgLink" alt="imagen de placetopay">
+			<img :src="imgLink" alt="imagen de pagoplux">
 		</button>
 	</div>
 </template>
 <script>
 
 async function linkGenerator() {
-	const url = `payment-gateway/${this.code}/checkout`;
+	const url = 'payment-gateway/pagoplux/checkout';
 	const body = {
 		categoryCode: this.categoryCode,
 		commerceCode: process.env.COMMERCE_CODE,
@@ -41,17 +41,13 @@ function data() {
 }
 
 export default {
-	name: 'placetopay',
+	name: 'pago-plux-link',
 	data,
 	methods: {
 		linkGenerator,
 	},
 	props: {
 		categoryCode: {
-			type: String,
-			required: true,
-		},
-		code: {
 			type: String,
 			required: true,
 		},
@@ -75,21 +71,22 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.placetopay-styles-container {
+.pago-plux-styles-container {
 	font-weight: bold;
 	transition-duration: 250ms;
 	max-width: fit-content;
 
-	.placetopay-styles {
+	.pago-plux-styles {
 		align-items: center;
 		background-color: white;
 		display: flex;
 		justify-content: center;
 		text-decoration: none;
-	}
-	&:hover {
-		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-		transform: scale(1.05);
+
+		&:hover {
+			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+			transform: scale(1.05);
+		}
 	}
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<button @click="openXchange" type="button" class="xchange-img">
+		<button @click="openXchange" type="button" class="xchange-img" :disabled="loading">
 			<img src="https://quipu-acl.s3.amazonaws.com/icons/logo_xchange.png" alt="logo xchange">
 		</button>
 		<div id="ButtonPaybox" class="xchange-btn" ref="xchangebtn" style="visibility:hidden"></div>
@@ -23,12 +23,17 @@
 import { mapGetters } from 'vuex';
 
 function mounted() {
-	this.mountData();
-	this.mountJQ();
-	this.mountXchange();
-	this.loadXchangeData();
+	await Promise.all([
+		this.mountData(),
+		this.mountJQ(),
+		this.mountXchange(),
+		this.loadXchangeData(),
+	]);
 	const loadEvent = new Event('load');
 	window.dispatchEvent(loadEvent);
+	setTimeout(() => {
+		this.loading = false;
+	}, 1500);
 	window.onAuthorize = (response) => {
 		this.informBackend(response);
 		if (response.status === 'succeeded') {
@@ -100,7 +105,6 @@ async function loadXchangeData() {
 
 function xchangeHandlerSuccess() {
 	this.showNotification('Transacción exitosa', 'success');
-	this.$store.dispatch('MAKE_ORDER', { flagFinish: true, context: this });
 }
 
 function xchangeHandlerError(error) {
@@ -111,6 +115,7 @@ function xchangeHandlerError(error) {
 function data() {
 	return {
 		hash: null,
+		loading: true,
 		payboxAmount: '',
 		payboxRemail: '',
 		payboxRename: '',
@@ -163,6 +168,10 @@ export default {
 	&:hover {
 		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 		transform: scale(1.05);
+	}
+	&[disabled] {
+		cursor: not-allowed;
+		opacity: 0.3;
 	}
 }
 </style>

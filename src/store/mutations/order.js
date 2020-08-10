@@ -23,13 +23,18 @@ const orderMutation = {
 	SET_ORDER_DETAILS(state, details) {
 		Vue.set(state.order, 'products', [...details]);
 	},
-	UPDATE_PRODUCTS_TO_BUY(state, { id, quantity, unitSelected }) {
+	UPDATE_PRODUCTS_TO_BUY(state, { product, context }) {
+		const { id, quantity, unitSelected } = product;
 		const { products } = state.order;
 		const index = products.findIndex((p) => {
 			const productId = p.productId || p.id;
 			return productId === id && p.unitSelected === unitSelected;
 		});
-		products[index].quantity = quantity;
+		const { stock } = products[index];
+		if (quantity > stock) {
+			context.showNotification(`Cantidad: ${quantity} no disponible`, 'primary');
+		}
+		products[index].quantity = quantity > stock ? stock : quantity;
 		Vue.set(state.order, 'products', [...products]);
 		localStorage.setItem('ecommerce::product-select', JSON.stringify([...products]));
 		orderMutation.UPDATE_ORDER_DETAILS_IF_EXIST(state, products);
@@ -92,6 +97,9 @@ const orderMutation = {
 	},
 	SET_GATEWAY_AUTHORIZATION_RESPONSE(state, data) {
 		Vue.set(state.order, 'gatewayAuthorizationResponse', data);
+	},
+	SET_PAYMENT_LINK(state, link) {
+		Vue.set(state.order, 'paymentLink', link);
 	},
 };
 export default orderMutation;
