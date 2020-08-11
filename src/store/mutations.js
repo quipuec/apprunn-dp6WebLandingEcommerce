@@ -151,10 +151,6 @@ function SET_FLAG_GROUPER(state, flagGrouper) {
 	Vue.set(state.products.params, 'flagGrouper', flagGrouper);
 }
 
-function SET_ATTRIBUTES(state, attributes) {
-	Vue.set(state, 'catAttributes', attributes);
-}
-
 const methods = {
 	ADD_ONE_IN_SERVICE_COUNTER,
 	clearUser,
@@ -169,7 +165,6 @@ const methods = {
 	RESET_PRODUCTS_ARRAY,
 	LAST_PAGE,
 	MINUS_ONE_IN_SERVICE_COUNTER,
-	SET_ATTRIBUTES,
 	SET_BANNERS,
 	SET_COMMERCE_DATA,
 	SET_CURRENCY_DEFAULT,
