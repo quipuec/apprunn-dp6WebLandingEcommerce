@@ -220,6 +220,11 @@ const asyncActions = {
 		const page = flagFinish ? 'buy-summary' : 'buy-payment';
 		context.goTo(page);
 	},
+	LOAD_ATTRIBUTES: async ({ commit }, ctx) => {
+		const url = 'attribute/attribute-public';
+		const { data: response } = await ctx.$httpProductsPublic.get(url);
+		commit('SET_ATTRIBUTES', response);
+	},
 };
 
 export default asyncActions;

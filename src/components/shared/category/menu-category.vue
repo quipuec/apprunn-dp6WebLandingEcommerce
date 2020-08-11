@@ -8,7 +8,10 @@
 				:breadcrumbs="breadcrumbs"
         		@change-category="changeCategory"
 				@open-category="openCategory"/>
-			<filters-category></filters-category>
+			<filters-category
+				:attributes="attributes"
+				@attributes="setAtributes"
+			></filters-category>
 			<div class="wrapper-btns py-3">
 				<app-button 
 					action="Cerrar"
@@ -53,6 +56,10 @@ function openCategory(id) {
 	this.$emit('open-category', id);
 }
 
+function setAtributes(attr) {
+	this.$emit('attribute-selected', attr);
+}
+
 function data() {
 	return {
 		close: true,
@@ -71,8 +78,13 @@ export default {
 		changeCategory,
 		filterCategory,
 		openCategory,
+		setAtributes,
 	},
 	props: {
+		attributes: {
+			type: Array,
+			default: () => [],
+		},
 		categories: {
 			type: Array,
 			default: () => [],
