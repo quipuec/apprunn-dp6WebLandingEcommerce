@@ -1,97 +1,72 @@
 <template>
 	<div class="filters-category">
-		<div class="section-filter-row">
+		<div
+			class="section-filter-row"
+			:style="`border-color:${globalColors.primary}`"
+		>
 			<div class="content-filter-title">
 				<button-image
 				:data="iconFilter"
 				></button-image>
-				<p class="title-section">Filtros</p>
+				<p
+					class="title-section"
+					:style="`color: ${globalColors.primary}`"
+				>Filtros</p>
 			</div>
 			<div>
-				<button-image
-				:data="arrowUp"
-				@click-image="closeCategory"
-				v-if="openUp">
-				</button-image>
-				<button-image
-				@click-image="openFilters"
-				:data="arrowDown"
-				v-if="closeFilters"></button-image>
+				<simple-svg
+					filepath="/static/img/arrow-left.svg"
+					:fill="globalColors.primary"
+					width="11"
+					class="icon"
+					:class="{'rotate-icon': false }"
+				/>
 			</div>
 		</div>
-		<div class="content-filter" v-if="contentFilters">
-			<p class="text-price">Precio</p>
-      	<v-layout row>
-      		<v-flex shrink class="input-number-price-min">
-          	<v-text-field
-						class="mt-0"
-						hide-details
-						single-line
-						type="number"
-          	></v-text-field>
-        	</v-flex>
-        	<v-flex class="pl-3">
-          	<v-range-slider
-            	:step="1">
-						</v-range-slider>
-        	</v-flex>
-      		<v-flex shrink class="input-number-price-max">
-						<v-text-field
-							class="mt-0 number"
-							hide-details
-							single-line
-							type="number"
-						></v-text-field>
-        	</v-flex>
-      	</v-layout>
+		<div class="content-filter mt-4" v-if="contentFilters">
+			<!-- <p class="text-price">Precio</p> -->
+			<!-- <v-layout row>
+				<v-flex shrink class="input-number-price-min">
+				<v-text-field
+					class="mt-0"
+					hide-details
+					single-line
+					type="number"
+				></v-text-field>
+				</v-flex>
+				<v-flex class="pl-3">
+				<v-range-slider
+					:step="1">
+							</v-range-slider>
+				</v-flex>
+				<v-flex shrink class="input-number-price-max">
+							<v-text-field
+								class="mt-0 number"
+								hide-details
+								single-line
+								type="number"
+							></v-text-field>
+				</v-flex>
+			</v-layout>
 		  	<div class="content-number">
-					<p class="number-filter">{{getCurrencySymbol}} {{filters.priceMin}}</p>
-					<p class="number-filter">{{getCurrencySymbol}} {{filters.priceMax}}</p>
-				</div>
-				<app-input
-				class="field"
-				type="text"
-				v-model="filters.price" />
-				<v-layout mt-5 mb-5>
-					<app-select 
+				<p class="number-filter">{{getCurrencySymbol}} {{filters.priceMin}}</p>
+				<p class="number-filter">{{getCurrencySymbol}} {{filters.priceMax}}</p>
+			</div> -->
+			<!-- <app-input
+			class="field"
+			type="text"
+			v-model="filters.price" /> -->
+			<v-layout mt-2 mb-2 v-for="(attr, indexAttr) in attributes" :key="indexAttr">
+				<app-select 
+					returnObject
 					item-text="name"
-					item-value="id"
-					class="input-filter" 
-					placeholder="Marca"
-					v-model="filters.brand"/>
-				</v-layout>
-				<v-layout mt-3 mb-5>
-					<app-select 
-					item-text="name"
-					item-value="id"
-					class="input-filter" 
-					placeholder="Modelo"
-					v-model="filters.model"/>
-				</v-layout>
-				<v-layout mt-3 mb-5>
-					<app-select 
-					item-text="name"
-					item-value="id"
-					class="input-filter" 
-					placeholder="Año"
-					v-model="filters.year"/>
-				</v-layout>
-				<v-layout mb-5>
-					<app-select 
-					item-text="name"
-					item-value="id"
-					class="input-filter" 
-					placeholder="Lado"
-					v-model="filters.side"/>
-				</v-layout>
-				<v-layout mb-3>
-					<app-select 
-					item-text="name"
-					item-value="id"
-					class="input-filter" 
-					placeholder="Tipo"
-					v-model="filters.type"/>
-				</v-layout>
+					class="input-filter"
+					:placeholder="attr.name"
+					:items="attr.attributeDetail"
+					v-model="filters[attr.name]"
+					@input="setAttributes"
+				/>
+			</v-layout>
 		</div>
 	</div>
 </template>
@@ -115,18 +90,24 @@ function openFilters() {
 	this.openUp = true;
 }
 
+function setAttributes(attr) {
+	const { name, code } = attr;
+	this.filters[name] = code;
+	this.$emit('attributes', code);
+}
+
+function resetAttributes(newValue) {
+	if (newValue) {
+		const keys = Object.keys(this.filters);
+		keys.forEach((k) => {
+			this.filters[k] = '';
+		});
+	}
+}
+
 function data() {
 	return {
-		filters: {
-			brand: '',
-			model: '',
-			side: '',
-			price: '',
-			priceMin: 7,
-			priceMax: 60,
-			type: null,
-			year: null,
-		},
+		filters: {},
 		arrowUp: {
 			image: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-down-sign-to-navigate.svg',
 			name: 'up',
@@ -149,7 +130,6 @@ function data() {
 }
 
 export default {
-	data,
 	name: 'filters-category',
 	computed: {
 		...mapGetters([
@@ -157,14 +137,29 @@ export default {
 			'token',
 		]),
 	},
-	methods: {
-		closeCategory,
-		openFilters,
-	},
 	components: {
 		appInput,
 		appSelect,
 		buttonImage,
+	},
+	data,
+	methods: {
+		closeCategory,
+		openFilters,
+		setAttributes,
+	},
+	props: {
+		attributes: {
+			type: Array,
+			required: true,
+		},
+		resetAttributes: {
+			type: Boolean,
+			required: true,
+		},
+	},
+	watch: {
+		resetAttributes,
 	},
 };
 </script>
@@ -176,7 +171,6 @@ export default {
 }
 
 .title-section {
-	color: color(primary);
 	font-family: font(bold);
 	font-size: size(xlarge);
 	margin: 0 0 0 11px;
@@ -191,7 +185,7 @@ export default {
 
 .section-filter-row {
 	align-items: center;
-	border-bottom: 3px solid color(primary);
+	border-bottom: 3px solid;
 	display: flex;
 	justify-content: space-between;
 	padding: 0 20px 15px 20px;
@@ -250,5 +244,13 @@ export default {
 
 .content-filter-title {
 	display: flex;
+}
+
+.icon {
+	transform: rotateZ(270deg);
+
+	&.rotate-icon {
+		transform: rotateZ(450deg);
+	}
 }
 </style>

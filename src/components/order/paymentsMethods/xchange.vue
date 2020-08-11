@@ -22,11 +22,13 @@
 <script>
 import { mapGetters } from 'vuex';
 
-function mounted() {
-	this.mountData();
-	this.mountJQ();
-	this.mountXchange();
-	this.loadXchangeData();
+async function mounted() {
+	await Promise.all([
+		this.mountData(),
+		this.mountJQ(),
+		this.mountXchange(),
+		this.loadXchangeData(),
+	]);
 	const loadEvent = new Event('load');
 	window.dispatchEvent(loadEvent);
 	setTimeout(() => {
