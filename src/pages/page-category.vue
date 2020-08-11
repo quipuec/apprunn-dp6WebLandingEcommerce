@@ -34,6 +34,7 @@
 				:categories="categories"
 				:breadcrumbs="breadcrumbs"
 				:toggle="toggle"
+				:reset-attributes="resetAttributes"
 				@attribute-selected="setAttribute"
 				@change-category="changeCategory"
 				@open-category="openCategory"
@@ -128,7 +129,7 @@ async function loadProduct() {
 			eCategories: this.id,
 			flagGrouper: this.$store.getters.productParams.flagGrouper,
 			page: this.page,
-			attributeCodes: this.attributeCodes,
+			codeAttribute: this.attributeCodes,
 		};
 		const url = 'products-public';
 		const { data: products, headers } = await this.$httpProductsPublic.get(url, { params });
@@ -153,6 +154,7 @@ function updateProductCard(value) {
 
 function selectCategory() {
 	this.breadcrumbs = [];
+	this.setAttribute();
 	this.loadProduct();
 	this.categories = this.getCategories;
 	this.currentSelect = this.getCurrentcategory(this.categories, this.id);
@@ -226,11 +228,13 @@ function toggleCategory() {
 
 function setAttribute(attr) {
 	if (attr) {
+		this.resetAttributes = false;
 		this.attributeCodesArr = this.attributeCodesArr.concat(attr);
 		this.attributeCodes = this.attributeCodesArr.join(',');
 	} else {
 		this.attributeCodesArr = [];
 		this.attributeCodes = null;
+		this.resetAttributes = true;
 	}
 	this.loadProduct();
 }
@@ -243,18 +247,19 @@ function data() {
 			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
 			image: 'descuento',
 		},
+		categories: [],
 		categoryId: null,
+		categorySelected: {},
+		currentSelect: {},
 		lastPage: 0,
 		listSubCategories: [],
 		listProducts: [],
 		page: 1,
+		resetAttributes: false,
 		totalPages: 7,
-		categories: [],
-		categorySelected: {},
 		open: false,
 		breadcrumbs: [],
 		toggle: false,
-		currentSelect: {},
 	};
 }
 

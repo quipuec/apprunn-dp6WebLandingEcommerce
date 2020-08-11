@@ -10,6 +10,7 @@
 				@open-category="openCategory"/>
 			<filters-category
 				:attributes="attributes"
+				:reset-attributes="resetAttributes"
 				@attributes="setAtributes"
 			></filters-category>
 			<div class="wrapper-btns py-3">
@@ -98,6 +99,10 @@ export default {
 				type: Array,
 				default: () => [],
 			},
+		},
+		resetAttributes: {
+			type: Boolean,
+			required: true,
 		},
 		toggle: {
 			type: Boolean,
