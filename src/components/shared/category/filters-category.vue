@@ -63,7 +63,7 @@
 					class="input-filter"
 					:placeholder="attr.name"
 					:items="attr.attributeDetail"
-					:value="filters[attr.name]"
+					v-model="filters[attr.name]"
 					@input="setAttributes"
 				/>
 			</v-layout>
@@ -94,6 +94,15 @@ function setAttributes(attr) {
 	const { name, code } = attr;
 	this.filters[name] = code;
 	this.$emit('attributes', code);
+}
+
+function resetAttributes(newValue) {
+	if (newValue) {
+		const keys = Object.keys(this.filters);
+		keys.forEach((k) => {
+			this.filters[k] = '';
+		});
+	}
 }
 
 function data() {
@@ -144,6 +153,13 @@ export default {
 			type: Array,
 			required: true,
 		},
+		resetAttributes: {
+			type: Boolean,
+			required: true,
+		},
+	},
+	watch: {
+		resetAttributes,
 	},
 };
 </script>
