@@ -23,8 +23,8 @@
 				/>
 			</div>
 		</div>
-		<div class="content-filter mt-4" v-if="contentFilters">
-			<!-- <p class="text-price">Precio</p> -->
+		<div class="content-filter" v-if="contentFilters">
+			<p class="text-price">Precio</p>
 			<!-- <v-layout row>
 				<v-flex shrink class="input-number-price-min">
 				<v-text-field
@@ -56,16 +56,45 @@
 			class="field"
 			type="text"
 			v-model="filters.price" /> -->
-			<v-layout mt-2 mb-2 v-for="(attr, indexAttr) in attributes" :key="indexAttr">
+			<v-layout mt-2 mb-2>
 				<app-select 
-					returnObject
-					item-text="name"
-					class="input-filter"
-					:placeholder="attr.name"
-					:items="attr.attributeDetail"
-					v-model="filters[attr.name]"
-					@input="setAttributes"
-				/>
+				item-text="name"
+				item-value="id"
+				class="input-filter" 
+				placeholder="Marca"
+				v-model="filters.brand"/>
+			</v-layout>
+			<v-layout mt-2 mb-2>
+				<app-select 
+				item-text="name"
+				item-value="id"
+				class="input-filter" 
+				placeholder="Modelo"
+				v-model="filters.model"/>
+			</v-layout>
+			<v-layout mt-2 mb-2>
+				<app-select 
+				item-text="name"
+				item-value="id"
+				class="input-filter" 
+				placeholder="Año"
+				v-model="filters.year"/>
+			</v-layout>
+			<v-layout mb-2>
+				<app-select 
+				item-text="name"
+				item-value="id"
+				class="input-filter" 
+				placeholder="Lado"
+				v-model="filters.side"/>
+			</v-layout>
+			<v-layout mb-2>
+				<app-select 
+				item-text="name"
+				item-value="id"
+				class="input-filter" 
+				placeholder="Tipo"
+				v-model="filters.type"/>
 			</v-layout>
 		</div>
 	</div>
@@ -90,24 +119,18 @@ function openFilters() {
 	this.openUp = true;
 }
 
-function setAttributes(attr) {
-	const { name, code } = attr;
-	this.filters[name] = code;
-	this.$emit('attributes', code);
-}
-
-function resetAttributes(newValue) {
-	if (newValue) {
-		const keys = Object.keys(this.filters);
-		keys.forEach((k) => {
-			this.filters[k] = '';
-		});
-	}
-}
-
 function data() {
 	return {
-		filters: {},
+		filters: {
+			brand: '',
+			model: '',
+			side: '',
+			price: '',
+			priceMin: 7,
+			priceMax: 60,
+			type: null,
+			year: null,
+		},
 		arrowUp: {
 			image: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/arrow-down-sign-to-navigate.svg',
 			name: 'up',
@@ -130,6 +153,7 @@ function data() {
 }
 
 export default {
+	data,
 	name: 'filters-category',
 	computed: {
 		...mapGetters([
@@ -137,29 +161,14 @@ export default {
 			'token',
 		]),
 	},
+	methods: {
+		closeCategory,
+		openFilters,
+	},
 	components: {
 		appInput,
 		appSelect,
 		buttonImage,
-	},
-	data,
-	methods: {
-		closeCategory,
-		openFilters,
-		setAttributes,
-	},
-	props: {
-		attributes: {
-			type: Array,
-			required: true,
-		},
-		resetAttributes: {
-			type: Boolean,
-			required: true,
-		},
-	},
-	watch: {
-		resetAttributes,
 	},
 };
 </script>

@@ -22,7 +22,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-async function mounted() {
+function mounted() {
 	await Promise.all([
 		this.mountData(),
 		this.mountJQ(),
