@@ -30,9 +30,12 @@
 					height="17">
 			</button>
 			<menu-category
+				:attributes="attributes"
 				:categories="categories"
 				:breadcrumbs="breadcrumbs"
 				:toggle="toggle"
+				:reset-attributes="resetAttributes"
+				@attribute-selected="setAttribute"
 				@change-category="changeCategory"
 				@open-category="openCategory"
 				@toggle="toggleCategory"
@@ -97,7 +100,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import appBannerTop from '@/components/header/app-banner-top';
 import buttonImage from '@/components/shared/buttons/app-button-image';
 import menuCategory from '@/components/shared/category/menu-category';
@@ -111,7 +114,12 @@ const { setNewProperty } = lib;
 function mounted() {
 	this.selectCategory();
 	this.changeOpen();
+	this.loadAttributes();
 	window.addEventListener('resize', this.changeOpen);
+}
+
+function loadAttributes() {
+	this.$store.dispatch('LOAD_ATTRIBUTES', this);
 }
 
 async function loadProduct() {
@@ -121,6 +129,7 @@ async function loadProduct() {
 			eCategories: this.id,
 			flagGrouper: this.$store.getters.productParams.flagGrouper,
 			page: this.page,
+			codeAttribute: this.attributeCodes,
 		};
 		const url = 'products-public';
 		const { data: products, headers } = await this.$httpProductsPublic.get(url, { params });
@@ -145,6 +154,7 @@ function updateProductCard(value) {
 
 function selectCategory() {
 	this.breadcrumbs = [];
+	this.setAttribute();
 	this.loadProduct();
 	this.categories = this.getCategories;
 	this.currentSelect = this.getCurrentcategory(this.categories, this.id);
@@ -216,24 +226,40 @@ function toggleCategory() {
 	this.toggle = !this.toggle;
 }
 
+function setAttribute(attr) {
+	if (attr) {
+		this.resetAttributes = false;
+		this.attributeCodesArr = this.attributeCodesArr.concat(attr);
+		this.attributeCodes = this.attributeCodesArr.join(',');
+	} else {
+		this.attributeCodesArr = [];
+		this.attributeCodes = null;
+		this.resetAttributes = true;
+	}
+	this.loadProduct();
+}
+
 function data() {
 	return {
+		attributeCodes: null,
+		attributeCodesArr: [],
 		bannerTop: {
 			urlImage: 'https://s3.amazonaws.com/apprunn-acl/COM-PRU-01/ARQ88/image/big.png',
 			image: 'descuento',
 		},
+		categories: [],
 		categoryId: null,
+		categorySelected: {},
+		currentSelect: {},
 		lastPage: 0,
 		listSubCategories: [],
 		listProducts: [],
 		page: 1,
+		resetAttributes: false,
 		totalPages: 7,
-		categories: [],
-		categorySelected: {},
 		open: false,
 		breadcrumbs: [],
 		toggle: false,
-		currentSelect: {},
 	};
 }
 
@@ -252,6 +278,9 @@ export default {
 			'getPromotionalBanner',
 			'getCommerceData',
 		]),
+		...mapState({
+			attributes: state => state.catAttributes,
+		}),
 	},
 	methods: {
 		changeCategory,
@@ -259,9 +288,11 @@ export default {
 		closeOpen,
 		getCurrentcategory,
 		linkCategories,
+		loadAttributes,
 		loadProduct,
 		openCategory,
 		selectCategory,
+		setAttribute,
 		toggleCategory,
 		toggleMenu,
 		updateMetaTag,
