@@ -221,11 +221,12 @@ const asyncActions = {
 		context.goTo(page);
 	},
 	LOAD_PAYMENT_TRANSACTIONS: async ({ commit }, { context, codeGateway, page }) => {
-		console.log(page);
+		// console.log(page);
 		const url = 'payment-gateway';
 		const params = {
 			codeGateway,
 			commerceCode: process.env.COMMERCE_CODE,
+			page,
 		};
 		const { data: response, headers } = await context.$httpSales.get(url, { params });
 		commit('SET_ONLINE_TRANSACTIONS', response);

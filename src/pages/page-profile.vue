@@ -300,11 +300,11 @@ export default {
 
 	.home-button-container {
 		align-items: center;
-		bottom: 90%;
 		display: flex;
 		justify-content: flex-end;
 		padding: 0 20px;
 		position: absolute;
+		top: 1%;
 		width: 100%;
 		z-index: 99;
 

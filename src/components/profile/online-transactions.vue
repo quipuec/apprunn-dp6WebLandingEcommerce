@@ -5,7 +5,7 @@
 				:style="`color: ${globalColors.primary};`"
 				class="section-title">Mis transacciones online</h3>
 		</section>
-		<section class="table">
+		<section class="table-online-transaction">
 			<responsive-table
 				align-left
 				:columns="columns"
@@ -15,11 +15,20 @@
 				@page-changed="pageChange"
 			>
 				<template slot-scope="{ row }">
-					<td class="order-number">{{row.documentNumber}}</td>
+					<td class="order-number">{{row.number}}</td>
 					<td class="order-amount">{{row.amount}}</td>
-					<td class="order-status">{{row.status}}</td>
+					<td class="order-status">{{row.paymentStateName}}</td>
 					<td class="order-reference">{{row.documentNumber}}</td>
-					<td class="date">{{row.dateTransaction | formatDate}}</td>
+					<td class="date">
+						<span>Fecha:</span>
+						{{row.dateTransaction | formatDate}}
+					</td>
+					<td class="date">
+						<span v-if="row.dateExpiration">
+							{{row.dateExpiration | formatDate}}
+						</span>
+						<span v-else>--</span>
+					</td>
 					<td class="actions">
 						<details-component class="action-btn" @click="seeDetails(row)"/>
 					</td>
@@ -61,11 +70,12 @@ function data() {
 			{ value: 'order', title: 'Pedido', responsive: true },
 			{ value: 'amount', title: 'Monto', responsive: true },
 			{ value: 'status', title: 'Estado', responsive: true },
-			{ value: 'reference', title: 'Referencia Pago', responsive: false },
-			{ value: 'date', title: 'Fecha', responsive: false },
-			{ value: 'actions', title: 'Acciones', responsive: false },
+			{ value: 'reference', title: 'Referencia', responsive: false },
+			{ value: 'date', title: 'Creación', responsive: false },
+			{ value: 'date', title: 'Expiración', responsive: false },
+			{ value: 'actions', title: '', responsive: false },
 		],
-		currentPage: 0,
+		currentPage: 1,
 		totalPages: 0,
 	};
 }
@@ -101,7 +111,7 @@ export default {
 		grid-template-columns: 50px 1fr;
 	}
 
-	.table {
+	.table-online-transaction {
 		margin: 0 50px;
 		
 		@media (max-width: 600px) {
@@ -109,7 +119,8 @@ export default {
 		}
 
 		td {
-			padding: 10px 20px;
+			font-size: size(small);
+			padding: 10px;
 			text-align: center;
 		}
 	}
@@ -195,9 +206,17 @@ export default {
 		grid-column: 1;
 		grid-row: 2;
 
+		span {
+			display: none;
+		}
+
 		@media (max-width: 600px) {
 			border-bottom: none;
 			font-size: size(small);
+
+			span {
+				display: inline-block;
+			}
 		}
 	}
 
