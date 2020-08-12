@@ -95,7 +95,6 @@ function setAttributes(detail, attr) {
 	const { name: attrName } = attr;
 	this.filters[attrName] = code;
 	this.$emit('attributes', this.filters);
-	// this.$emit('attributes', code);
 }
 
 function resetAttributes(newValue) {
