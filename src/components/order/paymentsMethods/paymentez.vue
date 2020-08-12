@@ -18,7 +18,7 @@ function openPaymentezModal() {
 				client_app_code: res.data.clientAppCode,
 				client_app_key: res.data.clientAppKey,
 				locale: 'es',
-				env_mode: process.env.NODE_ENV === 'production' ? 'prod' : 'stg',
+				env_mode: res.data.payboxProduction ? 'prod' : 'stg',
 				onOpen: () => console.log('open Modal Paymentez'),
 				onClose: () => console.log('close Modal Paymentez'),
 				onResponse: this.onCreditCardResponse,
