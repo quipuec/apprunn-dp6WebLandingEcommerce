@@ -16,6 +16,7 @@ export default {
 		Home: 3,
 		Top: 4,
 	},
+	catAttributes: [],
 	colors: {},
 	commerce: {},
 	currencyDefault: null,
