@@ -57,6 +57,14 @@
 							]"
 							@click="goTo('address')"
 						>Direcciones</button></li>
+					<li class="user-action" v-if="isOnlinePayment">
+						<button
+							:style="borderPrimaryOnline"
+							:class="[
+								'user-action-btn',
+							]"
+							@click="goTo('online-transactions')"
+						>Mis pagos online</button></li>
 					<li class="user-action user-logout">
 						<button
 							:style="`border-bottom: 6px solid ${globalColors.dark};`"
@@ -74,6 +82,8 @@
 <script>
 import { mapGetters } from 'vuex';
 import leftComponent from '@/components/shared/icons/left-component';
+import { creditCard } from '@/shared/enums/wayPayment';
+import { isEmpty } from '@/shared/lib';
 
 function goTo(name) {
 	this.$router.push({ name });
@@ -103,6 +113,12 @@ function borderPrimaryAddress() {
 	return name === 'address' ? border : null;
 }
 
+function borderPrimaryOnline() {
+	const border = `border-bottom: 6px solid ${this.globalColors.primary};`;
+	const { name } = this.$route;
+	return name === 'online-transactions' ? border : null;
+}
+
 function logout() {
 	this.goTo('page-home');
 	this.$store.dispatch('clearUser');
@@ -118,6 +134,11 @@ function getUserAvatar() {
 	return this.user.image || this.user.logo || this.user.urlImage || process.env.DEFAULT_AVATAR;
 }
 
+function isOnlinePayment() {
+	const isCreditCard = this.getWaypaymentsByCommerce.find(w => w.code === creditCard.code);
+	return !isEmpty(isCreditCard);
+}
+
 export default {
 	name: 'page-profile',
 	components: {
@@ -125,15 +146,18 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getWaypaymentsByCommerce',
 			'getFilters',
 			'user',
 			'userName',
 		]),
 		borderPrimaryAddress,
 		borderPrimaryFavorites,
+		borderPrimaryOnline,
 		borderPrimaryUserData,
 		borderPrimaryUserOrder,
 		getUserAvatar,
+		isOnlinePayment,
 	},
 	methods: {
 		goTo,
@@ -248,7 +272,7 @@ export default {
 	}
 
 	.user-action-btn {
-		width: 92px;
+		width: 120px;
 	}
 
 	.user-name {
@@ -276,11 +300,11 @@ export default {
 
 	.home-button-container {
 		align-items: center;
-		bottom: 90%;
 		display: flex;
 		justify-content: flex-end;
 		padding: 0 20px;
 		position: absolute;
+		top: 1%;
 		width: 100%;
 		z-index: 99;
 

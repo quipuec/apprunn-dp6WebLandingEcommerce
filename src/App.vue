@@ -871,4 +871,10 @@ input.app-input::-webkit-input-placeholder {
 		width: 210px !important;
 	}
 }
+
+.table-online-transaction {
+	tr:nth-child(even) {
+		background-color: white !important;
+	}
+}
 </style>

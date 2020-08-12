@@ -7,4 +7,7 @@ export default {
 	SET_FAVORITES(state, favorites) {
 		Vue.set(state.profile, 'favorites', favorites);
 	},
+	SET_ONLINE_TRANSACTIONS(state, transactions) {
+		Vue.set(state.profile, 'onlineTransactions', transactions);
+	},
 };

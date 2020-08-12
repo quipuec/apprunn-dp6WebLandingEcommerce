@@ -117,13 +117,18 @@ export default {
 			margin: 0 10px;
 		}
 
-		td {
-			padding: 10px 30px;
+		tr {
+			background-color: red;
 
-			@media (max-width: 600px) {
-				padding: 10px 20px;
+			td {
+				padding: 10px 30px;
+	
+				@media (max-width: 600px) {
+					padding: 10px 20px;
+				}
 			}
 		}
+
 	}
 
 	.row-product {
