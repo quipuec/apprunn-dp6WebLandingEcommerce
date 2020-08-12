@@ -64,7 +64,7 @@
 					:placeholder="attr.name"
 					:items="attr.attributeDetail"
 					v-model="filters[attr.name]"
-					@input="setAttributes"
+					@input="setAttributes($event, attr)"
 				/>
 			</v-layout>
 		</div>
@@ -90,10 +90,12 @@ function openFilters() {
 	this.openUp = true;
 }
 
-function setAttributes(attr) {
-	const { name, code } = attr;
-	this.filters[name] = code;
-	this.$emit('attributes', code);
+function setAttributes(detail, attr) {
+	const { code } = detail;
+	const { name: attrName } = attr;
+	this.filters[attrName] = code;
+	this.$emit('attributes', this.filters);
+	// this.$emit('attributes', code);
 }
 
 function resetAttributes(newValue) {
