@@ -229,7 +229,8 @@ function toggleCategory() {
 function setAttribute(attr) {
 	if (attr) {
 		this.resetAttributes = false;
-		this.attributeCodesArr = this.attributeCodesArr.concat(attr);
+		const values = Object.values(attr);
+		this.attributeCodesArr = [].concat(values);
 		this.attributeCodes = this.attributeCodesArr.join(',');
 	} else {
 		this.attributeCodesArr = [];
