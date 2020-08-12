@@ -9,8 +9,8 @@
         		@change-category="changeCategory"
 				@open-category="openCategory"/>
 			<filters-category
-				:attributes="attributes"
 				:reset-attributes="resetAttributes"
+				:attributes="attributes"
 				@attributes="setAtributes"
 			></filters-category>
 			<div class="wrapper-btns py-3">
