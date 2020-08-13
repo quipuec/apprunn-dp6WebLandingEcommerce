@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<!-- <button @click="clickOnButton" type="button" class="pago-plux-img" :disabled="loading"> -->
 		<button @click="openPagoPlux" type="button" class="pago-plux-img" :disabled="loading">
 			<img src="https://quipu-acl.s3.amazonaws.com/icons/logo-pago-plux.png" alt="logo pagoplux">
 		</button>
@@ -26,28 +27,21 @@
 import { mapGetters } from 'vuex';
 
 function mounted() {
+	this.loading = true;
+	this.mountJQ();
 	this.loadPagoPluxData()
 		.then(() => {
-			Promise.all([
-				this.mountData(),
-				this.mountJQ(),
-				this.mountPagoPlux(),
-			]).then(() => {
-				const loadEvent = new Event('load');
-				window.dispatchEvent(loadEvent);
-				setTimeout(() => {
-					this.loading = false;
-				}, 1500);
-				window.onAuthorize = (response) => {
-					this.informBackend(response);
-					if (response.status === 'succeeded') {
-						this.pagoPluxHandlerSuccess(response);
-					} else {
-						this.pagoPluxHandlerError(response);
-					}
-				};
-			});
+			this.mountData();
+			this.mountPagoPlux();
 		});
+	window.onAuthorize = (response) => {
+		this.informBackend(response);
+		if (response.status === 'succeeded') {
+			this.pagoPluxHandlerSuccess(response);
+		} else {
+			this.pagoPluxHandlerError(response);
+		}
+	};
 }
 
 function informBackend(res) {
@@ -72,11 +66,17 @@ function openPagoPlux() {
 }
 
 function mountPagoPlux() {
+	const that = this;
 	const testENV = 'https://sandbox-paybox.pagoplux.com/paybox/index.js';
 	const prodENV = 'https://paybox.pagoplux.com/paybox/index.js';
 	const url = this.productionEnv ? prodENV : testENV;
 	const PagoPluxScript = document.createElement('script');
 	PagoPluxScript.setAttribute('src', url);
+	PagoPluxScript.onload = () => {
+		const loadEvent = new Event('load');
+		window.dispatchEvent(loadEvent);
+		that.loading = false;
+	};
 	const body = document.querySelector('body');
 	body.appendChild(PagoPluxScript);
 }
@@ -84,6 +84,9 @@ function mountPagoPlux() {
 function mountJQ() {
 	const JQScript = document.createElement('script');
 	JQScript.setAttribute('src', 'https://code.jquery.com/jquery-3.4.1.js');
+	JQScript.onload = () => {
+		console.log('cargo JQ');
+	};
 	const body = document.querySelector('body');
 	body.appendChild(JQScript);
 }
@@ -104,6 +107,7 @@ function mountData() {
 	}`;
 	const body = document.querySelector('body');
 	body.appendChild(Data);
+	console.log('DATA');
 }
 
 async function loadPagoPluxData() {
@@ -137,7 +141,7 @@ function pagoPluxHandlerError() {
 function data() {
 	return {
 		hash: null,
-		loading: true,
+		loading: false,
 		payboxRemail: '',
 		payboxRename: '',
 		payboxBase0: '',
@@ -159,6 +163,7 @@ export default {
 	},
 	data,
 	methods: {
+		// clickOnButton,
 		informBackend,
 		loadPagoPluxData,
 		mountData,
