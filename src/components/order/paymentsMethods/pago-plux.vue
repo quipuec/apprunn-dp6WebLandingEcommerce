@@ -70,7 +70,8 @@ function openPagoPlux() {
 function mountPagoPlux() {
 	const testENV = 'https://sandbox-paybox.pagoplux.com/paybox/index.js';
 	const prodENV = 'https://paybox.pagoplux.com/paybox/index.js';
-	const url = process.env.NODE_ENV === 'production' ? prodENV : testENV;
+	const url = prodENV;
+	// const url = process.env.NODE_ENV === 'production' ? prodENV : testENV;
 	const PagoPluxScript = document.createElement('script');
 	PagoPluxScript.setAttribute('src', url);
 	const body = document.querySelector('body');
