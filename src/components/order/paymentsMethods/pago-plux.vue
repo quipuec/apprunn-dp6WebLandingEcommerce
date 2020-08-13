@@ -25,29 +25,26 @@
 <script>
 import { mapGetters } from 'vuex';
 
-function mounted() {
-	this.loadPagoPluxData()
-		.then(() => {
-			Promise.all([
-				this.mountData(),
-				this.mountJQ(),
-				this.mountPagoPlux(),
-			]).then(() => {
-				const loadEvent = new Event('load');
-				window.dispatchEvent(loadEvent);
-				setTimeout(() => {
-					this.loading = false;
-				}, 1500);
-				window.onAuthorize = (response) => {
-					this.informBackend(response);
-					if (response.status === 'succeeded') {
-						this.pagoPluxHandlerSuccess(response);
-					} else {
-						this.pagoPluxHandlerError(response);
-					}
-				};
-			});
-		});
+async function mounted() {
+	await Promise.all([
+		this.loadPagoPluxData(),
+		this.mountData(),
+		this.mountJQ(),
+		this.mountPagoPlux(),
+	]);
+	const loadEvent = new Event('load');
+	window.dispatchEvent(loadEvent);
+	setTimeout(() => {
+		this.loading = false;
+	}, 1500);
+	window.onAuthorize = (response) => {
+		this.informBackend(response);
+		if (response.status === 'succeeded') {
+			this.pagoPluxHandlerSuccess(response);
+		} else {
+			this.pagoPluxHandlerError(response);
+		}
+	};
 }
 
 function informBackend(res) {
@@ -72,9 +69,10 @@ function openPagoPlux() {
 }
 
 function mountPagoPlux() {
-	const testENV = 'https://sandbox-paybox.pagoplux.com/paybox/index.js';
+	// const testENV = 'https://sandbox-paybox.pagoplux.com/paybox/index.js';
 	const prodENV = 'https://paybox.pagoplux.com/paybox/index.js';
-	const url = this.productionEnv ? prodENV : testENV;
+	const url = prodENV;
+	// const url = this.productionEnv ? prodENV : testENV;
 	const PagoPluxScript = document.createElement('script');
 	PagoPluxScript.setAttribute('src', url);
 	const body = document.querySelector('body');
@@ -99,7 +97,7 @@ function mountData() {
 		PayboxBase0: "#PayboxBase0",
 		PayboxBase12: "#PayboxBase12",
 		PayboxDescription: "#PayboxDescriptionPlux",
-		PayboxProduction: ${this.productionEnv},
+		PayboxProduction: true,
 		PayboxLanguage: "es",
 	}`;
 	const body = document.querySelector('body');
