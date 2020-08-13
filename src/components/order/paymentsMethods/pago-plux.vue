@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<!-- <button @click="clickOnButton" type="button" class="pago-plux-img" :disabled="loading"> -->
-		<button @click="openPagoPlux" type="button" class="pago-plux-img" :disabled="loading">
+		<button @click="clickOnButton" type="button" class="pago-plux-img" :disabled="loading">
+		<!-- <button @click="openPagoPlux" type="button" class="pago-plux-img" :disabled="loading"> -->
 			<img src="https://quipu-acl.s3.amazonaws.com/icons/logo-pago-plux.png" alt="logo pagoplux">
 		</button>
 		<div id="ButtonPaybox" ref="pagopluxbtn" style="visibility:hidden"></div>
@@ -26,7 +26,7 @@
 <script>
 import { mapGetters } from 'vuex';
 
-function mounted() {
+function clickOnButton() {
 	this.loading = true;
 	this.mountJQ();
 	this.loadPagoPluxData()
@@ -56,6 +56,7 @@ function informBackend(res) {
 function openPagoPlux() {
 	const btn = this.$refs.pagopluxbtn.children.pay;
 	if (btn) {
+		console.log('presionando boton');
 		btn.click();
 	} else {
 		this.showNotification(
@@ -75,7 +76,10 @@ function mountPagoPlux() {
 	PagoPluxScript.onload = () => {
 		const loadEvent = new Event('load');
 		window.dispatchEvent(loadEvent);
-		that.loading = false;
+		setTimeout(() => {
+			that.openPagoPlux();
+			that.loading = false;
+		}, 1600);
 	};
 	const body = document.querySelector('body');
 	body.appendChild(PagoPluxScript);
@@ -84,9 +88,6 @@ function mountPagoPlux() {
 function mountJQ() {
 	const JQScript = document.createElement('script');
 	JQScript.setAttribute('src', 'https://code.jquery.com/jquery-3.4.1.js');
-	JQScript.onload = () => {
-		console.log('cargo JQ');
-	};
 	const body = document.querySelector('body');
 	body.appendChild(JQScript);
 }
@@ -107,7 +108,6 @@ function mountData() {
 	}`;
 	const body = document.querySelector('body');
 	body.appendChild(Data);
-	console.log('DATA');
 }
 
 async function loadPagoPluxData() {
@@ -163,7 +163,7 @@ export default {
 	},
 	data,
 	methods: {
-		// clickOnButton,
+		clickOnButton,
 		informBackend,
 		loadPagoPluxData,
 		mountData,
@@ -173,7 +173,7 @@ export default {
 		pagoPluxHandlerError,
 		pagoPluxHandlerSuccess,
 	},
-	mounted,
+	// mounted,
 };
 </script>
 <style lang="scss" scoped>
