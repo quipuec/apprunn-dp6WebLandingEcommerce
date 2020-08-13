@@ -21,14 +21,26 @@
 				</div>
 			</div>
 		</section>
-		<section class="summary-content">
-			contenido
+		<section class="summary-content-container">
+			<h2 class="title" :style="`color:${globalColors.primary}`">Resumen de compra</h2>
+			<div class="summary-content">
+				<div class="products-in-order">
+					<productInSummary
+						class="products"
+						v-for="(product, productIndex) in order.details"
+						:key="productIndex"
+						:product="product"
+					/>
+				</div>
+				<div></div>
+			</div>
 		</section>
 	</div>
 </template>
 <script>
 import { mapGetters } from 'vuex';
 import deliveryWays from '@/shared/enums/waysDeliveries';
+import productInSummary from '@/components/products/product-in-summary';
 
 const { store, house } = deliveryWays;
 
@@ -57,6 +69,9 @@ function billing() {
 
 export default {
 	name: 'page-new-summary-order',
+	components: {
+		productInSummary,
+	},
 	computed: {
 		...mapGetters({
 			addressObject: 'getDeliveryAddress',
@@ -113,12 +128,40 @@ export default {
 	}
 }
 
-.summary-content {
-    border-radius: 8px;
-    box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.19);
-	margin: 0 auto;
-	margin-bottom: 3rem;
-	max-width: 1024px;
-	padding: 2.5rem;
+.summary-content-container {
+	padding: 0 2.5rem;
+
+	.title {
+		background-color: color(background);
+		font-family: font(bold) !important;
+		margin-bottom: 2.5rem;
+		padding: 1rem;
+		text-align: center;
+	}
+
+	.summary-content {
+		border-radius: 8px;
+		// box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.19);
+		display: grid;
+		margin: 0 auto;
+		margin-bottom: 3rem;
+		max-width: 1024px;
+
+		@media (min-width: 768px) {
+			grid-template-columns: 1fr 1fr;
+		}
+	
+		.products-in-order {
+			
+			@media (min-width: 768px) {
+				border-right: 2px solid color(border);
+			}
+			.products {
+				margin-bottom: 3.5rem;
+			}
+		}
+	
+	}
 }
+
 </style>
