@@ -25,26 +25,29 @@
 <script>
 import { mapGetters } from 'vuex';
 
-async function mounted() {
-	await Promise.all([
-		this.loadPagoPluxData(),
-		this.mountData(),
-		this.mountJQ(),
-		this.mountPagoPlux(),
-	]);
-	const loadEvent = new Event('load');
-	window.dispatchEvent(loadEvent);
-	setTimeout(() => {
-		this.loading = false;
-	}, 1500);
-	window.onAuthorize = (response) => {
-		this.informBackend(response);
-		if (response.status === 'succeeded') {
-			this.pagoPluxHandlerSuccess(response);
-		} else {
-			this.pagoPluxHandlerError(response);
-		}
-	};
+function mounted() {
+	this.loadPagoPluxData()
+		.then(() => {
+			Promise.all([
+				this.mountData(),
+				this.mountJQ(),
+				this.mountPagoPlux(),
+			]).then(() => {
+				const loadEvent = new Event('load');
+				window.dispatchEvent(loadEvent);
+				setTimeout(() => {
+					this.loading = false;
+				}, 1500);
+				window.onAuthorize = (response) => {
+					this.informBackend(response);
+					if (response.status === 'succeeded') {
+						this.pagoPluxHandlerSuccess(response);
+					} else {
+						this.pagoPluxHandlerError(response);
+					}
+				};
+			});
+		});
 }
 
 function informBackend(res) {
