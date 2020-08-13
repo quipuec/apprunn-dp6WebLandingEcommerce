@@ -1,51 +1,61 @@
 <template>
 	<div class="leadgods-styles-container">
-		<a
-			target="_blank"
+		<button
 			class="leadgods-styles"
-			:href="link"
+			@click="linkGenerator"
 		>
 			<img :src="imgLink" alt="imagen de marketpago">
-		</a>
+		</button>
 	</div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
-
-function created() {
-	this.linkGenerator();
-}
 
 async function linkGenerator() {
 	const url = 'payment-gateway/leadgods/checkout';
 	const body = {
-		orderId: this.getOrderInfo.id,
+		categoryCode: this.categoryCode,
 		commerceCode: process.env.COMMERCE_CODE,
+		ipAddress: this.ipAddress,
+		orderId: this.orderId,
+		uri: this.uri,
 	};
-	const { data: res } = await this.$httpSales.post(url, body);
-	this.link = res.data.url;
-}
-
-function data() {
-	return {
-		link: null,
-	};
+	try {
+		await this.$httpSales.post(url, body);
+		this.showNotification('Se generó un enlace de pagos de forma exitosa', 'success');
+		this.$router.push({ name: 'buy-summary' });
+		this.$store.dispatch('GET_ORDER_INFO', { context: this, id: this.orderId });
+	} catch (error) {
+		this.showNotification(
+			'Ocurrió un error en el checkout de MarketPago. Recargue e intente de nuevo',
+			'error',
+		);
+		console.log(error);
+	}
 }
 
 export default {
 	name: 'leadgods',
-	computed: {
-		...mapGetters([
-			'getOrderInfo',
-		]),
-	},
-	created,
-	data,
 	methods: {
 		linkGenerator,
 	},
 	props: {
+		categoryCode: {
+			type: String,
+			required: true,
+		},
 		imgLink: {
+			type: String,
+			required: true,
+		},
+		ipAddress: {
+			type: String,
+			required: true,
+		},
+		orderId: {
+			type: Number,
+			required: true,
+		},
+		uri: {
 			type: String,
 			required: true,
 		},

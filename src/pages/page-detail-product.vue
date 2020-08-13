@@ -271,8 +271,9 @@ function clickQuantity(value) {
 }
 
 async function openDialog() {
+	const id = this.productDetails.id;
 	try {
-		const { data: response } = await this.$httpProductsPublic.get(`products-public/${this.product.id}/stock-by-warehouse`);
+		const { data: response } = await this.$httpProductsPublic.get(`products-public/${id}/stock-by-warehouse`);
 		this.warehouses = response;
 		this.dialogWarehouses = true;
 	} catch (error) {

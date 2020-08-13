@@ -33,7 +33,7 @@ async function mounted() {
 	window.dispatchEvent(loadEvent);
 	setTimeout(() => {
 		this.loading = false;
-	});
+	}, 1500);
 	window.onAuthorize = (response) => {
 		this.informBackend(response);
 		if (response.status === 'succeeded') {
@@ -105,7 +105,6 @@ async function loadXchangeData() {
 
 function xchangeHandlerSuccess() {
 	this.showNotification('Transacción exitosa', 'success');
-	this.$store.dispatch('MAKE_ORDER', { flagFinish: true, context: this });
 }
 
 function xchangeHandlerError(error) {

@@ -147,6 +147,9 @@ const getters = {
 	getGatewayErrorCode(state) {
 		return state.order.gatewayErrorCode;
 	},
+	getPaymentLink(state) {
+		return state.order.paymentLink;
+	},
 };
 
 export default getters;

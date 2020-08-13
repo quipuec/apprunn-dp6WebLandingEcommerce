@@ -20,20 +20,48 @@
 					<span class="label">Fecha de la Orden: </span><span class="order-info-data">{{getValue('createdAt', getOrderInfo)}}</span>
 				</div>
 				<div>
-					<span class="label">Estado: </span><span class="order-info-data">{{getValue('orderState.name', getOrderInfo)}}</span>
+					<span class="label">Estado pago: </span><span class="order-info-data">{{getValue('paymentStateName', getOrderInfo)}}</span>
 				</div>
 			</div>
 			<div class="order-payment" v-if="!rating">
 				<div class="order-payment-wrapper">
-					<div class="my-2 delivery-address">
-						<span v-if="flagPickUp === 1" class="label">
-							Direccion de envio: 
-							<span class="order-info-data">{{getValue('customerAddress.addressLine1', getOrderInfo)}}</span>
-						</span>
-						<span v-else class="label">
-							Direccion de recojo: 
-							<span class="order-info-data">{{getValue('warehouseName', getOrderInfo)}}</span>
-						</span>
+					<div class="mb-2 delivery-address">
+						<div v-if="pendingPayment && isPaymentLink" class="payment-link-data">
+							<div class="link-container">
+								<span>Paga ahora en {{gatewayName}}: </span>
+								<div class="link-wrapper">
+									<a
+										:href="paymentLink"
+										class="order-info-data"
+										:style="`color:${globalColors.primary}`"
+										target="_blank"
+										ref="link"
+									>{{paymentLink}}</a>
+								</div>
+								<button class="copy-button" type="button" @click="copyLink">copiar</button>
+							</div>
+							<div>
+								ID de transacción: <span class="label">{{transactionPaymentLinkId}}</span>
+							</div>
+						</div>
+						<div v-if="pendingPayment && isPaymentez && !isPaymentLink" class="payment-link-data">
+							<div class="link-container">
+								Id transacción: <span class="label">{{paymentezData.id}}</span>
+							</div>
+							<div>
+								Código de transacción: <span class="label">{{paymentezData.code}}</span>
+							</div>
+						</div>
+						<section>
+							<span v-if="flagPickUp === 1" class="label">
+								Direccion de envio: 
+								<span class="order-info-data">{{getValue('customerAddress.addressLine1', getOrderInfo)}}</span>
+							</span>
+							<span v-else class="label">
+								Direccion de recojo: 
+								<span class="order-info-data">{{getValue('warehouseName', getOrderInfo)}}</span>
+							</span>
+						</section>
 					</div>
 					<app-button
 						v-if="!flagAddVoucher && isDeposit"
@@ -95,16 +123,53 @@ import responsiveTable from '@/components/shared/table/respondive-table';
 import { getDeeper, isEmpty } from '@/shared/lib';
 import formOpinion from '@/components/products/form-opinion';
 import productRating from '@/components/profile/product-rating';
+import helper from '@/shared/helper';
 import { deposit } from '@/shared/enums/wayPayment';
+import * as gatewayCodes from '@/shared/enums/gatewayCodes';
 
 async function created() {
 	({ id: this.orderId } = this.$route.params);
 	await this.$store.dispatch('LOAD_ORDER_DETAILS', { context: this, orderId: this.orderId });
 	if (!isEmpty(this.getOrderInfo)) {
-		const { additionalInfo } = this.getOrderInfo;
+		const { additionalInfo, sessionGateway, additionalInformation } = this.getOrderInfo;
 		this.$store.commit('UPDATE_FLAG_ADD_VOUCHER', !isEmpty(additionalInfo));
+		this.additionalInformation = additionalInformation;
+		this.sessionGateway = sessionGateway;
 	}
 	this.updateColumns();
+}
+
+function isPaymentLink() {
+	return !isEmpty(this.getValue('data.url', this.sessionGateway));
+}
+
+function paymentLink() {
+	if (this.isPaymentLink) {
+		return this.getValue('data.url', this.sessionGateway);
+	}
+	return false;
+}
+
+function transactionPaymentLinkId() {
+	if (this.isPaymentLink) {
+		return this.getValue('gatewayTransactionId', this.additionalInformation);
+	}
+	return false;
+}
+
+function gatewayName() {
+	const { leadgods, pagopluxLink, placetopay } = gatewayCodes;
+	const code = this.getValue('gatewayCode', this.additionalInformation);
+	const options = {
+		[leadgods]: 'Market Pago',
+		[pagopluxLink]: 'Pago plux',
+		[placetopay]: 'Place to Pay',
+	};
+	return options[code];
+}
+
+function pendingPayment() {
+	return this.getValue('paymentStateName', this.getOrderInfo) === 'Pendiente';
 }
 
 function updateColumns() {
@@ -150,8 +215,29 @@ function isDeposit() {
 	return getDeeper('wayPayment.code')(this.getOrderInfo) === deposit.code;
 }
 
+function copyLink() {
+	const linkContainer = this.$refs.link;
+	helper.copyFn(linkContainer);
+	this.showNotification('Enlace copiado al porta papeles', 'primary');
+}
+
+function isPaymentez() {
+	return this.additionalInformation.paymentGateway;
+}
+
+function paymentezData() {
+	if (this.isPaymentez) {
+		return {
+			id: this.isPaymentez.referenceId,
+			code: this.isPaymentez.authorizationCode,
+		};
+	}
+	return false;
+}
+
 function data() {
 	return {
+		additionalInformation: null,
 		columns: [
 			{ value: 'product', title: 'Producto', responsive: false },
 			{ value: 'unitPrice', title: 'Precio Und', responsive: true },
@@ -162,6 +248,7 @@ function data() {
 		currentProduct: {},
 		orderId: 0,
 		rating: false,
+		sessionGateway: null,
 	};
 }
 
@@ -182,13 +269,21 @@ export default {
 		]),
 		details,
 		flagPickUp,
+		gatewayName,
 		isDeposit,
+		isPaymentez,
+		isPaymentLink,
 		orderStatusIsGiven,
+		paymentezData,
+		paymentLink,
+		pendingPayment,
+		transactionPaymentLinkId,
 	},
 	created,
 	data,
 	methods: {
 		addPaymentInfo,
+		copyLink,
 		getValue,
 		goTo,
 		onRating,
@@ -290,7 +385,7 @@ export default {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
-		margin: 10px 40px 0;
+		margin-top: 10px;
 		padding: 10px 0;
 
 		@media (max-width: 600px) {
@@ -299,7 +394,6 @@ export default {
 	}
 
 	.order-payment {
-		margin: 0 30px;
 		padding: 10px 0;
 
 		@media (max-width: 600px) {
@@ -389,7 +483,7 @@ export default {
 	}
 
 	.rating-container {
-		margin: 0 50px;
+		margin: 0 30px;
 
 			@media (max-width: 600px) {
 				margin: 0 10px;
@@ -406,6 +500,41 @@ export default {
 
 	.rating-button:hover {
 		background-color: color(border);
+	}
+
+	.payment-link-data {
+		align-items: center;
+		background-color: color(border);
+		border-radius: 0.5rem;
+		display: flex;
+		font-size: size(small);
+		justify-content: space-between;
+		margin-bottom: 0.5rem;
+		padding: 0.5rem 1rem;
+	}
+
+	.link-container {
+		align-items: center;
+		display: flex;
+
+		.link-wrapper {
+			margin: 0 0.5rem;
+			max-width: 8rem;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+	}
+
+	.copy-button {
+		border: 1px solid color(dark);
+		border-radius: 3px;
+		font-family: font(regular);
+		padding: 0 0.3rem;
+
+		&:hover {
+			background-color: color(dark);
+			color: color(border);
+		}
 	}
 
 </style>

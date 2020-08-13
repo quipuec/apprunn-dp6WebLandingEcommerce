@@ -1,13 +1,95 @@
 <template>
-	<div>
-		<h1>Place to pay</h1>
+	<div class="placetopay-styles-container">
+		<button
+			type="button"
+			class="placetopay-styles"
+			@click="linkGenerator"
+		>
+			<img :src="imgLink" alt="imagen de placetopay">
+		</button>
 	</div>
 </template>
 <script>
-export default {
-	name: 'PlaceToPay',
+
+async function linkGenerator() {
+	const url = `payment-gateway/${this.code}/checkout`;
+	const body = {
+		categoryCode: this.categoryCode,
+		commerceCode: process.env.COMMERCE_CODE,
+		ipAddress: this.ipAddress,
+		orderId: this.orderId,
+		uri: this.uri,
+	};
+	try {
+		await this.$httpSales.post(url, body);
+		this.showNotification('Se generó un enlace de pagos de forma exitosa', 'success');
+		this.$router.push({ name: 'buy-summary' });
+		this.$store.dispatch('GET_ORDER_INFO', { context: this, id: this.orderId });
+	} catch (error) {
+		this.showNotification(
+			'Ocurrió un error al generar el enlace de pago. Recargue y vuelva a intentarlo por favor',
+			'error',
+		);
+		console.log(error);
+	}
 }
+
+function data() {
+	return {
+		link: null,
+	};
+}
+
+export default {
+	name: 'placetopay',
+	data,
+	methods: {
+		linkGenerator,
+	},
+	props: {
+		categoryCode: {
+			type: String,
+			required: true,
+		},
+		code: {
+			type: String,
+			required: true,
+		},
+		imgLink: {
+			type: String,
+			required: true,
+		},
+		ipAddress: {
+			type: String,
+			required: true,
+		},
+		orderId: {
+			type: Number,
+			required: true,
+		},
+		uri: {
+			type: String,
+			required: true,
+		},
+	},
+};
 </script>
 <style lang="scss" scoped>
+.placetopay-styles-container {
+	font-weight: bold;
+	transition-duration: 250ms;
+	max-width: fit-content;
 
+	.placetopay-styles {
+		align-items: center;
+		background-color: white;
+		display: flex;
+		justify-content: center;
+		text-decoration: none;
+	}
+	&:hover {
+		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+		transform: scale(1.05);
+	}
+}
 </style>

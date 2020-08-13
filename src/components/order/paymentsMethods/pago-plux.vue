@@ -26,24 +26,28 @@
 import { mapGetters } from 'vuex';
 
 function mounted() {
-	this.loading = true;
-	this.mountData();
-	this.mountJQ();
-	this.mountPagoPlux();
-	this.loadPagoPluxData();
-	const loadEvent = new Event('load');
-	window.dispatchEvent(loadEvent);
-	setTimeout(() => {
-		this.loading = false;
-	}, 1500);
-	window.onAuthorize = (response) => {
-		this.informBackend(response);
-		if (response.status === 'succeeded') {
-			this.pagoPluxHandlerSuccess(response);
-		} else {
-			this.pagoPluxHandlerError(response);
-		}
-	};
+	this.loadPagoPluxData()
+		.then(() => {
+			Promise.all([
+				this.mountData(),
+				this.mountJQ(),
+				this.mountPagoPlux(),
+			]).then(() => {
+				const loadEvent = new Event('load');
+				window.dispatchEvent(loadEvent);
+				setTimeout(() => {
+					this.loading = false;
+				}, 1500);
+				window.onAuthorize = (response) => {
+					this.informBackend(response);
+					if (response.status === 'succeeded') {
+						this.pagoPluxHandlerSuccess(response);
+					} else {
+						this.pagoPluxHandlerError(response);
+					}
+				};
+			});
+		});
 }
 
 function informBackend(res) {
@@ -70,8 +74,7 @@ function openPagoPlux() {
 function mountPagoPlux() {
 	const testENV = 'https://sandbox-paybox.pagoplux.com/paybox/index.js';
 	const prodENV = 'https://paybox.pagoplux.com/paybox/index.js';
-	const url = prodENV;
-	// const url = process.env.NODE_ENV === 'production' ? prodENV : testENV;
+	const url = this.productionEnv ? prodENV : testENV;
 	const PagoPluxScript = document.createElement('script');
 	PagoPluxScript.setAttribute('src', url);
 	const body = document.querySelector('body');
@@ -96,7 +99,7 @@ function mountData() {
 		PayboxBase0: "#PayboxBase0",
 		PayboxBase12: "#PayboxBase12",
 		PayboxDescription: "#PayboxDescriptionPlux",
-		PayboxProduction: false,
+		PayboxProduction: ${this.productionEnv},
 		PayboxLanguage: "es",
 	}`;
 	const body = document.querySelector('body');
@@ -111,6 +114,7 @@ async function loadPagoPluxData() {
 	const url = 'payment-gateway/pagoplux/checkout';
 	const { data: res } = await this.$httpSales.post(url, body);
 	this.hash = res.hash;
+	this.productionEnv = res.payboxProduction;
 	this.payboxRemail = res.payboxRemail;
 	this.payboxRename = res.payboxRename;
 	this.payboxBase0 = res.payboxBase0;
@@ -122,7 +126,8 @@ async function loadPagoPluxData() {
 
 function pagoPluxHandlerSuccess() {
 	this.showNotification('Transacción exitosa', 'success');
-	this.$store.dispatch('MAKE_ORDER', { flagFinish: true, context: this });
+	this.showNotification('Pago realizado con éxito', 'success');
+	this.$router.push({ name: 'buy-summary' });
 }
 
 function pagoPluxHandlerError() {
@@ -140,11 +145,12 @@ function data() {
 		payboxSendmail: '',
 		payboxSendname: '',
 		payboxDescription: '',
+		productionEnv: null,
 	};
 }
 
 export default {
-	name: 'xchange',
+	name: 'pagoplux',
 	computed: {
 		...mapGetters([
 			'getOrderInfo',

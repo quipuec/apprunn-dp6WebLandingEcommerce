@@ -49,6 +49,7 @@ export default {
 		order: null,
 		orderStates: null,
 		orderStatus: null,
+		paymentLink: null,
 		paymentMethod: {
 			bankAccountId: null,
 			wayPayment: null,
@@ -72,6 +73,7 @@ export default {
 		address: [],
 		favorites: [],
 		flagAddVoucher: false,
+		onlineTransactions: [],
 		userData: null,
 	},
 	products: {

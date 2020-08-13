@@ -34,6 +34,10 @@ function openPaymentezModal() {
 				order_taxable_amount: Number(res.data.taxableAmount),
 				order_tax_percentage: res.data.taxPercentage,
 			};
+<<<<<<< HEAD
+=======
+			console.log(orderValues);
+>>>>>>> 771
 			paymentezCheckout.open(orderValues);
 		})
 		.catch((error) => {

@@ -39,6 +39,7 @@
 				v-else-if="stepThree"
 				action="Pagar"
 				class="btn-order"
+				:disabled="isOnlinePayment"
 				:background="globalColors.primary"
 				@click="makeOrder(true)"
 			/>
@@ -49,6 +50,7 @@
 import { mapGetters } from 'vuex';
 import appButton from '@/components/shared/buttons/app-button';
 import { getDeeper } from '@/shared/lib';
+import { creditCard } from '@/shared/enums/wayPayment';
 
 function total() {
 	return (this.getTotalToBuy - this.discount) + this.getShippingCost;
@@ -84,6 +86,16 @@ function discount() {
 	return Number(amount.toFixed(2));
 }
 
+function isOnlinePayment() {
+	if (this.getWaypaymentsByCommerce && this.getWaypaymentsByCommerce.length > 0) {
+		const selectedId = this.getWayPayment.wayPayment;
+		const paymentSelected = this.getWaypaymentsByCommerce.find(w => w.wayPaymentId === selectedId);
+		const isOnline = creditCard.code === paymentSelected.code;
+		return isOnline;
+	}
+	return false;
+}
+
 export default {
 	name: 'summary-order',
 	components: {
@@ -109,11 +121,13 @@ export default {
 			'getShippingCost',
 			'getTotalToBuy',
 			'getWayPayment',
+			'getWaypaymentsByCommerce',
 			'invalidOrder',
 			'token',
 			'user',
 		]),
 		discount,
+		isOnlinePayment,
 		stepOne,
 		stepThree,
 		stepTwo,
