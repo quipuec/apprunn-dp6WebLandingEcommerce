@@ -9,7 +9,8 @@
     "start": "node build/dev-server.js",
     "build": "node build/build.js",
     "lint": "eslint --ext .js,.vue src",
-    "test": "cypress run"
+    "test": "cypress run",
+    "cy:open": "cypress open"
   },
   "dependencies": {
     "axios": "^0.19.2",
