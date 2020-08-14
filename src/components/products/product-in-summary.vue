@@ -78,10 +78,18 @@ export default {
 			font-size: size(msmall);
 		}
 
+		.product-quantity {
+			padding: 0.25rem 0;
+		}
+
 		.product-price,
 		.quantity {
 			color: color(dark);
 			font-size: size(medium);
+		}
+
+		.product-price {
+			font-size: size(large);
 		}
 
 		.product-unit {

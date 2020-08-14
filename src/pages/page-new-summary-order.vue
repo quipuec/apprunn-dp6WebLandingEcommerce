@@ -9,9 +9,9 @@
 						<span>{{countryLabels.dni}}: {{responsible.dni}},</span>
 						<span>Teléfono: {{responsible.phone}}.</span>
 					</p>
-					<p class="address">Dirección: {{address}}</p>
+					<p class="address">Dirección: {{addressDel}}</p>
 				</div>
-				<div>
+				<div v-if="billing">
 					<h2 class="title">Solicitud de Factura</h2>
 					<p class="billing-data" :style="`color:${globalColors.title}`">
 						<span>RUC: {{billing.ruc}},</span>
@@ -32,7 +32,43 @@
 						:product="product"
 					/>
 				</div>
-				<div></div>
+				<div class="delivery-and-payment">
+					<div>
+						<div class="delivery-container">
+							<span class="delivery-title">Estado del pago:</span>
+							<span class="delivery-result">{{order.paymentStateName}}</span>
+						</div>
+						<div class="shipping-cost-container">
+							<span class="delivery-title">Costo de envío:</span>
+							<output class="delivery-result">{{currency}} {{order.costShipping}}</output>
+						</div>
+						<output class="total" :style="`color:${globalColors.primary}`">
+							{{currency}} {{order.formatNumbers.total}}
+						</output>
+						<div class="payment-strategy">
+							<div class="online-payment" v-if="isOnlinePayment">
+								<h3 class="online-payment-title" :style="`color:${globalColors.primary}`">Pago Online</h3>
+								<div v-if="link.exist">
+									<h4 class="payment-link">Enlace de pago</h4>
+									<img v-if="false" src="" alt="logo de pasarela de pagos">
+									<div class="link-style-container">
+										<a
+											target="_blank"
+											ref="link"
+											:href="link.link"
+											:style="`color:${globalColors.primary};border-color:${globalColors.primary}`"
+										>{{link.link}}</a>
+										<button @click="copyLink" class="copy-button" type="button">copiar</button>
+									</div>
+								</div>
+								<div v-else>
+									<h4>Botón de pago</h4>
+									<img src="" alt="logo de pasarela de pagos">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</section>
 	</div>
@@ -41,6 +77,9 @@
 import { mapGetters } from 'vuex';
 import deliveryWays from '@/shared/enums/waysDeliveries';
 import productInSummary from '@/components/products/product-in-summary';
+// import { LINK } from '@/shared/enums/paymentStrategy';
+import { getDeeper, isEmpty } from '@/shared/lib';
+import helper from '@/shared/helper';
 
 const { store, house } = deliveryWays;
 
@@ -58,13 +97,38 @@ function isStore() {
 	return this.flagPickUp === store.value;
 }
 
-function address() {
-	const { addressLine1, parish, city, province } = this.addressObject;
+function addressDel() {
+	const { address, name, addressLine1, parish, city, province } = this.addressObject;
+	if (this.isStore) {
+		return `${name}, ${address}.`;
+	}
 	return `${addressLine1} - ${parish.name} - ${city.name}, ${province.name}.`;
 }
 
 function billing() {
-	return this.order.dataBill;
+	return getDeeper('dataBill')(this.order);
+}
+
+function isOnlinePayment() {
+	const { gatewayTransaction } = this.order;
+	return !isEmpty(gatewayTransaction);
+}
+
+function link() {
+	if (this.isOnlinePayment) {
+		const paymentLink = getDeeper('additionalInformation.paymentGateway.url')(this.order);
+		return {
+			exist: !isEmpty(paymentLink),
+			link: paymentLink,
+		};
+	}
+	return false;
+}
+
+function copyLink() {
+	const linkContainer = this.$refs.link;
+	helper.copyFn(linkContainer);
+	this.showNotification('Enlace copiado al porta papeles', 'primary');
 }
 
 export default {
@@ -75,15 +139,21 @@ export default {
 	computed: {
 		...mapGetters({
 			addressObject: 'getDeliveryAddress',
+			currency: 'getCurrencySymbol',
 			flagPickUp: 'getFlagPickUp',
 			order: 'getOrderInfo',
 			responsible: 'getResponsible',
 		}),
-		address,
+		addressDel,
 		addressPickUp,
 		billing,
 		isHome,
+		link,
+		isOnlinePayment,
 		isStore,
+	},
+	methods: {
+		copyLink,
 	},
 };
 </script>
@@ -152,15 +222,88 @@ export default {
 		}
 	
 		.products-in-order {
+			border-bottom: 2px solid color(border);
 			
 			@media (min-width: 768px) {
+				border-bottom: none;
 				border-right: 2px solid color(border);
 			}
 			.products {
 				margin-bottom: 3.5rem;
 			}
 		}
-	
+
+		.delivery-and-payment {
+			color: color(dark) !important;
+			padding-top: 2.5rem;
+			position: sticky;
+			text-align: left !important;
+			top: 5rem;
+
+			@media (min-width: 768px) {
+				padding-left: 4rem;
+				padding-top: 1.5rem;
+			}
+
+			.delivery-container,
+			.shipping-cost-container {
+				font-family: font(bold);
+
+				.delivery-title {
+					color: color(base);
+					font-size: size(medium);
+				}
+
+				.delivery-result {
+					font-size: size(large);
+				}
+			}
+
+			.total {
+				font-family: font(bold) !important;
+				font-size: size(sbig) !important;
+			}
+
+			.payment-strategy {
+				margin-top: 2rem;
+
+				.online-payment {
+
+					.online-payment-title {
+						font-family: font(bold);
+						font-size: size(small);
+						margin-bottom: 0.25rem;
+						text-transform: uppercase;
+					}
+
+					.payment-link {
+						color: color(base);
+						margin-bottom: 0.25rem;
+					}
+
+					.link-style-container {
+						display: grid;
+						grid-auto-flow: column;
+						gap: 1rem;
+
+						a {
+							border: 1px solid;
+							overflow: hidden;
+							padding: 0.5rem 1rem;
+							text-overflow: ellipsis;
+						}
+
+						.copy-button {
+							padding: 0 0.5rem;
+
+							&:hover {
+								background-color: color(border);
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 }
 
