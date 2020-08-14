@@ -69,9 +69,10 @@ function openPagoPlux() {
 }
 
 function mountPagoPlux() {
-	const testENV = 'https://sandbox-paybox.pagoplux.com/paybox/index.js';
+	// const testENV = 'https://sandbox-paybox.pagoplux.com/paybox/index.js';
 	const prodENV = 'https://paybox.pagoplux.com/paybox/index.js';
-	const url = this.productionEnv ? prodENV : testENV;
+	const url = prodENV;
+	// const url = this.productionEnv ? prodENV : testENV;
 	const PagoPluxScript = document.createElement('script');
 	PagoPluxScript.setAttribute('src', url);
 	const body = document.querySelector('body');
@@ -96,7 +97,7 @@ function mountData() {
 		PayboxBase0: "#PayboxBase0",
 		PayboxBase12: "#PayboxBase12",
 		PayboxDescription: "#PayboxDescriptionPlux",
-		PayboxProduction: ${this.productionEnv},
+		PayboxProduction: true,
 		PayboxLanguage: "es",
 	}`;
 	const body = document.querySelector('body');

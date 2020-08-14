@@ -237,7 +237,7 @@ function buildBody(provinceId) {
 }
 
 function beforeDestroy() {
-	this.$store.commit('SET_DELIVERY_PLACE', null);
+	// this.$store.commit('SET_DELIVERY_PLACE', null);
 	this.$store.dispatch('setNoShippingCost');
 }
 
