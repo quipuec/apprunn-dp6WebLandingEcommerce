@@ -38,7 +38,6 @@ const getters = {
 		return state.order.flagPickUp;
 	},
 	getDeliveryAddress(state) {
-		debugger;
 		return state.order.delivery;
 	},
 	invalidOrder(state) {

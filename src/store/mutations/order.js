@@ -10,7 +10,6 @@ const orderMutation = {
 		Vue.set(state.order, 'responsible', responsible);
 	},
 	SET_DELIVERY_PLACE(state, address) {
-		debugger;
 		Vue.set(state.order, 'delivery', address);
 		const id = address && address.addressLine1 ? address.id : null;
 		Vue.set(state.order, 'customerAddressId', id);
