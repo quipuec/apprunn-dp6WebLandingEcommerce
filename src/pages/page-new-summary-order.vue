@@ -46,7 +46,7 @@
 							{{currency}} {{order.formatNumbers.total}}
 						</output>
 						<div class="payment-strategy">
-							<div class="online-payment" v-if="isOnlinePayment">
+							<div v-if="isOnlinePayment" class="online-payment">
 								<h3 class="online-payment-title" :style="`color:${globalColors.primary}`">Pago Online</h3>
 								<div v-if="link.exist">
 									<h4 class="payment-link">Enlace de pago</h4>
@@ -66,6 +66,42 @@
 									<img src="" alt="logo de pasarela de pagos">
 								</div>
 							</div>
+							<div v-if="isReciveAndPay.exist" class="online-payment">
+								<h3 class="online-payment-title" :style="`color:${globalColors.primary}`">{{isReciveAndPay.title}}</h3>
+								<h4 class="payment-link">{{isReciveAndPay.description}}</h4>
+							</div>
+							<div v-if="isDeposit.exist" class="online-payment">
+								<h3 class="online-payment-title" :style="`color:${globalColors.primary}`">{{isDeposit.title}}</h3>
+								<h4 class="payment-link">{{isDeposit.description}}</h4>
+								<div v-if="true">
+									<swiper :options="swiperOption" ref="swp">
+										<swiper-slide 
+											v-for="bankAccount in isDeposit.bankAccounts" 
+											:key="bankAccount.id"
+										>
+											<div class="bankAccount-container">
+												<h4>{{bankAccount.bank.name}}</h4>
+												<div class="bankAccount-data">
+													<span>A nombre de:{{bankAccount.additionalInformation.personName}}</span>
+													<span>Nro. Cta: {{bankAccount.accountNumber}}</span>
+												</div>
+											</div>
+										</swiper-slide>
+										<div class="swiper-button-prev" slot="button-prev">
+											<ArrowLeft
+												:color="globalColors.primary"
+												class="arrow"
+											/>
+										</div>
+										<div class="swiper-button-next" slot="button-next">
+											<ArrowRight
+												:color="globalColors.primary"
+												class="arrow"
+											/>
+										</div>
+									</swiper>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -77,9 +113,11 @@
 import { mapGetters } from 'vuex';
 import deliveryWays from '@/shared/enums/waysDeliveries';
 import productInSummary from '@/components/products/product-in-summary';
-// import { LINK } from '@/shared/enums/paymentStrategy';
 import { getDeeper, isEmpty } from '@/shared/lib';
 import helper from '@/shared/helper';
+import { deposit, reciveAndPay } from '@/shared/enums/wayPayment';
+import ArrowLeft from '@/components/svg/ArrowLeft';
+import ArrowRight from '@/components/svg/ArrowRight';
 
 const { store, house } = deliveryWays;
 
@@ -109,9 +147,31 @@ function billing() {
 	return getDeeper('dataBill')(this.order);
 }
 
+function wayPayment() {
+	return this.order.wayPayment;
+}
+/**
+ * Cuando el pago es online wayPayment es null
+ */
 function isOnlinePayment() {
-	const { gatewayTransaction } = this.order;
-	return !isEmpty(gatewayTransaction);
+	return isEmpty(this.wayPayment);
+}
+
+function isReciveAndPay() {
+	return {
+		description: getDeeper('description')(this.wayPayment),
+		exist: getDeeper('code')(this.wayPayment) === reciveAndPay.code,
+		title: getDeeper('name')(this.wayPayment),
+	};
+}
+
+function isDeposit() {
+	return {
+		bankAccounts: getDeeper('commerce.bankAccountsRelated')(this.order),
+		description: 'Usa alguna de nuestras cuentas bancarias para realizar el pago.',
+		exist: getDeeper('code')(this.wayPayment) === deposit.code,
+		title: getDeeper('name')(this.wayPayment),
+	};
 }
 
 function link() {
@@ -131,9 +191,26 @@ function copyLink() {
 	this.showNotification('Enlace copiado al porta papeles', 'primary');
 }
 
+function data() {
+	return {
+		swiperOption: {
+			slidesPerView: 2,
+			spaceBetween: 5,
+			slidesPerGroup: 1,
+			allowTouchMove: true,
+			navigation: {
+				nextEl: '.swiper-button-next',
+				prevEl: '.swiper-button-prev',
+			},
+		},
+	};
+}
+
 export default {
 	name: 'page-new-summary-order',
 	components: {
+		ArrowLeft,
+		ArrowRight,
 		productInSummary,
 	},
 	computed: {
@@ -148,10 +225,14 @@ export default {
 		addressPickUp,
 		billing,
 		isHome,
-		link,
+		isDeposit,
 		isOnlinePayment,
+		isReciveAndPay,
 		isStore,
+		link,
+		wayPayment,
 	},
+	data,
 	methods: {
 		copyLink,
 	},
@@ -216,6 +297,7 @@ export default {
 		margin: 0 auto;
 		margin-bottom: 3rem;
 		max-width: 1024px;
+		overflow: hidden;
 
 		@media (min-width: 768px) {
 			grid-template-columns: 1fr 1fr;
@@ -241,8 +323,10 @@ export default {
 			top: 5rem;
 
 			@media (min-width: 768px) {
-				padding-left: 4rem;
+				padding-left: 3rem;
+				padding-right: 2rem;
 				padding-top: 1.5rem;
+				overflow: hidden;
 			}
 
 			.delivery-container,
@@ -261,11 +345,11 @@ export default {
 
 			.total {
 				font-family: font(bold) !important;
-				font-size: size(sbig) !important;
+				font-size: size(big) !important;
 			}
 
 			.payment-strategy {
-				margin-top: 2rem;
+				margin-top: 1.5rem;
 
 				.online-payment {
 
@@ -301,6 +385,24 @@ export default {
 							}
 						}
 					}
+
+					.bankAccount-container {
+						border: 1px solid color(border);
+						margin: 0.5rem auto 0;
+						padding: 1rem;
+						width: fit-content;
+
+						.bankAccount-data {
+							display: grid;
+							grid-auto-flow: row;
+							margin-left: 0.25rem;
+						}
+					}
+				}
+
+				.arrow {
+					height: 100%;
+					width: 100%;
 				}
 			}
 		}
