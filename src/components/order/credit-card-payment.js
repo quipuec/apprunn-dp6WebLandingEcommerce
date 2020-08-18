@@ -1,10 +1,10 @@
 import { mapGetters } from 'vuex';
 import { LINK, BUTTON } from '@/shared/enums/paymentStrategy';
 import {
-	leadgods, visa, datafast, pagoplux, pagopluxLink, xchange, paymentez, placetopay,
+	leadgods, niubiz, datafast, pagoplux, pagopluxLink, xchange, paymentez, placetopay,
 } from '@/shared/enums/gatewayCodes';
 
-const VisaPeru = () => import('@/components/order/paymentsMethods/visa-payment');
+const Niubiz = () => import('@/components/order/paymentsMethods/niubiz');
 const Paymentez = () => import('@/components/order/paymentsMethods/paymentez');
 const DataFast = () => import('@/components/order/paymentsMethods/data-fast');
 const PagoPlux = () => import('@/components/order/paymentsMethods/pago-plux');
@@ -72,7 +72,7 @@ function paymentLinkCreator(h, gateway) {
 }
 const paymentButtonCreator = (h, gateway) => {
 	const buttonOptions = {
-		[visa]: VisaPeru,
+		[niubiz]: Niubiz,
 		[paymentez]: Paymentez,
 		[datafast]: DataFast,
 		[pagoplux]: PagoPlux,
@@ -80,8 +80,16 @@ const paymentButtonCreator = (h, gateway) => {
 	};
 	let selectedButtons = [];
 	gateway.forEach((t) => {
-		const { code } = t;
-		selectedButtons = selectedButtons.concat(h(buttonOptions[code]));
+		const { code, urlImage } = t;
+		const paymentButton = h(
+			buttonOptions[code],
+			{
+				props: {
+					img: urlImage,
+				},
+			},
+		);
+		selectedButtons = selectedButtons.concat(paymentButton);
 	});
 	const btns = h(
 		'div',
