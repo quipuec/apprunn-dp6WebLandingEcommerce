@@ -92,6 +92,7 @@ async function loadXchangeData() {
 	const body = {
 		orderId: this.getOrderInfo.id,
 		commerceCode: process.env.COMMERCE_CODE,
+		ipAddress: this.ipAddress,
 	};
 	const url = 'payment-gateway/xchange/checkout';
 	const { data: res } = await this.$httpSales.post(url, body);
@@ -146,6 +147,12 @@ export default {
 		xchangeHandlerSuccess,
 	},
 	mounted,
+	props: {
+		ipAddress: {
+			type: String,
+			required: true,
+		},
+	},
 };
 </script>
 <style lang="scss" scoped>

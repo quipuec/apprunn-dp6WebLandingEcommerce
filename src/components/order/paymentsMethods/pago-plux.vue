@@ -108,6 +108,7 @@ async function loadPagoPluxData() {
 	const body = {
 		orderId: this.getOrderInfo.id,
 		commerceCode: process.env.COMMERCE_CODE,
+		ipAddress: this.ipAddress,
 	};
 	const url = 'payment-gateway/pagoplux/checkout';
 	const { data: res } = await this.$httpSales.post(url, body);
@@ -167,6 +168,12 @@ export default {
 		pagoPluxHandlerSuccess,
 	},
 	mounted,
+	props: {
+		ipAddress: {
+			type: String,
+			required: true,
+		},
+	},
 };
 </script>
 <style lang="scss" scoped>
