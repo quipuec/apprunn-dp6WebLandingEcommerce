@@ -40,6 +40,7 @@
 				</div>
 			</div>
 			<div 
+				data-cy="loginBtn"
 				class="flex container-button-image align-center"
 				:class="{'opacity' : isSearchMobile}">
 				<button-image 

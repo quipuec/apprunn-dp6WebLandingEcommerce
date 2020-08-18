@@ -16,6 +16,9 @@
  * @type {Cypress.PluginConfig}
  */
 module.exports = (on, config) => {
-  // `on` is used to hook into various events Cypress emits
-  // `config` is the resolved Cypress config
-}
+	// `on` is used to hook into various events Cypress emits
+	// `config` is the resolved Cypress config
+	// eslint-disable-next-line no-param-reassign
+	config.env.port = process.env.PORT;
+	return config;
+};
