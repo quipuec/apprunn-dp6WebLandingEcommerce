@@ -56,7 +56,6 @@ function informBackend(res) {
 function openPagoPlux() {
 	const btn = this.$refs.pagopluxbtn.children.pay;
 	if (btn) {
-		console.log('presionando boton');
 		btn.click();
 	} else {
 		this.showNotification(
@@ -173,7 +172,6 @@ export default {
 		pagoPluxHandlerError,
 		pagoPluxHandlerSuccess,
 	},
-	// mounted,
 };
 </script>
 <style lang="scss" scoped>
