@@ -34,13 +34,21 @@
 				</div>
 				<div class="delivery-and-payment">
 					<div>
-						<div class="delivery-container">
+						<div class="payment-status-container">
 							<span class="delivery-title">Estado del pago:</span>
 							<span class="delivery-result">{{order.paymentStateName}}</span>
 						</div>
+						<div class="subtotal-container">
+							<span class="delivery-title">Subtotal:</span>
+							<span class="delivery-result">{{currency}}{{order.subtotal | currencyFormat}}</span>
+						</div>
+						<div class="discount-container">
+							<span class="delivery-title">Descuentos:</span>
+							<span class="delivery-result">{{currency}}{{discount | currencyFormat}}</span>
+						</div>
 						<div class="shipping-cost-container">
 							<span class="delivery-title">Costo de envío:</span>
-							<output class="delivery-result">{{currency}} {{order.costShipping}}</output>
+							<output class="delivery-result">{{currency}}{{order.costShipping | currencyFormat}}</output>
 						</div>
 						<output class="total" :style="`color:${globalColors.primary}`">
 							{{currency}} {{order.formatNumbers.total}}
@@ -107,10 +115,14 @@
 				</div>
 			</div>
 		</section>
+		<section class="summary-btns">
+			<button :style="`background-color:${globalColors.primary}`" type="button" @click="seeOrder">Ver pedido</button>
+			<button :style="`background-color:${globalColors.primary}`" type="button" @click="cancelOrder">Cancelar pedido</button>
+		</section>
 	</div>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapActions, mapGetters } from 'vuex';
 import deliveryWays from '@/shared/enums/waysDeliveries';
 import productInSummary from '@/components/products/product-in-summary';
 import { getDeeper, isEmpty } from '@/shared/lib';
@@ -206,8 +218,30 @@ function data() {
 	};
 }
 
+function seeOrder() {
+	const { id } = this.order;
+	this.$router.push({ name: 'order-detail', params: { id } });
+}
+
+async function cancelOrder() {
+	const { id } = this.order;
+	await this.CANCEL_ORDER({ context: this, id });
+	this.goTo('page-home');
+}
+
+function beforeDestroy() {
+	this.SET_DEFAULT_VALUES();
+}
+
+function discount() {
+	const percentage = this.user.discount || 0;
+	const amount = this.order.total * (Number(percentage) / 100);
+	return Number(amount.toFixed(2));
+}
+
 export default {
 	name: 'page-new-summary-order',
+	beforeDestroy,
 	components: {
 		ArrowLeft,
 		ArrowRight,
@@ -220,10 +254,12 @@ export default {
 			flagPickUp: 'getFlagPickUp',
 			order: 'getOrderInfo',
 			responsible: 'getResponsible',
+			user: 'user',
 		}),
 		addressDel,
 		addressPickUp,
 		billing,
+		discount,
 		isHome,
 		isDeposit,
 		isOnlinePayment,
@@ -234,7 +270,13 @@ export default {
 	},
 	data,
 	methods: {
+		...mapActions([
+			'SET_DEFAULT_VALUES',
+			'CANCEL_ORDER',
+		]),
+		cancelOrder,
 		copyLink,
+		seeOrder,
 	},
 };
 </script>
@@ -292,12 +334,15 @@ export default {
 
 	.summary-content {
 		border-radius: 8px;
-		// box-shadow: 0 2px 9px 0 rgba(0, 0, 0, 0.19);
 		display: grid;
 		margin: 0 auto;
 		margin-bottom: 3rem;
 		max-width: 1024px;
+<<<<<<< HEAD
 		overflow: hidden;
+=======
+		padding: 0 1rem;
+>>>>>>> 05a7481f8b4347db65b58e2ee8637b65145d4487
 
 		@media (min-width: 768px) {
 			grid-template-columns: 1fr 1fr;
@@ -323,24 +368,38 @@ export default {
 			top: 5rem;
 
 			@media (min-width: 768px) {
+<<<<<<< HEAD
 				padding-left: 3rem;
 				padding-right: 2rem;
 				padding-top: 1.5rem;
 				overflow: hidden;
+=======
+				padding-left: 4rem;
+				padding-top: 1rem;
+>>>>>>> 05a7481f8b4347db65b58e2ee8637b65145d4487
 			}
 
-			.delivery-container,
+			.payment-status-container,
+			.discount-container,
+			.subtotal-container,
 			.shipping-cost-container {
-				font-family: font(bold);
+				font-family: font(heavy);
+				font-family: font(heavy);
 
 				.delivery-title {
 					color: color(base);
 					font-size: size(medium);
 				}
+			}
 
-				.delivery-result {
-					font-size: size(large);
-				}
+			.payment-status-container {
+				font-family: font(bold);
+				font-size: size(large);
+				margin-bottom: 0.5rem;
+			}
+
+			.shipping-cost-container {
+				margin-bottom: 0.5rem;
 			}
 
 			.total {
@@ -406,6 +465,22 @@ export default {
 				}
 			}
 		}
+	}
+}
+
+.summary-btns {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	font-family: font(bold);
+	justify-content: center;
+	margin-top: 3rem;
+
+	button {
+		color: white;
+		margin: 1rem;
+		padding: 0.75rem 2rem;
+		width: 14rem;
 	}
 }
 
