@@ -23,3 +23,23 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+Cypress.Commands.add('login', () => {
+	cy.fixture('fenix-dev.json').then(({ email, password }) => {
+		cy.visit('localhost:9010');
+		cy.get('[data-cy="loginBtn"]')
+			.find('.icon-desktop')
+			.click();
+		cy.get('[data-cy="appButtonLogin"]')
+			.should('exist')
+			.click();
+		cy.get('[data-cy="inputEmail"]')
+			.should('exist')
+			.type(email);
+		cy.get('[data-cy="inputPassword"]')
+			.should('exist')
+			.type(password);
+		cy.get('[data-cy="loginBtnAction"]')
+			.should('exist')
+			.click();
+	});
+})
