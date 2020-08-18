@@ -338,11 +338,8 @@ export default {
 		margin: 0 auto;
 		margin-bottom: 3rem;
 		max-width: 1024px;
-<<<<<<< HEAD
 		overflow: hidden;
-=======
 		padding: 0 1rem;
->>>>>>> 05a7481f8b4347db65b58e2ee8637b65145d4487
 
 		@media (min-width: 768px) {
 			grid-template-columns: 1fr 1fr;
@@ -368,15 +365,10 @@ export default {
 			top: 5rem;
 
 			@media (min-width: 768px) {
-<<<<<<< HEAD
 				padding-left: 3rem;
 				padding-right: 2rem;
 				padding-top: 1.5rem;
 				overflow: hidden;
-=======
-				padding-left: 4rem;
-				padding-top: 1rem;
->>>>>>> 05a7481f8b4347db65b58e2ee8637b65145d4487
 			}
 
 			.payment-status-container,
