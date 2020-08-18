@@ -2,10 +2,12 @@
     "PER": {
         "department": "Departamento",
         "district": "Distrito",
+        "dni": "dni",
         "province": "Provincia"
     },
     "ECU": {
         "department": "Provincia",
+        "dni": "Cédula",
         "district": "Parroquia",
         "province": "Ciudad"
     }
