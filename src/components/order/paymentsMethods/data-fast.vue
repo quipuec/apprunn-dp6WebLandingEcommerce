@@ -39,7 +39,7 @@ async function checkout() {
 		commerceCode: this.getCommerceData.code,
 		ipAddress: this.clientIp,
 	};
-	const url = 'payment-transaction/datafast/checkouts';
+	const url = 'payment-gateway/datafast/checkout';
 	const { data: response } = await this.$httpSales.post(url, body);
 	this.checkoutId = response.id;
 	this.createDataFastForm();
