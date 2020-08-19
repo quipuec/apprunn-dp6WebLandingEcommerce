@@ -331,6 +331,14 @@ input.app-input::-webkit-input-placeholder {
 	}
 }
 
+.online-payment {
+	.swiper-button-prev,
+	.swiper-button-next {
+		background-image: none;
+		cursor: pointer;
+	}
+}
+
 
 .filters-category {
 	.theme--light.v-messages {
