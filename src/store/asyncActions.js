@@ -221,7 +221,6 @@ const asyncActions = {
 		context.goTo(page);
 	},
 	LOAD_PAYMENT_TRANSACTIONS: async ({ commit }, { context, codeGateway, page }) => {
-		// console.log(page);
 		const url = 'payment-gateway';
 		const params = {
 			codeGateway,

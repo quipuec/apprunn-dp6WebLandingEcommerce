@@ -1,7 +1,7 @@
 const route = {
 	name: 'buy-summary',
 	path: '/resumen-de-mi-pedido',
-	component: () => import(/* webpackChunkName: "summaryOrder" */ '@/pages/page-summary-order'),
+	component: () => import(/* webpackChunkName: "summaryOrder" */ '@/pages/page-new-summary-order'),
 	beforeEnter: (to, from, next) => {
 		if (to.fullPath.includes('resumen-de-mi-pedido') && localStorage.getItem('ecommerce::token')) {
 			next();

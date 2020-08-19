@@ -13,6 +13,11 @@ export const transfer = {
 	description: 'Transferencia bancaria',
 };
 
+export const reciveAndPay = {
+	code: 'PPR',
+	description: 'paga tu producto al recibir',
+};
+
 export default {
 	creditCard: {
 		code: 'CDC',

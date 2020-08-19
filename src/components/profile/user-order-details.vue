@@ -464,10 +464,6 @@ export default {
 
 	.delivery-address {
 		flex: 1 1 50%;
-
-		@media (max-width: 600px) {
-			margin-right: 40px;
-		}
 	}
 
 	.absolute {
@@ -503,23 +499,44 @@ export default {
 	}
 
 	.payment-link-data {
-		align-items: center;
+		align-items: flex-start;
 		background-color: color(border);
 		border-radius: 0.5rem;
 		display: flex;
+		flex-direction: column;
 		font-size: size(small);
 		justify-content: space-between;
 		margin-bottom: 0.5rem;
 		padding: 0.5rem 1rem;
+
+		@media (min-width: 768px) {
+			align-items: center;
+			flex-direction: row;	
+		}
 	}
 
 	.link-container {
 		align-items: center;
 		display: flex;
+		flex-wrap: wrap;
+		margin-bottom: 0.5rem;
+
+		@media (min-width: 768px) {
+			margin-bottom: 0rem;
+		}
+
+		span {
+			flex-basis: 100%;
+
+			@media (min-width: 768px) {
+				flex-basis: auto;
+			}
+		}
 
 		.link-wrapper {
+			flex-basis: 70%;
 			margin: 0 0.5rem;
-			max-width: 8rem;
+			max-width: 17rem;
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
@@ -529,7 +546,7 @@ export default {
 		border: 1px solid color(dark);
 		border-radius: 3px;
 		font-family: font(regular);
-		padding: 0 0.3rem;
+		padding: 0.3rem 1.3rem;
 
 		&:hover {
 			background-color: color(dark);
