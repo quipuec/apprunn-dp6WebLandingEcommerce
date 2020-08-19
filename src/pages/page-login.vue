@@ -31,6 +31,7 @@
 		if (this.$route.params.tokenValidate) {
 			this.tokenVerification(this.$route.params.tokenValidate);
 		}
+		this.afterLoginRoute = this.getLocalStorage('route-after-login');
 	}
 
 	async function aclAuthentication(params) {
@@ -150,7 +151,7 @@
 				this.$store.dispatch('LOAD_COMMERCE_INFO', this);
 				this.getCustomerData();
 				this.cleanForm();
-				this.goTo('page-home');
+				this.redirect();
 			}
 		} catch (err) {
 			if (err.status === 500) {
@@ -158,6 +159,14 @@
 			}
 		} finally {
 			this.loading = false;
+		}
+	}
+
+	function redirect() {
+		if (this.afterLoginRoute) {
+			this.goTo(this.afterLoginRoute);
+		} else {
+			this.goTo('page-home');
 		}
 	}
 
@@ -192,6 +201,12 @@
 		}
 	}
 
+	function beforeDestroy() {
+		if (this.getLocalStorage('route-after-login')) {
+			localStorage.removeItem('route-after-login');
+		}
+	}
+
 	function validations() {
 		return {
 			model: {
@@ -208,6 +223,7 @@
 
 	function data() {
 		return {
+			afterLoginRoute: '',
 			backgroundImage: process.env.FORM_BACKGROUND,
 			headingImage: '/static/img/sign-in.svg',
 			loading: false,
@@ -222,6 +238,7 @@
 
 	export default {
 		name: 'page-login',
+		beforeDestroy,
 		components: {
 			formContainer,
 			loginForm,
@@ -244,6 +261,7 @@
 			setModel,
 			setWidth,
 			tokenVerification,
+			redirect,
 		},
 		mounted,
 		props: {
