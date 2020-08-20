@@ -53,13 +53,13 @@
 		</div>
 		<modal-login 
 			class="app-modal-login"
-			v-show="modalLogin"
+			v-show="showLoginModal"
 			@close-modal="closeModal"
 		/>
 	</header>
 </template>
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import callMenu from '@/components/header/call-menu';
 import appSearch from '@/components/shared/inputs/app-input-search';
 import buttonImage from '@/components/shared/buttons/app-button-image';
@@ -89,12 +89,12 @@ function openModalLogin() {
 	if (this.token) {
 		this.goTo('profile');
 	} else {
-		this.modalLogin = !this.modalLogin;
+		this.$store.commit('toogleLoginModal');
 	}
 }
 
 function closeModal() {
-	this.modalLogin = false;
+	this.$store.commit('toogleLoginModal');
 }
 
 function getData($event) {
@@ -175,7 +175,6 @@ function data() {
 			height: 20,
 		},
 		isSearchMobile: false,
-		modalLogin: false,
 		scrolled: false,
 		searchText: null,
 	};
@@ -201,6 +200,9 @@ export default {
 			'indeterminate',
 			'productParams',
 		]),
+		...mapState({
+			showLoginModal: state => state.openSignInModal,
+		}),
 	},
 	data,
 	destroyed,
@@ -209,11 +211,11 @@ export default {
 		closeModal,
 		getData,
 		goShopping,
+		goToFavorites,
 		openModalLogin,
 		searchProduct,
 		updateFilter,
 		toogleSearch,
-		goToFavorites,
 	},
 	mounted,
 	props: {
