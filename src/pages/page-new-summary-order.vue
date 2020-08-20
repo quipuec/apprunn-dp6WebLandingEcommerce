@@ -166,6 +166,10 @@ function wayPayment() {
  * Cuando el pago es online wayPayment es null
  */
 function isOnlinePayment() {
+	const online = isEmpty(this.wayPayment);
+	if (online) {
+		return online;
+	}
 	return this.wayPayment.code === creditCard.code;
 }
 
