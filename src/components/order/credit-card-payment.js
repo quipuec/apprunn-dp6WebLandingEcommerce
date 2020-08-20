@@ -65,7 +65,7 @@ function paymentLinkCreator(h, gateway) {
 			},
 			selectedLinks,
 		);
-		const linkTitle = h('h3', { style: { marginBottom: '0rem' } }, 'Paga más tarde');
+		const linkTitle = h('h3', { style: { marginBottom: '0rem' } }, 'Pagar con link de pago');
 		return h('div', [linkTitle, links]);
 	}
 	return null;
