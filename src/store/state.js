@@ -91,6 +91,7 @@ export default {
 	},
 	productIdToRate: null,
 	token: null,
+	topLocationModal: 0,
 	user: {
 		email: '',
 		logo: '/static/img/user.svg',

@@ -4,12 +4,14 @@
 			v-if="user.discount && user.showCustomerDiscountMessage"
 			:discount="user.discount"
 		/>
-		<app-banner-top v-if="!indeterminate" :data="bannerTop"/>
+		<app-banner-top ref="bannerTop" v-if="!indeterminate" :data="bannerTop"/>
 		<app-header
+			ref="ecoHeader"
 			:logo="logo" 
-			@change-menu="changeMenu" 
 			:menu="showMenu"
-			:user="user"/>
+			:user="user"
+			@change-menu="changeMenu" 
+		/>
 		<transition name="slide-fade">
 			<div 
 				class="v-overlay v-overlay--absolute v-overlay--active mobile-overlay" 
@@ -55,7 +57,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import appHeader from '@/components/header/app-header';
-import { isEmpty } from '@/shared/lib';
+import { isEmpty, getDeeper } from '@/shared/lib';
 import appCustomerDiscount from '@/components/header/app-customer-discount';
 
 const appMenuCategory = () => import(/* webpackChunkName: "app-Menu-Category" */'@/components/header/app-category');
@@ -70,6 +72,15 @@ function mounted() {
 			this.showMenu = false;
 		}
 	});
+	this.bannerTopAndHeaderHeight();
+}
+
+function bannerTopAndHeaderHeight() {
+	const { bannerTop, ecoHeader } = this.$refs;
+	const ecoHeaderEl = getDeeper('$el.offsetHeight')(ecoHeader) || 0;
+	const bannerTopEl = getDeeper('$el.offsetHeight')(bannerTop) || 0;
+	const h = bannerTopEl + ecoHeaderEl;
+	this.$store.dispatch('topLocationOfModal', h);
 }
 
 function existcreditsCard() {
@@ -149,6 +160,7 @@ export default {
 		sectionVisa,
 	},
 	methods: {
+		bannerTopAndHeaderHeight,
 		changeMenu,
 	},
 	mounted,

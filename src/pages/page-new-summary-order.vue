@@ -235,6 +235,7 @@ async function cancelOrder() {
 
 function beforeDestroy() {
 	this.SET_DEFAULT_VALUES();
+	this.removeProductFromLS();
 }
 
 function discount() {
@@ -277,6 +278,7 @@ export default {
 		...mapActions([
 			'SET_DEFAULT_VALUES',
 			'CANCEL_ORDER',
+			'removeProductFromLS',
 		]),
 		cancelOrder,
 		copyLink,
