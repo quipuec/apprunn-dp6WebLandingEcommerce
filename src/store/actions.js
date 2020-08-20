@@ -219,6 +219,10 @@ function loadProductsFromLocal({ commit }, context) {
 	commit('SET_ORDER_DETAILS', products);
 }
 
+function topLocationOfModal({ commit }, h) {
+	commit('SET_TOP_LOCATION_OF_MODAL', h);
+}
+
 const methods = {
 	addProductToBuyCar,
 	addService,
@@ -253,6 +257,7 @@ const methods = {
 	setRatingProductId,
 	SET_WINDOW_LOADED_TO_TRUE,
 	START_PAGINATION,
+	topLocationOfModal,
 };
 
 export default methods;

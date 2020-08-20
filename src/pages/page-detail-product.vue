@@ -1,6 +1,10 @@
 <template>
 	<div class="page-detail-product">
-		<div class="confirm-modal-container" v-if="showConfirmModal">
+		<div
+			v-if="showConfirmModal"
+			class="confirm-modal-container"
+			:style="topLocation"
+		>
 			<app-modal
 				:product="productDetails"
 				@close-modal="closeConfirmModal"
@@ -295,6 +299,10 @@ function closeConfirmModal() {
 	this.showConfirmModal = false;
 }
 
+function topLocation() {
+	return `top:${this.topModal}px`;
+}
+
 function data() {
 	return {
 		allFeatures: [],
@@ -353,7 +361,9 @@ export default {
 		]),
 		...mapState({
 			relateds: state => state.products.relateds,
+			topModal: state => state.topLocationModal,
 		}),
+		topLocation,
 	},
 	data,
 	methods: {
@@ -474,10 +484,10 @@ export default {
 		border: 1px solid color(border);
 		border-radius: 8px;
 		box-shadow: 0 2px 4px 0 rgba(213, 213, 213, 0.5);
+		margin-top: 1rem;
 		padding: 10px;
-		position: absolute;
+		position: fixed;
 		right: 37px;
-		top: 15px;
 		width: 350px;
 		z-index: 2;
 	}
