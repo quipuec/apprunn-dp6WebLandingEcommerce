@@ -72,18 +72,21 @@ export default {
 </script>
 <style lang="scss" scoped>
 .pago-plux-styles-container {
-	border: 1px solid #0679FB;
+	align-items: center;
+	display: flex;
 	font-weight: bold;
-	padding: 0.5rem 1.5rem;
-	transition-duration: 250ms;
 	max-width: fit-content;
 
 	.pago-plux-styles {
 		align-items: center;
+		border: 1px solid #0679FB;
 		background-color: white;
 		display: flex;
+		height: 50px;
 		justify-content: center;
+		padding: 0 2rem;
 		text-decoration: none;
+		transition-duration: 250ms;
 
 		&:hover {
 			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);

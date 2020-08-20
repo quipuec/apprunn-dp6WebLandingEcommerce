@@ -314,7 +314,7 @@ export default {
 		position: absolute;
 		top: 1%;
 		width: 100%;
-		z-index: 99;
+		z-index: 4;
 
 		.home-button {
 			padding: 10px;

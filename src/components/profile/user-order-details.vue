@@ -222,7 +222,7 @@ function copyLink() {
 }
 
 function isPaymentez() {
-	return this.additionalInformation.paymentGateway;
+	return getDeeper('paymentGateway')(this.additionalInformation);
 }
 
 function paymentezData() {

@@ -112,6 +112,10 @@ function setNoShippingCost({ commit }) {
 	commit('SET_SHIPPING_COST_OBJECT', shippingCost);
 }
 
+function removeProductFromLS() {
+	localStorage.removeItem('ecommerce::product-select');
+}
+
 function SET_DEFAULT_VALUES({ commit, dispatch }) {
 	localStorage.removeItem('ecommerce-order');
 	commit('SET_BILLING_DATA', null);
@@ -236,6 +240,7 @@ const methods = {
 	UPDATE_PRODUCT_FILTER,
 	UPDATE_PRODUCT_SEARCH,
 	updateProductSelect,
+	removeProductFromLS,
 	resetCounter,
 	setFlagGrouper,
 	setNoShippingCost,
