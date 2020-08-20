@@ -64,6 +64,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .leadgods-styles-container {
+	border: 1px solid #ED7033;
 	font-weight: bold;
 	transition-duration: 250ms;
 	max-width: fit-content;

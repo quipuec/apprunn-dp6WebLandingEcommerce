@@ -127,7 +127,7 @@ import deliveryWays from '@/shared/enums/waysDeliveries';
 import productInSummary from '@/components/products/product-in-summary';
 import { getDeeper, isEmpty } from '@/shared/lib';
 import helper from '@/shared/helper';
-import { deposit, reciveAndPay } from '@/shared/enums/wayPayment';
+import { creditCard, deposit, reciveAndPay } from '@/shared/enums/wayPayment';
 import ArrowLeft from '@/components/svg/ArrowLeft';
 import ArrowRight from '@/components/svg/ArrowRight';
 
@@ -166,7 +166,11 @@ function wayPayment() {
  * Cuando el pago es online wayPayment es null
  */
 function isOnlinePayment() {
-	return isEmpty(this.wayPayment);
+	const online = isEmpty(this.wayPayment);
+	if (online) {
+		return online;
+	}
+	return this.wayPayment.code === creditCard.code;
 }
 
 function isReciveAndPay() {
