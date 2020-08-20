@@ -76,7 +76,8 @@ function goToMakeOrder() {
 	if (this.token) {
 		this.goTo('buy-delivery');
 	} else {
-		this.showGenericError('Debe iniciar sesión para hacer el pedido');
+		this.setLocalData('route-after-login', 'buy-delivery');
+		this.$store.commit('toogleLoginModal');
 	}
 }
 

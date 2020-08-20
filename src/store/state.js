@@ -32,6 +32,7 @@ export default {
 		districts: [],
 		provinces: [],
 	},
+	openSignInModal: false,
 	order: {
 		bankAccountsRelated: null,
 		bill: null,

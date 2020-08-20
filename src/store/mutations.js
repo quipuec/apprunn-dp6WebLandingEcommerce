@@ -155,6 +155,10 @@ function SET_ATTRIBUTES(state, attributes) {
 	Vue.set(state, 'catAttributes', attributes);
 }
 
+function toogleLoginModal(state) {
+	Vue.set(state, 'openSignInModal', !state.openSignInModal);
+}
+
 const methods = {
 	ADD_ONE_IN_SERVICE_COUNTER,
 	clearUser,
@@ -189,6 +193,7 @@ const methods = {
 	SET_PRODUCT_SEARCH,
 	SET_RELATED_PRODUCTS,
 	RESETING_COUNTER,
+	toogleLoginModal,
 	UPDATE_FILTERS,
 	UPDATE_PRODUCT_PAGE,
 	UPDATE_PRODUCTS_SELECTED,

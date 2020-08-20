@@ -67,7 +67,7 @@ function loadingFn() {
 function insertForm() {
 	const dataFastForm = document.createElement('form');
 	const commerceCode = `commerceCode=${this.getCommerceData.code}`;
-	const purchaseNumber = `purchaseNumber=${this.getOrderId}`;
+	const purchaseNumber = `orderId=${this.getOrderId}`;
 	const redirect = 'uri=resumen-de-mi-pedido';
 	const url = `${this.baseUrl}?${commerceCode}&${purchaseNumber}&${redirect}`;
 	dataFastForm.setAttribute('action', url);
@@ -80,7 +80,7 @@ function insertForm() {
 }
 
 function baseUrl() {
-	return `${process.env.SALES_URL}/payment-transaction/checkouts/validate`;
+	return `${process.env.SALES_URL}/payment-gateway/validation`;
 }
 
 function closeModal(val) {
