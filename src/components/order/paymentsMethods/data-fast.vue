@@ -37,7 +37,7 @@ async function getTokenId() {
 		clientIp: this.clientIp,
 	};
 	const url = 'payment-transaction/dataweb/checkouts';
-	const { data: response } = await this.$httpSales.post(url, body);
+	const { data: response } = await this.$http2.post(url, body);
 	this.checkoutId = response.id;
 	this.createDataFastForm();
 }
@@ -77,7 +77,7 @@ function insertForm() {
 }
 
 function baseUrl() {
-	return `${process.env.SALES_URL}/payment-transaction/checkouts/validate`;
+	return `${process.env.SALES_URL_HTTP2}/payment-transaction/checkouts/validate`;
 }
 
 function closeModal(val) {
