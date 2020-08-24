@@ -1,5 +1,6 @@
 <template>
 	<div class="product-container">
+		<trash-component class="action" @click="deleteProduct"/>
 		<section class="grid-areas">
 			<img
 				:src="product.imagePresentation"
@@ -130,6 +131,7 @@ export default {
 		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.18);
 		margin-bottom: 10px;
 		padding: 10px;
+		position: relative;
 	}
 
 	.grid-areas {
@@ -281,6 +283,9 @@ export default {
 
 	.action {
 		margin: 5px 15px;
+		position: absolute;
+		right: 10px;
+		top: 10;
 	}
 
 	.continer-quantity-button {
