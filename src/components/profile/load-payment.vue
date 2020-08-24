@@ -6,7 +6,8 @@
 		<div v-if="voucherLoaded" class="voucher-loaded">
 			<div class="voucher-data">
 				<span class="voucher-label">Nro de Depósito: </span>
-				<span>{{getValue('number', getOrderInfo)}}</span>
+				<span>{{deposit.number}}</span>
+				<!-- <span>{{getValue('number', getOrderInfo)}}</span> -->
 			</div>
 			<img :src="deposit.urlImage" alt="foto del voucher" class="voucher-img">
 			<app-button
@@ -58,7 +59,7 @@ import UploadImage from '@/components/shared/upload-image';
 function created() {
 	if (this.getOrderInfo && this.getOrderInfo.additionalInfo) {
 		const { depositNumber, urlVoucher } = this.getOrderInfo.additionalInfo;
-		this.voucherLoaded = true;
+		this.voucherLoaded = Boolean(depositNumber);
 		this.deposit = {
 			number: depositNumber,
 			urlImage: urlVoucher,

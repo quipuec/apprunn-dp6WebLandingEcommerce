@@ -133,6 +133,13 @@ import ArrowRight from '@/components/svg/ArrowRight';
 
 const { store, house } = deliveryWays;
 
+function created() {
+	const { orderId: id } = this.$route.params;
+	if (id) {
+		this.$store.dispatch('GET_ORDER_INFO', { context: this, id });
+	}
+}
+
 function addressPickUp() {
 	const shop = 'Recojo en tienda';
 	const delivery = 'Envío a domicilio';
@@ -273,6 +280,7 @@ export default {
 		link,
 		wayPayment,
 	},
+	created,
 	data,
 	methods: {
 		...mapActions([
