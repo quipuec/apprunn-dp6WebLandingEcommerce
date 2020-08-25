@@ -150,7 +150,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .xchange-btn {
-
+	
 	button {
 		width: 210px !important;
 	}
@@ -158,6 +158,7 @@ export default {
 
 .xchange-img {
 	align-items: center;
+	border: 1px solid #3794D5;
 	display: flex;
 	height: 50px;
 	justify-content: center;
