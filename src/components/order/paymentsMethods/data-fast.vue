@@ -32,9 +32,9 @@ async function getClientIp() {
 
 async function getTokenId() {
 	const body = {
-		orderId: this.getOrderId,
-		commerceCode: this.getCommerceData.code,
 		clientIp: this.clientIp,
+		commerceCode: this.getCommerceData.code,
+		orderId: this.getOrderId,
 	};
 	const url = 'payment-transaction/dataweb/checkouts';
 	const { data: response } = await this.$http2.post(url, body);
