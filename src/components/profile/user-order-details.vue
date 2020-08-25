@@ -182,7 +182,7 @@ function updateColumns() {
 }
 
 function goTo() {
-	this.$router.back();
+	this.$router.push({ name: 'user-orders' });
 }
 
 function addPaymentInfo() {
