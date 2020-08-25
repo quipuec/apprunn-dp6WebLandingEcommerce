@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<button type="button" @click="checkout" style="padding:1rem">
+		<button type="button" @click="checkout" class="niubiz-btn" style="padding:1rem">
 			<img :src="img" alt="logo_Niubiz">
 		</button>
 		<form
@@ -81,6 +81,7 @@ async function checkout() {
 	const body = {
 		orderId: this.getOrderId,
 		commerceCode: process.env.COMMERCE_CODE,
+		clientIp: this.clientIp,
 	};
 	const url = 'payment-gateway/niubiz/checkout';
 	const { data: res } = await this.$httpSales.post(url, body);
@@ -138,6 +139,25 @@ export default {
 
 		@media (max-width: 768px) {
 			width: auto;
+		}
+	}
+
+	.niubiz-btn {
+		border: 1px solid black;
+		display: flex;
+		height: 50px;
+		justify-content: center;
+		margin: auto 1rem;
+		padding: 0 2rem;
+		transition-duration: 250ms;
+
+		&:hover {
+			box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+			transform: scale(1.05);
+		}
+		&[disabled] {
+			opacity: 0.3;
+			cursor: not-allowed;
 		}
 	}
 </style>
