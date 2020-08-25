@@ -36,7 +36,7 @@ async function getTokenId() {
 		commerceCode: this.getCommerceData.code,
 		orderId: this.getOrderId,
 	};
-	const url = 'payment-transaction/dataweb/checkouts';
+	const url = 'payment-gateway/datafast/checkout';
 	const { data: response } = await this.$http2.post(url, body);
 	this.checkoutId = response.id;
 	this.createDataFastForm();
