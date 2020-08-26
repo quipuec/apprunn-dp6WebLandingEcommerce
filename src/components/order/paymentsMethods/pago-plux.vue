@@ -26,6 +26,24 @@
 <script>
 import { mapGetters } from 'vuex';
 
+function created() {
+	this.getClientIp();
+}
+
+/**
+ * getClientIp - obtiene el ip del computador del cliente
+*/
+async function getClientIp() {
+	try {
+		({ data: this.ipAddress } = await this.$http.get('https://api.ipify.org'));
+	} catch (err) {
+		this.showNotification(
+			'Ocurrio un error con la ip de origen',
+			'error',
+		);
+	}
+}
+
 function clickOnButton() {
 	this.loading = true;
 	this.mountJQ();
@@ -113,6 +131,7 @@ async function loadPagoPluxData() {
 	const body = {
 		orderId: this.getOrderInfo.id,
 		commerceCode: process.env.COMMERCE_CODE,
+		ipAddress: this.ipAddress,
 	};
 	const url = 'payment-gateway/pagoplux/checkout';
 	const { data: res } = await this.$httpSales.post(url, body);
@@ -149,6 +168,7 @@ function data() {
 		payboxSendname: '',
 		payboxDescription: '',
 		productionEnv: null,
+		ipAddress: null,
 	};
 }
 
@@ -160,9 +180,11 @@ export default {
 			'getResponsible',
 		]),
 	},
+	created,
 	data,
 	methods: {
 		clickOnButton,
+		getClientIp,
 		informBackend,
 		loadPagoPluxData,
 		mountData,

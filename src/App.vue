@@ -897,4 +897,8 @@ input.app-input::-webkit-input-placeholder {
 		background-color: white !important;
 	}
 }
+
+.payment-sections {
+	font-family: font(medium);
+}
 </style>
