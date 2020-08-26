@@ -127,11 +127,18 @@ import deliveryWays from '@/shared/enums/waysDeliveries';
 import productInSummary from '@/components/products/product-in-summary';
 import { getDeeper, isEmpty } from '@/shared/lib';
 import helper from '@/shared/helper';
-import { deposit, reciveAndPay } from '@/shared/enums/wayPayment';
+import { creditCard, deposit, reciveAndPay } from '@/shared/enums/wayPayment';
 import ArrowLeft from '@/components/svg/ArrowLeft';
 import ArrowRight from '@/components/svg/ArrowRight';
 
 const { store, house } = deliveryWays;
+
+function created() {
+	const { orderId: id } = this.$route.params;
+	if (id) {
+		this.$store.dispatch('GET_ORDER_INFO', { context: this, id });
+	}
+}
 
 function addressPickUp() {
 	const shop = 'Recojo en tienda';
@@ -166,7 +173,11 @@ function wayPayment() {
  * Cuando el pago es online wayPayment es null
  */
 function isOnlinePayment() {
-	return isEmpty(this.wayPayment);
+	const online = isEmpty(this.wayPayment);
+	if (online) {
+		return online;
+	}
+	return this.wayPayment.code === creditCard.code;
 }
 
 function isReciveAndPay() {
@@ -231,6 +242,7 @@ async function cancelOrder() {
 
 function beforeDestroy() {
 	this.SET_DEFAULT_VALUES();
+	this.removeProductFromLS();
 }
 
 function discount() {
@@ -268,11 +280,13 @@ export default {
 		link,
 		wayPayment,
 	},
+	created,
 	data,
 	methods: {
 		...mapActions([
 			'SET_DEFAULT_VALUES',
 			'CANCEL_ORDER',
+			'removeProductFromLS',
 		]),
 		cancelOrder,
 		copyLink,

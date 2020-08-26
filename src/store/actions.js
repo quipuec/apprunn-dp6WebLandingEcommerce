@@ -87,7 +87,7 @@ function setShippingCostFromOrder({ commit }, order) {
 		price: costShipping - costShippingTaxAmount,
 
 	};
-	commit('SET_SHIPPING_COST', costShippingObject.price);
+	// commit('SET_SHIPPING_COST', costShippingObject.price);
 	commit('SET_SHIPPING_COST_OBJECT', costShippingObject);
 }
 
@@ -110,6 +110,10 @@ function setNoShippingCost({ commit }) {
 		taxAmount: 0,
 	};
 	commit('SET_SHIPPING_COST_OBJECT', shippingCost);
+}
+
+function removeProductFromLS() {
+	localStorage.removeItem('ecommerce::product-select');
 }
 
 function SET_DEFAULT_VALUES({ commit, dispatch }) {
@@ -215,6 +219,10 @@ function loadProductsFromLocal({ commit }, context) {
 	commit('SET_ORDER_DETAILS', products);
 }
 
+function topLocationOfModal({ commit }, h) {
+	commit('SET_TOP_LOCATION_OF_MODAL', h);
+}
+
 const methods = {
 	addProductToBuyCar,
 	addService,
@@ -236,6 +244,7 @@ const methods = {
 	UPDATE_PRODUCT_FILTER,
 	UPDATE_PRODUCT_SEARCH,
 	updateProductSelect,
+	removeProductFromLS,
 	resetCounter,
 	setFlagGrouper,
 	setNoShippingCost,
@@ -248,6 +257,7 @@ const methods = {
 	setRatingProductId,
 	SET_WINDOW_LOADED_TO_TRUE,
 	START_PAGINATION,
+	topLocationOfModal,
 };
 
 export default methods;

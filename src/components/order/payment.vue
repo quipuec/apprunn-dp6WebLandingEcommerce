@@ -146,6 +146,7 @@ export default {
 
 	.component-container {
 		margin-top: 15px;
+		padding: 0 1rem;
 	}
 
 	.payment-section-title {

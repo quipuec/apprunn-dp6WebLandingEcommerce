@@ -50,6 +50,7 @@ async function checkout() {
 	const body = {
 		orderId: this.getOrderInfo.id,
 		commerceCode: process.env.COMMERCE_CODE,
+		ipAddress: this.ipAddress,
 	};
 	return this.$httpSales.post(url, body);
 }
@@ -108,6 +109,10 @@ export default {
 		informBackend,
 		onCreditCardResponse,
 		openPaymentezModal,
+	},
+	props: {
+		type: String,
+		required: true,
 	},
 };
 </script>

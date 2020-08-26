@@ -182,7 +182,7 @@ function updateColumns() {
 }
 
 function goTo() {
-	this.$router.back();
+	this.$router.push({ name: 'user-orders' });
 }
 
 function addPaymentInfo() {
@@ -222,7 +222,7 @@ function copyLink() {
 }
 
 function isPaymentez() {
-	return this.additionalInformation.paymentGateway;
+	return getDeeper('paymentGateway')(this.additionalInformation);
 }
 
 function paymentezData() {

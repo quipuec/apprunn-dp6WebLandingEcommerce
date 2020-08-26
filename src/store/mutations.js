@@ -159,6 +159,10 @@ function toogleLoginModal(state) {
 	Vue.set(state, 'openSignInModal', !state.openSignInModal);
 }
 
+function SET_TOP_LOCATION_OF_MODAL(state, h) {
+	Vue.set(state, 'topLocationModal', h);
+}
+
 const methods = {
 	ADD_ONE_IN_SERVICE_COUNTER,
 	clearUser,
@@ -192,6 +196,7 @@ const methods = {
 	SET_PRODUCT_ID_TO_RATE,
 	SET_PRODUCT_SEARCH,
 	SET_RELATED_PRODUCTS,
+	SET_TOP_LOCATION_OF_MODAL,
 	RESETING_COUNTER,
 	toogleLoginModal,
 	UPDATE_FILTERS,

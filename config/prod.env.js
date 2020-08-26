@@ -36,4 +36,5 @@ module.exports = {
 	URL_VALID_DOCUMENT_NUMBER: `'${process.env.URL_VALID_DOCUMENT_NUMBER}'`,
 	PAYMENTEZ_CLIENT: `'${process.env.PAYMENTEZ_CLIENT}'`,
 	PAYMENTEZ_KEY: `'${process.env.PAYMENTEZ_KEY}'`,
+	SALES_URL_HTTP2: `'${process.env.SALES_URL_HTTP2}'`,
 };
