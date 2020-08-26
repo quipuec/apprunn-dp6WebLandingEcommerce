@@ -3,9 +3,9 @@
 		<button
 			class="data-fast-btn"
 			type="button"
-			@click="getTokenId"
+			@click="checkout"
 		>
-		<img src="https://quipu-acl.s3.amazonaws.com/icons/logo-datafast.png" alt="logo data fast">
+		<img :src="img" alt="logo_data_fast">
 		</button>
 		<modal v-model="showModal" max-width="420px" @input="closeModal">
 			<div ref="data-fast" class="modal-data-fast" v-if="showModal">
@@ -18,7 +18,7 @@
 import { mapGetters } from 'vuex';
 import modal from '@/components/shared/modal/modal-component';
 
-function mounted() {
+function created() {
 	this.getClientIp();
 }
 
@@ -26,18 +26,21 @@ async function getClientIp() {
 	try {
 		({ data: this.clientIp } = await this.$http.get('https://api.ipify.org'));
 	} catch (err) {
-		this.showGenericError();
+		this.showNotification(
+			'Ocurrio un error con la ip de origen',
+			'error',
+		);
 	}
 }
 
-async function getTokenId() {
+async function checkout() {
 	const body = {
-		clientIp: this.clientIp,
-		commerceCode: this.getCommerceData.code,
 		orderId: this.getOrderId,
+		commerceCode: this.getCommerceData.code,
+		ipAddress: this.clientIp,
 	};
 	const url = 'payment-gateway/datafast/checkout';
-	const { data: response } = await this.$http2.post(url, body);
+	const { data: response } = await this.$httpSales.post(url, body);
 	this.checkoutId = response.id;
 	this.createDataFastForm();
 }
@@ -64,7 +67,7 @@ function loadingFn() {
 function insertForm() {
 	const dataFastForm = document.createElement('form');
 	const commerceCode = `commerceCode=${this.getCommerceData.code}`;
-	const purchaseNumber = `purchaseNumber=${this.getOrderId}`;
+	const purchaseNumber = `orderId=${this.getOrderId}`;
 	const redirect = 'uri=resumen-de-mi-pedido';
 	const url = `${this.baseUrl}?${commerceCode}&${purchaseNumber}&${redirect}`;
 	dataFastForm.setAttribute('action', url);
@@ -77,7 +80,7 @@ function insertForm() {
 }
 
 function baseUrl() {
-	return `${process.env.SALES_URL_HTTP2}/payment-transaction/checkouts/validate`;
+	return `${process.env.SALES_URL}/payment-gateway/validation`;
 }
 
 function closeModal(val) {
@@ -108,15 +111,25 @@ export default {
 		]),
 		baseUrl,
 	},
+	created,
 	data,
-	mounted,
 	methods: {
+		checkout,
 		closeModal,
 		createDataFastForm,
 		getClientIp,
-		getTokenId,
 		insertForm,
 		loadingFn,
+	},
+	props: {
+		img: {
+			type: String,
+			required: true,
+		},
+		// ipAddress: {
+		// 	type: String,
+		// 	required: true,
+		// },
 	},
 };
 </script>
