@@ -13,23 +13,12 @@ const Xchange = () => import('@/components/order/paymentsMethods/xchange');
 const LeadGods = () => import('@/components/order/paymentsMethods/leadgods');
 const PlaceToPay = () => import('@/components/order/paymentsMethods/place-to-pay');
 
-function created() {
-	this.getClientIp();
-}
-
-async function getClientIp() {
-	try {
-		({ data: this.clientIp } = await this.$http.get('https://api.ipify.org'));
-	} catch (err) {
-		this.showNotification(
-			'Ocurrio un error con la ip de origen',
-			'error',
-		);
-	}
-}
-
-function paymentLinkCreator(h, gateway) {
-	if (this.getOrderInfo && this.clientIp) {
+/**
+ * @param {object-function} h render function
+ * @param {array} gateway - arreglo con enlaces de pago configurados para el comercio
+*/
+function paymentLinkCreator(h, gateway, ipAddress) {
+	if (this.getOrderInfo) {
 		const orderId = this.getOrderInfo.id;
 		const redirectUri = 'perfil/detalle-orden';
 		const linkOptions = {
@@ -47,7 +36,7 @@ function paymentLinkCreator(h, gateway) {
 						categoryCode,
 						code,
 						imgLink: urlImage,
-						ipAddress: this.clientIp,
+						ipAddress,
 						orderId,
 						uri: redirectUri,
 					},
@@ -70,7 +59,12 @@ function paymentLinkCreator(h, gateway) {
 	}
 	return null;
 }
-const paymentButtonCreator = (h, gateway) => {
+
+/**
+ * @param {object-function} h render function
+ * @param {array} gateway - arreglo con botones de pago configurados para el comercio
+ */
+const paymentButtonCreator = (h, gateway, ipAddress) => {
 	const buttonOptions = {
 		[niubiz]: Niubiz,
 		[paymentez]: Paymentez,
@@ -81,15 +75,16 @@ const paymentButtonCreator = (h, gateway) => {
 	let selectedButtons = [];
 	gateway.forEach((t) => {
 		const { code, urlImage } = t;
-		const paymentButton = h(
+		const paymentBtns = h(
 			buttonOptions[code],
 			{
 				props: {
 					img: urlImage,
+					ipAddress,
 				},
 			},
 		);
-		selectedButtons = selectedButtons.concat(paymentButton);
+		selectedButtons = selectedButtons.concat(paymentBtns);
 	});
 	const btns = h(
 		'div',
@@ -100,7 +95,7 @@ const paymentButtonCreator = (h, gateway) => {
 		},
 		selectedButtons,
 	);
-	const btnTitle = h('h3', { style: { marginBottom: '1rem' } }, 'Paga ahora');
+	const btnTitle = h('h3', { class: ['payment-sections'], style: { marginBottom: '1rem' } }, 'Paga ahora');
 	return h(
 		'div',
 		{
@@ -113,26 +108,21 @@ const paymentButtonCreator = (h, gateway) => {
 	);
 };
 
-function data() {
-	return {
-		clientIp: null,
-	};
-}
-
 export default {
 	computed: {
 		...mapGetters([
 			'getOrderInfo',
 		]),
 	},
-	created,
-	data,
 	methods: {
-		getClientIp,
 		paymentButtonCreator,
 		paymentLinkCreator,
 	},
 	props: {
+		ip: {
+			required: true,
+			type: String,
+		},
 		paymentsTypes: {
 			required: true,
 			type: Array,
@@ -145,11 +135,13 @@ export default {
 		const paymentsMethos = [];
 		const link = this.paymentsTypes.find(p => p.code === LINK);
 		if (link) {
-			paymentsMethos.push(this.paymentLinkCreator(h, link.gateway));
+			const l = this.paymentLinkCreator(h, link.gateway, this.ip);
+			paymentsMethos.push(l);
 		}
 		const button = this.paymentsTypes.find(p => p.code === BUTTON);
 		if (button) {
-			paymentsMethos.push(this.paymentButtonCreator(h, button.gateway));
+			const b = this.paymentButtonCreator(h, button.gateway, this.ip);
+			paymentsMethos.push(b);
 		}
 		return h('div', paymentsMethos);
 	},

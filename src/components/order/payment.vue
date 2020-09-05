@@ -20,6 +20,7 @@
 				/>
 			</div>
 			<component class="component-container"
+				:ip="ip"
 				:is="paymentMethodSelectedComponent"
 				:paymentsTypes="gatewayConfiguration"
 			></component>
@@ -37,12 +38,27 @@ import VisaByCountry from '@/components/order/credit-card-payment';
 import { creditCard, transfer } from '@/shared/enums/wayPayment';
 
 function created() {
+	this.getClientIp();
 	if (isEmpty(this.getWaysPayments)) {
 		this.$store.dispatch('SET_WAY_PAYMENT', this);
 		this.$store.dispatch('SET_BANK_ACCOUNTS', this);
 	} else {
 		const selectThisWayPayment = this.getCreditCard || this.getWaysPayments[0];
 		this.onSelect(selectThisWayPayment);
+	}
+}
+
+/**
+ * getClientIp - obtiene el ip del computador del cliente
+*/
+async function getClientIp() {
+	try {
+		({ data: this.ip } = await this.$http.get('https://api.ipify.org'));
+	} catch (err) {
+		this.showNotification(
+			'Ocurrio un error con la ip de origen',
+			'error',
+		);
 	}
 }
 
@@ -85,6 +101,7 @@ function data() {
 		logo: {
 			section: '/static/icons/payment.svg',
 		},
+		ip: '',
 		paymentMethodSelected: '',
 	};
 }
@@ -120,6 +137,7 @@ export default {
 	created,
 	data,
 	methods: {
+		getClientIp,
 		onSelect,
 	},
 	watch: {
@@ -146,6 +164,7 @@ export default {
 
 	.component-container {
 		margin-top: 15px;
+		padding: 0 1rem;
 	}
 
 	.payment-section-title {

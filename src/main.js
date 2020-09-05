@@ -66,6 +66,11 @@ Vue.config.productionTip = false;
 Vue.mixin(globalMixin);
 
 async function created() {
+	this.$http2.interceptors.request.use(this.httpRequestInterceptor);
+	this.$http2.interceptors.response.use(
+		this.httpResponseSuccessInterceptor,
+		this.httpResponseInterceptor,
+	);
 	this.$httpProducts.interceptors.request.use(this.httpRequestInterceptor);
 	this.$httpProducts.interceptors.response.use(
 		this.httpResponseSuccessInterceptor,

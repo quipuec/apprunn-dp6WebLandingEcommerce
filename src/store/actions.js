@@ -87,7 +87,7 @@ function setShippingCostFromOrder({ commit }, order) {
 		price: costShipping - costShippingTaxAmount,
 
 	};
-	commit('SET_SHIPPING_COST', costShippingObject.price);
+	// commit('SET_SHIPPING_COST', costShippingObject.price);
 	commit('SET_SHIPPING_COST_OBJECT', costShippingObject);
 }
 

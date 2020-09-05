@@ -5,7 +5,7 @@
 		</button>
 		<form
 			id="visa-payment"
-			:action="`${apiSales}/payment-transaction/gateway-response?purchaseNumber=${getOrderId}`"
+			:action="`${apiSales}/payment-gateway/validation?orderId=${getOrderId}`"
 			method='post'
 		></form>
 	</div>
@@ -13,17 +13,14 @@
 <script>
 import { mapGetters } from 'vuex';
 
-function created() {
-	this.getClientIp();
-}
-
 function createScript() {
 	if (process.browser && this.merchantId) {
 		const visaForm = document.createElement('script');
 		const dataSessionToken = this.sessionKey;
 		const dataMerchantId = this.merchantId;
 		const dataAmount = this.orderTotal;
-		const dataCurrency = this.currentCurrency || 'PEN';
+		const dataCurrency = 'PEN';
+		// const dataCurrency = this.currentCurrency || 'PEN';
 		const purchaseNumber = this.getOrderId;
 		const logo = this.companyLogo;
 		const name = process.env.COMPANY_LOGIN_TITLE;
@@ -41,35 +38,12 @@ function createScript() {
 		visaForm.setAttribute('currency', dataCurrency);
 		visaForm.setAttribute('data-expirationminutes', 20);
 		visaForm.setAttribute('data-timeouturl', 'timeout.html');
-		document.getElementById('visa-payment').appendChild(visaForm);
-	}
-}
-
-async function createVisaSession() {
-	this.loading = true;
-	const body = {
-		orderId: this.getOrderId,
-		commerceCode: process.env.COMMERCE_CODE,
-		channel: 'web',
-		clientIp: this.clientIp,
-	};
-	try {
-		const { data: response } = await this.$httpSales.post('payment-transaction/visa/token',
-			body,
-		);
-		({ sessionKey: this.sessionKey, expirationTime: this.expirationTime } = response);
-		this.createScript();
-	} catch (err) {
-		this.showGenericError();
-	}
-	this.loading = false;
-}
-
-async function getClientIp() {
-	try {
-		({ data: this.clientIp } = await this.$http.get('https://api.ipify.org'));
-	} catch (err) {
-		this.showGenericError();
+		const Visa = document.getElementById('visa-payment').appendChild(visaForm);
+		Visa.onload = () => {
+			const visaBtn = document.querySelector('.modal-opener');
+			visaBtn.style.visibility = 'hidden';
+			visaBtn.click();
+		};
 	}
 }
 
@@ -81,18 +55,18 @@ async function checkout() {
 	const body = {
 		orderId: this.getOrderId,
 		commerceCode: process.env.COMMERCE_CODE,
-		clientIp: this.clientIp,
+		ipAddress: this.ipAddress,
 	};
 	const url = 'payment-gateway/niubiz/checkout';
 	const { data: res } = await this.$httpSales.post(url, body);
 	this.merchantId = res.merchantId;
-	this.createVisaSession();
+	this.sessionKey = res.sessionKey;
+	this.createScript();
 }
 
 function data() {
 	return {
 		apiSales: process.env.SALES_URL,
-		clientIp: null,
 		companyLogo: process.env.COMPANY_LOGO,
 		expirationTime: null,
 		loading: false,
@@ -103,7 +77,7 @@ function data() {
 }
 
 export default {
-	name: 'visa-payment',
+	name: 'niubiz',
 	computed: {
 		...mapGetters([
 			'getOrderId',
@@ -113,18 +87,19 @@ export default {
 		]),
 		orderTotal,
 	},
-	created,
 	data,
 	methods: {
 		checkout,
 		createScript,
-		createVisaSession,
-		getClientIp,
 	},
 	props: {
 		img: {
-			type: String,
 			required: true,
+			type: String,
+		},
+		ipAddress: {
+			required: true,
+			type: String,
 		},
 	},
 };
