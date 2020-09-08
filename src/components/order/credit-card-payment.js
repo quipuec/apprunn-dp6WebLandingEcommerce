@@ -17,6 +17,9 @@ function created() {
 	this.getClientIp();
 }
 
+/**
+ * getClientIp - obtiene el ip del computador del cliente
+*/
 async function getClientIp() {
 	try {
 		({ data: this.clientIp } = await this.$http.get('https://api.ipify.org'));
@@ -28,8 +31,12 @@ async function getClientIp() {
 	}
 }
 
+/**
+ * @param {object-function} h render function
+ * @param {array} gateway - arreglo con enlaces de pago configurados para el comercio
+*/
 function paymentLinkCreator(h, gateway) {
-	if (this.getOrderInfo && this.clientIp) {
+	if (this.getOrderInfo) {
 		const orderId = this.getOrderInfo.id;
 		const redirectUri = 'perfil/detalle-orden';
 		const linkOptions = {
@@ -65,11 +72,16 @@ function paymentLinkCreator(h, gateway) {
 			},
 			selectedLinks,
 		);
-		const linkTitle = h('h3', { style: { marginBottom: '0rem' } }, 'Paga más tarde');
+		const linkTitle = h('h3', { style: { marginBottom: '0rem' } }, 'Pagar con link de pago');
 		return h('div', [linkTitle, links]);
 	}
 	return null;
 }
+
+/**
+ * @param {object-function} h render function
+ * @param {array} gateway - arreglo con botones de pago configurados para el comercio
+ */
 const paymentButtonCreator = (h, gateway) => {
 	const buttonOptions = {
 		[visa]: VisaPeru,
@@ -80,8 +92,17 @@ const paymentButtonCreator = (h, gateway) => {
 	};
 	let selectedButtons = [];
 	gateway.forEach((t) => {
-		const { code } = t;
-		selectedButtons = selectedButtons.concat(h(buttonOptions[code]));
+		const { code, urlImage } = t;
+		const paymentBtns = h(
+			buttonOptions[code],
+			{
+				props: {
+					img: urlImage,
+					ipAddress: this.clientIp,
+				},
+			},
+		);
+		selectedButtons = selectedButtons.concat(paymentBtns);
 	});
 	const btns = h(
 		'div',
@@ -92,7 +113,7 @@ const paymentButtonCreator = (h, gateway) => {
 		},
 		selectedButtons,
 	);
-	const btnTitle = h('h3', { style: { marginBottom: '1rem' } }, 'Paga ahora');
+	const btnTitle = h('h3', { class: ['payment-sections'], style: { marginBottom: '1rem' } }, 'Paga ahora');
 	return h(
 		'div',
 		{
@@ -105,6 +126,10 @@ const paymentButtonCreator = (h, gateway) => {
 	);
 };
 
+function ipAddress() {
+	return this.clientIp;
+}
+
 function data() {
 	return {
 		clientIp: null,
@@ -116,6 +141,7 @@ export default {
 		...mapGetters([
 			'getOrderInfo',
 		]),
+		ipAddress,
 	},
 	created,
 	data,
@@ -137,11 +163,13 @@ export default {
 		const paymentsMethos = [];
 		const link = this.paymentsTypes.find(p => p.code === LINK);
 		if (link) {
-			paymentsMethos.push(this.paymentLinkCreator(h, link.gateway));
+			const l = this.paymentLinkCreator(h, link.gateway);
+			paymentsMethos.push(l);
 		}
 		const button = this.paymentsTypes.find(p => p.code === BUTTON);
 		if (button) {
-			paymentsMethos.push(this.paymentButtonCreator(h, button.gateway));
+			const b = this.paymentButtonCreator(h, button.gateway);
+			paymentsMethos.push(b);
 		}
 		return h('div', paymentsMethos);
 	},

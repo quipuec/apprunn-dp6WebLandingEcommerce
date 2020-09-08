@@ -236,11 +236,6 @@ function buildBody(provinceId) {
 	};
 }
 
-function beforeDestroy() {
-	this.$store.commit('SET_DELIVERY_PLACE', null);
-	this.$store.dispatch('setNoShippingCost');
-}
-
 function atStore() {
 	const deliveryType = getDeeper('deliveryType')(this.getCommerceData);
 	if (deliveryType) {
@@ -298,7 +293,6 @@ function data() {
 
 export default {
 	name: 'delivery',
-	beforeDestroy,
 	components: {
 		addressComponent,
 		appButtonOrder,

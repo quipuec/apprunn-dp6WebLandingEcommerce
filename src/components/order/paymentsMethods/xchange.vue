@@ -92,6 +92,7 @@ async function loadXchangeData() {
 	const body = {
 		orderId: this.getOrderInfo.id,
 		commerceCode: process.env.COMMERCE_CODE,
+		ipAddress: this.ipAddress,
 	};
 	const url = 'payment-gateway/xchange/checkout';
 	const { data: res } = await this.$httpSales.post(url, body);
@@ -146,11 +147,17 @@ export default {
 		xchangeHandlerSuccess,
 	},
 	mounted,
+	props: {
+		ipAddress: {
+			type: String,
+			required: true,
+		},
+	},
 };
 </script>
 <style lang="scss" scoped>
 .xchange-btn {
-
+	
 	button {
 		width: 210px !important;
 	}
@@ -158,6 +165,7 @@ export default {
 
 .xchange-img {
 	align-items: center;
+	border: 1px solid #3794D5;
 	display: flex;
 	height: 50px;
 	justify-content: center;

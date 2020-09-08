@@ -57,7 +57,7 @@
 							]"
 							@click="goTo('address')"
 						>Direcciones</button></li>
-					<li class="user-action" v-if="isOnlinePayment">
+					<li class="user-action" v-if="isPlaceToPay">
 						<button
 							:style="borderPrimaryOnline"
 							:class="[
@@ -84,6 +84,8 @@ import { mapGetters } from 'vuex';
 import leftComponent from '@/components/shared/icons/left-component';
 import { creditCard } from '@/shared/enums/wayPayment';
 import { isEmpty } from '@/shared/lib';
+import { placetopay } from '@/shared/enums/gatewayCodes';
+import { LINK } from '@/shared/enums/paymentStrategy';
 
 function goTo(name) {
 	this.$router.push({ name });
@@ -134,9 +136,15 @@ function getUserAvatar() {
 	return this.user.image || this.user.logo || this.user.urlImage || process.env.DEFAULT_AVATAR;
 }
 
-function isOnlinePayment() {
+function isPlaceToPay() {
 	const isCreditCard = this.getWaypaymentsByCommerce.find(w => w.code === creditCard.code);
-	return !isEmpty(isCreditCard);
+	if (isCreditCard) {
+		const { gatewayConfiguration } = isCreditCard;
+		const paymentLink = gatewayConfiguration.find(ga => ga.code === LINK);
+		const ptp = paymentLink && paymentLink.gateway.find(g => g.code === placetopay);
+		return !isEmpty(ptp);
+	}
+	return false;
 }
 
 export default {
@@ -157,7 +165,7 @@ export default {
 		borderPrimaryUserData,
 		borderPrimaryUserOrder,
 		getUserAvatar,
-		isOnlinePayment,
+		isPlaceToPay,
 	},
 	methods: {
 		goTo,
@@ -306,7 +314,7 @@ export default {
 		position: absolute;
 		top: 1%;
 		width: 100%;
-		z-index: 99;
+		z-index: 4;
 
 		.home-button {
 			padding: 10px;

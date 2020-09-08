@@ -1,6 +1,7 @@
 <template>
 	<div>
-		<button @click="openPagoPlux" type="button" class="pago-plux-img" :disabled="loading">
+		<button @click="clickOnButton" type="button" class="pago-plux-img" :disabled="loading">
+		<!-- <button @click="openPagoPlux" type="button" class="pago-plux-img" :disabled="loading"> -->
 			<img src="https://quipu-acl.s3.amazonaws.com/icons/logo-pago-plux.png" alt="logo pagoplux">
 		</button>
 		<div id="ButtonPaybox" ref="pagopluxbtn" style="visibility:hidden"></div>
@@ -25,18 +26,32 @@
 <script>
 import { mapGetters } from 'vuex';
 
-async function mounted() {
-	await Promise.all([
-		this.loadPagoPluxData(),
-		this.mountData(),
-		this.mountJQ(),
-		this.mountPagoPlux(),
-	]);
-	const loadEvent = new Event('load');
-	window.dispatchEvent(loadEvent);
-	setTimeout(() => {
-		this.loading = false;
-	}, 1500);
+function created() {
+	this.getClientIp();
+}
+
+/**
+ * getClientIp - obtiene el ip del computador del cliente
+*/
+async function getClientIp() {
+	try {
+		({ data: this.ipAddress } = await this.$http.get('https://api.ipify.org'));
+	} catch (err) {
+		this.showNotification(
+			'Ocurrio un error con la ip de origen',
+			'error',
+		);
+	}
+}
+
+function clickOnButton() {
+	this.loading = true;
+	this.mountJQ();
+	this.loadPagoPluxData()
+		.then(() => {
+			this.mountData();
+			this.mountPagoPlux();
+		});
 	window.onAuthorize = (response) => {
 		this.informBackend(response);
 		if (response.status === 'succeeded') {
@@ -69,12 +84,20 @@ function openPagoPlux() {
 }
 
 function mountPagoPlux() {
-	// const testENV = 'https://sandbox-paybox.pagoplux.com/paybox/index.js';
+	const that = this;
+	const testENV = 'https://sandbox-paybox.pagoplux.com/paybox/index.js';
 	const prodENV = 'https://paybox.pagoplux.com/paybox/index.js';
-	const url = prodENV;
-	// const url = this.productionEnv ? prodENV : testENV;
+	const url = this.productionEnv ? prodENV : testENV;
 	const PagoPluxScript = document.createElement('script');
 	PagoPluxScript.setAttribute('src', url);
+	PagoPluxScript.onload = () => {
+		const loadEvent = new Event('load');
+		window.dispatchEvent(loadEvent);
+		setTimeout(() => {
+			that.openPagoPlux();
+			that.loading = false;
+		}, 1600);
+	};
 	const body = document.querySelector('body');
 	body.appendChild(PagoPluxScript);
 }
@@ -97,7 +120,7 @@ function mountData() {
 		PayboxBase0: "#PayboxBase0",
 		PayboxBase12: "#PayboxBase12",
 		PayboxDescription: "#PayboxDescriptionPlux",
-		PayboxProduction: true,
+		PayboxProduction: ${this.productionEnv},
 		PayboxLanguage: "es",
 	}`;
 	const body = document.querySelector('body');
@@ -108,6 +131,7 @@ async function loadPagoPluxData() {
 	const body = {
 		orderId: this.getOrderInfo.id,
 		commerceCode: process.env.COMMERCE_CODE,
+		ipAddress: this.ipAddress,
 	};
 	const url = 'payment-gateway/pagoplux/checkout';
 	const { data: res } = await this.$httpSales.post(url, body);
@@ -135,7 +159,7 @@ function pagoPluxHandlerError() {
 function data() {
 	return {
 		hash: null,
-		loading: true,
+		loading: false,
 		payboxRemail: '',
 		payboxRename: '',
 		payboxBase0: '',
@@ -144,6 +168,7 @@ function data() {
 		payboxSendname: '',
 		payboxDescription: '',
 		productionEnv: null,
+		ipAddress: null,
 	};
 }
 
@@ -155,8 +180,11 @@ export default {
 			'getResponsible',
 		]),
 	},
+	created,
 	data,
 	methods: {
+		clickOnButton,
+		getClientIp,
 		informBackend,
 		loadPagoPluxData,
 		mountData,
@@ -166,7 +194,6 @@ export default {
 		pagoPluxHandlerError,
 		pagoPluxHandlerSuccess,
 	},
-	mounted,
 };
 </script>
 <style lang="scss" scoped>

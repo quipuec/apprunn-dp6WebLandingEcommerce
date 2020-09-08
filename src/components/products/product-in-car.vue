@@ -1,5 +1,6 @@
 <template>
 	<div class="product-container">
+		<trash-component class="action" @click="deleteProduct"/>
 		<section class="grid-areas">
 			<img
 				:src="product.imagePresentation"
@@ -39,20 +40,20 @@
 				<p
 					:style="`color: ${globalColors.primary};`"
 					class="product-title">Total</p>
-				<p class="product-price">{{getCurrencySymbol}} {{product.total | currencyFormat}}</p>
+				<p class="product-total">{{getCurrencySymbol}} {{product.total | currencyFormat}}</p>
 			</div>
-			<div class="comments">
+			<!-- <div class="comments">
 				<text-area
 					v-if="show"
 					label="Comentarios"
 					v-model="comments"
 				/>
-			</div>
+			</div> -->
 		</section>
-		<section class="actions">
+		<!-- <section class="actions">
 			<comments-component class="action" @click="showComments"/>
 			<trash-component class="action" @click="deleteProduct"/>
-		</section>
+		</section> -->
 	</div>
 </template>
 <script>
@@ -129,29 +130,34 @@ export default {
 		border-radius: 20px;
 		box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.18);
 		margin-bottom: 10px;
-		padding: 20px 10px;
+		padding: 10px;
+		position: relative;
 	}
 
 	.grid-areas {
-		border-bottom: 1px solid color(border);
 		display: grid;
-		grid-gap: 5px;
 		grid-template-areas:
-			"image image image image"
-			"description description description description"
+			"image image description description"
 			"price quantity quantity total";
 		grid-template-columns: repeat(4, 1fr);
-		grid-template-rows: 1fr 0.2fr 0.2fr;
-		margin-bottom: 10px;
+		grid-template-rows: 1fr 0.2fr;
 		padding-bottom: 8px;
 
-		@media (min-width: 768px) {
+		@media (min-width: 800px) {
 			grid-gap: 10px;
-			grid-template-columns: 1fr 1fr 0.5fr 1fr 0.7fr;
+			grid-template-columns: 0.5fr 0.5fr 1fr 0.5fr;
+			grid-template-areas:
+				"image description description description "
+				"image price quantity total";
+			margin-bottom: 0px;
+		}
+
+		@media (min-width: 925px) {
+			grid-gap: 10px;
+			grid-template-columns: 0.5fr 0.5fr 0.5fr 1fr 0.5fr;
 			grid-template-areas:
 				"image image description description description "
-				"image image price quantity total"
-				"comments comments comments comments comments";
+				"image image price quantity total";
 			margin-bottom: 0px;
 		}
 	}
@@ -162,7 +168,7 @@ export default {
 		margin-top: 20px;
 		margin: 0;
 
-		@media (min-width: 768px) {
+		@media (min-width: 800px) {
 			display: block;
 		}
 	}
@@ -175,18 +181,20 @@ export default {
 		grid-area: description;
 		place-self: flex-start;
 		margin-top: 15px;
-		padding-left: 15px;
+		text-transform: lowercase;
 		width: 100%;
-		@media (min-width: 768px) {
-			padding-left: 0;
+		@media (min-width: 800px) {
+			margin-top: 0;
+			padding-left: 20px;
 		}
 	}
 
 	.price {
 		grid-area: price;
 		padding-left: 15px;
-		@media (min-width: 768px) {
-			padding-left: 0px;
+		@media (min-width: 800px) {
+			margin-top: 0;
+			padding-left: 20px;
 		}
 	}
 
@@ -197,7 +205,7 @@ export default {
 		grid-area: quantity;
 		place-self: stretch;
 
-		@media (min-width: 768px) {
+		@media (min-width: 800px) {
 			justify-self: center;
 		}
 	}
@@ -207,18 +215,20 @@ export default {
 		place-self: flex-end;
 		padding-right: 10px;
 
-		@media (min-width: 768px) {
+		@media (min-width: 800px) {
 			place-self: stretch;
 		}
 	}
 
 	.product-img {
-		height: 136px;
+		height: 6rem;
 		object-fit: contain;
-		width: 100%;
+		margin: 0 auto;
+		width: 6rem;
 
-		@media (min-width: 768px) {
-			height: 100%;
+		@media (min-width: 800px) {
+			height: 10rem;
+			width: 10rem;
 		}
 	}
 
@@ -233,6 +243,7 @@ export default {
 		font-size: size(large);
 		font-weight: bold;
 		margin-bottom: 5px;
+		padding-right: 2rem;
 		text-align: left;
 		width: inherit;
 	}
@@ -244,8 +255,15 @@ export default {
 
 	.product-price {
 		color: color(dark);
-		font-family: font(heavy);
+		font-family: font(bold);
 		font-size: size(medium);
+		white-space: nowrap;
+	}
+
+	.product-total {
+		color: color(dark);
+		font-family: font(bold);
+		font-size: size(sbig);
 		white-space: nowrap;
 	}
 
@@ -266,6 +284,9 @@ export default {
 
 	.action {
 		margin: 5px 15px;
+		position: absolute;
+		right: 10px;
+		top: 10;
 	}
 
 	.continer-quantity-button {
