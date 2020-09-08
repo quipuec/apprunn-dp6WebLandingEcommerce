@@ -26,7 +26,7 @@
 			<div class="order-payment" v-if="!rating">
 				<div class="order-payment-wrapper">
 					<div class="mb-2 delivery-address">
-						<div v-if="pendingPayment && isPaymentLink" class="payment-link-data">
+						<div v-if="isPaymentLink" class="payment-link-data">
 							<div class="link-container">
 								<span>Paga ahora en {{gatewayName}}: </span>
 								<div class="link-wrapper">
@@ -44,7 +44,7 @@
 								ID de transacción: <span class="label">{{transactionPaymentLinkId}}</span>
 							</div>
 						</div>
-						<div v-if="pendingPayment && isPaymentez && !isPaymentLink" class="payment-link-data">
+						<div v-if="isPaymentez && !isPaymentLink" class="payment-link-data">
 							<div class="link-container">
 								Id transacción: <span class="label">{{paymentezData.id}}</span>
 							</div>
