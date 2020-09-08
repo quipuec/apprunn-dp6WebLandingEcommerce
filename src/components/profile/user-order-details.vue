@@ -62,6 +62,13 @@
 								<span class="order-info-data">{{getValue('warehouseName', getOrderInfo)}}</span>
 							</span>
 						</section>
+						<div v-if="refund.exist" class="refund-container">
+							<h3 class="refund-text">{{refund.text}}</h3>
+							<div>
+								<h4>Correo: {{getCommerceData.email}}.</h4>
+								<h4 v-if="getCommerceData.phone">Teléfono: {{getCommerceData.phone}}</h4>
+							</div>
+						</div>
 					</div>
 					<app-button
 						v-if="!flagAddVoucher && isDeposit"
@@ -168,9 +175,9 @@ function gatewayName() {
 	return options[code];
 }
 
-function pendingPayment() {
-	return this.getValue('paymentStateName', this.getOrderInfo) === 'Pendiente';
-}
+// function pendingPayment() {
+// 	return this.getValue('paymentStateName', this.getOrderInfo) === 'Pendiente';
+// }
 
 function updateColumns() {
 	this.columns = this.columns.reduce((list, col) => {
@@ -235,6 +242,17 @@ function paymentezData() {
 	return false;
 }
 
+function refund() {
+	const exist = getDeeper('gatewayAuthorizationResponse.refund.errors')(this.getOrderInfo);
+	const errors = {
+		VALID_TIME_AUTOMATIC_REFUND_EXCEEDED: 'Comuníquese con el administrador del ecommerce para su reembolso',
+	};
+	return {
+		exist,
+		text: errors[exist],
+	};
+}
+
 function data() {
 	return {
 		additionalInformation: null,
@@ -265,6 +283,7 @@ export default {
 	computed: {
 		...mapGetters([
 			'flagAddVoucher',
+			'getCommerceData',
 			'getOrderInfo',
 		]),
 		details,
@@ -276,7 +295,8 @@ export default {
 		orderStatusIsGiven,
 		paymentezData,
 		paymentLink,
-		pendingPayment,
+		// pendingPayment,
+		refund,
 		transactionPaymentLinkId,
 	},
 	created,
@@ -554,4 +574,21 @@ export default {
 		}
 	}
 
+	.refund-container {
+		background-color: color(errorLight);
+		border: 1px solid color(error);
+		border-radius: 5px;
+		color: color(error);
+		font-family: font(regular);
+		font-size: size(small);
+		margin: 1rem auto 0;
+		padding: 0.5rem 2rem;
+		width: fit-content;
+
+		div {
+			display: flex;
+			justify-content: space-evenly;
+			opacity: 0.8;
+		}
+	}
 </style>
