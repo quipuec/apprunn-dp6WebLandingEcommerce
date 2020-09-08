@@ -1,6 +1,16 @@
 <template>
+<div>
+	<div class="conditions">
+		<v-checkbox
+			class="check"
+			v-model="checkbox"
+		>
+		</v-checkbox>
+		<span>Acepto los <a :href="conditionsAndTermsLink" target="_blank">términos y condiciones</a></span>
+	</div>
 	<div class="placetopay-styles-container">
 		<button
+			:disabled="!checkbox"
 			type="button"
 			class="placetopay-styles"
 			@click="linkGenerator"
@@ -8,9 +18,22 @@
 			<img :src="imgLink" alt="imagen de placetopay">
 		</button>
 	</div>
+</div>
 </template>
 <script>
+import { mapState } from 'vuex';
 
+function conditionsAndTermsLink() {
+	const findIt = this.help.find((h) => {
+		debugger;
+		const name = h.name.toLowerCase().normalize('NFD')
+			.replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, '$1$2')
+			.normalize();
+		return name === 'terminos y condiciones';
+	});
+	debugger;
+	return findIt;
+}
 async function linkGenerator() {
 	const url = `payment-gateway/${this.code}/checkout`;
 	const body = {
@@ -36,12 +59,19 @@ async function linkGenerator() {
 
 function data() {
 	return {
+		checkbox: false,
 		link: null,
 	};
 }
 
 export default {
 	name: 'placetopay',
+	computed: {
+		...mapState({
+			help: state => state.commerce.helperCenter,
+		}),
+		conditionsAndTermsLink,
+	},
 	data,
 	methods: {
 		linkGenerator,
@@ -86,10 +116,24 @@ export default {
 		display: flex;
 		justify-content: center;
 		text-decoration: none;
+		&[disabled] {
+			cursor: not-allowed;
+			opacity: 0.4;
+		}
 	}
 	&:hover {
 		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
 		transform: scale(1.05);
+	}
+}
+
+.conditions {
+	align-items: center;
+	display: flex;
+
+	.check {
+		margin-right: 1rem;
+		max-width: 2rem;
 	}
 }
 </style>
