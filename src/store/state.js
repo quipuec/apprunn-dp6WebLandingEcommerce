@@ -32,6 +32,7 @@ export default {
 		districts: [],
 		provinces: [],
 	},
+	openSignInModal: false,
 	order: {
 		bankAccountsRelated: null,
 		bill: null,
@@ -90,6 +91,7 @@ export default {
 	},
 	productIdToRate: null,
 	token: null,
+	topLocationModal: 0,
 	user: {
 		email: '',
 		logo: '/static/img/user.svg',

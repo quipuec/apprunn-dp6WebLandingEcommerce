@@ -25,13 +25,23 @@ export function httpResponseSuccessInterceptor(response) {
 	return response;
 }
 
+function pseudoLogout() {
+	store.dispatch('clearUser');
+	store.dispatch('DEFAULT_USER');
+	store.dispatch('SET_DEFAULT_VALUES');
+	localStorage.clear();
+}
+
 export function httpResponseInterceptor(error) {
 	store.dispatch('toggleLoading', false);
 	store.dispatch('resetCounter');
 	let text = 'Su sesión expiró.';
-	const status = error.response.status;
-	if (status === 401) {
+	const { status, statusText } = error.response;
+	if (status === 401 && statusText === 'Unauthorized') {
 		text = 'Correo o contraseña inválidos';
+		pseudoLogout();
+	} else if (status === 401) {
+		pseudoLogout();
 	} else if (status === 400) {
 		text = errors(error.response);
 	} else if (status === 403) {
