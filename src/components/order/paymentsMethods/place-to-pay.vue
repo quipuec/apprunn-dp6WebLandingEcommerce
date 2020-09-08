@@ -106,7 +106,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .placetopay-styles-container {
+	border: 1px solid #E75A32;
 	font-weight: bold;
+	padding: 0.5rem 1.5rem;
 	transition-duration: 250ms;
 	max-width: fit-content;
 

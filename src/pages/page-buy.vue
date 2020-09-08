@@ -121,8 +121,9 @@ export default {
 		display: grid;
 		grid-template-rows: 1fr;
 		margin: 0 auto;
-		max-width: 1186px;
+		max-width: 1000px;
 		padding: 40px 0;
+		width: 100%;
 	}
 	.buy-layout {
 		align-items: flex-start;

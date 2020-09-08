@@ -34,6 +34,10 @@ const documentNumberValidating = axios.create({
 	baseURL: process.env.URL_VALID_DOCUMENT_NUMBER,
 });
 
+const http2Instance = axios.create({
+	baseURL: process.env.SALES_URL_HTTP2,
+});
+
 export default function (Vue) {
 	/* eslint-disable no-param-reassign */
 	Vue.prototype.$httpProducts = productsInstance;
@@ -43,4 +47,5 @@ export default function (Vue) {
 	Vue.prototype.$httpProductsPublic = productsPublicInstance;
 	Vue.prototype.$httpUpLoad = uploadInstance;
 	Vue.prototype.$httpDocumentNumberValidating = documentNumberValidating;
+	Vue.prototype.$http2 = http2Instance;
 }
