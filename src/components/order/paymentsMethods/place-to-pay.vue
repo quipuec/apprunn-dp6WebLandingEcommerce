@@ -6,7 +6,11 @@
 			v-model="checkbox"
 		>
 		</v-checkbox>
+<<<<<<< HEAD
 		<span>Acepto los <a :href="conditionsAndTermsLink" target="_blank">términos y condiciones</a></span>
+=======
+		<span>Acepto los <button type="button" @click="conditionsAndTermsLink">términos y condiciones</button></span>
+>>>>>>> production-fintimas
 	</div>
 	<div class="placetopay-styles-container">
 		<button
@@ -22,6 +26,27 @@
 </template>
 <script>
 import { mapState } from 'vuex';
+<<<<<<< HEAD
+=======
+
+function conditionsAndTermsLink() {
+	const findIt = this.help.find((h) => {
+		const name = this.normalize(h.name);
+		return name === 'terminos y condiciones';
+	});
+	const [item] = findIt.section;
+	const link = findIt;
+	const newItem = item.name.split(' ').join('-');
+	const newLink = link.name.split(' ').join('-');
+	this.$router.push(`/ayuda/apartado/${newItem}/seccion/${newLink}`);
+}
+
+function normalize(str) {
+	return str.toLowerCase().normalize('NFD')
+		.replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, '$1$2')
+		.normalize();
+}
+>>>>>>> production-fintimas
 
 function conditionsAndTermsLink() {
 	const findIt = this.help.find((h) => {
@@ -44,10 +69,8 @@ async function linkGenerator() {
 		uri: this.uri,
 	};
 	try {
-		await this.$httpSales.post(url, body);
-		this.showNotification('Se generó un enlace de pagos de forma exitosa', 'success');
-		this.$router.push({ name: 'buy-summary' });
-		this.$store.dispatch('GET_ORDER_INFO', { context: this, id: this.orderId });
+		const { data: response } = await this.$httpSales.post(url, body);
+		window.open(response.data.url, '_self');
 	} catch (error) {
 		this.showNotification(
 			'Ocurrió un error al generar el enlace de pago. Recargue y vuelva a intentarlo por favor',
@@ -70,11 +93,16 @@ export default {
 		...mapState({
 			help: state => state.commerce.helperCenter,
 		}),
+<<<<<<< HEAD
 		conditionsAndTermsLink,
+=======
+>>>>>>> production-fintimas
 	},
 	data,
 	methods: {
+		conditionsAndTermsLink,
 		linkGenerator,
+		normalize,
 	},
 	props: {
 		categoryCode: {
