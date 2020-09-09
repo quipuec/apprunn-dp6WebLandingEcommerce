@@ -150,6 +150,11 @@ export default {
 		margin-right: 1rem;
 		max-width: 2rem;
 	}
+
+	button {
+		color: color(terciary);
+		text-decoration: underline;
+	}
 }
 
 .credit-card-container {
