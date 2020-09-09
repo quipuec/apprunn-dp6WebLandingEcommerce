@@ -6,11 +6,7 @@
 			v-model="checkbox"
 		>
 		</v-checkbox>
-<<<<<<< HEAD
-		<span>Acepto los <a :href="conditionsAndTermsLink" target="_blank">términos y condiciones</a></span>
-=======
 		<span>Acepto los <button type="button" @click="conditionsAndTermsLink">términos y condiciones</button></span>
->>>>>>> production-fintimas
 	</div>
 	<div class="placetopay-styles-container">
 		<button
@@ -26,8 +22,6 @@
 </template>
 <script>
 import { mapState } from 'vuex';
-<<<<<<< HEAD
-=======
 
 function conditionsAndTermsLink() {
 	const findIt = this.help.find((h) => {
@@ -46,19 +40,7 @@ function normalize(str) {
 		.replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, '$1$2')
 		.normalize();
 }
->>>>>>> production-fintimas
 
-function conditionsAndTermsLink() {
-	const findIt = this.help.find((h) => {
-		debugger;
-		const name = h.name.toLowerCase().normalize('NFD')
-			.replace(/([aeio])\u0301|(u)[\u0301\u0308]/gi, '$1$2')
-			.normalize();
-		return name === 'terminos y condiciones';
-	});
-	debugger;
-	return findIt;
-}
 async function linkGenerator() {
 	const url = `payment-gateway/${this.code}/checkout`;
 	const body = {
@@ -93,10 +75,6 @@ export default {
 		...mapState({
 			help: state => state.commerce.helperCenter,
 		}),
-<<<<<<< HEAD
-		conditionsAndTermsLink,
-=======
->>>>>>> production-fintimas
 	},
 	data,
 	methods: {
