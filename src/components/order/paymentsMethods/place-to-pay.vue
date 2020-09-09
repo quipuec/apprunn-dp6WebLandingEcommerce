@@ -18,6 +18,13 @@
 			<img :src="imgLink" alt="imagen de placetopay">
 		</button>
 	</div>
+	<div class="credit-card-container">
+		<img src="/static/img/creditCards/Visa_Inc._logo.svg.png" alt="logo_visa">
+		<img src="/static/img/creditCards/mastercard.svg" alt="logo_mastercard">
+		<img src="/static/img/creditCards/american.svg" alt="logo_american">
+		<img src="/static/img/creditCards/dinners.svg" alt="logo_dinner">
+		<img src="/static/img/creditCards/discover.png" alt="logo_discover">
+	</div>
 </div>
 </template>
 <script>
@@ -142,6 +149,17 @@ export default {
 	.check {
 		margin-right: 1rem;
 		max-width: 2rem;
+	}
+}
+
+.credit-card-container {
+	display: flex;
+	height: 1rem;
+	margin-top: 1rem;
+
+	img {
+		height: 100%;
+		margin: 0 0.25rem;
 	}
 }
 </style>
