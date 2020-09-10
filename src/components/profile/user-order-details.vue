@@ -20,7 +20,7 @@
 					<span class="label">Fecha de la Orden: </span><span class="order-info-data">{{getValue('createdAt', getOrderInfo)}}</span>
 				</div>
 				<div>
-					<span class="label">Estado pago: </span><span class="order-info-data">{{statusUpdated || getValue('paymentStateName', getOrderInfo)}}</span>
+					<span class="label">Estado pago: </span><span class="order-info-data">{{getValue('paymentStateName', getOrderInfo)}}</span>
 				</div>
 			</div>
 			<div class="order-payment" v-if="!rating">
@@ -161,10 +161,7 @@ async function created() {
 async function updatePaymentStatus() {
 	const url = 'payment-gateway/status';
 	const params = { orderId: this.orderId };
-	const { data: response } = await this.$httpSales.get(url, { params });
-	const { status: { status }, payment } = response;
-	const newStatus = payment.find(p => status === p.status.status);
-	this.statusUpdated = newStatus.status.message;
+	await this.$httpSales.get(url, { params });
 	this.loadData();
 }
 
@@ -313,7 +310,6 @@ function data() {
 		rating: false,
 		sessionGateway: null,
 		showConfirm: false,
-		statusUpdated: null,
 	};
 }
 
