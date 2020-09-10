@@ -20,7 +20,7 @@
 					<span class="label">Fecha de la Orden: </span><span class="order-info-data">{{getValue('createdAt', getOrderInfo)}}</span>
 				</div>
 				<div>
-					<span class="label">Estado pago: </span><span class="order-info-data">{{getValue('paymentStateName', getOrderInfo)}}</span>
+					<span class="label">Estado pago: </span><span class="order-info-data">{{statusUpdated || getValue('paymentStateName', getOrderInfo)}}</span>
 				</div>
 			</div>
 			<div class="order-payment" v-if="!rating">
@@ -129,6 +129,25 @@ import * as gatewayCodes from '@/shared/enums/gatewayCodes';
 
 async function created() {
 	({ id: this.orderId } = this.$route.params);
+	const { gatewayCode } = this.$route.query;
+	if (gatewayCode === gatewayCodes.placetopay) {
+		this.updatePaymentStatus();
+	} else {
+		this.loadData();
+	}
+}
+
+async function updatePaymentStatus() {
+	const url = 'payment-gateway/status';
+	const params = { orderId: this.orderId };
+	const { data: response } = await this.$httpSales.get(url, { params });
+	const { status: { status }, payment } = response;
+	const newStatus = payment.find(p => status === p.status.status);
+	this.statusUpdated = newStatus.status.message;
+	this.loadData();
+}
+
+async function loadData() {
 	await this.$store.dispatch('LOAD_ORDER_DETAILS', { context: this, orderId: this.orderId });
 	if (!isEmpty(this.getOrderInfo)) {
 		const { additionalInfo, sessionGateway, additionalInformation } = this.getOrderInfo;
@@ -251,6 +270,7 @@ function data() {
 		orderId: 0,
 		rating: false,
 		sessionGateway: null,
+		statusUpdated: null,
 	};
 }
 
@@ -288,8 +308,10 @@ export default {
 		copyLink,
 		getValue,
 		goTo,
+		loadData,
 		onRating,
 		updateColumns,
+		updatePaymentStatus,
 	},
 };
 </script>
