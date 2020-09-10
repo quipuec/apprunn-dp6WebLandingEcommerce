@@ -30,15 +30,15 @@
 							<div class="link-container" v-if="pendingPayment">
 								<span>Paga ahora en {{gatewayName}}: </span>
 								<div class="link-wrapper">
-									<a
-										:href="paymentLink"
+									<button
+										type="button"
 										class="order-info-data"
 										:style="`color:${globalColors.primary}`"
-										target="_blank"
 										ref="link"
-									>{{paymentLink}}</a>
+										@click="openConfirmModal('goToLink')"
+									>{{paymentLink}}</button>
 								</div>
-								<button class="copy-button" type="button" @click="copyLink">copiar</button>
+								<button class="copy-button" type="button" @click="openConfirmModal('copy')">copiar</button>
 							</div>
 							<div>
 								ID de transacción: <span class="label">{{transactionPaymentLinkId}}</span>
@@ -112,6 +112,26 @@
 				</responsive-table>
 			</section>
 		</transition-group>
+		<modal-component v-model="showConfirm">
+			<div class="slot-modal-wrapper">
+				<section class="modal-content">
+					<h3>Este enlace tiene una transacción de pago en proceso</h3>
+					<h4>¿Desea continuar?</h4>
+				</section>
+				<div class="modal-btns">
+					<button
+						type="button"
+						:style="`background-color:${globalColors.secondary}`"
+						@click="closeConfirmModal"
+					>Cancelar</button>
+					<button
+						type="button"
+						:style="`background-color:${globalColors.primary}`"
+						@click="accept"
+					>Aceptar</button>
+				</div>
+			</div>
+		</modal-component>
 	</div>
 </template>
 <script>
@@ -126,6 +146,7 @@ import productRating from '@/components/profile/product-rating';
 import helper from '@/shared/helper';
 import { deposit } from '@/shared/enums/wayPayment';
 import * as gatewayCodes from '@/shared/enums/gatewayCodes';
+import modalComponent from '@/components/shared/modal/modal-component';
 
 async function created() {
 	({ id: this.orderId } = this.$route.params);
@@ -256,6 +277,27 @@ function paymentezData() {
 	return false;
 }
 
+function openConfirmModal(flag) {
+	this.action = flag;
+	this.showConfirm = true;
+}
+
+function closeConfirmModal() {
+	this.showConfirm = false;
+}
+
+function accept() {
+	const opt = {
+		copy: this.copyLink,
+		goToLink: this.goToLink,
+	};
+	opt[this.action].call();
+}
+
+function goToLink() {
+	window.open(this.paymentLink);
+}
+
 function data() {
 	return {
 		additionalInformation: null,
@@ -270,6 +312,7 @@ function data() {
 		orderId: 0,
 		rating: false,
 		sessionGateway: null,
+		showConfirm: false,
 		statusUpdated: null,
 	};
 }
@@ -281,6 +324,7 @@ export default {
 		formOpinion,
 		leftComponent,
 		loadPayment,
+		modalComponent,
 		productRating,
 		responsiveTable,
 	},
@@ -305,11 +349,15 @@ export default {
 	data,
 	methods: {
 		addPaymentInfo,
+		accept,
 		copyLink,
+		closeConfirmModal,
 		getValue,
 		goTo,
+		goToLink,
 		loadData,
 		onRating,
+		openConfirmModal,
 		updateColumns,
 		updatePaymentStatus,
 	},
@@ -575,6 +623,30 @@ export default {
 		&:hover {
 			background-color: color(dark);
 			color: color(border);
+		}
+	}
+
+	.slot-modal-wrapper {
+		background-color: white;
+		border-radius: 0.75rem;
+		padding: 2rem;
+
+		.modal-content,
+		.modal-btns {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+			margin: 1rem 0;
+		}
+		.modal-content {
+			flex-direction: column;
+		}
+		.modal-btns {
+			button {
+				color: white;
+				margin: 0 1rem;
+				padding: 0.5rem 1rem;
+			}
 		}
 	}
 
