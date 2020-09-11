@@ -164,7 +164,7 @@ async function updatePaymentStatus() {
 	const url = 'payment-gateway/status';
 	const params = { orderId: this.orderId };
 	try {
-		await this.$httpSales.get(url, { params });
+		await this.$httpUpdateTransaction.get(url, { params });
 	} finally {
 		this.loadData();
 	}
