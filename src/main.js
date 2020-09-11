@@ -91,7 +91,6 @@ async function created() {
 		this.httpResponseSuccessInterceptor,
 		this.httpResponseInterceptor,
 	);
-	this.$httpUpdateTransaction.interceptors.request.use(this.httpRequestInterceptor);
 }
 
 /* eslint-disable no-new */

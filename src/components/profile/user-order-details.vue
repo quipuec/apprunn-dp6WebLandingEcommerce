@@ -163,8 +163,11 @@ async function created() {
 async function updatePaymentStatus() {
 	const url = 'payment-gateway/status';
 	const params = { orderId: this.orderId };
+	const headers = {
+		Authorization: `Bearer ${this.$store.state.token}`,
+	};
 	try {
-		await this.$httpUpdateTransaction.get(url, { params });
+		await this.$httpUpdateTransaction.get(url, { params, headers });
 	} finally {
 		this.loadData();
 	}
