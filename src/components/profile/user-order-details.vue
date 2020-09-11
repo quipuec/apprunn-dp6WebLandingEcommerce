@@ -21,7 +21,7 @@
 				</div>
 				<div>
 					<span class="label">Estado pago: </span><span class="order-info-data">
-						{{getValue('paymentStateGateway', getOrderInfo) || getValue('paymentStateName', getOrderInfo)}}
+						{{paymentState}}
 					</span>
 				</div>
 			</div>
@@ -117,7 +117,7 @@
 		<modal-component v-model="showConfirm">
 			<div class="slot-modal-wrapper">
 				<section class="modal-content">
-					<h3>Este enlace tiene una transacción de pago en proceso</h3>
+					<h3>Este enlace tiene una transacción de pago en proceso con referencia: {{transactionPaymentLinkId}}</h3>
 					<h4>¿Desea continuar?</h4>
 				</section>
 				<div class="modal-btns">
@@ -210,7 +210,13 @@ function gatewayName() {
 }
 
 function pendingPayment() {
-	return this.getValue('paymentStateName', this.getOrderInfo) === 'Pendiente';
+	return this.paymentState === 'Pendiente' || this.paymentState === 'pendiente';
+}
+
+function paymentState() {
+	const paymentStateGateway = this.getValue('paymentStateGateway', this.getOrderInfo);
+	const paymentStateName = this.getValue('paymentStateName', this.getOrderInfo);
+	return paymentStateGateway || paymentStateName;
 }
 
 function updateColumns() {
@@ -339,6 +345,7 @@ export default {
 		isPaymentLink,
 		orderStatusIsGiven,
 		paymentezData,
+		paymentState,
 		paymentLink,
 		pendingPayment,
 		transactionPaymentLinkId,
