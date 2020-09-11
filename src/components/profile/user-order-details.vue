@@ -269,6 +269,7 @@ function copyLink() {
 	const linkContainer = this.$refs.link;
 	helper.copyFn(linkContainer);
 	this.showNotification('Enlace copiado al porta papeles', 'primary');
+	this.closeConfirmModal();
 }
 
 function isPaymentez() {
