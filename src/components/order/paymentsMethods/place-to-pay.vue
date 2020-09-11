@@ -124,8 +124,7 @@ async function checkCurrentTransactions() {
 		this.showTransactionsModal = true;
 		this.currentTransactionsData = transactionsOn;
 	} else {
-		console.log(transactionsOn);
-		// this.linkGenerator();
+		this.linkGenerator();
 	}
 }
 
