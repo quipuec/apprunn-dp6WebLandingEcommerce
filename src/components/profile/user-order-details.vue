@@ -20,7 +20,9 @@
 					<span class="label">Fecha de la Orden: </span><span class="order-info-data">{{getValue('createdAt', getOrderInfo)}}</span>
 				</div>
 				<div>
-					<span class="label">Estado pago: </span><span class="order-info-data">{{getValue('paymentStateName', getOrderInfo)}}</span>
+					<span class="label">Estado pago: </span><span class="order-info-data">
+						{{getValue('paymentStateGateway', getOrderInfo) || getValue('paymentStateName', getOrderInfo)}}
+					</span>
 				</div>
 			</div>
 			<div class="order-payment" v-if="!rating">
