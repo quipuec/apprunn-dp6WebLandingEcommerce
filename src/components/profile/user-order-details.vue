@@ -163,8 +163,11 @@ async function created() {
 async function updatePaymentStatus() {
 	const url = 'payment-gateway/status';
 	const params = { orderId: this.orderId };
-	await this.$httpSales.get(url, { params });
-	this.loadData();
+	try {
+		await this.$httpSales.get(url, { params });
+	} finally {
+		this.loadData();
+	}
 }
 
 async function loadData() {
