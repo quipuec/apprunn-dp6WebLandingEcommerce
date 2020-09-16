@@ -208,19 +208,28 @@ export default {
 .placetopay-styles-container {
 	border: 1px solid #E75A32;
 	font-weight: bold;
+	height: 50px;
 	padding: 0.5rem 1.5rem;
 	transition-duration: 250ms;
-	max-width: fit-content;
+	width: 210px;
 
 	.placetopay-styles {
 		align-items: center;
 		background-color: white;
 		display: flex;
+		height: 100%;
 		justify-content: center;
 		text-decoration: none;
+		width: 100%;
 		&[disabled] {
 			cursor: not-allowed;
 			opacity: 0.4;
+		}
+
+		img {
+			height: 100%;
+			object-fit: contain;
+			width: 100%;
 		}
 	}
 	&:hover {
