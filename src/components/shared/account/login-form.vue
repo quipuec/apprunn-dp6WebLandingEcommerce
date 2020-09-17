@@ -4,6 +4,7 @@
 			<v-flex xs12 pb-4 text-xs-left>
 				<p class="caption ma-0">Si tienes una cuenta</p>
 				<app-input
+					data-cy="inputEmail"
 					type="email"
 					placeholder="E-mail"
 					:value="model.email"
@@ -18,6 +19,7 @@
 			</v-flex>
 			<v-flex xs12 pb-4 text-xs-left>
 				<app-input
+					data-cy="inputPassword"
 					type="password"
 					placeholder="Contraseña"
 					:value="model.password"
