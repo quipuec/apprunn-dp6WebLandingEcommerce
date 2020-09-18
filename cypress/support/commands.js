@@ -44,29 +44,16 @@ Cypress.Commands.add('login', () => {
 	});
 });
 
-Cypress.Commands.add('SelectProductWithStockFromHome', () => {
+Cypress.Commands.add('SelectRandomProduct', () => {
 	cy.visit('localhost:9010');
 	cy.get('[data-cy="productsSection"]')
 		.should('exist')
+		.its('length')
+		.should('be.gt', 0);
+	const random = Math.floor(Math.random() * 20);
+	cy.get('[data-cy="productsSection"]')
+		.should('exist')
 		.children()
-		.eq(0)
+		.eq(random)
 		.click();
-		// .children().then(($children) => {
-		// 	let clicked = false;
-		// 	const len = $children.length;
-		// 	if (len > 0) {
-		// 		while (!clicked) {
-		// 			let i = 0;
-		// 			const currentChild = $children[i];
-		// 			cy.wrap(currentChild).find('.without-stock-tag').should('exist');
-		// 			debugger;
-		// 			if (res) {
-		// 				i += 1;
-		// 			} else {
-		// 				cy.wrap(currentChild).click();
-		// 				clicked = true;
-		// 			}
-		// 		}
-		// 	}
-		// });
 });
