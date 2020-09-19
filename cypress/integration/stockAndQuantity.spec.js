@@ -48,6 +48,7 @@ context('VERIFICAR CANTIDAD Y STOCK DISPONIBLE', () => {
 		});
 
 		cy.fixture('fenix-dev.json').then(({ token }) => {
+			let stockWarehouse = null;
 			cy.visit(`http://localhost:9010/${slug}/detalle-producto`);
 			cy.request({
 				method: 'get',
@@ -56,24 +57,23 @@ context('VERIFICAR CANTIDAD Y STOCK DISPONIBLE', () => {
 					Authorization: token,
 				},
 			}).as('ProductDetail');
-			let stockWarehouse = null;
 			cy.get('@ProductDetail').its('body').then((res) => {
 				stockWarehouse = res.stockWarehouse;
 				cy.get('[data-cy="more-quantity"]')
 					.should('exist')
 					.click()
 					.click();
+				cy.get('[data-cy="add-to-cart"]')
+					.should('exist')
+					.click({ force: true });
+				cy.get('[data-cy="go-to-cart"]')
+					.should('exist')
+					.click({ force: true });
+				cy.get('[data-cy="product-in-car"]')
+					.eq(0)
+					.find('[data-cy="quantity-to-buy"]')
+					.contains(stockWarehouse);
 			});
-			cy.get('[data-cy="add-to-cart"]')
-				.should('exist')
-				.click({ force: true });
-			cy.get('[data-cy="go-to-cart"]')
-				.should('exist')
-				.click({ force: true });
-			cy.get('[data-cy="product-in-car"]')
-				.eq(0)
-				.find('[data-cy="quantity-to-buy"]')
-				.contains(stockWarehouse);
 		});
 	});
 })
