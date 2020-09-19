@@ -9,7 +9,7 @@
 		:style="animatingCard"
 	>
 		<div :class="{ 'opacity': !product.stockWarehouse }">
-			<div v-if="!product.stockWarehouse && !indeterminate" class="without-stock-tag">
+			<div v-if="noStock" class="without-stock-tag">
 				Agotado
 			</div>
 			<div class="pd-10">
@@ -84,6 +84,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import heartComponent from '@/components/shared/icons/heart-component';
+import { getDeeper } from '@/shared/lib';
 
 function productFavo() {
 	if (this.token) {
@@ -129,6 +130,16 @@ function onCard(v) {
 	this.y = v.offsetY;
 }
 
+function noStock() {
+	const stockCero = !this.product.stockWarehouse;
+	const loading = !this.indeterminate;
+	const productService = getDeeper('typeInfo.code')(this.product) === 'servicio';
+	if (productService) {
+		return false;
+	}
+	return stockCero && loading;
+}
+
 function data() {
 	return {
 		x: 0,
@@ -151,6 +162,7 @@ export default {
 		]),
 		animatingCard,
 		discountPercentage,
+		noStock,
 	},
 	data,
 	methods: {
