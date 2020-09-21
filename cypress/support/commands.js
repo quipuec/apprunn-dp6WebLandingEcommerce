@@ -57,3 +57,68 @@ Cypress.Commands.add('SelectRandomProduct', () => {
 		.eq(random)
 		.click();
 });
+
+Cypress.Commands.add('ProductsDetailPage', (productId) => {
+	cy.fixture('fenix-dev.json').then(({ token }) => {
+		cy.visit(`http://localhost:9010/${productId}/detalle-producto`);
+		cy.request({
+			method: 'get',
+			url: `https://products2.perudatos.com/products-public/${productId}`,
+			headers: {
+				Authorization: token,
+			},
+		}).as('ProductDetail');
+	});
+})
+
+Cypress.Commands.add('AddProductWithStock', () => {
+	cy.ProductsDetailPage(1093074); // gelatina
+	cy.get('@ProductDetail').its('body').then(() => {
+		cy.get('[data-cy="add-to-cart"]')
+			.should('exist')
+			.click({ force: true });
+		cy.get('[data-cy="go-to-cart"]')
+			.should('exist')
+			.click();
+	});
+})
+
+Cypress.Commands.add('AddProductService', () => {
+	cy.ProductsDetailPage(1090512); // SHAMPOO HYS  ALIVIO INSTANTANEO 400ML
+	cy.get('@ProductDetail').its('body').then(() => {
+		cy.get('[data-cy="add-to-cart"]')
+			.should('exist')
+			.click({ force: true });
+		cy.get('[data-cy="go-to-cart"]')
+			.should('exist')
+			.click();
+	});
+})
+
+Cypress.Commands.add('FillResponsibleForm', () => {
+	cy.fixture('fenix-dev.json').then(({ responsible }) => {
+		const { name, lastname, phone, email, dni } = responsible;
+		cy.get('[data-cy="responsible-name"]').clear().type(name);
+		cy.get('[data-cy="responsible-lastname"]').clear().type(lastname);
+		cy.get('[data-cy="responsible-dni"]').clear().type(dni);
+		cy.get('[data-cy="responsible-phone"]').clear().type(phone);
+		cy.get('[data-cy="responsible-email"]').clear().type(email);
+	});
+})
+
+Cypress.Commands.add('SelectAddress', () => {
+	cy.get('[data-cy="address-selection"]')
+		.should('exist')
+		.click({ force: true });
+	cy.get('.menuable__content__active')
+		.children()
+		.children()
+		.contains('papa')
+		.click();
+})
+
+Cypress.Commands.add('SelectDeliveryHome', () => {
+	cy.get('[data-cy="delivery-buttons"]')
+		.contains('Envío a Domicilio')
+		.click({ force: true });
+})
