@@ -7,7 +7,7 @@
 			@input="validateForm"
 		>
 			<span v-if="!$v.responsible.name.required">El nombre es requerido</span>
-			<span v-if="!$v.responsible.name.onlyCharacters">Solo se permiten letras</span>
+			<span v-if="!$v.responsible.name.onlyCharacters">Solo se permiten letras (la ñ no está permitida)</span>
 		</app-input>
 		<app-input
 			placeholder="Apellido responsable de recibir"
@@ -16,7 +16,7 @@
 			@input="validateForm"
 		>
 			<span v-if="!$v.responsible.lastname.required">El Apellido es requerido</span>
-			<span v-if="!$v.responsible.lastname.onlyCharacters">Solo se permiten letras</span>
+			<span v-if="!$v.responsible.lastname.onlyCharacters">Solo se permiten letras (la ñ no está permitida)</span>
 		</app-input>
 		<app-input
 			:placeholder="labelCountry"
@@ -95,7 +95,11 @@ function onlyCharacters(char) {
 	if (char !== null) {
 		const trimedChar = char.split(' ').join('');
 		const noChar = /[^a-zA-ZáéíóúáéíóúÁÉÍÓÚ]/i.test(trimedChar);
-		return !noChar;
+		let ene = false;
+		if (noChar) {
+			ene = trimedChar.toLowerCase().includes('ñ');
+		}
+		return !noChar && !ene;
 	}
 	return false;
 }
