@@ -3,6 +3,16 @@
 	"password": 123456,
 	"token": "Bearer $2y$10$tNJmuXZKGwi0l38A.SxUVemGrFJiyLunyqkOqOTE7LHsrSwMEmEBi",
 	"products": {
-		"stockLow": "polo-cuello-v-manga-corta-color-blanco"
+		"lowStock": 1090512,
+		"service": 1095225,
+		"noStock": 1092910,
+		"greatStock": 1093035
+	},
+	"responsible": {
+		"name": "José Juan",
+		"lastname": "Dominguez",
+		"dni": "16006652",
+		"phone": "970121334",
+		"email": "root30@mail.com"
 	}
 }

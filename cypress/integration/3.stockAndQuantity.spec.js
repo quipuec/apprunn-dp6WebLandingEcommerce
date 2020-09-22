@@ -1,10 +1,11 @@
 /// <reference types="cypress" />
 
 context('VERIFICAR CANTIDAD Y STOCK DISPONIBLE', () => {
-	beforeEach(() => {
-		cy.SelectRandomProduct();
-	});
+	/**
+	 * Probar que ningun producto vaya al carrito de compras con cantidad CERO
+	 */
 	it('La cantidad no puede ser CERO en detalle de producto', () => {
+		cy.SelectRandomProduct();
 		cy.location('pathname').then((pathname) => {
 			const splitted = pathname.split('/');
 			const slug = splitted[1];
@@ -15,18 +16,14 @@ context('VERIFICAR CANTIDAD Y STOCK DISPONIBLE', () => {
 			cy.get('[data-cy="quantity-to-buy"]').should('contain', 1);
 		});
 	});
-
-	it('Verificar que la cantidad no supere Stock en detalle de producto', () => {
-		const slug = 1090512; // SHAMPOO HYS  ALIVIO INSTANTANEO 400ML
-		cy.fixture('fenix-dev.json').then(({ token }) => {
-			cy.visit(`http://localhost:9010/${slug}/detalle-producto`);
-			cy.request({
-				method: 'get',
-				url: `https://products2.perudatos.com/products-public/${slug}`,
-				headers: {
-					Authorization: token,
-				},
-			}).as('ProductDetail');
+	/**
+	 * Agrego dos veces el mismo producto. La primera vez con cantidad igual al stock y
+	 * la segunda vez con cantidad 2. La cantidad a mostrar en el carrito de compras
+	 * debe ser la del stock
+	 */
+	it('Verificar que la cantidad no supere Stock en producto terminado', () => {
+		cy.fixture('fenix-dev.json').then(({ products }) => {
+			cy.ProductsDetailPage(products.lowStock); // SHAMPOO HYS  ALIVIO INSTANTANEO 400ML
 			cy.get('@ProductDetail').its('body').then((res) => {
 				const { stockWarehouse } = res;
 				expect(stockWarehouse).to.be.gt(0);
@@ -45,18 +42,9 @@ context('VERIFICAR CANTIDAD Y STOCK DISPONIBLE', () => {
 			cy.get('[data-cy="go-to-cart"]')
 				.should('exist')
 				.click({ force: true });
-		});
 
-		cy.fixture('fenix-dev.json').then(({ token }) => {
 			let stockWarehouse = null;
-			cy.visit(`http://localhost:9010/${slug}/detalle-producto`);
-			cy.request({
-				method: 'get',
-				url: `https://products2.perudatos.com/products-public/${slug}`,
-				headers: {
-					Authorization: token,
-				},
-			}).as('ProductDetail');
+			cy.ProductsDetailPage(products.lowStock);
 			cy.get('@ProductDetail').its('body').then((res) => {
 				stockWarehouse = res.stockWarehouse;
 				cy.get('[data-cy="more-quantity"]')
@@ -76,4 +64,31 @@ context('VERIFICAR CANTIDAD Y STOCK DISPONIBLE', () => {
 			});
 		});
 	});
-})
+
+	/**
+	 * Agregar al carrito de compras un producto tipo servicio con
+	 * cantidad aleatoria.
+	 */
+	it('Agregar cualquier cantidad de producto tipo servicio', () => {
+		cy.fixture('fenix-dev.json').then(({ products }) => {
+			cy.ProductsDetailPage(products.service); // servicio prueba
+			cy.get('@ProductDetail').its('body').then((res) => {
+				const { type } = res;
+				expect(type).to.be.equal(2);
+				const random = Math.floor((Math.random() * 10) + 1);
+				for (let i = 1; i <= random; i += 1) {
+					cy.get('[data-cy="more-quantity"]')
+						.should('exist')
+						.click();
+				}
+				cy.get('[data-cy="quantity-to-buy"]').should('contain', random + 1);
+				cy.get('[data-cy="add-to-cart"]')
+					.should('exist')
+					.click({ force: true });
+				cy.get('[data-cy="go-to-cart"]')
+					.should('exist')
+					.click({ force: true });
+			});
+		});
+	});
+});

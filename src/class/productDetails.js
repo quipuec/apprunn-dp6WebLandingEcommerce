@@ -33,6 +33,9 @@ class ProductDetails {
 	get image() {
 		return this.selectedProduct.imagePresentation;
 	}
+	get isService() {
+		return this.selectedProduct.typeInfo.code === 'servicios';
+	}
 	get name() {
 		return this.selectedProduct.name;
 	}
