@@ -53,6 +53,7 @@ import { required, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import { getDeeper } from '@/shared/lib';
 import appInput from '@/components/shared/inputs/app-input';
+import userDataValidation from '@/mixins/userDataValidation';
 
 function mounted() {
 	if (getDeeper('responsiblePickUp')(this.getOrderInfo)) {
@@ -87,38 +88,25 @@ function labelError() {
 	return getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'El número de documento es requerido' : 'El DNI es requerido';
 }
 
-function onlyNumbers(val) {
-	return Number(val) > 0;
-}
-
-function onlyCharacters(char) {
-	if (char !== null) {
-		const trimedChar = char.split(' ').join('');
-		const noChar = /[^a-zA-ZáéíóúáéíóúÁÉÍÓÚñÑ]/i.test(trimedChar);
-		return !noChar;
-	}
-	return false;
-}
-
 function validations() {
 	const validating = {
 		responsible: {
 			dni: {
 				required,
-				onlyNumbers,
+				onlyNumbers: this.onlyNumbers,
 			},
 			email: { email, required },
 			lastname: {
 				required,
-				onlyCharacters,
+				onlyCharacters: this.onlyCharacters,
 			},
 			name: {
 				required,
-				onlyCharacters,
+				onlyCharacters: this.onlyCharacters,
 			},
 			phone: {
 				required,
-				onlyNumbers,
+				onlyNumbers: this.onlyNumbers,
 			},
 		},
 	};
@@ -155,8 +143,8 @@ export default {
 	methods: {
 		setUserData,
 		validateForm,
-		onlyCharacters,
 	},
+	mixins: [userDataValidation],
 	mounted,
 	validations,
 	watch: {
