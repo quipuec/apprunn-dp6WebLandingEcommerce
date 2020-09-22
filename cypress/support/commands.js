@@ -50,7 +50,7 @@ Cypress.Commands.add('SelectRandomProduct', () => {
 		.should('exist')
 		.its('length')
 		.should('be.gt', 0);
-	const random = Math.floor(Math.random() * 20);
+	const random = Math.floor(Math.random() * 10);
 	cy.get('[data-cy="productsSection"]')
 		.should('exist')
 		.children()
@@ -72,30 +72,49 @@ Cypress.Commands.add('ProductsDetailPage', (productId) => {
 })
 
 Cypress.Commands.add('AddProductWithStock', () => {
-	cy.ProductsDetailPage(1093074); // gelatina
-	cy.get('@ProductDetail').its('body').then(() => {
+	cy.fixture('fenix-dev.json').then(({ products }) => {
+		cy.ProductsDetailPage(products.lowStock); // gelatina
+		cy.get('@ProductDetail').its('body').then(() => {
+			cy.get('[data-cy="add-to-cart"]')
+				.should('exist')
+				.click({ force: true });
+			cy.get('[data-cy="go-to-cart"]')
+				.should('exist')
+				.click();
+		});
+	});
+});
+
+Cypress.Commands.add('AddProductWithOutStock', () => {
+	cy.fixture('fenix-dev.json').then(({ products }) => {
+		cy.ProductsDetailPage(products.noStock); // sun7 producto sin stock
+		cy.get('@ProductDetail').its('body').then((res) => {
+			const { stockWarehouse } = res;
+			expect(stockWarehouse).to.be.eq(0);
+		});
 		cy.get('[data-cy="add-to-cart"]')
 			.should('exist')
 			.click({ force: true });
 		cy.get('[data-cy="go-to-cart"]')
-			.should('exist')
-			.click();
+			.should('not.exist');
 	});
-})
+});
 
 Cypress.Commands.add('AddProductService', () => {
-	cy.ProductsDetailPage(1095225); // servicio prueba
-	cy.get('@ProductDetail').its('body').then((res) => {
-		const { type, typeInfo } = res;
-		expect(type).to.equal(2);
-		expect(typeInfo.code).to.equal('servicios');
-		cy.get('[data-cy="add-to-cart"]')
-			.should('exist')
-			.click({ force: true });
-		cy.get('[data-cy="go-to-cart"]')
-			.should('exist')
-			.click();
-	});
+	cy.fixture('fenix-dev.json').then(({ products }) => {
+		cy.ProductsDetailPage(products.service); // servicio prueba
+		cy.get('@ProductDetail').its('body').then((res) => {
+			const { type, typeInfo } = res;
+			expect(type).to.equal(2);
+			expect(typeInfo.code).to.equal('servicios');
+			cy.get('[data-cy="add-to-cart"]')
+				.should('exist')
+				.click({ force: true });
+			cy.get('[data-cy="go-to-cart"]')
+				.should('exist')
+				.click();
+		});
+	})
 })
 
 Cypress.Commands.add('FillResponsibleForm', () => {

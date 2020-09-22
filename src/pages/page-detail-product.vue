@@ -270,6 +270,7 @@ function clickQuantity(value) {
 	}
 	const validQuantity = this.checkValidQuantity(num);
 	if (validQuantity) {
+		console.log('entro');
 		this.$set(newProductdetail, 'quantity', num);
 		this.product = { ...newProductdetail };
 		this.productInstance.updateQuantity(num);
@@ -280,6 +281,9 @@ function clickQuantity(value) {
 }
 
 function checkValidQuantity(quantity) {
+	if (this.productInstance.isService) {
+		return true;
+	}
 	return this.productInstance.stock >= quantity;
 }
 
