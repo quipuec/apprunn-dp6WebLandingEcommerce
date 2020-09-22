@@ -2,6 +2,7 @@
 
 context('COMPRAR DOS PRODUCTOS CON RECOJO EN TIENDA', () => {
 	it('Producto terminado y producto tipo servicio', () => {
+		cy.CheckIfThereIsProductServices();
 		cy.AddProductWithStock();
 		cy.AddProductService();
 		cy.get('[data-cy="make-order"]')
@@ -10,6 +11,5 @@ context('COMPRAR DOS PRODUCTOS CON RECOJO EN TIENDA', () => {
 		cy.SelectDeliveryHome();
 		cy.FillResponsibleForm();
 		cy.SelectAddress();
-		
 	});
 })

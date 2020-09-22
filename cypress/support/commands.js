@@ -84,8 +84,11 @@ Cypress.Commands.add('AddProductWithStock', () => {
 })
 
 Cypress.Commands.add('AddProductService', () => {
-	cy.ProductsDetailPage(1090512); // SHAMPOO HYS  ALIVIO INSTANTANEO 400ML
-	cy.get('@ProductDetail').its('body').then(() => {
+	cy.ProductsDetailPage(1095225); // servicio prueba
+	cy.get('@ProductDetail').its('body').then((res) => {
+		const { type, typeInfo } = res;
+		expect(type).to.equal(2);
+		expect(typeInfo.code).to.equal('servicios');
 		cy.get('[data-cy="add-to-cart"]')
 			.should('exist')
 			.click({ force: true });
@@ -121,4 +124,24 @@ Cypress.Commands.add('SelectDeliveryHome', () => {
 	cy.get('[data-cy="delivery-buttons"]')
 		.contains('Envío a Domicilio')
 		.click({ force: true });
+})
+
+Cypress.Commands.add('CheckIfThereIsProductServices', () => {
+	cy.fixture('fenix-dev.json').then(({ token }) => {
+		cy.visit('http://localhost:9010');
+		cy.request({
+			method: 'get',
+			url: 'https://products2.perudatos.com/products-public?flagGrouper=2',
+			headers: {
+				Authorization: token,
+			},
+		}).as('Products');
+		cy.get('@Products').its('body').then((res) => {
+			res.forEach((p) => {
+				if (p.type === 2) {
+					expect(p.typeInfo.code).to.equal('servicios');
+				}
+			});
+		})
+	});	
 })
