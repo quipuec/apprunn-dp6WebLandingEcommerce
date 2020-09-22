@@ -2,7 +2,8 @@
 	<div class="modal-login">
 		<div>
 			<span class="label-modal">¿Tienes una cuenta?</span>
-			<app-button 
+			<app-button
+				data-cy="appButtonLogin"
 				thin
 				class="mb-3"
 				action="Iniciar Sesión"
