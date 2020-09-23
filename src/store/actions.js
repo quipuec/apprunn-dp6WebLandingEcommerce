@@ -37,7 +37,9 @@ function addProductToBuyCar(context, product) {
 	);
 	if (index > -1) {
 		const currentProduct = productsSelected[index];
-		const quantity = currentProduct.quantity + newProduct.quantity;
+		const { stockWarehouse } = currentProduct;
+		let quantity = currentProduct.quantity + newProduct.quantity;
+		quantity = stockWarehouse > quantity ? quantity : stockWarehouse;
 		productsSelected[index].quantity = quantity;
 		context.commit('UPDATE_PRODUCTS_SELECTED', productsSelected);
 		context.commit('UPDATE_ORDER_DETAILS_IF_EXIST', productsSelected);

@@ -12,6 +12,7 @@
 			</v-flex>
 			<v-flex xs12 text-xs-center>
 				<app-button
+					data-cy="loginBtnAction"
 					:action="titleBtn || title"
 					:background="color"
 					:disabled="disabled"

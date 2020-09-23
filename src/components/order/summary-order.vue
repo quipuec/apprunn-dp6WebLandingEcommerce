@@ -21,6 +21,7 @@
 		</section>
 		<section class="btns-summary-order">
 			<app-button
+				data-cy="make-order"
 				v-if="stepOne"
 				action='Hacer pedido'
 				class="btn-order"
@@ -28,6 +29,7 @@
 				@click="goToMakeOrder"
 			/>
 			<app-button
+				data-cy="go-pay"
 				v-else-if="stepTwo"
 				action="Pasar a caja"
 				class="btn-order"

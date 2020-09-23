@@ -20,6 +20,7 @@
 		</section>
 		<section class="modal-footer">
 			<button 
+				data-cy="go-to-cart"
 				type="button"
 				:style="`color:${globalColors.primary};border-color:${globalColors.primary}`"
 				@click="redirect('buy')"
