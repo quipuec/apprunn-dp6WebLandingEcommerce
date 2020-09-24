@@ -39,14 +39,18 @@
 						@click-image="toogleSearch"/>
 				</div>
 			</div>
-			<div 
+			<div
+				data-cy="loginBtn"
 				class="flex container-button-image align-center"
 				:class="{'opacity' : isSearchMobile}">
 				<button-image 
 					:data="search" 
 					class="icon-mobile"
 					@click-image="toogleSearch"/>
-				<UserSvg @click="openModalLogin" class="icon-desktop"/>
+				<UserSvg
+					class="icon-desktop"
+					@click="openModalLogin"
+				/>
 				<HeartComponent @click="goToFavorites"/>
 				<CarComponent @click="goShopping" :count="totalProducts"/>
 			</div>

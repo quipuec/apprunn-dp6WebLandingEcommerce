@@ -7,6 +7,7 @@
 			/>
 		</div>
 		<div
+			data-cy="categories-home"
 			:class="[
 				indeterminate ? 'loading loading-categories' : 'categories-carousel-slider',
 			]"

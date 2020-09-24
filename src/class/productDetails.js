@@ -33,6 +33,9 @@ class ProductDetails {
 	get image() {
 		return this.selectedProduct.imagePresentation;
 	}
+	get isService() {
+		return this.selectedProduct.typeInfo.code === 'servicios';
+	}
 	get name() {
 		return this.selectedProduct.name;
 	}
@@ -49,7 +52,7 @@ class ProductDetails {
 		return this.selectedProduct.rating;
 	}
 	get stock() {
-		return this.selectedProduct.stock;
+		return this.selectedProduct.stockWarehouse;
 	}
 	get total() {
 		return Number((this.quantity * this.price).toFixed(2));

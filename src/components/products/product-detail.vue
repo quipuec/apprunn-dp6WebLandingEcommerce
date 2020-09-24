@@ -109,8 +109,12 @@ function noStock() {
 	return !(stock && positiveStock);
 }
 
+function isService() {
+	return getDeeper('typeInfo.code')(this.data) === 'servicios';
+}
+
 function addToCar() {
-	if (!this.noStock) {
+	if (!this.noStock || this.isService) {
 		this.$store.dispatch('addProductToBuyCar', this.data);
 		this.$emit('open-confirm-modal');
 	} else {
@@ -141,6 +145,7 @@ export default {
 		...mapGetters('loading', [
 			'isLoading',
 		]),
+		isService,
 		noStock,
 	},
 	methods: {

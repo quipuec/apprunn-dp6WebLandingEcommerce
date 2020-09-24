@@ -8,11 +8,10 @@
 		@mouseleave="mouseOnCard = false"
 		:style="animatingCard"
 	>
-		<div>
-		<!-- <div :class="{ 'opacity': !product.stockWarehouse }"> -->
-			<!-- <div v-if="!product.stockWarehouse && !indeterminate" class="without-stock-tag">
+		<div :class="{ 'opacity': noStock }">
+			<div v-if="noStock" class="without-stock-tag">
 				Agotado
-			</div> -->
+			</div>
 			<div class="pd-10">
 				<section class="product-header" :class="{ 'small': small }">
 					<div
@@ -49,7 +48,7 @@
 							:class="[
 								indeterminate ? 'loading text-field' : 'product-description'
 							]"
-						>{{product.description}}</p>
+						>{{product.name}}</p>
 						<small
 							v-if="product.warehouseProduct && product.warehouseProduct.brand"
 							class="product-brand">{{product.warehouseProduct.brand.name}}</small>
@@ -85,6 +84,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import heartComponent from '@/components/shared/icons/heart-component';
+import { getDeeper } from '@/shared/lib';
 
 function productFavo() {
 	if (this.token) {
@@ -130,6 +130,19 @@ function onCard(v) {
 	this.y = v.offsetY;
 }
 
+function noStock() {
+	let stockCero = getDeeper('stockVirtual')(this.product);
+	if (stockCero === null || stockCero === undefined) {
+		stockCero = !this.product.stockWarehouse;
+	}
+	const loading = !this.indeterminate;
+	const productService = getDeeper('typeInfo.code')(this.product) === 'servicios';
+	if (productService) {
+		return false;
+	}
+	return stockCero && loading;
+}
+
 function data() {
 	return {
 		x: 0,
@@ -152,6 +165,7 @@ export default {
 		]),
 		animatingCard,
 		discountPercentage,
+		noStock,
 	},
 	data,
 	methods: {
@@ -256,6 +270,7 @@ export default {
 	.product-description {
 		color: color(dark);
 		font-size: size(small);
+		font-family: font(bold);
 		height: 35px;
 		margin: 0 auto;
 		max-width: 150px;

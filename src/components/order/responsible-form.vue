@@ -1,6 +1,7 @@
 <template>
 	<form class="responsible">
 		<app-input
+			data-cy="responsible-name"
 			placeholder="Persona responsable de recibir"
 			class="mx-2 my-1 responsible-field"
 			v-model="responsible.name"
@@ -10,6 +11,7 @@
 			<span v-if="!$v.responsible.name.onlyCharacters">Solo se permiten letras</span>
 		</app-input>
 		<app-input
+			data-cy="responsible-lastname"
 			placeholder="Apellido responsable de recibir"
 			class="mx-2 my-1 responsible-field"
 			v-model="responsible.lastname"
@@ -19,6 +21,7 @@
 			<span v-if="!$v.responsible.lastname.onlyCharacters">Solo se permiten letras</span>
 		</app-input>
 		<app-input
+			data-cy="responsible-dni"
 			:placeholder="labelCountry"
 			class="mx-2 my-1 responsible-field"
 			v-model="responsible.dni"
@@ -28,6 +31,7 @@
 			<span v-if="!$v.responsible.dni.onlyNumbers">Solo se permiten números</span>
 		</app-input>
 		<app-input
+			data-cy="responsible-phone"
 			placeholder="Celular"
 			class="mx-2 my-1 responsible-field"
 			v-model="responsible.phone"
@@ -37,6 +41,7 @@
 			<span v-if="!$v.responsible.phone.onlyNumbers">Solo se permiten números</span>
 		</app-input>
 		<app-input
+			data-cy="responsible-email"
 			placeholder="Correo"
 			type="email"
 			class="mx-2 my-1 responsible-field"

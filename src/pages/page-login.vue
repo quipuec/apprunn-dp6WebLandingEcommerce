@@ -164,7 +164,7 @@
 
 	function redirect() {
 		if (this.afterLoginRoute) {
-			this.goTo(this.afterLoginRoute);
+			this.$router.push(this.afterLoginRoute);
 		} else {
 			this.goTo('page-home');
 		}
