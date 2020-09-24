@@ -131,7 +131,10 @@ function onCard(v) {
 }
 
 function noStock() {
-	const stockCero = !this.product.stockWarehouse;
+	let stockCero = getDeeper('stockVirtual')(this.product);
+	if (stockCero === null || stockCero === undefined) {
+		stockCero = !this.product.stockWarehouse;
+	}
 	const loading = !this.indeterminate;
 	const productService = getDeeper('typeInfo.code')(this.product) === 'servicios';
 	if (productService) {
