@@ -231,6 +231,11 @@ const asyncActions = {
 		commit('SET_ONLINE_TRANSACTIONS', response);
 		return Number(headers['x-last-page']);
 	},
+	getCurrentTransactions: async (_, { context, gatewayCode }) => {
+		const url = `payment-gateway/${gatewayCode}/list-order`;
+		const { data: response } = await context.$httpSales.get(url);
+		return response;
+	},
 };
 
 export default asyncActions;

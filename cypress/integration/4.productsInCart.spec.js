@@ -8,6 +8,8 @@ context('COMPRAR DOS PRODUCTOS CON RECOJO EN TIENDA', () => {
 		cy.get('[data-cy="make-order"]')
 			.click();
 		cy.login();
+		cy.get('[data-cy="make-order"]')
+			.click();
 		cy.SelectDeliveryHome();
 		cy.FillResponsibleForm();
 		cy.SelectAddress();

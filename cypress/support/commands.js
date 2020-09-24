@@ -25,13 +25,12 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 Cypress.Commands.add('login', () => {
 	cy.fixture('fenix-dev.json').then(({ email, password }) => {
-		cy.visit('localhost:9010');
 		cy.get('[data-cy="loginBtn"]')
 			.find('.icon-desktop')
 			.click();
 		cy.get('[data-cy="appButtonLogin"]')
 			.should('exist')
-			.click();
+			.click({ force: true });
 		cy.get('[data-cy="inputEmail"]')
 			.should('exist')
 			.type(email);
@@ -163,4 +162,15 @@ Cypress.Commands.add('CheckIfThereIsProductServices', () => {
 			});
 		})
 	});	
+});
+
+Cypress.Commands.add('SelectFirstCategory', () => {
+	cy.get('[data-cy="categories-home"]')
+		.should('exist')
+		.children()
+		.children()
+		.eq(0)
+		.children()
+		.eq(0)
+		.click();
 })
