@@ -8,10 +8,11 @@
 			</div>
 			<div class="methods-container">
 				<app-button
+					class="method-item"
 					v-for="method in getWaysPayments"
 					:key="method.id"
-					class="method-item"
 					:max-width="'100%'"
+					:data-cy="method.name"
 					:action="method.name"
 					:active="paymentMethodSelected === method.code"
 					:background="globalColors.secondary"
