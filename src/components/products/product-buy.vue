@@ -3,7 +3,8 @@
 		<div class="container-btn-open">
 			<p class="warehouse-null" v-if="openWarehouse">No hay tiendas disponibles</p>
 			<button
-				v-else
+				data-cy="see-available-warehouse"
+				v-if="!openWarehouse && product.typeInfo.code !== 'servicios'"
 				:class="[
 					isLoading ? 'loading stores' : 'btn-stores',
 				]"
@@ -67,6 +68,10 @@ export default {
 	props: {
 		number: Number,
 		openWarehouse: false,
+		product: {
+			required: true,
+			type: Object,
+		},
 	},
 };
 </script>
