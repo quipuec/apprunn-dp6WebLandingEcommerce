@@ -48,7 +48,7 @@
 							:class="[
 								indeterminate ? 'loading text-field' : 'product-description'
 							]"
-						>{{product.description}}</p>
+						>{{product.name}}</p>
 						<small
 							v-if="product.warehouseProduct && product.warehouseProduct.brand"
 							class="product-brand">{{product.warehouseProduct.brand.name}}</small>
@@ -267,6 +267,7 @@ export default {
 	.product-description {
 		color: color(dark);
 		font-size: size(small);
+		font-family: font(bold);
 		height: 35px;
 		margin: 0 auto;
 		max-width: 150px;
