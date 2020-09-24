@@ -4,7 +4,7 @@
 			<p class="warehouse-null" v-if="openWarehouse">No hay tiendas disponibles</p>
 			<button
 				data-cy="see-available-warehouse"
-				v-if="!openWarehouse && product.typeInfo.code !== 'servicios'"
+				v-if="!openWarehouse && productTypeService"
 				:class="[
 					isLoading ? 'loading stores' : 'btn-stores',
 				]"
@@ -45,9 +45,14 @@ import { mapGetters } from 'vuex';
 import quantityButton from '@/components/shared/buttons/quantity-button';
 import appButtonOrder from '@/components/shared/buttons/app-button-order';
 import imageCheck from '@/components/shared/icons/check-component';
+import { getDeeper } from '@/shared/lib';
 
 function clickQuantity(value) {
 	this.$emit('click', value);
+}
+
+function productTypeService() {
+	return getDeeper('typeInfo.code')(this.product) !== 'servicios';
 }
 
 export default {
@@ -61,6 +66,7 @@ export default {
 		...mapGetters('loading', [
 			'isLoading',
 		]),
+		productTypeService,
 	},
 	methods: {
 		clickQuantity,
