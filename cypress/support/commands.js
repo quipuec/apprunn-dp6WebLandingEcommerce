@@ -26,6 +26,7 @@
 Cypress.Commands.add('login', () => {
 	cy.fixture('fenix-dev.json').then(({ email, password }) => {
 		cy.get('[data-cy="loginBtn"]')
+			.should('exist')
 			.find('.icon-desktop')
 			.click();
 		cy.get('[data-cy="appButtonLogin"]')
