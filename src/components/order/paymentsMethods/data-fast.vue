@@ -1,11 +1,20 @@
 <template>
-	<div>
+	<div class="data-fast-container">
 		<button
 			class="data-fast-btn"
 			type="button"
 			@click="checkout"
 		>
-		<img :src="img" alt="logo_data_fast">
+			<img :src="img" alt="logo_data_fast">
+		</button>
+		<button
+			class="data-fast-btn-details"
+			type="button"
+		>
+			<img src="/static/icons/informacion.svg" alt="" height="24" />
+			<span class="tooltip">
+				Haz clic en el botón para ver las tarjetas con las que puedes pagar en DATAFAST
+			</span>
 		</button>
 		<modal v-model="showModal" max-width="420px" @input="closeModal">
 			<div ref="data-fast" class="modal-data-fast" v-if="showModal">
@@ -154,5 +163,39 @@ export default {
     display: flex;
     justify-content: center;
     padding: 30px;
+}
+
+.data-fast-btn-details {
+	display: inline-flex;
+	padding-left: 10px;
+	position: relative;
+	z-index: 2;
+
+	& > span.tooltip {
+		background-color: rgba(37, 37, 37, .6);
+		border-radius: 4px;
+		color: color(white);
+		display: none;
+		font-family: font(bold);
+		left: -250%;
+		line-height: 1;
+		padding: 5px;
+		position: absolute;
+		text-align: center;
+		top: -65px;
+		width: 220px;
+	}
+
+	&:hover > span.tooltip {
+		display: initial;
+	}
+}
+
+.data-fast-container {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	position: relative;
 }
 </style>

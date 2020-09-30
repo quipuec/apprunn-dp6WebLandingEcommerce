@@ -24,6 +24,37 @@
 				:is="paymentMethodSelectedComponent"
 				:paymentsTypes="gatewayConfiguration"
 			></component>
+			<div class="details-collapse component-container">
+				<div class="details-collapse-title payment-sections">
+					Tarjetas con las que puedes pagar en DATAFAST
+					<button
+						class="details-collapse-title-btn"
+						type="button"
+						@click="openDetails"
+					>
+						<template v-if="open">OCULTAR</template>
+						<template v-else>VER</template>
+					</button>
+				</div>
+				<div v-if="open" class="details-collapse-container">
+					<div class="details-collapse-items">
+						<div
+							class="details-collapse-item"
+							v-for="card in datafastData.creditCards.options"
+							:key="card.code"
+						>
+							<template v-if="card.active">
+								<template v-if="card.urlImage">
+									<img :src="card.urlImage" :alt="card.name" />
+								</template>
+								<template v-else>
+									{{ card.name }}
+								</template>
+							</template>
+						</div>
+					</div>
+				</div>
+			</div>
 		</section>
 	</div>
 </template>
@@ -35,6 +66,8 @@ import depositPayment from '@/components/order/deposit-payment';
 import productsBuyed from '@/components/order/products-buyed';
 import recievedPayment from '@/components/order/recieved-payment';
 import VisaByCountry from '@/components/order/credit-card-payment';
+import { datafast } from '@/shared/enums/gatewayCodes';
+import { BUTTON } from '@/shared/enums/paymentStrategy';
 import { creditCard, transfer } from '@/shared/enums/wayPayment';
 
 function created() {
@@ -51,8 +84,14 @@ function onSelect(method) {
 	this.$store.commit('SET_WAY_PAYMENT', { wayPayment: null, bankAccountId: null });
 	this.paymentMethodSelected = method.code;
 	this.gatewayConfiguration = method.gatewayConfiguration || [];
+	const buttonsGateway = this.gatewayConfiguration.find(gc => gc.code === BUTTON) || {};
+	const datafastItem = buttonsGateway.gateway ? buttonsGateway.gateway.find(bg =>
+		bg.code === datafast) : null;
 	const wayPayment = method.wayPaymentId;
 	let bankAccountId = null;
+	if (datafastItem) {
+		this.datafastAdditionals(datafastItem);
+	}
 	if (method.code === transfer.code) {
 		bankAccountId = isEmpty(this.getBankAccounts) ? null : this.getBankAccounts[0].bankId;
 	}
@@ -80,12 +119,34 @@ function getCreditCard() {
 	return findCreditCard;
 }
 
+async function datafastAdditionals({ code }) {
+	const params = { commerceCode: this.getCommerceData.code };
+	try {
+		({ data: this.datafastData } = await this.$httpSales.get(
+			`payment-gateway/${code}/additionals`, { params }));
+	} catch (err) {
+		if (err.status === 500) {
+			this.showGenericError();
+		}
+	}
+}
+
+function openDetails() {
+	if (this.datafastData.creditCards) {
+		if (this.datafastData.creditCards.options) {
+			this.open = !this.open;
+		}
+	}
+}
+
 function data() {
 	return {
+		datafastData: {},
 		gatewayConfiguration: [],
 		logo: {
 			section: '/static/icons/payment.svg',
 		},
+		open: false,
 		paymentMethodSelected: '',
 	};
 }
@@ -111,6 +172,7 @@ export default {
 	},
 	computed: {
 		...mapGetters([
+			'getCommerceData',
 			'getWaysPayments',
 			'getBankAccounts',
 			'indeterminate',
@@ -121,7 +183,9 @@ export default {
 	created,
 	data,
 	methods: {
+		datafastAdditionals,
 		onSelect,
+		openDetails,
 	},
 	watch: {
 		getWaysPayments,
@@ -170,5 +234,43 @@ export default {
 		@media (min-width: 768px) {
 			width: 650px;
 		}
+	}
+
+	.details-collapse-title {
+		align-items: center;
+		border-bottom: 1px solid color(black);
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		font-family: font(bold);
+		font-size: size(medium);
+		justify-content: space-between;
+		padding-bottom: 3px;
+
+		&-btn {
+			border: 1px solid black;
+			border-radius: 6px;
+			font-family: font(demi);
+			font-size: size(minmedium);
+			padding: 4px 5px 0px;
+		}
+	}
+
+	.details-collapse-items {
+		align-items: flex-start;
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: flex-start;
+		margin-top: 10px;
+	}
+
+	.details-collapse-item {
+		border: 1px solid color(black);
+		border-radius: 6px;
+		font-family: font(bold);
+		margin: 5px 8px;
+		padding: 10px 15px 5px;
+		text-transform: uppercase;
 	}
 </style>
