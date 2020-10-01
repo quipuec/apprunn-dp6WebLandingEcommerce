@@ -40,7 +40,7 @@
 					<div class="details-collapse-items">
 						<div
 							class="details-collapse-item"
-							v-for="card in datafastData.creditCards.options"
+							v-for="card in datafastData.creditCards"
 							:key="card.code"
 						>
 							<template v-if="card.active">
@@ -122,8 +122,26 @@ function getCreditCard() {
 async function datafastAdditionals({ code }) {
 	const params = { commerceCode: this.getCommerceData.code };
 	try {
-		({ data: this.datafastData } = await this.$httpSales.get(
-			`payment-gateway/${code}/additionals`, { params }));
+		const { data: datafastResponse } = await this.$httpSales.get(
+			`payment-gateway/${code}/additionals`, { params });
+		const creditCards = datafastResponse.creditCards ?
+			datafastResponse.creditCards.options || [] : [];
+		const typesCredit = datafastResponse.typesCredit ?
+			datafastResponse.typesCredit.options || [] : [];
+		this.datafastData.creditCards = creditCards.filter(cc => cc.active);
+		this.datafastData.typesCredit = typesCredit.filter(tc => tc.flagActive);
+		if (this.datafastData.creditCards.length > 0) {
+			const datafastStringify = JSON.stringify(this.datafastData.creditCards);
+			localStorage.setItem('datafast-cards', datafastStringify);
+		} else {
+			localStorage.removeItem('datafast-cards');
+		}
+		if (this.datafastData.typesCredit.length > 0) {
+			const datafastStringify = JSON.stringify(this.datafastData.typesCredit);
+			localStorage.setItem('datafast-types-credit', datafastStringify);
+		} else {
+			localStorage.removeItem('datafast-types-credit');
+		}
 	} catch (err) {
 		if (err.status === 500) {
 			this.showGenericError();
@@ -132,10 +150,8 @@ async function datafastAdditionals({ code }) {
 }
 
 function openDetails() {
-	if (this.datafastData.creditCards) {
-		if (this.datafastData.creditCards.options) {
-			this.open = !this.open;
-		}
+	if (this.datafastData.creditCards && this.datafastData.creditCards.length > 0) {
+		this.open = !this.open;
 	}
 }
 

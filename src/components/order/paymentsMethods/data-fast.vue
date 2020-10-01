@@ -55,6 +55,7 @@ async function checkout() {
 }
 
 function createDataFastForm() {
+	const datafastTypesCredit = JSON.parse(localStorage.getItem('datafast-types-credit')) || [];
 	const dataFastScript = document.createElement('script');
 	const src = `${process.env.DATA_FAST_URL}${this.checkoutId}`;
 	dataFastScript.setAttribute('src', src);
@@ -62,7 +63,7 @@ function createDataFastForm() {
 	setTimeout(() => {
 		const el = this.$refs['data-fast'];
 		el.appendChild(dataFastScript);
-		this.insertForm();
+		this.insertForm(datafastTypesCredit);
 	});
 	this.loadingFn();
 }
@@ -73,7 +74,67 @@ function loadingFn() {
 	}, 2200);
 }
 
-function insertForm() {
+function insertDiferidos(dtc) {
+	const divTitle = document.createElement('div');
+	divTitle.setAttribute('class', 'wpwl-label wpwl-label-custom');
+	divTitle.setAttribute('style', 'display:inline-block');
+	const divContent = document.createTextNode('Diferidos:');
+	divTitle.appendChild(divContent);
+	const divSelect = document.createElement('div');
+	divSelect.setAttribute('class', 'wpwl-wrapper wpwl-wrapper-custom');
+	divSelect.setAttribute('style', 'display:inline-block');
+	const newSelect = document.createElement('select');
+	newSelect.setAttribute('name', 'recurring.numberOfInstallments');
+	dtc.forEach(({ id }) => {
+		const newOption = document.createElement('option');
+		newOption.setAttribute('value', id);
+		const newOptionContent = document.createTextNode(id);
+		newOption.appendChild(newOptionContent);
+		newSelect.appendChild(newOption);
+	});
+	divSelect.appendChild(newSelect);
+	const formCard = document.querySelector('form.wpwl-form-card').querySelector('.wpwl-wrapper-submit');
+	formCard.appendChild(divTitle);
+	formCard.appendChild(divSelect);
+}
+
+function insertTiposDeCredito(dtc) {
+	const tipocredito = document.createElement('div');
+	tipocredito.setAttribute('class', 'wpwl-wrapper wpwl-wrapper-custom');
+	tipocredito.setAttribute('style', 'display:inline-block');
+	const divContent = document.createTextNode('Tipo de crédito:');
+	tipocredito.appendChild(divContent);
+	const newSelect = document.createElement('select');
+	newSelect.setAttribute('name', 'customeParameters[SHOPPER_TIPOCREDITO]');
+	dtc.forEach(({ id, name }) => {
+		const newOption = document.createElement('option');
+		newOption.setAttribute('value', id);
+		const newOptionContent = document.createTextNode(name);
+		newOption.appendChild(newOptionContent);
+		newSelect.appendChild(newOption);
+	});
+	tipocredito.appendChild(newSelect);
+	const formCard = document.querySelector('form.wpwl-form-card').querySelector('.wpwl-wrapper-submit');
+	formCard.appendChild(tipocredito);
+}
+
+function insertForm(dtc) {
+	const datafastCards = JSON.parse(localStorage.getItem('datafast-cards')) || [];
+	const dataBrands = datafastCards.length > 0 ? datafastCards.reduce((a, dfc, i) => {
+		let { codeInternal } = dfc;
+		if (codeInternal.toLowerCase() === 'mastercard') {
+			codeInternal = 'MASTER';
+		} else if (codeInternal.toLowerCase() === 'american') {
+			codeInternal = 'AMEX';
+		}
+		if (a.indexOf(codeInternal) === -1) {
+			if (datafastCards.length > 1 && (i !== (datafastCards.length - 1))) {
+				return a.concat(`${codeInternal} `);
+			}
+			return a.concat(codeInternal);
+		}
+		return a;
+	}, '') : 'VISA MASTER DINERS AMEX DISCOVER';
 	const dataFastForm = document.createElement('form');
 	const commerceCode = `commerceCode=${this.getCommerceData.code}`;
 	const purchaseNumber = `orderId=${this.getOrderId}`;
@@ -81,11 +142,15 @@ function insertForm() {
 	const url = `${this.baseUrl}?${commerceCode}&${purchaseNumber}&${redirect}`;
 	dataFastForm.setAttribute('action', url);
 	dataFastForm.setAttribute('method', 'get');
-	dataFastForm.setAttribute('data-brands', 'VISA MASTER DINERS AMEX DISCOVER');
+	dataFastForm.setAttribute('data-brands', dataBrands);
 	dataFastForm.setAttribute('id', 'datafast-form');
 	dataFastForm.setAttribute('class', 'paymentWidgets');
 	const el = this.$refs['data-fast'];
 	el.appendChild(dataFastForm);
+	setTimeout(() => {
+		this.insertDiferidos(dtc);
+		this.insertTiposDeCredito(dtc);
+	}, 5000);
 }
 
 function baseUrl() {
@@ -127,6 +192,8 @@ export default {
 		closeModal,
 		createDataFastForm,
 		getClientIp,
+		insertDiferidos,
+		insertTiposDeCredito,
 		insertForm,
 		loadingFn,
 	},
