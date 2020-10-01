@@ -74,7 +74,7 @@ function loadingFn() {
 	}, 2200);
 }
 
-function insertDiferidos(dtc) {
+function insertDiferidos() {
 	const divTitle = document.createElement('div');
 	divTitle.setAttribute('class', 'wpwl-label wpwl-label-custom');
 	divTitle.setAttribute('style', 'display:inline-block');
@@ -85,10 +85,10 @@ function insertDiferidos(dtc) {
 	divSelect.setAttribute('style', 'display:inline-block');
 	const newSelect = document.createElement('select');
 	newSelect.setAttribute('name', 'recurring.numberOfInstallments');
-	dtc.forEach(({ id }) => {
+	[3, 6, 9].forEach((item) => {
 		const newOption = document.createElement('option');
-		newOption.setAttribute('value', id);
-		const newOptionContent = document.createTextNode(id);
+		newOption.setAttribute('value', item);
+		const newOptionContent = document.createTextNode(item);
 		newOption.appendChild(newOptionContent);
 		newSelect.appendChild(newOption);
 	});
@@ -148,7 +148,7 @@ function insertForm(dtc) {
 	const el = this.$refs['data-fast'];
 	el.appendChild(dataFastForm);
 	setTimeout(() => {
-		this.insertDiferidos(dtc);
+		this.insertDiferidos();
 		this.insertTiposDeCredito(dtc);
 	}, 5000);
 }
