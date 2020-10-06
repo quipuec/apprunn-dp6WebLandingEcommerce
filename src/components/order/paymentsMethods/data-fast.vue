@@ -1,11 +1,20 @@
 <template>
-	<div>
+	<div class="data-fast-container">
 		<button
 			class="data-fast-btn"
 			type="button"
 			@click="checkout"
 		>
-		<img :src="img" alt="logo_data_fast">
+			<img :src="img" alt="logo_data_fast">
+		</button>
+		<button
+			class="data-fast-btn-details"
+			type="button"
+		>
+			<img src="/static/icons/informacion.svg" alt="" height="24" />
+			<span class="tooltip">
+				Haz clic en el botón para ver las tarjetas con las que puedes pagar en DATAFAST
+			</span>
 		</button>
 		<modal v-model="showModal" max-width="420px" @input="closeModal">
 			<div ref="data-fast" class="modal-data-fast" v-if="showModal">
@@ -46,6 +55,7 @@ async function checkout() {
 }
 
 function createDataFastForm() {
+	const datafastTypesCredit = JSON.parse(localStorage.getItem('datafast-types-credit')) || [];
 	const dataFastScript = document.createElement('script');
 	const src = `${process.env.DATA_FAST_URL}${this.checkoutId}`;
 	dataFastScript.setAttribute('src', src);
@@ -53,7 +63,7 @@ function createDataFastForm() {
 	setTimeout(() => {
 		const el = this.$refs['data-fast'];
 		el.appendChild(dataFastScript);
-		this.insertForm();
+		this.insertForm(datafastTypesCredit);
 	});
 	this.loadingFn();
 }
@@ -64,7 +74,67 @@ function loadingFn() {
 	}, 2200);
 }
 
-function insertForm() {
+function insertDiferidos() {
+	const divTitle = document.createElement('div');
+	divTitle.setAttribute('class', 'wpwl-label wpwl-label-custom');
+	divTitle.setAttribute('style', 'display:inline-block');
+	const divContent = document.createTextNode('Diferidos:');
+	divTitle.appendChild(divContent);
+	const divSelect = document.createElement('div');
+	divSelect.setAttribute('class', 'wpwl-wrapper wpwl-wrapper-custom');
+	divSelect.setAttribute('style', 'display:inline-block');
+	const newSelect = document.createElement('select');
+	newSelect.setAttribute('name', 'recurring.numberOfInstallments');
+	[3, 6, 9].forEach((item) => {
+		const newOption = document.createElement('option');
+		newOption.setAttribute('value', item);
+		const newOptionContent = document.createTextNode(item);
+		newOption.appendChild(newOptionContent);
+		newSelect.appendChild(newOption);
+	});
+	divSelect.appendChild(newSelect);
+	const formCard = document.querySelector('form.wpwl-form-card').querySelector('.wpwl-wrapper-submit');
+	formCard.appendChild(divTitle);
+	formCard.appendChild(divSelect);
+}
+
+function insertTiposDeCredito(dtc) {
+	const tipocredito = document.createElement('div');
+	tipocredito.setAttribute('class', 'wpwl-wrapper wpwl-wrapper-custom');
+	tipocredito.setAttribute('style', 'display:inline-block');
+	const divContent = document.createTextNode('Tipo de crédito:');
+	tipocredito.appendChild(divContent);
+	const newSelect = document.createElement('select');
+	newSelect.setAttribute('name', 'customeParameters[SHOPPER_TIPOCREDITO]');
+	dtc.forEach(({ id, name }) => {
+		const newOption = document.createElement('option');
+		newOption.setAttribute('value', id);
+		const newOptionContent = document.createTextNode(name);
+		newOption.appendChild(newOptionContent);
+		newSelect.appendChild(newOption);
+	});
+	tipocredito.appendChild(newSelect);
+	const formCard = document.querySelector('form.wpwl-form-card').querySelector('.wpwl-wrapper-submit');
+	formCard.appendChild(tipocredito);
+}
+
+function insertForm(dtc) {
+	const datafastCards = JSON.parse(localStorage.getItem('datafast-cards')) || [];
+	const dataBrands = datafastCards.length > 0 ? datafastCards.reduce((a, dfc, i) => {
+		let { codeInternal } = dfc;
+		if (codeInternal.toLowerCase() === 'mastercard') {
+			codeInternal = 'MASTER';
+		} else if (codeInternal.toLowerCase() === 'american') {
+			codeInternal = 'AMEX';
+		}
+		if (a.indexOf(codeInternal) === -1) {
+			if (datafastCards.length > 1 && (i !== (datafastCards.length - 1))) {
+				return a.concat(`${codeInternal} `);
+			}
+			return a.concat(codeInternal);
+		}
+		return a;
+	}, '') : 'VISA MASTER DINERS AMEX DISCOVER';
 	const dataFastForm = document.createElement('form');
 	const commerceCode = `commerceCode=${this.getCommerceData.code}`;
 	const purchaseNumber = `orderId=${this.getOrderId}`;
@@ -72,11 +142,15 @@ function insertForm() {
 	const url = `${this.baseUrl}?${commerceCode}&${purchaseNumber}&${redirect}`;
 	dataFastForm.setAttribute('action', url);
 	dataFastForm.setAttribute('method', 'get');
-	dataFastForm.setAttribute('data-brands', 'VISA MASTER DINERS AMEX DISCOVER');
+	dataFastForm.setAttribute('data-brands', dataBrands);
 	dataFastForm.setAttribute('id', 'datafast-form');
 	dataFastForm.setAttribute('class', 'paymentWidgets');
 	const el = this.$refs['data-fast'];
 	el.appendChild(dataFastForm);
+	setTimeout(() => {
+		this.insertDiferidos();
+		this.insertTiposDeCredito(dtc);
+	}, 5000);
 }
 
 function baseUrl() {
@@ -118,6 +192,8 @@ export default {
 		closeModal,
 		createDataFastForm,
 		getClientIp,
+		insertDiferidos,
+		insertTiposDeCredito,
 		insertForm,
 		loadingFn,
 	},
@@ -154,5 +230,39 @@ export default {
     display: flex;
     justify-content: center;
     padding: 30px;
+}
+
+.data-fast-btn-details {
+	display: inline-flex;
+	padding-left: 10px;
+	position: relative;
+	z-index: 2;
+
+	& > span.tooltip {
+		background-color: rgba(37, 37, 37, .6);
+		border-radius: 4px;
+		color: color(white);
+		display: none;
+		font-family: font(bold);
+		left: -250%;
+		line-height: 1;
+		padding: 5px;
+		position: absolute;
+		text-align: center;
+		top: -65px;
+		width: 220px;
+	}
+
+	&:hover > span.tooltip {
+		display: initial;
+	}
+}
+
+.data-fast-container {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	position: relative;
 }
 </style>
