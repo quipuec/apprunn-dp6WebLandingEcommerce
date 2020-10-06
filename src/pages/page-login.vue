@@ -98,7 +98,9 @@
 			await this.$auth.authenticate(provider);
 			this.afterAuthenticate();
 		} catch (err) {
-			this.showGenericError();
+			if (!err.message.includes('Auth popup window closed')) {
+				this.showGenericError();
+			}
 		}
 	}
 
