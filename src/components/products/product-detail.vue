@@ -14,8 +14,13 @@
 					:class="[isLoading ? 'loading' : 'product-detail-name']"
 				>{{ data.name }}</p>
 				<p
+					v-if="data.description"
+					:class="[isLoading ? 'loading' : 'product-detail-description']"
+				>{{ data.description }}</p>
+				<p
+					v-if="data.getBrandName"
 					:class="[isLoading ? 'loading' : 'product-detail-brand']"
-				>{{ data.getBrandName || '--' }}</p>
+				>{{ data.getBrandName }}</p>
 			</div>
 			<div class="d-center container-code-rating">
 				<span
@@ -176,8 +181,12 @@ export default {
 		font-family: font(demi);
 		font-size: size(xlarge);
 		margin: 20px 0 5px 0;
+		text-transform: uppercase;
 	}
 
+	.product-detail-description {
+		text-transform: lowercase;
+	}
 	.product-detail-code {
 		color: color(base);
 		flex: 1 1 30%;

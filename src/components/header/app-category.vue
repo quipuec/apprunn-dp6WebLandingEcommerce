@@ -39,8 +39,8 @@
 							:data="list" 
 							color-select="#ed0000"
 							@click-item="goToCategory(list)"
-							@hover-item="hoverCategory
-						"/>
+							@hover-item="hoverCategory"
+						/>
 						<button class="btn-collapse" @click="clickCategory(list)">
 							<v-icon 
 								:class="{'rotate-icon': list.select}"
