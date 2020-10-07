@@ -180,17 +180,6 @@ export default {
 		position: relative;
 		width: 100%;
 
-		// &::before {
-			// background-image: linear-gradient(to bottom, rgba(60, 60, 60, 0.89), rgba(60, 60, 60, 0.50));
-		// 	border-radius: 9px;
-		// 	bottom: 0;
-		// 	content: '';
-		// 	left: 0;
-		// 	position: absolute;
-		// 	right: 0;
-		// 	top: 0;
-		// }
-
 		.image {
 			filter: brightness(0) invert(1);
 			height: 67px;
