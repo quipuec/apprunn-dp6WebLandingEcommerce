@@ -27,7 +27,7 @@
 								:style="`background-image: url(${category.urlImage})`"
 								:class="[
 									'category-image',
-									{ 'category-opacity': applyBgOpacity },
+									{ 'category-opacity': !applyBgOpacity },
 								]"
 							>
 								<img 
