@@ -213,8 +213,7 @@ export default {
 <style lang="scss" scoped>
 .data-fast-btn {
 	align-items: center;
-	border: 1px solid #184D73;
-	border-radius: 5px;
+	border: 1px solid #E75A32;
 	color: white;
 	display: flex;
 	font-family: font(bold);
@@ -222,7 +221,13 @@ export default {
 	height: 50px;
 	justify-content: center;
 	overflow: hidden;
-	padding: 1rem 2rem;
+	padding: 1.5rem 3.7rem;
+	transition-duration: 250ms;
+
+	&:hover {
+		box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+		transform: scale(1.05);
+	}
 }
 
 .modal-data-fast {
@@ -235,7 +240,7 @@ export default {
 
 .data-fast-btn-details {
 	display: inline-flex;
-	padding-left: 10px;
+	padding-left: 15px;
 	position: relative;
 	z-index: 2;
 
@@ -264,6 +269,7 @@ export default {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
+	margin: 0 14px;
 	position: relative;
 }
 </style>

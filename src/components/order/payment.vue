@@ -252,7 +252,7 @@ export default {
 
 	.details-collapse-title {
 		align-items: center;
-		border-bottom: 1px solid color(black);
+		border-bottom: 1px solid rgb(230, 230, 230);
 		display: flex;
 		flex-direction: row;
 		flex-wrap: wrap;
