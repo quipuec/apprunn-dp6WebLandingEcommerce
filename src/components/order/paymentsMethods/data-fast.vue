@@ -16,7 +16,7 @@
 				Haz clic en el botón para ver las tarjetas con las que puedes pagar en DATAFAST
 			</span>
 		</button>
-		<modal v-model="showModal" max-width="420px" @input="closeModal">
+		<modal v-model="showModal" max-width="460px" @input="closeModal">
 			<div ref="data-fast" class="modal-data-fast" v-if="showModal">
 				<h3 v-if="loading">Cargando...</h3>
 			</div>
@@ -74,17 +74,37 @@ function loadingFn() {
 	}, 2200);
 }
 
+function insertTiposDeCredito(dtc) {
+	const tipocredito = document.createElement('div');
+	tipocredito.setAttribute('class', 'wpwl-wrapper wpwl-wrapper-custom');
+	tipocredito.setAttribute('style', 'margin-top: 10px;flex-direction: column;display: flex');
+	const divContent = document.createTextNode('Tipo de crédito:');
+	tipocredito.appendChild(divContent);
+	const newSelect = document.createElement('select');
+	newSelect.setAttribute('style', 'background-color: white;padding: 3.75px 0 3.75px 10px; border: 1px solid #ccc;border-radius: 4px; width: 225px;');
+	newSelect.setAttribute('name', 'customeParameters[SHOPPER_TIPOCREDITO]');
+	dtc.forEach(({ id, name }) => {
+		const newOption = document.createElement('option');
+		newOption.setAttribute('value', id);
+		const newOptionContent = document.createTextNode(name);
+		newOption.appendChild(newOptionContent);
+		newSelect.appendChild(newOption);
+	});
+	tipocredito.appendChild(newSelect);
+	const formCard = document.querySelector('form.wpwl-form-card').querySelector('.wpwl-wrapper-submit');
+	formCard.appendChild(tipocredito);
+}
+
 function insertDiferidos() {
 	const divTitle = document.createElement('div');
 	divTitle.setAttribute('class', 'wpwl-label wpwl-label-custom');
-	divTitle.setAttribute('style', 'display:inline-block');
 	const divContent = document.createTextNode('Diferidos:');
 	divTitle.appendChild(divContent);
 	const divSelect = document.createElement('div');
 	divSelect.setAttribute('class', 'wpwl-wrapper wpwl-wrapper-custom');
 	divSelect.setAttribute('style', 'display:inline-block');
 	const newSelect = document.createElement('select');
-	newSelect.setAttribute('style', 'margin-left: 15px;background-color: white;width: 150px;border-radius: 4px;border: 1px solid #ccc;padding: 3.75px 0 3.75px 10px;outline: none;');
+	newSelect.setAttribute('style', 'background-color: white;width: 225px;border-radius: 4px;border: 1px solid #ccc;padding: 3.75px 0 3.75px 10px;outline: none;');
 	newSelect.setAttribute('name', 'recurring.numberOfInstallments');
 	[0, 3, 6, 12].forEach((item) => {
 		const newOption = document.createElement('option');
@@ -97,26 +117,6 @@ function insertDiferidos() {
 	const formCard = document.querySelector('form.wpwl-form-card').querySelector('.wpwl-wrapper-submit');
 	formCard.appendChild(divTitle);
 	formCard.appendChild(divSelect);
-}
-
-function insertTiposDeCredito(dtc) {
-	const tipocredito = document.createElement('div');
-	tipocredito.setAttribute('class', 'wpwl-wrapper wpwl-wrapper-custom');
-	tipocredito.setAttribute('style', 'display:inline-block');
-	const divContent = document.createTextNode('Tipo de crédito:');
-	tipocredito.appendChild(divContent);
-	const newSelect = document.createElement('select');
-	newSelect.setAttribute('name', 'customeParameters[SHOPPER_TIPOCREDITO]');
-	dtc.forEach(({ id, name }) => {
-		const newOption = document.createElement('option');
-		newOption.setAttribute('value', id);
-		const newOptionContent = document.createTextNode(name);
-		newOption.appendChild(newOptionContent);
-		newSelect.appendChild(newOption);
-	});
-	tipocredito.appendChild(newSelect);
-	const formCard = document.querySelector('form.wpwl-form-card').querySelector('.wpwl-wrapper-submit');
-	formCard.appendChild(tipocredito);
 }
 
 function insertForm(dtc) {
