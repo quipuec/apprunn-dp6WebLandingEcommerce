@@ -44,10 +44,8 @@
 							:key="card.code"
 						>
 							<template v-if="card.active">
-								<template v-if="card.urlImage">
-									<img :src="card.urlImage" :alt="card.name" />
-								</template>
-								<template v-else>
+								<template>
+									<img :src="card.urlImage" height="20" />
 									{{ card.name }}
 								</template>
 							</template>
