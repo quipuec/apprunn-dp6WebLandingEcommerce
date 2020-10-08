@@ -25,7 +25,7 @@
 				:paymentsTypes="gatewayConfiguration"
 			></component>
 			<div class="details-collapse component-container">
-				<div class="details-collapse-title payment-sections">
+				<div class="details-collapse-title payment-sections" v-if="datafastData.creditCards">
 					Tarjetas con las que puedes pagar en DATAFAST
 					<button
 						class="details-collapse-title-btn"
