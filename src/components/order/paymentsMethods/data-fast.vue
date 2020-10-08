@@ -84,8 +84,9 @@ function insertDiferidos() {
 	divSelect.setAttribute('class', 'wpwl-wrapper wpwl-wrapper-custom');
 	divSelect.setAttribute('style', 'display:inline-block');
 	const newSelect = document.createElement('select');
+	newSelect.setAttribute('style', 'margin-left: 15px;background-color: white;width: 150px;border-radius: 4px;border: 1px solid #ccc;padding: 3.75px 0 3.75px 10px;outline: none;');
 	newSelect.setAttribute('name', 'recurring.numberOfInstallments');
-	[3, 6, 9].forEach((item) => {
+	[0, 3, 6, 12].forEach((item) => {
 		const newOption = document.createElement('option');
 		newOption.setAttribute('value', item);
 		const newOptionContent = document.createTextNode(item);
