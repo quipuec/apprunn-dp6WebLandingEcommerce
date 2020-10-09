@@ -901,4 +901,31 @@ input.app-input::-webkit-input-placeholder {
 .payment-sections {
 	font-family: font(medium);
 }
+
+.wpwl-brand-DINERS {
+	height: 35px;
+	width: 85px;
+}
+
+.wpwl-label-brand {
+	visibility: hidden;
+	text-decoration: none;
+	width: 133px;
+}
+
+.wpwl-label-brand::after {
+	content: "Tipo de Tarjeta:";
+	position: relative;
+    right: 36px;
+	top: 5px;
+	visibility: visible;
+}
+
+.wpwl-label-brand, .wpwl-wrapper-brand, .wpwl-wrapper-registration-registrationId, .wpwl-wrapper-registration-brand, .wpwl-wrapper-registration-number, .wpwl-wrapper-registration-expiry {
+	padding: 0 !important;
+}
+
+.wpwl-form {
+	max-width: 32em;
+}
 </style>

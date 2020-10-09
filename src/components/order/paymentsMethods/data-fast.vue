@@ -16,7 +16,7 @@
 				Haz clic en el botón para ver las tarjetas con las que puedes pagar en DATAFAST
 			</span>
 		</button>
-		<modal v-model="showModal" max-width="460px" @input="closeModal">
+		<modal v-model="showModal" max-width="520px" @input="closeModal">
 			<div ref="data-fast" class="modal-data-fast" v-if="showModal">
 				<h3 v-if="loading">Cargando...</h3>
 			</div>
@@ -81,7 +81,7 @@ function insertTiposDeCredito(dtc) {
 	const divContent = document.createTextNode('Tipo de crédito:');
 	tipocredito.appendChild(divContent);
 	const newSelect = document.createElement('select');
-	newSelect.setAttribute('style', 'background-color: white;padding: 3.75px 0 3.75px 10px; border: 1px solid #ccc;border-radius: 4px; width: 225px;');
+	newSelect.setAttribute('style', 'background-color: white;padding: 3.75px 0 3.75px 10px; border: 1px solid #ccc;border-radius: 4px; width: 258px;');
 	newSelect.setAttribute('name', 'customeParameters[SHOPPER_TIPOCREDITO]');
 	dtc.forEach(({ id, name }) => {
 		const newOption = document.createElement('option');
@@ -104,7 +104,7 @@ function insertDiferidos() {
 	divSelect.setAttribute('class', 'wpwl-wrapper wpwl-wrapper-custom');
 	divSelect.setAttribute('style', 'display:inline-block');
 	const newSelect = document.createElement('select');
-	newSelect.setAttribute('style', 'background-color: white;width: 225px;border-radius: 4px;border: 1px solid #ccc;padding: 3.75px 0 3.75px 10px;outline: none;');
+	newSelect.setAttribute('style', 'background-color: white;width: 258px;border-radius: 4px;border: 1px solid #ccc;padding: 3.75px 0 3.75px 10px;outline: none;');
 	newSelect.setAttribute('name', 'recurring.numberOfInstallments');
 	[0, 3, 6, 12].forEach((item) => {
 		const newOption = document.createElement('option');
