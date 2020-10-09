@@ -1,6 +1,7 @@
 <template>
 	<div class="data-fast-container">
 		<button
+			:disabled="disabledButtonDataFast"
 			class="data-fast-btn"
 			type="button"
 			@click="checkout"
@@ -43,6 +44,7 @@ async function getClientIp() {
 }
 
 async function checkout() {
+	this.disabledButtonDataFast = true;
 	const body = {
 		orderId: this.getOrderId,
 		commerceCode: this.getCommerceData.code,
@@ -162,10 +164,12 @@ function closeModal(val) {
 	if (!val) {
 		this.loading = true;
 	}
+	this.disabledButtonDataFast = false;
 }
 
 function data() {
 	return {
+		disabledButtonDataFast: false,
 		checkoutId: null,
 		clientIp: null,
 		loading: true,
