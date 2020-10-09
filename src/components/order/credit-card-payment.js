@@ -114,7 +114,7 @@ const paymentButtonCreator = (h, gateway) => {
 		},
 		selectedButtons,
 	);
-	const btnTitle = h('h3', { class: ['payment-sections'], style: { marginBottom: '1rem' } }, 'Paga ahora');
+	const btnTitle = h('h3', { style: { marginBottom: '1rem' } }, 'Paga ahora');
 	return h(
 		'div',
 		{
