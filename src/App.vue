@@ -907,6 +907,47 @@ input.app-input::-webkit-input-placeholder {
 	width: 85px;
 }
 
+.wpwl-label-cardNumber {
+	visibility: hidden;
+	text-decoration: none;
+}
+
+.wpwl-label-cardNumber::after {
+	content: "Numero de la Tarjeta:";
+	position: relative;
+    right: 80px;
+	visibility: visible;
+}
+
+.wpwl-label-expiry {
+	visibility: hidden;
+	text-decoration: none;	
+}
+
+.wpwl-label-expiry::after {
+	content: "Expira:";
+	position: relative;
+    right: 66px;
+	visibility: visible;
+}
+
+.wpwl-label-cardHolder {
+	visibility: hidden;
+	text-decoration: none;
+}
+
+.wpwl-label-cardHolder::before {
+	display: none;
+}
+
+
+.wpwl-label-cardHolder::after {
+	content: "Nom. (Igual que en la tarjeta)";
+	position: relative;
+    right: 66px;
+	visibility: visible;
+}
+
 .wpwl-label-brand {
 	visibility: hidden;
 	text-decoration: none;
@@ -927,5 +968,9 @@ input.app-input::-webkit-input-placeholder {
 
 .wpwl-form {
 	max-width: 32em;
+}
+
+.wpwl-control-brand {
+	width: 127px !important;
 }
 </style>
