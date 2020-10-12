@@ -84,7 +84,7 @@ function insertTiposDeCredito(dtc) {
 	tipocredito.appendChild(divContent);
 	const newSelect = document.createElement('select');
 	newSelect.setAttribute('style', 'background-color: white;padding: 3.75px 0 3.75px 10px; border: 1px solid #ccc;border-radius: 4px; width: 258px;');
-	newSelect.setAttribute('name', 'customeParameters[SHOPPER_TIPOCREDITO]');
+	newSelect.setAttribute('name', 'customParameters[SHOPPER_TIPOCREDITO]');
 	dtc.forEach(({ id, name }) => {
 		const newOption = document.createElement('option');
 		newOption.setAttribute('value', id);
