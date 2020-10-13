@@ -203,7 +203,7 @@ const asyncActions = {
 		const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
 		link.type = 'image/x-icon';
 		link.rel = 'shortcut icon';
-		link.href = commerceData.urlDomain;
+		link.href = commerceData.favicon.value;
 		link.sizes = '16x16';
 		document.getElementsByTagName('head')[0].appendChild(link);
 		const pageTitle = document.getElementsByTagName('title');

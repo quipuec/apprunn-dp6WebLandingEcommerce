@@ -101,9 +101,8 @@ function statusChanged(id) {
 
 async function deleteOrder() {
 	const { id } = this.currentOrder;
-	const newOrdersArray = this.getOrders.filter(o => o.id !== id);
-	this.$store.commit('SET_ORDERS', newOrdersArray);
 	await this.CANCEL_ORDER({ context: this, id });
+	this.loadOrders();
 	this.closeModal();
 }
 
