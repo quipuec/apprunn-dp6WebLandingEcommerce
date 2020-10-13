@@ -47,7 +47,7 @@
 									<div>
 										<img :src="card.urlImage" height="24" />
 									</div>
-									<div class="align-center">
+									<div class="name-tarjet">
 										{{ card.name }}
 									</div>
 							</template>
@@ -294,7 +294,8 @@ export default {
 		width: 205px;
 	}
 
-	.align-center {
+	.name-tarjet {
+		font-size: 11px;
 		margin-top: 5px;
 		text-align: center;
 	}
