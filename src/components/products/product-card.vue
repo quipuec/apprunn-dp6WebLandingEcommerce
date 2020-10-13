@@ -8,10 +8,10 @@
 		@mouseleave="mouseOnCard = false"
 		:style="animatingCard"
 	>
-		<div :class="{ 'opacity': noStock }">
-			<div v-if="noStock" class="without-stock-tag">
+		<div>
+			<!-- <div v-if="noStock" class="without-stock-tag">
 				Agotado
-			</div>
+			</div> -->
 			<div class="pd-10">
 				<section class="product-header" :class="{ 'small': small }">
 					<div
