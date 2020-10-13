@@ -44,10 +44,12 @@
 							:key="card.code"
 						>
 							<template v-if="card.active">
-								<template>
-									<img :src="card.urlImage" height="20" />
-									{{ card.name }}
-								</template>
+									<div>
+										<img :src="card.urlImage" height="24" />
+									</div>
+									<div class="align-center">
+										{{ card.name }}
+									</div>
 							</template>
 						</div>
 					</div>
@@ -280,11 +282,20 @@ export default {
 	}
 
 	.details-collapse-item {
+		align-items: center;
 		border: 1px solid color(black);
 		border-radius: 6px;
+		display: flex;
+		flex-direction: column;
 		font-family: font(bold);
 		margin: 5px 8px;
 		padding: 10px 15px 5px;
 		text-transform: uppercase;
+		width: 205px;
+	}
+
+	.align-center {
+		margin-top: 5px;
+		text-align: center;
 	}
 </style>

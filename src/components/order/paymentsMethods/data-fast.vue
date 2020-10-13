@@ -12,7 +12,7 @@
 			class="data-fast-btn-details"
 			type="button"
 		>
-			<img src="/static/icons/informacion.svg" alt="" height="24" />
+			<img src="/static/icons/information.svg" alt="" height="26" />
 			<span class="tooltip">
 				Haz clic en el botón para ver las tarjetas con las que puedes pagar en DATAFAST
 			</span>
