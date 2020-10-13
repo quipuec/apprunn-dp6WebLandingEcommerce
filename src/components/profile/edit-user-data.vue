@@ -23,7 +23,13 @@
 					:items="genders"
 					v-model="userData.gender"
 				/>
-				<app-input class="user-phone" placeholder="Teléfono" v-model="userData.phone"/>
+				<app-input
+					class="user-phone"
+					placeholder="Teléfono"
+					v-model="userData.phone"
+				>
+					<span v-if="!$v.userData.phone.onlyNumbers">Solo se permiten números</span>
+				</app-input>
 				<app-select
 					class="user-department"
 					:placeholder="countryLabels.department"
@@ -82,7 +88,7 @@ import { required } from 'vuelidate/lib/validators';
 import userDataValidation from '@/mixins/userDataValidation';
 
 function created() {
-	this.userData = this.user || this.userData;
+	this.userData = { ...this.user } || this.userData;
 }
 
 function goBack() {
