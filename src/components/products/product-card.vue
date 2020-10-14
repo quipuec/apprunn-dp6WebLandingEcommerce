@@ -8,7 +8,7 @@
 		@mouseleave="mouseOnCard = false"
 		:style="animatingCard"
 	>
-		<div :class="{ 'opacity': noStock }">
+		<div :class="{ opacity: noStock}">
 			<div v-if="noStock" class="without-stock-tag">
 				Agotado
 			</div>
@@ -48,7 +48,7 @@
 							:class="[
 								indeterminate ? 'loading text-field' : 'product-description'
 							]"
-						>{{product.description}}</p>
+						>{{product.name}}</p>
 						<small
 							v-if="product.warehouseProduct && product.warehouseProduct.brand"
 							class="product-brand">{{product.warehouseProduct.brand.name}}</small>
@@ -131,13 +131,13 @@ function onCard(v) {
 }
 
 function noStock() {
-	const stockCero = !this.product.stockWarehouse;
-	const loading = !this.indeterminate;
+	const { stockVirtual, stock } = this.product;
+	const stockCero = stockVirtual || stock || 0;
 	const productService = getDeeper('typeInfo.code')(this.product) === 'servicios';
 	if (productService) {
 		return false;
 	}
-	return stockCero && loading;
+	return stockCero === 0;
 }
 
 function data() {
@@ -267,6 +267,7 @@ export default {
 	.product-description {
 		color: color(dark);
 		font-size: size(small);
+		font-family: font(bold);
 		height: 35px;
 		margin: 0 auto;
 		max-width: 150px;

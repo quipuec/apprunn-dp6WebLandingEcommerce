@@ -26,6 +26,8 @@
 import appButton from '@/components/shared/buttons/app-button';
 
 function goToLink(name) {
+	const { fullPath } = this.$route;
+	this.setLocalData('route-after-login', fullPath);
 	this.goTo(name);
 	this.$emit('close-modal');
 }

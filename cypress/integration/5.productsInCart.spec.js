@@ -12,6 +12,8 @@ context('COMPRAR DOS PRODUCTOS - ENVIO A DOMICILIO', () => {
 		cy.get('[data-cy="make-order"]')
 			.click();
 		cy.login();
+		cy.get('[data-cy="make-order"]')
+			.click();
 		cy.SelectDeliveryHome();
 		cy.SelectAddress();
 		cy.FillResponsibleForm();
