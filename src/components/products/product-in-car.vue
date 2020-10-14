@@ -242,7 +242,7 @@ export default {
 
 	.product-name {
 		color: color(dark);
-		font-family: font(bold);
+		font-family: font(bold );
 		font-size: size(large);
 		font-weight: bold;
 		margin-bottom: 0px;
@@ -258,6 +258,7 @@ export default {
 		margin-bottom: 0px;
 		padding-right: 2rem;
 		text-align: left;
+		text-transform: lowercase;
 		width: inherit;
 	}
 

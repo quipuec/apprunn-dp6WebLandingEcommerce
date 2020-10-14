@@ -178,13 +178,12 @@ const asyncActions = {
 			commit('UPDATE_FILTERS', filters);
 		}
 	},
-	LOAD_FAVORITES_PRODUCTS: async ({ commit }, { context, params }) => {
+	LOAD_FAVORITES_PRODUCTS: async ({ commit, getters }, { context, params }) => {
 		const url = 'products/favorites?favorite=true';
 		const { data: favorites, headers } = await context.$httpProducts.get(url, { params });
-		const newFavorites = favorites.map(
-			lib.setNewProperty('createdAt', ({ createdAt }) => helper.formatDate(createdAt)),
-		);
-		commit('SET_FAVORITES', newFavorites);
+		const commercePriceListId = getters.getCommerceData.settings.salPriceListId;
+		const setUpDateInProducts = updateProducts(favorites, commercePriceListId);
+		commit('SET_FAVORITES', setUpDateInProducts);
 		return Number(headers['x-last-page']);
 	},
 	LOAD_BANNERS: async ({ commit, getters }, context) => {
