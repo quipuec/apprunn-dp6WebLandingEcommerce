@@ -132,16 +132,12 @@ function onCard(v) {
 
 function noStock() {
 	const { stockVirtual, stock } = this.product;
-	const stockCero = stockVirtual || stock;
-	// let stockCero = getDeeper('stockVirtual')(this.product);
-	// if (stockCero === null || stockCero === undefined) {
-	// 	stockCero = !this.product.stockWarehouse;
-	// }
+	const stockCero = stockVirtual || stock || 0;
 	const productService = getDeeper('typeInfo.code')(this.product) === 'servicios';
 	if (productService) {
 		return false;
 	}
-	return stockCero && stockCero === 0;
+	return stockCero === 0;
 }
 
 function data() {
