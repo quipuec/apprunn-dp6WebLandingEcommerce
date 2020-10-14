@@ -8,7 +8,7 @@
 		@mouseleave="mouseOnCard = false"
 		:style="animatingCard"
 	>
-		<div :class="{ 'opacity': noStock }">
+		<div :class="{ opacity: noStock}">
 			<div v-if="noStock" class="without-stock-tag">
 				Agotado
 			</div>
@@ -131,13 +131,13 @@ function onCard(v) {
 }
 
 function noStock() {
-	const stockCero = !this.product.stockWarehouse;
-	const loading = !this.indeterminate;
+	const { stockVirtual, stock } = this.product;
+	const stockCero = stockVirtual || stock || 0;
 	const productService = getDeeper('typeInfo.code')(this.product) === 'servicios';
 	if (productService) {
 		return false;
 	}
-	return stockCero && loading;
+	return stockCero === 0;
 }
 
 function data() {

@@ -185,8 +185,8 @@ function selectFeature(value) {
 	this.productInstance.featureSelected(value);
 	this.product.quantity = 1;
 	this.globalFeatures = [...this.productInstance.getFeatures()];
-	this.productDetails = { ...this.productInstance.getProductDetails() };
 	this.productImages = [...this.productInstance.getImages()];
+	this.productDetails = { ...this.productInstance.getProductDetails() };
 }
 
 function possibleFeature(possibles) {
@@ -270,7 +270,6 @@ function clickQuantity(value) {
 	}
 	const validQuantity = this.checkValidQuantity(num);
 	if (validQuantity) {
-		console.log('entro');
 		this.$set(newProductdetail, 'quantity', num);
 		this.product = { ...newProductdetail };
 		this.productInstance.updateQuantity(num);

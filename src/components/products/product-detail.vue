@@ -77,10 +77,12 @@
 			@clear="$emit('clear')"/>
 		<product-buy
 			:open-warehouse="openWarehouse"
+			:number="data.quantity"
+			:product="data"
 			@click="clickQuantity"
 			@add-to-car="addToCar"
 			@open-dialog="$emit('open-dialog')"
-			:number="data.quantity"/>
+		/>
 	</div>
 </template>
 <script>

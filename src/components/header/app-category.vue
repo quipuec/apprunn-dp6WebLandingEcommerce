@@ -354,6 +354,7 @@ export default {
 		cursor: pointer;
 		flex: 1 1 auto;
 		height: 100%;
+		overflow-y: scroll;
 	}
 
 	.desktop {
