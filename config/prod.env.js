@@ -36,5 +36,5 @@ module.exports = {
 	PAYMENTEZ_CLIENT: `'${process.env.PAYMENTEZ_CLIENT}'`,
 	PAYMENTEZ_KEY: `'${process.env.PAYMENTEZ_KEY}'`,
 	SALES_URL_HTTP2: `'${process.env.SALES_URL_HTTP2}'`,
-	DYNAMIC_OPACITY: `'${process.env.DYNAMIC_OPACITY}'`,
+	NO_ICON_CATEGORY: `'${process.env.NO_ICON_CATEGORY}'`,
 };

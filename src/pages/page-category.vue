@@ -114,12 +114,7 @@ const { setNewProperty } = lib;
 function mounted() {
 	this.selectCategory();
 	this.changeOpen();
-	this.loadAttributes();
 	window.addEventListener('resize', this.changeOpen);
-}
-
-function loadAttributes() {
-	this.$store.dispatch('LOAD_ATTRIBUTES', this);
 }
 
 async function loadProduct() {
@@ -289,7 +284,6 @@ export default {
 		closeOpen,
 		getCurrentcategory,
 		linkCategories,
-		loadAttributes,
 		loadProduct,
 		openCategory,
 		selectCategory,
