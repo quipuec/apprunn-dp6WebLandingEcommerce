@@ -53,13 +53,15 @@ async function checkout() {
 	const url = 'payment-gateway/datafast/checkout';
 	const { data: response } = await this.$httpSales.post(url, body);
 	this.checkoutId = response.id;
-	this.createDataFastForm();
+	this.createDataFastForm(response);
 }
 
-function createDataFastForm() {
+function createDataFastForm(response) {
+	const testENV = `https://test.oppwa.com/v1/paymentWidgets.js?checkoutId=${response.id}`;
+	const prodENV = `https://oppwa.com/v1/paymentWidgets.js?checkoutId=${response.id}`;
+	const src = response.payboxProduction ? prodENV : testENV;
 	const datafastTypesCredit = JSON.parse(localStorage.getItem('datafast-types-credit')) || [];
 	const dataFastScript = document.createElement('script');
-	const src = `${process.env.DATA_FAST_URL}${this.checkoutId}`;
 	dataFastScript.setAttribute('src', src);
 	this.showModal = true;
 	setTimeout(() => {
