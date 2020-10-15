@@ -32,7 +32,6 @@ module.exports = {
 	BANNER_SEARCHER_SHOW: `'${process.env.BANNER_SEARCHER_SHOW}'`,
 	WAYS_DELIVERIES: `'${process.env.WAYS_DELIVERIES}'`,
 	GOOGLE_MAP_API_KEY: `'${process.env.GOOGLE_MAP_API_KEY}'`,
-	DATA_FAST_URL: `'${process.env.DATA_FAST_URL}'`,
 	URL_VALID_DOCUMENT_NUMBER: `'${process.env.URL_VALID_DOCUMENT_NUMBER}'`,
 	PAYMENTEZ_CLIENT: `'${process.env.PAYMENTEZ_CLIENT}'`,
 	PAYMENTEZ_KEY: `'${process.env.PAYMENTEZ_KEY}'`,
