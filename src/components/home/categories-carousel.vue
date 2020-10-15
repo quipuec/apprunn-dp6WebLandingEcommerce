@@ -31,7 +31,8 @@
 									{ 'category-opacity': !applyBgOpacity },
 								]"
 							>
-								<img 
+								<img
+									v-if="!applyBgOpacity"
 									:src="category.webImage" 
 									:alt="category.name"
 									class="image">	
