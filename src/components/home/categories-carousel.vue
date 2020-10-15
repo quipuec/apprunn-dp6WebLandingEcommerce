@@ -82,7 +82,7 @@ function goToCategory({ slug, id }) {
 }
 
 function applyBgOpacity() {
-	const opacity = process.env.DYNAMIC_OPACITY;
+	const opacity = process.env.NO_ICON_CATEGORY;
 	return opacity && opacity === 'true';
 }
 
