@@ -136,6 +136,7 @@ export default {
 	font-size: 16px;
 	margin: 0 0 0 20px;
 	max-width: 136px;
+	white-space: nowrap;
 
 	@media (max-width: 850px) {
 		font-size: size(xlarge);

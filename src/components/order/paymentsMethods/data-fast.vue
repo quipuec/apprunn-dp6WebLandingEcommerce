@@ -52,7 +52,6 @@ async function checkout() {
 	};
 	const url = 'payment-gateway/datafast/checkout';
 	const { data: response } = await this.$httpSales.post(url, body);
-	this.checkoutId = response.id;
 	this.createDataFastForm(response);
 }
 
@@ -145,6 +144,7 @@ function insertForm(dtc) {
 	const purchaseNumber = `orderId=${this.getOrderId}`;
 	const redirect = 'uri=resumen-de-mi-pedido';
 	const url = `${this.baseUrl}?${commerceCode}&${purchaseNumber}&${redirect}`;
+	console.log('url', url);
 	dataFastForm.setAttribute('action', url);
 	dataFastForm.setAttribute('method', 'get');
 	dataFastForm.setAttribute('data-brands', dataBrands);
@@ -172,7 +172,6 @@ function closeModal(val) {
 function data() {
 	return {
 		disabledButtonDataFast: false,
-		checkoutId: null,
 		clientIp: null,
 		loading: true,
 		show: false,

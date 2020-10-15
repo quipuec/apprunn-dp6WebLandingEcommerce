@@ -41,10 +41,20 @@ function currencyFormat(val) {
 	return `${integer}.${newDecimals}`;
 }
 
+function cuttingWord(val, num) {
+	const len = val.length;
+	if (len > num) {
+		const cuted = val.substr(0, (num - 3));
+		return `${cuted}...`;
+	}
+	return val;
+}
+
 export default function (Vue) {
 	Vue.filter('round', round);
 	Vue.filter('limitTo', limitTo);
 	Vue.filter('exactDate', exactDate);
 	Vue.filter('formatDate', formatDate);
 	Vue.filter('currencyFormat', currencyFormat);
+	Vue.filter('cuttingWord', cuttingWord);
 }
