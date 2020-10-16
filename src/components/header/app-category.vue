@@ -63,18 +63,28 @@
 					</div>
 				</div>
 			</div>
-			<div class="menu-list-item desktop" v-if="selectCategory">
-				<v-treeview 
-					:items="selectCategory.detail"
-					item-children="detail"
+			<div class="menu-list-item desktop" v-if="selectCategory && selectCategory.description">
+				<v-treeview
+					v-if="load && selectCategory.detail.length > 0"
+					activatable
+					return-object
 					open-all
+					item-children="detail"
 					item-text="title"
 					item-key="id"
-					activatable
+					:items="selectCategory.detail"
 					@update:active="goToCategories"
-					return-object
-					v-if="load">
+				>
 				</v-treeview>
+				<div v-else-if="selectCategory.description" class="category-description">
+					<h2 :style="`color:${globalColors.primary}`">{{selectCategory.title}}</h2>
+					<p>{{selectCategory.description}}</p>
+					<button
+						type="button"
+						:style="`color:${globalColors.primary};border-color:${globalColors.primary}`"
+						@click.stop="goToCategory(selectCategory)"
+					>Ver productos</button>
+				</div>
 			</div>
 			<div class="menu-list-banner">
 				<img :src="selectCategory.urlImage" alt="imagen de la categoria">
@@ -534,6 +544,15 @@ export default {
 			display: none;
 		}
 	}
+
+	.category-description {
+		padding: 3rem;
+
+		button {
+			border-style: solid;
+			border-width: 1px;
+			font-family: font(bold);
+			padding: 0.75rem;
+		}
+	}
 </style>
-
-
