@@ -176,7 +176,6 @@ function data() {
 		loading: true,
 		show: false,
 		showModal: false,
-		open: false,
 	};
 }
 
@@ -277,30 +276,5 @@ export default {
 	flex-wrap: wrap;
 	margin: 0 14px;
 	position: relative;
-}
-
-.details-collapse-title {
-	align-items: center;
-	border-bottom: 1px solid rgb(230, 230, 230);
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	font-family: font(bold);
-	font-size: size(medium);
-	justify-content: space-between;
-	padding-bottom: 3px;
-
-	&-btn {
-		border: 1px solid black;
-		border-radius: 6px;
-		font-family: font(demi);
-		font-size: size(minmedium);
-		padding: 4px 5px 0px;
-	}
-}
-
-.component-container {
-	margin-top: 15px;
-	width: 100%;
 }
 </style>
