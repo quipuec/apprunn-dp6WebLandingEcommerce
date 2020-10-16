@@ -10,7 +10,7 @@
 			<img :src="product.imagePresentation" alt="imagen del producto">
 			<p class="product-information">
 				<span class="product-name">{{ product.name }}</span>
-				<span>{{ product.description }}</span>
+				<span>{{ product.description | cuttingWord(62) }}</span>
 				<span
 					class="product-price"
 					:style="`color:${globalColors.secondary}`"
