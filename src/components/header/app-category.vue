@@ -602,6 +602,15 @@ export default {
 			display: none;
 		}
 	}
+
+	.category-description {
+		padding: 3rem;
+
+		button {
+			border-style: solid;
+			border-width: 1px;
+			font-family: font(bold);
+			padding: 0.75rem;
+		}
+	}
 </style>
-
-
