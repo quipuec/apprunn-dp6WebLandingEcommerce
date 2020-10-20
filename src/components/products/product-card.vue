@@ -13,9 +13,15 @@
 				Agotado
 			</div>
 			<div class="pd-10">
-				<section class="product-header" :class="{ 'small': small }">
+				<section
+					:class="[
+						'product-header',
+						{ 'small': small },
+						{ 'noDiscount': !discountPercentage },
+					]"
+				>
 					<div
-						v-if="product.priceDiscount || !indeterminate"
+						v-if="!!discountPercentage"
 						:style="`background-color:${indeterminate ? 'transparent' : globalColors.primary}`"
 						:class="[
 							'product-discount',
@@ -213,6 +219,9 @@ export default {
 		display: flex;
 		height: 3rem;
 		justify-content: space-between;
+		&.noDiscount {
+			justify-content: flex-end;
+		}
 	}
 
 	.product-discount {
