@@ -1,41 +1,47 @@
 <template>
 	<form class="responsible">
 		<app-input
+			data-cy="responsible-name"
 			placeholder="Persona responsable de recibir"
 			class="mx-2 my-1 responsible-field"
 			v-model="responsible.name"
 			@input="validateForm"
 		>
 			<span v-if="!$v.responsible.name.required">El nombre es requerido</span>
-			<span v-if="!$v.responsible.name.validNameAndLastname">Solo se permiten letras</span>
+			<span v-if="!$v.responsible.name.onlyCharacters">Solo se permiten letras</span>
 		</app-input>
 		<app-input
+			data-cy="responsible-lastname"
 			placeholder="Apellido responsable de recibir"
 			class="mx-2 my-1 responsible-field"
 			v-model="responsible.lastname"
 			@input="validateForm"
 		>
 			<span v-if="!$v.responsible.lastname.required">El Apellido es requerido</span>
-			<span v-if="!$v.responsible.lastname.validNameAndLastname">Solo se permiten letras</span>
+			<span v-if="!$v.responsible.lastname.onlyCharacters">Solo se permiten letras</span>
 		</app-input>
 		<app-input
+			data-cy="responsible-dni"
 			:placeholder="labelCountry"
 			class="mx-2 my-1 responsible-field"
 			v-model="responsible.dni"
 			@input="validateForm"
 		>
 			<span v-if="!$v.responsible.dni.required">{{labelError}}.</span>
-			<span v-if="isPeru && !$v.responsible.dni.validDni">Solo se permiten números</span>
+			<span v-if="!$v.responsible.dni.onlyNumbers">Solo se permiten números</span>
 		</app-input>
 		<app-input
+			data-cy="responsible-phone"
 			placeholder="Celular"
 			class="mx-2 my-1 responsible-field"
 			v-model="responsible.phone"
 			@input="validateForm"
 		>
-			<span v-if="$v.responsible.phone.$invalid">El teléfono es requerido</span>
+			<span v-if="!$v.responsible.phone.required">El teléfono es requerido</span>
+			<span v-if="!$v.responsible.phone.onlyNumbers">Solo se permiten números</span>
 		</app-input>
 		<app-input
+			data-cy="responsible-email"
 			placeholder="Correo"
 			type="email"
 			class="mx-2 my-1 responsible-field"
@@ -52,6 +58,7 @@ import { required, email } from 'vuelidate/lib/validators';
 import { mapGetters } from 'vuex';
 import { getDeeper } from '@/shared/lib';
 import appInput from '@/components/shared/inputs/app-input';
+import userDataValidation from '@/mixins/userDataValidation';
 
 function mounted() {
 	if (getDeeper('responsiblePickUp')(this.getOrderInfo)) {
@@ -86,36 +93,28 @@ function labelError() {
 	return getDeeper('company.country.countryCode')(this.user) === 'ECU' ? 'El número de documento es requerido' : 'El DNI es requerido';
 }
 
-function validDni(dni) {
-	const reg = /[0-9]/i;
-	return reg.test(dni);
-}
-
-function validNameAndLastname(char) {
-	const trimedChar = char.split(' ').join('');
-	const noChar = /[^a-zA-ZáéíóúáéíóúÁÉÍÓÚ]/i.test(trimedChar);
-	return !noChar;
-}
-
 function validations() {
 	const validating = {
 		responsible: {
-			dni: { required },
+			dni: {
+				required,
+				onlyNumbers: this.onlyNumbers,
+			},
 			email: { email, required },
 			lastname: {
 				required,
-				validNameAndLastname,
+				onlyCharacters: this.onlyCharacters,
 			},
 			name: {
 				required,
-				validNameAndLastname,
+				onlyCharacters: this.onlyCharacters,
 			},
-			phone: { required },
+			phone: {
+				required,
+				onlyNumbers: this.onlyNumbers,
+			},
 		},
 	};
-	if (this.isPeru) {
-		validating.responsible.dni.validDni = this.validDni;
-	}
 	return validating;
 }
 
@@ -148,10 +147,9 @@ export default {
 	data,
 	methods: {
 		setUserData,
-		validDni,
 		validateForm,
-		validNameAndLastname,
 	},
+	mixins: [userDataValidation],
 	mounted,
 	validations,
 	watch: {

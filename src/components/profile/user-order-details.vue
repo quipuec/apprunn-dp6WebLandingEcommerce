@@ -20,31 +20,33 @@
 					<span class="label">Fecha de la Orden: </span><span class="order-info-data">{{getValue('createdAt', getOrderInfo)}}</span>
 				</div>
 				<div>
-					<span class="label">Estado pago: </span><span class="order-info-data">{{getValue('paymentStateName', getOrderInfo)}}</span>
+					<span class="label">Estado pago: </span><span class="order-info-data">
+						{{paymentState}}
+					</span>
 				</div>
 			</div>
 			<div class="order-payment" v-if="!rating">
 				<div class="order-payment-wrapper">
 					<div class="mb-2 delivery-address">
-						<div v-if="pendingPayment && isPaymentLink" class="payment-link-data">
-							<div class="link-container">
+						<div v-if="isPaymentLink" class="payment-link-data">
+							<div class="link-container" v-if="pendingPayment">
 								<span>Paga ahora en {{gatewayName}}: </span>
 								<div class="link-wrapper">
-									<a
-										:href="paymentLink"
+									<button
+										type="button"
 										class="order-info-data"
 										:style="`color:${globalColors.primary}`"
-										target="_blank"
 										ref="link"
-									>{{paymentLink}}</a>
+										@click="openConfirmModal('goToLink')"
+									>{{paymentLink}}</button>
 								</div>
-								<button class="copy-button" type="button" @click="copyLink">copiar</button>
+								<button class="copy-button" type="button" @click="openConfirmModal('copy')">copiar</button>
 							</div>
 							<div>
 								ID de transacción: <span class="label">{{transactionPaymentLinkId}}</span>
 							</div>
 						</div>
-						<div v-if="pendingPayment && isPaymentez && !isPaymentLink" class="payment-link-data">
+						<div v-if="isPaymentez && !isPaymentLink" class="payment-link-data">
 							<div class="link-container">
 								Id transacción: <span class="label">{{paymentezData.id}}</span>
 							</div>
@@ -62,6 +64,13 @@
 								<span class="order-info-data">{{getValue('warehouseName', getOrderInfo)}}</span>
 							</span>
 						</section>
+						<div v-if="refund.exist" class="refund-container">
+							<h3 class="refund-text">{{refund.text}}</h3>
+							<div>
+								<h4>Correo: {{getCommerceData.email}}.</h4>
+								<h4 v-if="getCommerceData.phone">Teléfono: {{getCommerceData.phone}}</h4>
+							</div>
+						</div>
 					</div>
 					<app-button
 						v-if="!flagAddVoucher && isDeposit"
@@ -112,6 +121,26 @@
 				</responsive-table>
 			</section>
 		</transition-group>
+		<modal-component v-model="showConfirm">
+			<div class="slot-modal-wrapper">
+				<section class="modal-content">
+					<h3>Este enlace tiene una transacción de pago en proceso con referencia: {{transactionPaymentLinkId}}</h3>
+					<h4>¿Desea continuar?</h4>
+				</section>
+				<div class="modal-btns">
+					<button
+						type="button"
+						:style="`background-color:${globalColors.secondary}`"
+						@click="closeConfirmModal"
+					>Cancelar</button>
+					<button
+						type="button"
+						:style="`background-color:${globalColors.primary}`"
+						@click="accept"
+					>Aceptar</button>
+				</div>
+			</div>
+		</modal-component>
 	</div>
 </template>
 <script>
@@ -126,9 +155,32 @@ import productRating from '@/components/profile/product-rating';
 import helper from '@/shared/helper';
 import { deposit } from '@/shared/enums/wayPayment';
 import * as gatewayCodes from '@/shared/enums/gatewayCodes';
+import modalComponent from '@/components/shared/modal/modal-component';
 
 async function created() {
 	({ id: this.orderId } = this.$route.params);
+	const { gatewayCode } = this.$route.query;
+	if (gatewayCode === gatewayCodes.placetopay) {
+		this.updatePaymentStatus();
+	} else {
+		this.loadData();
+	}
+}
+
+async function updatePaymentStatus() {
+	const url = 'payment-gateway/status';
+	const params = { orderId: this.orderId };
+	const headers = {
+		Authorization: `Bearer ${this.$store.state.token}`,
+	};
+	try {
+		await this.$httpUpdateTransaction.get(url, { params, headers });
+	} finally {
+		this.loadData();
+	}
+}
+
+async function loadData() {
 	await this.$store.dispatch('LOAD_ORDER_DETAILS', { context: this, orderId: this.orderId });
 	if (!isEmpty(this.getOrderInfo)) {
 		const { additionalInfo, sessionGateway, additionalInformation } = this.getOrderInfo;
@@ -152,7 +204,9 @@ function paymentLink() {
 
 function transactionPaymentLinkId() {
 	if (this.isPaymentLink) {
-		return this.getValue('gatewayTransactionId', this.additionalInformation);
+		const gTransactionId = this.getValue('gatewayTransactionId', this.additionalInformation);
+		const refId = this.getValue('paymentGateway.referenceId', this.additionalInformation);
+		return refId || gTransactionId;
 	}
 	return false;
 }
@@ -169,7 +223,13 @@ function gatewayName() {
 }
 
 function pendingPayment() {
-	return this.getValue('paymentStateName', this.getOrderInfo) === 'Pendiente';
+	return this.paymentState === 'Pendiente' || this.paymentState === 'pendiente';
+}
+
+function paymentState() {
+	const paymentStateGateway = this.getValue('paymentStateGateway', this.getOrderInfo);
+	const paymentStateName = this.getValue('paymentStateName', this.getOrderInfo);
+	return paymentStateGateway || paymentStateName;
 }
 
 function updateColumns() {
@@ -219,6 +279,7 @@ function copyLink() {
 	const linkContainer = this.$refs.link;
 	helper.copyFn(linkContainer);
 	this.showNotification('Enlace copiado al porta papeles', 'primary');
+	this.closeConfirmModal();
 }
 
 function isPaymentez() {
@@ -235,6 +296,38 @@ function paymentezData() {
 	return false;
 }
 
+function refund() {
+	const exist = getDeeper('gatewayAuthorizationResponse.refund.errors')(this.getOrderInfo);
+	const errors = {
+		VALID_TIME_AUTOMATIC_REFUND_EXCEEDED: 'Comuníquese con el administrador del ecommerce para su reembolso',
+	};
+	return {
+		exist,
+		text: errors[exist],
+	};
+}
+
+function openConfirmModal(flag) {
+	this.action = flag;
+	this.showConfirm = true;
+}
+
+function closeConfirmModal() {
+	this.showConfirm = false;
+}
+
+function accept() {
+	const opt = {
+		copy: this.copyLink,
+		goToLink: this.goToLink,
+	};
+	opt[this.action].call();
+}
+
+function goToLink() {
+	window.open(this.paymentLink);
+}
+
 function data() {
 	return {
 		additionalInformation: null,
@@ -249,6 +342,7 @@ function data() {
 		orderId: 0,
 		rating: false,
 		sessionGateway: null,
+		showConfirm: false,
 	};
 }
 
@@ -259,12 +353,14 @@ export default {
 		formOpinion,
 		leftComponent,
 		loadPayment,
+		modalComponent,
 		productRating,
 		responsiveTable,
 	},
 	computed: {
 		...mapGetters([
 			'flagAddVoucher',
+			'getCommerceData',
 			'getOrderInfo',
 		]),
 		details,
@@ -275,19 +371,27 @@ export default {
 		isPaymentLink,
 		orderStatusIsGiven,
 		paymentezData,
+		paymentState,
 		paymentLink,
 		pendingPayment,
+		refund,
 		transactionPaymentLinkId,
 	},
 	created,
 	data,
 	methods: {
 		addPaymentInfo,
+		accept,
 		copyLink,
+		closeConfirmModal,
 		getValue,
 		goTo,
+		goToLink,
+		loadData,
 		onRating,
+		openConfirmModal,
 		updateColumns,
+		updatePaymentStatus,
 	},
 };
 </script>
@@ -551,6 +655,47 @@ export default {
 		&:hover {
 			background-color: color(dark);
 			color: color(border);
+		}
+	}
+
+	.refund-container {
+		background-color: color(errorLight);
+		border: 1px solid color(error);
+		border-radius: 5px;
+		color: color(error);
+		font-family: font(regular);
+		font-size: size(small);
+		margin: 1rem auto 0;
+		padding: 0.5rem 2rem;
+		width: fit-content;
+
+		div {
+			display: flex;
+			justify-content: space-evenly;
+			opacity: 0.8;
+		}
+	}
+	.slot-modal-wrapper {
+		background-color: white;
+		border-radius: 0.75rem;
+		padding: 2rem;
+
+		.modal-content,
+		.modal-btns {
+			align-items: center;
+			display: flex;
+			justify-content: center;
+			margin: 1rem 0;
+		}
+		.modal-content {
+			flex-direction: column;
+		}
+		.modal-btns {
+			button {
+				color: white;
+				margin: 0 1rem;
+				padding: 0.5rem 1rem;
+			}
 		}
 	}
 

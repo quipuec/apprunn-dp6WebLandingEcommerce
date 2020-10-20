@@ -7,3 +7,4 @@ export const paymentez = 'paymentez';
 export const placetopay = 'placetopay';
 export const visa = 'visa';
 export const xchange = 'xchange';
+export const alignet = 'alignet';

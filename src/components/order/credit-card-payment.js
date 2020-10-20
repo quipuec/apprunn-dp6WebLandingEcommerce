@@ -1,7 +1,7 @@
 import { mapGetters } from 'vuex';
 import { LINK, BUTTON } from '@/shared/enums/paymentStrategy';
 import {
-	leadgods, niubiz, datafast, pagoplux, pagopluxLink, xchange, paymentez, placetopay,
+	leadgods, niubiz, datafast, pagoplux, pagopluxLink, xchange, paymentez, placetopay, alignet,
 } from '@/shared/enums/gatewayCodes';
 
 const Niubiz = () => import('@/components/order/paymentsMethods/niubiz');
@@ -12,6 +12,7 @@ const PagoPluxLink = () => import('@/components/order/paymentsMethods/pago-plux-
 const Xchange = () => import('@/components/order/paymentsMethods/xchange');
 const LeadGods = () => import('@/components/order/paymentsMethods/leadgods');
 const PlaceToPay = () => import('@/components/order/paymentsMethods/place-to-pay');
+const Alignet = () => import('@/components/order/paymentsMethods/alignet');
 
 /**
  * @param {object-function} h render function
@@ -71,8 +72,9 @@ const paymentButtonCreator = (h, gateway, ipAddress) => {
 		[datafast]: DataFast,
 		[pagoplux]: PagoPlux,
 		[xchange]: Xchange,
+		[alignet]: Alignet,
 	};
-	let selectedButtons = [];
+	let selectedButtons = [h(Alignet)];
 	gateway.forEach((t) => {
 		const { code, urlImage } = t;
 		const paymentBtns = h(
@@ -95,7 +97,7 @@ const paymentButtonCreator = (h, gateway, ipAddress) => {
 		},
 		selectedButtons,
 	);
-	const btnTitle = h('h3', { class: ['payment-sections'], style: { marginBottom: '1rem' } }, 'Paga ahora');
+	const btnTitle = h('h3', { style: { marginBottom: '1rem' } }, 'Paga ahora');
 	return h(
 		'div',
 		{
