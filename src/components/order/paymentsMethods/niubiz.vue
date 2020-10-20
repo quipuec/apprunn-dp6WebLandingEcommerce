@@ -5,7 +5,7 @@
 		</button>
 		<form
 			id="visa-payment"
-			:action="`${apiSales}/payment-gateway/validation?orderId=${getOrderId}`"
+			:action="redirect"
 			method='post'
 		></form>
 	</div>
@@ -18,14 +18,14 @@ function createScript() {
 		const visaForm = document.createElement('script');
 		const dataSessionToken = this.sessionKey;
 		const dataMerchantId = this.merchantId;
-		const dataAmount = this.orderTotal;
-		const dataCurrency = 'PEN';
-		// const dataCurrency = this.currentCurrency || 'PEN';
+		const dataAmount = this.amount;
+		const dataCurrency = this.currency;
+		const src = this.payboxProduction === 'dev' ? this.dev : this.prod;
 		const purchaseNumber = this.getOrderId;
 		const logo = this.companyLogo;
 		const name = process.env.COMPANY_LOGIN_TITLE;
 		const btnColor = process.env.COLOR_PRIMARY;
-		visaForm.setAttribute('src', 'https://static-content-qas.vnforapps.com/v2/js/checkout.js?qa=true');
+		visaForm.setAttribute('src', src);
 		visaForm.setAttribute('data-sessiontoken', dataSessionToken);
 		visaForm.setAttribute('data-channel', 'web');
 		visaForm.setAttribute('data-merchantid', dataMerchantId);
@@ -61,16 +61,31 @@ async function checkout() {
 	const { data: res } = await this.$httpSales.post(url, body);
 	this.merchantId = res.merchantId;
 	this.sessionKey = res.sessionKey;
+	this.payboxProduction = res.payboxProduction;
+	this.currency = res.currency;
+	this.amount = res.amount;
 	this.createScript();
+}
+
+function redirect() {
+	const orderId = `orderId=${this.getOrderId}`;
+	const successUri = 'uri=resumen-de-mi-pedido';
+	const errorUri = 'errorUri=carrito-de-compras/pago';
+	return `${this.apiSales}/payment-gateway/validation?${orderId}&${successUri}&${errorUri}`;
 }
 
 function data() {
 	return {
+		amount: 0,
 		apiSales: process.env.SALES_URL,
 		companyLogo: process.env.COMPANY_LOGO,
+		currency: 'PEN',
+		dev: 'https://static-content-qas.vnforapps.com/v2/js/checkout.js?qa=true',
 		expirationTime: null,
 		loading: false,
 		merchantId: '',
+		payboxProduction: false,
+		prod: 'https://static-content.vnforapps.com/v2/js/checkout.js',
 		sessionKey: null,
 		totalAmount: null,
 	};
@@ -86,6 +101,7 @@ export default {
 			'token',
 		]),
 		orderTotal,
+		redirect,
 	},
 	data,
 	methods: {
